@@ -6,7 +6,6 @@ import {addNewItemState, postItem } from '../actions';
 class AddItemPage extends React.Component {
 
     onItemSubmit(item) {
-        console.log('Submitting...', item);
         this.props.postItem(item);
     }
 
