@@ -1,0 +1,24 @@
+{
+    "types": [
+        {
+            "id": "t1",
+            "name": "Kambarių nuoma",
+            "description": ""
+        },
+        {
+            "id": "t2",
+            "name": "Butai ir apartamentai",
+            "description": ""
+        },
+        {
+            "id": "t3",
+            "name": "Kotedžai",
+            "description": ""
+        },
+        {
+            "id": "t4",
+            "name": "Svečių namai",
+            "description": ""
+        }
+    ]    
+}

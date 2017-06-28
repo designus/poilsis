@@ -1,0 +1,7 @@
+{
+    "id": "i1",
+    "name": "Almuka",
+    "description": "",
+    "city": "c1",
+    "types": ["t1", "t2", "t3"]
+}
