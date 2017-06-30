@@ -13,11 +13,19 @@ export const getKeyMap = (value, title, validators) => {
 	return { value, title, validators }
 }
 
+// export const newItemModel = {
+// 	name: getKeyMap('', 'Pavadinimas', [Validators.required, Validators.minLength(6)]),
+// 	city: getKeyMap('', 'Miestas', [Validators.required]),
+// 	types: getKeyMap([], 'Tipai', [Validators.required, Validators.minLength(1)]),
+// 	address: getKeyMap('', 'Adresas', [Validators.required]),
+// 	description: getKeyMap('', 'Aprasymas', [])
+// }
+
 export const newItemModel = {
-	name: getKeyMap('', 'Pavadinimas', [Validators.required, Validators.minLength(6)]),
-	city: getKeyMap('', 'Miestas', [Validators.required]),
-	types: getKeyMap([], 'Tipai', [Validators.required, Validators.minLength(1)]),
-	address: getKeyMap('', 'Adresas', [Validators.required]),
+	name: getKeyMap('', 'Pavadinimas', []),
+	city: getKeyMap('', 'Miestas', []),
+	types: getKeyMap([], 'Tipai', []),
+	address: getKeyMap('', 'Adresas', []),
 	description: getKeyMap('', 'Aprasymas', [])
 }
 
@@ -109,6 +117,7 @@ export default class AddItemForm extends React.Component {
 			this.props.onSaveState(this.state);
 			this.props.onItemSubmit(this.state[FIELD_VALUES]);
 		} else {
+			console.log('Form not valid');
 			this.props.onSaveState({
 				...this.state,
 				[SHOW_VALIDATION_ERRORS]: true
