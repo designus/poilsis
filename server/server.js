@@ -10,8 +10,6 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from '../webpack.config'
 
 import { ReduxAsyncConnect, loadOnServer, reducer as reduxAsyncConnect } from 'redux-connect';
-import { syncHistoryWithStore } from 'react-router-redux';
-import { configureStore } from '../src/store';
 
 import bodyParser from 'body-parser';
 const sanitize = require('mongo-sanitize');
@@ -123,31 +121,28 @@ app.get('/favicon.ico', function(req, res) {
 
 app.get('*', (request, response) => {
 	const location = request.url;
-  	const memoryHistory = createMemoryHistory(request.originalUrl);
-  	const store = configureStore(memoryHistory);
-  	const history = syncHistoryWithStore(memoryHistory, store);
-	console.log('Inside server', request.url);
+	const store = createStore(rootReducer, undefined, applyMiddleware(thunkMiddleware));
 
-	match({history, routes, location}, function(error, redirectLocation, renderProps) {
+	match({routes, location}, function(error, redirectLocation, renderProps) {
 		if (error) {
 			response.status(500).send(error.message);
 		} else if (redirectLocation) {
 			response.redirect(302, redirectLocation.pathName + redirectLocation.search);
 		} else if (renderProps) {
 
-			loadOnServer({ ...renderProps, store }).then(() => {
-				const responseHtml = renderToString(
-	        <MuiThemeProvider muiTheme={getMuiTheme({userAgent: request.headers['user-agent']})}>
-						<Provider store={store} key="provider">
-							<ReduxAsyncConnect {...renderProps} />
-						</Provider>
-					</MuiThemeProvider>
-				)
-
-				const finalState = store.getState();
-				response.status(200).send(renderFullPage(responseHtml, finalState));
-
-			})					
+			loadOnServer({ ...renderProps, store })
+				.then(() => {
+					const responseHtml = renderToString(
+						<MuiThemeProvider muiTheme={getMuiTheme({userAgent: request.headers['user-agent']})}>
+							<Provider store={store} key="provider">
+								<ReduxAsyncConnect {...renderProps} />
+							</Provider>
+						</MuiThemeProvider>
+					)
+					const finalState = store.getState();
+					response.status(200).send(renderFullPage(responseHtml, finalState));
+			})
+			.catch(err => console.error(err));
 
 		} else {
 			response.status(404).send('Not found');
