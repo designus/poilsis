@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import AddItemForm from '../components/addItemForm';
-import {addNewItemState, postItem } from '../actions';
+import { addNewItemState, postItem } from '../actions';
 
 class AddItemPage extends React.Component {
 

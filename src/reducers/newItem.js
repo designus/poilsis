@@ -1,4 +1,4 @@
-import {ADD_NEW_ITEM_STATE, CLEAR_FIELDS} from '../actions';
+import {ADD_NEW_ITEM_STATE, CLEAR_FIELDS, SHOW_BACKEND_VALIDATION_ERRORS} from '../actions';
 import {newItemModel} from '../components/addItemForm';
 import mapValues from 'lodash/mapValues';
 
@@ -19,6 +19,12 @@ export const newItem = (state = initialNewItemState, action) => {
       break;
     case CLEAR_FIELDS:
       return initialNewItemState;
+    case SHOW_BACKEND_VALIDATION_ERRORS:
+      return {
+        ...state, 
+        [VALIDATION_ERRORS]: action.errors,
+        [SHOW_VALIDATION_ERRORS]: true
+      };
     default:
       return state;
   }

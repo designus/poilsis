@@ -1,14 +1,12 @@
 import thunkMiddleware from 'redux-thunk'
 import React from 'react';
-import {render} from 'react-dom';
-import {Router, browserHistory} from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux'
+import { render } from 'react-dom';
+import { Router, browserHistory } from 'react-router';
 import { selectCityIfValid } from './helpers';
 import { ReduxAsyncConnect } from 'redux-connect'
-import { configureStore } from './store';
 
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
 import routes from './routes';
 
@@ -18,14 +16,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-// const initialState = window.__PRELOADED_STATE__;
 const rootElement = document.getElementById('app');
 
-const store = configureStore(
-  browserHistory,
-  window.__INITIAL_STATE__,
-);
-// const history = syncHistoryWithStore(browserHistory, store);
+const store = createStore(rootReducer, window.__INITIAL_STATE__, applyMiddleware(thunkMiddleware));
 const connectedCmp = (props) => <ReduxAsyncConnect {...props} />;
 
 render(
