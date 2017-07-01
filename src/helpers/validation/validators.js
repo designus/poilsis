@@ -1,11 +1,7 @@
 import * as ErrorMessages from './errorMessages';
 
 export const required = (text) => {
-  if (text) {
-    return null;
-  } else {
-    return ErrorMessages.isRequired;
-  }
+  return text ? null : ErrorMessages.isRequired;
 };
 
 export const mustMatch = (field, fieldName) => {
@@ -14,8 +10,24 @@ export const mustMatch = (field, fieldName) => {
   };
 };
 
-export const minLength = (length) => {
-  return (text) => {
-    return text.length >= length ? null : ErrorMessages.minLength(length);
+export const minLength = (length, isSelection = false) => {
+  return (item) => {
+    if (item.length >= length) {
+      return null;
+    }
+    return isSelection 
+      ? ErrorMessages.minSelectionLength(length)
+      : ErrorMessages.minTextLength(length);
   };
 };
+
+export const maxLength = (length, isSelection = false) => {
+  return (item) => {
+    if (item.length <= length) {
+      return null;
+    }
+    return isSelection 
+      ? ErrorMessages.maxSelectionLength(length)
+      : ErrorMessages.maxTextLength(length);
+  }
+}

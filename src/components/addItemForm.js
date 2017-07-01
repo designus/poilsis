@@ -1,4 +1,7 @@
 import React from 'react';
+import autoBind from 'react-autobind';
+
+import { ValidationErrors } from './validationErrors';
 import {initialNewItemState, FIELD_VALUES, VALIDATION_ERRORS, SHOW_VALIDATION_ERRORS } from '../reducers/newItem';
 
 import SelectField from 'material-ui/SelectField';
@@ -8,25 +11,30 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as Validators from '../helpers/validation/validators';
+import { 
+	NAME_LABEL,
+	CITY_LABEL,
+	TYPES_LABEL, 
+	ADDRESS_LABEL, 
+	DESCRIPTION_LABEL,
+	SEND_LABEL,
+	NAME_KEY,
+	CITY_KEY,
+	TYPES_KEY,
+	ADDRESS_KEY,
+	DESCRIPTION_KEY
+} from '../data-strings';
 
 export const getKeyMap = (value, title, validators) => {
 	return { value, title, validators }
 }
 
-// export const newItemModel = {
-// 	name: getKeyMap('', 'Pavadinimas', [Validators.required, Validators.minLength(6)]),
-// 	city: getKeyMap('', 'Miestas', [Validators.required]),
-// 	types: getKeyMap([], 'Tipai', [Validators.required, Validators.minLength(1)]),
-// 	address: getKeyMap('', 'Adresas', [Validators.required]),
-// 	description: getKeyMap('', 'Aprasymas', [])
-// }
-
 export const newItemModel = {
-	name: getKeyMap('', 'Pavadinimas', []),
-	city: getKeyMap('', 'Miestas', []),
-	types: getKeyMap([], 'Tipai', []),
-	address: getKeyMap('', 'Adresas', []),
-	description: getKeyMap('', 'Aprasymas', [])
+	[NAME_KEY]: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
+	[CITY_KEY]: getKeyMap('', CITY_LABEL, [Validators.required]),
+	[TYPES_KEY]: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
+	[ADDRESS_KEY]: getKeyMap('', ADDRESS_LABEL, [Validators.required]),
+	[DESCRIPTION_KEY]: getKeyMap('', DESCRIPTION_LABEL, [])
 }
 
 export const getValidationErrors = (state, model = newItemModel) => {
@@ -48,14 +56,10 @@ export default class AddItemForm extends React.Component {
 
 	constructor(props) {
 		super(props);
+		autoBind(this);
 
 		this.state = this.props.initialState;
 		console.log('Initial state', this.state);
-		
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleInputChange = this.handleInputChange.bind(this);
-		this.handleCheckboxToggle = this.handleCheckboxToggle.bind(this);
-		this.handleOnBlur = this.handleOnBlur.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -126,23 +130,37 @@ export default class AddItemForm extends React.Component {
 		
 	}
 
+	getErrorUnderlineStyle(showErrors, errors) {
+		return showErrors && errors.length > 0 ? {borderColor: 'red'} : null
+	}
+
 	render() {
+		const showErrors = this.state[SHOW_VALIDATION_ERRORS];
+		const fieldValues = this.state[FIELD_VALUES];
+		const errors = this.state[VALIDATION_ERRORS];
+
 		return (
 			<form onSubmit={this.handleSubmit}>				
 				<div>
 					<TextField
-						hintText="Pavadinimas"
-						value={this.state[FIELD_VALUES].name}
-						onChange={this.handleInputChange('name')}
+						floatingLabelText={NAME_LABEL}
+						hintText={NAME_LABEL}
+						value={fieldValues[NAME_KEY]}
+						onChange={this.handleInputChange(NAME_KEY)}
 						onBlur={this.handleOnBlur}
-						errorText={this.state[SHOW_VALIDATION_ERRORS] && this.state[VALIDATION_ERRORS].name}
+						underlineStyle={this.getErrorUnderlineStyle(showErrors, errors[NAME_KEY])}
 	   			/>
+					<ValidationErrors 
+						showErrors={showErrors}
+						errors={errors[NAME_KEY]}
+					/>
 				</div>
 				<div>
 					<SelectField
-						floatingLabelText="City"
-						value={this.state[FIELD_VALUES].city}
-						onChange={this.handleInputChange('city')}
+						floatingLabelText={CITY_LABEL}
+						value={fieldValues[CITY_KEY]}
+						onChange={this.handleInputChange(CITY_KEY)}
+						underlineStyle={this.getErrorUnderlineStyle(showErrors, errors[CITY_KEY])}
 					>
 						{
 							Object.keys(this.props.citiesMap).map((cityId, i) => {
@@ -156,33 +174,51 @@ export default class AddItemForm extends React.Component {
 							})
 						}
 					</SelectField>
+					<ValidationErrors 
+						showErrors={showErrors}
+						errors={errors[CITY_KEY]}
+					/>
 				</div>
 				<div>
-				{Object.keys(this.props.typesMap).map(typeId => {
-						const name = this.props.typesMap[typeId].name;
-						return (
-							<div key={typeId}>
-								<Checkbox
-      						label={name}
-									onCheck={this.handleCheckboxToggle('types', typeId)}
-									checked={this.isCheckboxChecked('types', typeId)}
-								/>
-							</div>
-						)
-				})}
+					<br />
+					<div>Types</div>
+					<br />
+					{Object.keys(this.props.typesMap).map(typeId => {
+							const name = this.props.typesMap[typeId].name;
+							return (
+								<div key={typeId}>
+									<Checkbox
+										label={name}
+										onCheck={this.handleCheckboxToggle(TYPES_KEY, typeId)}
+										checked={this.isCheckboxChecked(TYPES_KEY, typeId)}
+									/>
+								</div>
+							)
+					})}
+					<br />
+					<ValidationErrors 
+						showErrors={showErrors}
+						errors={errors[TYPES_KEY]}
+					/>
 				</div>
 				<div>
 					<TextField
-      			hintText="Adresas"
-						value={this.state[FIELD_VALUES].address}
- 						onChange={this.handleInputChange('address')}
+						floatingLabelText={ADDRESS_LABEL}
+						hintText={ADDRESS_LABEL}
+						value={fieldValues[ADDRESS_KEY]}
+ 						onChange={this.handleInputChange(ADDRESS_KEY)}
 						onBlur={this.handleOnBlur}
+						underlineStyle={this.getErrorUnderlineStyle(showErrors, errors[ADDRESS_KEY])}
 	   			/>
+					<ValidationErrors 
+						showErrors={showErrors}
+						errors={errors[ADDRESS_KEY]}
+					/>
 				</div>
 				
 		    <RaisedButton
 					type="submit"
-					label="Siusti"
+					label={SEND_LABEL}
 					primary={true} 
 					style={{marginTop: 12}} 
 				/>
