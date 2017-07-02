@@ -2,6 +2,7 @@
 	"cities": {
 		"selectedId": 123,
 		"aliases": ["palanga", "sventoji"],
+		"ids": ["123", "322"],
 		"dataMap": {
 			"123": {
 				"name": "Palanga",

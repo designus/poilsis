@@ -1,5 +1,4 @@
 import {RECEIVE_CITIES, SELECT_CITY, ADD_ITEMS_TO_CITY, ADD_ITEM_TO_CITY } from '../actions/cities';
-import {normalizeData} from './helpers';
 import uniq from 'lodash/uniq';
 
 const cities = (state = null, action) => {
@@ -10,8 +9,7 @@ const cities = (state = null, action) => {
             return {...state, selectedId: action.cityId}
             break;
         case RECEIVE_CITIES: 
-            const {dataMap, aliases} = normalizeData(action.payload);
-            return {...state, dataMap, aliases};
+            return {...state, ...action.payload};
             break;
         case ADD_ITEMS_TO_CITY:
             let items = state.dataMap[action.cityId].items || [];

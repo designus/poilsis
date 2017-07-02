@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import { /*setLoadedItemsFlagInSelectedCity, */ addItemsToCity } from './cities';
 import { startRequest, responseSuccess, responseFailure } from './global';
-import { normalizeData } from '../reducers/helpers';
+import { getNormalizedData } from '../helpers';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
@@ -38,7 +38,7 @@ export const fetchItems = (cityId) => {
         .then(items => items.json())
         .then(items => {
 
-            const {dataMap, aliases} = normalizeData(items);
+            const {dataMap, aliases} = getNormalizedData(items);
 
             dispatch(receiveItems(dataMap, aliases));
             dispatch(addItemsToCity(cityId, Object.keys(dataMap)));

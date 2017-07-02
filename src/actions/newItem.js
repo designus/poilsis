@@ -30,7 +30,11 @@ export const showBackendValidationErrors = (errors) => {
 
 export const getMergedErrors = (backendErrors, frontendErrors) => {
   return Object.keys(frontendErrors).reduce((acc, field) => {
-    const fieldErrors = backendErrors[field] ? [...frontendErrors[field], backendErrors[field].message] : frontendErrors[field]
+
+    const fieldErrors = backendErrors[field] 
+    ? [...frontendErrors[field], backendErrors[field].message] 
+    : frontendErrors[field]
+    
     return {...acc, [field]: fieldErrors }
   }, {})
 } 

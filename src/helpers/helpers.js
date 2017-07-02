@@ -9,3 +9,23 @@ export const selectCityIfValid = (store, reqParam) => {
         store.dispatch(selectCity(selectedCity.id));
     }
 }
+
+export const getNormalizedData = (data, initial = {dataMap: {}, ids: [], aliases: []}) => {
+    return data.reduce((acc, item) => {
+        return {
+            ...acc, 
+            dataMap: {
+                ...acc.dataMap, 
+                [item.id]: item
+            },
+            ids: [...acc.ids, item.id],
+            aliases: [
+                ...acc.aliases, 
+                {
+                    id: item.id, 
+                    alias: item.alias
+                }
+            ]
+        }
+    }, initial)
+}
