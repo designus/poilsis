@@ -4,7 +4,7 @@ import { ReduxAsyncConnect, asyncConnect, reducer as reduxAsyncConnect } from 'r
 
 import {fetchItems} from '../actions/items';
 import {selectCity} from '../actions/cities';
-import {selectCityIfValid} from '../helpers'
+import {selectCityIfValid, getSelectedCity} from '../helpers'
 
 import NotFoundPage from '../components/notFoundPage';
 import ItemsList from '../components/itemsList';
@@ -12,19 +12,25 @@ import ItemsList from '../components/itemsList';
 @asyncConnect([{
   key: 'items',
   promise: ({params, store}) => {
-		selectCityIfValid(store, params.city);
 
 		const citiesState = store.getState().cities;
-		const selectedId = citiesState.selectedId;
-		const selectedCity = citiesState.dataMap[selectedId];
 
-		if (!selectedCity) {
-			return Promise.resolve();
-		} else if (selectedCity && !selectedCity.isItemsLoaded) {
-			return store.dispatch(fetchItems(selectedId))
-		} else {
-			return Promise.resolve(selectedCity.items);
-		}
+		return getSelectedCity(citiesState, params.city)
+			.then(({id}) => {
+				store.dispatch(selectCity(id));
+				const selectedCity = citiesState.dataMap[id];
+
+				if (!selectedCity) {
+					return Promise.resolve();
+				} else if (selectedCity && !selectedCity.isItemsLoaded) {
+					return store.dispatch(fetchItems(id))
+				} else {
+					return Promise.resolve(selectedCity.items);
+				}
+		}).catch((e) => {
+			console.error('Err', e);
+			return Promise.resolve()
+		})
   }
 }])
 class CityPage extends React.Component {
@@ -49,7 +55,6 @@ class CityPage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
 	return {
 		selectedCity: state.cities.dataMap[state.cities.selectedId],
 		itemsMap: state.items.dataMap,

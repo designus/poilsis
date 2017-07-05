@@ -7,11 +7,11 @@ import { SelectBox, getSelectOptions } from './selectBox';
 import { CheckboxGroup, getCheckboxOptions } from './checkboxGroup';
 
 import {initialNewItemState, FIELD_VALUES, VALIDATION_ERRORS, SHOW_VALIDATION_ERRORS } from '../reducers/newItem';
+import {getValidationErrors} from '../helpers/validation/methods';
+
 import RaisedButton from 'material-ui/RaisedButton';
 
 import * as Validators from '../helpers/validation/validators';
-
-import {getValidationErrors} from '../helpers/validation/methods';
 
 import { 
 	NAME_LABEL,

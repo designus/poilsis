@@ -5,7 +5,7 @@ const config = {
   devtool: 'source-map',
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     modules: [path.resolve(__dirname), 'node_modules'],
   },
 
@@ -22,6 +22,10 @@ const config = {
 
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
+      },
       {
         test: /\.jsx?$/,
         loader: 'babel-loader'

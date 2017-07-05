@@ -2,7 +2,6 @@ import thunkMiddleware from 'redux-thunk'
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
-import { selectCityIfValid } from './helpers';
 import { ReduxAsyncConnect } from 'redux-connect'
 
 import { Provider } from 'react-redux';
