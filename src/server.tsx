@@ -19,12 +19,10 @@ import { match } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk'  
 
-import CitiesModel from '../model/cities';
-import TypesModel from '../model/types';
-import ItemsModel from '../model/items';
+import {CitiesModel, TypesModel, ItemsModel } from './server/model';
 
-import rootReducer from './reducers';
-import routes from './routes';
+import rootReducer from './app/reducers';
+import routes from './app/routes';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -185,7 +183,6 @@ function renderFullPage(html, preloadedState) {
     </html>
     `;
 }
-
 
 app.listen(port, (error) => {
   if (error) {

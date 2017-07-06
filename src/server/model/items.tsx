@@ -1,12 +1,11 @@
 'use strict';
 
-import { isRequired } from '../src/helpers/validation/errorMessages';
-import { NAME_KEY, CITY_KEY } from '../src/data-strings';
+import { isRequired } from '../../app/helpers/validation/errorMessages';
+import { NAME_KEY, CITY_KEY } from '../../app/data-strings';
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortId = require('shortid');
-//create new instance of the mongoose.schema. the schema takes an object that shows
-//the shape of your database entries.
 
 const formatAlias = (alias) => alias
   .split(/\s+/)
@@ -22,5 +21,4 @@ const ItemsSchema = new Schema({
   createdAt: {type: Date, default: Date.now }
 });
 
-//export our module to use in server.js
-export default mongoose.model('Items', ItemsSchema);
+export const ItemsModel = mongoose.model('Items', ItemsSchema);
