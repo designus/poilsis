@@ -5,12 +5,12 @@ export const getValidationErrors = (state, model = newItemModel) => {
 		const keyModel = model[key];
 		const validationMsg = keyModel.validators.reduce((acc, errorMessageFn) => {
 			const getErrorMsg = errorMessageFn(state[key], state);
-			return getErrorMsg 
-				? [...acc, getErrorMsg(keyModel.title)] 
+			return getErrorMsg
+				? [...acc, getErrorMsg(keyModel.title)]
 				: [...acc];
-		}, [])
+		}, []);
 
 		return {...errors, [key]: validationMsg};
 
-	}, {})
-}
+	}, {});
+};

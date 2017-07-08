@@ -7,16 +7,16 @@ export const RECEIVE_TYPES = 'RECEIVE_TYPES';
 export const selectType = (id) => {
 	return {
 			type: SELECT_TYPE,
-			typeId: id
-	}
-}
+			typeId: id,
+	};
+};
 
 export const receiveTypes = (payload) => {
 	return {
 		type: RECEIVE_TYPES,
-		payload
-	}
-}
+		payload,
+	};
+};
 
 export const fetchTypes = () => {
 
@@ -26,12 +26,12 @@ export const fetchTypes = () => {
 		return fetch(`http://localhost:3000/api/types`)
 			.then(types => types.json())
 			.then(types => {
-				dispatch(receiveTypes(getNormalizedData(types)))
+				dispatch(receiveTypes(getNormalizedData(types)));
 				dispatch(responseSuccess());
 			})
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
-			})
+			});
 	};
-}
+};

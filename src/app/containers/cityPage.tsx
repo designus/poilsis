@@ -1,17 +1,17 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import { asyncConnect} from 'redux-connect'
+import { asyncConnect} from 'redux-connect';
 
 import {fetchItems} from '../actions/items';
 import {selectCity} from '../actions/cities';
-import {getSelectedCity} from '../helpers'
+import {getSelectedCity} from '../helpers';
 
 import NotFoundPage from '../components/notFoundPage';
 import ItemsList from '../components/itemsList';
 
 @asyncConnect([{
-  key: 'items',
-  promise: ({params, store}) => {
+	key: 'items',
+	promise: ({params, store}) => {
 
 		const citiesState = store.getState().cities;
 
@@ -23,15 +23,15 @@ import ItemsList from '../components/itemsList';
 				if (!selectedCity) {
 					return Promise.resolve();
 				} else if (selectedCity && !selectedCity.isItemsLoaded) {
-					return store.dispatch(fetchItems(id))
+					return store.dispatch(fetchItems(id));
 				} else {
 					return Promise.resolve(selectedCity.items);
 				}
 		}).catch((e) => {
 			console.error('Err', e);
-			return Promise.resolve()
-		})
-  }
+			return Promise.resolve();
+		});
+	},
 }])
 class CityPage extends React.Component<any, any> {
 
@@ -46,11 +46,10 @@ class CityPage extends React.Component<any, any> {
 					<p>{selectedCity.description}</p>
 					{selectedCity.isItemsLoaded ? <ItemsList {...this.props} /> : ''}
 				</div>
-			)
+			);
 		} else {
-			return <NotFoundPage/>
+			return <NotFoundPage/>;
 		}
-		
 	}
 }
 
@@ -58,9 +57,8 @@ const mapStateToProps = (state) => {
 	return {
 		selectedCity: state.cities.dataMap[state.cities.selectedId],
 		itemsMap: state.items.dataMap,
-		typesMap: state.types.dataMap
-	}
-}
-
+		typesMap: state.types.dataMap,
+	};
+};
 
 export default connect(mapStateToProps)(CityPage);

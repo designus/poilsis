@@ -1,44 +1,50 @@
 import * as React from 'react';
+import * as autoBind from 'react-autobind';
+
 import {connect} from 'react-redux';
 import AddItemForm from '../components/addItemForm';
 import { addNewItemState, postItem } from '../actions';
 
 class AddItemPage extends React.Component<any, any> {
 
-    onItemSubmit(item) {
-        this.props.postItem(item);
-    }
+	constructor(props) {
+		super(props);
+		autoBind(this);
+	}
 
-    onSaveState(state) {
-        this.props.addNewItemState(state);
-    }
+	onItemSubmit(item) {
+		this.props.postItem(item);
+	}
 
-    render() { 
-    
-        return (
-            <div>
-                <h1>Pasiskelbkite</h1>
-                <AddItemForm 
-                    onSaveState={this.onSaveState.bind(this)}
-                    onItemSubmit={this.onItemSubmit.bind(this)} 
-                    {...this.props} 
-                />
-            </div>
-        )
-    }    
+	onSaveState(state) {
+		this.props.addNewItemState(state);
+	}
+
+	render() {
+		return (
+			<div>
+				<h1>Pasiskelbkite</h1>
+				<AddItemForm
+					onSaveState={this.onSaveState}
+					onItemSubmit={this.onItemSubmit}
+					{...this.props}
+				/>
+			</div>
+		);
+	}
 }
 
 export const mapStateToProps = (state) => {
-    return {
-        initialState: state.newItem
-    }
-}
+	return {
+		initialState: state.newItem,
+	};
+};
 
 export const mapDispatchToProps = (dispatch) => {
-    return {
-        addNewItemState: (state) => dispatch(addNewItemState(state)),
-        postItem: (item) => dispatch(postItem(item))
-    }
-}
+	return {
+		addNewItemState: (state) => dispatch(addNewItemState(state)),
+		postItem: (item) => dispatch(postItem(item)),
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddItemPage);

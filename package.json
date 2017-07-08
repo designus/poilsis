@@ -10,7 +10,8 @@
     "build:prod": "cross-env NODE_ENV=production npm run build",
     "postbuild": "webpack --config config/webpack/server.js",
     "prestart": "npm run build",
-    "start": "node build/server.js"
+    "start": "node build/server.js",
+    "lint": "tslint \"src/**/**.ts*\""
   },
   "author": "",
   "license": "ISC",
@@ -50,7 +51,9 @@
     "serve-favicon": "^2.4.3",
     "shortid": "^2.2.8",
     "source-map-loader": "^0.2.1",
-    "ts-loader": "^2.2.2",
+    "tslint": "^4.3.1",
+    "tslint-loader": "^3.3.0",
+    "tslint-react": "^2.3.0",
     "typescript": "^2.4.1",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.4.0",

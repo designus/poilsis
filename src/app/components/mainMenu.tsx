@@ -4,11 +4,11 @@ import { Link } from 'react-router';
 export const getSubmenu = (cityAlias, types, typesMap) => {
 	return (
 		<ul>
-			{types.map(typeId => {
+			{types.map((typeId) => {
 				const type = typesMap[typeId];
 				return (
 					<li key={typeId}>
-						<Link 
+						<Link
 							activeStyle={{ color: 'red' }}
 							to={`/${cityAlias}/${type.alias}`}
 						>
@@ -18,8 +18,8 @@ export const getSubmenu = (cityAlias, types, typesMap) => {
 				);
 			})}
 		</ul>
-	)
-}
+	);
+};
 
 export const MainMenu = (props) => {
 
@@ -28,13 +28,13 @@ export const MainMenu = (props) => {
 	return (
 		<div className="menu">
 			<ul>
-				{citiesMap ? Object.keys(citiesMap).map(cityId => {
+				{citiesMap ? Object.keys(citiesMap).map((cityId) => {
 					const city = citiesMap[cityId];
 					const types = city.types;
 					const isSubmenuVisible = showSubmenu && typesMap && types.length > 0 && selectedCityId === cityId;
 					return (
 						<li key={cityId}>
-							<Link 
+							<Link
 								activeStyle={{ color: 'red' }}
 								to={`/${city.alias}`}
 							>
@@ -42,9 +42,9 @@ export const MainMenu = (props) => {
 							</Link>
 							{isSubmenuVisible ? getSubmenu(city.alias, types, typesMap) : ''}
 						</li>
-					)
-				}): ''}
+					);
+				}) : ''}
 			</ul>
 		</div>
-	)
-}
+	);
+};

@@ -3,29 +3,29 @@ export const getSelectedCity = (citiesState, reqParam) => {
 		const {aliases} = citiesState;
 		const selectedCity = aliases.find(({alias, id}) => alias === reqParam);
 		if (selectedCity) {
-			resolve(selectedCity)
+			resolve(selectedCity);
 		} else {
-			reject('City is not available')
+			reject('City is not available');
 		}
-	})
-}
+	});
+};
 
 export const getNormalizedData = (data, initial = {dataMap: {}, ids: [], aliases: []}) => {
 	return data.reduce((acc, item) => {
 		return {
-			...acc, 
+			...acc,
 			dataMap: {
-				...acc.dataMap, 
-				[item.id]: item
+				...acc.dataMap,
+				[item.id]: item,
 			},
 			ids: [...acc.ids, item.id],
 			aliases: [
-				...acc.aliases, 
+				...acc.aliases,
 				{
-					id: item.id, 
-					alias: item.alias
-				}
-			]
-		}
-	}, initial)
-}
+					id: item.id,
+					alias: item.alias,
+				},
+			],
+		};
+	}, initial);
+};

@@ -9,11 +9,11 @@ import ItemPage from './components/itemPage';
 import AddItemPage from './containers/addItemPage';
 
 export default (
-    <Route path="/" component={LayoutPage}>
-        <IndexRoute component={IndexPage} />
-        <Route path="/pasiskelbti" component={AddItemPage} />
-        <Route path="/:city" component={CityPage} />
-        <Route path="/:city/:type" component={TypePage} />
-        <Route path="/:city/:type/:item" component={ItemPage} />
-    </Route>
-)
+	<Route path="/" component={LayoutPage}>
+		<IndexRoute component={IndexPage} />
+		<Route path="/pasiskelbti" component={AddItemPage} />
+		<Route path="/:city" component={CityPage} />
+		<Route path="/:city/:type" component={TypePage} />
+		<Route path="/:city/:type/:item" component={ItemPage} />
+	</Route>
+);
