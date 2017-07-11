@@ -1,7 +1,26 @@
 import {RECEIVE_CITIES, SELECT_CITY, ADD_ITEMS_TO_CITY, ADD_ITEM_TO_CITY } from '../actions/cities';
+import {IAlias} from '../typeDefinitions';
 import {uniq} from 'lodash';
 
-const cities = (state = null, action) => {
+export interface ICityMap {
+	id: string;
+	alias: string;
+	description: string;
+	name: string;
+	types: string[];
+	items?: string[];
+	isItemsLoaded?: boolean;
+}
+
+export interface ICityState {
+	selectedId: string;
+	aliases: IAlias[];
+	dataMap: {
+		[key: string]: ICityMap,
+	};
+};
+
+const cities = (state: ICityState = null, action) => {
 	switch (action.type) {
 		case SELECT_CITY:
 			return {...state, selectedId: action.cityId};

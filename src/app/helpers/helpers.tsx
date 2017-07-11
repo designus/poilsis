@@ -10,7 +10,7 @@ export const getSelectedCity = (citiesState, reqParam) => {
 	});
 };
 
-export const getNormalizedData = (data, initial = {dataMap: {}, ids: [], aliases: []}) => {
+export const getNormalizedData = (data, initial = {dataMap: {}, aliases: []}) => {
 	return data.reduce((acc, item) => {
 		return {
 			...acc,
@@ -18,7 +18,6 @@ export const getNormalizedData = (data, initial = {dataMap: {}, ids: [], aliases
 				...acc.dataMap,
 				[item.id]: item,
 			},
-			ids: [...acc.ids, item.id],
 			aliases: [
 				...acc.aliases,
 				{

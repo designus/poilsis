@@ -1,16 +1,15 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
+import * as Validators from '../helpers/validation/validators';
 
 import { TextInput } from './textInput';
 import { SelectBox, getSelectOptions } from './selectBox';
 import { CheckboxGroup, getCheckboxOptions } from './checkboxGroup';
 
-import {FIELD_VALUES, VALIDATION_ERRORS, SHOW_VALIDATION_ERRORS } from '../reducers/newItem';
+import {FIELD_VALUES, VALIDATION_ERRORS, SHOW_VALIDATION_ERRORS, INewItemFields } from '../reducers/newItem';
 import {getValidationErrors} from '../helpers/validation/methods';
 
 import RaisedButton from 'material-ui/RaisedButton';
-
-import * as Validators from '../helpers/validation/validators';
 
 import {
 	NAME_LABEL,
@@ -23,19 +22,28 @@ import {
 	CITY_KEY,
 	TYPES_KEY,
 	ADDRESS_KEY,
-	DESCRIPTION_KEY,
 } from '../data-strings';
 
-export const getKeyMap = (value, title, validators) => {
+export interface IKeyMap {
+	value: string|string[];
+	title: string;
+	validators: Array<() => void>;
+}
+
+export type TNewItemModel<T> = {
+	[I in keyof T]: IKeyMap
+};
+
+export const getKeyMap = (value: string|string[], title: string, validators: any[]): IKeyMap => {
 	return { value, title, validators };
 };
 
-export const newItemModel = {
-	[NAME_KEY]: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
-	[CITY_KEY]: getKeyMap('', CITY_LABEL, [Validators.required]),
-	[TYPES_KEY]: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
-	[ADDRESS_KEY]: getKeyMap('', ADDRESS_LABEL, [Validators.required]),
-	[DESCRIPTION_KEY]: getKeyMap('', DESCRIPTION_LABEL, []),
+export const newItemModel: TNewItemModel<INewItemFields> = {
+	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
+	city: getKeyMap('', CITY_LABEL, [Validators.required]),
+	types: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
+	address: getKeyMap('', ADDRESS_LABEL, [Validators.required]),
+	description: getKeyMap('', DESCRIPTION_LABEL, []),
 };
 
 export default class AddItemForm extends React.Component<any, any> {

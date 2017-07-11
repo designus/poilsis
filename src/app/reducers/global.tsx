@@ -1,6 +1,10 @@
 import {START_REQUEST, RESPONSE_SUCCESS, RESPONSE_FAILURE } from '../actions';
 
-const global = (state = {}, action) => {
+export interface IGlobalState {
+	isLoading: boolean;
+}
+
+const global = (state: IGlobalState = {isLoading: false}, action) => {
 	switch (action.type) {
 		case START_REQUEST:
 			return {...state, isLoading: true};

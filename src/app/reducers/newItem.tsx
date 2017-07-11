@@ -6,13 +6,29 @@ export const FIELD_VALUES = 'fields';
 export const VALIDATION_ERRORS = 'errors';
 export const SHOW_VALIDATION_ERRORS = 'showErrors';
 
-export const initialNewItemState = {
-	[FIELD_VALUES]: mapValues(newItemModel, (item) => item.value),
-	[VALIDATION_ERRORS]: {},
-	[SHOW_VALIDATION_ERRORS]: false,
+export interface INewItemFields {
+	address: string;
+	city: string;
+	description: string;
+	name: string;
+	types: string[];
+}
+
+export interface INewItemState {
+	fields: INewItemFields;
+	errors: {[key: string]: string[]};
+	showErrors: boolean;
+}
+
+export const newItemFields: any = mapValues(newItemModel, (item) => item.value);
+
+export const initialNewItemState: INewItemState = {
+	fields: newItemFields,
+	errors: {},
+	showErrors: false,
 };
 
-export const newItem = (state = initialNewItemState, action) => {
+export const newItem = (state: INewItemState = initialNewItemState, action) => {
 	switch (action.type) {
 		case ADD_NEW_ITEM_STATE:
 			return action.state;

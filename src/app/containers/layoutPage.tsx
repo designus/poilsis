@@ -62,6 +62,7 @@ class LayoutPage extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state) => {
+	console.log('State', state);
 	return {
 		citiesMap: state.cities.dataMap,
 		typesMap: state.types.dataMap,
