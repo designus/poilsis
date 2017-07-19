@@ -86,7 +86,7 @@ export default class AddItemForm extends React.Component<any, any> {
 
 	}
 
-	handleInputChange = (name) => (e, i, val) => {
+	handleInputChange = (name: string) => (e, i, val) => {
 		const value = val ? val : e.target.value;
 		const newState = this.getNewState(name, value);
 		this.setState(newState);
