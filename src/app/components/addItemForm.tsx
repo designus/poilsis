@@ -6,7 +6,14 @@ import { TextInput } from './textInput';
 import { SelectBox, getSelectOptions } from './selectBox';
 import { CheckboxGroup, getCheckboxOptions } from './checkboxGroup';
 
-import {FIELD_VALUES, VALIDATION_ERRORS, SHOW_VALIDATION_ERRORS, INewItemFields } from '../reducers/newItem';
+import {
+	FIELD_VALUES,
+	VALIDATION_ERRORS,
+	SHOW_VALIDATION_ERRORS,
+	INewItemFields,
+	INewItemState,
+	TNewItemErrors,
+} from '../reducers/newItem';
 import {getValidationErrors} from '../helpers/validation/methods';
 
 import RaisedButton from 'material-ui/RaisedButton';
@@ -66,7 +73,7 @@ export default class AddItemForm extends React.Component<any, any> {
 		this.setState({[VALIDATION_ERRORS]: getValidationErrors(this.state[FIELD_VALUES])});
 	}
 
-	getNewState(name, value) {
+	getNewState(name: string, value: string): INewItemState {
 		const fieldValues = {...this.state[FIELD_VALUES], [name]: value };
 
 		return {
@@ -98,8 +105,8 @@ export default class AddItemForm extends React.Component<any, any> {
 
 	}
 
-	isFormValid(errors) {
-		return Object.keys(errors).filter(key => errors[key].length).length === 0;
+	isFormValid(errors: TNewItemErrors<INewItemFields>): boolean {
+		return Object.keys(errors).filter((key: string) => errors[key].length).length === 0;
 	}
 
 	handleOnBlur() {
@@ -120,7 +127,7 @@ export default class AddItemForm extends React.Component<any, any> {
 		}
 	}
 
-	getErrorUnderlineStyle(showErrors, errors) {
+	getErrorUnderlineStyle(showErrors: boolean, errors: string[]) {
 		return showErrors && errors.length > 0 ? {borderColor: 'red'} : null;
 	}
 

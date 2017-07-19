@@ -14,9 +14,13 @@ export interface INewItemFields {
 	types: string[];
 }
 
+export type TNewItemErrors<T> = {
+	[I in keyof T]?: string[]
+};
+
 export interface INewItemState {
 	fields: INewItemFields;
-	errors: {[key: string]: string[]};
+	errors: TNewItemErrors<INewItemFields>;
 	showErrors: boolean;
 }
 
@@ -28,7 +32,7 @@ export const initialNewItemState: INewItemState = {
 	showErrors: false,
 };
 
-export const newItem = (state: INewItemState = initialNewItemState, action) => {
+export const newItem = (state: INewItemState = initialNewItemState, action): INewItemState => {
 	switch (action.type) {
 		case ADD_NEW_ITEM_STATE:
 			return action.state;
