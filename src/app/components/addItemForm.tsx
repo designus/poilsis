@@ -24,8 +24,10 @@ import {
 	ADDRESS_KEY,
 } from '../data-strings';
 
+export type ValueType = string|string[];
+
 export interface IKeyMap {
-	value: string|string[];
+	value: ValueType;
 	title: string;
 	validators: Array<() => void>;
 }
@@ -34,7 +36,7 @@ export type TNewItemModel<T> = {
 	[I in keyof T]: IKeyMap
 };
 
-export const getKeyMap = (value: string|string[], title: string, validators: any[]): IKeyMap => {
+export const getKeyMap = (value: ValueType, title: string, validators: any[]): IKeyMap => {
 	return { value, title, validators };
 };
 
