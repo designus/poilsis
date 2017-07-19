@@ -1,3 +1,6 @@
+import { INewItemFields } from '../reducers/newItem';
+import { NewItemModelType } from '../components/addItemForm';
+
 export const getSelectedCity = (citiesState, reqParam) => {
 	return new Promise((resolve, reject) => {
 		const {aliases} = citiesState;
@@ -27,4 +30,11 @@ export const getNormalizedData = (data, initial = {dataMap: {}, aliases: []}) =>
 			],
 		};
 	}, initial);
+};
+
+export const getNewItemFieldsFromModel = (model: NewItemModelType): INewItemFields => {
+	return Object.keys(model).reduce((acc: INewItemFields, key: string) => {
+		acc[key] = model[key].value;
+		return acc;
+	}, {});
 };

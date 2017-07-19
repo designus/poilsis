@@ -12,7 +12,7 @@ import {
 	SHOW_VALIDATION_ERRORS,
 	INewItemFields,
 	INewItemState,
-	TNewItemErrors,
+	NewItemErrorsType,
 } from '../reducers/newItem';
 import {getValidationErrors} from '../helpers/validation/methods';
 
@@ -43,11 +43,13 @@ export type TNewItemModel<T> = {
 	[I in keyof T]: IKeyMap
 };
 
+export type NewItemModelType = TNewItemModel<INewItemFields>;
+
 export const getKeyMap = (value: ValueType, title: string, validators: any[]): IKeyMap => {
 	return { value, title, validators };
 };
 
-export const newItemModel: TNewItemModel<INewItemFields> = {
+export const newItemModel: NewItemModelType = {
 	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
 	city: getKeyMap('', CITY_LABEL, [Validators.required]),
 	types: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
@@ -74,7 +76,7 @@ export default class AddItemForm extends React.Component<any, any> {
 	}
 
 	getNewState(name: string, value: string): INewItemState {
-		const fieldValues = {...this.state[FIELD_VALUES], [name]: value };
+		const fieldValues: INewItemFields = {...this.state[FIELD_VALUES], [name]: value };
 
 		return {
 			...this.state,
@@ -105,7 +107,7 @@ export default class AddItemForm extends React.Component<any, any> {
 
 	}
 
-	isFormValid(errors: TNewItemErrors<INewItemFields>): boolean {
+	isFormValid(errors: NewItemErrorsType): boolean {
 		return Object.keys(errors).filter((key: string) => errors[key].length).length === 0;
 	}
 

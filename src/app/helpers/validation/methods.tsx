@@ -1,12 +1,12 @@
-import { newItemModel } from '../../components/addItemForm';
+import { newItemModel, NewItemModelType } from '../../components/addItemForm';
+import { INewItemFields, NewItemErrorsType } from '../../reducers/newItem';
 
-export const getValidationErrors = (state, model = newItemModel) => {
-	return Object.keys(model).reduce((errors, key) => {
-		const keyModel = model[key];
-		const validationMsg = keyModel.validators.reduce((acc, errorMessageFn) => {
+export const getValidationErrors = (state: INewItemFields, model: NewItemModelType = newItemModel) => {
+	return Object.keys(model).reduce((errors: NewItemErrorsType, key: string) => {
+		const validationMsg = model[key].validators.reduce((acc: string[], errorMessageFn) => {
 			const getErrorMsg = errorMessageFn(state[key], state);
 			return getErrorMsg
-				? [...acc, getErrorMsg(keyModel.title)]
+				? [...acc, getErrorMsg(model[key].title)]
 				: [...acc];
 		}, []);
 
