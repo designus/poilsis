@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
-import * as Validators from '../helpers/validation/validators';
+import * as Validators from '../helpers/validation';
 
 import { TextInput } from './textInput';
 import { SelectBox, getSelectOptions } from './selectBox';
@@ -14,7 +14,8 @@ import {
 	INewItemState,
 	NewItemErrorsType,
 } from '../reducers/newItem';
-import {getValidationErrors} from '../helpers/validation/methods';
+import { getValidationErrors, getKeyMap } from '../helpers';
+import { IKeyMap } from '../typeDefinitions';
 
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -31,23 +32,11 @@ import {
 	ADDRESS_KEY,
 } from '../data-strings';
 
-export type ValueType = string|string[];
-
-export interface IKeyMap {
-	value: ValueType;
-	title: string;
-	validators: Array<() => void>;
-}
-
 export type TNewItemModel<T> = {
 	[I in keyof T]: IKeyMap
 };
 
 export type NewItemModelType = TNewItemModel<INewItemFields>;
-
-export const getKeyMap = (value: ValueType, title: string, validators: any[]): IKeyMap => {
-	return { value, title, validators };
-};
 
 export const newItemModel: NewItemModelType = {
 	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
@@ -72,7 +61,7 @@ export default class AddItemForm extends React.Component<any, any> {
 	}
 
 	componentWillMount() {
-		this.setState({[VALIDATION_ERRORS]: getValidationErrors(this.state[FIELD_VALUES])});
+		this.setState({[VALIDATION_ERRORS]: getValidationErrors(this.state[FIELD_VALUES], newItemModel)});
 	}
 
 	getNewState(name: string, value: string): INewItemState {
@@ -81,7 +70,7 @@ export default class AddItemForm extends React.Component<any, any> {
 		return {
 			...this.state,
 			[FIELD_VALUES]: fieldValues,
-			[VALIDATION_ERRORS]: getValidationErrors(fieldValues),
+			[VALIDATION_ERRORS]: getValidationErrors(fieldValues, newItemModel),
 		};
 
 	}
