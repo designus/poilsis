@@ -33,7 +33,7 @@ import ItemsList from '../components/itemsList';
 		});
 	},
 }])
-class CityPage extends React.Component<any, any> {
+class CityPageComponent extends React.Component<any, any> {
 
 	render() {
 
@@ -61,4 +61,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(CityPage);
+export const CityPage = connect(mapStateToProps)(CityPageComponent);

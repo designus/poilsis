@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import AddItemForm from '../components/addItemForm';
 import { addNewItemState, postItem } from '../actions';
 
-class AddItemPage extends React.Component<any, any> {
+class AddItemPageComponent extends React.Component<any, any> {
 
 	constructor(props) {
 		super(props);
@@ -47,4 +47,4 @@ export const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddItemPage);
+export const AddItemPage = connect(mapStateToProps, mapDispatchToProps)(AddItemPageComponent);

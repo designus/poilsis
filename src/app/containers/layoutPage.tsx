@@ -37,7 +37,7 @@ import {fetchTypes} from '../actions/types';
 		},
 	},
 ])
-class LayoutPage extends React.Component<any, any> {
+class LayoutPageComponent extends React.Component<any, any> {
 
 	render() {
 		return (
@@ -70,4 +70,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps)(LayoutPage);
+export const LayoutPage = connect(mapStateToProps)(LayoutPageComponent);
