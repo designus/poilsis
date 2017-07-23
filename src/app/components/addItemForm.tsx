@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
-import * as Validators from '../helpers/validation';
+import * as Validators from '../helpers/validation/validators';
 
 import { TextInput } from './textInput';
 import { SelectBox, getSelectOptions } from './selectBox';
