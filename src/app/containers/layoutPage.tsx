@@ -48,6 +48,7 @@ class LayoutPageComponent extends React.Component<any, any> {
 				<div className="top-menu">
 					<IndexLink to="/" activeClassName="active">Home</IndexLink>&nbsp;
 					<Link to="/pasiskelbti">Pasiskelbkite</Link>
+					<Link to="/admin">Admin</Link>
 				</div>
 				<div className="content">
 					<MainMenu {...this.props} showSubmenu={true} />
