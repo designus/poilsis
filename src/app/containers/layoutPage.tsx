@@ -3,40 +3,10 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {MainMenu} from '../components/mainMenu';
 import {asyncConnect } from 'redux-connect';
-import { IndexLink, Link } from 'react-router';
+import {IndexLink, Link} from 'react-router';
+import {typesProps, citiesProps} from '../helpers';
 
-import {fetchCities} from '../actions/cities';
-import {fetchTypes} from '../actions/types';
-
-@asyncConnect([
-	{
-		key: 'types',
-		promise: ({params, store}) => {
-
-			const typesState = store.getState().types;
-
-			if (!typesState) {
-				return store.dispatch(fetchTypes());
-			} else {
-				return Promise.resolve(typesState);
-			}
-		},
-	},
-	{
-		key: 'cities',
-		promise: ({params, store}) => {
-
-			const citiesState = store.getState().cities;
-
-			if (!citiesState) {
-				return store.dispatch(fetchCities());
-			} else {
-				return Promise.resolve(citiesState);
-			}
-
-		},
-	},
-])
+@asyncConnect([typesProps, citiesProps])
 class LayoutPageComponent extends React.Component<any, any> {
 
 	render() {
@@ -47,7 +17,7 @@ class LayoutPageComponent extends React.Component<any, any> {
 				</div>
 				<div className="top-menu">
 					<IndexLink to="/" activeClassName="active">Home</IndexLink>&nbsp;
-					<Link to="/pasiskelbti">Pasiskelbkite</Link>
+					<Link to="/pasiskelbti">Pasiskelbkite</Link>&nbsp;
 					<Link to="/admin">Admin</Link>
 				</div>
 				<div className="content">
@@ -66,8 +36,6 @@ const mapStateToProps = (state) => {
 	return {
 		citiesMap: state.cities.dataMap,
 		typesMap: state.types.dataMap,
-		selectedCityId: state.cities.selectedId,
-		selectedTypeId: state.types.selectedId,
 	};
 };
 
