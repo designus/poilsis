@@ -6,7 +6,7 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const sanitize = require('mongo-sanitize');
+// const sanitize = require('mongo-sanitize');
 
 const { ReduxAsyncConnect, loadOnServer } = require('redux-connect');
 
@@ -19,8 +19,6 @@ import { match } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import {CitiesModel, TypesModel, ItemsModel } from './server/model';
-
 import rootReducer from './app/reducers';
 import routes from './app/routes';
 
@@ -30,7 +28,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const favicon = require('serve-favicon');
 
 const app = express();
-const router = express.Router();
 const port = 3000;
 
 // db config
@@ -65,68 +62,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-router.get('/', (req, res) => {
-	res.json({message: 'API initialized'});
-	// next();
-});
-
-router.route('/cities')
-	.get((req, res) => {
-		CitiesModel.find((err, cities) => {
-			if (err) {
-				res.send(err);
-			}
-			res.json(cities);
-		});
-	});
-
-router.route('/types')
-	.get((req, res) => {
-		TypesModel.find((err, types) => {
-			if (err) {
-				res.send(err);
-			}
-			res.json(types);
-		});
-	});
-
-router.route('/cities/:cityId')
-	.get((req, res) => {
-		ItemsModel.find({city: req.params.cityId}, (err, items) => {
-			if (err) {
-				res.send(err);
-			}
-			res.json(items);
-		});
-	});
-
-router.route('/items')
-	.get((req, res) => {
-		ItemsModel.find((err, items) => {
-			if (err) {
-				res.send(err);
-			}
-			res.json(items);
-		});
-	})
-	.post((req, res) => {
-
-		const name = sanitize(req.body.name);
-		const city = sanitize(req.body.city);
-		const alias = sanitize(req.body.alias) || name;
-		const types = req.body.types;
-
-		const newItem = {name, city, alias, types};
-
-		new ItemsModel(newItem).save((err, item) => {
-			if (err) {
-				res.send(err);
-			}
-			res.json(item);
-		});
-	});
-
-app.use('/api', router);
+app.use('/api', require('./server/controllers'));
 
 app.get('/favicon.ico', (req, res) => {
 	res.send(204);
