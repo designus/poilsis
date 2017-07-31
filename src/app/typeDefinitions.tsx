@@ -10,3 +10,10 @@ export interface IKeyMap {
 	title: string;
 	validators: Array<() => void>;
 }
+
+export interface IGenericState<T>  {
+	aliases: IAlias[];
+	dataMap: {
+		[key: string]: T,
+	};
+}

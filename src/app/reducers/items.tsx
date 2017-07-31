@@ -1,5 +1,5 @@
 import {SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM } from '../actions/items';
-import {IAlias} from '../typeDefinitions';
+import {IGenericState} from '../typeDefinitions';
 
 export interface IItemsMap {
 	alias: string;
@@ -10,21 +10,17 @@ export interface IItemsMap {
 	types: string[];
 }
 
-export interface IItemsState {
-	aliases: IAlias[];
-	dataMap: {
-		[key: string]: IItemsMap,
-	};
-}
-
-const items = (state: IItemsState = {dataMap: {}, aliases: []}, action) => {
+const items = (state: IGenericState<IItemsMap> = {dataMap: {}, aliases: []}, action) => {
 	switch (action.type) {
 		case SELECT_ITEM:
 			return {...state, selectedId: action.itemId};
 		case RECEIVE_ITEMS:
 			return {
 				...state,
-				dataMap: { ...state.dataMap, ...action.dataMap },
+				dataMap: {
+					...state.dataMap,
+					...action.dataMap,
+				},
 				aliases: [ ...state.aliases, ...action.aliases ],
 			};
 		case RECEIVE_ITEM:

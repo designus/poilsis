@@ -32,7 +32,6 @@ router.route('/')
 
 router.route('/city/:cityId')
 	.get((req, res) => {
-		console.log('Req params', req.params.cityId);
 		ItemsModel.find({city: req.params.cityId}, (err, items) => {
 			if (err) {
 				res.send(err);
@@ -40,6 +39,5 @@ router.route('/city/:cityId')
 			res.json(items);
 		});
 	});
-
 
 module.exports = router;
