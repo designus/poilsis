@@ -13,7 +13,7 @@ export interface ICityMap {
 }
 
 export interface ICityState extends IGenericState<ICityMap> {
-	selectedId: string;
+	selectedId?: string;
 };
 
 const cities = (state: ICityState = null, action): ICityState => {
