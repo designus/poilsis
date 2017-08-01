@@ -38,9 +38,10 @@ export const fetchItems = (cityId) => {
 			.then(items => {
 
 				const {dataMap, aliases} = getNormalizedData(items);
+				const itemIds = Object.keys(dataMap);
 
 				dispatch(receiveItems(dataMap, aliases));
-				dispatch(addItemsToCity(cityId, Object.keys(dataMap)));
+				dispatch(addItemsToCity(cityId, itemIds));
 				dispatch(responseSuccess());
 
 			})

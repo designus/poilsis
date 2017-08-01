@@ -1,7 +1,6 @@
 import { NewItemModelType } from '../components/addItemForm';
 import { INewItemFields, NewItemErrorsType } from '../reducers/newItem';
 import { ValueType, IKeyMap, IGenericState } from '../typeDefinitions';
-import { GENERIC_STATE } from './constants';
 
 export const getSelectedCity = (citiesState, reqParam) => {
 	return new Promise((resolve, reject) => {
@@ -15,22 +14,11 @@ export const getSelectedCity = (citiesState, reqParam) => {
 	});
 };
 
-export const getNormalizedData = (data: any[], initial: IGenericState<object> = GENERIC_STATE) => {
+export const getNormalizedData = (data: any[], initial: IGenericState<object> = {dataMap: {}, aliases: []}) => {
 	return data.reduce((acc: IGenericState<object>, item: any) => {
-		return {
-			...acc,
-			dataMap: {
-				...acc.dataMap,
-				[item.id]: item,
-			},
-			aliases: [
-				...acc.aliases,
-				{
-					id: item.id,
-					alias: item.alias,
-				},
-			],
-		};
+		acc.dataMap[item.id] = item;
+		acc.aliases.push({id: item.id, alias: item.alias});
+		return acc;
 	}, initial);
 };
 

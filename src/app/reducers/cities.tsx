@@ -12,8 +12,13 @@ export interface ICityMap {
 	isItemsLoaded?: boolean;
 }
 
+export interface ICityItems {
+	[key: string]: string[];
+}
+
 export interface ICityState extends IGenericState<ICityMap> {
 	selectedId?: string;
+	items?: ICityItems;
 };
 
 const cities = (state: ICityState = null, action): ICityState => {
