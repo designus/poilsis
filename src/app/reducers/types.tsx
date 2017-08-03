@@ -1,6 +1,6 @@
 import {RECEIVE_TYPES, SELECT_TYPE} from '../actions/types';
 
-const types = (state = null, action) => {
+export const types = (state = null, action) => {
 	switch (action.type) {
 		case RECEIVE_TYPES:
 			return {...state, ...action.payload};
@@ -10,5 +10,3 @@ const types = (state = null, action) => {
 			return state;
 	}
 };
-
-export default types;

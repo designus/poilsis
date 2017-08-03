@@ -1,6 +1,6 @@
-import {RECEIVE_CITIES, SELECT_CITY, ADD_ITEMS_TO_CITY, ADD_ITEM_TO_CITY } from '../actions/cities';
-import {IGenericState} from '../typeDefinitions';
-import {uniq} from 'lodash';
+import { RECEIVE_CITIES, SELECT_CITY, ADD_ITEMS_TO_CITY, ADD_ITEM_TO_CITY } from '../actions/cities';
+import { IGenericState } from '../typeDefinitions';
+import { uniq } from 'lodash';
 
 export interface ICityMap {
 	id: string;
@@ -21,7 +21,7 @@ export interface ICityState extends IGenericState<ICityMap> {
 	items?: ICityItems;
 };
 
-const cities = (state: ICityState = null, action): ICityState => {
+export const cities = (state: ICityState = null, action): ICityState => {
 	switch (action.type) {
 		case SELECT_CITY:
 			return {...state, selectedId: action.cityId};
@@ -60,5 +60,3 @@ const cities = (state: ICityState = null, action): ICityState => {
 			return state;
 	}
 };
-
-export default cities;

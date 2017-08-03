@@ -15,7 +15,7 @@ export interface IItemsState extends IGenericState<IItemsMap> {
 	selectedId?: string;
 }
 
-const items = (state: IItemsState = GENERIC_STATE, action): IItemsState => {
+export const items = (state: IItemsState = GENERIC_STATE, action): IItemsState => {
 	switch (action.type) {
 		case SELECT_ITEM:
 			return {...state, selectedId: action.itemId};
@@ -45,5 +45,3 @@ const items = (state: IItemsState = GENERIC_STATE, action): IItemsState => {
 			return state;
 	}
 };
-
-export default items;

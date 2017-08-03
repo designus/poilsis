@@ -11,9 +11,11 @@ export interface IKeyMap {
 	validators: Array<() => void>;
 }
 
-export interface IGenericState<T>  {
+export interface IGenericDataMap<T> {
+	[key: string]: T;
+}
+
+export interface IGenericState<T> {
 	aliases: IAlias[];
-	dataMap: {
-		[key: string]: T,
-	};
+	dataMap: IGenericDataMap<T>;
 }

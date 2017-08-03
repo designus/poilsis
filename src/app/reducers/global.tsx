@@ -4,7 +4,7 @@ export interface IGlobalState {
 	isLoading: boolean;
 }
 
-const global = (state: IGlobalState = {isLoading: false}, action) => {
+export const global = (state: IGlobalState = {isLoading: false}, action) => {
 	switch (action.type) {
 		case START_REQUEST:
 			return {...state, isLoading: true};
@@ -16,5 +16,3 @@ const global = (state: IGlobalState = {isLoading: false}, action) => {
 			return state;
 	}
 };
-
-export default global;
