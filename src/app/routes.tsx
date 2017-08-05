@@ -4,7 +4,7 @@ import {Route} from 'react-router';
 import IndexPage from './components/indexPage';
 import TypePage from './components/typePage';
 import ItemPage from './components/itemPage';
-import { AddItemPage,	CityPage,	LayoutPage, AdminPage } from './containers';
+import { AddItemPage,	CityPage,	ClientPage, AdminPage } from './containers';
 
 export default (
 	<Route>
@@ -13,7 +13,7 @@ export default (
 			<Route path="/admin/items/create" />
 			<Route path="/admin/items/edit/:id" />
 		</Route>
-		<Route component={LayoutPage}>
+		<Route component={ClientPage}>
 			<Route path="/" component={IndexPage} />
 			<Route path="/pasiskelbti" component={AddItemPage} />
 			<Route path="/:city" component={CityPage} />
