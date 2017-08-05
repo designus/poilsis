@@ -4,7 +4,7 @@ import { startRequest, responseSuccess, responseFailure } from './global';
 export const SELECT_CITY = 'SELECT_CITY';
 export const RECEIVE_CITIES = 'RECEIVE_CITIES';
 export const ADD_ITEM_TO_CITY = 'ADD_ITEM_TO_CITY';
-export const ADD_ITEMS_TO_CITY = 'ADD_ITEMS_TO_CITY';
+export const ADD_ITEMS = 'ADD_ITEMS';
 
 export const selectCity = (id) => {
 	return {
@@ -28,10 +28,9 @@ export const addItemToCity = (cityId, itemId) => {
 	};
 };
 
-export const addItemsToCity = (cityId, items) => {
+export const addItemsToCitiesState = (items) => {
 	return {
-		type: ADD_ITEMS_TO_CITY,
-		cityId,
+		type: ADD_ITEMS,
 		items,
 	};
 };

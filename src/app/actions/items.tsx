@@ -1,4 +1,4 @@
-import { addItemsToCity } from './cities';
+import { addItemsToCitiesState } from './cities';
 import { startRequest, responseSuccess, responseFailure } from './global';
 import { getNormalizedData, getGroupedItemsByCityId } from '../helpers';
 
@@ -28,23 +28,25 @@ export const receiveItem = (item) => {
 	};
 };
 
-export const fetchItems = (cityId) => {
+export const fetchItems = (cityId = null) => {
+
+	const endpoint = cityId	?
+		`http://localhost:3000/api/items/city/${cityId}` :
+		'http://localhost:3000/api/items';
 
 	return (dispatch) => {
 
 		dispatch(startRequest());
-		return fetch(`http://localhost:3000/api/items/city/${cityId}`)
+		return fetch(endpoint)
 			.then(data => data.json())
 			.then(data => {
 
 				const { dataMap, aliases } = getNormalizedData(data);
 
 				const groupedItems = cityId ? {[cityId]: Object.keys(dataMap)} : getGroupedItemsByCityId(dataMap);
-				console.log('Grouped items', groupedItems);
-				const itemIds = Object.keys(dataMap);
 
 				dispatch(receiveItems(dataMap, aliases));
-				dispatch(addItemsToCity(cityId, itemIds));
+				dispatch(addItemsToCitiesState(groupedItems));
 				dispatch(responseSuccess());
 
 			})

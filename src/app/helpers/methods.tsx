@@ -1,8 +1,8 @@
 import { NewItemModelType } from '../components/addItemForm';
 import { ValueType, IKeyMap, IGenericState, IGenericDataMap } from '../typeDefinitions';
-import { INewItemFields, NewItemErrorsType, IItemsMap, ICityItems } from '../reducers';
+import { INewItemFields, NewItemErrorsType, IItemsMap, ICityItems, ICityState } from '../reducers';
 
-export const getSelectedCity = (citiesState, reqParam) => {
+export const getSelectedCity = (citiesState: ICityState, reqParam: string) => {
 	return new Promise((resolve, reject) => {
 		const {aliases} = citiesState;
 		const selectedCity = aliases.find(({alias, id}) => alias === reqParam);

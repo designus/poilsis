@@ -19,13 +19,14 @@ import ItemsList from '../components/itemsList';
 			.then(({id}) => {
 				store.dispatch(selectCity(id));
 				const selectedCity = citiesState.dataMap[id];
+				const selectedCityItems = citiesState.items[id] || [];
 
 				if (!selectedCity) {
 					return Promise.resolve();
-				} else if (selectedCity && !selectedCity.isItemsLoaded) {
+				} else if (selectedCity && selectedCityItems.length === 0) {
 					return store.dispatch(fetchItems(id));
 				} else {
-					return Promise.resolve(selectedCity.items);
+					return Promise.resolve(selectedCityItems);
 				}
 		}).catch((e) => {
 			console.error('Err', e);
@@ -37,14 +38,14 @@ class CityPageComponent extends React.Component<any, any> {
 
 	render() {
 
-		const selectedCity = this.props.selectedCity;
+		const {selectedCity, cityItems, itemsMap, typesMap} = this.props;
 
 		if (selectedCity) {
 			return (
 				<div>
 					<h1>{selectedCity.name}</h1>
 					<p>{selectedCity.description}</p>
-					{selectedCity.isItemsLoaded ? <ItemsList {...this.props} /> : ''}
+					{cityItems.length ? <ItemsList items={cityItems} itemsMap={itemsMap} typesMap={typesMap} /> : ''}
 				</div>
 			);
 		} else {
@@ -54,9 +55,13 @@ class CityPageComponent extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state) => {
+	console.log('State', state);
+	const selectedCityId = state.cities.selectedId;
+	const cityItems = state.cities.items[selectedCityId] || [];
 	return {
-		selectedCity: state.cities.dataMap[state.cities.selectedId],
+		selectedCity: state.cities.dataMap[selectedCityId],
 		itemsMap: state.items.dataMap,
+		cityItems,
 		typesMap: state.types.dataMap,
 	};
 };

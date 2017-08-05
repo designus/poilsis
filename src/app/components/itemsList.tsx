@@ -8,7 +8,7 @@ export default class ItemsList extends React.Component<any, any> {
 
 		return (
 			<div className="itemsList">
-				{this.props.selectedCity.items.map(itemId => {
+				{this.props.items.map(itemId => {
 						const item = this.props.itemsMap[itemId];
 						return (
 							<div className="item" key={itemId}>

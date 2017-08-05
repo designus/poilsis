@@ -1,6 +1,5 @@
-import { RECEIVE_CITIES, SELECT_CITY, ADD_ITEMS_TO_CITY, ADD_ITEM_TO_CITY } from '../actions/cities';
+import { RECEIVE_CITIES, SELECT_CITY, ADD_ITEM_TO_CITY, ADD_ITEMS } from '../actions/cities';
 import { IGenericState } from '../typeDefinitions';
-import { uniq } from 'lodash';
 
 export interface ICityMap {
 	id: string;
@@ -26,21 +25,9 @@ export const cities = (state: ICityState = null, action): ICityState => {
 		case SELECT_CITY:
 			return {...state, selectedId: action.cityId};
 		case RECEIVE_CITIES:
-			return {...state, ...action.payload};
-		case ADD_ITEMS_TO_CITY:
-			const items = state.dataMap[action.cityId].items || [];
-			const newItems = uniq([...items, ...action.items]);
-			return {
-				...state,
-				dataMap: {
-					...state.dataMap,
-					[action.cityId]: {
-						...state.dataMap[action.cityId],
-						isItemsLoaded: true,
-						items: [...newItems],
-					},
-				},
-			};
+			return {...state, ...action.payload, items: {}};
+		case ADD_ITEMS:
+			return {...state, items: {...state.items, ...action.items}};
 		case ADD_ITEM_TO_CITY:
 			const itemsState = state.dataMap[action.cityId].items || [];
 			return {
