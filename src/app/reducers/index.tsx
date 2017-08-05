@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { routerReducer } from 'react-router-redux';
+// import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
 import { cities } from './cities';
@@ -20,7 +20,6 @@ const rootReducer = combineReducers({
 	items,
 	newItem,
 	global,
-	routing: routerReducer,
 	reduxAsyncConnect,
 });
 
