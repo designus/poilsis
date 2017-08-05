@@ -5,11 +5,13 @@ import {MainMenu} from '../components/mainMenu';
 import {asyncConnect } from 'redux-connect';
 import {IndexLink, Link} from 'react-router';
 import {typesProps, citiesProps} from '../helpers';
+import {IAppState} from '../reducers';
 
 @asyncConnect([typesProps, citiesProps])
 class ClientPageComponent extends React.Component<any, any> {
 
 	render() {
+		console.log('This props in client page', this.props);
 		return (
 			<div className="app-container">
 				<div className="header">
@@ -32,7 +34,7 @@ class ClientPageComponent extends React.Component<any, any> {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IAppState) => {
 	return {
 		citiesMap: state.cities.dataMap,
 		typesMap: state.types.dataMap,

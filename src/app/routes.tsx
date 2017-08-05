@@ -4,12 +4,12 @@ import {Route} from 'react-router';
 import IndexPage from './components/indexPage';
 import TypePage from './components/typePage';
 import ItemPage from './components/itemPage';
-import { AddItemPage,	CityPage,	ClientPage, AdminPage } from './containers';
+import { AddItemPage,	CityPage,	ClientPage, AdminPage, AdminItemsPage } from './containers';
 
 export default (
 	<Route>
 		<Route path="/admin" component={AdminPage}>
-			<Route path="/admin/items" />
+			<Route path="/admin/items"component={AdminItemsPage} />
 			<Route path="/admin/items/create" />
 			<Route path="/admin/items/edit/:id" />
 		</Route>

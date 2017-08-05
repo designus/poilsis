@@ -1,17 +1,24 @@
 import * as React from 'react';
+import { Link, IndexLink } from 'react-router';
 import {asyncConnect } from 'redux-connect';
-// import {IndexLink, Link} from 'react-router';
-import {typesProps, citiesProps} from '../helpers';
+import {typesProps, citiesProps} from '../../helpers';
 
 @asyncConnect([typesProps, citiesProps])
 class AdminPageComponent extends React.Component<any, any> {
 	render() {
-		console.log('This props', this.props);
+
 		return (
 			<div>
 				<div>
 					<ul>
-						<li>Items</li>
+						<li>
+							<IndexLink to="/admin" activeClassName="active">Home</IndexLink>
+						</li>
+						<li>
+							<Link	activeStyle={{ color: 'red' }} to="/admin/items">
+								Items
+							</Link>
+						</li>
 						<li>Types</li>
 					</ul>
 				</div>
