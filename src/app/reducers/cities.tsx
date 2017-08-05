@@ -7,8 +7,6 @@ export interface ICityMap {
 	description: string;
 	name: string;
 	types: string[];
-	items?: string[];
-	isItemsLoaded?: boolean;
 }
 
 export interface ICityItems {
@@ -29,18 +27,13 @@ export const cities = (state: ICityState = null, action): ICityState => {
 		case ADD_ITEMS:
 			return {...state, items: {...state.items, ...action.items}};
 		case ADD_ITEM_TO_CITY:
-			const itemsState = state.dataMap[action.cityId].items || [];
 			return {
 				...state,
-				dataMap: {
-					...state.dataMap,
-					[action.cityId]: {
-						...state.dataMap[action.cityId],
-						items: [
-							...itemsState,
-							action.itemId,
-						],
-					},
+				items: {
+					...state.items,
+					[action.cityId]: [
+						...state.items[action.cityId], action.itemId,
+					],
 				},
 			};
 		default:
