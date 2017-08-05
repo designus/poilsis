@@ -1,11 +1,10 @@
 import {combineReducers} from 'redux';
-// import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
-import { cities } from './cities';
+import { cities, ICityState } from './cities';
 import { types } from './types';
-import { items } from './items';
-import { newItem } from './newItem';
+import { items, IItemsState } from './items';
+import { newItem, INewItemState } from './newItem';
 import { global } from './global';
 
 export * from './cities';
@@ -13,6 +12,15 @@ export * from './types';
 export * from './items';
 export * from './newItem';
 export * from './global';
+
+export interface IAppState {
+	cities: ICityState;
+	global: any;
+	items: IItemsState;
+	newItem: INewItemState;
+	reduxAsyncConnect: any;
+	types: any;
+}
 
 const rootReducer = combineReducers({
 	cities,

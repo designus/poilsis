@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
-
-import {fetchItems} from '../actions/items';
-import {selectCity} from '../actions/cities';
-import {getSelectedCity} from '../helpers';
+import { IAppState } from '../reducers';
+import { fetchItems } from '../actions/items';
+import { selectCity } from '../actions/cities';
+import { getSelectedCity } from '../helpers';
 
 import NotFoundPage from '../components/notFoundPage';
 import ItemsList from '../components/itemsList';
@@ -54,8 +54,7 @@ class CityPageComponent extends React.Component<any, any> {
 	}
 }
 
-const mapStateToProps = (state) => {
-	console.log('State', state);
+const mapStateToProps = (state: IAppState) => {
 	const selectedCityId = state.cities.selectedId;
 	const cityItems = state.cities.items[selectedCityId] || [];
 	return {
