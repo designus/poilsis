@@ -3,14 +3,8 @@ import {IAppState} from '../../reducers';
 import {connect} from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { fetchItems } from '../../actions/items';
-import {
-	Table,
-	TableBody,
-	TableHeader,
-	TableHeaderColumn,
-	TableRow,
-	TableRowColumn,
-} from 'material-ui/Table';
+import { GenericTable } from '../../components';
+import {ItemTypesList} from '../../components/itemTypesList';
 
 @asyncConnect([{
 	key: 'items',
@@ -28,37 +22,32 @@ import {
 }])
 class AdminItemsPageComponent extends React.Component<any, any> {
 	render() {
+		const columns = {
+			id: 'ID',
+			name: 'Name',
+			city: {
+				label: 'City',
+				accessor: function(dataMap, cityId) {
+					return dataMap[cityId].name;
+				}.bind(null, this.props.citiesMap),
+			},
+			types: {
+				label: 'Types',
+				accessor: function(dataMap, types) {
+					return (
+						<ItemTypesList typeIds={types} typesMap={dataMap} />
+					);
+				}.bind(null, this.props.typesMap),
+			},
+			createdAt: 'Created at',
+		};
 		return (
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHeaderColumn>ID</TableHeaderColumn>
-						<TableHeaderColumn>Name</TableHeaderColumn>
-						<TableHeaderColumn>City</TableHeaderColumn>
-						<TableHeaderColumn>Types</TableHeaderColumn>
-						<TableHeaderColumn>Created At</TableHeaderColumn>
-						<TableHeaderColumn>Actions</TableHeaderColumn>
-					</TableRow>	
-				</TableHeader>
-				<TableBody>
-					{
-						Object.keys(this.props.itemsMap).map(itemId => {
-							const item = this.props.itemsMap[itemId];
-							const city = this.props.citiesMap[item.city];
-							return (
-								<TableRow>
-									<TableRowColumn>{item.id}</TableRowColumn>
-									<TableRowColumn>{item.name}</TableRowColumn>
-									<TableRowColumn>{city.name}</TableRowColumn>
-									<TableRowColumn>{item.types}</TableRowColumn>
-									<TableRowColumn>{item.createdAt}</TableRowColumn>
-									<TableRowColumn>Actions</TableRowColumn>
-								</TableRow>
-							);
-						})
-					}
-				</TableBody>
-			</Table>
+			<div>
+				<GenericTable
+					rows={this.props.itemsMap}
+					columns={columns}
+				/>
+			</div>
 		);
 
 	};
