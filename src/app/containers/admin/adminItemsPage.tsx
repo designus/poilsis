@@ -57,7 +57,6 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 							);
 						})
 					}
-
 				</TableBody>
 			</Table>
 		);

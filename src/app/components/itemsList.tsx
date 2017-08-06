@@ -1,6 +1,6 @@
 'use strict';
-
 import * as React from 'react';
+import {ItemTypesList} from './itemTypesList';
 
 export default class ItemsList extends React.Component<any, any> {
 
@@ -13,13 +13,7 @@ export default class ItemsList extends React.Component<any, any> {
 						return (
 							<div className="item" key={itemId}>
 								{item.name}<br />
-								{item.types.map((typeId) => {
-									return (
-										<span key={typeId} className="types" style={{ fontSize: 12 + 'px' }}>
-											{this.props.typesMap[typeId].name}&nbsp;
-										</span>
-									);
-								})}
+								<ItemTypesList typeIds={item.types} typesMap={this.props.typesMap} />
 								<hr />
 							</div>
 						);
