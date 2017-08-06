@@ -1,6 +1,5 @@
 import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM } from '../actions/items';
 import { IGenericState } from '../typeDefinitions';
-import { GENERIC_STATE } from '../helpers';
 
 export interface IItemsMap {
 	alias: string;
@@ -13,9 +12,12 @@ export interface IItemsMap {
 
 export interface IItemsState extends IGenericState<IItemsMap> {
 	selectedId?: string;
+	allItemsLoaded?: boolean;
 }
 
-export const items = (state: IItemsState = GENERIC_STATE, action): IItemsState => {
+const initialItemsState = {dataMap: {}, aliases: [], allItemsLoaded: false};
+
+export const items = (state: IItemsState = initialItemsState, action): IItemsState => {
 	switch (action.type) {
 		case SELECT_ITEM:
 			return {...state, selectedId: action.itemId};
@@ -27,6 +29,7 @@ export const items = (state: IItemsState = GENERIC_STATE, action): IItemsState =
 					...action.dataMap,
 				},
 				aliases: [ ...state.aliases, ...action.aliases ],
+				allItemsLoaded: action.allItemsLoaded,
 			};
 		case RECEIVE_ITEM:
 			const itemState = state.dataMap[action.item.id] || {};

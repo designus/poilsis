@@ -13,7 +13,9 @@ import ItemsList from '../components/itemsList';
 	key: 'items',
 	promise: ({params, store}) => {
 
-		const citiesState = store.getState().cities;
+		const appState: IAppState = store.getState();
+		const citiesState = appState.cities;
+		const allItemsLoaded = appState.items.allItemsLoaded;
 
 		return getSelectedCity(citiesState, params.city)
 			.then(({id}) => {
@@ -21,12 +23,10 @@ import ItemsList from '../components/itemsList';
 				const selectedCity = citiesState.dataMap[id];
 				const selectedCityItems = citiesState.items[id] || [];
 
-				if (!selectedCity) {
-					return Promise.resolve();
-				} else if (selectedCity && selectedCityItems.length === 0) {
+				if (selectedCity && !allItemsLoaded && selectedCityItems.length === 0) {
 					return store.dispatch(fetchItems(id));
 				} else {
-					return Promise.resolve(selectedCityItems);
+					return Promise.resolve();
 				}
 		}).catch((e) => {
 			console.error('Err', e);
