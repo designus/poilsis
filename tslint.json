@@ -27,6 +27,7 @@
     ],
     "object-literal-sort-keys": false,
     "no-shadowed-variable": false,
+    "no-empty-interface": false,
     "no-console": [
       false
     ],
