@@ -3,7 +3,7 @@ import {IAppState} from '../../reducers';
 import {connect} from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { fetchItems } from '../../actions/items';
-import { GenericTable } from '../../components';
+import { GenericTable, IGenericTableColumn } from '../../components';
 import {ItemTypesList} from '../../components/itemTypesList';
 
 @asyncConnect([{
@@ -22,7 +22,7 @@ import {ItemTypesList} from '../../components/itemTypesList';
 }])
 class AdminItemsPageComponent extends React.Component<any, any> {
 
-	get columns() {
+	get columns(): IGenericTableColumn[] {
 		return [
 			{
 				title: 'Id',

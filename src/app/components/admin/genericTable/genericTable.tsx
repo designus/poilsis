@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { IGenericDataMap } from '../../../typeDefinitions';
 import {
 	Table,
 	TableBody,
@@ -8,7 +9,19 @@ import {
 	TableRowColumn,
 } from 'material-ui/Table';
 
-export const GenericTable = ({data, columns}) => {
+export interface IGenericTableColumn {
+	title: string;
+	dataProp: string;
+	sortable?: boolean;
+	format?: any;
+}
+
+export interface IGenericTableProps {
+	data: IGenericDataMap<object>;
+	columns: IGenericTableColumn[];
+}
+
+export const GenericTable = ({data, columns}: IGenericTableProps) => {
 	return (
 		<Table>
 			<TableHeader
