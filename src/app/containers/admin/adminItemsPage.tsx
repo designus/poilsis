@@ -21,31 +21,42 @@ import {ItemTypesList} from '../../components/itemTypesList';
 	},
 }])
 class AdminItemsPageComponent extends React.Component<any, any> {
+
+	get columns() {
+		return [
+			{
+				title: 'Id',
+				dataProp: 'id',
+			},
+			{
+				title: 'Name',
+				dataProp: 'name',
+				sortable: true,
+			},
+			{
+				title: 'City',
+				dataProp: 'city',
+				sortable: true,
+				format: (cityId: string) => this.props.citiesMap[cityId].name,
+			},
+			{
+				title: 'Types',
+				dataProp: 'types',
+				format: (types: string[]) => (<ItemTypesList typeIds={types} typesMap={this.props.typesMap} />),
+			},
+			{
+				title: 'Created at',
+				dataProp: 'createdAt',
+			},
+		];
+	}
+
 	render() {
-		const columns = {
-			id: 'ID',
-			name: 'Name',
-			city: {
-				label: 'City',
-				accessor: function(dataMap, cityId) {
-					return dataMap[cityId].name;
-				}.bind(null, this.props.citiesMap),
-			},
-			types: {
-				label: 'Types',
-				accessor: function(dataMap, types) {
-					return (
-						<ItemTypesList typeIds={types} typesMap={dataMap} />
-					);
-				}.bind(null, this.props.typesMap),
-			},
-			createdAt: 'Created at',
-		};
 		return (
 			<div>
 				<GenericTable
-					rows={this.props.itemsMap}
-					columns={columns}
+					data={this.props.itemsMap}
+					columns={this.columns}
 				/>
 			</div>
 		);

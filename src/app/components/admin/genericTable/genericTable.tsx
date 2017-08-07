@@ -8,7 +8,7 @@ import {
 	TableRowColumn,
 } from 'material-ui/Table';
 
-export const GenericTable = ({rows, columns}) => {
+export const GenericTable = ({data, columns}) => {
 	return (
 		<Table>
 			<TableHeader
@@ -17,12 +17,8 @@ export const GenericTable = ({rows, columns}) => {
 			>
 				<TableRow>
 					{
-						Object.keys(columns).map(columnKey => {
-							const column = columns[columnKey];
-							const label = typeof column === 'object' ? column.label : column;
-							return (
-								<TableHeaderColumn key={columnKey}>{label}</TableHeaderColumn>
-							);
+						columns.map((column, index) => {
+							return (<TableHeaderColumn key={index}>{column.title}</TableHeaderColumn>);
 						})
 					}
 					<TableHeaderColumn>Actions</TableHeaderColumn>
@@ -30,24 +26,24 @@ export const GenericTable = ({rows, columns}) => {
 			</TableHeader>
 			<TableBody displayRowCheckbox={false}>
 				{
-						Object.keys(rows).map(rowId => {
-							const row = rows[rowId];
-							return (
-								<TableRow key={rowId}>
-									{
-										Object.keys(columns).map(columnId => {
-											const column = columns[columnId];
-											const rowColumn = column.accessor ? column.accessor(row[columnId]) : row[columnId];
-											return (
-												<TableRowColumn key={columnId}>{rowColumn}</TableRowColumn>
-											);
-										})
-									}
-									<TableRowColumn>Actions</TableRowColumn>
-								</TableRow>
-							);
-						})
-					}
+					Object.keys(data).map(rowId => {
+						const row = data[rowId];
+						return (
+							<TableRow key={rowId}>
+								{
+									columns.map((columnObj, index) => {
+										const column = row[columnObj.dataProp];
+										const formattedColumn = columnObj.format ? columnObj.format(column) : column;
+										return (
+											<TableRowColumn key={index}>{formattedColumn}</TableRowColumn>
+										);
+									})
+								}
+								<TableRowColumn>Actions</TableRowColumn>
+							</TableRow>
+						);
+					})
+				}
 			</TableBody>
 		</Table>
 	);
