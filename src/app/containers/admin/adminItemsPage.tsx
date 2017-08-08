@@ -55,8 +55,9 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 		return (
 			<div>
 				<GenericTable
-					data={this.props.itemsMap}
+					dataMap={this.props.itemsMap}
 					columns={this.columns}
+					limit={5}
 				/>
 			</div>
 		);
