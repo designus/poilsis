@@ -37,101 +37,109 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
 			offset: 0,
 			limit: props.limit,
 			pageData: allData.slice(0, this.props.limit),
+			currentPage: 1,
+			pages: Math.round(allData.length / props.limit),
 			allData,
 		};
 	}
 
-	paginate = (offset, limit) => {
-		const { allData } = this.state;
+	paginate = (nextPage) => {
+		const { allData, limit } = this.state;
+		const offset = nextPage * limit - limit;
 		this.setState({
 			pageData: allData.slice(offset, offset + limit),
-			offset,
+			currentPage: nextPage,
 		});
 	}
 
-	paginateBack = () => {
-		const { offset, limit } = this.state;
-		this.paginate(offset - limit, limit);
-	}
-
-	paginateForward = () => {
-		const { offset, limit } = this.state;
-		this.paginate(offset + limit, limit);
-	}
-
 	getPageNumber(total) {
-		const { offset, limit } = this.state;
-		return `${Math.min((offset + 1), total)} - ${Math.min((offset + limit), total)} of ${total}`;
+		const { currentPage, limit } = this.state;
+		const topLimit = currentPage * limit;
+		return `${topLimit - limit + 1} - ${topLimit <= total ? topLimit : total} of ${total}`;
+	}
+
+	getPaginationLinks(pageCount) {
+		return (
+			<ul>
+				{
+					[...Array(pageCount)].map((_, i) => {
+						return (
+							<li
+								onClick={this.paginate.bind(this, i + 1)}
+								key={i}
+							>
+								{i + 1}
+							</li>
+						);
+					})
+				}
+			</ul>
+		);
 	}
 
 	render() {
 
 		const { columns, dataMap } = this.props;
-		const { offset, limit } = this.state;
+		const { pages, currentPage } = this.state;
 		const total = this.state.allData.length;
 
 		return (
-			<Table>
-				<TableHeader
-					adjustForCheckbox={false}
-					displaySelectAll={false}
-				>
-					<TableRow>
+			<div>
+				<Table>
+					<TableHeader
+						adjustForCheckbox={false}
+						displaySelectAll={false}
+					>
+						<TableRow>
+							{
+								columns.map((column, index) => {
+									return (<TableHeaderColumn key={index}>{column.title}</TableHeaderColumn>);
+								})
+							}
+							<TableHeaderColumn>Actions</TableHeaderColumn>
+						</TableRow>	
+					</TableHeader>
+					<TableBody displayRowCheckbox={false}>
 						{
-							columns.map((column, index) => {
-								return (<TableHeaderColumn key={index}>{column.title}</TableHeaderColumn>);
+							this.state.pageData.map((id, i) => {
+								const row = dataMap[id];
+								return (
+									<TableRow key={i}>
+										{
+											columns.map((colItem, index) => {
+												const column = row[colItem.dataProp];
+												const formattedColumn = colItem.format ? colItem.format(column) : column;
+												return (
+													<TableRowColumn key={index}>{formattedColumn}</TableRowColumn>
+												);
+											})
+										}
+										<TableRowColumn>Actions</TableRowColumn>
+									</TableRow>
+								);
 							})
 						}
-						<TableHeaderColumn>Actions</TableHeaderColumn>
-					</TableRow>	
-				</TableHeader>
-				<TableBody displayRowCheckbox={false}>
-					{
-						this.state.pageData.map((id, i) => {
-							const row = dataMap[id];
-							return (
-								<TableRow key={i}>
-									{
-										columns.map((colItem, index) => {
-											const column = row[colItem.dataProp];
-											const formattedColumn = colItem.format ? colItem.format(column) : column;
-											return (
-												<TableRowColumn key={index}>{formattedColumn}</TableRowColumn>
-											);
-										})
-									}
-									<TableRowColumn>Actions</TableRowColumn>
-								</TableRow>
-							);
-						})
-					}
-				</TableBody>
-				<TableFooter adjustForCheckbox={false}>
-					<TableRow>
-						<TableRowColumn>
-							<div>
-								<IconButton
-									disabled={offset === 0}
-									onClick={this.paginateBack}
-								>
-									<ChevronLeft />
-								</IconButton>
-								<IconButton
-									disabled={offset + limit >= total}
-									onClick={this.paginateForward}
-								>
-									<ChevronRight />
-								</IconButton>
-							</div>
-						</TableRowColumn>
-						<TableRowColumn>
-							<div style={{textAlign: 'right'}}>
-								{this.getPageNumber(total)}
-							</div>
-						</TableRowColumn>
-					</TableRow>
-				</TableFooter>
-			</Table>
+					</TableBody>
+				</Table>
+				<div>
+					<IconButton
+						disabled={currentPage === 0}
+						onClick={this.paginate.bind(this, currentPage - 1)}
+					>
+						<ChevronLeft />
+					</IconButton>
+					{this.getPaginationLinks(pages)}
+					<IconButton
+						disabled={currentPage + 1 > pages}
+						onClick={this.paginate.bind(this, currentPage + 1)}
+					>
+						<ChevronRight />
+					</IconButton>
+				</div>
+					<div style={{textAlign: 'right'}}>
+						{this.getPageNumber(total)}
+					</div>
+			</div>
 		);
 	}
 };
