@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
+import styled, { StyledFunction } from 'styled-components';
 import { IGenericDataMap } from '../../../typeDefinitions';
 import {
 	Table,
@@ -8,7 +9,6 @@ import {
 	TableHeaderColumn,
 	TableRow,
 	TableRowColumn,
-	TableFooter,
 } from 'material-ui/Table';
 import IconButton from 'material-ui/IconButton';
 import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
@@ -26,6 +26,51 @@ export interface IGenericTableProps {
 	columns: IGenericTableColumn[];
 	limit?: number;
 }
+
+export const Pagination = styled.div`
+	border-top: 1px solid #F0F0F0;
+	padding: 10px;
+	display: flex;
+`;
+
+export const PaginationNavigation = styled.div`
+	flex: 3;
+	display: flex;
+	justify-content: left;
+`;
+
+export const PaginationLinks = styled.div`
+	display: flex;
+	align-items: center;
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}	
+`;
+
+interface IPaginationLinkProps {
+	isActive: boolean;
+}
+
+const li: StyledFunction<IPaginationLinkProps & React.HTMLProps<any>> = styled.li;
+
+export const PaginationLink = li`
+	display: inline-block;
+	padding: 0 5px;
+	list-style: none;
+	& > span {
+		cursor: pointer;
+		background: ${props => props.isActive ? '#4286f4' : '#F0F0F0'};
+		color: ${props => props.isActive ? '#fff' : '#1c1c1c'};
+		padding: 3px 6px;
+	}
+`;
+
+export const PaginationPageNumber = styled.div`
+	flex: 1;
+	text-align: right;
+`;
 
 export class GenericTable extends React.Component<IGenericTableProps, any> {
 
@@ -58,21 +103,20 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
 		return `${topLimit - limit + 1} - ${topLimit <= total ? topLimit : total} of ${total}`;
 	}
 
-	getPaginationLinks(pageCount) {
+	getPaginationLinks(pageCount: number, currentPage: number) {
+		const pages = [...Array(pageCount)];
 		return (
 			<ul>
-				{
-					[...Array(pageCount)].map((_, i) => {
-						return (
-							<li
-								onClick={this.paginate.bind(this, i + 1)}
-								key={i}
-							>
-								{i + 1}
-							</li>
-						);
-					})
-				}
+				{pages.map((_, i) => {
+					return (
+						<PaginationLink
+							isActive={i + 1 === currentPage}
+							onClick={this.paginate.bind(this, i + 1)}
+							key={i}>
+								<span>{i + 1}</span>
+						</PaginationLink>
+					);
+				})}
 			</ul>
 		);
 	}
@@ -121,24 +165,28 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
 						}
 					</TableBody>
 				</Table>
-				<div>
-					<IconButton
-						disabled={currentPage === 0}
-						onClick={this.paginate.bind(this, currentPage - 1)}
-					>
-						<ChevronLeft />
-					</IconButton>
-					{this.getPaginationLinks(pages)}
-					<IconButton
-						disabled={currentPage + 1 > pages}
-						onClick={this.paginate.bind(this, currentPage + 1)}
-					>
-						<ChevronRight />
-					</IconButton>
-				</div>
-					<div style={{textAlign: 'right'}}>
+				<Pagination>
+					<PaginationNavigation>
+						<IconButton
+							disabled={currentPage === 1}
+							onClick={this.paginate.bind(this, currentPage - 1)}
+						>
+							<ChevronLeft />
+						</IconButton>
+						<PaginationLinks>
+							{this.getPaginationLinks(pages, currentPage)}
+						</PaginationLinks>
+						<IconButton
+							disabled={currentPage + 1 > pages}
+							onClick={this.paginate.bind(this, currentPage + 1)}
+						>
+							<ChevronRight />
+						</IconButton>
+					</PaginationNavigation>
+					<PaginationPageNumber>
 						{this.getPageNumber(total)}
-					</div>
+					</PaginationPageNumber>
+				</Pagination>
 			</div>
 		);
 	}
