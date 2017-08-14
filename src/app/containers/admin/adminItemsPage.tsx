@@ -5,6 +5,9 @@ import { asyncConnect} from 'redux-connect';
 import { fetchItems } from '../../actions/items';
 import { GenericTable, IGenericTableColumn } from '../../components';
 import {ItemTypesList} from '../../components/itemTypesList';
+import { withPagination } from '../../components/pagination';
+
+const PaginatedTable = withPagination(GenericTable);
 
 @asyncConnect([{
 	key: 'items',
@@ -48,17 +51,37 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 				title: 'Created at',
 				dataProp: 'createdAt',
 			},
+			{
+				title: 'Actions',
+				dataProp: 'id',
+				format: (id) => {
+					return (
+						<div>
+							<div onClick={this.onEdit.bind(null, id)}>Edit action</div>
+							<div onClick={this.onDelete.bind(null, id)}>Delete action</div>
+						</div>
+					);
+				},
+			},
 		];
+	}
+
+	onEdit(id) {
+		console.log('Open edit', id);
+	}
+
+	onDelete(id) {
+		console.log('Open delete', id);
 	}
 
 	render() {
 		return (
 			<div>
-				<GenericTable
-					dataMap={this.props.itemsMap}
-					columns={this.columns}
-					limit={5}
-				/>
+					<PaginatedTable
+						dataMap={this.props.itemsMap}
+						columns={this.columns}
+						limit={5}
+					/>
 			</div>
 		);
 
