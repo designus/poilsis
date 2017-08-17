@@ -2,16 +2,17 @@ import * as React from 'react';
 import TextField from 'material-ui/TextField';
 import { ValidationErrors } from './validationErrors';
 
-export const TextInput = ({label, value, showErrors, errors, underlineStyle, onChange, onBlur}) => {
+export const TextInput = ({label, value, showErrors, errors, onChange, onBlur}) => {
 	return (
 		<div>
 			<TextField
-				floatingLabelText={label}
-				hintText={label}
+				label={label}
+				placeholder={label}
 				value={value}
 				onChange={onChange}
 				onBlur={onBlur}
-				underlineStyle={underlineStyle}
+				error={showErrors && errors.length > 0}
+				margin="dense"
 			/>
 			<ValidationErrors
 				showErrors={showErrors}

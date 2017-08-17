@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { ValidationErrors } from './validationErrors';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import styled from 'styled-components';
+
+export const SelectBoxWrapper = styled.div`
+	padding: 10px 0;
+`;
 
 export const getSelectOptions = (data, labelKey = 'name') => {
 
@@ -11,31 +14,28 @@ export const getSelectOptions = (data, labelKey = 'name') => {
 	return options.map((option, i) => {
 		const primaryText = isDataArray ? option : data[option][labelKey];
 		return (
-			<MenuItem
-				value={option}
-				key={i}
-				primaryText={primaryText}
-			/>
+			<option	value={option} key={i}>
+				{primaryText}
+			</option>
 		);
 	});
 };
 
-export const SelectBox = ({label, value, underlineStyle, onChange, showErrors, errors, options}) => {
+export const SelectBox = ({label, value, onChange, showErrors, errors, options}) => {
 
 	return (
-		<div>
-			<SelectField
-				floatingLabelText={label}
+		<SelectBoxWrapper>
+			<select
 				value={value}
 				onChange={onChange}
-				underlineStyle={underlineStyle}
 			>
-			{options} 
-			</SelectField>
+				<option hidden>{label}</option>
+				{options} 
+			</select>
 			<ValidationErrors
 				showErrors={showErrors}
 				errors={errors}
 			/>
-		</div>
+		</SelectBoxWrapper>
 	);
 };

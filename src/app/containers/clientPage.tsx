@@ -11,7 +11,6 @@ import {IAppState} from '../reducers';
 class ClientPageComponent extends React.Component<any, any> {
 
 	render() {
-		console.log('This props in client page', this.props);
 		return (
 			<div className="app-container">
 				<div className="header">

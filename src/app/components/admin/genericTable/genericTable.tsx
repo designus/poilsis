@@ -1,14 +1,8 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
 // import { IGenericDataMap } from '../../../typeDefinitions';
-import {
-	Table,
-	TableBody,
-	TableHeader,
-	TableHeaderColumn,
-	TableRow,
-	TableRowColumn,
-} from 'material-ui/Table';
+
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 export interface IGenericTableColumn {
 	title: string;
@@ -31,19 +25,16 @@ export class GenericTable extends React.Component<any, any> {
 		return (
 			<div>
 				<Table>
-					<TableHeader
-						adjustForCheckbox={false}
-						displaySelectAll={false}
-					>
+					<TableHead>
 						<TableRow>
 							{
 								columns.map((column, index) => {
-									return (<TableHeaderColumn key={index}>{column.title}</TableHeaderColumn>);
+									return (<TableCell key={index}>{column.title}</TableCell>);
 								})
 							}
 						</TableRow>	
-					</TableHeader>
-					<TableBody displayRowCheckbox={false}>
+					</TableHead>
+					<TableBody>
 						{
 							this.props.pageData.map((id, i) => {
 								const row = dataMap[id];
@@ -54,7 +45,7 @@ export class GenericTable extends React.Component<any, any> {
 												const column = colItem.dataProp ? row[colItem.dataProp] : '';
 												const formattedColumn = colItem.format ? colItem.format(column) : column;
 												return (
-													<TableRowColumn key={index}>{formattedColumn}</TableRowColumn>
+													<TableCell key={index}>{formattedColumn}</TableCell>
 												);
 											})
 										}

@@ -32,7 +32,8 @@ export const cities = (state: ICityState = null, action): ICityState => {
 				items: {
 					...state.items,
 					[action.cityId]: [
-						...state.items[action.cityId], action.itemId,
+						...(state.items[action.cityId] || []),
+						action.itemId,
 					],
 				},
 			};

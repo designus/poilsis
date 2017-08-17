@@ -21,8 +21,12 @@ import thunkMiddleware from 'redux-thunk';
 import rootReducer from './app/reducers';
 import routes from './app/routes';
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { JssProvider, SheetsRegistry } from 'react-jss';
+import { create } from 'jss';
+
+import preset from 'jss-preset-default';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
 
 const favicon = require('serve-favicon');
 
@@ -80,15 +84,23 @@ app.get('*', (req, res) => {
 
 			loadOnServer({ ...renderProps, store })
 				.then(() => {
+					const sheetsRegistry = new SheetsRegistry();
+					const theme = createMuiTheme();
+					const jss = create(preset());
+					jss.options.createGenerateClassName = createGenerateClassName;
+
 					const responseHtml = renderToString(
-						<MuiThemeProvider muiTheme={getMuiTheme({userAgent: req.headers['user-agent']})}>
-							<Provider store={store} key="provider">
-								<ReduxAsyncConnect {...renderProps} />
-							</Provider>
-						</MuiThemeProvider>,
+						<JssProvider registry={sheetsRegistry} jss={jss}>
+							<MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+								<Provider store={store} key="provider">
+									<ReduxAsyncConnect {...renderProps} />
+								</Provider>
+							</MuiThemeProvider>
+						</JssProvider>,
 					);
+					const css = sheetsRegistry.toString();
 					const finalState = store.getState();
-					res.status(200).send(renderFullPage(responseHtml, finalState));
+					res.status(200).send(renderFullPage(responseHtml, css, finalState));
 			})
 			.catch((err) => console.error(err));
 
@@ -98,7 +110,7 @@ app.get('*', (req, res) => {
 	});
 });
 
-function renderFullPage(html, preloadedState) {
+function renderFullPage(html, css, preloadedState) {
 	return `
 		<!DOCTYPE html>
 		<html>
@@ -107,6 +119,7 @@ function renderFullPage(html, preloadedState) {
 			</head>
 			<body>
 				<div id="app"><div>${html}</div></div>
+				<style id="jss-server-side">${css}</style>
 				<script>
 					window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
 				</script>

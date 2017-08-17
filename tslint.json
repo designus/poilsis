@@ -17,7 +17,9 @@
      "no-consecutive-blank-lines": [
         true
     ],
+    "jsx-boolean-value": false,
     "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false,
     "member-access": false,
     "no-var-requires": false,
     "arrow-parens": false,

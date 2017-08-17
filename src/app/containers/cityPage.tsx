@@ -21,9 +21,8 @@ import ItemsList from '../components/itemsList';
 			.then(({id}) => {
 				store.dispatch(selectCity(id));
 				const selectedCity = citiesState.dataMap[id];
-				const selectedCityItems = citiesState.items[id] || [];
 
-				if (selectedCity && !allItemsLoaded && selectedCityItems.length === 0) {
+				if (selectedCity && !allItemsLoaded) {
 					return store.dispatch(fetchItems(id));
 				} else {
 					return Promise.resolve();

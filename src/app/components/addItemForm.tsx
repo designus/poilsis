@@ -17,7 +17,7 @@ import {
 import { getValidationErrors, getKeyMap } from '../helpers';
 import { IKeyMap } from '../typeDefinitions';
 
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 
 import {
 	NAME_LABEL,
@@ -133,7 +133,6 @@ export default class AddItemForm extends React.Component<any, any> {
 				<TextInput
 					label={NAME_LABEL}
 					value={fieldValues[NAME_KEY]}
-					underlineStyle={this.getErrorUnderlineStyle(showErrors, errors[NAME_KEY])}
 					showErrors={showErrors}
 					errors={errors[NAME_KEY]}
 					onChange={this.handleInputChange(NAME_KEY)}
@@ -143,7 +142,6 @@ export default class AddItemForm extends React.Component<any, any> {
 					label={CITY_LABEL}
 					value={fieldValues[CITY_KEY]}
 					onChange={this.handleInputChange(CITY_KEY)}
-					underlineStyle={this.getErrorUnderlineStyle(showErrors, errors[CITY_KEY])}
 					showErrors={showErrors}
 					errors={errors[CITY_KEY]}
 					options={getSelectOptions(this.props.citiesMap)}
@@ -157,19 +155,20 @@ export default class AddItemForm extends React.Component<any, any> {
 				<TextInput
 					label={ADDRESS_LABEL}
 					value={fieldValues[ADDRESS_KEY]}
-					underlineStyle={this.getErrorUnderlineStyle(showErrors, errors[ADDRESS_KEY])}
 					showErrors={showErrors}
 					errors={errors[ADDRESS_KEY]}
 					onChange={this.handleInputChange(ADDRESS_KEY)}
 					onBlur={this.handleOnBlur}
 				/>		
-				<RaisedButton
+				<Button
+					raised
+					color="primary"
 					type="submit"
 					label={SEND_LABEL}
-					primary={true}
-					style={{marginTop: 12}}
-				/>
-
+					style={{marginTop: 12, marginBottom: 20, display: 'block'}}
+				>
+					Submit
+				</Button>
 			</form>
 		);
 	}

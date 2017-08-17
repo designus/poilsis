@@ -1,6 +1,7 @@
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
 import 'isomorphic-fetch';
+// import 'typeface-roboto';
 
 import thunkMiddleware from 'redux-thunk';
 import * as React from 'react';
@@ -13,8 +14,8 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './app/reducers';
 import routes from './app/routes';
 
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import createMuiTheme from 'material-ui/styles/theme';
+import { MuiThemeProvider } from 'material-ui/styles';
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
@@ -25,7 +26,7 @@ const store = createStore(rootReducer, window.__INITIAL_STATE__, applyMiddleware
 const connectedCmp = (props) => <ReduxAsyncConnect {...props} />;
 
 render(
-	<MuiThemeProvider muiTheme={getMuiTheme({userAgent: navigator.userAgent})}>
+	<MuiThemeProvider theme={createMuiTheme({userAgent: navigator.userAgent})}>
 		<Provider store={store} key="provider">
 			<Router
 				history={browserHistory}
