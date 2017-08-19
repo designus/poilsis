@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {IAppState} from '../../reducers';
-import {connect} from 'react-redux';
+import * as moment from 'moment';
+import { IAppState } from '../../reducers';
+import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { fetchItems } from '../../actions/items';
-import { GenericTable, IGenericTableColumn } from '../../components';
-import {ItemTypesList} from '../../components/itemTypesList';
-import { withPagination } from '../../components/pagination';
+import { GenericTable, IGenericTableColumn, ItemTypesList, withPagination } from '../../components';
 
 const PaginatedTable = withPagination(GenericTable);
 
@@ -34,22 +33,31 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 			{
 				title: 'Name',
 				dataProp: 'name',
-				sortable: true,
+				sortType: 'string',
 			},
 			{
 				title: 'City',
 				dataProp: 'city',
-				sortable: true,
+				sortType: 'string',
 				format: (cityId: string) => this.props.citiesMap[cityId].name,
 			},
 			{
 				title: 'Types',
 				dataProp: 'types',
-				format: (types: string[]) => (<ItemTypesList typeIds={types} typesMap={this.props.typesMap} />),
+				format: (types: string[]) => {
+					return (
+						<ItemTypesList
+							typeIds={types}
+							typesMap={this.props.typesMap}
+						/>
+					);
+				},
 			},
 			{
 				title: 'Created at',
 				dataProp: 'createdAt',
+				sortType: 'date',
+				format: (date: string) => moment(date).format('YYYY-MM-DD'),
 			},
 			{
 				title: 'Actions',
@@ -77,11 +85,11 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 	render() {
 		return (
 			<div>
-					<PaginatedTable
-						dataMap={this.props.itemsMap}
-						columns={this.columns}
-						limit={5}
-					/>
+				<PaginatedTable
+					dataMap={this.props.itemsMap}
+					columns={this.columns}
+					limit={5}
+				/>
 			</div>
 		);
 

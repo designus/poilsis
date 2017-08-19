@@ -69,9 +69,22 @@ export const withPagination = (WrappedComponent) => {
 			};
 		}
 
+		getOffset(pageNumber, limit) {
+			return pageNumber * limit - limit;
+		}
+
+		paginateNewData(newData: string[]) {
+			const { limit, currentPage } = this.state;
+			const offset = this.getOffset(currentPage, limit);
+			this.setState({
+				pageData: newData.slice(offset, offset + limit),
+				allData: newData,
+			});
+		}
+
 		paginate = (nextPage) => {
 			const { allData, limit } = this.state;
-			const offset = nextPage * limit - limit;
+			const offset = this.getOffset(nextPage, limit);
 			this.setState({
 				pageData: allData.slice(offset, offset + limit),
 				currentPage: nextPage,
@@ -93,8 +106,9 @@ export const withPagination = (WrappedComponent) => {
 							<PaginationLink
 								isActive={i + 1 === currentPage}
 								onClick={this.paginate.bind(this, i + 1)}
-								key={i}>
-									<span>{i + 1}</span>
+								key={i}
+							>
+								<span>{i + 1}</span>
 							</PaginationLink>
 						);
 					})}
@@ -109,7 +123,11 @@ export const withPagination = (WrappedComponent) => {
 
 			return (
 				<div>
-					<WrappedComponent pageData={pageData} {...this.props} />
+					<WrappedComponent
+						pageData={pageData}
+						handleNewData={this.paginateNewData}
+						{...this.props}
+					/>
 					<PaginationWrapper>
 						<PaginationNav>
 							<IconButton
