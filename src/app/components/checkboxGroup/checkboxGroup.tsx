@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ValidationErrors } from './validationErrors';
+import { ValidationErrors } from '../../components';
 import Checkbox from 'material-ui/Checkbox';
 import { FormGroup, FormControlLabel } from 'material-ui/Form';
 

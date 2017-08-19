@@ -1,5 +1,5 @@
 import { RECEIVE_CITIES, SELECT_CITY, ADD_ITEM_TO_CITY, ADD_ITEMS } from '../actions/cities';
-import { IGenericState } from '../typeDefinitions';
+import { IGenericState } from '../helpers';
 
 export interface ICityMap {
 	id: string;

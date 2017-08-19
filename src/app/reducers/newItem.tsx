@@ -1,6 +1,6 @@
-import {ADD_NEW_ITEM_STATE, CLEAR_FIELDS, SHOW_BACKEND_VALIDATION_ERRORS} from '../actions';
-import {newItemModel} from '../components/addItemForm';
-import {getNewItemFieldsFromModel} from '../helpers';
+import { ADD_NEW_ITEM_STATE, CLEAR_FIELDS, SHOW_BACKEND_VALIDATION_ERRORS } from '../actions';
+import { newItemModel } from '../components';
+import { getNewItemFieldsFromModel } from '../helpers';
 
 export const FIELD_VALUES = 'fields';
 export const VALIDATION_ERRORS = 'errors';

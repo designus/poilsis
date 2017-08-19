@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export default class IndexPage extends React.Component<any, any> {
+export class IndexPage extends React.Component<any, any> {
 	render() {
 		return (
 			<div>           

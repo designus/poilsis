@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ValidationErrors } from './validationErrors';
+import { ValidationErrors } from '../../components';
 import styled from 'styled-components';
 
 export const SelectBoxWrapper = styled.div`

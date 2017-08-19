@@ -1,5 +1,5 @@
 import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM } from '../actions/items';
-import { IGenericState } from '../typeDefinitions';
+import { IGenericState } from '../helpers';
 
 export interface IItemsMap {
 	alias: string;

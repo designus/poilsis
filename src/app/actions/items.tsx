@@ -1,7 +1,6 @@
 import { addItemsToCitiesState } from './cities';
 import { startRequest, responseSuccess, responseFailure } from './global';
-import { getNormalizedData, getGroupedItemsByCityId } from '../helpers';
-import { IGenericDataMap, IAlias } from '../typeDefinitions';
+import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias } from '../helpers';
 import { IItemsMap } from '../reducers';
 
 export const SELECT_ITEM = 'SELECT_ITEM';

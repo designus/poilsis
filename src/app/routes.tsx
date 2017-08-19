@@ -1,10 +1,16 @@
 import * as React from 'react';
-
 import {Route} from 'react-router';
-import IndexPage from './components/indexPage';
-import TypePage from './components/typePage';
-import ItemPage from './components/itemPage';
-import { AddItemPage,	CityPage,	ClientPage, AdminPage, AdminItemsPage } from './containers';
+
+import {
+	AddItemPage,
+	CityPage,
+	ClientPage,
+	AdminPage,
+	AdminItemsPage,
+	IndexPage,
+	TypePage,
+	ItemPage,
+} from './containers';
 
 export default (
 	<Route>

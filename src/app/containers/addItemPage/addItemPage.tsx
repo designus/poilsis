@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as autoBind from 'react-autobind';
 
 import {connect} from 'react-redux';
-import AddItemForm from '../components/addItemForm';
-import { addNewItemState, postItem } from '../actions';
+import { AddItemForm } from '../../components';
+import { addNewItemState, postItem } from '../../actions';
 
 class AddItemPageComponent extends React.Component<any, any> {
 

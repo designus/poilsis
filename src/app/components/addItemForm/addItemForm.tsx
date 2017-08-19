@@ -1,10 +1,14 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
-import * as Validators from '../helpers/validation/validators';
+import * as Validators from '../../helpers/validation/validators';
 
-import { TextInput } from './textInput';
-import { SelectBox, getSelectOptions } from './selectBox';
-import { CheckboxGroup, getCheckboxOptions } from './checkboxGroup';
+import {
+	CheckboxGroup,
+	getCheckboxOptions,
+	SelectBox,
+	getSelectOptions,
+	TextInput,
+} from '../../components';
 
 import {
 	FIELD_VALUES,
@@ -13,9 +17,8 @@ import {
 	INewItemFields,
 	INewItemState,
 	NewItemErrorsType,
-} from '../reducers/newItem';
-import { getValidationErrors, getKeyMap } from '../helpers';
-import { IKeyMap } from '../typeDefinitions';
+} from '../../reducers/newItem';
+import { getValidationErrors, getKeyMap, IKeyMap } from '../../helpers';
 
 import Button from 'material-ui/Button';
 
@@ -30,7 +33,7 @@ import {
 	CITY_KEY,
 	TYPES_KEY,
 	ADDRESS_KEY,
-} from '../data-strings';
+} from '../../data-strings';
 
 export type TNewItemModel<T> = {
 	[I in keyof T]: IKeyMap
@@ -46,7 +49,7 @@ export const newItemModel: NewItemModelType = {
 	description: getKeyMap('', DESCRIPTION_LABEL, []),
 };
 
-export default class AddItemForm extends React.Component<any, any> {
+export class AddItemForm extends React.Component<any, any> {
 
 	constructor(props) {
 		super(props);

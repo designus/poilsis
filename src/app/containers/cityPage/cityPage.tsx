@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
-import { IAppState } from '../reducers';
-import { fetchItems } from '../actions/items';
-import { selectCity } from '../actions/cities';
-import { getSelectedCity } from '../helpers';
+import { IAppState } from '../../reducers';
+import { fetchItems } from '../../actions/items';
+import { selectCity } from '../../actions/cities';
+import { getSelectedCity } from '../../helpers';
 
-import NotFoundPage from '../components/notFoundPage';
-import ItemsList from '../components/itemsList';
+import { ItemsList, NotFound } from '../../components';
 
 @asyncConnect([{
 	key: 'items',
@@ -48,7 +47,7 @@ class CityPageComponent extends React.Component<any, any> {
 				</div>
 			);
 		} else {
-			return <NotFoundPage/>;
+			return <NotFound/>;
 		}
 	}
 }

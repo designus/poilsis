@@ -1,8 +1,8 @@
 'use strict';
 import * as React from 'react';
-import {ItemTypesList} from './itemTypesList';
+import {ItemTypesList} from '../itemTypesList';
 
-export default class ItemsList extends React.Component<any, any> {
+export class ItemsList extends React.Component<any, any> {
 
 	render() {
 

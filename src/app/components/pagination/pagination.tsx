@@ -64,7 +64,7 @@ export const withPagination = (WrappedComponent) => {
 				limit: props.limit,
 				pageData: allData.slice(0, this.props.limit),
 				currentPage: 1,
-				pages: Math.round(allData.length / props.limit),
+				pages: Math.ceil(allData.length / props.limit),
 				allData,
 			};
 		}

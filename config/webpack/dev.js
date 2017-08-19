@@ -15,6 +15,10 @@ var config = {
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      actions: path.resolve(__dirname, 'src/actions/'),
+      components: path.resolve(__dirname, '../../src/app/components/'),
+    },
     modules: [path.resolve(__dirname), 'node_modules', 'app', 'app/redux'],
   },
 

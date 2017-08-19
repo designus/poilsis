@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TextField from 'material-ui/TextField';
-import { ValidationErrors } from './validationErrors';
+import { ValidationErrors } from '../../components';
 
 export const TextInput = ({label, value, showErrors, errors, onChange, onBlur}) => {
 	return (

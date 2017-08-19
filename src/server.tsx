@@ -22,7 +22,8 @@ import rootReducer from './app/reducers';
 import routes from './app/routes';
 
 import { JssProvider, SheetsRegistry } from 'react-jss';
-import { create } from 'jss';
+// import { create } from 'jss';
+const create = require('jss').create;
 
 import preset from 'jss-preset-default';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';

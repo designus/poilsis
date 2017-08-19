@@ -1,5 +1,5 @@
 import { NewItemModelType } from '../components/addItemForm';
-import { ValueType, IKeyMap, IGenericState, IGenericDataMap } from '../typeDefinitions';
+import { ValueType, IKeyMap, IGenericState, IGenericDataMap } from './types';
 import { INewItemFields, NewItemErrorsType, IItemsMap, ICityItems, ICityState } from '../reducers';
 
 export const getSelectedCity = (citiesState: ICityState, reqParam: string) => {

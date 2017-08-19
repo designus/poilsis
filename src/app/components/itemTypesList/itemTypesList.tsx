@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ITypesMap } from '../reducers';
-import { IGenericDataMap } from '../typeDefinitions';
+import { ITypesMap } from '../../reducers';
+import { IGenericDataMap } from '../../helpers';
 
 export interface IItemsTypesList {
 	typeIds: string[];
