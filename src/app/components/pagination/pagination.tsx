@@ -4,8 +4,9 @@ import styled, { StyledFunction } from 'styled-components';
 import IconButton from 'material-ui/IconButton';
 import ChevronLeft from 'material-ui-icons/ChevronLeft';
 import ChevronRight from 'material-ui-icons/ChevronRight';
+import { SelectBox } from '../selectBox';
 
-export const PaginationWrapper = styled.div`
+export const PaginationToolbar = styled.div`
 	border-top: 1px solid #F0F0F0;
 	padding: 10px;
 	display: flex;
@@ -45,9 +46,22 @@ export const PaginationLink = li`
 	}
 `;
 
-export const PaginationPageNumber = styled.div`
+export const PaginationUtils = styled.div`
 	flex: 1;
-	text-align: right;
+	text-align:right;
+	display: flex;
+	justify-content: flex-end;
+`;
+
+export const PageNumber = styled.div`
+	display: flex;
+	padding: 0 10px;
+	align-items: center;
+	justify-content: flex-end;
+`;
+
+export const PageLimit = PageNumber.extend`
+	border-right: 1px solid #ccc;
 `;
 
 export const withPagination = (WrappedComponent) => {
@@ -98,10 +112,9 @@ export const withPagination = (WrappedComponent) => {
 		}
 
 		getPaginationLinks(pageCount: number, currentPage: number) {
-			const pages = [...Array(pageCount)];
 			return (
 				<ul>
-					{pages.map((_, i) => {
+					{[...Array(pageCount)].map((_, i) => {
 						return (
 							<PaginationLink
 								isActive={i + 1 === currentPage}
@@ -116,6 +129,20 @@ export const withPagination = (WrappedComponent) => {
 			);
 		}
 
+		handleLimitChange(e) {
+			const allData = this.state.allData;
+			const limit = Number(e.target.value) || allData.length;
+			const pageData = allData.slice(0, limit);
+			const pages = Math.ceil(allData.length / limit);
+			const currentPage = 1;
+			this.setState({limit, pageData, currentPage, pages});
+		}
+
+		getLimitOptions() {
+			const options = [...Array(Math.floor(this.state.allData.length / this.props.limit))].map((_, i) => (i + 1) * this.props.limit);
+			return [...options, 'show all'];
+		}
+
 		render() {
 
 			const { pages, currentPage, pageData } = this.state;
@@ -128,7 +155,7 @@ export const withPagination = (WrappedComponent) => {
 						handleNewData={this.paginateNewData}
 						{...this.props}
 					/>
-					<PaginationWrapper>
+					<PaginationToolbar>
 						<PaginationNav>
 							<IconButton
 								disabled={currentPage === 1}
@@ -146,10 +173,20 @@ export const withPagination = (WrappedComponent) => {
 								<ChevronRight />
 							</IconButton>
 						</PaginationNav>
-						<PaginationPageNumber>
-							{this.getPageNumber(total)}
-						</PaginationPageNumber>
-					</PaginationWrapper>
+						<PaginationUtils>
+							<PageLimit>
+								<SelectBox
+									label="Limit"
+									value={this.state.limit}
+									onChange={this.handleLimitChange}
+									data={this.getLimitOptions()}
+								/>
+							</PageLimit>
+							<PageNumber>
+								{this.getPageNumber(total)}
+							</PageNumber>
+						</PaginationUtils>
+					</PaginationToolbar>
 				</div>
 			);
 		}

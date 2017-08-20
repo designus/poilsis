@@ -6,7 +6,6 @@ import {
 	CheckboxGroup,
 	getCheckboxOptions,
 	SelectBox,
-	getSelectOptions,
 	TextInput,
 } from '../../components';
 
@@ -147,7 +146,7 @@ export class AddItemForm extends React.Component<any, any> {
 					onChange={this.handleInputChange(CITY_KEY)}
 					showErrors={showErrors}
 					errors={errors[CITY_KEY]}
-					options={getSelectOptions(this.props.citiesMap)}
+					data={this.props.citiesMap}
 				/>
 				<CheckboxGroup
 					label={TYPES_LABEL}
