@@ -14,15 +14,24 @@ export interface IGenericTableColumn {
 	format?: any;
 }
 
-export class GenericTable extends React.Component<any, any> {
+export interface IGenericTableProps {
+	order?: OrderType;
+	orderBy?: string;
+	dataMap?: IGenericDataMap<object>;
+	pageData?: string[];
+	columns?: IGenericTableColumn[];
+	handleNewData?: (data: string[]) => void;
+}
+
+export class GenericTable extends React.Component<IGenericTableProps, any> {
 
 	constructor(props) {
 		super(props);
 		autoBind(this);
 
 		this.state = {
-			order: props.order || 'asc',
-			orderBy: null,
+			order: props.order || null,
+			orderBy: props.orderBy || null,
 			allData: Object.keys(props.dataMap),
 		};
 	}
@@ -42,9 +51,16 @@ export class GenericTable extends React.Component<any, any> {
 	}
 
 	handleSort(prop: string, sortType: SortType) {
-		const orderBy = prop;
-		const order = this.state.orderBy === prop && this.state.order === 'desc' ? 'asc' : 'desc';
-		const data = [...this.state.allData].sort(this.sortData(this.props.dataMap, order, orderBy, sortType));
+		let order;
+		if (!this.state.order) {
+			order = 'asc';
+		} else if (this.state.order === 'asc') {
+			order = 'desc';
+		}
+		const orderBy = order ? prop : null;
+		const dataCopy = [...this.state.allData];
+		const data = order ? dataCopy.sort(this.sortData(this.props.dataMap, order, orderBy, sortType)) : dataCopy;
+
 		this.setState({order, orderBy});
 		this.props.handleNewData(data);
 	}
