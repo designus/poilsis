@@ -1,9 +1,49 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
+import * as Validators from '../../helpers/validation/validators';
 
-import {connect} from 'react-redux';
-import { AddItemForm } from '../../components';
+import { connect } from 'react-redux';
+import { AddItem, extendWithForm } from '../../components';
 import { addNewItemState, postItem } from '../../actions';
+import { IGenericFormState, TGenericFormModel, getKeyMap, getFormFieldsFromModel } from '../../helpers';
+
+import {
+	NAME_LABEL,
+	CITY_LABEL,
+	TYPES_LABEL,
+	ADDRESS_LABEL,
+	DESCRIPTION_LABEL,
+} from '../../data-strings';
+
+export interface INewItemFields {
+	address?: string;
+	city?: string;
+	description?: string;
+	name?: string;
+	types?: string[];
+}
+
+export type TItemState = IGenericFormState<INewItemFields>;
+export type TItemModel = TGenericFormModel<INewItemFields>;
+
+export const itemModel: TItemModel = {
+	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
+	city: getKeyMap('', CITY_LABEL, [Validators.required]),
+	types: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
+	address: getKeyMap('', ADDRESS_LABEL, [Validators.required]),
+	description: getKeyMap('', DESCRIPTION_LABEL, []),
+};
+
+export const getInitialItemState = (): TItemState => {
+	return {
+		fields: getFormFieldsFromModel(itemModel),
+		errors: {},
+		showErrors: false,
+		model: itemModel,
+	};
+};
+
+const AddItemForm = extendWithForm(AddItem);
 
 class AddItemPageComponent extends React.Component<any, any> {
 

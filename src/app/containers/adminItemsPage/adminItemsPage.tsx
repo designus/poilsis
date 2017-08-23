@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { fetchItems } from '../../actions/items';
 import { GenericTable, IGenericTableColumn, ItemTypesList, withPagination } from '../../components';
+import { Link } from 'react-router';
 
 const PaginatedTable = withPagination(GenericTable);
 
@@ -65,7 +66,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 				format: (id) => {
 					return (
 						<div>
-							<div onClick={this.onEdit.bind(null, id)}>Edit action</div>
+							<Link	to={`/admin/items/edit/${id}`}>Edit</Link>
 							<div onClick={this.onDelete.bind(null, id)}>Delete action</div>
 						</div>
 					);

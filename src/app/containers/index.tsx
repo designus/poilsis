@@ -1,5 +1,6 @@
 export * from './addItemPage/';
 export * from './adminItemsPage/';
+export * from './adminItemsEditPage/';
 export * from './adminPage/';
 export * from './cityPage/';
 export * from './clientPage/';

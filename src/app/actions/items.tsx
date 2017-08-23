@@ -1,4 +1,4 @@
-import { addItemsToCitiesState } from './cities';
+import { addItemsToCitiesState, addItemToCity } from './cities';
 import { startRequest, responseSuccess, responseFailure } from './global';
 import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias } from '../helpers';
 import { IItemsMap } from '../reducers';
@@ -30,8 +30,25 @@ export const receiveItem = (item) => {
 	};
 };
 
-export const fetchItems = (cityId = null) => {
+export const fetchItem = (itemId) => {
+	return dispatch => {
+		dispatch(startRequest());
+		return fetch(`http://localhost:3000/api/items/item/${itemId}`)
+			.then(items => items.json())
+			.then(items => {
+				const item = items[0];
+				dispatch(receiveItem(item));
+				dispatch(addItemToCity(item.city, item.id));
+				dispatch(responseSuccess());
+			})
+			.catch(err => {
+				console.error(err);
+				dispatch(responseFailure(err));
+			});
+	};
+};
 
+export const fetchItems = (cityId = null) => {
 	const endpoint = cityId	?
 		`http://localhost:3000/api/items/city/${cityId}` :
 		'http://localhost:3000/api/items';

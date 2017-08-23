@@ -1,5 +1,6 @@
-export * from './addItemForm';
+export * from './addItem';
 export * from './checkboxGroup';
+export * from './form';
 export * from './genericTable';
 export * from './mainMenu';
 export * from './notFound';

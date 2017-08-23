@@ -1,6 +1,5 @@
-import { NewItemModelType } from '../components/addItemForm';
-import { ValueType, IKeyMap, IGenericState, IGenericDataMap } from './types';
-import { INewItemFields, NewItemErrorsType, IItemsMap, ICityItems, ICityState } from '../reducers';
+import { ValueType, IKeyMap, IGenericState, IGenericDataMap, TGenericFormModel } from './types';
+import { IItemsMap, ICityItems, ICityState } from '../reducers';
 
 export const getSelectedCity = (citiesState: ICityState, reqParam: string) => {
 	return new Promise((resolve, reject) => {
@@ -35,17 +34,17 @@ export const getNormalizedData = (data: any[], initial = {dataMap: {}, aliases: 
 	}, initial);
 };
 
-export const getNewItemFieldsFromModel = (model: NewItemModelType): INewItemFields => {
-	return Object.keys(model).reduce((acc: INewItemFields, key: string) => {
+export const getFormFieldsFromModel = (model: TGenericFormModel<object>) => {
+	return Object.keys(model).reduce((acc: {[key: string]: any}, key: string) => {
 		acc[key] = model[key].value;
 		return acc;
 	}, {});
 };
 
-export const getValidationErrors = (state: INewItemFields, model: NewItemModelType) => {
-	return Object.keys(model).reduce((errors: NewItemErrorsType, key: string) => {
+export const getValidationErrors = (fields: object, model: TGenericFormModel<object>) => {
+	return Object.keys(model).reduce((errors, key: string) => {
 		const validationMsg = model[key].validators.reduce((acc: string[], errorMessageFn) => {
-			const getErrorMsg = errorMessageFn(state[key], state);
+			const getErrorMsg = errorMessageFn(fields[key], fields);
 			return getErrorMsg
 				? [...acc, getErrorMsg(model[key].title)]
 				: [...acc];

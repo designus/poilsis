@@ -30,9 +30,19 @@ router.route('/')
 		});
 	});
 
+router.route('/item/:itemId')
+	.get((req, res) => {
+		ItemsModel.find({id: req.params.itemId}, (err, item) => {
+			if (err) {
+				res.send(err);
+			}
+			res.json(item);
+		});
+	});
+
 router.route('/city/:cityId')
 	.get((req, res) => {
-		ItemsModel.find({city: req.params.cityId}, (err, items) => {
+		ItemsModel.findOne({city: req.params.cityId}, (err, items) => {
 			if (err) {
 				res.send(err);
 			}
