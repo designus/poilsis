@@ -1,5 +1,6 @@
 export * from './addItem';
 export * from './checkboxGroup';
+export * from './checkboxOptions';
 export * from './form';
 export * from './genericTable';
 export * from './mainMenu';
@@ -8,5 +9,6 @@ export * from './itemsList';
 export * from './itemTypesList';
 export * from './pagination';
 export * from './selectBox';
+export * from './selectOptions';
 export * from './textInput';
 export * from './validationErrors';

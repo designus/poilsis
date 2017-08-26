@@ -1,7 +1,7 @@
 import { ValueType, IKeyMap, IGenericState, IGenericDataMap, TGenericFormModel, IGenericFormState  } from './types';
 import { IItemsMap, ICityItems, ICityState } from '../reducers';
 
-export const getSelectedCity = (citiesState: ICityState, reqParam: string) => {
+export function getSelectedCity(citiesState: ICityState, reqParam: string) {
 	return new Promise((resolve, reject) => {
 		const {aliases} = citiesState;
 		const selectedCity = aliases.find(({alias, id}) => alias === reqParam);
@@ -13,7 +13,7 @@ export const getSelectedCity = (citiesState: ICityState, reqParam: string) => {
 	});
 };
 
-export const getGroupedItemsByCityId = (dataMap: IGenericDataMap<IItemsMap>) => {
+export function getGroupedItemsByCityId(dataMap: IGenericDataMap<IItemsMap>) {
 	return Object.keys(dataMap).reduce((acc: ICityItems, itemId: string) => {
 		const item: IItemsMap = dataMap[itemId];
 		const state = acc[item.city];
@@ -26,7 +26,7 @@ export const getGroupedItemsByCityId = (dataMap: IGenericDataMap<IItemsMap>) => 
 	}, {});
 };
 
-export const getNormalizedData = (data: any[], initial = {dataMap: {}, aliases: []}) => {
+export function getNormalizedData(data: any[], initial = {dataMap: {}, aliases: []}) {
 	return data.reduce((acc: IGenericState<object>, item: any) => {
 		acc.dataMap[item.id] = item;
 		acc.aliases.push({id: item.id, alias: item.alias});
@@ -34,7 +34,7 @@ export const getNormalizedData = (data: any[], initial = {dataMap: {}, aliases: 
 	}, initial);
 };
 
-export const getFormFieldsFromModel = (model: TGenericFormModel<object>) => {
+export function getFormFieldsFromModel(model: TGenericFormModel<object>) {
 	return Object.keys(model).reduce((acc: {[key: string]: any}, key: string) => {
 		const modelKeyValue = model[key].value;
 		let newValue;
@@ -50,7 +50,7 @@ export const getFormFieldsFromModel = (model: TGenericFormModel<object>) => {
 	}, {});
 };
 
-export const getFormStateWithData = (data, emptyState: IGenericFormState<object>) => {
+export function getFormStateWithData(data, emptyState: IGenericFormState<object>) {
 	const fields = Object.keys(emptyState.fields).reduce((acc, key) => {
 		acc[key] = data[key];
 		return acc;
@@ -59,7 +59,7 @@ export const getFormStateWithData = (data, emptyState: IGenericFormState<object>
 	return {...emptyState, fields};
 };
 
-export const getInitialFormState = (model: TGenericFormModel<object>): IGenericFormState<object> => {
+export function getInitialFormState(model: TGenericFormModel<object>): IGenericFormState<object> {
 	return {
 		fields: getFormFieldsFromModel(model),
 		errors: {},
@@ -68,7 +68,7 @@ export const getInitialFormState = (model: TGenericFormModel<object>): IGenericF
 	};
 };
 
-export const getValidationErrors = (fields: object, model: TGenericFormModel<object>) => {
+export function getValidationErrors(fields: object, model: TGenericFormModel<object>) {
 	return Object.keys(model).reduce((errors, key: string) => {
 		const validationMsg = model[key].validators.reduce((acc: string[], errorMessageFn) => {
 			const getErrorMsg = errorMessageFn(fields[key], fields);
@@ -82,7 +82,7 @@ export const getValidationErrors = (fields: object, model: TGenericFormModel<obj
 	}, {});
 };
 
-export const getKeyMap = (value: ValueType, title: string, validators: any[]): IKeyMap => {
+export function getKeyMap(value: ValueType, title: string, validators: any[]): IKeyMap {
 	return { value, title, validators };
 };
 

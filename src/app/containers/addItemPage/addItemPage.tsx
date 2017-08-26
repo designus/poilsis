@@ -34,15 +34,6 @@ export const itemModel: TItemModel = {
 	description: getKeyMap('', DESCRIPTION_LABEL, []),
 };
 
-// export const getInitialItemState = (): TItemState => {
-// 	return {
-// 		fields: getFormFieldsFromModel(itemModel),
-// 		errors: {},
-// 		showErrors: false,
-// 		model: itemModel,
-// 	};
-// };
-
 const AddItemForm = extendWithForm(AddItem);
 
 class AddItemPageComponent extends React.Component<any, any> {

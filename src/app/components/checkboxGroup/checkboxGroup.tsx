@@ -1,43 +1,22 @@
 import * as React from 'react';
-import { ValidationErrors } from '../../components';
-import Checkbox from 'material-ui/Checkbox';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import { ValidationErrors, CheckboxOptions, ICheckboxOptionsParams } from '../../components';
 
-export const isCheckboxChecked = (checkedList, option) => checkedList.indexOf(option) > -1;
+interface ICheckboxGroupParams extends ICheckboxOptionsParams {
+	label: string;
+	showErrors: boolean;
+	errors: string[];
+}
 
-export const getCheckboxOptions = (data, onCheck, checkedList = [], labelKey = 'name') => {
-
-	const isDataArray = data.constructor === Array;
-	const options = isDataArray ? data : Object.keys(data);
-	return (
-		<FormGroup row>
-			{
-				options.map((option, i) => {
-					const label = isDataArray ? option : data[option][labelKey];
-					return (
-						<FormControlLabel
-							key={i}
-							control={
-								<Checkbox
-									onChange={onCheck(option)}
-									checked={isCheckboxChecked(checkedList, option)}
-								/>
-							}
-							label={label}
-						/>
-					);
-				})
-			}
-		</FormGroup>
-	);
-};
-
-export const CheckboxGroup = ({label, showErrors, errors, options}) => {
+export function CheckboxGroup({data, label, showErrors, errors, onChange, checkedItems}: ICheckboxGroupParams) {
 	return (
 		<div>
 			{label}
 			<br />
-			{options}
+			<CheckboxOptions
+				data={data}
+				onChange={onChange}
+				checkedItems={checkedItems}
+			/>
 			<ValidationErrors
 				padding={'0'}
 				showErrors={showErrors}

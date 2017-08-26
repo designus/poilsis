@@ -40,6 +40,7 @@ export function extendWithForm<T extends IFormProps>(
 		handleInputChange = (name: string) => (e, i, val) => {
 			const value = val ? val : e.target.value;
 			const newState = this.getNewState(name, value);
+
 			this.setState(newState);
 		}
 

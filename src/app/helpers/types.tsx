@@ -43,5 +43,5 @@ export interface IFormProps {
 	handleOnBlur?: any;
 	handleInputChange?: any;
 	handleCheckboxToggle?: any;
-	state?: any;
+	state?: IGenericFormState<object>;
 }

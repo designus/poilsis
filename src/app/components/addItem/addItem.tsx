@@ -1,12 +1,7 @@
 import * as React from 'react';
 import Button from 'material-ui/Button';
 
-import {
-	CheckboxGroup,
-	getCheckboxOptions,
-	SelectBox,
-	TextInput,
-} from '../../components';
+import { CheckboxGroup,	SelectBox, TextInput } from '../../components';
 import { ICityMap, ITypesMap } from '../../reducers';
 import { IFormProps, IGenericDataMap } from '../../helpers';
 import {
@@ -54,7 +49,9 @@ export class AddItem extends React.Component<IAddItemProps, any> {
 					label={TYPES_LABEL}
 					showErrors={showErrors}
 					errors={errors[TYPES_KEY]}
-					options={getCheckboxOptions(this.props.typesMap, this.props.handleCheckboxToggle(TYPES_KEY), fields[TYPES_KEY])}
+					onChange={this.props.handleCheckboxToggle(TYPES_KEY)}
+					data={this.props.typesMap}
+					checkedItems={fields[TYPES_KEY]}
 				/>
 				<TextInput
 					label={ADDRESS_LABEL}
