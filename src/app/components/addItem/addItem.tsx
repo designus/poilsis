@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Button from 'material-ui/Button';
 
 import {
 	CheckboxGroup,
@@ -6,11 +7,8 @@ import {
 	SelectBox,
 	TextInput,
 } from '../../components';
-
-import { IFormProps } from '../../helpers';
-
-import Button from 'material-ui/Button';
-
+import { ICityMap, ITypesMap } from '../../reducers';
+import { IFormProps, IGenericDataMap } from '../../helpers';
 import {
 	NAME_LABEL,
 	CITY_LABEL,
@@ -24,8 +22,8 @@ import {
 } from '../../data-strings';
 
 export interface IAddItemProps extends IFormProps {
-	citiesMap: any;
-	typesMap: any;
+	citiesMap: IGenericDataMap<ICityMap>;
+	typesMap: IGenericDataMap<ITypesMap>;
 }
 
 export class AddItem extends React.Component<IAddItemProps, any> {

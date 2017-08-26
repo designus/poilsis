@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { getValidationErrors, IGenericFormState } from '../../helpers';
+import { getValidationErrors, IGenericFormState, voidFn, IFormProps } from '../../helpers';
 import * as autoBind from 'react-autobind';
 
-export const extendWithForm = (WrappedComponent) => {
+export function extendWithForm<T extends IFormProps>(
+	WrappedComponent: React.ComponentClass<T> | React.StatelessComponent<T>,
+): React.ComponentClass<T> {
 
-	return class extends React.Component<any, any> {
+	return class extends React.Component<T, {}> {
 
 		state: IGenericFormState<object> = this.props.initialState;
+		onSaveState = this.props.onSaveState || voidFn;
 
 		constructor(props) {
 			super(props);
@@ -14,10 +17,12 @@ export const extendWithForm = (WrappedComponent) => {
 		}
 
 		componentWillReceiveProps(nextProps) {
-			this.setState(nextProps.initialState);
+			if (this.props.initialState !== nextProps.initialState) {
+				this.setState(nextProps.initialState);
+			}
 		}
 
-		componentWillMount() {
+		componentDidMount() {
 			this.setState({errors: getValidationErrors(this.state.fields, this.state.model)});
 		}
 
@@ -58,20 +63,17 @@ export const extendWithForm = (WrappedComponent) => {
 		}
 
 		handleOnBlur() {
-			this.props.onSaveState(this.state);
+			this.onSaveState(this.state);
 		}
 
 		handleSubmit(e) {
 			e.preventDefault();
-
 			if (this.isFormValid(this.state.errors)) {
-				this.props.onSaveState(this.state);
+				this.onSaveState(this.state);
 				this.props.onItemSubmit(this.state.fields);
 			} else {
-				this.props.onSaveState({
-					...this.state,
-					showErrors: true,
-				});
+				this.setState({showErrors: true});
+				this.onSaveState({...this.state, showErrors: true});
 			}
 		}
 

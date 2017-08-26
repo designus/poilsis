@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { ValidationErrors } from '../../components';
 import styled from 'styled-components';
+import { ValidationErrors } from '../../components';
+import { IGenericDataMap } from '../../helpers';
 
 export interface ISelectBoxProps {
-	data?: any[];
+	data?: any[]|IGenericDataMap<object>;
 	dataKey?: string;
 	label?: string;
 	value?: string;

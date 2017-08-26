@@ -5,7 +5,7 @@ import * as Validators from '../../helpers/validation/validators';
 import { connect } from 'react-redux';
 import { AddItem, extendWithForm } from '../../components';
 import { addNewItemState, postItem } from '../../actions';
-import { IGenericFormState, TGenericFormModel, getKeyMap, getFormFieldsFromModel } from '../../helpers';
+import { IGenericFormState, TGenericFormModel, getKeyMap } from '../../helpers';
 
 import {
 	NAME_LABEL,
@@ -34,14 +34,14 @@ export const itemModel: TItemModel = {
 	description: getKeyMap('', DESCRIPTION_LABEL, []),
 };
 
-export const getInitialItemState = (): TItemState => {
-	return {
-		fields: getFormFieldsFromModel(itemModel),
-		errors: {},
-		showErrors: false,
-		model: itemModel,
-	};
-};
+// export const getInitialItemState = (): TItemState => {
+// 	return {
+// 		fields: getFormFieldsFromModel(itemModel),
+// 		errors: {},
+// 		showErrors: false,
+// 		model: itemModel,
+// 	};
+// };
 
 const AddItemForm = extendWithForm(AddItem);
 

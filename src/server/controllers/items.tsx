@@ -32,7 +32,7 @@ router.route('/')
 
 router.route('/item/:itemId')
 	.get((req, res) => {
-		ItemsModel.find({id: req.params.itemId}, (err, item) => {
+		ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
 			if (err) {
 				res.send(err);
 			}
@@ -42,7 +42,7 @@ router.route('/item/:itemId')
 
 router.route('/city/:cityId')
 	.get((req, res) => {
-		ItemsModel.findOne({city: req.params.cityId}, (err, items) => {
+		ItemsModel.find({city: req.params.cityId}, (err, items) => {
 			if (err) {
 				res.send(err);
 			}

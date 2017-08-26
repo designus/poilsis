@@ -34,9 +34,8 @@ export const fetchItem = (itemId) => {
 	return dispatch => {
 		dispatch(startRequest());
 		return fetch(`http://localhost:3000/api/items/item/${itemId}`)
-			.then(items => items.json())
-			.then(items => {
-				const item = items[0];
+			.then(item => item.json())
+			.then(item => {
 				dispatch(receiveItem(item));
 				dispatch(addItemToCity(item.city, item.id));
 				dispatch(responseSuccess());

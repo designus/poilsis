@@ -1,4 +1,4 @@
-import { ValueType, IKeyMap, IGenericState, IGenericDataMap, TGenericFormModel } from './types';
+import { ValueType, IKeyMap, IGenericState, IGenericDataMap, TGenericFormModel, IGenericFormState  } from './types';
 import { IItemsMap, ICityItems, ICityState } from '../reducers';
 
 export const getSelectedCity = (citiesState: ICityState, reqParam: string) => {
@@ -36,9 +36,36 @@ export const getNormalizedData = (data: any[], initial = {dataMap: {}, aliases: 
 
 export const getFormFieldsFromModel = (model: TGenericFormModel<object>) => {
 	return Object.keys(model).reduce((acc: {[key: string]: any}, key: string) => {
-		acc[key] = model[key].value;
+		const modelKeyValue = model[key].value;
+		let newValue;
+		if (Array.isArray(modelKeyValue)) {
+			newValue = [...modelKeyValue];
+		} else if (typeof modelKeyValue === 'object' && modelKeyValue !== null) {
+			newValue = {...modelKeyValue};
+		} else {
+			newValue = modelKeyValue;
+		}
+		acc[key] = newValue;
 		return acc;
 	}, {});
+};
+
+export const getFormStateWithData = (data, emptyState: IGenericFormState<object>) => {
+	const fields = Object.keys(emptyState.fields).reduce((acc, key) => {
+		acc[key] = data[key];
+		return acc;
+	}, {});
+
+	return {...emptyState, fields};
+};
+
+export const getInitialFormState = (model: TGenericFormModel<object>): IGenericFormState<object> => {
+	return {
+		fields: getFormFieldsFromModel(model),
+		errors: {},
+		showErrors: false,
+		model,
+	};
 };
 
 export const getValidationErrors = (fields: object, model: TGenericFormModel<object>) => {
@@ -58,3 +85,5 @@ export const getValidationErrors = (fields: object, model: TGenericFormModel<obj
 export const getKeyMap = (value: ValueType, title: string, validators: any[]): IKeyMap => {
 	return { value, title, validators };
 };
+
+export const voidFn = (f) => f;
