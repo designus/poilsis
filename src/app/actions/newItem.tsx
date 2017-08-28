@@ -2,6 +2,7 @@ import axios from 'axios';
 import { startRequest, responseSuccess, responseFailure } from './global';
 import { receiveItem } from './items';
 import { addItemToCity } from './cities';
+import { getMergedErrors } from '../helpers';
 
 export const ADD_NEW_ITEM_STATE = 'ADD_NEW_ITEM_STATE';
 export const CLEAR_FIELDS = 'CLEAR_FIELDS';
@@ -26,17 +27,6 @@ export const showBackendValidationErrors = (errors) => {
 		type: SHOW_BACKEND_VALIDATION_ERRORS,
 		errors,
 	};
-};
-
-export const getMergedErrors = (backendErrors, frontendErrors) => {
-	return Object.keys(frontendErrors).reduce((acc, field) => {
-
-		const fieldErrors = backendErrors[field]
-		? [...frontendErrors[field], backendErrors[field].message]
-		: frontendErrors[field];
-
-		return {...acc, [field]: fieldErrors };
-	}, {});
 };
 
 export const postItem = (item) => {

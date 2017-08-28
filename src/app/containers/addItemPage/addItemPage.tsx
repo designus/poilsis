@@ -30,7 +30,7 @@ export const itemModel: TItemModel = {
 	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
 	city: getKeyMap('', CITY_LABEL, [Validators.required]),
 	types: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
-	address: getKeyMap('', ADDRESS_LABEL, [Validators.required]),
+	address: getKeyMap('', ADDRESS_LABEL, []),
 	description: getKeyMap('', DESCRIPTION_LABEL, []),
 };
 
@@ -54,7 +54,7 @@ class AddItemPageComponent extends React.Component<any, any> {
 	render() {
 		return (
 			<div>
-				<h1>Pasiskelbkite</h1>
+				<h1>Post your ad</h1>
 				<AddItemForm
 					onSaveState={this.onSaveState}
 					onItemSubmit={this.onItemSubmit}

@@ -1,7 +1,9 @@
-import { addItemsToCitiesState, addItemToCity } from './cities';
+import axios from 'axios';
+
+import { addItemsToCitiesState, addItemToCity, removeItemFromCity } from './cities';
 import { startRequest, responseSuccess, responseFailure } from './global';
-import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias } from '../helpers';
-import { IItemsMap } from '../reducers';
+import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias /*getMergedErrors */ } from '../helpers';
+import { IItemsMap, IAppState } from '../reducers';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
@@ -30,24 +32,7 @@ export const receiveItem = (item) => {
 	};
 };
 
-export const fetchItem = (itemId) => {
-	return dispatch => {
-		dispatch(startRequest());
-		return fetch(`http://localhost:3000/api/items/item/${itemId}`)
-			.then(item => item.json())
-			.then(item => {
-				dispatch(receiveItem(item));
-				dispatch(addItemToCity(item.city, item.id));
-				dispatch(responseSuccess());
-			})
-			.catch(err => {
-				console.error(err);
-				dispatch(responseFailure(err));
-			});
-	};
-};
-
-export const fetchItems = (cityId = null) => {
+export const getItems = (cityId = null) => {
 	const endpoint = cityId	?
 		`http://localhost:3000/api/items/city/${cityId}` :
 		'http://localhost:3000/api/items';
@@ -55,10 +40,10 @@ export const fetchItems = (cityId = null) => {
 	return (dispatch) => {
 
 		dispatch(startRequest());
-		return fetch(endpoint)
-			.then(data => data.json())
-			.then(data => {
+		return axios.get(endpoint)
+			.then(response => {
 
+				const { data } = response;
 				const { dataMap, aliases } = getNormalizedData(data);
 
 				const groupedItems = cityId ? {[cityId]: Object.keys(dataMap)} : getGroupedItemsByCityId(dataMap);
@@ -73,5 +58,54 @@ export const fetchItems = (cityId = null) => {
 				console.error(err);
 				dispatch(responseFailure(err));
 			});
+	};
+};
+
+export const getItem = (itemId) => {
+	return dispatch => {
+		dispatch(startRequest());
+
+		return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
+			.then(response => {
+				const item = response.data;
+				dispatch(receiveItem(item));
+				dispatch(addItemToCity(item.city, item.id));
+				dispatch(responseSuccess());
+			})
+			.catch(err => {
+				console.error(err);
+				dispatch(responseFailure(err));
+			});
+	};
+};
+
+export const putItem = (item, itemId) => {
+	return (dispatch, getState) => {
+
+		const appState: IAppState = getState();
+		const oldItem = appState.items.dataMap[itemId];
+
+		dispatch(startRequest());
+
+		return axios.put(`http://localhost:3000/api/items/item/${itemId}`, item)
+			.then(response => response.data)
+			.then(item => {
+				if (item.errors) {
+					console.log('Errors', item.errors);
+					// const validationErrors = getMergedErrors(item.errors, getState().newItem.errors);
+				} else {
+					dispatch(receiveItem(item));
+					if (oldItem.city !== item.city) {
+						dispatch(addItemToCity(item.city, itemId));
+						dispatch(removeItemFromCity(oldItem.city, itemId));
+					}
+					dispatch(responseSuccess());
+				}
+			})
+			.catch(err => {
+				console.error(err);
+				dispatch(responseFailure(err));
+			});
+
 	};
 };

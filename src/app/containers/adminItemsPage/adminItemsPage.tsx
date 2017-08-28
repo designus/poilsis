@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { IAppState } from '../../reducers';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
-import { fetchItems } from '../../actions/items';
+import { getItems } from '../../actions/items';
 import { GenericTable, IGenericTableColumn, ItemTypesList, withPagination } from '../../components';
 import { Link } from 'react-router';
 
@@ -19,7 +19,7 @@ const PaginatedTable = withPagination(GenericTable);
 		if (itemsState.allItemsLoaded) {
 			return Promise.resolve();
 		} else {
-			return store.dispatch(fetchItems());
+			return store.dispatch(getItems());
 		}
 	},
 }])

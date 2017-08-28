@@ -25,6 +25,7 @@
     "@types/material-ui": "^0.17.23",
     "@types/mocha": "^2.2.38",
     "@types/moment": "^2.13.0",
+    "@types/mongodb": "^2.2.11",
     "@types/mongoose": "^4.7.18",
     "@types/node": "^6.10.0",
     "@types/react": "^15.0.34",

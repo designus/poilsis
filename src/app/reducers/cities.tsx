@@ -1,4 +1,4 @@
-import { RECEIVE_CITIES, SELECT_CITY, ADD_ITEM_TO_CITY, ADD_ITEMS } from '../actions/cities';
+import { RECEIVE_CITIES, SELECT_CITY, ADD_ITEM_TO_CITY, REMOVE_ITEM_FROM_CITY, ADD_ITEMS } from '../actions/cities';
 import { IGenericState } from '../helpers';
 
 export interface ICityMap {
@@ -35,6 +35,15 @@ export const cities = (state: ICityState = null, action): ICityState => {
 						...(state.items[action.cityId] || []),
 						action.itemId,
 					],
+				},
+			};
+		case REMOVE_ITEM_FROM_CITY:
+			const cityItems = [...state.items[action.cityId]].filter(itemId => itemId !== action.itemId);
+			return {
+				...state,
+				items: {
+					...state.items,
+					[action.cityId]: cityItems,
 				},
 			};
 		default:

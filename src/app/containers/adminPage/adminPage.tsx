@@ -12,7 +12,10 @@ class AdminPageComponent extends React.Component<any, any> {
 				<div>
 					<ul>
 						<li>
-							<IndexLink to="/admin" activeClassName="active">Home</IndexLink>
+							<IndexLink to="/" activeClassName="active">Home</IndexLink>
+						</li>
+						<li>
+							<Link to="/admin" activeStyle={{ color: 'red' }} >Admin page home</Link>
 						</li>
 						<li>
 							<Link	activeStyle={{ color: 'red' }} to="/admin/items">
@@ -23,7 +26,7 @@ class AdminPageComponent extends React.Component<any, any> {
 					</ul>
 				</div>
 				<div>
-					<h1>Sveiki atvyke</h1>
+					<h1>Welcome to admin area</h1>
 					{this.props.children}
 				</div>
 			</div>

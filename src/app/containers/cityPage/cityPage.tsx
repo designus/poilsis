@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../reducers';
-import { fetchItems } from '../../actions/items';
+import { getItems } from '../../actions/items';
 import { selectCity } from '../../actions/cities';
 import { getSelectedCity } from '../../helpers';
 
@@ -22,7 +22,7 @@ import { ItemsList, NotFound } from '../../components';
 				const selectedCity = citiesState.dataMap[id];
 
 				if (selectedCity && !allItemsLoaded) {
-					return store.dispatch(fetchItems(id));
+					return store.dispatch(getItems(id));
 				} else {
 					return Promise.resolve();
 				}

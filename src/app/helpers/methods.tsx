@@ -52,7 +52,7 @@ export function getFormFieldsFromModel(model: TGenericFormModel<object>) {
 
 export function getFormStateWithData(data, emptyState: IGenericFormState<object>) {
 	const fields = Object.keys(emptyState.fields).reduce((acc, key) => {
-		acc[key] = data[key];
+		acc[key] = data[key] || emptyState.fields[key];
 		return acc;
 	}, {});
 
@@ -87,3 +87,14 @@ export function getKeyMap(value: ValueType, title: string, validators: any[]): I
 };
 
 export const voidFn = (f) => f;
+
+export function getMergedErrors(backendErrors, frontendErrors) {
+	return Object.keys(frontendErrors).reduce((acc, field) => {
+
+		const fieldErrors = backendErrors[field]
+		? [...frontendErrors[field], backendErrors[field].message]
+		: frontendErrors[field];
+
+		return {...acc, [field]: fieldErrors };
+	}, {});
+};

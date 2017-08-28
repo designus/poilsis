@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppState } from '../../reducers';
-import { fetchItem } from '../../actions';
+import { getItem, putItem } from '../../actions';
 import { AddItem, extendWithForm } from '../../components';
 import { itemModel } from '../../containers';
 import { getFormStateWithData, getInitialFormState } from '../../helpers';
@@ -10,26 +10,31 @@ const EditItemForm = extendWithForm(AddItem);
 
 class CreateEditItemPageComponent extends React.Component<any, any> {
 
+	state = getInitialFormState(itemModel);
+	isCreatePage = !Boolean(this.props.params.id);
+
 	constructor(props) {
 		super(props);
 	}
 
 	componentDidMount() {
-		this.props.dispatch(fetchItem(this.props.params.id));
+		this.props.dispatch(getItem(this.props.params.id));
 	}
 
-	onItemSubmit(item) {
-		console.log('Submit...');
+	onItemSubmit = (item) => {
+		this.props.dispatch(putItem(item, this.props.params.id)).then(() => {
+			if (this.isCreatePage) {
+				this.setState(getInitialFormState(itemModel));
+			}
+		});
 	}
 
 	render() {
 
 		const loadedItem = this.props.itemsMap[this.props.params.id];
-		const isCreatePage = !Boolean(this.props.params.id);
-		const emptyState = getInitialFormState(itemModel);
-		const finalState = loadedItem && getFormStateWithData(loadedItem, emptyState) || emptyState;
+		const finalState = loadedItem && getFormStateWithData(loadedItem, this.state) || this.state;
 
-		if (loadedItem || isCreatePage) {
+		if (loadedItem || this.isCreatePage) {
 
 			return (
 				<EditItemForm

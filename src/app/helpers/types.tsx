@@ -16,6 +16,10 @@ export type TGenericFormErrors<T> = {
 	[I in keyof T]?: string[]
 };
 
+export type TGenericSchemaMap<T> = {
+	[I in keyof T]: any;
+};
+
 export interface IGenericFormState<T> {
 	fields: T;
 	errors: TGenericFormErrors<T>;
@@ -45,3 +49,7 @@ export interface IFormProps {
 	handleCheckboxToggle?: any;
 	state?: IGenericFormState<object>;
 }
+
+export type IGenericModelSchema<T> = {
+	[I in keyof T]: any;
+};
