@@ -18,9 +18,10 @@ router.route('/')
 		const name = sanitize(req.body.name);
 		const city = sanitize(req.body.city);
 		const alias = sanitize(req.body.alias) || name;
+		const address = sanitize(req.body.address);
 		const types = req.body.types;
 
-		const newItem = {name, city, alias, types};
+		const newItem = {name, city, alias, types, address};
 
 		new ItemsModel(newItem).save((err, item) => {
 			if (err) {

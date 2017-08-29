@@ -21,12 +21,25 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 		this.props.dispatch(getItem(this.props.params.id));
 	}
 
+	getBackendErrors(errors) {
+		return Object.keys(errors).reduce((acc, key) => {
+			acc[key] = [errors[key].message];
+			return acc;
+		}, {});
+	}
+
 	onItemSubmit = (item) => {
-		this.props.dispatch(putItem(item, this.props.params.id)).then(() => {
-			if (this.isCreatePage) {
-				this.setState(getInitialFormState(itemModel));
-			}
-		});
+		if (this.isCreatePage) {
+			this.setState(getInitialFormState(itemModel));
+		} else {
+			this.props.dispatch(putItem(item, this.props.params.id)).then((errors) => {
+				if (errors) {
+					const newErrors = {...this.state.errors, ...this.getBackendErrors(errors)};
+					this.setState({errors: newErrors, showErrors: true});
+				}
+			});
+		}
+
 	}
 
 	render() {

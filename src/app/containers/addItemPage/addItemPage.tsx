@@ -30,7 +30,7 @@ export const itemModel: TItemModel = {
 	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
 	city: getKeyMap('', CITY_LABEL, [Validators.required]),
 	types: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
-	address: getKeyMap('', ADDRESS_LABEL, []),
+	address: getKeyMap('', ADDRESS_LABEL, [Validators.required]),
 	description: getKeyMap('', DESCRIPTION_LABEL, []),
 };
 
@@ -44,6 +44,7 @@ class AddItemPageComponent extends React.Component<any, any> {
 	}
 
 	onItemSubmit(item) {
+		console.log('Submitting', item);
 		this.props.postItem(item);
 	}
 

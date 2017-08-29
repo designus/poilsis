@@ -90,17 +90,19 @@ export const putItem = (item, itemId) => {
 		return axios.put(`http://localhost:3000/api/items/item/${itemId}`, item)
 			.then(response => response.data)
 			.then(item => {
-				if (item.errors) {
-					console.log('Errors', item.errors);
-					// const validationErrors = getMergedErrors(item.errors, getState().newItem.errors);
-				} else {
-					dispatch(receiveItem(item));
-					if (oldItem.city !== item.city) {
-						dispatch(addItemToCity(item.city, itemId));
-						dispatch(removeItemFromCity(oldItem.city, itemId));
+				return new Promise((resolve) => {
+					if (item.errors) {
+						resolve(item.errors);
+					} else {
+						dispatch(receiveItem(item));
+						if (oldItem.city !== item.city) {
+							dispatch(addItemToCity(item.city, itemId));
+							dispatch(removeItemFromCity(oldItem.city, itemId));
+						}
+						dispatch(responseSuccess());
+						resolve();
 					}
-					dispatch(responseSuccess());
-				}
+				});
 			})
 			.catch(err => {
 				console.error(err);

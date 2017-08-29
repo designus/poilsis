@@ -59,27 +59,20 @@ export function getFormStateWithData(data, emptyState: IGenericFormState<object>
 	return {...emptyState, fields};
 };
 
+export function getFormErrorsFromModel(model: TGenericFormModel<object>) {
+	return Object.keys(model).reduce((acc, key) => {
+		acc[key] = [];
+		return acc;
+	}, {});
+}
+
 export function getInitialFormState(model: TGenericFormModel<object>): IGenericFormState<object> {
 	return {
 		fields: getFormFieldsFromModel(model),
-		errors: {},
+		errors: getFormErrorsFromModel(model),
 		showErrors: false,
 		model,
 	};
-};
-
-export function getValidationErrors(fields: object, model: TGenericFormModel<object>) {
-	return Object.keys(model).reduce((errors, key: string) => {
-		const validationMsg = model[key].validators.reduce((acc: string[], errorMessageFn) => {
-			const getErrorMsg = errorMessageFn(fields[key], fields);
-			return getErrorMsg
-				? [...acc, getErrorMsg(model[key].title)]
-				: [...acc];
-		}, []);
-
-		return {...errors, [key]: validationMsg};
-
-	}, {});
 };
 
 export function getKeyMap(value: ValueType, title: string, validators: any[]): IKeyMap {

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { getValidationErrors, IGenericFormState, voidFn, IFormProps } from '../../helpers';
 import * as autoBind from 'react-autobind';
+
+import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from '../../helpers';
 
 export function extendWithForm<T extends IFormProps>(
 	WrappedComponent: React.ComponentClass<T> | React.StatelessComponent<T>,
@@ -23,16 +24,32 @@ export function extendWithForm<T extends IFormProps>(
 		}
 
 		componentDidMount() {
-			this.setState({errors: getValidationErrors(this.state.fields, this.state.model)});
+			this.setState({errors: this.getAllValidationErrors(this.state.fields, this.state.model)});
+		}
+
+		getAllValidationErrors(fields: object, model: TGenericFormModel<object>) {
+			return Object.keys(model).reduce((errors, key: string) => {
+				return {...errors, [key]: this.getSingleFieldValidationErrors(key, fields[key], model)};
+			}, {});
+		};
+
+		getSingleFieldValidationErrors(key: string, value, model: TGenericFormModel<object>) {
+			return model[key].validators.reduce((acc: string[], errorMessageFn) => {
+				const getErrorMsg = errorMessageFn(value);
+				return getErrorMsg ?
+					[...acc, getErrorMsg(model[key].title)]	:
+					[...acc];
+			}, []);
 		}
 
 		getNewState(name: string, value: string): IGenericFormState<object> {
 			const fieldValues = {...this.state.fields, [name]: value };
+			const validationErrors = {...this.state.errors, [name]: this.getSingleFieldValidationErrors(name, value, this.state.model) };
 
 			return {
 				...this.state,
 				fields: fieldValues,
-				errors: getValidationErrors(fieldValues, this.state.model),
+				errors: validationErrors,
 			};
 
 		}
