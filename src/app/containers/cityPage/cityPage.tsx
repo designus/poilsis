@@ -2,10 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../reducers';
-import { getItems } from '../../actions/items';
-import { selectCity } from '../../actions/cities';
+import { getItems, selectCity } from '../../actions';
 import { getSelectedCity } from '../../helpers';
-
 import { ItemsList, NotFound } from '../../components';
 
 @asyncConnect([{
@@ -20,8 +18,7 @@ import { ItemsList, NotFound } from '../../components';
 			.then(({id}) => {
 				store.dispatch(selectCity(id));
 				const selectedCity = citiesState.dataMap[id];
-
-				if (selectedCity && !allItemsLoaded) {
+				if (selectedCity && !allItemsLoaded && !citiesState.items[id]) {
 					return store.dispatch(getItems(id));
 				} else {
 					return Promise.resolve();

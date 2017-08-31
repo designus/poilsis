@@ -1,4 +1,4 @@
-import {RECEIVE_TYPES, SELECT_TYPE} from '../actions/types';
+import { SELECT_TYPE, RECEIVE_INITIAL_DATA } from '../actions';
 import { IGenericState } from '../helpers';
 
 export interface ITypesMap {
@@ -12,8 +12,8 @@ export interface ITypesState extends IGenericState<ITypesMap> {}
 
 export const types = (state: ITypesState = null, action) => {
 	switch (action.type) {
-		case RECEIVE_TYPES:
-			return {...state, ...action.payload};
+		case RECEIVE_INITIAL_DATA:
+			return {...state, ...action.data.types};
 		case SELECT_TYPE:
 			return {...state, selectedId: action.typeId};
 		default:

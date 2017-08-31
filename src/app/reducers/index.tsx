@@ -5,15 +5,16 @@ import { cities, ICityState } from './cities';
 import { types } from './types';
 import { items, IItemsState } from './items';
 import { newItem } from './newItem';
-import { global } from './global';
-
+import { response } from './response';
+import { initialData, IInitialDataState } from './initialData';
 import { TItemState } from '../containers';
 
 export * from './cities';
 export * from './types';
 export * from './items';
 export * from './newItem';
-export * from './global';
+export * from './response';
+export * from './initialData';
 
 export interface IAppState {
 	cities: ICityState;
@@ -22,6 +23,7 @@ export interface IAppState {
 	newItem: TItemState;
 	reduxAsyncConnect: any;
 	types: any;
+	initialData: IInitialDataState;
 }
 
 const rootReducer = combineReducers({
@@ -29,8 +31,9 @@ const rootReducer = combineReducers({
 	types,
 	items,
 	newItem,
-	global,
+	response,
 	reduxAsyncConnect,
+	initialData,
 });
 
 export default rootReducer;

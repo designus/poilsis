@@ -1,4 +1,10 @@
-import { RECEIVE_CITIES, SELECT_CITY, ADD_ITEM_TO_CITY, REMOVE_ITEM_FROM_CITY, ADD_ITEMS } from '../actions/cities';
+import {
+	SELECT_CITY,
+	ADD_ITEM_TO_CITY,
+	REMOVE_ITEM_FROM_CITY,
+	ADD_ITEMS,
+	RECEIVE_INITIAL_DATA,
+} from '../actions';
 import { IGenericState } from '../helpers';
 
 export interface ICityMap {
@@ -22,8 +28,8 @@ export const cities = (state: ICityState = null, action): ICityState => {
 	switch (action.type) {
 		case SELECT_CITY:
 			return {...state, selectedId: action.cityId};
-		case RECEIVE_CITIES:
-			return {...state, ...action.payload, items: {}};
+		case RECEIVE_INITIAL_DATA:
+			return {...state, ...action.data.cities, items: {}};
 		case ADD_ITEMS:
 			return {...state, items: {...state.items, ...action.items}};
 		case ADD_ITEM_TO_CITY:

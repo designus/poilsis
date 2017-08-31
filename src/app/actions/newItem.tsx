@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { responseSuccess, responseFailure } from './global';
-import { receiveItem } from './items';
-import { addItemToCity } from './cities';
+
 import { getMergedErrors } from '../helpers';
+import { responseSuccess, responseFailure, receiveItem, addItemToCity } from '../actions';
 
 export const ADD_NEW_ITEM_STATE = 'ADD_NEW_ITEM_STATE';
 export const CLEAR_FIELDS = 'CLEAR_FIELDS';

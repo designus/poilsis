@@ -1,30 +1,13 @@
-import {fetchCities} from '../actions/cities';
-import {fetchTypes} from '../actions/types';
+import { getInitialData } from '../actions';
 
-export const typesProps = {
-	key: 'types',
+export const initialDataProps = {
+	key: 'initial',
 	promise: ({params, store}) => {
-
-		const typesState = store.getState().types;
-
-		if (!typesState) {
-			return store.dispatch(fetchTypes());
+		const appState = store.getState();
+		if (appState.initialData.isLoaded) {
+			return Promise.resolve();
 		} else {
-			return Promise.resolve(typesState);
-		}
-	},
-};
-
-export const citiesProps = {
-	key: 'cities',
-	promise: ({params, store}) => {
-
-		const citiesState = store.getState().cities;
-
-		if (!citiesState) {
-			return store.dispatch(fetchCities());
-		} else {
-			return Promise.resolve(citiesState);
+			return store.dispatch(getInitialData());
 		}
 	},
 };

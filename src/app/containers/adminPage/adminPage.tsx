@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Link, IndexLink } from 'react-router';
-import {asyncConnect } from 'redux-connect';
-import {typesProps, citiesProps} from '../../helpers';
+import { asyncConnect } from 'redux-connect';
+import { initialDataProps } from '../../helpers';
 
-@asyncConnect([typesProps, citiesProps])
+@asyncConnect([initialDataProps])
 class AdminPageComponent extends React.Component<any, any> {
 	render() {
 

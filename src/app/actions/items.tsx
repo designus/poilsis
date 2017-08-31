@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-import { addItemsToCitiesState, addItemToCity, removeItemFromCity } from './cities';
-import { responseSuccess, responseFailure } from './global';
-import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias /*getMergedErrors */ } from '../helpers';
+import { addItemsToCitiesState, addItemToCity, removeItemFromCity, responseSuccess, responseFailure } from '../actions';
+import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias } from '../helpers';
 import { IItemsMap, IAppState } from '../reducers';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
