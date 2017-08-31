@@ -44,7 +44,6 @@ class AddItemPageComponent extends React.Component<any, any> {
 	}
 
 	onItemSubmit(item) {
-		console.log('Submitting', item);
 		this.props.postItem(item);
 	}
 

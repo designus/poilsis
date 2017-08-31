@@ -32,7 +32,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 		if (this.isCreatePage) {
 			this.setState(getInitialFormState(itemModel));
 		} else {
-			this.props.dispatch(putItem(item, this.props.params.id)).then((errors) => {
+			this.props.dispatch(putItem(item)).then((errors) => {
 				if (errors) {
 					const newErrors = {...this.state.errors, ...this.getBackendErrors(errors)};
 					this.setState({errors: newErrors, showErrors: true});

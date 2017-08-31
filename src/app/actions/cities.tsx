@@ -1,5 +1,5 @@
 import { getNormalizedData } from '../helpers';
-import { startRequest, responseSuccess, responseFailure } from './global';
+import { responseSuccess, responseFailure } from './global';
 
 export const SELECT_CITY = 'SELECT_CITY';
 export const RECEIVE_CITIES = 'RECEIVE_CITIES';
@@ -48,7 +48,6 @@ export const fetchCities = () => {
 
 	return (dispatch) => {
 
-		dispatch(startRequest());
 		return fetch(`http://localhost:3000/api/cities`)
 			.then(cities => cities.json())
 			.then(cities => {

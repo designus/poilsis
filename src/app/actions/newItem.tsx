@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { startRequest, responseSuccess, responseFailure } from './global';
+import { responseSuccess, responseFailure } from './global';
 import { receiveItem } from './items';
 import { addItemToCity } from './cities';
 import { getMergedErrors } from '../helpers';
@@ -32,7 +32,6 @@ export const showBackendValidationErrors = (errors) => {
 export const postItem = (item) => {
 
 	return (dispatch, getState) => {
-		dispatch(startRequest());
 
 		return axios.post('http://localhost:3000/api/items', item)
 			.then(item => item.data)

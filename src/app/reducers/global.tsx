@@ -1,17 +1,11 @@
-import {START_REQUEST, RESPONSE_SUCCESS, RESPONSE_FAILURE } from '../actions';
+import { RESPONSE_SUCCESS, RESPONSE_FAILURE } from '../actions';
 
-export interface IGlobalState {
-	isLoading: boolean;
-}
-
-export const global = (state: IGlobalState = {isLoading: false}, action) => {
+export const global = (state = null, action) => {
 	switch (action.type) {
-		case START_REQUEST:
-			return {...state, isLoading: true};
 		case RESPONSE_SUCCESS:
-			return {...state, isLoading: false};
+			return {...state, message: action.message, isVisible: action.isVisible };
 		case RESPONSE_FAILURE:
-			return {...state, isLoading: false, error: action.payload};
+			return {...state, message: action.message, isVisible: action.isVisible };
 		default:
 			return state;
 	}

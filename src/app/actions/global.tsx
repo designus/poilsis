@@ -1,22 +1,18 @@
-export const START_REQUEST = 'START_REQUEST';
 export const RESPONSE_SUCCESS = 'RESPONSE_SUCCESS';
 export const RESPONSE_FAILURE = 'RESPONSE_FAILURE';
 
-export const startRequest = () => {
-	return {
-		type: START_REQUEST,
-	};
-};
-
-export const responseSuccess = () => {
+export const responseSuccess = (message = '', isVisible = false) => {
 	return {
 		type: RESPONSE_SUCCESS,
+		message,
+		isVisible,
 	};
 };
 
-export const responseFailure = (payload) => {
+export const responseFailure = (message = '', isVisible = false) => {
 	return {
 		type: RESPONSE_FAILURE,
-		payload,
+		message,
+		isVisible,
 	};
 };

@@ -85,13 +85,11 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 
 	render() {
 		return (
-			<div>
-				<PaginatedTable
-					dataMap={this.props.itemsMap}
-					columns={this.columns}
-					limit={5}
-				/>
-			</div>
+			<PaginatedTable
+				dataMap={this.props.itemsMap}
+				columns={this.columns}
+				limit={5}
+			/>
 		);
 
 	};

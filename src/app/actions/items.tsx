@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { addItemsToCitiesState, addItemToCity, removeItemFromCity } from './cities';
-import { startRequest, responseSuccess, responseFailure } from './global';
+import { responseSuccess, responseFailure } from './global';
 import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias /*getMergedErrors */ } from '../helpers';
 import { IItemsMap, IAppState } from '../reducers';
 
@@ -39,7 +39,6 @@ export const getItems = (cityId = null) => {
 
 	return (dispatch) => {
 
-		dispatch(startRequest());
 		return axios.get(endpoint)
 			.then(response => {
 
@@ -63,7 +62,6 @@ export const getItems = (cityId = null) => {
 
 export const getItem = (itemId) => {
 	return dispatch => {
-		dispatch(startRequest());
 
 		return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
 			.then(response => {
@@ -79,15 +77,13 @@ export const getItem = (itemId) => {
 	};
 };
 
-export const putItem = (item, itemId) => {
+export const putItem = (item) => {
 	return (dispatch, getState) => {
 
 		const appState: IAppState = getState();
-		const oldItem = appState.items.dataMap[itemId];
+		const oldItem = appState.items.dataMap[item.id];
 
-		dispatch(startRequest());
-
-		return axios.put(`http://localhost:3000/api/items/item/${itemId}`, item)
+		return axios.put(`http://localhost:3000/api/items/item/${item.id}`, item)
 			.then(response => response.data)
 			.then(item => {
 				return new Promise((resolve) => {
@@ -96,8 +92,8 @@ export const putItem = (item, itemId) => {
 					} else {
 						dispatch(receiveItem(item));
 						if (oldItem.city !== item.city) {
-							dispatch(addItemToCity(item.city, itemId));
-							dispatch(removeItemFromCity(oldItem.city, itemId));
+							dispatch(addItemToCity(item.city, item.id));
+							dispatch(removeItemFromCity(oldItem.city, item.id));
 						}
 						dispatch(responseSuccess());
 						resolve();
