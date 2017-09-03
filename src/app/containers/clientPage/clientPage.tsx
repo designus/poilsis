@@ -1,9 +1,9 @@
 import * as React from 'react';
-
-import {connect} from 'react-redux';
-import {MainMenu} from '../../components';
 import {asyncConnect } from 'redux-connect';
+import {connect} from 'react-redux';
 import {IndexLink, Link} from 'react-router';
+
+import {MainMenu} from '../../components';
 import {initialDataProps} from '../../helpers';
 import {IAppState} from '../../reducers';
 

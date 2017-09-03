@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../reducers';
 import { getItems, selectCity } from '../../actions';
-import { getSelectedCity } from '../../helpers';
-import { ItemsList, NotFound } from '../../components';
+import { getSelectedCity, ITEMS_LOADER_ID } from '../../helpers';
+import { ItemsList, NotFound, extendWithLoader } from '../../components';
+
+const ItemsListWithLoader = extendWithLoader(ItemsList);
 
 @asyncConnect([{
 	key: 'items',
@@ -19,7 +21,7 @@ import { ItemsList, NotFound } from '../../components';
 				store.dispatch(selectCity(id));
 				const selectedCity = citiesState.dataMap[id];
 				if (selectedCity && !allItemsLoaded && !citiesState.items[id]) {
-					return store.dispatch(getItems(id));
+					return store.dispatch(getItems(ITEMS_LOADER_ID, id));
 				} else {
 					return Promise.resolve();
 				}
@@ -40,7 +42,12 @@ class CityPageComponent extends React.Component<any, any> {
 				<div>
 					<h1>{selectedCity.name}</h1>
 					<p>{selectedCity.description}</p>
-					{cityItems.length ? <ItemsList items={cityItems} itemsMap={itemsMap} typesMap={typesMap} /> : ''}
+					<ItemsListWithLoader
+						loaderId={ITEMS_LOADER_ID}
+						items={cityItems}
+						itemsMap={itemsMap}
+						typesMap={typesMap}
+					/>
 				</div>
 			);
 		} else {
@@ -51,11 +58,11 @@ class CityPageComponent extends React.Component<any, any> {
 
 const mapStateToProps = (state: IAppState) => {
 	const selectedCityId = state.cities.selectedId;
-	const cityItems = state.cities.items[selectedCityId] || [];
+
 	return {
 		selectedCity: state.cities.dataMap[selectedCityId],
 		itemsMap: state.items.dataMap,
-		cityItems,
+		cityItems: state.cities.items[selectedCityId] || [],
 		typesMap: state.types.dataMap,
 	};
 };

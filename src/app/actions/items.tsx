@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-import { addItemsToCitiesState, addItemToCity, removeItemFromCity, responseSuccess, responseFailure } from '../actions';
+import {
+	addItemsToCitiesState,
+	addItemToCity,
+	removeItemFromCity,
+	responseSuccess,
+	responseFailure,
+	startLoading,
+	endLoading,
+} from '../actions';
 import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias } from '../helpers';
 import { IItemsMap, IAppState } from '../reducers';
 
@@ -31,13 +39,13 @@ export const receiveItem = (item) => {
 	};
 };
 
-export const getItems = (cityId = null) => {
+export const getItems = (loaderId, cityId = null) => {
 	const endpoint = cityId	?
 		`http://localhost:3000/api/items/city/${cityId}` :
 		'http://localhost:3000/api/items';
 
 	return (dispatch) => {
-
+		dispatch(startLoading(loaderId));
 		return axios.get(endpoint)
 			.then(response => {
 
@@ -50,34 +58,42 @@ export const getItems = (cityId = null) => {
 				dispatch(receiveItems(dataMap, aliases, allItemsLoaded));
 				dispatch(addItemsToCitiesState(groupedItems));
 				dispatch(responseSuccess());
-
+				setTimeout(() => {
+					dispatch(endLoading(loaderId));
+				}, 1000);
 			})
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
+				dispatch(endLoading(loaderId));
 			});
 	};
 };
 
-export const getItem = (itemId) => {
+export const getItem = (loaderId, itemId) => {
 	return dispatch => {
-
+		dispatch(startLoading(loaderId));
 		return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
 			.then(response => {
 				const item = response.data;
 				dispatch(receiveItem(item));
 				dispatch(addItemToCity(item.city, item.id));
 				dispatch(responseSuccess());
+				setTimeout(() => {
+					dispatch(endLoading(loaderId));
+				}, 1000);
 			})
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
+				dispatch(endLoading(loaderId));
 			});
 	};
 };
 
-export const putItem = (item) => {
+export const putItem = (loaderId, item) => {
 	return (dispatch, getState) => {
+		dispatch(startLoading(loaderId));
 
 		const appState: IAppState = getState();
 		const oldItem = appState.items.dataMap[item.id];
@@ -95,6 +111,9 @@ export const putItem = (item) => {
 							dispatch(removeItemFromCity(oldItem.city, item.id));
 						}
 						dispatch(responseSuccess());
+						setTimeout(() => {
+							dispatch(endLoading(loaderId));
+						}, 1000);
 						resolve();
 					}
 				});
@@ -102,6 +121,7 @@ export const putItem = (item) => {
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
+				dispatch(endLoading(loaderId));
 			});
 
 	};

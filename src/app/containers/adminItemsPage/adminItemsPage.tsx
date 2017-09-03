@@ -1,13 +1,14 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import { IAppState } from '../../reducers';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
-import { getItems } from '../../actions/items';
-import { GenericTable, IGenericTableColumn, ItemTypesList, withPagination } from '../../components';
-import { Link } from 'react-router';
+import { IAppState } from '../../reducers';
+import { getItems } from '../../actions';
+import { GenericTable, IGenericTableColumn, ItemTypesList, extendWithPagination, extendWithLoader } from '../../components';
+import { ITEMS_LOADER_ID } from '../../helpers';
 
-const PaginatedTable = withPagination(GenericTable);
+const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
 
 @asyncConnect([{
 	key: 'items',
@@ -19,7 +20,7 @@ const PaginatedTable = withPagination(GenericTable);
 		if (itemsState.allItemsLoaded) {
 			return Promise.resolve();
 		} else {
-			return store.dispatch(getItems());
+			return store.dispatch(getItems(ITEMS_LOADER_ID));
 		}
 	},
 }])
@@ -86,6 +87,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 	render() {
 		return (
 			<PaginatedTable
+				loaderId={ITEMS_LOADER_ID}
 				dataMap={this.props.itemsMap}
 				columns={this.columns}
 				limit={5}

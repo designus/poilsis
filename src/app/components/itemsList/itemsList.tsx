@@ -2,13 +2,21 @@
 import * as React from 'react';
 import {ItemTypesList} from '../itemTypesList';
 
-export class ItemsList extends React.Component<any, any> {
+export interface IItemsListProps {
+	items: string[];
+	itemsMap: any;
+	typesMap: any;
+}
+
+export class ItemsList extends React.Component<IItemsListProps, {}> {
 
 	render() {
 
+		const items = this.props.items || [];
+
 		return (
 			<div className="itemsList">
-				{this.props.items.map(itemId => {
+				{items.map(itemId => {
 						const item = this.props.itemsMap[itemId];
 						return (
 							<div className="item" key={itemId}>

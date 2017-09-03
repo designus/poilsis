@@ -16,6 +16,7 @@ import {
 } from '../../data-strings';
 
 export interface INewItemFields {
+	id?: string;
 	address?: string;
 	city?: string;
 	description?: string;
@@ -27,6 +28,7 @@ export type TItemState = IGenericFormState<INewItemFields>;
 export type TItemModel = TGenericFormModel<INewItemFields>;
 
 export const itemModel: TItemModel = {
+	id: getKeyMap('', 'id', []),
 	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
 	city: getKeyMap('', CITY_LABEL, [Validators.required]),
 	types: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),

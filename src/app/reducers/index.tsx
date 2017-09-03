@@ -8,6 +8,7 @@ import { newItem } from './newItem';
 import { response } from './response';
 import { initialData, IInitialDataState } from './initialData';
 import { TItemState } from '../containers';
+import { loader, ILoadingState } from './loader';
 
 export * from './cities';
 export * from './types';
@@ -24,6 +25,7 @@ export interface IAppState {
 	reduxAsyncConnect: any;
 	types: any;
 	initialData: IInitialDataState;
+	loader: ILoadingState;
 }
 
 const rootReducer = combineReducers({
@@ -34,6 +36,7 @@ const rootReducer = combineReducers({
 	response,
 	reduxAsyncConnect,
 	initialData,
+	loader,
 });
 
 export default rootReducer;

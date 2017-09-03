@@ -64,7 +64,7 @@ export const PageLimit = PageNumber.extend`
 	border-right: 1px solid #ccc;
 `;
 
-export const withPagination = (WrappedComponent) => {
+export const extendWithPagination = (WrappedComponent) => {
 
 	return class extends React.Component<any, any> {
 		constructor(props) {

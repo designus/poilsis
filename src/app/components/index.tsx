@@ -3,6 +3,7 @@ export * from './checkboxGroup';
 export * from './checkboxOptions';
 export * from './form';
 export * from './genericTable';
+export * from './loader';
 export * from './mainMenu';
 export * from './notFound';
 export * from './itemsList';
