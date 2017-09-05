@@ -17,8 +17,8 @@ import {
 } from '../../data-strings';
 
 export interface IAddItemProps extends IFormProps {
-	citiesMap: IGenericDataMap<ICityMap>;
-	typesMap: IGenericDataMap<ITypesMap>;
+	citiesMap?: IGenericDataMap<ICityMap>;
+	typesMap?: IGenericDataMap<ITypesMap>;
 }
 
 export class AddItem extends React.Component<IAddItemProps, any> {

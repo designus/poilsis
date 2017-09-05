@@ -2,10 +2,13 @@ import * as React from 'react';
 import * as autoBind from 'react-autobind';
 
 import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from '../../helpers';
+import { extendWithLoader } from '../../components';
 
 export function extendWithForm<T extends IFormProps>(
 	WrappedComponent: React.ComponentClass<T> | React.StatelessComponent<T>,
 ): React.ComponentClass<T> {
+
+	const WrappedWithLoader = extendWithLoader(WrappedComponent) as React.ComponentClass<T>;
 
 	return class extends React.Component<T, {}> {
 
@@ -96,8 +99,9 @@ export function extendWithForm<T extends IFormProps>(
 		}
 
 		render() {
+
 			return (
-				<WrappedComponent
+				<WrappedWithLoader
 					handleCheckboxToggle={this.handleCheckboxToggle}
 					handleSubmit={this.handleSubmit}
 					handleOnBlur={this.handleOnBlur}

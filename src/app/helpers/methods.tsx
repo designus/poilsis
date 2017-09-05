@@ -91,3 +91,7 @@ export function getMergedErrors(backendErrors, frontendErrors) {
 		return {...acc, [field]: fieldErrors };
 	}, {});
 };
+
+export function removeDuplicates(item, i, arr) {
+	return arr.indexOf(item) === i;
+}

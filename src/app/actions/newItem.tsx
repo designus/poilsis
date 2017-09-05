@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { getMergedErrors } from '../helpers';
-import { responseSuccess, responseFailure, receiveItem, addItemToCity } from '../actions';
+import { responseSuccess, responseFailure, receiveItem, addItemToCity, startLoading, endLoading } from '../actions';
 
 export const ADD_NEW_ITEM_STATE = 'ADD_NEW_ITEM_STATE';
 export const CLEAR_FIELDS = 'CLEAR_FIELDS';
@@ -28,9 +28,11 @@ export const showBackendValidationErrors = (errors) => {
 	};
 };
 
-export const postItem = (item) => {
+export const postItem = (item, loaderId) => {
 
 	return (dispatch, getState) => {
+
+		dispatch(startLoading(loaderId));
 
 		return axios.post('http://localhost:3000/api/items', item)
 			.then(item => item.data)
@@ -48,6 +50,9 @@ export const postItem = (item) => {
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
+			})
+			.then(() => {
+				dispatch(endLoading(loaderId));
 			});
 	};
 };

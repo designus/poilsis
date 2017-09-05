@@ -16,6 +16,7 @@ export * from './items';
 export * from './newItem';
 export * from './response';
 export * from './initialData';
+export * from './loader';
 
 export interface IAppState {
 	cities: ICityState;

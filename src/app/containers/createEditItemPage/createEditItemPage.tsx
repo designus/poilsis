@@ -2,11 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppState } from '../../reducers';
 import { getItem, putItem } from '../../actions';
-import { AddItem, extendWithForm, extendWithLoader } from '../../components';
+import { AddItem, extendWithForm } from '../../components';
 import { itemModel } from '../../containers';
 import { getFormStateWithData, getInitialFormState, ITEM_LOADER_ID } from '../../helpers';
 
-const EditItemForm = extendWithLoader(extendWithForm(AddItem));
+const EditItemForm = extendWithForm(AddItem);
 
 class CreateEditItemPageComponent extends React.Component<any, any> {
 
@@ -18,7 +18,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(getItem(ITEM_LOADER_ID, this.props.params.id));
+		this.props.dispatch(getItem(this.props.params.id, ITEM_LOADER_ID));
 	}
 
 	getBackendErrors(errors) {
@@ -32,7 +32,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 		if (this.isCreatePage) {
 			this.setState(getInitialFormState(itemModel));
 		} else {
-			this.props.dispatch(putItem(ITEM_LOADER_ID, item)).then((errors) => {
+			this.props.dispatch(putItem(item, ITEM_LOADER_ID)).then((errors) => {
 				if (errors) {
 					const newErrors = {...this.state.errors, ...this.getBackendErrors(errors)};
 					this.setState({errors: newErrors, showErrors: true});

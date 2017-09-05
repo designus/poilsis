@@ -5,7 +5,7 @@ import {
 	ADD_ITEMS,
 	RECEIVE_INITIAL_DATA,
 } from '../actions';
-import { IGenericState } from '../helpers';
+import { IGenericState, removeDuplicates } from '../helpers';
 
 export interface ICityMap {
 	id: string;
@@ -33,14 +33,12 @@ export const cities = (state: ICityState = null, action): ICityState => {
 		case ADD_ITEMS:
 			return {...state, items: {...state.items, ...action.items}};
 		case ADD_ITEM_TO_CITY:
+			const cityItemsState = [...(state.items[action.cityId] || []), action.itemId];
 			return {
 				...state,
 				items: {
 					...state.items,
-					[action.cityId]: [
-						...(state.items[action.cityId] || []),
-						action.itemId,
-					],
+					[action.cityId]: cityItemsState.filter(removeDuplicates),
 				},
 			};
 		case REMOVE_ITEM_FROM_CITY:

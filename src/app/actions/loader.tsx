@@ -9,8 +9,9 @@ export const startLoading = (id) => {
 };
 
 export const endLoading = (id) => {
-	return {
-		type: END_LOADING,
-		id,
+	return dispatch => {
+		setTimeout(() => {
+			dispatch({type: END_LOADING, id});
+		}, 500);
 	};
 };

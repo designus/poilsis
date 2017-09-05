@@ -46,7 +46,7 @@ class AddItemPageComponent extends React.Component<any, any> {
 	}
 
 	onItemSubmit(item) {
-		this.props.postItem(item);
+		this.props.postItem(item, 'addItemPage');
 	}
 
 	onSaveState(state) {
@@ -58,6 +58,7 @@ class AddItemPageComponent extends React.Component<any, any> {
 			<div>
 				<h1>Post your ad</h1>
 				<AddItemForm
+					loaderId={'addItemPage'}
 					onSaveState={this.onSaveState}
 					onItemSubmit={this.onItemSubmit}
 					{...this.props}
@@ -76,7 +77,7 @@ export const mapStateToProps = (state) => {
 export const mapDispatchToProps = (dispatch) => {
 	return {
 		addNewItemState: (state) => dispatch(addNewItemState(state)),
-		postItem: (item) => dispatch(postItem(item)),
+		postItem: (item, loaderId) => dispatch(postItem(item, loaderId)),
 	};
 };
 

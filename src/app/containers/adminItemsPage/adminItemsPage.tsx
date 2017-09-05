@@ -90,7 +90,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 				loaderId={ITEMS_LOADER_ID}
 				dataMap={this.props.itemsMap}
 				columns={this.columns}
-				limit={5}
+				limit={10}
 			/>
 		);
 

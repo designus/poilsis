@@ -1,32 +1,32 @@
 import * as React from 'react';
 import { CircularProgress } from 'material-ui/Progress';
 import { connect } from 'react-redux';
-import { IAppState } from '../../reducers';
+import { IAppState, ILoadingState } from '../../reducers';
 
 export interface ILoaderProps {
 	loaderId: string;
-	showWrappedComponent: boolean;
+	loader?: ILoadingState;
 }
 
-export function extendWithLoader(
-		WrappedComponent: React.ComponentClass<any> | React.StatelessComponent<any>,
-	): React.ComponentClass<any> {
-		function LoaderComponent(props) {
+export function extendWithLoader<TOriginalProps extends {}>(
+		WrappedComponent: React.ComponentClass<TOriginalProps> | React.StatelessComponent<TOriginalProps>,
+	): React.ComponentClass<TOriginalProps & ILoaderProps> {
 
-			const {loaderId, loader } = props;
-			const loaderState = loader[loaderId];
-			const {isLoading} = loaderState;
+		type ResultProps = TOriginalProps & ILoaderProps;
+		const LoaderComponent = class extends React.Component<ResultProps, {}> {
 
-			if (isLoading) {
+			render(): JSX.Element {
+				const {loaderId, loader} = this.props;
+				const loaderState = loader[loaderId];
+				const isLoading = loaderState && loaderState.isLoading;
+
 				return (
-					<CircularProgress />
+					isLoading ?
+						<CircularProgress /> :
+						<WrappedComponent {...this.props} />
 				);
 			}
-
-			return (
-				<WrappedComponent {...props} />
-			);
-		}
+		};
 
 		function mapStateToProps(state: IAppState) {
 			return {
@@ -34,5 +34,5 @@ export function extendWithLoader(
 			};
 		}
 
-		return connect(mapStateToProps)(LoaderComponent);
+		return connect<{}, {}, any>(mapStateToProps)(LoaderComponent);
 };

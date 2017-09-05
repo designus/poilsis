@@ -45,7 +45,9 @@ export const getItems = (loaderId, cityId = null) => {
 		'http://localhost:3000/api/items';
 
 	return (dispatch) => {
+
 		dispatch(startLoading(loaderId));
+
 		return axios.get(endpoint)
 			.then(response => {
 
@@ -58,41 +60,45 @@ export const getItems = (loaderId, cityId = null) => {
 				dispatch(receiveItems(dataMap, aliases, allItemsLoaded));
 				dispatch(addItemsToCitiesState(groupedItems));
 				dispatch(responseSuccess());
-				setTimeout(() => {
-					dispatch(endLoading(loaderId));
-				}, 1000);
+
 			})
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
+			})
+			.then(() => {
 				dispatch(endLoading(loaderId));
 			});
 	};
 };
 
-export const getItem = (loaderId, itemId) => {
+export const getItem = (itemId, loaderId) => {
+
 	return dispatch => {
+
 		dispatch(startLoading(loaderId));
+
 		return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
-			.then(response => {
-				const item = response.data;
+			.then(response => response.data)
+			.then(item => {
 				dispatch(receiveItem(item));
 				dispatch(addItemToCity(item.city, item.id));
 				dispatch(responseSuccess());
-				setTimeout(() => {
-					dispatch(endLoading(loaderId));
-				}, 1000);
 			})
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
+			})
+			.then(() => {
 				dispatch(endLoading(loaderId));
 			});
 	};
 };
 
-export const putItem = (loaderId, item) => {
+export const putItem = (item, loaderId) => {
+
 	return (dispatch, getState) => {
+
 		dispatch(startLoading(loaderId));
 
 		const appState: IAppState = getState();
@@ -106,14 +112,11 @@ export const putItem = (loaderId, item) => {
 						resolve(item.errors);
 					} else {
 						dispatch(receiveItem(item));
+						dispatch(responseSuccess());
 						if (oldItem.city !== item.city) {
 							dispatch(addItemToCity(item.city, item.id));
 							dispatch(removeItemFromCity(oldItem.city, item.id));
 						}
-						dispatch(responseSuccess());
-						setTimeout(() => {
-							dispatch(endLoading(loaderId));
-						}, 1000);
 						resolve();
 					}
 				});
@@ -121,8 +124,9 @@ export const putItem = (loaderId, item) => {
 			.catch(err => {
 				console.error(err);
 				dispatch(responseFailure(err));
+			})
+			.then(() => {
 				dispatch(endLoading(loaderId));
 			});
-
 	};
 };
