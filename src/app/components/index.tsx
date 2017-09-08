@@ -12,4 +12,5 @@ export * from './pagination';
 export * from './selectBox';
 export * from './selectOptions';
 export * from './textInput';
+export * from './toast';
 export * from './validationErrors';

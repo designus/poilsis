@@ -4,8 +4,8 @@ import * as Validators from '../../helpers/validation/validators';
 
 import { connect } from 'react-redux';
 import { AddItem, extendWithForm } from '../../components';
-import { addNewItemState, postItem } from '../../actions';
-import { IGenericFormState, TGenericFormModel, getKeyMap } from '../../helpers';
+import { addNewItemState, postItem, showBackendValidationErrors, clearFields } from '../../actions';
+import { IGenericFormState, TGenericFormModel, getKeyMap, getMergedErrors } from '../../helpers';
 
 import {
 	NAME_LABEL,
@@ -32,11 +32,12 @@ export const itemModel: TItemModel = {
 	name: getKeyMap('', NAME_LABEL, [Validators.required, Validators.minLength(6)]),
 	city: getKeyMap('', CITY_LABEL, [Validators.required]),
 	types: getKeyMap([], TYPES_LABEL, [Validators.required, Validators.minLength(1, true), Validators.maxLength(3, true)]),
-	address: getKeyMap('', ADDRESS_LABEL, [Validators.required]),
+	address: getKeyMap('', ADDRESS_LABEL, []),
 	description: getKeyMap('', DESCRIPTION_LABEL, []),
 };
 
 const AddItemForm = extendWithForm(AddItem);
+const ADD_ITEM_PAGE_LOADER = 'addItemPage';
 
 class AddItemPageComponent extends React.Component<any, any> {
 
@@ -46,7 +47,14 @@ class AddItemPageComponent extends React.Component<any, any> {
 	}
 
 	onItemSubmit(item) {
-		this.props.postItem(item, 'addItemPage');
+		this.props.postItem(item, ADD_ITEM_PAGE_LOADER).then((errors) => {
+			if (errors) {
+				const validationErrors = getMergedErrors(errors, this.props.initialState.errors);
+				this.props.showBackendErrors(validationErrors);
+			} else {
+				this.props.clearFormFields();
+			}
+		});
 	}
 
 	onSaveState(state) {
@@ -58,7 +66,7 @@ class AddItemPageComponent extends React.Component<any, any> {
 			<div>
 				<h1>Post your ad</h1>
 				<AddItemForm
-					loaderId={'addItemPage'}
+					loaderId={ADD_ITEM_PAGE_LOADER}
 					onSaveState={this.onSaveState}
 					onItemSubmit={this.onItemSubmit}
 					{...this.props}
@@ -78,6 +86,8 @@ export const mapDispatchToProps = (dispatch) => {
 	return {
 		addNewItemState: (state) => dispatch(addNewItemState(state)),
 		postItem: (item, loaderId) => dispatch(postItem(item, loaderId)),
+		showBackendErrors: (errors) => dispatch(showBackendValidationErrors(errors)),
+		clearFormFields: () => dispatch(clearFields()),
 	};
 };
 

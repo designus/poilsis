@@ -5,18 +5,18 @@ import { cities, ICityState } from './cities';
 import { types } from './types';
 import { items, IItemsState } from './items';
 import { newItem } from './newItem';
-import { response } from './response';
 import { initialData, IInitialDataState } from './initialData';
 import { TItemState } from '../containers';
 import { loader, ILoadingState } from './loader';
+import { toast, IToastState } from './toast';
 
 export * from './cities';
 export * from './types';
 export * from './items';
 export * from './newItem';
-export * from './response';
 export * from './initialData';
 export * from './loader';
+export * from './toast';
 
 export interface IAppState {
 	cities: ICityState;
@@ -27,6 +27,7 @@ export interface IAppState {
 	types: any;
 	initialData: IInitialDataState;
 	loader: ILoadingState;
+	toast: IToastState;
 }
 
 const rootReducer = combineReducers({
@@ -34,10 +35,10 @@ const rootReducer = combineReducers({
 	types,
 	items,
 	newItem,
-	response,
 	reduxAsyncConnect,
 	initialData,
 	loader,
+	toast,
 });
 
 export default rootReducer;

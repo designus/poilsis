@@ -3,14 +3,17 @@ import axios from 'axios';
 import {
 	addItemsToCitiesState,
 	addItemToCity,
-	removeItemFromCity,
-	responseSuccess,
-	responseFailure,
 	startLoading,
 	endLoading,
+	showToast,
+	changeItemCity,
 } from '../actions';
 import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias } from '../helpers';
-import { IItemsMap, IAppState } from '../reducers';
+import { IItemsMap, IAppState, Toast } from '../reducers';
+import {
+	ITEM_UPDATE_SUCCESS,
+	ITEM_UPDATE_ERROR,
+} from '../data-strings';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
@@ -59,16 +62,12 @@ export const getItems = (loaderId, cityId = null) => {
 
 				dispatch(receiveItems(dataMap, aliases, allItemsLoaded));
 				dispatch(addItemsToCitiesState(groupedItems));
-				dispatch(responseSuccess());
 
 			})
 			.catch(err => {
 				console.error(err);
-				dispatch(responseFailure(err));
 			})
-			.then(() => {
-				dispatch(endLoading(loaderId));
-			});
+			.then(dispatch(endLoading(loaderId)));
 	};
 };
 
@@ -83,21 +82,17 @@ export const getItem = (itemId, loaderId) => {
 			.then(item => {
 				dispatch(receiveItem(item));
 				dispatch(addItemToCity(item.city, item.id));
-				dispatch(responseSuccess());
 			})
 			.catch(err => {
 				console.error(err);
-				dispatch(responseFailure(err));
 			})
-			.then(() => {
-				dispatch(endLoading(loaderId));
-			});
+			.then(dispatch(endLoading(loaderId)));
 	};
 };
 
-export const putItem = (item, loaderId) => {
+export const putItem = (item, loaderId) => (dispatch, getState) => {
 
-	return (dispatch, getState) => {
+	return new Promise((resolve, reject) => {
 
 		dispatch(startLoading(loaderId));
 
@@ -107,26 +102,44 @@ export const putItem = (item, loaderId) => {
 		return axios.put(`http://localhost:3000/api/items/item/${item.id}`, item)
 			.then(response => response.data)
 			.then(item => {
-				return new Promise((resolve) => {
-					if (item.errors) {
-						resolve(item.errors);
-					} else {
-						dispatch(receiveItem(item));
-						dispatch(responseSuccess());
-						if (oldItem.city !== item.city) {
-							dispatch(addItemToCity(item.city, item.id));
-							dispatch(removeItemFromCity(oldItem.city, item.id));
-						}
-						resolve();
-					}
-				});
+				if (item.errors) {
+					dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
+					resolve(item.errors);
+				} else {
+					dispatch(receiveItem(item));
+					dispatch(changeItemCity(oldItem.city, item.city, item.id));
+					dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
+					resolve();
+				}
 			})
 			.catch(err => {
 				console.error(err);
-				dispatch(responseFailure(err));
+				dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
 			})
-			.then(() => {
-				dispatch(endLoading(loaderId));
-			});
-	};
+			.then(dispatch(endLoading(loaderId)));
+	});
+};
+
+export const postItem = (item, loaderId) => (dispatch) => {
+
+	return new Promise(resolve => {
+
+		dispatch(startLoading(loaderId));
+
+		return axios.post('http://localhost:3000/api/items', item)
+			.then(response => response.data)
+			.then(item => {
+				if (item.errors) {
+					resolve(item.errors);
+				} else {
+					dispatch(receiveItem(item));
+					dispatch(addItemToCity(item.city, item.id));
+					resolve();
+				}
+			})
+			.catch(err => {
+				console.error(err);
+			})
+			.then(dispatch(endLoading(loaderId)));
+	});
 };

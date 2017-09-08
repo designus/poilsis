@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { responseSuccess, responseFailure } from './response';
 import { getNormalizedData } from '../helpers';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
@@ -22,11 +21,9 @@ export const getInitialData = () => {
 			const types = getNormalizedData(typesResponse.data);
 
 			dispatch(receiveInitialData({cities, types}));
-			responseSuccess();
 		}))
 		.catch(err => {
 			console.error(err);
-			dispatch(responseFailure(err));
 		});
 	};
 };

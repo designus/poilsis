@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link, IndexLink } from 'react-router';
 import { asyncConnect } from 'redux-connect';
 import { initialDataProps } from '../../helpers';
+import { Toast } from '../../components';
 
 @asyncConnect([initialDataProps])
 class AdminPageComponent extends React.Component<any, any> {
@@ -29,6 +30,7 @@ class AdminPageComponent extends React.Component<any, any> {
 					<h1>Welcome to admin area</h1>
 					{this.props.children}
 				</div>
+				<Toast />
 			</div>
 		);
 	}

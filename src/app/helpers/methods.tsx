@@ -92,6 +92,13 @@ export function getMergedErrors(backendErrors, frontendErrors) {
 	}, {});
 };
 
+export function getBackendErrors(errors) {
+	return Object.keys(errors).reduce((acc, key) => {
+		acc[key] = [errors[key].message];
+		return acc;
+	}, {});
+}
+
 export function removeDuplicates(item, i, arr) {
 	return arr.indexOf(item) === i;
 }
