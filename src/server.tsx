@@ -22,12 +22,12 @@ import rootReducer from './app/reducers';
 import routes from './app/routes';
 
 import { JssProvider, SheetsRegistry } from 'react-jss';
-// import { create } from 'jss';
 const create = require('jss').create;
 
 import preset from 'jss-preset-default';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 const favicon = require('serve-favicon');
 
@@ -90,18 +90,23 @@ app.get('*', (req, res) => {
 					const jss = create(preset());
 					jss.options.createGenerateClassName = createGenerateClassName;
 
+					const sheet: any = new ServerStyleSheet();
 					const responseHtml = renderToString(
-						<JssProvider registry={sheetsRegistry} jss={jss}>
-							<MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-								<Provider store={store} key="provider">
-									<ReduxAsyncConnect {...renderProps} />
-								</Provider>
-							</MuiThemeProvider>
-						</JssProvider>,
+						<StyleSheetManager sheet={sheet.instance}>
+							<JssProvider registry={sheetsRegistry} jss={jss}>
+								<MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+									<Provider store={store} key="provider">
+										<ReduxAsyncConnect {...renderProps} />
+									</Provider>
+								</MuiThemeProvider>
+							</JssProvider>
+						</StyleSheetManager>,
 					);
 					const css = sheetsRegistry.toString();
+					const styleTags = sheet.getStyleTags();
+
 					const finalState = store.getState();
-					res.status(200).send(renderFullPage(responseHtml, css, finalState));
+					res.status(200).send(renderFullPage(responseHtml, css, styleTags, finalState));
 			})
 			.catch((err) => console.error(err));
 
@@ -111,7 +116,7 @@ app.get('*', (req, res) => {
 	});
 });
 
-function renderFullPage(html, css, preloadedState) {
+function renderFullPage(html, css1, css2, preloadedState) {
 	return `
 		<!DOCTYPE html>
 		<html>
@@ -120,7 +125,8 @@ function renderFullPage(html, css, preloadedState) {
 			</head>
 			<body>
 				<div id="app"><div>${html}</div></div>
-				<style id="jss-server-side">${css}</style>
+				<style id="jss-server-side">${css1}</style>
+				<style id="styled-css">${css2}</style>
 				<script>
 					window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
 				</script>

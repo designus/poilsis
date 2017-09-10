@@ -48,10 +48,9 @@ const CloseButton = ({className, handleRequestClose}): React.ReactElement<any> =
 	);
 };
 
-// @withStyles(styles)
 class ToastComponent extends React.Component<any, any> {
 
-	handleRequestClose(event, reason) {
+	handleRequestClose = (event, reason) => {
 		this.props.dispatch(hideToast());
 	}
 
@@ -69,7 +68,12 @@ class ToastComponent extends React.Component<any, any> {
 					autoHideDuration={4000}
 					onRequestClose={this.handleRequestClose}
 					message={message}
-					action={<CloseButton className={classes.close} handleRequestClose={this.handleRequestClose} />}
+					action={
+						<CloseButton
+							className={classes.close}
+							handleRequestClose={this.handleRequestClose}
+						/>
+					}
 				/>
 			</div>
 		);
