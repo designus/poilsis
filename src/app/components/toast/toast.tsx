@@ -34,10 +34,24 @@ const styles = theme => ({
 	},
 });
 
-@withStyles(styles)
+const CloseButton = ({className, handleRequestClose}): React.ReactElement<any> => {
+	return (
+		<IconButton
+			key="close"
+			aria-label="Close"
+			color="inherit"
+			className={className}
+			onClick={handleRequestClose}
+		>
+			<CloseIcon />
+		</IconButton>
+	);
+};
+
+// @withStyles(styles)
 class ToastComponent extends React.Component<any, any> {
 
-	handleRequestClose = (event, reason) => {
+	handleRequestClose(event, reason) {
 		this.props.dispatch(hideToast());
 	}
 
@@ -55,17 +69,7 @@ class ToastComponent extends React.Component<any, any> {
 					autoHideDuration={4000}
 					onRequestClose={this.handleRequestClose}
 					message={message}
-					action={[
-						<IconButton
-							key="close"
-							aria-label="Close"
-							color="inherit"
-							className={classes.close}
-							onClick={this.handleRequestClose}
-						>
-							<CloseIcon />
-						</IconButton>,
-					]}
+					action={<CloseButton className={classes.close} handleRequestClose={this.handleRequestClose} />}
 				/>
 			</div>
 		);
@@ -81,4 +85,5 @@ const mapStateToProps = (state: IAppState) => {
 	};
 };
 
-export const Toast = connect(mapStateToProps)(ToastComponent);
+const StyledToastComponent = withStyles(styles)(ToastComponent) as any;
+export const Toast = connect(mapStateToProps)(StyledToastComponent);

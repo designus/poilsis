@@ -1,7 +1,5 @@
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
-import 'isomorphic-fetch';
-// import 'typeface-roboto';
 
 import thunkMiddleware from 'redux-thunk';
 import * as React from 'react';
@@ -14,7 +12,7 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './app/reducers';
 import routes from './app/routes';
 
-import createMuiTheme from 'material-ui/styles/theme';
+import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import { MuiThemeProvider } from 'material-ui/styles';
 
 const injectTapEventPlugin = require('react-tap-event-plugin');

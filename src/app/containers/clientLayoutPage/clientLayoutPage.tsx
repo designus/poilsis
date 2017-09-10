@@ -8,7 +8,7 @@ import {initialDataProps} from '../../helpers';
 import {IAppState} from '../../reducers';
 
 @asyncConnect([initialDataProps])
-class ClientPageComponent extends React.Component<any, any> {
+class ClientLayoutPageComponent extends React.Component<any, any> {
 
 	render() {
 		return (
@@ -40,4 +40,4 @@ const mapStateToProps = (state: IAppState) => {
 	};
 };
 
-export const ClientPage = connect(mapStateToProps)(ClientPageComponent);
+export const ClientLayoutPage = connect(mapStateToProps)(ClientLayoutPageComponent);

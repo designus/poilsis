@@ -4,8 +4,9 @@ import {Route} from 'react-router';
 import {
 	AddItemPage,
 	CityPage,
-	ClientPage,
-	AdminPage,
+	ClientLayoutPage,
+	AdminLayoutPage,
+	AdminHomePage,
 	AdminItemsPage,
 	CreateEditItemPage,
 	IndexPage,
@@ -15,12 +16,13 @@ import {
 
 export default (
 	<Route>
-		<Route path="/admin" component={AdminPage}>
+		<Route path="/admin" component={AdminLayoutPage}>
+			<Route path="/admin/home" component={AdminHomePage} />
 			<Route path="/admin/items" component={AdminItemsPage} />
 			<Route path="/admin/items/create" component={CreateEditItemPage} />
 			<Route path="/admin/items/edit/:id" component={CreateEditItemPage}  />
 		</Route>
-		<Route component={ClientPage}>
+		<Route component={ClientLayoutPage}>
 			<Route path="/" component={IndexPage} />
 			<Route path="/pasiskelbti" component={AddItemPage} />
 			<Route path="/:city" component={CityPage} />

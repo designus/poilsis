@@ -1,4 +1,5 @@
 export * from './addItem';
+export * from './adminMenu';
 export * from './checkboxGroup';
 export * from './checkboxOptions';
 export * from './form';

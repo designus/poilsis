@@ -65,10 +65,9 @@ export class AddItem extends React.Component<IAddItemProps, any> {
 					raised
 					color="primary"
 					type="submit"
-					label={SEND_LABEL}
 					style={{marginTop: 12, marginBottom: 20, display: 'block'}}
 				>
-					Submit
+					{SEND_LABEL}
 				</Button>
 			</form>
 		);
