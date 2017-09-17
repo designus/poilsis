@@ -31,17 +31,20 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 			{
 				title: 'Id',
 				dataProp: 'id',
+				searchable: true,
 			},
 			{
 				title: 'Name',
 				dataProp: 'name',
 				sortType: 'string',
+				searchable: true,
 			},
 			{
 				title: 'City',
 				dataProp: 'city',
 				sortType: 'string',
 				format: (cityId: string) => this.props.citiesMap[cityId].name,
+				searchable: true,
 			},
 			{
 				title: 'Types',
@@ -89,6 +92,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 			<PaginatedTable
 				loaderId={ITEMS_LOADER_ID}
 				dataMap={this.props.itemsMap}
+				search={this.props.search}
 				columns={this.columns}
 				limit={10}
 			/>

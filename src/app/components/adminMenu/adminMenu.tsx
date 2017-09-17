@@ -4,16 +4,19 @@ import styled from 'styled-components';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 export const StyledListItem = styled(ListItem)`
+	padding: 0!important;
+
  	>	a {
 		display: flex;
+		padding: 8px 12px;
 		flex: 1;
 		text-decoration: none;
 	}
 	
 	> a.active h3 {
-			color: red;
-			text-decoration: none;
-		}
+		color: red;
+		text-decoration: none;
+	}
 ` as any;
 
 export interface IAdminMenuItem {
@@ -32,7 +35,11 @@ export const AdminMenu = ({items}: IAdminMenuProps) => {
 			{
 				items.map((item: IAdminMenuItem, i) => {
 					return (
-						<StyledListItem button key={i}>
+						<StyledListItem button
+							key={i}
+							divider={true}
+							disableGutters={true}
+						>
 							<Link to={item.link} activeClassName="active">
 								<ListItemIcon>
 									{item.icon()}

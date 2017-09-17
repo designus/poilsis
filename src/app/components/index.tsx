@@ -6,6 +6,7 @@ export * from './form';
 export * from './genericTable';
 export * from './loader';
 export * from './mainMenu';
+export * from './markedText';
 export * from './notFound';
 export * from './itemsList';
 export * from './itemTypesList';

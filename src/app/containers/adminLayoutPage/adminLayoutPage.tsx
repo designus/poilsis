@@ -1,4 +1,7 @@
 import * as React from 'react';
+import debounceFn from 'lodash-es/debounce';
+import { browserHistory } from 'react-router';
+
 import { asyncConnect } from 'redux-connect';
 import { initialDataProps } from '../../helpers';
 import { Toast, AdminMenu, IAdminMenuItem } from '../../components';
@@ -10,18 +13,31 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import HomeIcon from 'material-ui-icons/Home';
 import ListIcon from 'material-ui-icons/List';
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
+import Input from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
 
 @asyncConnect([initialDataProps])
 class AdminLayoutPageComponent extends React.Component<any, any> {
 
 	state = {
-		open: false,
+		searchInput: '',
+		search: '',
 	};
+
+	constructor(props) {
+		super(props);
+		browserHistory.listen(location => {
+			if (this.state.search && this.state.searchInput) {
+				this.setState({search: '', searchInput: ''});
+			}
+		});
+	}
+
+	searchItems = debounceFn(this.setSearch, 500);
 
 	componentDidMount() {
 		const jssStyles = document.getElementById('jss-server-side');
@@ -50,12 +66,13 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
 		];
 	}
 
-	handleDrawerOpen = () => {
-		this.setState({ open: true });
+	onChange = (event) => {
+		this.setState({ searchInput: event.target.value });
+		this.searchItems();
 	}
 
-	handleDrawerClose = () => {
-		this.setState({ open: false });
+	setSearch() {
+		this.setState({ search: this.state.searchInput });
 	}
 
 	render() {
@@ -64,39 +81,40 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
 		return (
 			<div className={classes.root}>
 				<div className={classes.appFrame}>
-					<AppBar className={`${classes.appBar} ${this.state.open && classes.appBarShift}`}>
-						<Toolbar disableGutters={!this.state.open}>
-							<IconButton
-								color="contrast"
-								aria-label="open drawer"
-								onClick={this.handleDrawerOpen}
-								className={`${classes.menuButton} ${this.state.open && classes.hide}`}
-							>
-								<MenuIcon />
-							</IconButton>
-								Mini variant drawer
+					<AppBar className={classes.appBar}>
+						<Toolbar className={classes.toolbar}>
+							<div>Admin panel</div>
+							<FormControl>
+								<Input
+									placeholder="Search"
+									value={this.state.searchInput}
+									disableUnderline={true}
+									onChange={this.onChange}
+									classes={{
+										input: classes.search,
+									}}
+								/>
+							</FormControl>
 						</Toolbar>
 					</AppBar>
 					<Drawer
 						type="permanent"
 						classes={{
-							paper: `${classes.drawerPaper} ${!this.state.open && classes.drawerPaperClose}`,
+							paper: classes.drawerPaper,
+							docked: classes.docked,
 						}}
-						open={this.state.open}
 					>
-						<div className={classes.drawerInner}>
-							<div className={classes.drawerHeader}>
-								Menu
-								<IconButton onClick={this.handleDrawerClose}>
-									<ChevronLeftIcon />
-								</IconButton>
-							</div>
-							<Divider />
-							<AdminMenu items={this.adminMenuItems} />
+						<div className={classes.drawerHeader}>
+							Menu
+							<IconButton>
+								<ChevronLeftIcon />
+							</IconButton>
 						</div>
+						<Divider />
+						<AdminMenu items={this.adminMenuItems} />
 					</Drawer>
 					<main className={classes.content}>
-						{this.props.children}
+						{React.cloneElement(this.props.children, { search: this.state.search })}
 					</main>
 				</div>
 				<Toast />

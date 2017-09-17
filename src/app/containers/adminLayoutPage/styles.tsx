@@ -15,47 +15,15 @@ export const styles = theme => ({
 	},
 	appBar: {
 		position: 'absolute',
-		zIndex: theme.zIndex.navDrawer + 1,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-	appBarShift: {
-		marginLeft: drawerWidth,
 		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	menuButton: {
-		marginLeft: 12,
-		marginRight: 36,
-	},
-	hide: {
-		display: 'none',
+		marginLeft: drawerWidth,
+		order: 1,
 	},
 	drawerPaper: {
 		position: 'relative',
 		height: 'auto',
-		overflow: 'hidden',
 		width: drawerWidth,
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	drawerPaperClose: {
-		width: 55,
-		overflow: 'hidden',
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-	drawerInner: {
-		width: drawerWidth,
+		borderRight: 'none!important',
 	},
 	drawerHeader: {
 		display: 'flex',
@@ -68,15 +36,25 @@ export const styles = theme => ({
 		},
 	},
 	content: {
-		width: '100%',
-		flexGrow: 1,
 		backgroundColor: theme.palette.background.default,
-		padding: 24,
+		width: '100%',
+		padding: theme.spacing.unit * 3,
 		height: 'calc(100% - 56px)',
 		marginTop: 56,
 		[theme.breakpoints.up('sm')]: {
 			height: 'calc(100% - 64px)',
 			marginTop: 64,
 		},
+	},
+	docked: {
+		borderRight: '1px solid rgba(0, 0, 0, 0.12)',
+	},
+	toolbar: {
+		justifyContent: 'space-between',
+	},
+	search: {
+		background: 'rgba(255,255,255, 0.3)',
+		padding: '7px',
+		color: '#fff',
 	},
 }) as any;

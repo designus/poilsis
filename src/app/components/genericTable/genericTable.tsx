@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
 import { IGenericDataMap } from '../../helpers';
+import { MarkedText } from '../../components';
 
 import Table, { TableBody, TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 
@@ -11,6 +12,7 @@ export interface IGenericTableColumn {
 	title: string;
 	dataProp?: string;
 	sortType?: SortType;
+	searchable?: boolean;
 	format?: any;
 }
 
@@ -20,7 +22,8 @@ export interface IGenericTableProps {
 	dataMap?: IGenericDataMap<object>;
 	pageData?: string[];
 	columns?: IGenericTableColumn[];
-	handleNewData?: (data: string[]) => void;
+	handleNewData?: (data: string[], goToFirstPage?: boolean) => void;
+	search?: string;
 }
 
 export class GenericTable extends React.Component<IGenericTableProps, any> {
@@ -29,11 +32,49 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
 		super(props);
 		autoBind(this);
 
+		const allData = Object.keys(props.dataMap);
+
 		this.state = {
+			search: props.search || '',
 			order: props.order || null,
 			orderBy: props.orderBy || null,
-			allData: Object.keys(props.dataMap),
+			allData,
+			sortedData: allData,
+			searchableProps: this.getSearchableItemProps(props.columns),
 		};
+	}
+
+	getSearchableItemProps(columns: IGenericTableColumn[]) {
+		return columns
+			.filter((column: IGenericTableColumn) => column.searchable)
+			.map((column: IGenericTableColumn) => ({dataProp: column.dataProp, format: column.format}));
+	}
+
+	componentWillReceiveProps(nextProps: IGenericTableProps) {
+		if (nextProps.search !== this.props.search) {
+			this.handleSearch(nextProps.search);
+		}
+	}
+
+	searchData(data: string[], search: string) {
+		return data.filter(id => {
+			const item = this.props.dataMap[id];
+			return this.state.searchableProps.some(prop => {
+				const itemVal = item[prop.dataProp];
+				const formattedItem = prop.format ? prop.format(itemVal) : itemVal;
+				return formattedItem && formattedItem.search(new RegExp(search, 'i')) !== -1;
+			});
+		});
+	}
+
+	handleSearch(search: string) {
+		const dataCopy = [...this.state.sortedData];
+		const data = search ?
+			this.searchData(dataCopy, search) :
+			dataCopy;
+
+		this.setState({search});
+		this.props.handleNewData(data, true);
 	}
 
 	sortData = (dataMap: IGenericDataMap<object>, order: OrderType, orderBy: string, sortType: SortType) => (a, b) => {
@@ -59,15 +100,17 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
 		}
 		const orderBy = order ? prop : null;
 		const dataCopy = [...this.state.allData];
-		const data = order ? dataCopy.sort(this.sortData(this.props.dataMap, order, orderBy, sortType)) : dataCopy;
+		const sortedData = order ?
+			dataCopy.sort(this.sortData(this.props.dataMap, order, orderBy, sortType)) :
+			dataCopy;
 
-		this.setState({order, orderBy});
-		this.props.handleNewData(data);
+		this.setState({order, orderBy, sortedData});
+		this.props.handleNewData(sortedData);
 	}
 
 	render() {
 		const { columns, dataMap, pageData } = this.props;
-		const { order, orderBy } = this.state;
+		const { order, orderBy, search } = this.state;
 
 		return (
 			<div>
@@ -106,7 +149,12 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
 												const column = colItem.dataProp ? row[colItem.dataProp] : '';
 												const formattedColumn = colItem.format ? colItem.format(column) : column;
 												return (
-													<TableCell key={index}>{formattedColumn}</TableCell>
+													<TableCell key={index}>
+														<MarkedText
+															fullText={formattedColumn}
+															markedText={search}
+														/>
+													</TableCell>
 												);
 											})
 										}

@@ -28,21 +28,30 @@ export const extendWithPagination = (WrappedComponent) => {
 				limit: props.limit,
 				pageData: allData.slice(0, this.props.limit),
 				currentPage: 1,
-				pages: Math.ceil(allData.length / props.limit),
+				pages: this.getPages(allData, props.limit),
 				allData,
 			};
+		}
+
+		getPages(data: string[], limit) {
+			return Math.ceil(data.length / limit);
 		}
 
 		getOffset(pageNumber, limit) {
 			return pageNumber * limit - limit;
 		}
 
-		paginateNewData(newData: string[]) {
-			const { limit, currentPage } = this.state;
+		paginateNewData(newData: string[], goToFirstPage = false) {
+
+			const limit = this.state.limit;
+			const currentPage = goToFirstPage ? 1 : this.state.currentPage;
 			const offset = this.getOffset(currentPage, limit);
+
 			this.setState({
 				pageData: newData.slice(offset, offset + limit),
 				allData: newData,
+				pages: this.getPages(newData, limit),
+				currentPage,
 			});
 		}
 

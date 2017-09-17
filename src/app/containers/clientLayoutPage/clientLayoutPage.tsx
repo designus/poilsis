@@ -19,7 +19,7 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
 				<div className="top-menu">
 					<IndexLink to="/" activeClassName="active">Home</IndexLink>&nbsp;
 					<Link to="/pasiskelbti">Pasiskelbkite</Link>&nbsp;
-					<Link to="/admin">Admin</Link>
+					<Link to="/admin/home">Admin</Link>
 				</div>
 				<div className="content">
 					<MainMenu {...this.props} showSubmenu={true} />
