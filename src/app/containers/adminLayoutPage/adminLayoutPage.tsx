@@ -30,14 +30,18 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
-    browserHistory.listen(location => {
-      if (this.state.search && this.state.searchInput) {
-        this.setState({search: '', searchInput: ''});
-      }
-    });
+    if (browserHistory) {
+      browserHistory.listen(this.routeChangeCallback);
+    }
   }
 
   searchItems = debounceFn(this.setSearch, 500);
+
+  routeChangeCallback() {
+    if (this.state.search && this.state.searchInput) {
+      this.setState({search: '', searchInput: ''});
+    }
+  }
 
   componentDidMount() {
     const jssStyles = document.getElementById('jss-server-side');

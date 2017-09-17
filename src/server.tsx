@@ -18,7 +18,7 @@ import { match } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-import rootReducer from './app/reducers';
+import { rootReducer } from './app/reducers';
 import routes from './app/routes';
 
 import { JssProvider, SheetsRegistry } from 'react-jss';

@@ -9,7 +9,7 @@ import { ReduxAsyncConnect } from 'redux-connect';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import rootReducer from './app/reducers';
+import { rootReducer } from './app/reducers';
 import routes from './app/routes';
 
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
