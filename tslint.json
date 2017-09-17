@@ -6,8 +6,8 @@
   "rules": {
     "indent": [
       true,
-      "tabs",
-      2
+      "spaces",
+      4
     ],
     "quotemark": [
       true,
