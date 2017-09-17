@@ -40,22 +40,22 @@ mongoose.Promise = global.Promise;
 
 if (process.env.NODE_ENV !== 'production') {
 
-	const webpack = require('webpack');
-	const webpackConfig = require('../config/webpack/dev');
-	const compiler = webpack(webpackConfig);
+  const webpack = require('webpack');
+  const webpackConfig = require('../config/webpack/dev');
+  const compiler = webpack(webpackConfig);
 
-	app.use(require('webpack-dev-middleware')(compiler, {
-		publicPath: webpackConfig.output.publicPath,
-		stats: { colors: true },
-		noInfo: true,
-		hot: true,
-		inline: true,
-		lazy: false,
-		historyApiFallback: true,
-		quiet: true,
-	}));
+  app.use(require('webpack-dev-middleware')(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    stats: { colors: true },
+    noInfo: true,
+    hot: true,
+    inline: true,
+    lazy: false,
+    historyApiFallback: true,
+    quiet: true,
+  }));
 
-	app.use(require('webpack-hot-middleware')(compiler));
+  app.use(require('webpack-hot-middleware')(compiler));
 
 }
 
@@ -69,77 +69,77 @@ app.use(bodyParser.json());
 app.use('/api', require('./server/controllers'));
 
 app.get('/favicon.ico', (req, res) => {
-	res.send(204);
+  res.send(204);
 });
 
 app.get('*', (req, res) => {
-	const location = req.url;
-	const store = createStore(rootReducer, undefined, applyMiddleware(thunkMiddleware));
+  const location = req.url;
+  const store = createStore(rootReducer, undefined, applyMiddleware(thunkMiddleware));
 
-	match({routes, location}, (error, redirectLocation, renderProps) => {
-		if (error) {
-			res.status(500).send(error.message);
-		} else if (redirectLocation) {
-			res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-		} else if (renderProps) {
+  match({routes, location}, (error, redirectLocation, renderProps) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    } else if (renderProps) {
 
-			loadOnServer({ ...renderProps, store })
-				.then(() => {
-					const sheetsRegistry = new SheetsRegistry();
-					const theme = createMuiTheme();
-					const jss = create(preset());
-					jss.options.createGenerateClassName = createGenerateClassName;
+      loadOnServer({ ...renderProps, store })
+        .then(() => {
+          const sheetsRegistry = new SheetsRegistry();
+          const theme = createMuiTheme();
+          const jss = create(preset());
+          jss.options.createGenerateClassName = createGenerateClassName;
 
-					const sheet: any = new ServerStyleSheet();
-					const responseHtml = renderToString(
-						<StyleSheetManager sheet={sheet.instance}>
-							<JssProvider registry={sheetsRegistry} jss={jss}>
-								<MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-									<Provider store={store} key="provider">
-										<ReduxAsyncConnect {...renderProps} />
-									</Provider>
-								</MuiThemeProvider>
-							</JssProvider>
-						</StyleSheetManager>,
-					);
-					const css = sheetsRegistry.toString();
-					const styleTags = sheet.getStyleTags();
+          const sheet: any = new ServerStyleSheet();
+          const responseHtml = renderToString(
+            <StyleSheetManager sheet={sheet.instance}>
+              <JssProvider registry={sheetsRegistry} jss={jss}>
+                <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+                  <Provider store={store} key="provider">
+                    <ReduxAsyncConnect {...renderProps} />
+                  </Provider>
+                </MuiThemeProvider>
+              </JssProvider>
+            </StyleSheetManager>,
+          );
+          const css = sheetsRegistry.toString();
+          const styleTags = sheet.getStyleTags();
 
-					const finalState = store.getState();
-					res.status(200).send(renderFullPage(responseHtml, css, styleTags, finalState));
-			})
-			.catch((err) => console.error(err));
+          const finalState = store.getState();
+          res.status(200).send(renderFullPage(responseHtml, css, styleTags, finalState));
+      })
+      .catch((err) => console.error(err));
 
-		} else {
-			res.status(404).send('Not found');
-		}
-	});
+    } else {
+      res.status(404).send('Not found');
+    }
+  });
 });
 
 function renderFullPage(html, css1, css2, preloadedState) {
-	return `
-		<!DOCTYPE html>
-		<html>
-			<head>
-				<title>Redux Universal Example</title>
-			</head>
-			<body>
-				<div id="app"><div>${html}</div></div>
-				<style id="jss-server-side">${css1}</style>
-				<style id="styled-css">${css2}</style>
-				<script>
-					window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
-				</script>
-				<script src="/public/js/app.js"></script>
-			</body>
-		</html>
-		`;
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Redux Universal Example</title>
+      </head>
+      <body>
+        <div id="app"><div>${html}</div></div>
+        <style id="jss-server-side">${css1}</style>
+        <style id="styled-css">${css2}</style>
+        <script>
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
+        </script>
+        <script src="/public/js/app.js"></script>
+      </body>
+    </html>
+    `;
 }
 
 app.listen(port, (error) => {
-	if (error) {
-		console.error(error);
-	} else {
-		console.info(`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`);
-	}
+  if (error) {
+    console.error(error);
+  } else {
+    console.info(`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`);
+  }
 });

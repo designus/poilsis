@@ -3,30 +3,30 @@ import * as React from 'react';
 import {ItemTypesList} from '../itemTypesList';
 
 export interface IItemsListProps {
-	items: string[];
-	itemsMap: any;
-	typesMap: any;
+  items: string[];
+  itemsMap: any;
+  typesMap: any;
 }
 
 export class ItemsList extends React.Component<IItemsListProps, {}> {
 
-	render() {
+  render() {
 
-		const items = this.props.items || [];
+    const items = this.props.items || [];
 
-		return (
-			<div className="itemsList">
-				{items.map(itemId => {
-						const item = this.props.itemsMap[itemId];
-						return (
-							<div className="item" key={itemId}>
-								{item.name}<br />
-								<ItemTypesList typeIds={item.types} typesMap={this.props.typesMap} />
-								<hr />
-							</div>
-						);
-				})}
-			</div>
-		);
-	}
+    return (
+      <div className="itemsList">
+        {items.map(itemId => {
+            const item = this.props.itemsMap[itemId];
+            return (
+              <div className="item" key={itemId}>
+                {item.name}<br />
+                <ItemTypesList typeIds={item.types} typesMap={this.props.typesMap} />
+                <hr />
+              </div>
+            );
+        })}
+      </div>
+    );
+  }
 }

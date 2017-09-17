@@ -3,22 +3,22 @@ import { ITypesMap } from '../../reducers';
 import { IGenericDataMap } from '../../helpers';
 
 export interface IItemsTypesList {
-	typeIds: string[];
-	typesMap: IGenericDataMap<ITypesMap>;
+  typeIds: string[];
+  typesMap: IGenericDataMap<ITypesMap>;
 }
 
 export const ItemTypesList = ({typeIds, typesMap}: IItemsTypesList) => {
-	return (
-		<div>
-			{
-				typeIds.map((typeId) => {
-					return (
-						<span key={typeId} className="types" style={{ fontSize: 12 + 'px' }}>
-							{typesMap[typeId].name}&nbsp;
-						</span>
-					);
-				})
-			}
-		</div>
-	);
+  return (
+    <div>
+      {
+        typeIds.map((typeId) => {
+          return (
+            <span key={typeId} className="types" style={{ fontSize: 12 + 'px' }}>
+              {typesMap[typeId].name}&nbsp;
+            </span>
+          );
+        })
+      }
+    </div>
+  );
 };

@@ -19,26 +19,26 @@ export * from './loader';
 export * from './toast';
 
 export interface IAppState {
-	cities: ICityState;
-	global: any;
-	items: IItemsState;
-	newItem: TItemState;
-	reduxAsyncConnect: any;
-	types: any;
-	initialData: IInitialDataState;
-	loader: ILoadingState;
-	toast: IToastState;
+  cities: ICityState;
+  global: any;
+  items: IItemsState;
+  newItem: TItemState;
+  reduxAsyncConnect: any;
+  types: any;
+  initialData: IInitialDataState;
+  loader: ILoadingState;
+  toast: IToastState;
 }
 
 const rootReducer = combineReducers({
-	cities,
-	types,
-	items,
-	newItem,
-	reduxAsyncConnect,
-	initialData,
-	loader,
-	toast,
+  cities,
+  types,
+  items,
+  newItem,
+  reduxAsyncConnect,
+  initialData,
+  loader,
+  toast,
 });
 
 export default rootReducer;

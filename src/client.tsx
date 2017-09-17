@@ -24,15 +24,15 @@ const store = createStore(rootReducer, window.__INITIAL_STATE__, applyMiddleware
 const connectedCmp = (props) => <ReduxAsyncConnect {...props} />;
 
 render(
-	<MuiThemeProvider theme={createMuiTheme({userAgent: navigator.userAgent})}>
-		<Provider store={store} key="provider">
-			<Router
-				history={browserHistory}
-				render={connectedCmp}
-			>
-				{routes}
-			</Router>
-		</Provider>
-	</MuiThemeProvider>,
-	rootElement,
+  <MuiThemeProvider theme={createMuiTheme({userAgent: navigator.userAgent})}>
+    <Provider store={store} key="provider">
+      <Router
+        history={browserHistory}
+        render={connectedCmp}
+      >
+        {routes}
+      </Router>
+    </Provider>
+  </MuiThemeProvider>,
+  rootElement,
 );
