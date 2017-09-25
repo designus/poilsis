@@ -1,60 +1,63 @@
-const drawerWidth = 240;
+import {APP_SETTING} from '../../styles';
 
 export const styles = theme => ({
-  root: {
-    width: '100%',
-    height: '100%',
-    zIndex: 1,
-    overflow: 'hidden',
-  },
-  appFrame: {
-    position: 'relative',
-    display: 'flex',
-    width: '100%',
-    height: '100%',
-  },
-  appBar: {
-    position: 'absolute',
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    order: 1,
-  },
-  drawerPaper: {
-    position: 'relative',
-    height: 'auto',
-    width: drawerWidth,
-    borderRight: 'none!important',
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    height: 56,
-    [theme.breakpoints.up('sm')]: {
-      height: 64,
+  '@global': {
+    'html': {
+      background: theme.palette.background.default,
+      WebkitFontSmoothing: 'antialiased',
+      MozOsxFontSmoothing: 'grayscale',
+      boxSizing: 'border-box',
+    },
+    '*, *:before, *:after': {
+      boxSizing: 'inherit',
+    },
+    'body': {
+      height: '100%',
+      margin: 0,
+    },
+    'div[id=root]': {
+      height: '100%',
     },
   },
-  content: {
-    backgroundColor: theme.palette.background.default,
+  'root': {
+    display: 'flex',
+    alignItems: 'stretch',
+    minHeight: '100%',
     width: '100%',
-    padding: theme.spacing.unit * 3,
+  },
+  'appBarTitle': {
+    flex: 1,
+  },
+  'appFrame': {
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+  },
+  'drawer': {
+    top: APP_SETTING.drawerTop,
+    [theme.breakpoints.up('lg')]: {
+      width: APP_SETTING.DrawerWidth,
+    },
+  },
+  'content': {
+    width: '100%',
+    padding: theme.spacing.unit,
     height: 'calc(100% - 56px)',
     marginTop: 56,
+    [theme.breakpoints.up('lg')]: {
+      width: 'calc(100% - ' + APP_SETTING.DrawerWidth + 'px)',
+    },
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',
       marginTop: 64,
+      padding: theme.spacing.unit * 3,
     },
   },
-  docked: {
-    borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-  },
-  toolbar: {
-    justifyContent: 'space-between',
-  },
-  search: {
+  'search': {
     background: 'rgba(255,255,255, 0.3)',
     padding: '7px',
+    margin: '0 15px 0 0',
     color: '#fff',
   },
 }) as any;

@@ -1,12 +1,21 @@
 import * as React from 'react';
 import * as moment from 'moment';
+import styled from 'styled-components';
+
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
+import DeleteIcon from 'material-ui-icons/Delete';
+import EditIcon from 'material-ui-icons/ModeEdit';
+
 import { IAppState } from '../../reducers';
 import { getItems } from '../../actions';
 import { GenericTable, IGenericTableColumn, ItemTypesList, extendWithPagination, extendWithLoader } from '../../components';
 import { ITEMS_LOADER_ID } from '../../helpers';
+
+const StyledActions = styled.div`
+  display: flex;
+`;
 
 const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
 
@@ -69,10 +78,14 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         dataProp: 'id',
         format: (id) => {
           return (
-            <div>
-              <Link	to={`/admin/items/edit/${id}`}>Edit</Link>
-              <div onClick={this.onDelete.bind(null, id)}>Delete action</div>
-            </div>
+            <StyledActions>
+              <Link	to={`/admin/items/edit/${id}`}>
+                <EditIcon />
+              </Link>
+              <div onClick={this.onDelete.bind(null, id)}>
+                <DeleteIcon />
+              </div>
+            </StyledActions>
           );
         },
       },

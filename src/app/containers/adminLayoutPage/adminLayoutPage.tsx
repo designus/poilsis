@@ -1,24 +1,27 @@
 import * as React from 'react';
 import debounceFn from 'lodash-es/debounce';
 import { browserHistory } from 'react-router';
-
 import { asyncConnect } from 'redux-connect';
-import { initialDataProps } from '../../helpers';
-import { Toast, AdminMenu, IAdminMenuItem } from '../../components';
-import { withStyles } from 'material-ui/styles';
-import {styles} from './styles';
 
-import Drawer from 'material-ui/Drawer';
+import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import HomeIcon from 'material-ui-icons/Home';
 import ListIcon from 'material-ui-icons/List';
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
+import MenuIcon from 'material-ui-icons/Menu';
+import Menu from 'material-ui/Menu';
+import Hidden from 'material-ui/Hidden';
+import { MenuItem } from 'material-ui/Menu';
+import MoreVertIcon from 'material-ui-icons/MoreVert';
+import Typography from 'material-ui/Typography';
 import Input from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
+
+import {styles} from './styles';
+import { initialDataProps } from '../../helpers';
+import { Toast, AdminMenu, IAdminMenuItem, Drawer } from '../../components';
 
 @asyncConnect([initialDataProps])
 class AdminLayoutPageComponent extends React.Component<any, any> {
@@ -26,16 +29,35 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   state = {
     searchInput: '',
     search: '',
+    mobileDrawerOpen: false,
+    dropdownAnchorEl: null,
+    dropdownMenuOpen: false,
   };
 
   constructor(props) {
     super(props);
     if (browserHistory) {
-      browserHistory.listen(this.routeChangeCallback);
+      browserHistory.listen(this.routeChangeCallback.bind(this));
     }
   }
 
   searchItems = debounceFn(this.setSearch, 500);
+
+  handleDrawerClose = () => {
+    this.setState({ mobileDrawerOpen: false });
+  }
+
+  handleDrawerToggle = () => {
+    this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
+  }
+
+  handleMenuOpen = event => {
+    this.setState({ dropdownMenuOpen: true, dropdownAnchorEl: event.currentTarget });
+  }
+
+  handleMenuclose = () => {
+    this.setState({ dropdownMenuOpen: false });
+  }
 
   routeChangeCallback() {
     if (this.state.search && this.state.searchInput) {
@@ -81,13 +103,23 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
 
   render() {
     const classes = this.props.classes;
-
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <AppBar className={classes.appBar}>
-            <Toolbar className={classes.toolbar}>
-              <div>Admin panel</div>
+            <Toolbar>
+              <Hidden lgUp implementation="css">
+                <IconButton
+                  color="contrast"
+                  aria-label="Open Drawer"
+                  onClick={this.handleDrawerToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+              <Typography className={classes.appBarTitle} type="title" color="inherit" noWrap>
+                Admin panel
+              </Typography>
               <FormControl>
                 <Input
                   placeholder="Search"
@@ -99,22 +131,35 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
                   }}
                 />
               </FormControl>
+              <IconButton
+                aria-label="More"
+                aria-owns="Open right Menu"
+                aria-haspopup="true"
+                onClick={this.handleMenuOpen}
+                className={classes.menuButtonRight}
+              >
+                <MoreVertIcon />
+              </IconButton>
+
+              <Menu
+                id="menuRight"
+                anchorEl={this.state.dropdownAnchorEl}
+                open={this.state.dropdownMenuOpen}
+                onRequestClose={this.handleMenuclose}
+              >
+                <div>
+                  <MenuItem>My account</MenuItem>
+                  <MenuItem>Logout</MenuItem>
+                </div>
+                
+              </Menu>
             </Toolbar>
           </AppBar>
           <Drawer
-            type="permanent"
-            classes={{
-              paper: classes.drawerPaper,
-              docked: classes.docked,
-            }}
+            className={classes.drawer}
+            onRequestClose={this.handleDrawerClose}
+            mobileDrawerOpen={this.state.mobileDrawerOpen}
           >
-            <div className={classes.drawerHeader}>
-              Menu
-              <IconButton>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            <Divider />
             <AdminMenu items={this.adminMenuItems} />
           </Drawer>
           <main className={classes.content}>

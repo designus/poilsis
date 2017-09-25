@@ -2,6 +2,7 @@ export * from './addItem';
 export * from './adminMenu';
 export * from './checkboxGroup';
 export * from './checkboxOptions';
+export * from './drawer';
 export * from './form';
 export * from './genericTable';
 export * from './loader';

@@ -6,6 +6,7 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { ReduxAsyncConnect } from 'redux-connect';
+import { injectGlobal } from 'styled-components';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -36,3 +37,11 @@ render(
   </MuiThemeProvider>,
   rootElement,
 );
+
+// tslint:disable-next-line
+injectGlobal`
+  body {
+    padding: 0;
+    margin: 0;
+  }
+`;
