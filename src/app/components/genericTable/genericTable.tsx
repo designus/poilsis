@@ -39,7 +39,7 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
       order: props.order || null,
       orderBy: props.orderBy || null,
       allData,
-      sortedData: allData,
+      filteredData: allData,
       searchableProps: this.getSearchableItemProps(props.columns),
     };
   }
@@ -68,13 +68,18 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
   }
 
   handleSearch(search: string) {
-    const dataCopy = [...this.state.sortedData];
-    const data = search ?
+    const {allData, order, orderBy, sortType} = this.state;
+    const dataCopy = [...allData];
+    const filteredData = search ?
       this.searchData(dataCopy, search) :
       dataCopy;
 
-    this.setState({search});
-    this.props.handleNewData(data, true);
+    const sortedData = order ?
+      filteredData.sort(this.sortData(this.props.dataMap, order, orderBy, sortType)) :
+      filteredData;
+
+    this.setState({search, filteredData: sortedData});
+    this.props.handleNewData(sortedData, true);
   }
 
   sortData = (dataMap: IGenericDataMap<object>, order: OrderType, orderBy: string, sortType: SortType) => (a, b) => {
@@ -91,20 +96,16 @@ export class GenericTable extends React.Component<IGenericTableProps, any> {
     return comparison * (order === 'desc' ? -1 : 1);
   }
 
-  handleSort(prop: string, sortType: SortType) {
-    let order;
-    if (!this.state.order) {
-      order = 'asc';
-    } else if (this.state.order === 'asc') {
-      order = 'desc';
-    }
-    const orderBy = order ? prop : null;
-    const dataCopy = [...this.state.allData];
+  handleSort(sortProp: string, sortType: SortType) {
+    const {allData, filteredData} = this.state;
+    const order = !this.state.order ? 'asc' : this.state.order === 'asc' ? 'desc' : null;
+    const orderBy = order ? sortProp : null;
+    const dataCopy = [...(allData.length === filteredData.length && allData || filteredData)];
     const sortedData = order ?
       dataCopy.sort(this.sortData(this.props.dataMap, order, orderBy, sortType)) :
       dataCopy;
 
-    this.setState({order, orderBy, sortedData});
+    this.setState({order, orderBy, sortProp, sortType});
     this.props.handleNewData(sortedData);
   }
 
