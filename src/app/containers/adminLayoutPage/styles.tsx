@@ -54,10 +54,4 @@ export const styles = theme => ({
       padding: theme.spacing.unit * 3,
     },
   },
-  'search': {
-    background: 'rgba(255,255,255, 0.3)',
-    padding: '7px',
-    margin: '0 15px 0 0',
-    color: '#fff',
-  },
 }) as any;

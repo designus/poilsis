@@ -14,6 +14,7 @@ export * from './itemTypesList';
 export * from './pagination';
 export * from './selectBox';
 export * from './selectOptions';
+export * from './search';
 export * from './textInput';
 export * from './toast';
 export * from './validationErrors';

@@ -16,12 +16,10 @@ import Hidden from 'material-ui/Hidden';
 import { MenuItem } from 'material-ui/Menu';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Typography from 'material-ui/Typography';
-import Input from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
 
 import {styles} from './styles';
 import { initialDataProps } from '../../helpers';
-import { Toast, AdminMenu, IAdminMenuItem, Drawer } from '../../components';
+import { Toast, AdminMenu, IAdminMenuItem, Drawer, SearchBox } from '../../components';
 
 @asyncConnect([initialDataProps])
 class AdminLayoutPageComponent extends React.Component<any, any> {
@@ -120,17 +118,10 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
               <Typography className={classes.appBarTitle} type="title" color="inherit" noWrap>
                 Admin panel
               </Typography>
-              <FormControl>
-                <Input
-                  placeholder="Search"
-                  value={this.state.searchInput}
-                  disableUnderline={true}
-                  onChange={this.onChange}
-                  classes={{
-                    input: classes.search,
-                  }}
-                />
-              </FormControl>
+              <SearchBox
+                searchInput={this.state.searchInput}
+                onChange={this.onChange}
+              />
               <IconButton
                 aria-label="More"
                 aria-owns="Open right Menu"
