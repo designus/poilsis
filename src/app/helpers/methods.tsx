@@ -102,3 +102,10 @@ export function getBackendErrors(errors) {
 export function removeDuplicates(item, i, arr) {
   return arr.indexOf(item) === i;
 }
+
+export function removeInjectedStyles() {
+  const jssStyles = document.getElementById('jss-server-side');
+  if (jssStyles && jssStyles.parentNode) {
+    jssStyles.parentNode.removeChild(jssStyles);
+  }
+}

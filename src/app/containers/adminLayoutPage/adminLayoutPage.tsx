@@ -11,15 +11,12 @@ import HomeIcon from 'material-ui-icons/Home';
 import ListIcon from 'material-ui-icons/List';
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
 import MenuIcon from 'material-ui-icons/Menu';
-import Menu from 'material-ui/Menu';
 import Hidden from 'material-ui/Hidden';
-import { MenuItem } from 'material-ui/Menu';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Typography from 'material-ui/Typography';
 
 import {styles} from './styles';
-import { initialDataProps } from '../../helpers';
-import { Toast, AdminMenu, IAdminMenuItem, Drawer, SearchBox } from '../../components';
+import { initialDataProps, removeInjectedStyles } from '../../helpers';
+import { Toast, AdminMenu, IAdminMenuItem, Drawer, SearchBox, UserMenu } from '../../components';
 
 @asyncConnect([initialDataProps])
 class AdminLayoutPageComponent extends React.Component<any, any> {
@@ -28,8 +25,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     searchInput: '',
     search: '',
     mobileDrawerOpen: false,
-    dropdownAnchorEl: null,
-    dropdownMenuOpen: false,
   };
 
   constructor(props) {
@@ -49,14 +44,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
   }
 
-  handleMenuOpen = event => {
-    this.setState({ dropdownMenuOpen: true, dropdownAnchorEl: event.currentTarget });
-  }
-
-  handleMenuclose = () => {
-    this.setState({ dropdownMenuOpen: false });
-  }
-
   routeChangeCallback() {
     if (this.state.search && this.state.searchInput) {
       this.setState({search: '', searchInput: ''});
@@ -64,10 +51,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    const jssStyles = document.getElementById('jss-server-side');
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
+    removeInjectedStyles();
   }
 
   get adminMenuItems(): IAdminMenuItem[] {
@@ -122,28 +106,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
                 searchInput={this.state.searchInput}
                 onChange={this.onChange}
               />
-              <IconButton
-                aria-label="More"
-                aria-owns="Open right Menu"
-                aria-haspopup="true"
-                onClick={this.handleMenuOpen}
-                className={classes.menuButtonRight}
-              >
-                <MoreVertIcon />
-              </IconButton>
-
-              <Menu
-                id="menuRight"
-                anchorEl={this.state.dropdownAnchorEl}
-                open={this.state.dropdownMenuOpen}
-                onRequestClose={this.handleMenuclose}
-              >
-                <div>
-                  <MenuItem>My account</MenuItem>
-                  <MenuItem>Logout</MenuItem>
-                </div>
-                
-              </Menu>
+              <UserMenu />
             </Toolbar>
           </AppBar>
           <Drawer

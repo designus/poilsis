@@ -11,6 +11,9 @@ export const styles = theme => ({
     '*, *:before, *:after': {
       boxSizing: 'inherit',
     },
+    ':focus': {
+      outline: 'none',
+    },
     'body': {
       height: '100%',
       margin: 0,
