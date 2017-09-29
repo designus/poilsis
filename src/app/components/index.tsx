@@ -11,6 +11,7 @@ export * from './markedText';
 export * from './notFound';
 export * from './itemsList';
 export * from './itemTypesList';
+export * from './itemActions';
 export * from './pagination';
 export * from './selectBox';
 export * from './selectOptions';
