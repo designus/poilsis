@@ -4,8 +4,16 @@ import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../reducers';
 import { getItems } from '../../actions';
-import { GenericTable, IGenericTableColumn, ItemTypesList, extendWithPagination, extendWithLoader, ItemActions } from '../../components';
 import { ITEMS_LOADER_ID } from '../../helpers';
+import {
+  GenericTable,
+  IGenericTableColumn,
+  ItemTypesList,
+  extendWithPagination,
+  extendWithLoader,
+  ItemActions,
+  DeleteModal,
+} from '../../components';
 
 const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
 
@@ -24,6 +32,10 @@ const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
   },
 }])
 class AdminItemsPageComponent extends React.Component<any, any> {
+
+  state = {
+    isDeleteModalOpen: false,
+  };
 
   get columns(): IGenericTableColumn[] {
     return [
@@ -70,12 +82,16 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           return (
             <ItemActions
               editLink={`/admin/items/edit/${id}`}
-              onDelete={this.onDelete.bind(null, id)}
+              onDelete={this.openDeleteModal.bind(this, id)}
             />
           );
         },
       },
     ];
+  }
+
+  openDeleteModal(id) {
+    this.setState({isDeleteModalOpen: true});
   }
 
   onDelete(id) {
@@ -84,13 +100,19 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 
   render() {
     return (
-      <PaginatedTable
-        loaderId={ITEMS_LOADER_ID}
-        dataMap={this.props.itemsMap}
-        search={this.props.search}
-        columns={this.columns}
-        limit={10}
-      />
+      <div>
+        <PaginatedTable
+          loaderId={ITEMS_LOADER_ID}
+          dataMap={this.props.itemsMap}
+          search={this.props.search}
+          columns={this.columns}
+          limit={10}
+        />
+        <DeleteModal
+          isDeleteModalOpen={this.state.isDeleteModalOpen}
+          onDelete={this.onDelete}
+        />
+      </div>
     );
 
   };

@@ -3,6 +3,7 @@ export * from './adminMenu';
 export * from './checkboxGroup';
 export * from './checkboxOptions';
 export * from './drawer';
+export * from './deleteModal';
 export * from './form';
 export * from './genericTable';
 export * from './loader';
