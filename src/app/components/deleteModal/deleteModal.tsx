@@ -9,6 +9,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
 import ClearIcon from 'material-ui-icons/Clear';
+import { extendWithLoader } from '../loader';
 import { blue, blueGrey } from 'material-ui/colors';
 
 const styles = theme => ({
@@ -47,8 +48,19 @@ const styles = theme => ({
   },
 });
 
+const DialogContentWrapper = (props) => (
+  <DialogContent>
+    <DialogContentText>
+      {props.error ? props.error : props.children}
+    </DialogContentText>
+  </DialogContent>
+);
+
+const DialogContentWithLoader = extendWithLoader(DialogContentWrapper);
+
 export interface IDeleteModalProps {
   isDeleteModalOpen: boolean;
+  loaderId: string;
   onDelete: any;
   classes?: any;
 }
@@ -57,6 +69,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
 
   state = {
     isModalOpen: this.props.isDeleteModalOpen,
+    error: null,
   };
 
   componentWillReceiveProps(newProps) {
@@ -66,15 +79,27 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
   }
 
   openModal(id) {
-    this.setState({isModalOpen: true});
+    this.setState({isModalOpen: true, error: null});
   }
 
   closeModal = () => {
-    this.setState({isModalOpen: false});
+    this.setState({isModalOpen: false, error: null});
+  }
+
+  deleteItem = () => {
+    this.props.onDelete().then(error => {
+      if (error) {
+        this.setState({error});
+      } else {
+        this.setState({error: null, isModalOpen: false});
+      }
+    });
   }
 
   render() {
-    const classes = this.props.classes;
+    const {classes, loaderId} = this.props;
+    const {error} = this.state;
+
     return (
       <div>
         <Dialog
@@ -94,11 +119,12 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
               <ClearIcon />
             </IconButton>
           </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Delete is permanent, you can not revert this action.
-            </DialogContentText>
-          </DialogContent>
+          <DialogContentWithLoader
+            error={error}
+            loaderId={loaderId}
+          >
+            Delete is permanent, you can not revert this action.
+          </DialogContentWithLoader>
           <DialogActions classes={{
             root: classes.actionWrapper,
             action: classes.buttonWrapper,
@@ -107,7 +133,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
             <Button onClick={this.closeModal} className={classes.cancel}>
               Cancel
             </Button>
-            <Button onClick={this.closeModal} className={classes.submit}>
+            <Button onClick={this.deleteItem} className={classes.submit}>
               Proceed
             </Button>
           </DialogActions>

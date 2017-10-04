@@ -3,8 +3,8 @@ import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../reducers';
-import { getItems } from '../../actions';
-import { ITEMS_LOADER_ID } from '../../helpers';
+import { getItems, deleteItem } from '../../actions';
+import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID } from '../../helpers';
 import {
   GenericTable,
   IGenericTableColumn,
@@ -94,8 +94,8 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     this.setState({isDeleteModalOpen: true});
   }
 
-  onDelete(id) {
-    console.log('Open delete', id);
+  onDelete = (itemId) => {
+    return this.props.deleteItem(itemId, DELETE_ITEM_LOADER_ID);
   }
 
   render() {
@@ -109,6 +109,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           limit={10}
         />
         <DeleteModal
+          loaderId={DELETE_ITEM_LOADER_ID}
           isDeleteModalOpen={this.state.isDeleteModalOpen}
           onDelete={this.onDelete}
         />
@@ -126,4 +127,10 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-export const AdminItemsPage = connect(mapStateToProps)(AdminItemsPageComponent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteItem: (itemId) => dispatch(deleteItem(itemId, DELETE_ITEM_LOADER_ID)),
+  };
+};
+
+export const AdminItemsPage = connect(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent);

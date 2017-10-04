@@ -58,6 +58,14 @@ router.route('/item/:itemId')
       }
       res.send(item);
     });
+  })
+  .delete((req, res) => {
+    ItemsModel.remove({id: req.params.itemId}, (err, item) => {
+      if (err) {
+        res.send(err);
+      }
+      res.json({ message: `${item.name} successfully deleted` });
+    });
   });
 
 router.route('/city/:cityId')

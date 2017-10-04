@@ -143,3 +143,26 @@ export const postItem = (item, loaderId) => (dispatch) => {
       .then(dispatch(endLoading(loaderId)));
   });
 };
+
+export const deleteItem = (itemId, loaderId) => (dispatch) => {
+
+  return new Promise(resolve => {
+
+    dispatch(startLoading(loaderId));
+
+    return axios.delete(`http://localhost:3000/api/items/item/${itemId}`)
+      .then(response => response.data)
+      .then(item => {
+        if (item.errors) {
+          resolve(item.errors);
+        } else {
+          // TODO: Implement these actions
+          // dispatch(removeItem(itemId));
+          // dispatch(removeItemFromCity(item.city, itemId));
+          resolve('This is error');
+        }
+      })
+      .catch(console.error)
+      .then(dispatch(endLoading(loaderId)));
+  });
+};
