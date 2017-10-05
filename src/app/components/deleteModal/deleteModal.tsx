@@ -10,11 +10,12 @@ import Dialog, {
 import IconButton from 'material-ui/IconButton';
 import ClearIcon from 'material-ui-icons/Clear';
 import { extendWithLoader } from '../loader';
-import { blue, blueGrey } from 'material-ui/colors';
+import { blue, blueGrey, grey } from 'material-ui/colors';
 
 const styles = theme => ({
   paper: {
     borderRadius: '0',
+    minWidth: '300px',
   },
   actionWrapper: {
     margin: '8px 0 0 0',
@@ -35,8 +36,11 @@ const styles = theme => ({
       background: blue[900],
     },
   },
+  dialogContent: {
+    paddingTop: '6px!important',
+  },
   cancel: {
-    'background': blueGrey[50],
+    'background': grey[100],
     '&:hover': {
       background: blueGrey[100],
     },
@@ -49,7 +53,7 @@ const styles = theme => ({
 });
 
 const DialogContentWrapper = (props) => (
-  <DialogContent>
+  <DialogContent classes={{root: props.contentClass}}>
     <DialogContentText>
       {props.error ? props.error : props.children}
     </DialogContentText>
@@ -61,6 +65,7 @@ const DialogContentWithLoader = extendWithLoader(DialogContentWrapper);
 export interface IDeleteModalProps {
   isDeleteModalOpen: boolean;
   loaderId: string;
+  itemName: string;
   onDelete: any;
   classes?: any;
 }
@@ -97,7 +102,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
   }
 
   render() {
-    const {classes, loaderId} = this.props;
+    const {classes, loaderId, itemName} = this.props;
     const {error} = this.state;
 
     return (
@@ -110,7 +115,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
           }}
         >
           <DialogTitle>
-            <span>Delete?</span>
+            <span>Delete "{itemName}"?</span>
             <IconButton
               className={classes.close}
               aria-label="Close modal"
@@ -122,6 +127,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
           <DialogContentWithLoader
             error={error}
             loaderId={loaderId}
+            contentClass={classes.dialogContent}
           >
             Delete is permanent, you can not revert this action.
           </DialogContentWithLoader>

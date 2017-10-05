@@ -13,11 +13,27 @@ import {
   PageNumber,
   PageLimit,
 } from './style';
+import { IGenericTableProps } from '../genericTable';
 
-export const extendWithPagination = (WrappedComponent) => {
+export type PaginationOriginalProps = IGenericTableProps;
 
-  return class extends React.Component<any, any> {
-    constructor(props) {
+export type PaginationExternalProps = {
+  limit: number;
+};
+
+export type PaginationInjectedProps = {
+  pageData?: string[];
+  handleNewData?: (data: string[], goToFirstPage?: boolean) => void;
+};
+
+export const extendWithPagination = (WrappedComponent:
+  React.ComponentClass<PaginationOriginalProps & PaginationInjectedProps>,
+) => {
+
+  type ResultProps = PaginationOriginalProps & PaginationExternalProps;
+
+  return class extends React.Component<ResultProps, any> {
+    constructor(props: ResultProps) {
       super(props);
       autoBind(this);
 
@@ -98,7 +114,8 @@ export const extendWithPagination = (WrappedComponent) => {
     }
 
     getLimitOptions() {
-      const options = [...Array(Math.floor(this.state.allData.length / this.props.limit))].map((_, i) => (i + 1) * this.props.limit);
+      const limit = this.props.limit;
+      const options = [...Array(Math.floor(this.state.allData.length / limit))].map((_, i) => (i + 1) * limit);
       return [...options, 'show all'];
     }
 

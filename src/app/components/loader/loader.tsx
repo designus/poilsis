@@ -2,6 +2,15 @@ import * as React from 'react';
 import { CircularProgress } from 'material-ui/Progress';
 import { connect } from 'react-redux';
 import { IAppState, ILoadingState } from '../../reducers';
+import styled from 'styled-components';
+
+const StyledLoader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
 
 export interface ILoaderProps {
   loaderId: string;
@@ -21,9 +30,11 @@ export function extendWithLoader<TOriginalProps extends {}>(
         const isLoading = loaderState && loaderState.isLoading;
 
         return (
-          isLoading ?
-            <CircularProgress /> :
-            <WrappedComponent {...this.props} />
+          <StyledLoader>
+            {isLoading ?
+              <CircularProgress /> :
+              <WrappedComponent {...this.props} />}
+          </StyledLoader>
         );
       }
     };

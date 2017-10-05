@@ -4,6 +4,7 @@ import { IGenericDataMap } from '../../helpers';
 import { MarkedText } from '../../components';
 
 import Table, { TableBody, TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
+import { PaginationInjectedProps } from '../pagination';
 
 export type SortType = 'string'|'number'|'date';
 export type OrderType = 'asc'|'desc';
@@ -20,13 +21,11 @@ export interface IGenericTableProps {
   order?: OrderType;
   orderBy?: string;
   dataMap?: IGenericDataMap<object>;
-  pageData?: string[];
   columns?: IGenericTableColumn[];
-  handleNewData?: (data: string[], goToFirstPage?: boolean) => void;
   search?: string;
 }
 
-export class GenericTable extends React.Component<IGenericTableProps, any> {
+export class GenericTable extends React.Component<IGenericTableProps & PaginationInjectedProps, any> {
 
   constructor(props) {
     super(props);

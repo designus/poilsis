@@ -35,6 +35,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 
   state = {
     isDeleteModalOpen: false,
+    deleteId: '',
   };
 
   get columns(): IGenericTableColumn[] {
@@ -91,7 +92,12 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   }
 
   openDeleteModal(id) {
-    this.setState({isDeleteModalOpen: true});
+    this.setState({isDeleteModalOpen: true, deleteId: id});
+  }
+
+  get deleteItemName() {
+    const item = this.props.itemsMap[this.state.deleteId];
+    return item && item.name;
   }
 
   onDelete = (itemId) => {
@@ -112,6 +118,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           loaderId={DELETE_ITEM_LOADER_ID}
           isDeleteModalOpen={this.state.isDeleteModalOpen}
           onDelete={this.onDelete}
+          itemName={this.deleteItemName}
         />
       </div>
     );
