@@ -1,5 +1,5 @@
-import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM } from '../actions/items';
-import { IGenericState } from '../helpers';
+import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM } from '../actions/items';
+import { IGenericState, removeDuplicates } from '../helpers';
 
 export interface IItemsMap {
   alias: string;
@@ -10,12 +10,44 @@ export interface IItemsMap {
   types: string[];
 }
 
-export interface IItemsState extends IGenericState<IItemsMap> {
-  selectedId?: string;
-  allItemsLoaded?: boolean;
+export interface IItemsByCity {
+  [key: string]: string[];
 }
 
-const initialItemsState = {dataMap: {}, aliases: [], allItemsLoaded: false};
+export type ItemsDataMap = IGenericState<IItemsMap>;
+
+export interface IItemsState extends ItemsDataMap {
+  selectedId?: string;
+  allItemsLoaded?: boolean;
+  itemsByCity?: IItemsByCity;
+}
+
+const initialItemsState = {
+  dataMap: {},
+  aliases: [],
+  allItemsLoaded: false,
+  itemsByCity: {},
+};
+
+export const removeItemFromCityState = (state: IItemsState, item: IItemsMap) => {
+  return [...state.itemsByCity[item.city].filter(id => id !== item.id)];
+};
+
+export const getItemsByCityState = (state: IItemsState, newItem: IItemsMap) => {
+
+  const oldItem = state.dataMap[newItem.id];
+  const cityItems = [...(state.itemsByCity[newItem.city] || []), newItem.id].filter(removeDuplicates);
+
+  if (oldItem && oldItem.city !== newItem.city) {
+    return {
+      ...state.itemsByCity,
+      [oldItem.city]: removeItemFromCityState(state, oldItem),
+      [newItem.city]: cityItems,
+    };
+  }
+
+  return {...state.itemsByCity, [newItem.city]: cityItems};
+};
 
 export const items = (state: IItemsState = initialItemsState, action): IItemsState => {
   switch (action.type) {
@@ -24,26 +56,35 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
     case RECEIVE_ITEMS:
       return {
         ...state,
-        dataMap: {
-          ...state.dataMap,
-          ...action.dataMap,
-        },
-        aliases: [ ...state.aliases, ...action.aliases ],
+        dataMap: {...state.dataMap, ...action.dataMap},
+        aliases: [...state.aliases, ...action.aliases],
         allItemsLoaded: action.allItemsLoaded,
+        itemsByCity: {...state.itemsByCity, ...action.itemsByCity},
       };
     case RECEIVE_ITEM:
-      const itemState = state.dataMap[action.item.id] || {};
       return {
         ...state,
+        itemsByCity: getItemsByCityState(state, action.item),
         dataMap: {
           ...state.dataMap,
           [action.item.id]: {
-            ...itemState,
+            ...(state.dataMap[action.item.id] || {}),
             ...action.item,
             fullInfo: true,
           },
         },
-    };
+      };
+    case REMOVE_ITEM:
+      const {[action.item]: removedItem, ...dataMap} = state.dataMap;
+
+      return {
+        ...state,
+        dataMap,
+        itemsByCity: {
+          ...state.itemsByCity,
+          [removedItem.city]: removeItemFromCityState(state, removedItem),
+        },
+      };
     default:
       return state;
   }

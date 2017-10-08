@@ -113,58 +113,56 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
     const { order, orderBy, search } = this.state;
 
     return (
-      <div>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {
-                columns.map((column: IGenericTableColumn, index) => {
-                  return (
-                    <TableCell key={index}>
-                      {
-                        column.sortType ?
-                          <TableSortLabel
-                            active={orderBy === column.dataProp}
-                            direction={order}
-                            onClick={this.handleSort.bind(this, column.dataProp, column.sortType)}
-                          >
-                            {column.title}
-                          </TableSortLabel> :
-                          column.title
-                      }
-                    </TableCell>
-                  );
-                })
-              }
-            </TableRow>	
-          </TableHead>
-          <TableBody>
+      <Table>
+        <TableHead>
+          <TableRow>
             {
-              pageData.map((id, i) => {
-                const row = dataMap[id];
+              columns.map((column: IGenericTableColumn, index) => {
                 return (
-                  <TableRow key={i}>
+                  <TableCell key={index}>
                     {
-                      columns.map((colItem, index) => {
-                        const column = colItem.dataProp ? row[colItem.dataProp] : '';
-                        const formattedColumn = colItem.format ? colItem.format(column) : column;
-                        return (
-                          <TableCell key={index}>
-                            <MarkedText
-                              fullText={formattedColumn}
-                              markedText={search}
-                            />
-                          </TableCell>
-                        );
-                      })
+                      column.sortType ?
+                        <TableSortLabel
+                          active={orderBy === column.dataProp}
+                          direction={order}
+                          onClick={this.handleSort.bind(this, column.dataProp, column.sortType)}
+                        >
+                          {column.title}
+                        </TableSortLabel> :
+                        column.title
                     }
-                  </TableRow>
+                  </TableCell>
                 );
               })
             }
-          </TableBody>
-        </Table>
-      </div>
+          </TableRow>	
+        </TableHead>
+        <TableBody>
+          {
+            pageData.map((id, i) => {
+              const row = dataMap[id];
+              return (
+                <TableRow key={i}>
+                  {
+                    columns.map((colItem, index) => {
+                      const column = colItem.dataProp ? row[colItem.dataProp] : '';
+                      const formattedColumn = colItem.format ? colItem.format(column) : column;
+                      return (
+                        <TableCell key={index}>
+                          <MarkedText
+                            fullText={formattedColumn}
+                            markedText={search}
+                          />
+                        </TableCell>
+                      );
+                    })
+                  }
+                </TableRow>
+              );
+            })
+          }
+        </TableBody>
+      </Table>
     );
   }
 };

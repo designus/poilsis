@@ -1,23 +1,14 @@
 import axios from 'axios';
 
-import {
-  addItemsToCitiesState,
-  addItemToCity,
-  startLoading,
-  endLoading,
-  showToast,
-  changeItemCity,
-} from '../actions';
-import { getNormalizedData, getGroupedItemsByCityId, IGenericDataMap, IAlias } from '../helpers';
-import { IItemsMap, IAppState, Toast } from '../reducers';
-import {
-  ITEM_UPDATE_SUCCESS,
-  ITEM_UPDATE_ERROR,
-} from '../data-strings';
+import { startLoading, endLoading, showToast } from '../actions';
+import { getNormalizedData, getItemsByCity, IAlias } from '../helpers';
+import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
+import { ITEM_UPDATE_SUCCESS, ITEM_UPDATE_ERROR } from '../data-strings';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
 
 export const selectItem = (id: string) => {
   return {
@@ -26,18 +17,26 @@ export const selectItem = (id: string) => {
   };
 };
 
-export const receiveItems = (dataMap: IGenericDataMap<IItemsMap>, aliases: IAlias[], allItemsLoaded: boolean) => {
+export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], allItemsLoaded: boolean, itemsByCity: IItemsByCity) => {
   return {
     type: RECEIVE_ITEMS,
     dataMap,
     aliases,
     allItemsLoaded,
+    itemsByCity,
   };
 };
 
-export const receiveItem = (item) => {
+export const receiveItem = (item: IItemsMap) => {
   return {
     type: RECEIVE_ITEM,
+    item,
+  };
+};
+
+export const removeItem = (item: IItemsMap) => {
+  return {
+    type: REMOVE_ITEM,
     item,
   };
 };
@@ -57,11 +56,10 @@ export const getItems = (loaderId, cityId = null) => {
         const { data } = response;
         const { dataMap, aliases } = getNormalizedData(data);
 
-        const groupedItems = cityId ? {[cityId]: Object.keys(dataMap)} : getGroupedItemsByCityId(dataMap);
+        const itemsByCity = cityId ? {[cityId]: Object.keys(dataMap)} : getItemsByCity(dataMap);
         const allItemsLoaded = !cityId;
 
-        dispatch(receiveItems(dataMap, aliases, allItemsLoaded));
-        dispatch(addItemsToCitiesState(groupedItems));
+        dispatch(receiveItems(dataMap, aliases, allItemsLoaded, itemsByCity));
 
       })
       .catch(err => {
@@ -79,10 +77,7 @@ export const getItem = (itemId, loaderId) => {
 
     return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
       .then(response => response.data)
-      .then(item => {
-        dispatch(receiveItem(item));
-        dispatch(addItemToCity(item.city, item.id));
-      })
+      .then(item => dispatch(receiveItem(item)))
       .catch(err => {
         console.error(err);
       })
@@ -96,9 +91,6 @@ export const putItem = (item, loaderId) => (dispatch, getState) => {
 
     dispatch(startLoading(loaderId));
 
-    const appState: IAppState = getState();
-    const oldItem = appState.items.dataMap[item.id];
-
     return axios.put(`http://localhost:3000/api/items/item/${item.id}`, item)
       .then(response => response.data)
       .then(item => {
@@ -107,7 +99,6 @@ export const putItem = (item, loaderId) => (dispatch, getState) => {
           resolve(item.errors);
         } else {
           dispatch(receiveItem(item));
-          dispatch(changeItemCity(oldItem.city, item.city, item.id));
           dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
           resolve();
         }
@@ -133,7 +124,6 @@ export const postItem = (item, loaderId) => (dispatch) => {
           resolve(item.errors);
         } else {
           dispatch(receiveItem(item));
-          dispatch(addItemToCity(item.city, item.id));
           resolve();
         }
       })
@@ -156,10 +146,8 @@ export const deleteItem = (itemId, loaderId) => (dispatch) => {
         if (item.errors) {
           resolve(item.errors);
         } else {
-          // TODO: Implement these actions
-          // dispatch(removeItem(itemId));
-          // dispatch(removeItemFromCity(item.city, itemId));
-          resolve('This is error');
+          removeItem(item);
+          resolve();
         }
       })
       .catch(console.error)

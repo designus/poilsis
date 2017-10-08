@@ -1,5 +1,5 @@
-import { ValueType, IKeyMap, IGenericState, IGenericDataMap, TGenericFormModel, IGenericFormState  } from './types';
-import { IItemsMap, ICityItems, ICityState } from '../reducers';
+import { ValueType, IKeyMap, IGenericState, TGenericFormModel, IGenericFormState  } from './types';
+import { IItemsMap, IItemsByCity, ItemsDataMap, ICityState } from '../reducers';
 
 export function getSelectedCity(citiesState: ICityState, reqParam: string) {
   return new Promise((resolve, reject) => {
@@ -13,8 +13,8 @@ export function getSelectedCity(citiesState: ICityState, reqParam: string) {
   });
 };
 
-export function getGroupedItemsByCityId(dataMap: IGenericDataMap<IItemsMap>) {
-  return Object.keys(dataMap).reduce((acc: ICityItems, itemId: string) => {
+export function getItemsByCity(dataMap: ItemsDataMap) {
+  return Object.keys(dataMap).reduce((acc: IItemsByCity, itemId: string) => {
     const item: IItemsMap = dataMap[itemId];
     const state = acc[item.city];
     if (state) {

@@ -14,13 +14,14 @@ const ItemsListWithLoader = extendWithLoader(ItemsList);
 
     const appState: IAppState = store.getState();
     const citiesState = appState.cities;
-    const allItemsLoaded = appState.items.allItemsLoaded;
+    const itemsState = appState.items;
+    const allItemsLoaded = itemsState.allItemsLoaded;
 
     return getSelectedCity(citiesState, params.city)
       .then(({id}) => {
         store.dispatch(selectCity(id));
         const selectedCity = citiesState.dataMap[id];
-        if (selectedCity && !allItemsLoaded && !citiesState.items[id]) {
+        if (selectedCity && !allItemsLoaded && !itemsState.itemsByCity[id]) {
           return store.dispatch(getItems(ITEMS_LOADER_ID, id));
         } else {
           return Promise.resolve();
@@ -62,7 +63,7 @@ const mapStateToProps = (state: IAppState) => {
   return {
     selectedCity: state.cities.dataMap[selectedCityId],
     itemsMap: state.items.dataMap,
-    cityItems: state.cities.items[selectedCityId] || [],
+    cityItems: state.items.itemsByCity[selectedCityId] || [],
     typesMap: state.types.dataMap,
   };
 };

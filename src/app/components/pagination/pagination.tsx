@@ -14,6 +14,11 @@ import {
   PageLimit,
 } from './style';
 import { IGenericTableProps } from '../genericTable';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  width: 100%;
+`;
 
 export type PaginationOriginalProps = IGenericTableProps;
 
@@ -125,7 +130,7 @@ export const extendWithPagination = (WrappedComponent:
       const total = this.state.allData.length;
 
       return (
-        <div>
+        <Wrapper>
           <WrappedComponent
             pageData={pageData}
             handleNewData={this.paginateNewData}
@@ -163,7 +168,7 @@ export const extendWithPagination = (WrappedComponent:
               </PageNumber>
             </PaginationUtils>
           </PaginationToolbar>
-        </div>
+        </Wrapper>
       );
     }
   };
