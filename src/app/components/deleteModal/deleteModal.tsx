@@ -65,6 +65,7 @@ const DialogContentWithLoader = extendWithLoader(DialogContentWrapper);
 export interface IDeleteModalProps {
   isDeleteModalOpen: boolean;
   loaderId: string;
+  itemId: string;
   itemName: string;
   onDelete: any;
   classes?: any;
@@ -92,7 +93,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
   }
 
   deleteItem = () => {
-    this.props.onDelete().then(error => {
+    this.props.onDelete(this.props.itemId).then(error => {
       if (error) {
         this.setState({error});
       } else {

@@ -25,6 +25,13 @@ export interface IGenericTableProps {
   search?: string;
 }
 
+export interface ISortParams {
+  order: OrderType;
+  orderBy: string;
+  sortType: SortType;
+  sortProp: string;
+}
+
 export class GenericTable extends React.Component<IGenericTableProps & PaginationInjectedProps, any> {
 
   constructor(props) {
@@ -34,11 +41,13 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
     const allData = Object.keys(props.dataMap);
 
     this.state = {
-      search: props.search || '',
       order: props.order || null,
       orderBy: props.orderBy || null,
       allData,
       filteredData: allData,
+      filters: {
+        search: props.search || '',
+      },
       searchableProps: this.getSearchableItemProps(props.columns),
     };
   }
@@ -50,6 +59,11 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
   }
 
   componentWillReceiveProps(nextProps: IGenericTableProps) {
+    const newData = Object.keys(nextProps.dataMap);
+    if (newData.length !== this.state.allData.length) {
+      console.log('Handle new data');
+      this.handleNewData(newData);
+    }
     if (nextProps.search !== this.props.search) {
       this.handleSearch(nextProps.search);
     }
@@ -66,33 +80,51 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
     });
   }
 
-  handleSearch(search: string) {
-    const {allData, order, orderBy, sortType} = this.state;
-    const dataCopy = [...allData];
-    const filteredData = search ?
-      this.searchData(dataCopy, search) :
-      dataCopy;
+  getFilteredData(newData: string[], newFilters) {
 
-    const sortedData = order ?
-      filteredData.sort(this.sortData(this.props.dataMap, order, orderBy, sortType)) :
-      filteredData;
+    const {allData, filters} = this.state;
+    const initialData = newData ? newData : [...allData];
+    const allFilters = newFilters ? {...filters, ...newFilters} : filters;
 
-    this.setState({search, filteredData: sortedData});
-    this.props.handleNewData(sortedData, true);
+    return Object.keys(allFilters).reduce((filteredData, filter) => {
+      if (filter === 'search' && allFilters[filter]) {
+        return this.searchData(filteredData, allFilters[filter]);
+      }
+      return filteredData;
+    }, initialData);
   }
 
-  sortData = (dataMap: IGenericDataMap<object>, order: OrderType, orderBy: string, sortType: SortType) => (a, b) => {
-    let comparison = 0;
-    const x = dataMap[a][orderBy].toLowerCase();
-    const y = dataMap[b][orderBy].toLowerCase();
+  getSortedData(data, sortParams: ISortParams) {
+    return sortParams.order ? data.sort(this.sortData(sortParams)) : data;
+  }
 
-    if (x > y) {
-      comparison = 1;
-    } else if (x < y) {
-      comparison = -1;
-    }
+  handleSearch(search: string) {
+    const filteredData = this.getSortedData(this.getFilteredData(null, {search}), this.state);
 
-    return comparison * (order === 'desc' ? -1 : 1);
+    this.setState({filteredData, filters: {...this.state.filters, search}});
+    this.props.handleNewData(filteredData, true);
+  }
+
+  handleNewData(newData: string[]) {
+    const filteredData = this.getSortedData(this.getFilteredData(newData, null), this.state);
+
+    this.setState({filteredData, allData: newData});
+    this.props.handleNewData(filteredData, false);
+  }
+
+  sortData = ({order, orderBy, sortType, sortProp}: ISortParams, dataMap: IGenericDataMap<object> = this.props.dataMap) =>
+    (a, b) => {
+      let comparison = 0;
+      const x = dataMap[a][orderBy].toLowerCase();
+      const y = dataMap[b][orderBy].toLowerCase();
+
+      if (x > y) {
+        comparison = 1;
+      } else if (x < y) {
+        comparison = -1;
+      }
+
+      return comparison * (order === 'desc' ? -1 : 1);
   }
 
   handleSort(sortProp: string, sortType: SortType) {
@@ -100,9 +132,7 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
     const order = !this.state.order ? 'asc' : this.state.order === 'asc' ? 'desc' : null;
     const orderBy = order ? sortProp : null;
     const dataCopy = [...(allData.length === filteredData.length && allData || filteredData)];
-    const sortedData = order ?
-      dataCopy.sort(this.sortData(this.props.dataMap, order, orderBy, sortType)) :
-      dataCopy;
+    const sortedData = this.getSortedData(dataCopy, {order, orderBy, sortType, sortProp});
 
     this.setState({order, orderBy, sortProp, sortType});
     this.props.handleNewData(sortedData);
@@ -110,8 +140,7 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
 
   render() {
     const { columns, dataMap, pageData } = this.props;
-    const { order, orderBy, search } = this.state;
-
+    const { order, orderBy, filters: {search} } = this.state;
     return (
       <Table>
         <TableHead>
@@ -141,24 +170,27 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
           {
             pageData.map((id, i) => {
               const row = dataMap[id];
-              return (
-                <TableRow key={i}>
-                  {
-                    columns.map((colItem, index) => {
-                      const column = colItem.dataProp ? row[colItem.dataProp] : '';
-                      const formattedColumn = colItem.format ? colItem.format(column) : column;
-                      return (
-                        <TableCell key={index}>
-                          <MarkedText
-                            fullText={formattedColumn}
-                            markedText={search}
-                          />
-                        </TableCell>
-                      );
-                    })
-                  }
-                </TableRow>
-              );
+              if (row) {
+                return (
+                  <TableRow key={i}>
+                    {
+                      columns.map((colItem, index) => {
+                        const column = colItem.dataProp ? row[colItem.dataProp] : '';
+                        const formattedColumn = colItem.format ? colItem.format(column) : column;
+                        return (
+                          <TableCell key={index}>
+                            <MarkedText
+                              fullText={formattedColumn}
+                              markedText={search}
+                            />
+                          </TableCell>
+                        );
+                      })
+                    }
+                  </TableRow>
+                );
+              }
+              return null;
             })
           }
         </TableBody>

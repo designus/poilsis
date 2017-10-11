@@ -75,8 +75,7 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
         },
       };
     case REMOVE_ITEM:
-      const {[action.item]: removedItem, ...dataMap} = state.dataMap;
-
+      const {[action.item.id]: removedItem, ...dataMap} = state.dataMap;
       return {
         ...state,
         dataMap,

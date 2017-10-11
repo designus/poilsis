@@ -60,11 +60,11 @@ router.route('/item/:itemId')
     });
   })
   .delete((req, res) => {
-    ItemsModel.remove({id: req.params.itemId}, (err, item) => {
+    ItemsModel.findOneAndRemove({id: req.params.itemId}, (err, item, result) => {
       if (err) {
         res.send(err);
       }
-      res.json({ message: `${item.name} successfully deleted` });
+      res.send(item);
     });
   });
 

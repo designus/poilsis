@@ -116,6 +116,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         />
         <DeleteModal
           loaderId={DELETE_ITEM_LOADER_ID}
+          itemId={this.state.deleteId}
           isDeleteModalOpen={this.state.isDeleteModalOpen}
           onDelete={this.onDelete}
           itemName={this.deleteItemName}

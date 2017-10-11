@@ -146,7 +146,7 @@ export const deleteItem = (itemId, loaderId) => (dispatch) => {
         if (item.errors) {
           resolve(item.errors);
         } else {
-          removeItem(item);
+          dispatch(removeItem(item));
           resolve();
         }
       })
