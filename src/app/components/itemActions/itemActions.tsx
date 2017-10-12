@@ -62,4 +62,4 @@ const ItemActionsComponent = (props: IItemActions) => {
   );
 };
 
-export const ItemActions = withStyles<IItemActions>(styles)(ItemActionsComponent);
+export const ItemActions = withStyles(styles)<IItemActions>(ItemActionsComponent);

@@ -1,25 +1,29 @@
 import * as React from 'react';
-import styled, { StyledFunction } from 'styled-components';
+import styled from 'styled-components';
 
-interface IErrorsWrapperProps {
-  padding: string;
-}
-
-const ul: StyledFunction<IErrorsWrapperProps & React.HTMLProps<any>> = styled.ul;
-
-const ErrorsWrapper = ul`
+const ErrorsWrapper = styled.ul`
   margin: 0;
-  padding: ${(props: IErrorsWrapperProps) => props.padding};
+  padding: ${(props: any) => props.padding};
   color: red;
   font-style: italic;
+` as any;
+
+const Li = styled.li`
+  list-style: none;
 `;
 
-export const ValidationErrors = ({showErrors, errors, padding = '10px 0'}) => {
+export interface IValidationErrors {
+  showErrors: boolean;
+  errors: string[];
+  padding?: string;
+}
+
+export const ValidationErrors = ({showErrors, errors, padding = '10px 0'}: IValidationErrors) => {
 
   if (showErrors && errors.length > 0) {
     return (
       <ErrorsWrapper padding={padding}>
-        {errors.map((error, i) => (<li key={i}>{error}</li>))}
+        {errors.map((error, i) => (<Li key={i}>{error}</Li>))}
       </ErrorsWrapper>
     );
   } else {

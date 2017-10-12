@@ -45,7 +45,7 @@ export interface IFormProps {
   onSaveState?: (state: IGenericFormState<object>) => void;
   handleSubmit?: any;
   handleOnBlur?: any;
-  handleInputChange?: any;
+  handleInputChange?: (key: string) => (event) => void;
   handleCheckboxToggle?: any;
   loaderId?: string;
   state?: IGenericFormState<object>;

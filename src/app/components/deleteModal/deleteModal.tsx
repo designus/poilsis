@@ -68,7 +68,6 @@ export interface IDeleteModalProps {
   itemId: string;
   itemName: string;
   onDelete: any;
-  classes?: any;
 }
 
 class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes: any }, any> {
@@ -150,4 +149,4 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
   }
 }
 
-export const DeleteModal = withStyles<IDeleteModalProps>(styles)(DeleteModalComponent);
+export const DeleteModal = withStyles(styles)<IDeleteModalProps>(DeleteModalComponent);
