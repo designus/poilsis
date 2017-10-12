@@ -20,7 +20,7 @@ export function getItemsByCity(dataMap: ItemsDataMap) {
     if (state) {
       state.push(itemId);
     } else {
-      acc[item.city] = [];
+      acc[item.city] = [itemId];
     }
     return acc;
   }, {});

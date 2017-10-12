@@ -59,7 +59,6 @@ class CityPageComponent extends React.Component<any, any> {
 
 const mapStateToProps = (state: IAppState) => {
   const selectedCityId = state.cities.selectedId;
-
   return {
     selectedCity: state.cities.dataMap[selectedCityId],
     itemsMap: state.items.dataMap,

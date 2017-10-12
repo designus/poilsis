@@ -61,7 +61,6 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
   componentWillReceiveProps(nextProps: IGenericTableProps) {
     const newData = Object.keys(nextProps.dataMap);
     if (newData.length !== this.state.allData.length) {
-      console.log('Handle new data');
       this.handleNewData(newData);
     }
     if (nextProps.search !== this.props.search) {

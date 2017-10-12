@@ -1,11 +1,11 @@
 import * as React from 'react';
 import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/ModeEdit';
-import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button';
 import styled from 'styled-components';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router';
-import { red, indigo } from 'material-ui/colors';
+import { red, indigo, blueGrey } from 'material-ui/colors';
 
 const StyledActions = styled.div`
   display: flex;
@@ -13,14 +13,28 @@ const StyledActions = styled.div`
 
 const styles = theme => ({
   button: {
-    width: '30px',
-    height: '30px',
+    'width': '36px',
+    'height': '36px',
+    'boxShadow': 'none',
+    'margin': '0 5px',
+    '&:active': {
+      boxShadow: 'none',
+    },
   },
   edit: {
-    color: indigo[500],
+    'backgroundColor': blueGrey[100],
+    '&:hover': {
+      backgroundColor: indigo[700],
+    },
   },
   delete: {
-    color: red[400],
+    'backgroundColor': blueGrey[100],
+    '&:hover': {
+      backgroundColor: red[600],
+    },
+  },
+  icon: {
+    color: '#fff',
   },
 });
 
@@ -35,14 +49,14 @@ const ItemActionsComponent = (props: IItemActions) => {
   return (
     <StyledActions>
       <Link	to={props.editLink}>
-        <IconButton aria-label="Edit" className={classes.button}>
-          <EditIcon className={classes.edit} />
-        </IconButton>
+        <Button fab aria-label="Edit" className={`${classes.button} ${classes.edit}`}>
+          <EditIcon className={classes.icon} />
+        </Button>
       </Link>
       <div onClick={props.onDelete}>
-        <IconButton aria-label="Delete" className={classes.button}>
-          <DeleteIcon className={classes.delete} />
-        </IconButton>
+        <Button fab aria-label="Delete" className={`${classes.button} ${classes.delete}`}>
+          <DeleteIcon className={classes.icon} />
+        </Button>
       </div>
     </StyledActions>
   );

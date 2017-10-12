@@ -3,7 +3,7 @@ import axios from 'axios';
 import { startLoading, endLoading, showToast } from '../actions';
 import { getNormalizedData, getItemsByCity, IAlias } from '../helpers';
 import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
-import { ITEM_UPDATE_SUCCESS, ITEM_UPDATE_ERROR } from '../data-strings';
+import { ITEM_UPDATE_SUCCESS, ITEM_UPDATE_ERROR, ITEM_CREATE_SUCCESS, ITEM_CREATE_ERROR } from '../data-strings';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
@@ -124,11 +124,13 @@ export const postItem = (item, loaderId) => (dispatch) => {
           resolve(item.errors);
         } else {
           dispatch(receiveItem(item));
+          dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
           resolve();
         }
       })
       .catch(err => {
         console.error(err);
+        dispatch(showToast(Toast.success, ITEM_CREATE_ERROR));
       })
       .then(dispatch(endLoading(loaderId)));
   });
