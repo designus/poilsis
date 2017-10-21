@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
-import { IAppState } from '../../../reducers';
-import { getItems, deleteItem } from '../../../actions';
-import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID } from '../../../helpers';
+import { IAppState } from 'reducers';
+import { getItems, deleteItem } from 'actions';
+import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID } from 'helpers';
 import {
   GenericTable,
   IGenericTableColumn,
@@ -13,6 +13,7 @@ import {
   extendWithLoader,
   ItemActions,
   DeleteModal,
+  AdminPageActions,
 } from 'components';
 
 const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
@@ -107,6 +108,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   render() {
     return (
       <div>
+        <AdminPageActions createLink={'/admin/items/create'} />
         <PaginatedTable
           loaderId={ITEMS_LOADER_ID}
           dataMap={this.props.itemsMap}

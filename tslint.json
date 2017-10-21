@@ -29,6 +29,7 @@
       false
     ],
     "object-literal-sort-keys": false,
+    "object-literal-key-quotes": [true, "as-needed"],
     "no-shadowed-variable": false,
     "no-empty-interface": false,
     "only-arrow-functions": [false],

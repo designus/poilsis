@@ -1,4 +1,5 @@
 export * from './adminMenu';
+export * from './adminPageActions';
 export * from './checkboxGroup';
 export * from './drawer';
 export * from './deleteModal';

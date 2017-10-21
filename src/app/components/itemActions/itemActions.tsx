@@ -13,22 +13,22 @@ const StyledActions = styled.div`
 
 const styles = theme => ({
   button: {
-    'width': '36px',
-    'height': '36px',
-    'boxShadow': 'none',
-    'margin': '0 5px',
+    width: '36px',
+    height: '36px',
+    boxShadow: 'none',
+    margin: '0 5px',
     '&:active': {
       boxShadow: 'none',
     },
   },
   edit: {
-    'backgroundColor': blueGrey[100],
+    backgroundColor: blueGrey[100],
     '&:hover': {
       backgroundColor: indigo[700],
     },
   },
   delete: {
-    'backgroundColor': blueGrey[100],
+    backgroundColor: blueGrey[100],
     '&:hover': {
       backgroundColor: red[600],
     },

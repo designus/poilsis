@@ -30,8 +30,8 @@ const styles = theme => ({
     borderRadius: '0',
   },
   submit: {
-    'background': blue[800],
-    'color': '#fff',
+    background: blue[800],
+    color: '#fff',
     '&:hover': {
       background: blue[900],
     },
@@ -40,7 +40,7 @@ const styles = theme => ({
     paddingTop: '6px!important',
   },
   cancel: {
-    'background': grey[100],
+    background: grey[100],
     '&:hover': {
       background: blueGrey[100],
     },
