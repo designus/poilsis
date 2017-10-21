@@ -3,6 +3,8 @@
 // We need this plugin to detect a `--watch` mode. It may be removed later
 // after https://github.com/webpack/webpack/issues/3460 will be resolved.
 var CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+var TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
+
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
@@ -20,6 +22,9 @@ var config = {
       components: path.resolve(__dirname, '../../src/app/components/'),
     },
     modules: [path.resolve(__dirname), 'node_modules', 'app', 'app/redux'],
+    plugins: [
+      new TsConfigPathsPlugin()      
+    ]
   },
 
   entry: {

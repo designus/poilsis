@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
+import { TItemState } from 'pages';
 import { cities, ICityState } from './cities';
 import { types } from './types';
 import { items, IItemsState } from './items';
 import { newItem } from './newItem';
 import { initialData, IInitialDataState } from './initialData';
-import { TItemState } from '../containers';
 import { loader, ILoadingState } from './loader';
 import { toast, IToastState } from './toast';
 

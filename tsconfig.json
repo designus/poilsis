@@ -2,10 +2,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "src/app/*",
-        "src/app/redux/*"
-      ]
+      "components": ["./src/app/components"],
+      "helpers": ["./src/app/helpers"],
+      "reducers": ["./src/app/reducers"],
+      "actions": ["./src/app/actions"],
+      "pages": ["./src/app/pages"],
+      "data-strings": ["./src/app/data-strings"]
     },
     "outDir": "build",
     "module": "commonjs",

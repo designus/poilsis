@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { ValidationErrors, CheckboxOptions, ICheckboxOptionsParams } from '../../components';
+import { ValidationErrors } from '../../components';
+import { CheckboxOptions, ICheckboxOptionsParams } from './checkboxOptions';
 
 interface ICheckboxGroupParams extends ICheckboxOptionsParams {
   label: string;

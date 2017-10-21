@@ -1,9 +1,9 @@
 'use strict';
 
 import { isRequired } from '../../app/helpers/validation/errorMessages';
-import { NAME_KEY, CITY_KEY, ADDRESS_KEY } from '../../app/data-strings';
-import { TGenericSchemaMap } from '../../app/helpers';
-import { INewItemFields } from '../../app/containers';
+import { NAME_KEY, CITY_KEY, ADDRESS_KEY } from 'data-strings';
+import { TGenericSchemaMap } from 'helpers';
+import { INewItemFields } from 'pages';
 
 interface IItemsSchemaMap extends TGenericSchemaMap<INewItemFields> {
   alias: any;

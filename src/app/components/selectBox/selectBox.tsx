@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { ValidationErrors, SelectOptions, ISelectOptionProps } from '../../components';
+import { ValidationErrors } from '../../components';
+import { SelectOptions, ISelectOptionProps } from './selectOptions';
 
 export interface ISelectBoxProps extends ISelectOptionProps {
   showErrors?: boolean;

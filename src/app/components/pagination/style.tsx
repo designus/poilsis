@@ -10,6 +10,9 @@ export const PaginationNav = styled.div`
   flex: 3;
   display: flex;
   justify-content: left;
+  & > button {
+    height: auto;
+  }
 `;
 
 export const PaginationLinks = styled.div`
@@ -36,9 +39,7 @@ export const PaginationLink = styled.li`
 
 export const PaginationUtils = styled.div`
   flex: 1;
-  text-align:right;
   display: flex;
-  justify-content: flex-end;
 `;
 
 export const PageNumber = styled.div`

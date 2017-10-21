@@ -9,10 +9,10 @@ import {
   AdminHomePage,
   AdminItemsPage,
   CreateEditItemPage,
-  IndexPage,
+  HomePage,
   TypePage,
   ItemPage,
-} from './containers';
+} from 'pages';
 
 export default (
   <Route>
@@ -23,7 +23,7 @@ export default (
       <Route path="/admin/items/edit/:id" component={CreateEditItemPage}  />
     </Route>
     <Route component={ClientLayoutPage}>
-      <Route path="/" component={IndexPage} />
+      <Route path="/" component={HomePage} />
       <Route path="/pasiskelbti" component={AddItemPage} />
       <Route path="/:city" component={CityPage} />
       <Route path="/:city/:type" component={TypePage} />

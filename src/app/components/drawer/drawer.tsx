@@ -49,13 +49,13 @@ function DrawerComponent(props: IDrawerProps, context) {
 
   const drawer = (
     <div>
+      <Hidden lgUp implementation="css">
       <div className={classes.drawerHeader}>
-        <Hidden lgUp implementation="css">
-          <IconButton onClick={onRequestClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </Hidden>
+        <IconButton onClick={onRequestClose}>
+          <ChevronLeftIcon />
+        </IconButton>
       </div>
+      </Hidden>
       {children}
     </div>
   );

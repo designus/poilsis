@@ -3,6 +3,7 @@ import * as autoBind from 'react-autobind';
 import IconButton from 'material-ui/IconButton';
 import ChevronLeft from 'material-ui-icons/ChevronLeft';
 import ChevronRight from 'material-ui-icons/ChevronRight';
+import styled from 'styled-components';
 import { SelectBox } from '../selectBox';
 import {
   PaginationToolbar,
@@ -14,7 +15,6 @@ import {
   PageLimit,
 } from './style';
 import { IGenericTableProps } from '../genericTable';
-import styled from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -121,13 +121,15 @@ export const extendWithPagination = (WrappedComponent:
     getLimitOptions() {
       const limit = this.props.limit;
       const options = [...Array(Math.floor(this.state.allData.length / limit))].map((_, i) => (i + 1) * limit);
-      return [...options, 'show all'];
+      return [...options, 'Show all'];
     }
 
     render() {
 
       const { pages, currentPage, pageData } = this.state;
       const total = this.state.allData.length;
+      const limitOptions = this.getLimitOptions();
+      const selectedLimit = limitOptions.length === 1 ? limitOptions[0] : this.state.limit;
 
       return (
         <Wrapper>
@@ -158,9 +160,9 @@ export const extendWithPagination = (WrappedComponent:
               <PageLimit>
                 <SelectBox
                   label="Limit"
-                  value={this.state.limit}
+                  value={selectedLimit}
                   onChange={this.handleLimitChange}
-                  data={this.getLimitOptions()}
+                  data={limitOptions}
                 />
               </PageLimit>
               <PageNumber>
