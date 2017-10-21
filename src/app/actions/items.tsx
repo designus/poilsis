@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import { startLoading, endLoading, showToast } from '../actions';
-import { getNormalizedData, getItemsByCity, IAlias } from '../helpers';
-import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
-import { ITEM_UPDATE_SUCCESS, ITEM_UPDATE_ERROR, ITEM_CREATE_SUCCESS, ITEM_CREATE_ERROR } from '../data-strings';
+import { startLoading, endLoading, showToast } from 'actions';
+import { getNormalizedData, getItemsByCity, IAlias } from 'helpers';
+import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from 'reducers';
+import { ITEM_UPDATE_SUCCESS, ITEM_UPDATE_ERROR, ITEM_CREATE_SUCCESS, ITEM_CREATE_ERROR } from 'data-strings';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';

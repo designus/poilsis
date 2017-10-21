@@ -7,16 +7,15 @@ import AddIcon from 'material-ui-icons/Add';
 import { indigo, grey } from 'material-ui/colors';
 
 const Wrapper = styled.div`
-  padding: 5px 10px;
-  border-radius: 30px;
-  border: 1px solid ${grey[300]};
-  display: inline-block;
-  float:right;
-  min-width: 120px;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const FlexContainer = styled.div`
   display: flex;
+  border-radius: 30px;
+  padding: 5px 10px;  
+  border: 1px solid ${grey[300]};
   justify-content: space-between;
 `;
 

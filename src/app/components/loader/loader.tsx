@@ -1,20 +1,28 @@
 import * as React from 'react';
 import { CircularProgress } from 'material-ui/Progress';
 import { connect } from 'react-redux';
-import { IAppState, ILoadingState } from '../../reducers';
 import styled from 'styled-components';
+import { IAppState, ILoadingState } from 'reducers';
 
-const StyledLoader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
+const Wrapper = styled.div`
+  position: relative;
 `;
+
+const CenteredLoader = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+height: 100%;
+position: absolute;
+${(props: any) => props.showLoadingOverlay ? 'background: rgba(255, 255, 255, .6); z-index: 1;' : ''}
+${(props: any) => !props.isLoading ? 'display: none;' : ''}
+` as any;
 
 export interface ILoaderProps {
   loaderId: string;
-  loader?: ILoadingState;
+  showLoadingOverlay?: boolean;
+  loadingState?: ILoadingState;
 }
 
 export function extendWithLoader<TOriginalProps extends {}>(
@@ -25,23 +33,28 @@ export function extendWithLoader<TOriginalProps extends {}>(
     const LoaderComponent = class extends React.Component<ResultProps, {}> {
 
       render(): JSX.Element {
-        const {loaderId, loader} = this.props;
-        const loaderState = loader[loaderId];
-        const isLoading = loaderState && loaderState.isLoading;
+
+        const {loaderId, loadingState, showLoadingOverlay} = this.props;
+        const loader = loadingState[loaderId];
+        const isLoading = loader && loader.isLoading;
 
         return (
-          <StyledLoader>
-            {isLoading ?
-              <CircularProgress /> :
-              <WrappedComponent {...this.props} />}
-          </StyledLoader>
+          <Wrapper>
+            <CenteredLoader
+              showLoadingOverlay={showLoadingOverlay}
+              isLoading={isLoading}
+            >
+              <CircularProgress />
+            </CenteredLoader>
+            <WrappedComponent {...this.props} />
+          </Wrapper>
         );
       }
     };
 
     function mapStateToProps(state: IAppState) {
       return {
-        loader: state.loader,
+        loadingState: state.loader,
       };
     }
 
