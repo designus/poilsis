@@ -7,7 +7,8 @@
       "reducers": ["./src/app/reducers"],
       "actions": ["./src/app/actions"],
       "pages": ["./src/app/pages"],
-      "data-strings": ["./src/app/data-strings"]
+      "data-strings": ["./src/app/data-strings"],
+      "global-styles": ["./src/app/global-styles"]
     },
     "outDir": "build",
     "module": "commonjs",

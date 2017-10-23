@@ -1,16 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { ERROR_COLOR } from 'global-styles';
 
 const ErrorsWrapper = styled.ul`
   margin: 0;
   padding: ${(props: any) => props.padding};
-  color: red;
+  color: ${ERROR_COLOR};
   font-style: italic;
+  & > li {
+    list-style: none;
+  }
 ` as any;
-
-const Li = styled.li`
-  list-style: none;
-`;
 
 export interface IValidationErrors {
   showErrors: boolean;
@@ -23,7 +23,7 @@ export const ValidationErrors = ({showErrors, errors, padding = '10px 0'}: IVali
   if (showErrors && errors.length > 0) {
     return (
       <ErrorsWrapper padding={padding}>
-        {errors.map((error, i) => (<Li key={i}>{error}</Li>))}
+        {errors.map((error, i) => (<li key={i}>{error}</li>))}
       </ErrorsWrapper>
     );
   } else {

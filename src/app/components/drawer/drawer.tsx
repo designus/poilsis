@@ -7,20 +7,20 @@ import Hidden from 'material-ui/Hidden';
 import IconButton from 'material-ui/IconButton';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 
-import {APP_SETTING} from '../../styles';
+import {DRAWER_WIDTH, DRAWER_TOP} from 'global-styles';
 
 const AppDrawer = MaterialDrawer as any;
 
 const styles = theme => ({
   paper: {
-    width: APP_SETTING.DrawerWidth,
+    width: DRAWER_WIDTH,
     backgroundColor: theme.palette.background.paper,
-    top: APP_SETTING.drawerTop,
+    top: DRAWER_TOP,
     zIndex: 1,
   },
   paperMobile: {
     top: 0,
-    width: APP_SETTING.DrawerWidth,
+    width: DRAWER_WIDTH,
     backgroundColor: theme.palette.background.paper,
     zIndex: 1,
   },

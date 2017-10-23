@@ -1,15 +1,25 @@
 import * as React from 'react';
-import { ValidationErrors } from '../../components';
+import { ValidationErrors } from 'components';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
+import { ERROR_COLOR, INPUT_WIDTH, INPUT_STYLE_MIXIN } from 'global-styles';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  padding: 10px 0;
+`;
 
 const styles = theme => ({
+  formControl: {
+    width: INPUT_WIDTH,
+  },
   error: {
     '&:after': {
-      height: '1px',
+      backgroundColor: ERROR_COLOR,
     },
   },
+  ...INPUT_STYLE_MIXIN,
 });
 
 export interface ITextInputProps {
@@ -24,17 +34,22 @@ export interface ITextInputProps {
 
 function InputComponent({label, value, showErrors, errors, onChange, onBlur, classes}: ITextInputProps) {
   return (
-    <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel htmlFor={label}>{label}</InputLabel>
+    <Wrapper>
+      <FormControl className={classes.formControl} error={showErrors && errors.length > 0}>
+        <InputLabel
+          htmlFor={label}
+        >
+          {label}
+        </InputLabel>
         <Input
           id={label}
           value={value}
           onChange={onChange}
           classes={{
             error: classes.error,
+            underline: classes.underline,
+            focused: classes.focused,
           }}
-          error={showErrors && errors.length > 0}
           margin="dense"
           onBlur={onBlur}
         />
@@ -43,7 +58,7 @@ function InputComponent({label, value, showErrors, errors, onChange, onBlur, cla
         showErrors={showErrors}
         errors={errors}
       />
-    </div>
+    </Wrapper>
   );
 };
 

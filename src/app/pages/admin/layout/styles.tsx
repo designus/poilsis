@@ -1,8 +1,8 @@
-import {APP_SETTING} from '../../../styles';
+import {DRAWER_TOP, DRAWER_WIDTH} from 'global-styles';
 
 export const styles = theme => ({
   '@global': {
-    'html': {
+    html: {
       background: theme.palette.background.default,
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
@@ -14,7 +14,7 @@ export const styles = theme => ({
     ':focus': {
       outline: 'none',
     },
-    'body': {
+    body: {
       height: '100%',
       margin: 0,
     },
@@ -22,34 +22,34 @@ export const styles = theme => ({
       height: '100%',
     },
   },
-  'root': {
+  root: {
     display: 'flex',
     alignItems: 'stretch',
     minHeight: '100%',
     width: '100%',
   },
-  'appBarTitle': {
+  appBarTitle: {
     flex: 1,
   },
-  'appFrame': {
+  appFrame: {
     position: 'relative',
     display: 'flex',
     width: '100%',
     height: '100%',
   },
-  'drawer': {
-    top: APP_SETTING.drawerTop,
+  drawer: {
+    top: DRAWER_TOP,
     [theme.breakpoints.up('lg')]: {
-      width: APP_SETTING.DrawerWidth,
+      width: DRAWER_WIDTH,
     },
   },
-  'content': {
+  content: {
     width: '100%',
     padding: theme.spacing.unit,
     height: 'calc(100% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('lg')]: {
-      width: 'calc(100% - ' + APP_SETTING.DrawerWidth + 'px)',
+      width: 'calc(100% - ' + DRAWER_WIDTH + 'px)',
     },
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px)',

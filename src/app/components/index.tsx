@@ -19,3 +19,4 @@ export * from './userMenu';
 export * from './textInput';
 export * from './toast';
 export * from './validationErrors';
+export * from './submitButton';

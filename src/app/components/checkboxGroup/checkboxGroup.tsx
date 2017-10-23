@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ValidationErrors } from '../../components';
 import { CheckboxOptions, ICheckboxOptionsParams } from './checkboxOptions';
+import styled from 'styled-components';
 
 interface ICheckboxGroupParams extends ICheckboxOptionsParams {
   label: string;
@@ -8,21 +9,24 @@ interface ICheckboxGroupParams extends ICheckboxOptionsParams {
   errors: string[];
 }
 
+const Wrapper = styled.div`
+  padding: 10px 0 0;
+`;
+
 export function CheckboxGroup({data, label, showErrors, errors, onChange, checkedItems}: ICheckboxGroupParams) {
   return (
-    <div>
-      {label}
-      <br />
+    <Wrapper>
       <CheckboxOptions
         data={data}
         onChange={onChange}
         checkedItems={checkedItems}
+        label={label}
+        hasErrors={showErrors && errors.length > 0}
       />
       <ValidationErrors
-        padding={'0'}
         showErrors={showErrors}
         errors={errors}
       />
-    </div>
+    </Wrapper>
   );
 };

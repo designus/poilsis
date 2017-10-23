@@ -1,7 +1,6 @@
 import * as React from 'react';
-import Button from 'material-ui/Button';
 
-import { CheckboxGroup,	SelectBox, TextInput } from 'components';
+import { CheckboxGroup,	SelectBox, TextInput, Submit } from 'components';
 import { IAddItemProps } from 'pages';
 import {
   NAME_LABEL,
@@ -18,7 +17,7 @@ import {
 export const CreateEditItem = (props: IAddItemProps) => {
   const {showErrors, errors, fields} = props.state;
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={props.handleSubmit} autoComplete="off">
       <TextInput
         label={NAME_LABEL}
         value={fields[NAME_KEY]}
@@ -50,15 +49,10 @@ export const CreateEditItem = (props: IAddItemProps) => {
         errors={errors[ADDRESS_KEY]}
         onChange={props.handleInputChange(ADDRESS_KEY)}
         onBlur={props.handleOnBlur}
-      />		
-      <Button
-        raised
-        color="primary"
-        type="submit"
-        style={{marginTop: 12, marginBottom: 20, display: 'block'}}
-      >
+      />
+      <Submit>
         {SEND_LABEL}
-      </Button>
+      </Submit>
     </form>
   );
 };
