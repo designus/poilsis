@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { CheckboxGroup,	SelectBox, TextInput, Submit } from 'components';
+import { CheckboxGroup,	SelectBox, TextInput, Submit, FileUpload } from 'components';
 import { IAddItemProps } from 'pages';
 import {
   NAME_LABEL,
@@ -50,6 +50,7 @@ export const CreateEditItem = (props: IAddItemProps) => {
         onChange={props.handleInputChange(ADDRESS_KEY)}
         onBlur={props.handleOnBlur}
       />
+      <FileUpload />
       <Submit>
         {SEND_LABEL}
       </Submit>
