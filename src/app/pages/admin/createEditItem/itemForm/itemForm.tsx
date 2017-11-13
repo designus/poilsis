@@ -8,14 +8,17 @@ import {
   TYPES_LABEL,
   ADDRESS_LABEL,
   SEND_LABEL,
+  IMAGES_LABEL,
   NAME_KEY,
   CITY_KEY,
   TYPES_KEY,
   ADDRESS_KEY,
+  IMAGES_KEY,
 } from 'data-strings';
 
 export const CreateEditItem = (props: IAddItemProps) => {
   const {showErrors, errors, fields} = props.state;
+  const id = fields.id;
   return (
     <form onSubmit={props.handleSubmit} autoComplete="off">
       <TextInput
@@ -50,7 +53,13 @@ export const CreateEditItem = (props: IAddItemProps) => {
         onChange={props.handleInputChange(ADDRESS_KEY)}
         onBlur={props.handleOnBlur}
       />
-      <FileUpload />
+      <FileUpload
+        label={IMAGES_LABEL}
+        images={fields[IMAGES_KEY]}
+        addImages={props.handleAddedImages}
+        removeImage={props.handleRemovedImage}
+        id={id}
+      />
       <Submit>
         {SEND_LABEL}
       </Submit>

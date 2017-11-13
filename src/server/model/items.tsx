@@ -30,6 +30,7 @@ const ItemsSchemaMap: IItemsSchemaMap = {
   alias: {type: String, lowercase: true, trim: true, required: true, set: formatAlias },
   createdAt: {type: Date },
   updatedAt: {type: Date },
+  images: {type: Array, maxLength: 6},
 };
 
 const ItemsSchema = new Schema(ItemsSchemaMap);

@@ -1,5 +1,21 @@
 import styled from 'styled-components';
 
+export const ImageUpload = styled.div`
+  margin: 10px 0;
+
+  label {
+    font-size: 13px;
+  }
+
+  .dropzone {
+    padding: 10px;
+    margin: 10px 0 0;
+    border: 1px dashed #ccc;
+    text-align: center;
+    cursor: pointer;
+  }
+`;
+
 export const FileUploadWrapper = styled.div`
   margin: 10px 0;
 
@@ -201,7 +217,7 @@ export const FileUploadWrapper = styled.div`
   }
 
   .dz-preview:not(.dz-processing) .dz-progress {
-    animation: pulse 6s ease infinite
+    display: none;
   }
 
   .dz-preview .dz-progress {

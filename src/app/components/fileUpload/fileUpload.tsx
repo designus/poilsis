@@ -1,52 +1,52 @@
 import * as React from 'react';
-import Dropzone from 'react-dropzone-component';
-import { FileUploadWrapper } from './style';
+import Dropzone from 'react-dropzone';
+import uniqBy from 'lodash-es/uniqBy';
+import { IImage } from 'helpers';
+import { ImageUpload } from './style';
+import { InputLabel } from 'material-ui/Input';
+import { ImagePreview } from './imagePreview';
 
-export class FileUpload extends React.Component<any, any> {
+export interface IFileUploadProps {
+  images: IImage[];
+  label: string;
+  id: string;
+  addImages: (images: any[]) => void;
+  removeImage: (image: IImage) => void;
+};
 
-  djsConfig = null;
-  componentConfig = null;
-  success = null;
-  removedfile = null;
-  dropzone = null;
+export class FileUpload extends React.Component<IFileUploadProps, any> {
 
   constructor(props) {
     super(props);
 
-    this.djsConfig = {
-      addRemoveLinks: true,
-      acceptedFiles: 'image/jpeg, image/png, image/gif',
+    this.state = {
+      images: [],
     };
+  }
 
-    this.componentConfig = {
-      iconFiletypes: ['.jpg', '.png', '.gif'],
-      showFiletypeIcon: true,
-      postUrl: '/uploadHandler',
-    };
-
-    this.success = file => console.log('uploaded', file);
-    this.removedfile = file => console.log('removing...', file);
-
-    this.dropzone = null;
-
+  onDrop = (acceptedImages) => {
+    const images = uniqBy([...this.state.images, ...acceptedImages], 'name');
+    this.props.addImages(images);
+    this.setState({images});
   }
 
   render() {
-
-    const eventHandlers = {
-      init: dz => this.dropzone = dz,
-      success: this.success,
-      removedfile: this.removedfile,
-    };
-
     return (
-      <FileUploadWrapper>
+      <ImageUpload>
+        <InputLabel>{this.props.label}</InputLabel>
         <Dropzone
-          config={this.componentConfig}
-          djsConfig={this.djsConfig}
-          eventHandlers={eventHandlers}
+          onDrop={this.onDrop}
+          className="dropzone"
+          activeClassName="active-dropzone"
+          accept="image/jpeg,image/jpg,image/png"
+          name="images"
+          multiple={true}>
+          <div>Drag and drop or click to select a 550x550px file to upload.</div>
+        </Dropzone>
+        <ImagePreview
+          images={this.state.images}
         />
-       </FileUploadWrapper>
+      </ImageUpload>
     );
   }
 }

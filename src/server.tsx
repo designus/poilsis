@@ -63,8 +63,8 @@ app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use('/api', require('./server/controllers'));
 

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
 
-import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from '../../helpers';
-import { extendWithLoader } from '../../components';
+import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from 'helpers';
+import { extendWithLoader } from 'components';
+import { IMAGES_KEY } from 'data-strings';
 
 export function extendWithForm<T extends IFormProps>(
   WrappedComponent: React.ComponentClass<T> | React.StatelessComponent<T>,
@@ -36,7 +37,7 @@ export function extendWithForm<T extends IFormProps>(
       }, {});
     };
 
-    getSingleFieldValidationErrors(key: string, value, model: TGenericFormModel<object>) {
+    getSingleFieldValidationErrors(key: string, value: any, model: TGenericFormModel<object>) {
       return model[key].validators.reduce((acc: string[], errorMessageFn) => {
         const getErrorMsg = errorMessageFn(value);
         return getErrorMsg ?
@@ -45,9 +46,13 @@ export function extendWithForm<T extends IFormProps>(
       }, []);
     }
 
-    getNewState(name: string, value: string): IGenericFormState<object> {
+    getNewState(name: string, value: any): IGenericFormState<object> {
+
       const fieldValues = {...this.state.fields, [name]: value };
-      const validationErrors = {...this.state.errors, [name]: this.getSingleFieldValidationErrors(name, value, this.state.model) };
+      const validationErrors = {
+        ...this.state.errors,
+        [name]: this.getSingleFieldValidationErrors(name, value, this.state.model),
+      };
 
       return {
         ...this.state,
@@ -79,6 +84,20 @@ export function extendWithForm<T extends IFormProps>(
 
     }
 
+    handleAddedImages(images: any[]) {
+      const newImageState = [...this.state.fields[IMAGES_KEY], ...images];
+      const newState = this.getNewState(IMAGES_KEY, newImageState);
+      this.setState(newState);
+    }
+
+    handleRemovedImage(image) {
+      console.log('Handle removed images', image);
+    }
+
+    handleImageOrderChange(images) {
+      console.log('Images', images);
+    }
+
     isFormValid(errors): boolean {
       return Object.keys(errors).filter((key: string) => errors[key].length).length === 0;
     }
@@ -106,6 +125,9 @@ export function extendWithForm<T extends IFormProps>(
           handleSubmit={this.handleSubmit}
           handleOnBlur={this.handleOnBlur}
           handleInputChange={this.handleInputChange}
+          handleAddedImages={this.handleAddedImages}
+          handleRemovedImage={this.handleRemovedImage}
+          handleImageOrderChange={this.handleImageOrderChange}
           state={this.state}
           {...this.props}
         />

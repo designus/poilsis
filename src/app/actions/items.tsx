@@ -88,10 +88,21 @@ export const getItem = (itemId, loaderId) => {
 export const putItem = (item, loaderId) => (dispatch, getState) => {
 
   return new Promise((resolve, reject) => {
+    console.log('Item', item);
+    const formData = new FormData();
+    const images = item.images;
+
+    Object.keys(item)
+      .filter(key => key !== 'images')
+      .forEach(key => formData.append(key, item[key]));
+
+    if (images) {
+      images.forEach((image) => formData.append('images', image));
+    }
 
     dispatch(startLoading(loaderId));
 
-    return axios.put(`http://localhost:3000/api/items/item/${item.id}`, item)
+    return axios.put(`http://localhost:3000/api/items/item/${item.id}`, formData)
       .then(response => response.data)
       .then(item => {
         if (item.errors) {

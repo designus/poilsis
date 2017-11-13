@@ -1,5 +1,5 @@
-import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM } from '../actions/items';
-import { IGenericState, removeDuplicates } from '../helpers';
+import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM } from 'actions';
+import { IGenericState, removeDuplicates, IImage } from 'helpers';
 
 export interface IItemsMap {
   alias: string;
@@ -8,6 +8,7 @@ export interface IItemsMap {
   id: string;
   name: string;
   types: string[];
+  images?: IImage[];
 }
 
 export interface IItemsByCity {

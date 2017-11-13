@@ -39,6 +39,16 @@ export type TGenericFormModel<T> = {
   [I in keyof T]: IKeyMap
 };
 
+export interface IImage {
+  id?: string;
+  name?: string;
+  order?: number;
+  mimeType?: string;
+  size?: string;
+  dataUrl?: string;
+  url?: string;
+}
+
 export interface IFormProps {
   initialState?: IGenericFormState<object>;
   onItemSubmit?: (fields: {[key: string]: any}) => void;
@@ -47,6 +57,9 @@ export interface IFormProps {
   handleOnBlur?: any;
   handleInputChange?: (key: string) => (event) => void;
   handleCheckboxToggle?: any;
+  handleAddedImages?: (images: any[]) => void;
+  handleRemovedImage?: (image: IImage) => void;
+  handleImageOrderChange?: (image: IImage[]) => void;
   loaderId?: string;
   state?: IGenericFormState<object>;
 }

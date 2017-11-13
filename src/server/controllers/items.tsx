@@ -1,8 +1,10 @@
 const express = require('express');
 const sanitize = require('mongo-sanitize');
 const router = express.Router();
+const shortId = require('shortid');
 
-import {ItemsModel} from '../model';
+import { checkItemPhotosUploadPath, uploadImages } from '../utils';
+import { ItemsModel } from '../model';
 
 router.route('/')
   .get((req, res) => {
@@ -15,13 +17,14 @@ router.route('/')
   })
   .post((req, res) => {
 
+    const id = shortId.generate();
     const name = sanitize(req.body.name);
     const city = sanitize(req.body.city);
     const alias = sanitize(req.body.alias) || name;
     const address = sanitize(req.body.address);
     const types = req.body.types;
 
-    const newItem = {name, city, alias, types, address};
+    const newItem = {id, name, city, alias, types, address};
 
     new ItemsModel(newItem).save((err, item) => {
       if (err) {
@@ -40,7 +43,15 @@ router.route('/item/:itemId')
       res.json(item);
     });
   })
-  .put((req, res) => {
+  .delete((req, res) => {
+    ItemsModel.findOneAndRemove({id: req.params.itemId}, (err, item, result) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send(item);
+    });
+  })
+  .put(checkItemPhotosUploadPath, uploadImages.array('images', 6), (req, res) => {
 
     const name = sanitize(req.body.name);
     const city = sanitize(req.body.city);
@@ -53,14 +64,6 @@ router.route('/item/:itemId')
     const updatedItem = {name, city, alias, types, description, address, updatedAt};
 
     ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true }, function(err, item) {
-      if (err) {
-        res.send(err);
-      }
-      res.send(item);
-    });
-  })
-  .delete((req, res) => {
-    ItemsModel.findOneAndRemove({id: req.params.itemId}, (err, item, result) => {
       if (err) {
         res.send(err);
       }

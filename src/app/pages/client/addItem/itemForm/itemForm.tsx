@@ -2,8 +2,8 @@ import * as React from 'react';
 import Button from 'material-ui/Button';
 
 import { CheckboxGroup,	SelectBox, TextInput } from 'components';
-import { ICityMap, ITypesMap } from 'reducers';
-import { IFormProps, IGenericDataMap } from 'helpers';
+import { ICityMap, ITypesMap, IItemsMap } from 'reducers';
+import { IFormProps, IGenericDataMap, IGenericFormState } from 'helpers';
 import {
   NAME_LABEL,
   CITY_LABEL,
@@ -19,6 +19,7 @@ import {
 export interface IAddItemProps extends IFormProps {
   citiesMap?: IGenericDataMap<ICityMap>;
   typesMap?: IGenericDataMap<ITypesMap>;
+  state?: IGenericFormState<IItemsMap>;
 }
 
 export const CreateItem = (props: IAddItemProps) => {

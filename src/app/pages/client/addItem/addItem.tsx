@@ -4,7 +4,7 @@ import * as autoBind from 'react-autobind';
 import { connect } from 'react-redux';
 import { extendWithForm } from 'components';
 import { addNewItemState, postItem, showBackendValidationErrors, clearFields } from 'actions';
-import { IGenericFormState, TGenericFormModel, getKeyMap, getMergedErrors, required, minLength, maxLength } from 'helpers';
+import { IGenericFormState, TGenericFormModel, IImage, getKeyMap, getMergedErrors, required, minLength, maxLength } from 'helpers';
 import { CreateItem } from './itemForm';
 
 import {
@@ -13,6 +13,7 @@ import {
   TYPES_LABEL,
   ADDRESS_LABEL,
   DESCRIPTION_LABEL,
+  IMAGES_LABEL,
 } from 'data-strings';
 
 export interface INewItemFields {
@@ -22,6 +23,7 @@ export interface INewItemFields {
   description?: string;
   name?: string;
   types?: string[];
+  images?: IImage[];
 }
 
 export type TItemState = IGenericFormState<INewItemFields>;
@@ -34,6 +36,7 @@ export const itemModel: TItemModel = {
   types: getKeyMap([], TYPES_LABEL, [required, minLength(1, true), maxLength(3, true)]),
   address: getKeyMap('', ADDRESS_LABEL, []),
   description: getKeyMap('', DESCRIPTION_LABEL, []),
+  images: getKeyMap([], IMAGES_LABEL, [maxLength(6, true)]),
 };
 
 const ItemForm = extendWithForm(CreateItem);
