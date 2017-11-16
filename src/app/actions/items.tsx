@@ -88,7 +88,7 @@ export const getItem = (itemId, loaderId) => {
 export const putItem = (item, loaderId) => (dispatch, getState) => {
 
   return new Promise((resolve, reject) => {
-    console.log('Item', item);
+
     const formData = new FormData();
     const images = item.images;
 
