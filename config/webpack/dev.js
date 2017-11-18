@@ -27,14 +27,14 @@ var config = {
     ]
   },
 
-  // entry: {
-  //   app: [
-  //     'webpack-hot-middleware/client?reload=true',
-  //     './src/client.tsx'
-  //   ]
-  // },
+  entry: {
+    app: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/client.tsx'
+    ]
+  },
 
-  entry: ['./src/ client'],
+  // entry: ['./src/ client'],
   
 
   output: {
@@ -90,22 +90,22 @@ var config = {
   ]
 };
 
-// const copySync = (src, dest, overwrite) => {
-//   if (overwrite && fs.existsSync(dest)) {
-//     fs.unlinkSync(dest);
-//   }
-//   const data = fs.readFileSync(src);
-//   fs.writeFileSync(dest, data);
-// }
+const copySync = (src, dest, overwrite) => {
+  if (overwrite && fs.existsSync(dest)) {
+    fs.unlinkSync(dest);
+  }
+  const data = fs.readFileSync(src);
+  fs.writeFileSync(dest, data);
+}
 
-// const createIfDoesntExist = dest => {
-//   if (!fs.existsSync(dest)) {
-//     fs.mkdirSync(dest);
-//   }
-// }
+const createIfDoesntExist = dest => {
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest);
+  }
+}
 
-// createIfDoesntExist('./build');
-// createIfDoesntExist('./build/public');
-// copySync('./src/favicon.ico', './build/public/favicon.ico', true);
+createIfDoesntExist('./build');
+createIfDoesntExist('./build/public');
+copySync('./src/favicon.ico', './build/public/favicon.ico', true);
 
 module.exports = config;
