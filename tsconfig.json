@@ -2,15 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "components": ["./src/app/components"],
-      "helpers": ["./src/app/helpers"],
-      "reducers": ["./src/app/reducers"],
-      "actions": ["./src/app/actions"],
-      "pages": ["./src/app/pages"],
-      "data-strings": ["./src/app/data-strings"],
-      "global-styles": ["./src/app/global-styles"]
+      "components": ["./src/client/app/components"],
+      "helpers": ["./src/client/app/helpers"],
+      "reducers": ["./src/client/app/reducers"],
+      "actions": ["./src/client/app/actions"],
+      "pages": ["./src/client/app/pages"],
+      "data-strings": ["./src/client/app/data-strings"],
+      "global-styles": ["./src/client/app/global-styles"]
     },
-    "outDir": "build",
+    "outDir": "./build",
     "module": "commonjs",
     "target": "es2015",
     "sourceMap": true,
@@ -23,16 +23,17 @@
     "moduleResolution": "node"
   },
   "exclude": [
-    "node_modules",
-    "build",
-    "typings/main",
-    "typings/main.d.ts"
+    "./node_modules",
+    "./build",
+    "./typings/main",
+    "./typings/main.d.ts"
   ],
   "typeRoots": [
     "./node_modules/@types"
   ],
   "awesomeTypescriptLoaderOptions": {
     "useCache": true,
-    "useBabel": true
+    "useBabel": true,
+    "babelCore": "./node_modules/babel-core/index.js"
   }
 }

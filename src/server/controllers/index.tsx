@@ -1,12 +1,18 @@
 const express = require('express');
-const router = express.Router();
+import citiesRouter from './cities';
+import typesRouter from './types';
+import itemsRouter from './items';
 
-router.get('/', (req, res) => {
-  res.json({message: 'API initialized'});
-});
+export function apiRouter() {
+  const router = express.Router();
 
-router.use('/cities', require('./cities'));
-router.use('/types', require('./types'));
-router.use('/items', require('./items'));
+  router.get('/', (req, res) => {
+    res.json({message: 'API initialized'});
+  });
 
-module.exports = router;
+  router.use('/cities', citiesRouter);
+  router.use('/types', typesRouter);
+  router.use('/items', itemsRouter);
+
+  return router;
+}

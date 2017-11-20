@@ -81,4 +81,4 @@ router.route('/city/:cityId')
     });
   });
 
-module.exports = router;
+export default router;
