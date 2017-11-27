@@ -109,3 +109,22 @@ export function removeInjectedStyles() {
     jssStyles.parentNode.removeChild(jssStyles);
   }
 }
+
+export function getFormData(item) {
+  const formData = new FormData();
+
+  Object.keys(item)
+    .forEach(key => {
+      const formItem = item[key];
+      if (Array.isArray(formItem)) {
+        item[key].forEach(elem => {
+          const elemKey = `${key}[]`;
+          formData.append(elemKey, elem);
+        });
+      } else {
+        formData.append(key, item[key]);
+      }
+    });
+
+  return formData;
+}

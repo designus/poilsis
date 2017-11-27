@@ -13,7 +13,7 @@ export const checkItemPhotosUploadPath = (req, res, next) => {
      } else {
        fs.mkdir(uploadPath, (err) => {
          if (err) {
-           console.log('Error in folder creation');
+           console.log('Error in folder creation', err);
            next();
          }
          next();

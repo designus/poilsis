@@ -51,7 +51,7 @@ router.route('/item/:itemId')
       res.send(item);
     });
   })
-  .put(checkItemPhotosUploadPath, uploadImages.array('images', 6), (req, res) => {
+  .put(checkItemPhotosUploadPath, uploadImages.array('images[]', 6), (req, res) => {
 
     const name = sanitize(req.body.name);
     const city = sanitize(req.body.city);

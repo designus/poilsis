@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { startLoading, endLoading, showToast } from '../actions';
-import { getNormalizedData, getItemsByCity, IAlias } from '../helpers';
+import { getNormalizedData, getItemsByCity, IAlias, getFormData } from '../helpers';
 import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
 import { ITEM_UPDATE_SUCCESS, ITEM_UPDATE_ERROR, ITEM_CREATE_SUCCESS, ITEM_CREATE_ERROR } from '../data-strings';
 
@@ -89,16 +89,7 @@ export const putItem = (item, loaderId) => (dispatch, getState) => {
 
   return new Promise((resolve, reject) => {
 
-    const formData = new FormData();
-    const images = item.images;
-
-    Object.keys(item)
-      .filter(key => key !== 'images')
-      .forEach(key => formData.append(key, item[key]));
-
-    if (images) {
-      images.forEach((image) => formData.append('images', image));
-    }
+    const formData = getFormData(item);
 
     dispatch(startLoading(loaderId));
 
