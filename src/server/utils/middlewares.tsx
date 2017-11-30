@@ -1,6 +1,8 @@
 const fs = require('fs');
 const multer = require('multer');
-import { getFileExtension } from './methods';
+const Jimp = require('jimp');
+
+import { getFileExtension, getFilePath } from './methods';
 
 export const checkItemPhotosUploadPath = (req, res, next) => {
 
@@ -34,3 +36,32 @@ const storage = multer.diskStorage({
 });
 
 export const uploadImages = multer({storage});
+
+export const resizeImages = (req, res, next) => {
+
+  const promises = [];
+  const files = req.files;
+
+  if (files && files.length) {
+    files.forEach((file) => {
+      Jimp
+        .read(file.path)
+        .then((image) => {
+          const [name, extension] = file.filename.split('.');
+          const thumb = new Promise((resolve, reject) => {
+            image
+              .resize(240, 200)
+              .quality(60)
+              .write(getFilePath(file.destination, name, extension, 'S'), () => resolve());
+          });
+          promises.push(thumb);
+        })
+        .catch(err => console.error(err));
+    });
+
+    return Promise.all(promises).then(() => next());
+
+  } else {
+    next();
+  }
+};

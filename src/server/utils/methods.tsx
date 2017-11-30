@@ -25,3 +25,7 @@ export const createIfDoesntExist = dest => {
     fs.mkdirSync(dest);
   }
 };
+
+export const getFilePath = (destination, name, extension, size: 'S'|'M'|'L') => {
+  return `${destination}/${name}_${size}.${extension}`;
+};

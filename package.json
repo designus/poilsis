@@ -79,6 +79,7 @@
     "express": "^4.14.0",
     "history": "^4.6.1",
     "html-webpack-plugin": "^2.28.0",
+    "jimp": "^0.2.28",
     "jss": "^8.1.0",
     "jss-preset-default": "^3.0.0",
     "lodash": "^4.17.4",
