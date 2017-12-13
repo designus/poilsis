@@ -21,3 +21,4 @@ export * from './toast';
 export * from './validationErrors';
 export * from './submitButton';
 export * from './fileUpload';
+export * from './imagePreview';

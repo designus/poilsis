@@ -1,5 +1,6 @@
-import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM } from '../actions';
-import { IGenericState, removeDuplicates, IImage } from '../helpers';
+import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES } from '../actions';
+import { IGenericState, removeDuplicates } from '../helpers';
+import { IImage } from '../../../shared';
 
 export interface IItemsMap {
   alias: string;
@@ -83,6 +84,17 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
         itemsByCity: {
           ...state.itemsByCity,
           [removedItem.city]: removeItemFromCityState(state, removedItem),
+        },
+      };
+    case RECEIVE_IMAGES:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.id]: {
+            ...state.dataMap[action.id],
+            images: action.images,
+          },
         },
       };
     default:

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppState } from '../../../reducers';
-import { getItem, putItem } from '../../../actions';
+import { getItem, putItem, uploadImages } from '../../../actions';
 import { extendWithForm } from '../../../components';
 import { itemModel } from '../../../pages';
 import { getFormStateWithData, getInitialFormState, getBackendErrors, ITEM_LOADER_ID } from '../../../helpers';
@@ -51,6 +51,8 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
           initialState={finalState}
           citiesMap={this.props.citiesMap}
           typesMap={this.props.typesMap}
+          uploadImages={this.props.uploadImages}
+          isCreate={this.isCreatePage}
         />
       );
     } else {
@@ -71,6 +73,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getItem: (itemId) => dispatch(getItem(itemId, ITEM_LOADER_ID)),
     putItem: (item) => dispatch(putItem(item, ITEM_LOADER_ID)),
+    uploadImages: (itemId, files) => dispatch(uploadImages(itemId, files)),
   };
 };
 

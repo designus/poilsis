@@ -20,6 +20,8 @@ export interface IAddItemProps extends IFormProps {
   citiesMap?: IGenericDataMap<ICityMap>;
   typesMap?: IGenericDataMap<ITypesMap>;
   state?: IGenericFormState<IItemsMap>;
+  uploadImages?: (itemId: string, files: any[]) => Promise<any>;
+  isCreate?: boolean;
 }
 
 export const CreateItem = (props: IAddItemProps) => {

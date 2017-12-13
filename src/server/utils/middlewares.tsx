@@ -3,6 +3,8 @@ const multer = require('multer');
 const Jimp = require('jimp');
 
 import { getFileExtension, getFilePath } from './methods';
+import { IMulterFile } from './types';
+import { ImageSize } from '../../shared';
 
 export const checkItemPhotosUploadPath = (req, res, next) => {
 
@@ -25,13 +27,13 @@ export const checkItemPhotosUploadPath = (req, res, next) => {
 };
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req, file: IMulterFile, cb) => {
     const itemId = req.params.itemId;
-    const uploadPath = `./uploads/items/${itemId}`;
+    const uploadPath = `uploads/items/${itemId}`;
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname.slice(0, 4) + Date.now() + getFileExtension(file.mimetype));
+    cb(null, file.originalname.split('.')[0] + Date.now() + getFileExtension(file.mimetype));
   },
 });
 
@@ -52,7 +54,7 @@ export const resizeImages = (req, res, next) => {
             image
               .resize(240, 200)
               .quality(60)
-              .write(getFilePath(file.destination, name, extension, 'S'), () => resolve());
+              .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => resolve());
           });
           promises.push(thumb);
         })

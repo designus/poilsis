@@ -2,15 +2,15 @@
 
 import { isRequired } from '../../client/app/helpers/validation/errorMessages';
 import { NAME_KEY, CITY_KEY, ADDRESS_KEY } from '../../client/app/data-strings';
-// import { TGenericSchemaMap } from '../../client/app/helpers';
-// import { INewItemFields } from '../../client/app/pages';
+import { TGenericSchemaMap } from '../../client/app/helpers';
+import { INewItemFields } from '../../client/app/pages';
 
-// interface IItemsSchemaMap extends TGenericSchemaMap<INewItemFields> {
-//   alias: any;
-//   createdAt: any;
-//   updatedAt: any;
-//   id: any;
-// }
+interface IItemsSchemaMap extends TGenericSchemaMap<INewItemFields> {
+  alias: any;
+  createdAt: any;
+  updatedAt: any;
+  id: any;
+}
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -21,8 +21,7 @@ const formatAlias = (alias) => alias
   .join('-')
   .toLowerCase();
 
-// const ItemsSchemaMap: IItemsSchemaMap = {
-const ItemsSchemaMap: any = {
+const ItemsSchemaMap: IItemsSchemaMap = {
   id: {type: String, unique: true, default: shortId.generate, required: true},
   name: {type: String, minLength: 6, required: [true, isRequired(NAME_KEY)]},
   city: {type: String, required: [true, isRequired(CITY_KEY)] },

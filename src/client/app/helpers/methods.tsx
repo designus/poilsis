@@ -115,11 +115,9 @@ export function getFormData(item) {
 
   Object.keys(item)
     .forEach(key => {
-      const formItem = item[key];
-      if (Array.isArray(formItem)) {
+      if (key === 'files') {
         item[key].forEach(elem => {
-          const elemKey = `${key}[]`;
-          formData.append(elemKey, elem);
+          formData.append(key + '[]', elem);
         });
       } else {
         formData.append(key, item[key]);

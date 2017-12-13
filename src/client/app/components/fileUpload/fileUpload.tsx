@@ -1,17 +1,15 @@
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
-// import uniqBy from 'lodash-es/uniqBy';
-import { IImage } from '../../helpers';
 import { ImageUpload } from './style';
 import { InputLabel } from 'material-ui/Input';
-import { ImagePreview } from './imagePreview';
+import { ImagePreview } from '../imagePreview';
 
 export interface IFileUploadProps {
-  images: IImage[];
   label: string;
+  isCreate: boolean;
   id: string;
   addImages: (images: any[]) => void;
-  removeImage: (image: IImage) => void;
+  uploadImages: (itemId: string, files: any[]) => Promise<any>;
 };
 
 export class FileUpload extends React.Component<IFileUploadProps, any> {
@@ -20,15 +18,22 @@ export class FileUpload extends React.Component<IFileUploadProps, any> {
     super(props);
 
     this.state = {
-      images: [],
+      droppedImages: [],
     };
   }
 
   onDrop = (acceptedImages) => {
-    // const images = uniqBy([...this.state.images, ...acceptedImages], 'name');
-    const images = [...this.state.images, ...acceptedImages];
-    this.props.addImages(images);
-    this.setState({images});
+    const droppedImages = [...this.state.droppedImages, ...acceptedImages];
+    if (this.props.isCreate) {
+      this.setState({droppedImages});
+      this.props.addImages(droppedImages);
+    } else {
+      this.props.uploadImages(this.props.id, droppedImages).then(err => {
+        if (!err) {
+          this.setState({droppedImages: []});
+        }
+      });
+    }
   }
 
   render() {
@@ -43,10 +48,11 @@ export class FileUpload extends React.Component<IFileUploadProps, any> {
           name="images"
           multiple={true}>
           <div>Drag and drop or click to select a 550x550px file to upload.</div>
+          <ImagePreview
+            images={this.state.droppedImages}
+            isPreview={true}
+          />
         </Dropzone>
-        <ImagePreview
-          images={this.state.images}
-        />
       </ImageUpload>
     );
   }

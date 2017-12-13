@@ -3,7 +3,7 @@ const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { checkItemPhotosUploadPath, uploadImages, resizeImages } from '../utils';
+import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages } from '../utils';
 import { ItemsModel } from '../model';
 
 router.route('/')
@@ -51,7 +51,7 @@ router.route('/item/:itemId')
       res.send(item);
     });
   })
-  .put(checkItemPhotosUploadPath, uploadImages.array('images[]', 6), resizeImages, (req, res) => {
+  .put((req, res) => {
 
       const name = sanitize(req.body.name);
       const city = sanitize(req.body.city);
@@ -59,9 +59,10 @@ router.route('/item/:itemId')
       const description = sanitize(req.body.description);
       const address = sanitize(req.body.address);
       const types = req.body.types;
+      const images = req.body.images;
       const updatedAt = new Date();
 
-      const updatedItem = {name, city, alias, types, description, address, updatedAt};
+      const updatedItem = {name, city, alias, types, description, address, images, updatedAt};
 
       ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true }, (err, item) => {
         if (err) {
@@ -70,6 +71,23 @@ router.route('/item/:itemId')
         res.send(item);
       });
   });
+
+router.route('/item/:itemId/photos')
+  .put(checkItemPhotosUploadPath, uploadImages.array('files[]', 6), resizeImages, (req, res) => {
+    console.log('Req body', req.body);
+    console.log('Files', req.files);
+
+    const images = getImages(req.files);
+
+    ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $push: {images: { $each: images }}}, { new: true, upsert: true },
+      (err, item) => {
+        if (err) {
+          res.send(err);
+        }
+        res.send(item.images);
+    });
+
+  })
 
 router.route('/city/:cityId')
   .get((req, res) => {

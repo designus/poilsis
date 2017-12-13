@@ -3,7 +3,7 @@ import * as autoBind from 'react-autobind';
 
 import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from '../../helpers';
 import { extendWithLoader } from '../../components';
-import { IMAGES_KEY } from '../../data-strings';
+import { FILES_KEY } from '../../data-strings';
 
 export function extendWithForm<T extends IFormProps>(
   WrappedComponent: React.ComponentClass<T> | React.StatelessComponent<T>,
@@ -85,8 +85,8 @@ export function extendWithForm<T extends IFormProps>(
     }
 
     handleAddedImages(images: any[]) {
-      const newImageState = [...this.state.fields[IMAGES_KEY], ...images];
-      const newState = this.getNewState(IMAGES_KEY, newImageState);
+      console.log('Handle added images', images);
+      const newState = this.getNewState(FILES_KEY, images);
       this.setState(newState);
     }
 

@@ -1,3 +1,5 @@
+import { IImage } from '../../../shared';
+
 export interface IAlias {
   alias: string;
   id: string;
@@ -38,16 +40,6 @@ export interface IKeyMap {
 export type TGenericFormModel<T> = {
   [I in keyof T]: IKeyMap
 };
-
-export interface IImage {
-  id?: string;
-  name?: string;
-  order?: number;
-  mimeType?: string;
-  size?: string;
-  dataUrl?: string;
-  url?: string;
-}
 
 export interface IFormProps {
   initialState?: IGenericFormState<object>;

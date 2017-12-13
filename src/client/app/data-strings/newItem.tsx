@@ -11,3 +11,4 @@ export const TYPES_KEY = 'types';
 export const ADDRESS_KEY = 'address';
 export const DESCRIPTION_KEY = 'description';
 export const IMAGES_KEY = 'images';
+export const FILES_KEY  = 'files';

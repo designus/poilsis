@@ -34,10 +34,10 @@ const port = 3000;
 
 // db config
 mongoose.connect('mongodb://localhost:27017/poilsis');
-// mongoose.Promise = global.Promise;
 
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
 app.use(bodyParser.json({limit: '50mb'}));
@@ -52,7 +52,6 @@ app.get('/favicon.ico', (req, res) => {
 app.get('*', (req, res) => {
   const location = req.url;
   const store = createStore(rootReducer, undefined, applyMiddleware(thunkMiddleware));
-
   match({routes, location}, (error, redirectLocation, renderProps) => {
     if (error) {
       res.status(500).send(error.message);

@@ -1,14 +1,30 @@
 import axios from 'axios';
 
 import { startLoading, endLoading, showToast } from '../actions';
-import { getNormalizedData, getItemsByCity, IAlias, getFormData } from '../helpers';
+import {
+  getNormalizedData,
+  getItemsByCity,
+  IAlias,
+  objectToFormData,
+  // getFormData,
+ } from '../helpers';
 import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
-import { ITEM_UPDATE_SUCCESS, ITEM_UPDATE_ERROR, ITEM_CREATE_SUCCESS, ITEM_CREATE_ERROR } from '../data-strings';
+import {
+  ITEM_UPDATE_SUCCESS,
+  ITEM_UPDATE_ERROR,
+  ITEM_CREATE_SUCCESS,
+  ITEM_CREATE_ERROR,
+  IMAGES_UPLOAD_ERROR,
+  IMAGES_UPLOAD_SUCCESS,
+} from '../data-strings';
+import { IImage } from '../../../shared';
 
+// const objectToFormData = require('object-to-formdata');
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
+export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
 
 export const selectItem = (id: string) => {
   return {
@@ -38,6 +54,14 @@ export const removeItem = (item: IItemsMap) => {
   return {
     type: REMOVE_ITEM,
     item,
+  };
+};
+
+export const receiveImages = (id: string, images: IImage[]) => {
+  return {
+    type: RECEIVE_IMAGES,
+    id,
+    images,
   };
 };
 
@@ -85,15 +109,34 @@ export const getItem = (itemId, loaderId) => {
   };
 };
 
-export const putItem = (item, loaderId) => (dispatch, getState) => {
+export const uploadImages = (itemId, files) => (dispatch) => {
+  return new Promise((resolve) => {
+    const formData = objectToFormData(files);
+    return axios.put(`http://localhost:3000/api/item/${itemId}/photos`, formData)
+      .then(response => response.data)
+      .then(images => {
+        if (images.errors) {
+          dispatch(showToast(Toast.error, IMAGES_UPLOAD_ERROR));
+          resolve(images.errors);
+        } else {
+          dispatch(receiveImages(itemId, images));
+          dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
+          resolve();
+        }
+      });
+  });
+};
 
+export const putItem = (item, loaderId) => (dispatch, getState) => {
+  console.log('Putting item...', item);
   return new Promise((resolve, reject) => {
 
-    const formData = getFormData(item);
+    // const formData = getFormData(item);
+    // const formData = objectToFormData(item);
 
     dispatch(startLoading(loaderId));
 
-    return axios.put(`http://localhost:3000/api/items/item/${item.id}`, formData)
+    return axios.put(`http://localhost:3000/api/items/item/${item.id}`, item)
       .then(response => response.data)
       .then(item => {
         if (item.errors) {

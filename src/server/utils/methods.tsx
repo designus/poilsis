@@ -1,4 +1,8 @@
 const fs = require('fs');
+const shortId = require('shortid');
+
+import { IMulterFile } from './types';
+import { ImageSize, IImage } from '../../shared';
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {
@@ -26,6 +30,18 @@ export const createIfDoesntExist = dest => {
   }
 };
 
-export const getFilePath = (destination, name, extension, size: 'S'|'M'|'L') => {
+export const getFilePath = (destination, name, extension, size: ImageSize) => {
   return `${destination}/${name}_${size}.${extension}`;
+};
+
+export const getImages = (files: IMulterFile[]): IImage[] => {
+  return files.map(({filename, destination}: IMulterFile, index: number): IImage => {
+    const [name, extension] = filename.split('.');
+    return {
+      id: shortId.generate(),
+      fileName: filename,
+      path: destination,
+      thumbName: `${name}_${ImageSize.Small}.${extension}`,
+    };
+  });
 };
