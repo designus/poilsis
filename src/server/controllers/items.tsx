@@ -5,6 +5,7 @@ const shortId = require('shortid');
 
 import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages } from '../utils';
 import { ItemsModel } from '../model';
+import { MAX_PHOTOS_LENGTH } from '../../client/app/helpers';
 
 router.route('/')
   .get((req, res) => {
@@ -73,13 +74,12 @@ router.route('/item/:itemId')
   });
 
 router.route('/item/:itemId/photos')
-  .put(checkItemPhotosUploadPath, uploadImages.array('files[]', 6), resizeImages, (req, res) => {
-    console.log('Req body', req.body);
-    console.log('Files', req.files);
+  .put(checkItemPhotosUploadPath, uploadImages.array('files[]', MAX_PHOTOS_LENGTH), resizeImages, (req, res) => {
 
     const images = getImages(req.files);
 
-    ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $push: {images: { $each: images }}}, { new: true, upsert: true },
+    ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $push: {images: { $each: images }}},
+      { new: true, runValidators: true, upsert: true },
       (err, item) => {
         if (err) {
           res.send(err);
@@ -87,7 +87,7 @@ router.route('/item/:itemId/photos')
         res.send(item.images);
     });
 
-  })
+  });
 
 router.route('/city/:cityId')
   .get((req, res) => {

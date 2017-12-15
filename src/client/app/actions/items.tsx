@@ -16,6 +16,7 @@ import {
   ITEM_CREATE_ERROR,
   IMAGES_UPLOAD_ERROR,
   IMAGES_UPLOAD_SUCCESS,
+  IMAGES_KEY,
 } from '../data-strings';
 import { IImage } from '../../../shared';
 
@@ -111,12 +112,19 @@ export const getItem = (itemId, loaderId) => {
 
 export const uploadImages = (itemId, files) => (dispatch) => {
   return new Promise((resolve) => {
-    const formData = objectToFormData(files);
-    return axios.put(`http://localhost:3000/api/item/${itemId}/photos`, formData)
+    const formData = objectToFormData({files});
+    return axios
+      .put(`http://localhost:3000/api/items/item/${itemId}/photos`, formData, {
+        onUploadProgress: (progressEvent) => {
+          console.log('Progress event', progressEvent);
+        },
+      })
       .then(response => response.data)
       .then(images => {
         if (images.errors) {
-          dispatch(showToast(Toast.error, IMAGES_UPLOAD_ERROR));
+          const errors = images.errors[IMAGES_KEY];
+          const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
+          dispatch(showToast(Toast.error, message));
           resolve(images.errors);
         } else {
           dispatch(receiveImages(itemId, images));

@@ -1,5 +1,4 @@
 const fs = require('fs');
-const shortId = require('shortid');
 
 import { IMulterFile } from './types';
 import { ImageSize, IImage } from '../../shared';
@@ -38,7 +37,6 @@ export const getImages = (files: IMulterFile[]): IImage[] => {
   return files.map(({filename, destination}: IMulterFile, index: number): IImage => {
     const [name, extension] = filename.split('.');
     return {
-      id: shortId.generate(),
       fileName: filename,
       path: destination,
       thumbName: `${name}_${ImageSize.Small}.${extension}`,

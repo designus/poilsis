@@ -22,17 +22,22 @@ export class FileUpload extends React.Component<IFileUploadProps, any> {
     };
   }
 
+  uploadImages(droppedImages) {
+    this.props.uploadImages(this.props.id, droppedImages).then(err => {
+      if (!err) {
+        // this.setState({droppedImages: []});
+      }
+    });
+  }
+
   onDrop = (acceptedImages) => {
     const droppedImages = [...this.state.droppedImages, ...acceptedImages];
     if (this.props.isCreate) {
       this.setState({droppedImages});
       this.props.addImages(droppedImages);
     } else {
-      this.props.uploadImages(this.props.id, droppedImages).then(err => {
-        if (!err) {
-          this.setState({droppedImages: []});
-        }
-      });
+      this.setState({droppedImages});
+      this.uploadImages(droppedImages);
     }
   }
 

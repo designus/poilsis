@@ -7,3 +7,5 @@ export const minSelectionLength = (length) => (fieldName) => `Please select at l
 export const maxSelectionLength = (length) => (fieldName) => `Please select no more thant ${length} option for ${fieldName}`;
 
 export const mustMatch = (otherFieldName) => (fieldName) => `${fieldName} must match ${otherFieldName}`;
+
+export const maxItemsLength = (length) => (fieldName) => `${fieldName} exceeds max ${length} length`;

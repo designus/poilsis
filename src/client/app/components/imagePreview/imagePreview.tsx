@@ -10,7 +10,7 @@ export interface IImagePreview {
 
 export const ImageWrapper = styled.div`
   img {
-    max-height: 150px;
+    max-height: 120px;
     widht: auto;
     margin: 10px 10px 0 0;
   }
