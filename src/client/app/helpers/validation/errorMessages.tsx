@@ -8,4 +8,6 @@ export const maxSelectionLength = (length) => (fieldName) => `Please select no m
 
 export const mustMatch = (otherFieldName) => (fieldName) => `${fieldName} must match ${otherFieldName}`;
 
-export const maxItemsLength = (length) => (fieldName) => `${fieldName} exceeds max ${length} length`;
+export const maxFileCount = (count) => (fieldName) => `${fieldName} exceeds maximum allowed number of ${count} files`;
+export const maxFileSize = (size) => (fieldName) => `${fieldName} exceeds allowed size of ${size} mb`;
+export const wrongFileType = (types) => (fieldName) => `${fieldName} supports only ${types}`;

@@ -1,8 +1,8 @@
 'use strict';
 
-import { isRequired, maxItemsLength } from '../../client/app/helpers/validation/errorMessages';
+import { isRequired, maxFileCount } from '../../client/app/helpers/validation/errorMessages';
 import { NAME_KEY, CITY_KEY, ADDRESS_KEY, IMAGES_KEY } from '../../client/app/data-strings';
-import { TGenericSchemaMap, MAX_PHOTOS_LENGTH } from '../../client/app/helpers';
+import { TGenericSchemaMap, MAX_FILE_COUNT } from '../../client/app/helpers';
 import { INewItemFields } from '../../client/app/pages';
 import { IImage } from '../../shared';
 
@@ -22,7 +22,7 @@ const formatAlias = (alias) => alias
   .join('-')
   .toLowerCase();
 
-const arrayLimit = (val) => val.length <= MAX_PHOTOS_LENGTH;
+const arrayLimit = (val) => val.length <= MAX_FILE_COUNT;
 
 const ImageSchemaMap: TGenericSchemaMap<IImage> = {
   id: {type: String, unique: true, default: shortId.generate, required: true},
@@ -42,7 +42,7 @@ const ItemsSchemaMap: IItemsSchemaMap = {
   updatedAt: {type: Date },
   images: {
     type: [ImageSchemaMap],
-    validate: [arrayLimit, maxItemsLength(MAX_PHOTOS_LENGTH)(IMAGES_KEY)],
+    validate: [arrayLimit, maxFileCount(MAX_FILE_COUNT)(IMAGES_KEY)],
   },
 };
 

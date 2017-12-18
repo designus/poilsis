@@ -13,3 +13,11 @@ export enum ImageSize {
   Medium = 'M',
   Large = 'L',
 }
+
+export interface IResponseError {
+  errors: {
+    [key: string]: {
+      message: string;
+    },
+  };
+}

@@ -6,3 +6,9 @@ export interface IMulterFile {
   filename: string;
   destination: string;
 }
+
+export enum FileUploadErrors {
+  limitFileSize = 'LIMIT_FILE_SIZE',
+  limitFileCount = 'LIMIT_FILE_COUNT',
+  wrongFileType = 'WRONG_FILE_TYPE',
+};

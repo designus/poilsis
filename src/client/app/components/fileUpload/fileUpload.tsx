@@ -49,7 +49,6 @@ export class FileUpload extends React.Component<IFileUploadProps, any> {
           onDrop={this.onDrop}
           className="dropzone"
           activeClassName="active-dropzone"
-          accept="image/jpeg,image/jpg,image/png"
           name="images"
           multiple={true}>
           <div>Drag and drop or click to select a 550x550px file to upload.</div>

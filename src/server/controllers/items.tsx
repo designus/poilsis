@@ -3,9 +3,9 @@ const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages } from '../utils';
+import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages, handleFileUploadErrors } from '../utils';
 import { ItemsModel } from '../model';
-import { MAX_PHOTOS_LENGTH } from '../../client/app/helpers';
+import { MAX_FILE_COUNT } from '../../client/app/helpers';
 
 router.route('/')
   .get((req, res) => {
@@ -74,20 +74,29 @@ router.route('/item/:itemId')
   });
 
 router.route('/item/:itemId/photos')
-  .put(checkItemPhotosUploadPath, uploadImages.array('files[]', MAX_PHOTOS_LENGTH), resizeImages, (req, res) => {
+  .put(checkItemPhotosUploadPath, (req, res) => {
 
-    const images = getImages(req.files);
+    const uploadPhotos = uploadImages.array('files[]', MAX_FILE_COUNT);
 
-    ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $push: {images: { $each: images }}},
-      { new: true, runValidators: true, upsert: true },
-      (err, item) => {
-        if (err) {
-          res.send(err);
-        }
-        res.send(item.images);
-    });
+    uploadPhotos(req, res, (err) => {
+      handleFileUploadErrors(err, res);
 
+      resizeImages(req, res).then(() => {
+        const images = getImages(req.files);
+
+        ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
+          handleFileUploadErrors(err, res);
+          item.images = [...item.images, ...images];
+
+          item.save((err, item) => {
+            handleFileUploadErrors(err, res);
+            res.send(item.images);
+          });
+        });
+      });
   });
+
+});
 
 router.route('/city/:cityId')
   .get((req, res) => {

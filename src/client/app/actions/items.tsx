@@ -131,16 +131,16 @@ export const uploadImages = (itemId, files) => (dispatch) => {
           dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
           resolve();
         }
+      })
+      .catch(err => {
+        console.error(err);
+        dispatch(showToast(Toast.error, IMAGES_UPLOAD_ERROR));
       });
   });
 };
 
 export const putItem = (item, loaderId) => (dispatch, getState) => {
-  console.log('Putting item...', item);
   return new Promise((resolve, reject) => {
-
-    // const formData = getFormData(item);
-    // const formData = objectToFormData(item);
 
     dispatch(startLoading(loaderId));
 
