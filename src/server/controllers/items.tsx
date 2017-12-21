@@ -3,7 +3,7 @@ const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages, handleFileUploadErrors } from '../server-utils';
+import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages } from '../server-utils';
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT } from '../../global-utils';
 
@@ -74,26 +74,29 @@ router.route('/item/:itemId')
   });
 
 router.route('/item/:itemId/photos')
-  .put(checkItemPhotosUploadPath, (req, res) => {
-
+  .put(checkItemPhotosUploadPath, (req, res, next) => {
     const uploadPhotos = uploadImages.array('files[]', MAX_FILE_COUNT);
 
     uploadPhotos(req, res, (err) => {
-      handleFileUploadErrors(err, res);
+      if (err) { return next(err); }
 
-      resizeImages(req, res).then(() => {
-        const images = getImages(req.files);
+      resizeImages(req, res)
+        .then(() => {
+          const images = getImages(req.files);
 
-        ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
-          handleFileUploadErrors(err, res);
-          item.images = [...item.images, ...images];
+          ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
+            if (err) { return next(err); }
 
-          item.save((err, item) => {
-            handleFileUploadErrors(err, res);
-            res.send(item.images);
+            item.images = [...item.images, ...images];
+
+            item.save((err, item) => {
+              if (err) { return next(err); }
+
+              res.send(item.images);
+            });
           });
-        });
-      });
+        })
+        .catch(console.log);
   });
 
 });

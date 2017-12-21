@@ -2,7 +2,7 @@ const fs = require('fs');
 const multer = require('multer');
 const Jimp = require('jimp');
 
-import { getFileExtension, getFilePath, getUploadPath } from './methods';
+import { getFileExtension, getFilePath, getUploadPath, handleFileUploadErrors } from './methods';
 import { IMulterFile, FileUploadErrors } from './types';
 import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize } from '../../global-utils';
 
@@ -62,8 +62,8 @@ export const resizeImages = (req, res) => {
   const promises = [];
   const files = req.files;
 
-  return new Promise((resolve) => {
-    if (files && files.length) {
+  return new Promise((resolve, reject) => {
+    if (files && files.length && !res.headersSent) {
       files.forEach((file) => {
         Jimp
           .read(file.path)
@@ -81,7 +81,15 @@ export const resizeImages = (req, res) => {
       });
       return Promise.all(promises).then(() => resolve());
     } else {
-      return resolve();
+      return reject();
     }
   });
 };
+
+export const handleItemsErrors = (err, req, res, next) => {
+  if (req.route.path === '/item/:itemId/photos') {
+    handleFileUploadErrors(err, res);
+  } else {
+    return next(err);
+  }
+}

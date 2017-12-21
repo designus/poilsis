@@ -58,7 +58,7 @@ export const getImages = (files: IMulterFile[]): IImage[] => {
 };
 
 export const handleFileUploadErrors = (err, response) => {
-  if (err) {
+  if (err && !response.headersSent) {
     let errorMsg;
 
     switch (err.code) {
