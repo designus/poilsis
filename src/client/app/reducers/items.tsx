@@ -1,6 +1,6 @@
 import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES } from '../actions';
-import { IGenericState, removeDuplicates } from '../helpers';
-import { IImage } from '../../../shared';
+import { IGenericState, removeDuplicates } from '../client-utils';
+import { IImage } from 'global-utils';
 
 export interface IItemsMap {
   alias: string;

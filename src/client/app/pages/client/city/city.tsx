@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../../reducers';
 import { getItems, selectCity } from '../../../actions';
-import { getSelectedCity, ITEMS_LOADER_ID } from '../../../helpers';
+import { getSelectedCity, ITEMS_LOADER_ID } from '../../../client-utils';
 import { ItemsList, NotFound, extendWithLoader } from '../../../components';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);

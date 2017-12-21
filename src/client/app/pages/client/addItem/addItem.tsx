@@ -4,7 +4,7 @@ import * as autoBind from 'react-autobind';
 import { connect } from 'react-redux';
 import { extendWithForm } from '../../../components';
 import { addNewItemState, postItem, showBackendValidationErrors, clearFields } from '../../../actions';
-import { IGenericFormState, TGenericFormModel, getKeyMap, getMergedErrors, required, minLength, maxLength } from '../../../helpers';
+import { IGenericFormState, TGenericFormModel, getKeyMap, getMergedErrors, required, minLength, maxLength } from '../../../client-utils';
 import { CreateItem } from './itemForm';
 
 import {
@@ -14,9 +14,9 @@ import {
   ADDRESS_LABEL,
   DESCRIPTION_LABEL,
   IMAGES_LABEL,
-} from '../../../data-strings';
+} from '../../../../../data-strings';
 
-import { IImage } from '../../../../../shared';
+import { IImage } from 'global-utils';
 
 export interface INewItemFields {
   id?: string;

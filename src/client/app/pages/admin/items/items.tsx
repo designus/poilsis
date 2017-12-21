@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../../reducers';
 import { getItems, deleteItem } from '../../../actions';
-import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID } from '../../../helpers';
+import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID } from '../../../client-utils';
 import {
   GenericTable,
   IGenericTableColumn,

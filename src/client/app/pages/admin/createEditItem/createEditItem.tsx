@@ -4,7 +4,7 @@ import { IAppState } from '../../../reducers';
 import { getItem, putItem, uploadImages } from '../../../actions';
 import { extendWithForm } from '../../../components';
 import { itemModel } from '../../../pages';
-import { getFormStateWithData, getInitialFormState, getBackendErrors, ITEM_LOADER_ID } from '../../../helpers';
+import { getFormStateWithData, getInitialFormState, getBackendErrors, ITEM_LOADER_ID } from '../../../client-utils';
 import { CreateEditItem } from './itemForm';
 
 const ItemForm = extendWithForm(CreateEditItem);

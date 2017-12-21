@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
-import { IGenericDataMap } from '../../helpers';
+import { IGenericDataMap } from '../../client-utils';
 import { MarkedText } from '../../components';
 
 import Table, { TableBody, TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';

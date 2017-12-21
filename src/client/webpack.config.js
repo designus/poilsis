@@ -30,27 +30,13 @@ var config = {
       './client.tsx'
     ]
   },
-
-  // entry: ['./client'],
   
   output: {
-    // path: path.resolve('./build/public'),
     path: path.join(projectRoot, 'build', 'public'),    
     publicPath: '/public/',
     filename: '[name].js',
     pathinfo: true
   },
-
-  // devServer: {
-  //   contentBase: path.join(projectRoot, 'build', 'public'),
-  //   publicPath: '/public/',
-  //   proxy: {
-  //     "*": {
-  //       target: "http://localhost:3000",
-  //       secure: false,
-  //     },
-  //   }
-  // },
 
   module: {
     rules: [
@@ -75,10 +61,6 @@ var config = {
   },
 
   plugins: [
-  //   new HtmlWebpackPlugin({
-  //     filename: 'index.html',
-  //     template: 'index.html'
-  //  }),
     new CheckerPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true,

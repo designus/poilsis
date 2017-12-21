@@ -1,8 +1,3 @@
-export const GENERIC_STATE = {dataMap: {}, aliases: []};
-export const ITEMS_LOADER_ID = 'items';
-export const ITEM_LOADER_ID = 'item';
-export const DELETE_ITEM_LOADER_ID = 'deleteItem';
-
 // Photo upload limits
 export const MAX_FILE_COUNT = 2;
 export const MAX_FILE_SIZE_MB = 1;

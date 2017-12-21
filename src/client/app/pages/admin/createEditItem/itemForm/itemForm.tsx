@@ -14,7 +14,7 @@ import {
   TYPES_KEY,
   ADDRESS_KEY,
   IMAGES_KEY,
-} from '../../../../data-strings';
+} from '../../../../../../data-strings';
 
 export const CreateEditItem = (props: IAddItemProps) => {
   const {showErrors, errors, fields} = props.state;

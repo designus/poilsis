@@ -4,8 +4,7 @@ const Jimp = require('jimp');
 
 import { getFileExtension, getFilePath, getUploadPath } from './methods';
 import { IMulterFile, FileUploadErrors } from './types';
-import { ImageSize } from '../../shared';
-import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES } from '../../client/app/helpers';
+import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize } from '../../global-utils';
 
 export const checkItemPhotosUploadPath = (req, res, next) => {
 

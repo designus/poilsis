@@ -15,7 +15,7 @@ import Hidden from 'material-ui/Hidden';
 import Typography from 'material-ui/Typography';
 
 import {styles} from './styles';
-import { initialDataProps, removeInjectedStyles } from '../../../helpers';
+import { initialDataProps, removeInjectedStyles } from '../../../client-utils';
 import { Toast, AdminMenu, IAdminMenuItem, Drawer, SearchBox, UserMenu } from '../../../components';
 
 @asyncConnect([initialDataProps])

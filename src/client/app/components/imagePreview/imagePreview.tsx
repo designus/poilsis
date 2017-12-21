@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { IImage } from '../../../../shared';
+import { IImage } from 'global-utils';
 
 export interface IImagePreview {
   images: IImage[];

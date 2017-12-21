@@ -1,6 +1,6 @@
 import { ADD_NEW_ITEM_STATE, CLEAR_FIELDS, SHOW_BACKEND_VALIDATION_ERRORS } from '../actions';
 import { TItemState, itemModel } from '../pages';
-import { getInitialFormState } from '../helpers';
+import { getInitialFormState } from '../client-utils';
 
 export const FIELD_VALUES = 'fields';
 export const VALIDATION_ERRORS = 'errors';

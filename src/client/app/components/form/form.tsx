@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
 
-import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from '../../helpers';
+import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from '../../client-utils';
 import { extendWithLoader } from '../../components';
-import { FILES_KEY } from '../../data-strings';
+import { FILES_KEY } from '../../../../data-strings';
 
 export function extendWithForm<T extends IFormProps>(
   WrappedComponent: React.ComponentClass<T> | React.StatelessComponent<T>,

@@ -1,5 +1,5 @@
 import { SELECT_CITY, RECEIVE_INITIAL_DATA } from '../actions';
-import { IGenericState } from 'helpers';
+import { IGenericState } from '../client-utils';
 
 export interface ICityMap {
   id: string;

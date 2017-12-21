@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import { FormLabel, FormControl, FormGroup, FormControlLabel } from 'material-ui/Form';
-import { IGenericDataMap } from 'helpers';
+import { IGenericDataMap } from '../../../client-utils';
 import { withStyles } from 'material-ui/styles';
 
 export interface ICheckboxOptionsParams {

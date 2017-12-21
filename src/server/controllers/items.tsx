@@ -3,9 +3,9 @@ const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages, handleFileUploadErrors } from '../utils';
+import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages, handleFileUploadErrors } from '../server-utils';
 import { ItemsModel } from '../model';
-import { MAX_FILE_COUNT } from '../../client/app/helpers';
+import { MAX_FILE_COUNT } from '../../global-utils';
 
 router.route('/')
   .get((req, res) => {

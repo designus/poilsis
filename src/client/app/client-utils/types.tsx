@@ -1,4 +1,4 @@
-import { IImage } from '../../../shared';
+import { IImage } from 'global-utils';
 
 export interface IAlias {
   alias: string;

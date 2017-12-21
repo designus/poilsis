@@ -5,12 +5,16 @@ import {
   ImageSize,
   IImage,
   IResponseError,
-} from '../../shared';
+  mapMimeTypesToTypes,
+  maxFileSize,
+  maxFileCount,
+  wrongFileType,
+  MAX_FILE_SIZE_MB,
+  MAX_FILE_COUNT,
+  ALLOWED_MIME_TYPES,
+} from '../../global-utils';
 
-import { maxFileSize, maxFileCount, wrongFileType } from '../../client/app/helpers/validation/errorMessages';
-import { MAX_FILE_SIZE_MB, MAX_FILE_COUNT, ALLOWED_MIME_TYPES } from '../../client/app/helpers';
-import { mapMimeTypesToTypes } from '../../shared';
-import { IMAGES_KEY } from '../../client/app/data-strings';
+import { IMAGES_KEY } from '../../data-strings';
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {

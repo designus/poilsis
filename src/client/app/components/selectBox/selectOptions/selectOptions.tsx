@@ -4,7 +4,7 @@ import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
-import { IGenericDataMap } from 'helpers';
+import { IGenericDataMap } from '../../../client-utils';
 import { INPUT_WIDTH, INPUT_STYLE_MIXIN } from '../../../global-styles';
 
 export interface ISelectOptionProps {

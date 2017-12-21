@@ -1,10 +1,9 @@
 'use strict';
 
-import { isRequired, maxFileCount } from '../../client/app/helpers/validation/errorMessages';
-import { NAME_KEY, CITY_KEY, ADDRESS_KEY, IMAGES_KEY } from '../../client/app/data-strings';
-import { TGenericSchemaMap, MAX_FILE_COUNT } from '../../client/app/helpers';
+import { NAME_KEY, CITY_KEY, ADDRESS_KEY, IMAGES_KEY } from '../../data-strings';
+import { TGenericSchemaMap } from '../../client/app/client-utils';
 import { INewItemFields } from '../../client/app/pages';
-import { IImage } from '../../shared';
+import { IImage, isRequired, maxFileCount, MAX_FILE_COUNT } from '../../global-utils';
 
 interface IItemsSchemaMap extends TGenericSchemaMap<INewItemFields> {
   alias: any;

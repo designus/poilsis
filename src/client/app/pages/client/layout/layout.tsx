@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {IndexLink, Link} from 'react-router';
 
 import {MainMenu} from '../../../components';
-import {initialDataProps} from '../../../helpers';
+import {initialDataProps} from '../../../client-utils';
 import {IAppState} from '../../../reducers';
 
 @asyncConnect([initialDataProps])

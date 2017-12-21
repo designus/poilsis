@@ -3,12 +3,13 @@
     "baseUrl": ".",
     "paths": {
       "components": ["./src/client/app/components"],
-      "helpers": ["./src/client/app/helpers"],
+      "client-utils": ["./src/client/app/client-utils"],
       "reducers": ["./src/client/app/reducers"],
       "actions": ["./src/client/app/actions"],
       "pages": ["./src/client/app/pages"],
-      "data-strings": ["./src/client/app/data-strings"],
-      "global-styles": ["./src/client/app/global-styles"]
+      "data-strings": ["./src/data-strings"],
+      "global-styles": ["./src/client/app/global-styles"],
+      "global-utils": ["./src/global-utils"]
     },
     "outDir": "./build",
     "module": "commonjs",

@@ -7,7 +7,7 @@ import {
   IAlias,
   objectToFormData,
   // getFormData,
- } from '../helpers';
+ } from '../client-utils';
 import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -17,8 +17,8 @@ import {
   IMAGES_UPLOAD_ERROR,
   IMAGES_UPLOAD_SUCCESS,
   IMAGES_KEY,
-} from '../data-strings';
-import { IImage } from '../../../shared';
+} from '../../../data-strings';
+import { IImage } from 'global-utils';
 
 // const objectToFormData = require('object-to-formdata');
 export const SELECT_ITEM = 'SELECT_ITEM';

@@ -3,7 +3,7 @@ import Button from 'material-ui/Button';
 
 import { CheckboxGroup,	SelectBox, TextInput } from '../../../../components';
 import { ICityMap, ITypesMap, IItemsMap } from '../../../../reducers';
-import { IFormProps, IGenericDataMap, IGenericFormState } from '../../../../helpers';
+import { IFormProps, IGenericDataMap, IGenericFormState } from '../../../../client-utils';
 import {
   NAME_LABEL,
   CITY_LABEL,
@@ -14,7 +14,7 @@ import {
   CITY_KEY,
   TYPES_KEY,
   ADDRESS_KEY,
-} from '../../../../data-strings';
+} from '../../../../../../data-strings';
 
 export interface IAddItemProps extends IFormProps {
   citiesMap?: IGenericDataMap<ICityMap>;

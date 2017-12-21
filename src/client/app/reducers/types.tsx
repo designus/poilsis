@@ -1,5 +1,5 @@
 import { SELECT_TYPE, RECEIVE_INITIAL_DATA } from '../actions';
-import { IGenericState } from '../helpers';
+import { IGenericState } from '../client-utils';
 
 export interface ITypesMap {
   id: string;

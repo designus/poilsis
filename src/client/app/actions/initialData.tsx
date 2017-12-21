@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getNormalizedData } from '../helpers';
+import { getNormalizedData } from '../client-utils';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
 
