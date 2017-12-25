@@ -1,18 +1,22 @@
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
+import { connect } from 'react-redux';
 import { ImageUpload } from './style';
 import { InputLabel } from 'material-ui/Input';
 import { ImagePreview } from '../imagePreview';
+import { IAppState, IUploadProgress  } from '../../reducers';
+import { IImage } from 'global-utils';
 
-export interface IFileUploadProps {
+export interface IFileUploadProps extends IUploadProgress {
   label: string;
   isCreate: boolean;
   id: string;
+  images: IImage[];
   addImages: (images: any[]) => void;
   uploadImages: (itemId: string, files: any[]) => Promise<any>;
 };
 
-export class FileUpload extends React.Component<IFileUploadProps, any> {
+class FileUploadComponent extends React.Component<IFileUploadProps, any> {
 
   constructor(props) {
     super(props);
@@ -23,11 +27,7 @@ export class FileUpload extends React.Component<IFileUploadProps, any> {
   }
 
   uploadImages(droppedImages) {
-    this.props.uploadImages(this.props.id, droppedImages).then(err => {
-      if (!err) {
-        // this.setState({droppedImages: []});
-      }
-    });
+    this.props.uploadImages(this.props.id, droppedImages).catch(console.error);
   }
 
   onDrop = (acceptedImages) => {
@@ -39,6 +39,10 @@ export class FileUpload extends React.Component<IFileUploadProps, any> {
       this.setState({droppedImages});
       this.uploadImages(droppedImages);
     }
+  }
+
+  handleLoadedImages = (e) => {
+    this.setState({droppedImages: []});
   }
 
   render() {
@@ -55,9 +59,24 @@ export class FileUpload extends React.Component<IFileUploadProps, any> {
           <ImagePreview
             images={this.state.droppedImages}
             isPreview={true}
+            progress={this.props.progress}
+            isUploaded={this.props.isUploaded}
           />
         </Dropzone>
+        <ImagePreview
+          images={this.props.images}
+          handleLoadedImages={this.handleLoadedImages}
+          isPreview={false}
+          isUploaded={true}
+        />
       </ImageUpload>
     );
   }
 }
+
+export const mapStateToProps = (state: IAppState) => ({
+  progress: state.uploadProgress.progress,
+  isUploaded: state.uploadProgress.isUploaded,
+});
+
+export const FileUpload = connect<{}, {}, any>(mapStateToProps)(FileUploadComponent);

@@ -1,28 +1,31 @@
 import * as React from 'react';
-import styled from 'styled-components';
 import { IImage } from 'global-utils';
+import { ImagesWrapper, Image, ImageSource, UploadProgress, UploadBar } from './style';
+import { IUploadProgress } from '../../reducers';
 
-export interface IImagePreview {
+export interface IImagePreview extends IUploadProgress {
   images: IImage[];
   isPreview: boolean;
   removeImage?: (image: IImage) => void;
+  handleLoadedImages?: any;
 }
 
-export const ImageWrapper = styled.div`
-  img {
-    max-height: 120px;
-    widht: auto;
-    margin: 10px 10px 0 0;
-  }
-`;
-
-export const ImagePreview = ({images, isPreview}: IImagePreview) => {
+export const ImagePreview = ({images, isPreview, progress, isUploaded, handleLoadedImages}: IImagePreview) => {
   return (
-    <ImageWrapper>
+    <ImagesWrapper>
       {images.map((image: IImage, index) => {
         const src = isPreview ? image.preview : `http://localhost:3000/${image.path}/${image.fileName}`;
-        return (<img src={src} key={index} />);
+        return (
+          <Image key={index}>
+            <ImageSource>
+              <img src={src} onLoad={handleLoadedImages}/>
+            </ImageSource>
+            <UploadProgress isUploaded={isUploaded}>
+              <UploadBar progress={progress} />
+            </UploadProgress>
+          </Image>
+        );
       })}
-    </ImageWrapper>
+    </ImagesWrapper>
   );
 };

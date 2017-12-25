@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
 import { TItemState } from 'pages';
@@ -9,6 +9,7 @@ import { newItem } from './newItem';
 import { initialData, IInitialDataState } from './initialData';
 import { loader, ILoadingState } from './loader';
 import { toast, IToastState } from './toast';
+import { uploadProgress, IUploadProgress  } from './uploadProgress';
 
 export interface IAppState {
   cities: ICityState;
@@ -20,6 +21,7 @@ export interface IAppState {
   initialData: IInitialDataState;
   loader: ILoadingState;
   toast: IToastState;
+  uploadProgress: IUploadProgress;
 }
 
 export const rootReducer = combineReducers({
@@ -31,4 +33,5 @@ export const rootReducer = combineReducers({
   initialData,
   loader,
   toast,
+  uploadProgress,
 });

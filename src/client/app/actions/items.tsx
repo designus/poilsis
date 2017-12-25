@@ -6,6 +6,8 @@ import {
   getItemsByCity,
   IAlias,
   objectToFormData,
+  onUploadProgress,
+  onDownloadProgress,
   // getFormData,
  } from '../client-utils';
 import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
@@ -26,6 +28,8 @@ export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
+export const SET_UPLOAD_PROGRESS = 'UPLOAD_PROGRESS';
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
 
 export const selectItem = (id: string) => {
   return {
@@ -65,6 +69,15 @@ export const receiveImages = (id: string, images: IImage[]) => {
     images,
   };
 };
+
+export const setUploadProgress = (progress: number) => {
+  return {
+    type: SET_UPLOAD_PROGRESS,
+    progress,
+  };
+};
+
+export const uploadSuccess = () => ({type: UPLOAD_SUCCESS});
 
 export const getItems = (loaderId, cityId = null) => {
   const endpoint = cityId	?
@@ -111,13 +124,12 @@ export const getItem = (itemId, loaderId) => {
 };
 
 export const uploadImages = (itemId, files) => (dispatch) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const formData = objectToFormData({files});
     return axios
       .put(`http://localhost:3000/api/items/item/${itemId}/photos`, formData, {
-        onUploadProgress: (progressEvent) => {
-          console.log('Progress event', progressEvent);
-        },
+        onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent))),
+        onDownloadProgress: (e) => onDownloadProgress(e, () => dispatch(uploadSuccess())),
       })
       .then(response => response.data)
       .then(images => {
@@ -125,7 +137,7 @@ export const uploadImages = (itemId, files) => (dispatch) => {
           const errors = images.errors[IMAGES_KEY];
           const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
           dispatch(showToast(Toast.error, message));
-          resolve(images.errors);
+          reject(images.errors);
         } else {
           dispatch(receiveImages(itemId, images));
           dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));

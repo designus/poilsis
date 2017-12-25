@@ -126,3 +126,21 @@ export function getFormData(item) {
 
   return formData;
 }
+
+export function onUploadProgress(e, callback) {
+  const totalLength = e.lengthComputable ?
+  e.total :
+  e.target.getResponseHeader('content-length') || e.target.getResponseHeader('x-decompressed-content-length');
+  if (totalLength !== null) {
+    const loadedPercent = Math.round((e.loaded * 100) / totalLength);
+    callback(loadedPercent);
+  }
+};
+
+export function onDownloadProgress(e, callback) {
+  if (e.loaded === e.total) {
+    setTimeout(() => {
+      callback();
+    }, 200);
+  }
+};

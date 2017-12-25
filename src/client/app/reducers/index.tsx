@@ -6,3 +6,4 @@ export * from './initialData';
 export * from './loader';
 export * from './toast';
 export * from './root';
+export * from './uploadProgress';

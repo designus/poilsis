@@ -1,6 +1,12 @@
 import * as React from 'react';
 
-import { CheckboxGroup,	SelectBox, TextInput, Submit, FileUpload, ImagePreview } from '../../../../components';
+import {
+  CheckboxGroup,
+  SelectBox,
+  TextInput,
+  Submit,
+  FileUpload,
+} from '../../../../components';
 import { IAddItemProps } from '../../../../pages';
 import {
   NAME_LABEL,
@@ -57,13 +63,9 @@ export const CreateEditItem = (props: IAddItemProps) => {
         label={IMAGES_LABEL}
         addImages={props.handleAddedImages}
         uploadImages={props.uploadImages}
+        images={fields[IMAGES_KEY]}
         isCreate={props.isCreate}
         id={id}
-      />
-      <ImagePreview
-        images={fields[IMAGES_KEY]}
-        removeImage={props.handleRemovedImage}
-        isPreview={false}
       />
       <Submit>
         {SEND_LABEL}

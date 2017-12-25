@@ -9,15 +9,15 @@ const Wrapper = styled.div`
 `;
 
 const CenteredLoader = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-height: 100%;
-position: absolute;
-${(props: any) => props.showLoadingOverlay ? 'background: rgba(255, 255, 255, .6); z-index: 1;' : ''}
-${(props: any) => !props.isLoading ? 'display: none;' : ''}
-` as any;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  ${(props: any) => props.showLoadingOverlay ? 'background: rgba(255, 255, 255, .6); z-index: 1;' : ''}
+  ${(props: any) => !props.isLoading ? 'display: none;' : ''}
+  ` as any;
 
 export interface ILoaderProps {
   loaderId: string;

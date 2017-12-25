@@ -54,6 +54,7 @@ export const uploadImages = multer({
   fileFilter,
   limits: {
     fileSize: MAX_FILE_SIZE_B,
+    files: MAX_FILE_COUNT,
   },
 });
 
