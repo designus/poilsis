@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { IImage } from 'global-utils';
-import { ImagesWrapper, Image, ImageSource, UploadProgress, UploadBar } from './style';
+
+import { ImagesWrapper, Image, ImageSource, UploadProgress, UploadBar, UploadResult, viewbox } from './style';
 import { IUploadProgress } from '../../reducers';
+import { SuccessIcon, ErrorIcon } from '../../client-utils';
 
 export interface IImagePreview extends IUploadProgress {
   images: IImage[];
@@ -10,7 +12,7 @@ export interface IImagePreview extends IUploadProgress {
   handleLoadedImages?: any;
 }
 
-export const ImagePreview = ({images, isPreview, progress, isUploaded, handleLoadedImages}: IImagePreview) => {
+export const ImagePreview = ({images, isPreview, progress, isUploaded, isError, handleLoadedImages}: IImagePreview) => {
   return (
     <ImagesWrapper>
       {images.map((image: IImage, index) => {
@@ -20,9 +22,12 @@ export const ImagePreview = ({images, isPreview, progress, isUploaded, handleLoa
             <ImageSource>
               <img src={src} onLoad={handleLoadedImages}/>
             </ImageSource>
-            <UploadProgress isUploaded={isUploaded}>
+            <UploadProgress isUploaded={isUploaded} isError={isError}>
               <UploadBar progress={progress} />
             </UploadProgress>
+            <UploadResult isUploaded={isUploaded} isError={isError} showLoader={isPreview}>
+              {isError ? <ErrorIcon viewBox={viewbox} /> : <SuccessIcon viewBox={viewbox} />}              
+            </UploadResult>
           </Image>
         );
       })}

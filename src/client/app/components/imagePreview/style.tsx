@@ -1,4 +1,7 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
+
+export const uploadResultIconSize = 54;
+export const viewbox = `0, 0, ${uploadResultIconSize}, ${uploadResultIconSize}`;
 
 export const ImagesWrapper = styled.div`
   margin: 10px 0;
@@ -26,8 +29,8 @@ export const ImageSource = styled.div`
 `;
 
 export const UploadProgress = styled.div`
-  opacity: ${(props: any) => props.isUploaded ? 0 : 1};
-  transition: ${(props: any) => props.isUploaded ? 'none' : 'all 0.2s linear' };
+  opacity: ${(props: any) => (props.isUploaded || props.isError) ? 0 : 1};
+  transition: ${(props: any) => (props.isUploaded || props.isError) ? 'none' : 'all 0.2s linear' };
   z-index: 1000;
   pointer-events: none;
   position: absolute;
@@ -50,4 +53,38 @@ export const UploadBar = styled.span`
   bottom: 0;
   transition: width 300ms ease-in-out;
   width: ${(props: any) => props.progress + '%'}
+` as any;
+
+export const passingThrough = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  30%, 70% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+`;
+
+export const UploadResult = styled.div`
+  opacity: 0;
+  pointer-events: none;
+  z-index: 500;
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  margin-left: -${uploadResultIconSize / 2}px;
+  margin-top: -${uploadResultIconSize / 2}px;
+  animation: ${(props: any) =>
+    (props.isUploaded || props.isError) && props.showLoader ? `${passingThrough} 2s cubic-bezier(0.77, 0, 0.175, 1) 0.2s` : 'none'};
+  & > svg {
+    width: ${uploadResultIconSize}px;
+    height: ${uploadResultIconSize}px;
+    fill: rgba(255, 255, 255, .8)
+  }
 ` as any;

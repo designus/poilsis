@@ -136,11 +136,3 @@ export function onUploadProgress(e, callback) {
     callback(loadedPercent);
   }
 };
-
-export function onDownloadProgress(e, callback) {
-  if (e.loaded === e.total) {
-    setTimeout(() => {
-      callback();
-    }, 200);
-  }
-};

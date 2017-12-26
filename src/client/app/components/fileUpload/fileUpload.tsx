@@ -26,8 +26,17 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
     };
   }
 
+  clearImagesState() {
+    setTimeout(() => {
+      this.setState({droppedImages: []});
+    }, 2000);
+  }
+
   uploadImages(droppedImages) {
-    this.props.uploadImages(this.props.id, droppedImages).catch(console.error);
+    this.props.uploadImages(this.props.id, droppedImages).catch(err => {
+      console.error(err);
+      this.clearImagesState();
+    });
   }
 
   onDrop = (acceptedImages) => {
@@ -42,7 +51,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
   }
 
   handleLoadedImages = (e) => {
-    this.setState({droppedImages: []});
+    this.clearImagesState();
   }
 
   render() {
@@ -59,6 +68,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
           <ImagePreview
             images={this.state.droppedImages}
             isPreview={true}
+            isError={this.props.isError}
             progress={this.props.progress}
             isUploaded={this.props.isUploaded}
           />
@@ -67,6 +77,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
           images={this.props.images}
           handleLoadedImages={this.handleLoadedImages}
           isPreview={false}
+          isError={false}
           isUploaded={true}
         />
       </ImageUpload>
@@ -77,6 +88,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
 export const mapStateToProps = (state: IAppState) => ({
   progress: state.uploadProgress.progress,
   isUploaded: state.uploadProgress.isUploaded,
+  isError: state.uploadProgress.isError,
 });
 
 export const FileUpload = connect<{}, {}, any>(mapStateToProps)(FileUploadComponent);
