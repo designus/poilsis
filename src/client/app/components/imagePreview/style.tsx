@@ -1,18 +1,19 @@
 import styled, {keyframes} from 'styled-components';
+import {UPLOADED_PHOTO_HEIGHT} from '../../global-styles';
 
-export const uploadResultIconSize = 54;
-export const viewbox = `0, 0, ${uploadResultIconSize}, ${uploadResultIconSize}`;
+const isUploadBarHidden = (props: any) => props.isUploaded || props.isError || !props.isUploading;
+export const uploadIconSize = 54;
+export const viewbox = `0, 0, ${uploadIconSize}, ${uploadIconSize}`;
 
 export const ImagesWrapper = styled.div`
-  margin: 10px 0;
 `;
 
 export const Image = styled.div`
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: 15px 10px 15px 0;
-  max-height: 120px;
+  margin: 0 10px 0 0;
+  max-height: ${UPLOADED_PHOTO_HEIGHT}px;
 `;
 
 export const ImageSource = styled.div`
@@ -20,17 +21,17 @@ export const ImageSource = styled.div`
   position: relative;
   display: block;
   z-index: 10;
-  height: 120px;
+  height: ${UPLOADED_PHOTO_HEIGHT}px;
 
   img {
-    height: 120px;
+    height: ${UPLOADED_PHOTO_HEIGHT}px;
     width: auto;
   }
 `;
 
 export const UploadProgress = styled.div`
-  opacity: ${(props: any) => (props.isUploaded || props.isError) ? 0 : 1};
-  transition: ${(props: any) => (props.isUploaded || props.isError) ? 'none' : 'all 0.2s linear' };
+  opacity: ${(props: any) => isUploadBarHidden(props) ? 0 : 1};
+  transition: ${(props: any) => isUploadBarHidden(props) ? 'none' : 'all 0.2s linear' };
   z-index: 1000;
   pointer-events: none;
   position: absolute;
@@ -78,13 +79,13 @@ export const UploadResult = styled.div`
   display: block;
   top: 50%;
   left: 50%;
-  margin-left: -${uploadResultIconSize / 2}px;
-  margin-top: -${uploadResultIconSize / 2}px;
+  margin-left: -${uploadIconSize / 2}px;
+  margin-top: -${uploadIconSize / 2}px;
   animation: ${(props: any) =>
     (props.isUploaded || props.isError) && props.showLoader ? `${passingThrough} 2s cubic-bezier(0.77, 0, 0.175, 1) 0.2s` : 'none'};
   & > svg {
-    width: ${uploadResultIconSize}px;
-    height: ${uploadResultIconSize}px;
+    width: ${uploadIconSize}px;
+    height: ${uploadIconSize}px;
     fill: rgba(255, 255, 255, .8)
   }
 ` as any;

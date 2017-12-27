@@ -4,7 +4,7 @@ import {
   CheckboxGroup,
   SelectBox,
   TextInput,
-  Submit,
+  Button,
   FileUpload,
 } from '../../../../components';
 import { IAddItemProps } from '../../../../pages';
@@ -21,7 +21,6 @@ import {
   ADDRESS_KEY,
   IMAGES_KEY,
 } from '../../../../../../data-strings';
-
 export const CreateEditItem = (props: IAddItemProps) => {
   const {showErrors, errors, fields} = props.state;
   const id = fields.id;
@@ -67,9 +66,9 @@ export const CreateEditItem = (props: IAddItemProps) => {
         isCreate={props.isCreate}
         id={id}
       />
-      <Submit>
+      <Button>
         {SEND_LABEL}
-      </Submit>
+      </Button>
     </form>
   );
 };

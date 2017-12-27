@@ -19,6 +19,6 @@ export * from './userMenu';
 export * from './textInput';
 export * from './toast';
 export * from './validationErrors';
-export * from './submitButton';
+export * from './button';
 export * from './fileUpload';
 export * from './imagePreview';

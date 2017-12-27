@@ -12,7 +12,7 @@ export interface IImagePreview extends IUploadProgress {
   handleLoadedImages?: any;
 }
 
-export const ImagePreview = ({images, isPreview, progress, isUploaded, isError, handleLoadedImages}: IImagePreview) => {
+export const ImagePreview = ({images, isPreview, progress, isUploaded, isUploading, isError, handleLoadedImages}: IImagePreview) => {
   return (
     <ImagesWrapper>
       {images.map((image: IImage, index) => {
@@ -22,11 +22,22 @@ export const ImagePreview = ({images, isPreview, progress, isUploaded, isError, 
             <ImageSource>
               <img src={src} onLoad={handleLoadedImages}/>
             </ImageSource>
-            <UploadProgress isUploaded={isUploaded} isError={isError}>
+            <UploadProgress
+              isUploaded={isUploaded}
+              isError={isError}
+              isUploading={isUploading}
+            >
               <UploadBar progress={progress} />
             </UploadProgress>
-            <UploadResult isUploaded={isUploaded} isError={isError} showLoader={isPreview}>
-              {isError ? <ErrorIcon viewBox={viewbox} /> : <SuccessIcon viewBox={viewbox} />}              
+            <UploadResult
+              isUploaded={isUploaded}
+              isError={isError}
+              showLoader={isPreview}
+            >
+              {isError ?
+                <ErrorIcon viewBox={viewbox} /> :
+                <SuccessIcon viewBox={viewbox} />
+              }              
             </UploadResult>
           </Image>
         );

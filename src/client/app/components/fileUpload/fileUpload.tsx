@@ -1,11 +1,13 @@
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
-import { ImageUpload } from './style';
+import { ImageUpload, UploadPlaceholder } from './style';
 import { InputLabel } from 'material-ui/Input';
-import { ImagePreview } from '../imagePreview';
+import { ImagePreview, Button } from '../../components';
 import { IAppState, IUploadProgress  } from '../../reducers';
 import { IImage } from 'global-utils';
+import { START_UPLOAD, UPLOAD_PLACEHOLDER } from '../../../../data-strings';
+import FileUploadIcon from 'material-ui-icons/FileUpload';
 
 export interface IFileUploadProps extends IUploadProgress {
   label: string;
@@ -32,8 +34,8 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
     }, 2000);
   }
 
-  uploadImages(droppedImages) {
-    this.props.uploadImages(this.props.id, droppedImages).catch(err => {
+  uploadImages = () => {
+    this.props.uploadImages(this.props.id, this.state.droppedImages).catch(err => {
       console.error(err);
       this.clearImagesState();
     });
@@ -46,7 +48,6 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
       this.props.addImages(droppedImages);
     } else {
       this.setState({droppedImages});
-      this.uploadImages(droppedImages);
     }
   }
 
@@ -64,14 +65,22 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
           activeClassName="active-dropzone"
           name="images"
           multiple={true}>
-          <div>Drag and drop or click to select a 550x550px file to upload.</div>
           <ImagePreview
             images={this.state.droppedImages}
             isPreview={true}
             isError={this.props.isError}
             progress={this.props.progress}
             isUploaded={this.props.isUploaded}
+            isUploading={this.props.isUploading}
           />
+          <UploadPlaceholder>{UPLOAD_PLACEHOLDER}</UploadPlaceholder>
+          {this.state.droppedImages.length ?
+            <Button type="button" onClick={this.uploadImages}>
+              <FileUploadIcon />
+              {START_UPLOAD}
+            </Button> :
+            null
+          }
         </Dropzone>
         <ImagePreview
           images={this.props.images}
@@ -79,6 +88,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
           isPreview={false}
           isError={false}
           isUploaded={true}
+          isUploading={false}
         />
       </ImageUpload>
     );
@@ -88,6 +98,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
 export const mapStateToProps = (state: IAppState) => ({
   progress: state.uploadProgress.progress,
   isUploaded: state.uploadProgress.isUploaded,
+  isUploading: state.uploadProgress.isUploading,
   isError: state.uploadProgress.isError,
 });
 
