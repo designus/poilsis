@@ -1,13 +1,15 @@
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
 import { connect } from 'react-redux';
-import { ImageUpload, UploadPlaceholder } from './style';
+import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 import { InputLabel } from 'material-ui/Input';
 import { ImagePreview, Button } from '../../components';
 import { IAppState, IUploadProgress  } from '../../reducers';
 import { IImage } from 'global-utils';
-import { START_UPLOAD, UPLOAD_PLACEHOLDER } from '../../../../data-strings';
+import { START_UPLOAD, UPLOAD_PLACEHOLDER, CLEAR_IMAGES } from '../../../../data-strings';
 import FileUploadIcon from 'material-ui-icons/FileUpload';
+import ClearIcon from 'material-ui-icons/Clear';
+import Typography from 'material-ui/Typography';
 
 export interface IFileUploadProps extends IUploadProgress {
   label: string;
@@ -39,6 +41,10 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
       console.error(err);
       this.clearImagesState();
     });
+  }
+
+  clearImages = () => {
+    this.setState({droppedImages: []});
   }
 
   onDrop = (acceptedImages) => {
@@ -73,15 +79,25 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
             isUploaded={this.props.isUploaded}
             isUploading={this.props.isUploading}
           />
-          <UploadPlaceholder>{UPLOAD_PLACEHOLDER}</UploadPlaceholder>
-          {this.state.droppedImages.length ?
-            <Button type="button" onClick={this.uploadImages}>
+          <UploadPlaceholder>
+            <Typography type="body1">
+              {UPLOAD_PLACEHOLDER}
+            </Typography>
+          </UploadPlaceholder>
+        </Dropzone>
+        {this.state.droppedImages.length ?
+          <UploadButtons>
+            <Button type="button" color="accent" onClick={this.clearImages} style={{margin: '0 2px'}}>
+              <ClearIcon />
+              {CLEAR_IMAGES}
+            </Button>
+            <Button type="button" onClick={this.uploadImages} style={{margin: '0 2px'}}>
               <FileUploadIcon />
               {START_UPLOAD}
-            </Button> :
-            null
-          }
-        </Dropzone>
+            </Button>
+          </UploadButtons> :
+          null
+        }
         <ImagePreview
           images={this.props.images}
           handleLoadedImages={this.handleLoadedImages}

@@ -12,7 +12,7 @@ export const Image = styled.div`
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: 0 10px 0 0;
+  margin: 0 5px;
   max-height: ${UPLOADED_PHOTO_HEIGHT}px;
 `;
 

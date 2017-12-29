@@ -81,7 +81,6 @@ app.get('*', (req, res) => {
           const styleTags = sheet.getStyleTags();
 
           const finalState = store.getState();
-          // console.log('State', JSON.stringify(finalState));
           res.status(200).send(renderFullPage(responseHtml, css, styleTags, finalState));
       })
       .catch((err) => console.error(err));

@@ -1,5 +1,5 @@
-import thunkMiddleware from 'redux-thunk';
 import * as React from 'react';
+import thunkMiddleware from 'redux-thunk';
 import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { ReduxAsyncConnect } from 'redux-connect';
@@ -10,8 +10,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './app/reducers';
 import routes from './app/routes';
 
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import { MuiThemeProvider } from 'material-ui/styles';
+import { theme } from './app/global-styles';
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
@@ -23,7 +23,7 @@ const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddle
 const connectedCmp = (props) => <ReduxAsyncConnect {...props} />;
 
 render(
-  <MuiThemeProvider theme={createMuiTheme({userAgent: navigator.userAgent})}>
+  <MuiThemeProvider theme={theme}>
     <Provider store={store} key="provider">
       <Router
         history={browserHistory}

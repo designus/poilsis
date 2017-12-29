@@ -9,7 +9,7 @@ export const ImageUpload = styled.div`
   }
 
   .dropzone {
-    padding: 10px;
+    padding: 15px 0;
     margin: 10px 0;
     border: 1px dashed #ccc;
     text-align: center;
@@ -24,5 +24,9 @@ export const ImageUpload = styled.div`
 
 export const UploadPlaceholder = styled.div`
   width: 100%;
+  margin: 10px 0;
+`;
+
+export const UploadButtons = styled.div`
   margin: 10px 0;
 `;
