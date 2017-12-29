@@ -163,7 +163,7 @@ export const putItem = (item, loaderId) => (dispatch, getState) => {
       .then(item => {
         if (item.errors) {
           dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
-          resolve(item.errors);
+          reject(item.errors);
         } else {
           dispatch(receiveItem(item));
           dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));

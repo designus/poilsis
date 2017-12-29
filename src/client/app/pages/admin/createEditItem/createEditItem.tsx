@@ -2,10 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppState } from '../../../reducers';
 import { getItem, putItem, uploadImages } from '../../../actions';
-import { extendWithForm } from '../../../components';
+import { extendWithForm, IAdminMenuItem } from '../../../components';
 import { itemModel } from '../../../pages';
 import { getFormStateWithData, getInitialFormState, getBackendErrors, ITEM_LOADER_ID } from '../../../client-utils';
 import { CreateEditItem } from './itemForm';
+import HomeIcon from 'material-ui-icons/Home';
+import PhotoIcon from 'material-ui-icons/Photo';
 
 const ItemForm = extendWithForm(CreateEditItem);
 const CREATE_EDIT_ITEM_LOADER = 'createEditItem';
@@ -19,19 +21,33 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
     super(props);
   }
 
+  get menuItems(): IAdminMenuItem[] {
+    return [
+      {
+        icon: () => (<HomeIcon />),
+        link: '/admin/home',
+        text: 'Main info',
+      },
+      {
+        icon: () => (<PhotoIcon />),
+        link: '/admin/home',
+        text: 'Photo gallery',
+      },
+    ];
+  }
+
   componentDidMount() {
     this.props.getItem(this.props.params.id);
+    this.props.setMenuItems(this.menuItems);
   }
 
   onItemSubmit = (item) => {
     if (this.isCreatePage) {
       this.setState(getInitialFormState(itemModel));
     } else {
-      this.props.putItem(item).then((errors) => {
-        if (errors) {
-          const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
-          this.setState({errors: newErrors, showErrors: true});
-        }
+      this.props.putItem(item).catch((errors) => {
+        const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
+        this.setState({errors: newErrors, showErrors: true});
       });
     }
 

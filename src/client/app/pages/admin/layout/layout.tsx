@@ -25,6 +25,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     searchInput: '',
     search: '',
     mobileDrawerOpen: false,
+    menuItems: this.menuItems,
   };
 
   constructor(props) {
@@ -46,6 +47,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   }
 
   routeChangeCallback() {
+    this.setMenuItems(this.menuItems);
     if (this.state.search && this.state.searchInput) {
       this.setState({search: '', searchInput: ''});
     }
@@ -55,7 +57,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     removeInjectedStyles();
   }
 
-  get adminMenuItems(): IAdminMenuItem[] {
+  get menuItems(): IAdminMenuItem[] {
     return [
       {
         icon: () => (<HomeIcon />),
@@ -73,6 +75,10 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
         text: 'Go to website',
       },
     ];
+  }
+
+  setMenuItems = (menuItems: IAdminMenuItem[]) => {
+    this.setState({menuItems});
   }
 
   onChange = (event) => {
@@ -115,10 +121,13 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
             onRequestClose={this.handleDrawerClose}
             mobileDrawerOpen={this.state.mobileDrawerOpen}
           >
-            <AdminMenu items={this.adminMenuItems} />
+            <AdminMenu items={this.state.menuItems} />
           </Drawer>
           <main className={classes.content}>
-            {React.cloneElement(this.props.children, { search: this.state.search })}
+            {React.cloneElement(this.props.children, {
+              search: this.state.search,
+              setMenuItems: this.setMenuItems,
+            })}
           </main>
         </div>
         <Toast />
