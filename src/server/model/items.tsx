@@ -35,7 +35,7 @@ const ItemsSchemaMap: IItemsSchemaMap = {
   name: {type: String, minLength: 6, required: [true, isRequired(NAME_KEY)]},
   city: {type: String, required: [true, isRequired(CITY_KEY)] },
   address: {type: String, required: [true, isRequired(ADDRESS_KEY)]},
-  types: {type: Array, required: [true, 'At least one type must be sleected']},
+  types: {type: Array, required: [true, 'At least one type must be selected']},
   alias: {type: String, lowercase: true, trim: true, required: true, set: formatAlias },
   createdAt: {type: Date },
   updatedAt: {type: Date },

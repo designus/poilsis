@@ -1,4 +1,4 @@
-import { SET_UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPLOAD_ERROR } from '../actions';
+import { SET_UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPLOAD_ERROR, INITIAL_UPLOAD_STATE } from '../actions';
 
 export interface IUploadProgress {
   progress?: number;
@@ -16,6 +16,8 @@ const initialState = {
 
 export const uploadProgress = (state: IUploadProgress = initialState, action): IUploadProgress => {
   switch (action.type) {
+    case INITIAL_UPLOAD_STATE:
+      return {...initialState};
     case SET_UPLOAD_PROGRESS:
       return {
         progress: action.progress,

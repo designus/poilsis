@@ -83,7 +83,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         format: (id) => {
           return (
             <ItemActions
-              editLink={`/admin/items/edit/${id}`}
+              editLink={`/admin/items/edit/${id}/main`}
               onDelete={this.openDeleteModal.bind(this, id)}
             />
           );

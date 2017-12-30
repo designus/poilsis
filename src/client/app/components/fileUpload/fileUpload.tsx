@@ -5,6 +5,7 @@ import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 import { InputLabel } from 'material-ui/Input';
 import { ImagePreview, Button } from '../../components';
 import { IAppState, IUploadProgress  } from '../../reducers';
+import { initialUploadState } from '../../actions';
 import { IImage } from 'global-utils';
 import { START_UPLOAD, UPLOAD_PLACEHOLDER, CLEAR_IMAGES } from '../../../../data-strings';
 import FileUploadIcon from 'material-ui-icons/FileUpload';
@@ -18,6 +19,7 @@ export interface IFileUploadProps extends IUploadProgress {
   images: IImage[];
   addImages: (images: any[]) => void;
   uploadImages: (itemId: string, files: any[]) => Promise<any>;
+  setInitialUploadState?: () => void;
 };
 
 class FileUploadComponent extends React.Component<IFileUploadProps, any> {
@@ -59,6 +61,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
 
   handleLoadedImages = (e) => {
     this.clearImagesState();
+    this.props.setInitialUploadState();
   }
 
   render() {
@@ -111,6 +114,10 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
   }
 }
 
+export const mapDispatchToProps = (dispatch) => ({
+  setInitialUploadState: () => dispatch(initialUploadState),
+});
+
 export const mapStateToProps = (state: IAppState) => ({
   progress: state.uploadProgress.progress,
   isUploaded: state.uploadProgress.isUploaded,
@@ -118,4 +125,4 @@ export const mapStateToProps = (state: IAppState) => ({
   isError: state.uploadProgress.isError,
 });
 
-export const FileUpload = connect<{}, {}, any>(mapStateToProps)(FileUploadComponent);
+export const FileUpload = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(FileUploadComponent);

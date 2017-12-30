@@ -1,5 +1,6 @@
 import {MAX_FILE_COUNT} from '../global-utils';
 
+export const ID_LABEL = 'Id';
 export const NAME_LABEL = 'Name';
 export const CITY_LABEL = 'City';
 export const TYPES_LABEL = 'Types';

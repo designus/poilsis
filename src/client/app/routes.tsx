@@ -9,6 +9,8 @@ import {
   AdminHomePage,
   AdminItemsPage,
   CreateEditItemPage,
+  MainInfoPage,
+  PhotosPage,
   HomePage,
   TypePage,
   ItemPage,
@@ -20,7 +22,10 @@ export default (
       <Route path="/admin/home" component={AdminHomePage} />
       <Route path="/admin/items" component={AdminItemsPage} />
       <Route path="/admin/items/create" component={CreateEditItemPage} />
-      <Route path="/admin/items/edit/:id" component={CreateEditItemPage}  />
+      <Route path="/admin/items/edit/:id" component={CreateEditItemPage} >
+        <Route path="/admin/items/edit/:id/main" component={MainInfoPage}  />
+        <Route path="/admin/items/edit/:id/photos" component={PhotosPage}  />
+      </Route>
     </Route>
     <Route component={ClientLayoutPage}>
       <Route path="/" component={HomePage} />

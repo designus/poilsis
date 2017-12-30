@@ -11,7 +11,13 @@ import { rootReducer } from './app/reducers';
 import routes from './app/routes';
 
 import { MuiThemeProvider } from 'material-ui/styles';
-import { theme } from './app/global-styles';
+// import { theme } from './app/global-styles';
+import createMuiTheme from 'material-ui/styles/createMuiTheme';
+
+export const theme = createMuiTheme({
+  palette: {},
+  userAgent: navigator.userAgent,
+});
 
 const injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();

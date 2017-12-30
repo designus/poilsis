@@ -21,3 +21,12 @@ export interface IResponseError {
     },
   };
 }
+
+export interface IMainInfoFields {
+  id?: string;
+  address?: string;
+  alias?: string;
+  city?: string;
+  name?: string;
+  types?: string[];
+}

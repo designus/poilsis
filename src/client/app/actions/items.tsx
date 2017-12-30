@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { startLoading, endLoading, showToast } from '../actions';
+import { startLoading, endLoading, showToast, setUploadProgress, uploadError, uploadSuccess } from '../actions';
 import {
   getNormalizedData,
   getItemsByCity,
@@ -19,7 +19,7 @@ import {
   IMAGES_UPLOAD_SUCCESS,
   IMAGES_KEY,
 } from '../../../data-strings';
-import { IImage } from 'global-utils';
+import { IImage, IMainInfoFields } from 'global-utils';
 
 // const objectToFormData = require('object-to-formdata');
 export const SELECT_ITEM = 'SELECT_ITEM';
@@ -27,9 +27,6 @@ export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
-export const SET_UPLOAD_PROGRESS = 'UPLOAD_PROGRESS';
-export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
-export const UPLOAD_ERROR = 'UPLOAD_ERROR';
 
 export const selectItem = (id: string) => {
   return {
@@ -69,16 +66,6 @@ export const receiveImages = (id: string, images: IImage[]) => {
     images,
   };
 };
-
-export const setUploadProgress = (progress: number) => {
-  return {
-    type: SET_UPLOAD_PROGRESS,
-    progress,
-  };
-};
-
-export const uploadSuccess = () => ({type: UPLOAD_SUCCESS});
-export const uploadError = () => ({type: UPLOAD_ERROR});
 
 export const getItems = (loaderId, cityId = null) => {
   const endpoint = cityId	?
@@ -128,7 +115,7 @@ export const uploadImages = (itemId, files) => (dispatch) => {
   return new Promise((resolve, reject) => {
     const formData = objectToFormData({files});
     return axios
-      .put(`http://localhost:3000/api/items/item/${itemId}/photos`, formData, {
+      .put(`http://localhost:3000/api/items/item/upload-photos/${itemId}`, formData, {
         onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent))),
       })
       .then(response => response.data)
@@ -153,12 +140,12 @@ export const uploadImages = (itemId, files) => (dispatch) => {
   });
 };
 
-export const putItem = (item, loaderId) => (dispatch, getState) => {
+export const updateMainInfo = (item: IMainInfoFields, loaderId) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
 
     dispatch(startLoading(loaderId));
 
-    return axios.put(`http://localhost:3000/api/items/item/${item.id}`, item)
+    return axios.put(`http://localhost:3000/api/items/item/mainInfo/${item.id}`, item)
       .then(response => response.data)
       .then(item => {
         if (item.errors) {

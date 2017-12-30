@@ -5,25 +5,25 @@ import {
   SelectBox,
   TextInput,
   Button,
-  FileUpload,
-} from '../../../../components';
-import { IAddItemProps } from '../../../../pages';
+  // FileUpload,
+} from '../../../../../components';
+import { IAddItemProps } from '../../../../../pages';
 import {
   NAME_LABEL,
   CITY_LABEL,
   TYPES_LABEL,
   ADDRESS_LABEL,
   SEND_LABEL,
-  IMAGES_LABEL,
+  // IMAGES_LABEL,
   NAME_KEY,
   CITY_KEY,
   TYPES_KEY,
   ADDRESS_KEY,
-  IMAGES_KEY,
-} from '../../../../../../data-strings';
-export const CreateEditItem = (props: IAddItemProps) => {
+  // IMAGES_KEY,
+} from '../../../../../../../data-strings';
+export const Form = (props: IAddItemProps) => {
   const {showErrors, errors, fields} = props.state;
-  const id = fields.id;
+  // const id = fields.id;
   return (
     <form onSubmit={props.handleSubmit} autoComplete="off">
       <TextInput
@@ -58,14 +58,14 @@ export const CreateEditItem = (props: IAddItemProps) => {
         onChange={props.handleInputChange(ADDRESS_KEY)}
         onBlur={props.handleOnBlur}
       />
-      <FileUpload
+      {/* <FileUpload
         label={IMAGES_LABEL}
         addImages={props.handleAddedImages}
         uploadImages={props.uploadImages}
         images={fields[IMAGES_KEY]}
         isCreate={props.isCreate}
         id={id}
-      />
+      /> */}
       <Button>
         {SEND_LABEL}
       </Button>

@@ -48,6 +48,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
 
   routeChangeCallback() {
     this.setMenuItems(this.menuItems);
+    this.handleDrawerClose();
     if (this.state.search && this.state.searchInput) {
       this.setState({search: '', searchInput: ''});
     }
