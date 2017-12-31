@@ -9,6 +9,7 @@ import {
   ITEM_LOADER_ID,
   voidFn,
   TGenericFormModel,
+  IGenericFormState,
   getKeyMap,
   required,
   minLength,
@@ -33,7 +34,7 @@ const MainInfoForm = extendWithForm(Form);
 
 class MainInfoPageComponent extends React.Component<any, any> {
 
-  state = getInitialFormState(mainInfoModel);
+  state: IGenericFormState<IMainInfoFields> = getInitialFormState(mainInfoModel);
   isCreatePage = !Boolean(this.props.params.id);
 
   constructor(props) {

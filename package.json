@@ -62,7 +62,7 @@
     "serve-favicon": "^2.4.3",
     "shortid": "^2.2.8",
     "source-map-loader": "^0.2.1",
-    "tsc-watch": "^1.0.8",
+    "tsc-watch": "^1.0.13",
     "tslib": "^1.8.0",
     "tslint": "^4.3.1",
     "tslint-loader": "^3.3.0",

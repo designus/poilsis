@@ -14,8 +14,8 @@ export const Form = (props: IAddItemProps) => {
     <form onSubmit={props.handleSubmit} autoComplete="off">
       <FileUpload
         label={IMAGES_LABEL}
-        addImages={props.handleAddedImages}
         uploadImages={props.uploadImages}
+        setImagesState={props.setNewState(IMAGES_KEY)}
         images={fields[IMAGES_KEY]}
         isCreate={props.isCreate}
         id={id}

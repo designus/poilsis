@@ -17,9 +17,9 @@ export interface IFileUploadProps extends IUploadProgress {
   isCreate: boolean;
   id: string;
   images: IImage[];
-  addImages: (images: any[]) => void;
   uploadImages: (itemId: string, files: any[]) => Promise<any>;
   setInitialUploadState?: () => void;
+  setImagesState?: (images) => void;
 };
 
 class FileUploadComponent extends React.Component<IFileUploadProps, any> {
@@ -53,15 +53,26 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
     const droppedImages = [...this.state.droppedImages, ...acceptedImages];
     if (this.props.isCreate) {
       this.setState({droppedImages});
-      this.props.addImages(droppedImages);
     } else {
       this.setState({droppedImages});
     }
   }
 
-  handleLoadedImages = (e) => {
+  onLoadImage = (e) => {
     this.clearImagesState();
     this.props.setInitialUploadState();
+  }
+
+  onDeleteImage = (index: number, isTemporary: boolean) => () => {
+    if (isTemporary) {
+      const droppedImages = this.state.droppedImages;
+      droppedImages.splice(index, 1);
+      this.setState({droppedImages});
+    } else {
+      const images = this.props.images;
+      images.splice(index, 1);
+      this.props.setImagesState(images);
+    }
   }
 
   render() {
@@ -76,8 +87,8 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
           multiple={true}>
           <ImagePreview
             images={this.state.droppedImages}
-            isPreview={true}
-            isError={this.props.isError}
+            onDeleteImage={this.onDeleteImage}
+            hasError={this.props.hasError}
             progress={this.props.progress}
             isUploaded={this.props.isUploaded}
             isUploading={this.props.isUploading}
@@ -103,9 +114,9 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
         }
         <ImagePreview
           images={this.props.images}
-          handleLoadedImages={this.handleLoadedImages}
-          isPreview={false}
-          isError={false}
+          onLoadImage={this.onLoadImage}
+          onDeleteImage={this.onDeleteImage}
+          hasError={false}
           isUploaded={true}
           isUploading={false}
         />
@@ -122,7 +133,7 @@ export const mapStateToProps = (state: IAppState) => ({
   progress: state.uploadProgress.progress,
   isUploaded: state.uploadProgress.isUploaded,
   isUploading: state.uploadProgress.isUploading,
-  isError: state.uploadProgress.isError,
+  hasError: state.uploadProgress.hasError,
 });
 
-export const FileUpload = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(FileUploadComponent);
+export const FileUpload = connect<{}, {}, IFileUploadProps>(mapStateToProps, mapDispatchToProps)(FileUploadComponent);

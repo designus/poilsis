@@ -1,5 +1,3 @@
-import { IImage } from 'global-utils';
-
 export interface IAlias {
   alias: string;
   id: string;
@@ -49,10 +47,8 @@ export interface IFormProps {
   handleOnBlur?: any;
   handleInputChange?: (key: string) => (event) => void;
   handleCheckboxToggle?: any;
-  handleAddedImages?: (images: any[]) => void;
-  handleRemovedImage?: (image: IImage) => void;
-  handleImageOrderChange?: (image: IImage[]) => void;
   loaderId?: string;
+  setNewState?: (key: string) => (value: any) => void;
   state?: IGenericFormState<object>;
 }
 

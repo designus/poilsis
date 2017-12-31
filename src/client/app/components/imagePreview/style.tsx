@@ -1,7 +1,7 @@
 import styled, {keyframes} from 'styled-components';
-import {UPLOADED_PHOTO_HEIGHT} from '../../global-styles';
+import {UPLOADED_PHOTO_HEIGHT, DIVIDER_COLOR} from '../../global-styles';
 
-const isUploadBarHidden = (props: any) => props.isUploaded || props.isError || !props.isUploading;
+const isUploadBarHidden = (props: any) => props.isUploaded || props.hasError || !props.isUploading;
 export const uploadIconSize = 54;
 export const viewbox = `0, 0, ${uploadIconSize}, ${uploadIconSize}`;
 
@@ -12,16 +12,36 @@ export const Image = styled.div`
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: 0 5px;
-  max-height: ${UPLOADED_PHOTO_HEIGHT}px;
-`;
+  margin: ${(props: any) => props.isTemporary ? '0 5px;' : '10px 5px 0 0'};
+  padding: 4px;
+  border: 1px solid ${DIVIDER_COLOR};
+` as any;
 
 export const ImageSource = styled.div`
-  overflow: hidden;
   position: relative;
   display: block;
   z-index: 10;
   height: ${UPLOADED_PHOTO_HEIGHT}px;
+
+  &:hover {
+    button {
+      visibility: visible;
+    }
+  }
+
+  button {
+    visibility: hidden;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    min-height: 30px;
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
 
   img {
     height: ${UPLOADED_PHOTO_HEIGHT}px;
@@ -82,7 +102,7 @@ export const UploadResult = styled.div`
   margin-left: -${uploadIconSize / 2}px;
   margin-top: -${uploadIconSize / 2}px;
   animation: ${(props: any) =>
-    (props.isUploaded || props.isError) && props.showLoader ? `${passingThrough} 2s cubic-bezier(0.77, 0, 0.175, 1) 0.2s` : 'none'};
+    (props.isUploaded || props.hasError) && props.showLoader ? `${passingThrough} 2s cubic-bezier(0.77, 0, 0.175, 1) 0.2s` : 'none'};
   & > svg {
     width: ${uploadIconSize}px;
     height: ${uploadIconSize}px;

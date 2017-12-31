@@ -8,12 +8,13 @@ import {
   // getBackendErrors,
   voidFn,
   TGenericFormModel,
+  IGenericFormState,
   getKeyMap,
   maxLength,
 } from '../../../../client-utils';
 import { Form } from './form';
 import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
-import { IMAGES_LABEL, ID_LABEL } from '../../../../../../data-strings';
+import { IMAGES_LABEL, ID_LABEL, FILES_KEY } from '../../../../../../data-strings';
 import { IImage } from 'global-utils';
 
 export interface IPhotoFields {
@@ -27,24 +28,25 @@ export type TPhotosModel = TGenericFormModel<IPhotoFields>;
 export const photosModel: TPhotosModel = {
   id: getKeyMap('', ID_LABEL, []),
   images: getKeyMap([], IMAGES_LABEL, [maxLength(6, true)]),
-  files: getKeyMap([], 'files', []),
+  files: getKeyMap([], FILES_KEY, []),
 };
 
 const PhotosForm = extendWithForm(Form);
 
 class PhotosPageComponent extends React.Component<any, any> {
 
-  state = getInitialFormState(photosModel);
+  state: IGenericFormState<IPhotoFields> = getInitialFormState(photosModel);
   isCreatePage = !Boolean(this.props.params.id);
 
   constructor(props) {
     super(props);
   }
 
-  onItemSubmit = (item) => {
+  onItemSubmit = (item: IPhotoFields) => {
     if (this.isCreatePage) {
       this.setState(getInitialFormState(photosModel));
     } else {
+      console.log('Submit item', item);
       // this.props.putItem(item).catch((errors) => {
       //   const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
       //   this.setState({errors: newErrors, showErrors: true});

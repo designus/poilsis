@@ -3,14 +3,14 @@ import { SET_UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPLOAD_ERROR, INITIAL_UPLOAD_STATE
 export interface IUploadProgress {
   progress?: number;
   isUploaded?: boolean;
-  isError?: boolean;
+  hasError?: boolean;
   isUploading?: boolean;
 };
 
 const initialState = {
   progress: 0,
   isUploaded: false,
-  isError: false,
+  hasError: false,
   isUploading: false,
 };
 
@@ -22,21 +22,21 @@ export const uploadProgress = (state: IUploadProgress = initialState, action): I
       return {
         progress: action.progress,
         isUploaded: false,
-        isError: false,
+        hasError: false,
         isUploading: true,
       };
     case UPLOAD_SUCCESS:
       return {
         progress: 0,
         isUploaded: true,
-        isError: false,
+        hasError: false,
         isUploading: false,
       };
     case UPLOAD_ERROR:
       return {
         progress: 0,
         isUploaded: false,
-        isError: true,
+        hasError: true,
         isUploading: false,
       };
     default:

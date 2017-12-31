@@ -16,7 +16,7 @@ import createMuiTheme from 'material-ui/styles/createMuiTheme';
 
 export const theme = createMuiTheme({
   palette: {},
-  userAgent: navigator.userAgent,
+  // userAgent: navigator.userAgent,
 });
 
 const injectTapEventPlugin = require('react-tap-event-plugin');

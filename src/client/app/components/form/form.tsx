@@ -3,7 +3,6 @@ import * as autoBind from 'react-autobind';
 
 import { IGenericFormState, voidFn, IFormProps, TGenericFormModel } from '../../client-utils';
 import { extendWithLoader } from '../../components';
-import { FILES_KEY } from '../../../../data-strings';
 
 export function extendWithForm<T extends IFormProps>(
   WrappedComponent: React.ComponentClass<T> | React.StatelessComponent<T>,
@@ -14,6 +13,7 @@ export function extendWithForm<T extends IFormProps>(
   return class extends React.Component<T, {}> {
 
     state: IGenericFormState<object> = this.props.initialState;
+    // TODO: Remove this
     onSaveState = this.props.onSaveState || voidFn;
 
     constructor(props) {
@@ -46,12 +46,12 @@ export function extendWithForm<T extends IFormProps>(
       }, []);
     }
 
-    getNewState(name: string, value: any): IGenericFormState<object> {
+    getNewState(key: string, value: any): IGenericFormState<object> {
 
-      const fieldValues = {...this.state.fields, [name]: value };
+      const fieldValues = {...this.state.fields, [key]: value };
       const validationErrors = {
         ...this.state.errors,
-        [name]: this.getSingleFieldValidationErrors(name, value, this.state.model),
+        [key]: this.getSingleFieldValidationErrors(key, value, this.state.model),
       };
 
       return {
@@ -62,9 +62,13 @@ export function extendWithForm<T extends IFormProps>(
 
     }
 
-    handleInputChange = (name: string) => (e, i, val) => {
+    setNewState = (key: string) => (value: any) => {
+      this.setState(this.getNewState(key, value));
+    }
+
+    handleInputChange = (key: string) => (e, i, val) => {
       const value = val ? val : e.target.value;
-      const newState = this.getNewState(name, value);
+      const newState = this.getNewState(key, value);
 
       this.setState(newState);
     }
@@ -82,20 +86,6 @@ export function extendWithForm<T extends IFormProps>(
       const newState = this.getNewState(key, checked);
       this.setState(newState);
 
-    }
-
-    handleAddedImages(images: any[]) {
-      console.log('Handle added images', images);
-      const newState = this.getNewState(FILES_KEY, images);
-      this.setState(newState);
-    }
-
-    handleRemovedImage(image) {
-      console.log('Handle removed images', image);
-    }
-
-    handleImageOrderChange(images) {
-      console.log('Images', images);
     }
 
     isFormValid(errors): boolean {
@@ -125,9 +115,7 @@ export function extendWithForm<T extends IFormProps>(
           handleSubmit={this.handleSubmit}
           handleOnBlur={this.handleOnBlur}
           handleInputChange={this.handleInputChange}
-          handleAddedImages={this.handleAddedImages}
-          handleRemovedImage={this.handleRemovedImage}
-          handleImageOrderChange={this.handleImageOrderChange}
+          setNewState={this.setNewState}
           state={this.state}
           {...this.props}
         />
