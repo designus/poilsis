@@ -84,3 +84,40 @@ export const handleFileUploadErrors = (err, response) => {
 };
 
 export const getUploadPath = (itemId) => `uploads/items/${itemId}`;
+
+export const getSourceFiles = (files) => files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
+
+export function removeFiles(files, next) {
+  if (files.length === 0) {
+    next();
+  } else {
+     const file = files.pop();
+     fs.unlink(file, (err) => {
+        if (err) {
+          return next(err);
+        } else {
+          removeFiles(files, next);
+        }
+     });
+  }
+};
+
+export function saveImageInfoToDatabase(dbModel, id, images, res, next) {
+  dbModel.findOne({id}, (err, item) => {
+    if (err) {
+      // TODO: Remove uploaded files or rollback deleted files
+      return next(err);
+    }
+
+    item.images = [...(item.images || []), ...images];
+
+    item.save((err, item) => {
+      if (err) {
+        // TODO: Remove uploaded files or rollback deleted files
+        return next(err);
+      }
+
+      res.send(item.images);
+    });
+  });
+}

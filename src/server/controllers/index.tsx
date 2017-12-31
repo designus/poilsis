@@ -2,7 +2,7 @@ const express = require('express');
 import citiesRouter from './cities';
 import typesRouter from './types';
 import itemsRouter from './items';
-import {handleItemsErrors} from '../server-utils';
+import { handleItemsErrors } from '../server-utils';
 
 export function apiRouter() {
   const router = express.Router();

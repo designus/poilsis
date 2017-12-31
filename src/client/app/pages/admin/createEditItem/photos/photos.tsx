@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { uploadImages } from '../../../../actions';
+import { uploadPhotos, updatePhotos } from '../../../../actions';
 import { extendWithForm } from '../../../../components';
 import {
   getFormStateWithData,
@@ -17,13 +17,13 @@ import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
 import { IMAGES_LABEL, ID_LABEL, FILES_KEY } from '../../../../../../data-strings';
 import { IImage } from 'global-utils';
 
-export interface IPhotoFields {
+export interface IImageFields {
   id?: string;
   images?: IImage[];
   files?: any[];
 }
 
-export type TPhotosModel = TGenericFormModel<IPhotoFields>;
+export type TPhotosModel = TGenericFormModel<IImageFields>;
 
 export const photosModel: TPhotosModel = {
   id: getKeyMap('', ID_LABEL, []),
@@ -35,22 +35,18 @@ const PhotosForm = extendWithForm(Form);
 
 class PhotosPageComponent extends React.Component<any, any> {
 
-  state: IGenericFormState<IPhotoFields> = getInitialFormState(photosModel);
+  state: IGenericFormState<IImageFields> = getInitialFormState(photosModel);
   isCreatePage = !Boolean(this.props.params.id);
 
   constructor(props) {
     super(props);
   }
 
-  onItemSubmit = (item: IPhotoFields) => {
+  onItemSubmit = (item: IImageFields) => {
     if (this.isCreatePage) {
       this.setState(getInitialFormState(photosModel));
     } else {
-      console.log('Submit item', item);
-      // this.props.putItem(item).catch((errors) => {
-      //   const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
-      //   this.setState({errors: newErrors, showErrors: true});
-      // });
+      this.props.updateImages(item.id, item.images, CREATE_EDIT_ITEM_LOADER);
     }
   }
 
@@ -79,7 +75,8 @@ class PhotosPageComponent extends React.Component<any, any> {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadImages: (itemId, files) => dispatch(uploadImages(itemId, files)),
+    uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
+    updateImages: (itemId: string, images: IImage[], loaderId: string) => dispatch(updatePhotos(itemId, images, loaderId)),
   };
 };
 

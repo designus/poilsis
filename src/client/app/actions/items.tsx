@@ -17,6 +17,8 @@ import {
   ITEM_CREATE_ERROR,
   IMAGES_UPLOAD_ERROR,
   IMAGES_UPLOAD_SUCCESS,
+  IMAGES_UPDATE_SUCCESS,
+  IMAGES_UPDATE_ERROR,
   IMAGES_KEY,
 } from '../../../data-strings';
 import { IImage, IMainInfoFields } from 'global-utils';
@@ -111,7 +113,7 @@ export const getItem = (itemId, loaderId) => {
   };
 };
 
-export const uploadImages = (itemId, files) => (dispatch) => {
+export const uploadPhotos = (itemId, files) => (dispatch) => {
   return new Promise((resolve, reject) => {
     const formData = objectToFormData({files});
     return axios
@@ -137,6 +139,33 @@ export const uploadImages = (itemId, files) => (dispatch) => {
         console.error(err);
         dispatch(showToast(Toast.error, IMAGES_UPLOAD_ERROR));
       });
+  });
+};
+
+export const updatePhotos = (itemId: string, images: IImage[], loaderId: string) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    dispatch(startLoading(loaderId));
+
+    return axios.put(`http://localhost:3000/api/items/item/photos/${itemId}`, {images})
+      .then(response => response.data)
+      .then(images => {
+        if (images.errors) {
+          const errors = images.errors[IMAGES_KEY];
+          const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
+          dispatch(showToast(Toast.error, message));
+          reject(images.errors);
+        } else {
+          dispatch(receiveImages(itemId, images));
+          dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
+          resolve();
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        dispatch(showToast(Toast.error, IMAGES_UPDATE_ERROR));
+      })
+      .then(dispatch(endLoading(loaderId)));
+
   });
 };
 

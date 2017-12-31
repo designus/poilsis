@@ -3,12 +3,10 @@ const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { checkItemPhotosUploadPath, uploadImages, resizeImages, getImages } from '../server-utils';
+import { createUploadPath, uploadImages, resizeImages, getImages, removeDeletedImages } from '../server-utils';
 import { ItemsModel } from '../model';
-import {
-  MAX_FILE_COUNT,
-  IMainInfoFields,
-} from '../../global-utils';
+import { MAX_FILE_COUNT, IMainInfoFields } from '../../global-utils';
+import { FILES_KEY } from '../../data-strings';
 
 router.route('/')
   .get((req, res) => {
@@ -57,7 +55,7 @@ router.route('/item/:itemId')
   });
 
 router.route('/item/mainInfo/:itemId')
-  .put((req, res) => {
+  .put((req, res, next) => {
     const item: IMainInfoFields = req.body;
     const name = sanitize(item.name);
     const city = sanitize(item.city);
@@ -68,21 +66,36 @@ router.route('/item/mainInfo/:itemId')
 
     const updatedItem = {name, city, alias, types, address, updatedAt};
 
-    ItemsModel.findOneAndUpdate(
-      { id: req.params.itemId },
-      { $set: updatedItem},
-      { new: true, runValidators: true },
-      (err, item) => {
-      if (err) {
-        res.send(err);
-      }
+    ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true }, (err, item) => {
+      if (err) { return next(err); }
       res.send(item);
     });
   });
 
+router.route('/item/photos/:itemId')
+  .put(removeDeletedImages, (req, res, next) => {
+    ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
+      if (err) {
+        // TODO: Rollback deleted files
+        return next(err);
+      }
+
+      item.images = req.body.images;
+
+      item.save((err, item) => {
+        if (err) {
+          // TODO: Rollback deleted files
+          return next(err);
+        }
+
+        res.send(item.images);
+      });
+    });
+  });
+
 router.route('/item/upload-photos/:itemId')
-  .put(checkItemPhotosUploadPath, (req, res, next) => {
-    const uploadPhotos = uploadImages.array('files[]', MAX_FILE_COUNT);
+  .put(createUploadPath, (req, res, next) => {
+    const uploadPhotos = uploadImages.array(`${FILES_KEY}[]`, MAX_FILE_COUNT);
 
     uploadPhotos(req, res, (err) => {
       if (err) { return next(err); }
@@ -92,18 +105,27 @@ router.route('/item/upload-photos/:itemId')
           const images = getImages(req.files);
 
           ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
-            if (err) { return next(err); }
+            if (err) {
+              // TODO: Remove uploaded files
+              return next(err);
+            }
 
             item.images = [...(item.images || []), ...images];
 
             item.save((err, item) => {
-              if (err) { return next(err); }
+              if (err) {
+                // TODO: Remove uploaded files
+                return next(err);
+              }
 
               res.send(item.images);
             });
           });
         })
-        .catch(console.log);
+        .catch(err => {
+          // TODO: Remove uploaded files
+          console.log(err);
+        });
   });
 
 });

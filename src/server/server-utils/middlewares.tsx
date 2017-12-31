@@ -2,11 +2,11 @@ const fs = require('fs');
 const multer = require('multer');
 const Jimp = require('jimp');
 
-import { getFileExtension, getFilePath, getUploadPath, handleFileUploadErrors } from './methods';
+import { getFileExtension, getFilePath, getUploadPath, handleFileUploadErrors, getSourceFiles, removeFiles } from './methods';
 import { IMulterFile, FileUploadErrors } from './types';
-import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize } from '../../global-utils';
+import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize, IImage } from '../../global-utils';
 
-export const checkItemPhotosUploadPath = (req, res, next) => {
+export const createUploadPath = (req, res, next) => {
 
   const itemId = req.params.itemId;
   const uploadPath = `./uploads/items/${itemId}`;
@@ -26,11 +26,31 @@ export const checkItemPhotosUploadPath = (req, res, next) => {
   });
 };
 
+export const removeDeletedImages = (req, res, next) => {
+  const itemId = req.params.itemId;
+  const images = req.body.images;
+  const uploadPath = getUploadPath(itemId);
+  fs.readdir(getUploadPath(itemId), (err, files: string[]) => {
+    const sourceFiles = getSourceFiles(files);
+    if (err) {
+      return next(err);
+    } else if (images.length !== sourceFiles.length) {
+      const removableFiles = files
+        .filter(fileName => !images.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
+        .map(fileName => `${uploadPath}/${fileName}`);
+
+      removeFiles(removableFiles, next);
+    } else {
+      next();
+    }
+  });
+};
+
 export const fileFilter = (req, file, cb) => {
   const itemId = req.params.itemId;
-  fs.readdir(getUploadPath(itemId), (err, files) => {
-    const originalFiles = files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
-    if (originalFiles.length >= MAX_FILE_COUNT) {
+  fs.readdir(getUploadPath(itemId), (err, files: string[]) => {
+    const sourceFiles = getSourceFiles(files);
+    if (sourceFiles.length >= MAX_FILE_COUNT) {
       cb({code: FileUploadErrors.limitFileCount}, false);
     } else if (ALLOWED_MIME_TYPES.indexOf(file.mimetype) === -1) {
       cb({code: FileUploadErrors.wrongFileType}, false);
@@ -88,9 +108,9 @@ export const resizeImages = (req, res) => {
 };
 
 export const handleItemsErrors = (err, req, res, next) => {
-  if (req.route.path === '/item/:itemId/photos') {
+  if (req.route.path === '/item/upload-photos/:itemId') {
     handleFileUploadErrors(err, res);
   } else {
     return next(err);
   }
-}
+};
