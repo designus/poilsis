@@ -14,8 +14,9 @@ import {
 } from '../../../../client-utils';
 import { Form } from './form';
 import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
-import { IMAGES_LABEL, ID_LABEL, FILES_KEY } from '../../../../../../data-strings';
+import { IMAGES_LABEL, ID_LABEL, FILES_KEY, PHOTO_GALLERY } from '../../../../../../data-strings';
 import { IImage } from 'global-utils';
+import Typography from 'material-ui/Typography';
 
 export interface IImageFields {
   id?: string;
@@ -57,15 +58,18 @@ class PhotosPageComponent extends React.Component<any, any> {
     if (this.props.loadedItem || this.isCreatePage) {
 
       return (
-        <PhotosForm
-          loaderId={CREATE_EDIT_ITEM_LOADER}
-          onItemSubmit={this.onItemSubmit}
-          initialState={finalState}
-          citiesMap={this.props.citiesMap}
-          typesMap={this.props.typesMap}
-          uploadImages={this.props.uploadImages}
-          isCreate={this.isCreatePage}
-        />
+        <div>
+          <Typography type="headline">{PHOTO_GALLERY}</Typography>
+          <PhotosForm
+            loaderId={CREATE_EDIT_ITEM_LOADER}
+            onItemSubmit={this.onItemSubmit}
+            initialState={finalState}
+            citiesMap={this.props.citiesMap}
+            typesMap={this.props.typesMap}
+            uploadImages={this.props.uploadImages}
+            isCreate={this.isCreatePage}
+          />
+        </div>
       );
     } else {
       return null;

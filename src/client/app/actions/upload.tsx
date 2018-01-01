@@ -1,7 +1,7 @@
 export const SET_UPLOAD_PROGRESS = 'UPLOAD_PROGRESS';
 export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
 export const UPLOAD_ERROR = 'UPLOAD_ERROR';
-export const INITIAL_UPLOAD_STATE = 'INITIAL_UPLOAD_STATE';
+export const SET_INITIAL_UPLOAD_STATE = 'INITIAL_UPLOAD_STATE';
 
 export const setUploadProgress = (progress: number) => {
   return {
@@ -12,4 +12,4 @@ export const setUploadProgress = (progress: number) => {
 
 export const uploadSuccess = () => ({type: UPLOAD_SUCCESS});
 export const uploadError = () => ({type: UPLOAD_ERROR});
-export const initialUploadState = () => ({type: INITIAL_UPLOAD_STATE});
+export const setInitialUploadState = () => ({type: SET_INITIAL_UPLOAD_STATE});

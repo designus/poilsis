@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Button, FileUpload } from '../../../../../components';
 import { IAddItemProps } from '../../../../../pages';
-import { SEND_LABEL, IMAGES_LABEL, IMAGES_KEY } from '../../../../../../../data-strings';
+import { SAVE_LABEL, IMAGES_LABEL, IMAGES_KEY } from '../../../../../../../data-strings';
 export const Form = (props: IAddItemProps) => {
   const {
     // showErrors,
@@ -21,7 +21,7 @@ export const Form = (props: IAddItemProps) => {
         id={id}
       />
       <Button>
-        {SEND_LABEL}
+        {SAVE_LABEL}
       </Button>
     </form>
   );

@@ -17,8 +17,9 @@ import {
 } from '../../../../client-utils';
 import { Form } from './form';
 import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
-import { ID_LABEL, NAME_LABEL, CITY_LABEL, TYPES_LABEL, ADDRESS_LABEL } from '../../../../../../data-strings';
+import { ID_LABEL, NAME_LABEL, CITY_LABEL, TYPES_LABEL, ADDRESS_LABEL, MAIN_INFO } from '../../../../../../data-strings';
 import { IMainInfoFields } from '../../../../../../global-utils';
+import Typography from 'material-ui/Typography';
 
 export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
 
@@ -59,14 +60,17 @@ class MainInfoPageComponent extends React.Component<any, any> {
     if (this.props.loadedItem || this.isCreatePage) {
 
       return (
-        <MainInfoForm
-          loaderId={CREATE_EDIT_ITEM_LOADER}
-          onItemSubmit={this.onItemSubmit}
-          initialState={finalState}
-          citiesMap={this.props.citiesMap}
-          typesMap={this.props.typesMap}
-          isCreate={this.isCreatePage}
-        />
+        <div>
+          <Typography type="headline">{MAIN_INFO}</Typography>
+          <MainInfoForm
+            loaderId={CREATE_EDIT_ITEM_LOADER}
+            onItemSubmit={this.onItemSubmit}
+            initialState={finalState}
+            citiesMap={this.props.citiesMap}
+            typesMap={this.props.typesMap}
+            isCreate={this.isCreatePage}
+          />
+        </div>
       );
     } else {
       return null;

@@ -5,7 +5,7 @@ import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 import { InputLabel } from 'material-ui/Input';
 import { ImagePreview, Button } from '../../components';
 import { IAppState, IUploadProgress  } from '../../reducers';
-import { initialUploadState } from '../../actions';
+import { setInitialUploadState } from '../../actions';
 import { IImage } from 'global-utils';
 import { START_UPLOAD, UPLOAD_PLACEHOLDER, CLEAR_IMAGES } from '../../../../data-strings';
 import FileUploadIcon from 'material-ui-icons/FileUpload';
@@ -126,7 +126,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
 }
 
 export const mapDispatchToProps = (dispatch) => ({
-  setInitialUploadState: () => dispatch(initialUploadState),
+  setInitialUploadState: () => dispatch(setInitialUploadState()),
 });
 
 export const mapStateToProps = (state: IAppState) => ({

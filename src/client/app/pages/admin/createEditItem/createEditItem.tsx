@@ -5,6 +5,7 @@ import { getItem } from '../../../actions';
 import { IAdminMenuItem } from '../../../components';
 import { itemModel } from '../../../pages';
 import { getInitialFormState, ITEM_LOADER_ID } from '../../../client-utils';
+import { MAIN_INFO, PHOTO_GALLERY } from '../../../../../data-strings';
 import HomeIcon from 'material-ui-icons/Home';
 import PhotoIcon from 'material-ui-icons/Photo';
 
@@ -24,12 +25,12 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
       {
         icon: () => (<HomeIcon />),
         link: `/admin/items/edit/${id}/main`,
-        text: 'Main info',
+        text: MAIN_INFO,
       },
       {
         icon: () => (<PhotoIcon />),
         link: `/admin/items/edit/${id}/photos`,
-        text: 'Photo gallery',
+        text: PHOTO_GALLERY,
       },
     ];
   }

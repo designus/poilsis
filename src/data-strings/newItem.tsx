@@ -15,3 +15,6 @@ export const ADDRESS_KEY = 'address';
 export const DESCRIPTION_KEY = 'description';
 export const IMAGES_KEY = 'images';
 export const FILES_KEY  = 'files';
+export const PHOTO_GALLERY = 'Photo gallery';
+export const MAIN_INFO = 'Main info';
+export const SAVE_LABEL = 'Save';
