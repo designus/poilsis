@@ -5,9 +5,6 @@ const isUploadBarHidden = (props: any) => props.isUploaded || props.hasError || 
 export const uploadIconSize = 54;
 export const viewbox = `0, 0, ${uploadIconSize}, ${uploadIconSize}`;
 
-export const ImagesWrapper = styled.div`
-`;
-
 export const Image = styled.div`
   position: relative;
   display: inline-block;

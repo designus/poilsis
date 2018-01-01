@@ -75,6 +75,14 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
     }
   }
 
+  onSortImages = (isTemporary: boolean) => (images: IImage[]) => {
+    if (isTemporary) {
+      console.log('Temporary');
+    } else {
+      this.props.setImagesState(images);
+    }
+  }
+
   render() {
     return (
       <ImageUpload>
@@ -116,6 +124,7 @@ class FileUploadComponent extends React.Component<IFileUploadProps, any> {
           images={this.props.images}
           onLoadImage={this.onLoadImage}
           onDeleteImage={this.onDeleteImage}
+          onSortImages={this.onSortImages(false)}
           hasError={false}
           isUploaded={true}
           isUploading={false}
