@@ -102,6 +102,7 @@ router.route('/item/upload-photos/:itemId')
 
       resizeImages(req, res)
         .then(() => {
+          console.log('Images is resized');
           const images = getImages(req.files);
 
           ItemsModel.findOne({id: req.params.itemId}, (err, item) => {

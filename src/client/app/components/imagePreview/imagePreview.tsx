@@ -28,7 +28,7 @@ export const ImagePreview = ({
     <div>
       {images.map((image: IImage, index) => {
         const isTemporary = image.hasOwnProperty('preview');
-        const src = isTemporary ? image.preview : `http://localhost:3000/${image.path}/${image.fileName}`;
+        const src = isTemporary ? image.preview : `http://localhost:3000/${image.path}/${image.thumbName}`;
         return (
           <SortableImage
             isTemporary={isTemporary}

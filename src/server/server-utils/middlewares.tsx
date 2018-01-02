@@ -80,25 +80,25 @@ export const uploadImages = multer({
 
 export const resizeImages = (req, res) => {
 
-  const promises = [];
   const files = req.files;
 
   return new Promise((resolve, reject) => {
     if (files && files.length && !res.headersSent) {
-      files.forEach((file) => {
-        Jimp
-          .read(file.path)
-          .then((image) => {
-            const [name, extension] = file.filename.split('.');
-            const thumb = new Promise((resolve, reject) => {
+      const promises = files.map(file => {
+        return new Promise((resolve, reject) => {
+          Jimp
+            .read(file.path)
+            .then((image) => {
+              const [name, extension] = file.filename.split('.');
               image
                 .resize(240, 200)
                 .quality(60)
-                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => resolve());
-            });
-            promises.push(thumb);
-          })
-          .catch(err => console.error(err));
+                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
+                  resolve();
+                });
+              })
+            .catch(err => reject(err));
+        });
       });
       return Promise.all(promises).then(() => resolve());
     } else {
