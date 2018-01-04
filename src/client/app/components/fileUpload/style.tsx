@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {UPLOADED_PHOTO_HEIGHT} from '../../global-styles';
+import {UPLOADED_PHOTO_HEIGHT, DIVIDER_COLOR} from '../../global-styles';
 
 export const ImageUpload = styled.div`
   margin: 10px 0;
@@ -11,7 +11,7 @@ export const ImageUpload = styled.div`
   .dropzone {
     padding: 15px 0;
     margin: 10px 0;
-    border: 1px dashed #ccc;
+    border: 2px dashed ${DIVIDER_COLOR};
     text-align: center;
     cursor: pointer;
     min-height: ${UPLOADED_PHOTO_HEIGHT}px;

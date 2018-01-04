@@ -3,7 +3,7 @@ const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { createUploadPath, uploadImages, resizeImages, getImages, removeDeletedImages } from '../server-utils';
+import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFromFs } from '../server-utils';
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT, IMainInfoFields } from '../../global-utils';
 import { FILES_KEY } from '../../data-strings';
@@ -73,7 +73,7 @@ router.route('/item/mainInfo/:itemId')
   });
 
 router.route('/item/photos/:itemId')
-  .put(removeDeletedImages, (req, res, next) => {
+  .put(removeImagesFromFs, (req, res, next) => {
     ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
       if (err) {
         // TODO: Rollback deleted files

@@ -5,7 +5,7 @@ import DeleteIcon from 'material-ui-icons/Clear';
 import Button from 'material-ui/Button';
 import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox } from './style';
 import { IUploadProgress } from '../../reducers';
-import { SuccessIcon, ErrorIcon } from '../../client-utils';
+import { SuccessIcon, ErrorIcon, voidFn } from '../../client-utils';
 
 export interface IImagePreview extends IUploadProgress {
   images: IImage[];
@@ -22,7 +22,7 @@ export const ImagePreview = ({
   hasError,
   onLoadImage,
   onDeleteImage,
-  onSortImages,
+  onSortImages = voidFn,
  }: IImagePreview) => {
   return (
     <div>

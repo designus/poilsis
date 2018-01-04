@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { uploadPhotos, updatePhotos } from '../../../../actions';
+import { updatePhotos } from '../../../../actions';
 import { extendWithForm } from '../../../../components';
 import {
   getFormStateWithData,
@@ -15,7 +15,7 @@ import {
 import { Form } from './form';
 import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
 import { IMAGES_LABEL, ID_LABEL, FILES_KEY, PHOTO_GALLERY } from '../../../../../../data-strings';
-import { IImage } from 'global-utils';
+import { IImage, MAX_FILE_COUNT } from '../../../../../../global-utils';
 import Typography from 'material-ui/Typography';
 
 export interface IImageFields {
@@ -28,7 +28,7 @@ export type TPhotosModel = TGenericFormModel<IImageFields>;
 
 export const photosModel: TPhotosModel = {
   id: getKeyMap('', ID_LABEL, []),
-  images: getKeyMap([], IMAGES_LABEL, [maxLength(6, true)]),
+  images: getKeyMap([], IMAGES_LABEL, [maxLength(MAX_FILE_COUNT, true)]),
   files: getKeyMap([], FILES_KEY, []),
 };
 
@@ -66,8 +66,6 @@ class PhotosPageComponent extends React.Component<any, any> {
             initialState={finalState}
             citiesMap={this.props.citiesMap}
             typesMap={this.props.typesMap}
-            uploadImages={this.props.uploadImages}
-            isCreate={this.isCreatePage}
           />
         </div>
       );
@@ -79,7 +77,7 @@ class PhotosPageComponent extends React.Component<any, any> {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
+    // uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
     updateImages: (itemId: string, images: IImage[], loaderId: string) => dispatch(updatePhotos(itemId, images, loaderId)),
   };
 };

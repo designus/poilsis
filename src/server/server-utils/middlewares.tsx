@@ -26,7 +26,7 @@ export const createUploadPath = (req, res, next) => {
   });
 };
 
-export const removeDeletedImages = (req, res, next) => {
+export const removeImagesFromFs = (req, res, next) => {
   const itemId = req.params.itemId;
   const images = req.body.images;
   const uploadPath = getUploadPath(itemId);

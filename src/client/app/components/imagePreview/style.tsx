@@ -9,9 +9,10 @@ export const Image = styled.div`
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: ${(props: any) => props.isTemporary ? '0 5px;' : '10px 5px 0 0'};
+  margin: ${(props: any) => props.isTemporary ? '0 5px;' : '10px 5px 10px 0'};
   padding: 4px;
   border: 1px solid ${DIVIDER_COLOR};
+  cursor: move;
 ` as any;
 
 export const ImageSource = styled.div`
