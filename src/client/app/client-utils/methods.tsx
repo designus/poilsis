@@ -132,7 +132,8 @@ export function onUploadProgress(e, callback) {
   e.total :
   e.target.getResponseHeader('content-length') || e.target.getResponseHeader('x-decompressed-content-length');
   if (totalLength !== null) {
-    const loadedPercent = Math.round((e.loaded * 100) / totalLength);
+    // Leave 10% upload progress space for the time to transform uploaded images to thumbnails
+    const loadedPercent = Math.round((e.loaded * 100) / totalLength - 10);
     callback(loadedPercent);
   }
 };

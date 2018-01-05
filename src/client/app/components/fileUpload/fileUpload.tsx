@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Dropzone from 'react-dropzone';
 import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
-import { InputLabel } from 'material-ui/Input';
 import { Button } from '../../components';
 import { START_UPLOAD, UPLOAD_PLACEHOLDER, CLEAR_IMAGES } from '../../../../data-strings';
 import { ALLOWED_MIME_TYPES, MAX_FILE_SIZE_B } from '../../../../global-utils';
@@ -10,7 +9,6 @@ import ClearIcon from 'material-ui-icons/Clear';
 import Typography from 'material-ui/Typography';
 
 export interface IFileUploadProps {
-  label: string;
   id: string;
   onDrop: (acceptedImages: any[], rejectedImages?: any[]) => void;
   showUploadButtons: boolean;
@@ -19,10 +17,9 @@ export interface IFileUploadProps {
   children: any;
 };
 
-export const FileUpload = ({label, id, onDrop, showUploadButtons, clearImages, uploadImages, children}: IFileUploadProps) => {
+export const FileUpload = ({id, onDrop, showUploadButtons, clearImages, uploadImages, children}: IFileUploadProps) => {
   return (
     <ImageUpload>
-      <InputLabel>{label}</InputLabel>
       <Dropzone
         onDrop={onDrop}
         accept={ALLOWED_MIME_TYPES.join(',')}

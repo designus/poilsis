@@ -130,6 +130,7 @@ export const uploadPhotos = (itemId, files) => (dispatch) => {
           reject(images.errors);
         } else {
           dispatch(receiveImages(itemId, images));
+          setUploadProgress(100);
           dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
           dispatch(uploadSuccess());
           resolve();

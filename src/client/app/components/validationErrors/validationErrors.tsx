@@ -9,7 +9,7 @@ const ErrorsWrapper = styled.div`
 
   & > ul {
     margin: 0;
-    padding-left: 15px;
+    padding-left: 25px;
   }
 ` as any;
 

@@ -1,18 +1,33 @@
 import styled, {keyframes} from 'styled-components';
-import {UPLOADED_PHOTO_HEIGHT, DIVIDER_COLOR} from '../../global-styles';
+import { UPLOADED_PHOTO_HEIGHT } from '../../global-styles';
+import { UPLOADED_ANIMATION_DURATION } from '../../client-utils';
 
 const isUploadBarHidden = (props: any) => props.isUploaded || props.hasError || !props.isUploading;
 export const uploadIconSize = 54;
 export const viewbox = `0, 0, ${uploadIconSize}, ${uploadIconSize}`;
 
+export const ImagePreviewWrapper = styled.div`
+  padding: ${(props: any) => props.isTemporary ? '0' : '15px 0'};
+  & > label {
+    font-size: 14px;
+  }
+` as any;
+
+export const Images = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 export const Image = styled.div`
   position: relative;
   display: inline-block;
   vertical-align: top;
-  margin: ${(props: any) => props.isTemporary ? '0 5px;' : '10px 5px 10px 0'};
+  margin: ${(props: any) => props.isTemporary ? '0 5px 5px 0' : '15px 5px 5px 0'}; 
   padding: 4px;
-  border: 1px solid ${DIVIDER_COLOR};
-  cursor: move;
+  border: 1px solid #dbdbdb;
+  background: #fff;
+  box-shadow: 0px 5px 5px -3px #dbdbdb;
+  cursor: ${(props: any) => props.isTemporary ? 'default' : 'move'};
 ` as any;
 
 export const ImageSource = styled.div`
@@ -99,8 +114,10 @@ export const UploadResult = styled.div`
   left: 50%;
   margin-left: -${uploadIconSize / 2}px;
   margin-top: -${uploadIconSize / 2}px;
-  animation: ${(props: any) =>
-    (props.isUploaded || props.hasError) && props.showLoader ? `${passingThrough} 2s cubic-bezier(0.77, 0, 0.175, 1) 0.2s` : 'none'};
+  animation: ${(props: any) => (props.isUploaded || props.hasError) && props.showLoader ?
+    `${passingThrough} ${UPLOADED_ANIMATION_DURATION / 1000}s cubic-bezier(0.77, 0, 0.175, 1)` :
+     'none'
+  };
   & > svg {
     width: ${uploadIconSize}px;
     height: ${uploadIconSize}px;

@@ -16,6 +16,7 @@ import {
 } from '../../../../../../../global-utils';
 import { IAppState, IUploadProgress } from '../../../../../reducers';
 import { setInitialUploadState, uploadPhotos } from '../../../../../actions';
+import { UPLOADED_ANIMATION_DURATION } from '../../../../../client-utils';
 
 interface IPhotosFormProps extends IUploadProgress, IAddItemProps {
   setInitialUploadState?: () => void;
@@ -36,8 +37,11 @@ class FormComponent extends React.Component<IPhotosFormProps, any> {
     this.setState({uploadedImages: this.props.state.fields[IMAGES_KEY], errors: []});
   }
 
-  clearDroppedImagesAsync() {
-    setTimeout(() => this.clearDroppedImages(), 2000);
+  resetUploadState() {
+    setTimeout(() => {
+      this.props.setInitialUploadState();
+      this.clearDroppedImages();
+    }, UPLOADED_ANIMATION_DURATION);
   }
 
   clearDroppedImages = () => {
@@ -49,8 +53,7 @@ class FormComponent extends React.Component<IPhotosFormProps, any> {
   }
 
   onLoadImage = (e) => {
-    this.clearDroppedImagesAsync();
-    this.props.setInitialUploadState();
+    this.resetUploadState();
   }
 
   getImageError(image) {
@@ -82,11 +85,12 @@ class FormComponent extends React.Component<IPhotosFormProps, any> {
   uploadImages = () => {
     this.props.uploadImages(this.props.state.fields.id, this.state.droppedImages).catch(err => {
       console.error(err);
-      this.clearDroppedImagesAsync();
+      this.resetUploadState();
     });
   }
 
-  onDeleteImage = (index: number, isTemporary: boolean) => () => {
+  onDeleteImage = (index: number, isTemporary: boolean) => (e: MouseEvent) => {
+    e.stopPropagation();
     if (isTemporary) {
       const droppedImages = this.state.droppedImages;
       droppedImages.splice(index, 1);
@@ -99,31 +103,34 @@ class FormComponent extends React.Component<IPhotosFormProps, any> {
   }
 
   onSortImages = (isTemporary: boolean) => (images: IImage[]) => {
-    if (isTemporary) {
-      console.log('Temporary');
-    } else {
+    if (!isTemporary) {
       this.setImagesState(images);
     }
+  }
+
+  getImagePreviewLabel = () => {
+    return `${IMAGES_LABEL} (${this.state.uploadedImages.length} of ${MAX_FILE_COUNT})`;
   }
 
   render() {
     return (
       <form onSubmit={this.props.handleSubmit} autoComplete="off">
         <FileUpload
-          label={IMAGES_LABEL}
           id={this.props.state.fields.id}
           onDrop={this.onDrop}
           showUploadButtons={this.state.droppedImages.length}
           clearImages={this.clearDroppedImages}
           uploadImages={this.uploadImages}
         >
-         <ImagePreview
+          <ImagePreview
             images={this.state.droppedImages}
             onDeleteImage={this.onDeleteImage}
             hasError={this.props.hasError}
+            onSortImages={this.onSortImages(true)}
             progress={this.props.progress}
             isUploaded={this.props.isUploaded}
             isUploading={this.props.isUploading}
+            isTemporary={true}
           />
         </FileUpload>
         <ValidationErrors
@@ -132,6 +139,7 @@ class FormComponent extends React.Component<IPhotosFormProps, any> {
           errors={this.state.errors}
         />
         <ImagePreview
+          label={this.getImagePreviewLabel()}
           images={this.state.uploadedImages}
           onLoadImage={this.onLoadImage}
           onDeleteImage={this.onDeleteImage}
@@ -139,6 +147,7 @@ class FormComponent extends React.Component<IPhotosFormProps, any> {
           hasError={false}
           isUploaded={true}
           isUploading={false}
+          isTemporary={false}
         />
         <Button>
           {SAVE_LABEL}
