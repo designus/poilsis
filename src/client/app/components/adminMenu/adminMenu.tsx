@@ -6,11 +6,16 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 export const StyledListItem = styled(ListItem)`
   padding: 0!important;
 
-   >	a {
+  a {
     display: flex;
     padding: 8px 12px;
     flex: 1;
     text-decoration: none;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: .5;
   }
   
   > a.active h3 {
@@ -23,6 +28,7 @@ export interface IAdminMenuItem {
   icon?: () => React.ReactElement<any>;
   link: string;
   text: string;
+  isDisabled?: boolean;
 }
 
 export interface IAdminMenuProps {
@@ -39,6 +45,7 @@ export const AdminMenu = ({items}: IAdminMenuProps) => {
               key={i}
               divider={true}
               disableGutters={true}
+              className={item.isDisabled ? 'disabled' : ''}
             >
               <Link to={item.link} activeClassName="active">
                 <ListItemIcon>

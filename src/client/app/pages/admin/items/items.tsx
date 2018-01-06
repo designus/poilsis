@@ -108,7 +108,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <AdminPageActions createLink={'/admin/items/create'} />
+        <AdminPageActions createLink={'/admin/items/create/main'} />
         <PaginatedTable
           loaderId={ITEMS_LOADER_ID}
           dataMap={this.props.itemsMap}

@@ -197,7 +197,7 @@ export const updateMainInfo = (item: IMainInfoFields, loaderId) => (dispatch, ge
 
 export const postItem = (item, loaderId) => (dispatch) => {
 
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
 
     dispatch(startLoading(loaderId));
 
@@ -205,16 +205,17 @@ export const postItem = (item, loaderId) => (dispatch) => {
       .then(response => response.data)
       .then(item => {
         if (item.errors) {
-          resolve(item.errors);
+          dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+          reject(item.errors);
         } else {
           dispatch(receiveItem(item));
           dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
-          resolve();
+          resolve(item.id);
         }
       })
       .catch(err => {
         console.error(err);
-        dispatch(showToast(Toast.success, ITEM_CREATE_ERROR));
+        dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
       })
       .then(dispatch(endLoading(loaderId)));
   });

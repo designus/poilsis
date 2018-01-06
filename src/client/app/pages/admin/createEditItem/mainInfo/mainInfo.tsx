@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { updateMainInfo } from '../../../../actions';
+import { updateMainInfo, postItem } from '../../../../actions';
 import { extendWithForm } from '../../../../components';
 import {
   getFormStateWithData,
@@ -25,10 +25,10 @@ export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
 
 export const mainInfoModel: TMainInfoModel = {
   id: getKeyMap('', ID_LABEL, []),
-  name: getKeyMap('', NAME_LABEL, [required, minLength(6)]),
+  name: getKeyMap('', NAME_LABEL, [required]),
   city: getKeyMap('', CITY_LABEL, [required]),
   types: getKeyMap([], TYPES_LABEL, [required, minLength(1, true), maxLength(3, true)]),
-  address: getKeyMap('', ADDRESS_LABEL, []),
+  address: getKeyMap('', ADDRESS_LABEL, [required]),
 };
 
 const MainInfoForm = extendWithForm(Form);
@@ -42,14 +42,18 @@ class MainInfoPageComponent extends React.Component<any, any> {
     super(props);
   }
 
-  onItemSubmit = (item) => {
+  handleErrors(errors) {
+    const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
+    this.setState({errors: newErrors, showErrors: true});
+  }
+
+  onItemSubmit = (item: IMainInfoFields) => {
     if (this.isCreatePage) {
-      this.setState(getInitialFormState(mainInfoModel));
+      this.props.postItem(item)
+        .then(id => this.props.router.push(`/admin/items/edit/${id}/main`))
+        .catch(this.handleErrors);
     } else {
-      this.props.updateMainInfo(item).catch((errors) => {
-        const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
-        this.setState({errors: newErrors, showErrors: true});
-      });
+      this.props.updateMainInfo(item).catch(this.handleErrors);
     }
   }
 
@@ -81,6 +85,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateMainInfo: (item) => dispatch(updateMainInfo(item, ITEM_LOADER_ID)),
+    postItem: (item) => dispatch(postItem(item, ITEM_LOADER_ID)),
   };
 };
 

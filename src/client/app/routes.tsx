@@ -21,10 +21,12 @@ export default (
     <Route path="/admin" component={AdminLayoutPage}>
       <Route path="/admin/home" component={AdminHomePage} />
       <Route path="/admin/items" component={AdminItemsPage} />
-      <Route path="/admin/items/create" component={CreateEditItemPage} />
+      <Route path="/admin/items/create" component={CreateEditItemPage} >
+        <Route path="/admin/items/create/main" component={MainInfoPage} />
+      </Route>
       <Route path="/admin/items/edit/:id" component={CreateEditItemPage} >
-        <Route path="/admin/items/edit/:id/main" component={MainInfoPage}  />
-        <Route path="/admin/items/edit/:id/photos" component={PhotosPage}  />
+        <Route path="/admin/items/edit/:id/main" component={MainInfoPage} />
+        <Route path="/admin/items/edit/:id/photos" component={PhotosPage} />
       </Route>
     </Route>
     <Route component={ClientLayoutPage}>

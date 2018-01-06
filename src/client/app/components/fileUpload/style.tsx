@@ -17,6 +17,7 @@ export const ImageUpload = styled.div`
     justify-content: center;
     flex-wrap: wrap;
   }
+
 `;
 
 export const UploadPlaceholder = styled.div`

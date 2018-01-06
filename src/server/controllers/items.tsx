@@ -17,7 +17,7 @@ router.route('/')
       res.json(items);
     });
   })
-  .post((req, res) => {
+  .post((req, res, next) => {
 
     const id = shortId.generate();
     const name = sanitize(req.body.name);
@@ -30,7 +30,7 @@ router.route('/')
 
     new ItemsModel(newItem).save((err, item) => {
       if (err) {
-        res.send(err);
+        return next(err);
       }
       res.json(item);
     });

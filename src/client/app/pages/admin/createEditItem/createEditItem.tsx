@@ -1,65 +1,60 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import HomeIcon from 'material-ui-icons/Home';
+import PhotoIcon from 'material-ui-icons/Photo';
 import { IAppState } from '../../../reducers';
 import { getItem } from '../../../actions';
 import { IAdminMenuItem } from '../../../components';
-import { itemModel } from '../../../pages';
-import { getInitialFormState, ITEM_LOADER_ID } from '../../../client-utils';
+import { ITEM_LOADER_ID } from '../../../client-utils';
 import { MAIN_INFO, PHOTO_GALLERY } from '../../../../../data-strings';
-import HomeIcon from 'material-ui-icons/Home';
-import PhotoIcon from 'material-ui-icons/Photo';
 
 export const CREATE_EDIT_ITEM_LOADER = 'createEditItem';
 
 class CreateEditItemPageComponent extends React.Component<any, any> {
 
-  state = getInitialFormState(itemModel);
   isCreatePage = !Boolean(this.props.params.id);
 
   constructor(props) {
     super(props);
   }
 
-  getMenuItems(id): IAdminMenuItem[] {
+  getMenuItems(id?: string): IAdminMenuItem[] {
     return [
       {
         icon: () => (<HomeIcon />),
-        link: `/admin/items/edit/${id}/main`,
+        link: id ? `/admin/items/edit/${id}/main` : '/admin/items/create/main',
         text: MAIN_INFO,
       },
       {
         icon: () => (<PhotoIcon />),
         link: `/admin/items/edit/${id}/photos`,
         text: PHOTO_GALLERY,
+        isDisabled: this.isCreatePage,
       },
     ];
   }
 
   componentDidMount() {
-    const id = this.props.params.id;
-    this.props.getItem(id);
-    this.props.setMenuItems(this.getMenuItems(id));
+    this.props.setMenuItems(this.getMenuItems(this.props.params.id));
+    if (!this.isCreatePage) {
+      this.props.getItem(this.props.params.id);
+    }
   }
 
-  componentWillUpdate() {
-    this.props.setMenuItems(this.getMenuItems(this.props.params.id));
+  componentWillReceiveProps(nextProps) {
+    this.isCreatePage = !Boolean(nextProps.params.id);
+    this.props.setMenuItems(this.getMenuItems(nextProps.params.id));
   }
 
   render() {
 
-    const id = this.props.params.id;
-    const loadedItem = this.props.itemsMap[id];
+    const loadedItem = this.props.itemsMap[this.props.params.id];
+    const { itemsMap, citiesMap, typesMap, children } = this.props;
 
     if (loadedItem || this.isCreatePage) {
-
       return (
         <div>
-          {React.cloneElement(this.props.children, {
-            loadedItem,
-            itemsMap: this.props.itemsMap,
-            citiesMap: this.props.citiesMap,
-            typesMap: this.props.typesMap,
-          })}
+          {React.cloneElement(children, {loadedItem, itemsMap, citiesMap, typesMap})}
         </div>
       );
     } else {
