@@ -14,7 +14,13 @@ import Typography from 'material-ui/Typography';
 
 import { styles } from './styles';
 import { initialDataProps, removeInjectedStyles, adminRoutes } from '../../../client-utils';
-import { Toast, AdminMenu, IAdminMenuItem, Drawer, UserMenu } from '../../../components';
+import {
+  Toast,
+  AdminMenu,
+  IAdminMenuItem,
+  Drawer,
+  UserMenu,
+} from '../../../components';
 import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';
 
 @asyncConnect([initialDataProps])
@@ -64,8 +70,14 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     ];
   }
 
+  isDifferentMenuItems(arr1: IAdminMenuItem[], arr2: IAdminMenuItem[], key: keyof IAdminMenuItem) {
+    return arr1.length !== arr2.length || arr1.every((item, index) => item[key] !== arr2[index][key]);
+  };
+
   setMenuItems = (menuItems: IAdminMenuItem[]) => {
-    this.setState({menuItems});
+    if (this.isDifferentMenuItems(menuItems, this.state.menuItems, 'text')) {
+      this.setState({menuItems});
+    }
   }
 
   render() {
@@ -99,7 +111,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
           </Drawer>
           <main className={classes.content}>
             {React.cloneElement(this.props.children, {
-              // search: this.state.search,
               setMenuItems: this.setMenuItems,
             })}
           </main>

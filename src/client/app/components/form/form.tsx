@@ -108,7 +108,6 @@ export function extendWithForm<T extends IFormProps>(
     }
 
     render() {
-
       return (
         <WrappedWithLoader
           handleCheckboxToggle={this.handleCheckboxToggle}

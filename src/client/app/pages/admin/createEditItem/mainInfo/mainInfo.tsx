@@ -19,6 +19,7 @@ import { Form } from './form';
 import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
 import { ID_LABEL, NAME_LABEL, CITY_LABEL, TYPES_LABEL, ADDRESS_LABEL, MAIN_INFO } from '../../../../../../data-strings';
 import { IMainInfoFields } from '../../../../../../global-utils';
+import { adminRoutes } from '../../../../client-utils';
 import Typography from 'material-ui/Typography';
 
 export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
@@ -50,11 +51,15 @@ class MainInfoPageComponent extends React.Component<any, any> {
   onItemSubmit = (item: IMainInfoFields) => {
     if (this.isCreatePage) {
       this.props.postItem(item)
-        .then(id => this.props.router.push(`/admin/items/edit/${id}/main`))
+        .then(id => this.props.router.push(adminRoutes.editItemMain.getLink(id)))
         .catch(this.handleErrors);
     } else {
       this.props.updateMainInfo(item).catch(this.handleErrors);
     }
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   render() {
