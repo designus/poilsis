@@ -7,16 +7,16 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
-import HomeIcon from 'material-ui-icons/Home';
 import ListIcon from 'material-ui-icons/List';
 import ArrowBackIcon from 'material-ui-icons/ArrowBack';
 import MenuIcon from 'material-ui-icons/Menu';
 import Hidden from 'material-ui/Hidden';
 import Typography from 'material-ui/Typography';
 
-import {styles} from './styles';
-import { initialDataProps, removeInjectedStyles } from '../../../client-utils';
+import { styles } from './styles';
+import { initialDataProps, removeInjectedStyles, adminRoutes } from '../../../client-utils';
 import { Toast, AdminMenu, IAdminMenuItem, Drawer, SearchBox, UserMenu } from '../../../components';
+import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';
 
 @asyncConnect([initialDataProps])
 class AdminLayoutPageComponent extends React.Component<any, any> {
@@ -61,19 +61,14 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   get menuItems(): IAdminMenuItem[] {
     return [
       {
-        icon: () => (<HomeIcon />),
-        link: '/admin/home',
-        text: 'Home',
-      },
-      {
         icon: () => (<ListIcon />),
-        link: '/admin/items',
-        text: 'Items',
+        link: adminRoutes.items.getLink(),
+        text: ITEMS,
       },
       {
         icon: () => (<ArrowBackIcon />),
         link: '/',
-        text: 'Go to website',
+        text: GO_TO_WEBSITE,
       },
     ];
   }

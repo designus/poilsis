@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {asyncConnect } from 'redux-connect';
-import {connect} from 'react-redux';
-import {IndexLink, Link} from 'react-router';
+import { asyncConnect } from 'redux-connect';
+import { connect } from 'react-redux';
+import { IndexLink, Link } from 'react-router';
 
-import {MainMenu} from '../../../components';
-import {initialDataProps} from '../../../client-utils';
-import {IAppState} from '../../../reducers';
+import { MainMenu } from '../../../components';
+import { initialDataProps, adminRoutes } from '../../../client-utils';
+import { IAppState } from '../../../reducers';
 
 @asyncConnect([initialDataProps])
 class ClientLayoutPageComponent extends React.Component<any, any> {
@@ -19,7 +19,7 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
         <div className="top-menu">
           <IndexLink to="/" activeClassName="active">Home</IndexLink>&nbsp;
           <Link to="/pasiskelbti">Pasiskelbkite</Link>&nbsp;
-          <Link to="/admin/home">Admin</Link>
+          <Link to={adminRoutes.items.getLink()}>Admin</Link>
         </div>
         <div className="content">
           <MainMenu {...this.props} showSubmenu={true} />

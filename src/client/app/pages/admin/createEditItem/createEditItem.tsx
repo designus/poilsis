@@ -2,11 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import HomeIcon from 'material-ui-icons/Home';
 import PhotoIcon from 'material-ui-icons/Photo';
+import BackIcon from 'material-ui-icons/ArrowBack';
+
 import { IAppState } from '../../../reducers';
 import { getItem } from '../../../actions';
 import { IAdminMenuItem } from '../../../components';
-import { ITEM_LOADER_ID } from '../../../client-utils';
-import { MAIN_INFO, PHOTO_GALLERY } from '../../../../../data-strings';
+import { ITEM_LOADER_ID, adminRoutes } from '../../../client-utils';
+import { MAIN_INFO, PHOTO_GALLERY, GO_BACK } from '../../../../../data-strings';
 
 export const CREATE_EDIT_ITEM_LOADER = 'createEditItem';
 
@@ -22,14 +24,19 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
     return [
       {
         icon: () => (<HomeIcon />),
-        link: id ? `/admin/items/edit/${id}/main` : '/admin/items/create/main',
+        link: id ? adminRoutes.editItemMain.getLink(id) : adminRoutes.createItemMain.getLink(),
         text: MAIN_INFO,
       },
       {
         icon: () => (<PhotoIcon />),
-        link: `/admin/items/edit/${id}/photos`,
+        link: adminRoutes.editItemPhotos.getLink(id),
         text: PHOTO_GALLERY,
         isDisabled: this.isCreatePage,
+      },
+      {
+        icon: () => (<BackIcon />),
+        link: adminRoutes.items.getLink(),
+        text: GO_BACK,
       },
     ];
   }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../../reducers';
 import { getItems, deleteItem } from '../../../actions';
-import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID } from '../../../client-utils';
+import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID, adminRoutes } from '../../../client-utils';
 import {
   GenericTable,
   IGenericTableColumn,
@@ -83,7 +83,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         format: (id) => {
           return (
             <ItemActions
-              editLink={`/admin/items/edit/${id}/main`}
+              editLink={adminRoutes.editItemMain.getLink(id)}
               onDelete={this.openDeleteModal.bind(this, id)}
             />
           );
@@ -108,7 +108,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <AdminPageActions createLink={'/admin/items/create/main'} />
+        <AdminPageActions createLink={adminRoutes.createItemMain.getLink()} />
         <PaginatedTable
           loaderId={ITEMS_LOADER_ID}
           dataMap={this.props.itemsMap}
