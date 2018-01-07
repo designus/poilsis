@@ -2,9 +2,12 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { asyncConnect} from 'redux-connect';
+import Typography from 'material-ui/Typography';
 import { IAppState } from '../../../reducers';
 import { getItems, deleteItem } from '../../../actions';
 import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID, adminRoutes } from '../../../client-utils';
+import { ITEMS } from '../../../../../data-strings';
+import { AdminHeader } from '../../../global-styles';
 import {
   GenericTable,
   IGenericTableColumn,
@@ -37,6 +40,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   state = {
     isDeleteModalOpen: false,
     deleteId: '',
+    search: '',
   };
 
   get columns(): IGenericTableColumn[] {
@@ -92,6 +96,10 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     ];
   }
 
+  setSearch = (search) => {
+    this.setState({search});
+  }
+
   openDeleteModal(id) {
     this.setState({isDeleteModalOpen: true, deleteId: id});
   }
@@ -108,11 +116,19 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <AdminPageActions createLink={adminRoutes.createItemMain.getLink()} />
+        <AdminHeader>
+          <Typography type="headline">
+            {ITEMS}
+          </Typography>
+          <AdminPageActions
+            search={this.setSearch}
+            createLink={adminRoutes.createItemMain.getLink()}
+          />
+        </AdminHeader>
         <PaginatedTable
           loaderId={ITEMS_LOADER_ID}
           dataMap={this.props.itemsMap}
-          search={this.props.search}
+          search={this.state.search}
           columns={this.columns}
           limit={10}
         />

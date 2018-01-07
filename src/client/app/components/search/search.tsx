@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import Input from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
 import SearchIcon from 'material-ui-icons/Search';
+// import debounce from 'lodash-es/debounce';
+import { indigo } from 'material-ui/colors';
+import { DIVIDER_COLOR } from '../../global-styles';
 
 const SearchWrapper = styled.div`
   margin: 0 30px;
@@ -15,6 +18,7 @@ export const styles = theme => ({
   root: {
     width: '120px',
     transition: 'all .2s linear',
+    borderBottom: `1px solid ${DIVIDER_COLOR}`,
   },
   focused: {
     width: '170px',
@@ -23,37 +27,61 @@ export const styles = theme => ({
   input: {
     padding: '7px',
     margin: '0 15px 0 0',
-    color: '#fff',
+    color: indigo[500],
+    '&::placeholder': {
+      color: '#777777',
+    },
   },
   icon: {
-    fill: 'rgba(255, 255, 255, .3)',
+    fill: indigo[500],
   },
 });
 
 export interface ISearchBoxProps {
-  searchInput: string;
-  onChange: any;
+  search: any;
   classes: any;
 }
 
-const Search = (props: ISearchBoxProps) => {
-  const {searchInput, onChange, classes} = props;
-  return (
-    <SearchWrapper>
-      <Input
-        placeholder="Search"
-        value={searchInput}
-        className={`${classes.root}`}
-        classes={{
-          input: classes.input,
-          focused: classes.focused,
-        }}
-        disableUnderline={true}
-        onChange={onChange}
-      />
-      <SearchIcon className={classes.icon} />
-    </SearchWrapper>
-  );
+class SearchComponent extends React.Component<ISearchBoxProps, any> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+    };
+  }
+
+  // search = debounce(this.searchCallback, 500);
+  search = this.searchCallback;
+
+  searchCallback() {
+    this.props.search(this.state.value);
+  }
+
+  onChange = (e) => {
+    this.setState({value: e.target.value});
+    this.search();
+  }
+
+  render() {
+    const {classes} = this.props;
+    return (
+      <SearchWrapper>
+        <Input
+          placeholder="Search"
+          value={this.state.value}
+          className={`${classes.root}`}
+          classes={{
+            input: classes.input,
+            focused: classes.focused,
+          }}
+          disableUnderline={true}
+          onChange={this.onChange}
+        />
+        <SearchIcon className={classes.icon} />
+      </SearchWrapper>
+    );
+  }
 };
 
-export const SearchBox = withStyles(styles)(Search) as any;
+export const SearchBox = withStyles(styles)(SearchComponent) as any;

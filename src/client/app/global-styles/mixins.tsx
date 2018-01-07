@@ -1,4 +1,5 @@
-import {INPUT_FOCUSED_COLOR, INPUT_BORDER_COLOR } from './colors';
+import styled from 'styled-components';
+import { INPUT_FOCUSED_COLOR, INPUT_BORDER_COLOR } from './colors';
 
 export const INPUT_STYLE_MIXIN = {
   underline: {
@@ -15,3 +16,8 @@ export const INPUT_STYLE_MIXIN = {
     },
   },
 };
+
+export const AdminHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

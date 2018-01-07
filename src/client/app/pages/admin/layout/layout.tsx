@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import debounceFn from 'lodash-es/debounce';
 import { browserHistory } from 'react-router';
 import { asyncConnect } from 'redux-connect';
 
@@ -15,15 +14,13 @@ import Typography from 'material-ui/Typography';
 
 import { styles } from './styles';
 import { initialDataProps, removeInjectedStyles, adminRoutes } from '../../../client-utils';
-import { Toast, AdminMenu, IAdminMenuItem, Drawer, SearchBox, UserMenu } from '../../../components';
+import { Toast, AdminMenu, IAdminMenuItem, Drawer, UserMenu } from '../../../components';
 import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';
 
 @asyncConnect([initialDataProps])
 class AdminLayoutPageComponent extends React.Component<any, any> {
 
   state = {
-    searchInput: '',
-    search: '',
     mobileDrawerOpen: false,
     menuItems: this.menuItems,
   };
@@ -34,9 +31,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
       browserHistory.listen(this.routeChangeCallback.bind(this));
     }
   }
-
-  // searchItems = debounceFn(this.setSearch, 500);
-  searchItems = this.setSearch;
 
   handleDrawerClose = () => {
     this.setState({ mobileDrawerOpen: false });
@@ -49,9 +43,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   routeChangeCallback() {
     this.setMenuItems(this.menuItems);
     this.handleDrawerClose();
-    if (this.state.search && this.state.searchInput) {
-      this.setState({search: '', searchInput: ''});
-    }
   }
 
   componentDidMount() {
@@ -77,15 +68,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     this.setState({menuItems});
   }
 
-  onChange = (event) => {
-    this.setState({ searchInput: event.target.value });
-    this.searchItems();
-  }
-
-  setSearch() {
-    this.setState({ search: this.state.searchInput });
-  }
-
   render() {
     const classes = this.props.classes;
     return (
@@ -105,10 +87,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
               <Typography className={classes.appBarTitle} type="title" color="inherit" noWrap>
                 Admin panel
               </Typography>
-              <SearchBox
-                searchInput={this.state.searchInput}
-                onChange={this.onChange}
-              />
               <UserMenu />
             </Toolbar>
           </AppBar>
@@ -121,7 +99,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
           </Drawer>
           <main className={classes.content}>
             {React.cloneElement(this.props.children, {
-              search: this.state.search,
+              // search: this.state.search,
               setMenuItems: this.setMenuItems,
             })}
           </main>

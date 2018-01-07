@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
-import { indigo, grey } from 'material-ui/colors';
+import { indigo } from 'material-ui/colors';
+import { SearchBox } from '../search';
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,8 +16,11 @@ const FlexContainer = styled.div`
   display: flex;
   border-radius: 30px;
   padding: 5px 10px;  
-  border: 1px solid ${grey[300]};
   justify-content: space-between;
+
+  a {
+    height: 30px;
+  }
 `;
 
 const styles = theme => ({
@@ -41,13 +45,18 @@ const styles = theme => ({
 
 interface IAdminPageActions {
   createLink: string;
+  search?: (value) => void;
   classes?: any;
 }
 
-const PageActionsComponent = ({classes, createLink}: IAdminPageActions) => {
+const PageActionsComponent = ({classes, createLink, search}: IAdminPageActions) => {
   return (
     <Wrapper>
       <FlexContainer>
+        {typeof search === 'function' ?
+          <SearchBox search={search} /> :
+          null
+        }
         <Link to={createLink}>
           <Button fab aria-label="Create" className={`${classes.button}`}>
             <AddIcon className={classes.icon} />
