@@ -9,17 +9,19 @@ import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID, adminRoutes } from '../../../cl
 import { ITEMS } from '../../../../../data-strings';
 import { AdminHeader } from '../../../global-styles';
 import {
-  GenericTable,
+  // GenericTable,
+  EnhancedTable,
   IGenericTableColumn,
   ItemTypesList,
-  extendWithPagination,
+  // extendWithPagination,
   extendWithLoader,
   ItemActions,
   DeleteModal,
   AdminPageActions,
 } from '../../../components';
 
-const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
+// const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
+const Table = extendWithLoader(EnhancedTable);
 
 @asyncConnect([{
   key: 'items',
@@ -125,12 +127,12 @@ class AdminItemsPageComponent extends React.Component<any, any> {
             createLink={adminRoutes.createItemMain.getLink()}
           />
         </AdminHeader>
-        <PaginatedTable
+        <Table
           loaderId={ITEMS_LOADER_ID}
           dataMap={this.props.itemsMap}
           search={this.state.search}
           columns={this.columns}
-          limit={10}
+          limit={20}
         />
         <DeleteModal
           loaderId={DELETE_ITEM_LOADER_ID}

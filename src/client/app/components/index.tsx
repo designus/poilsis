@@ -22,3 +22,4 @@ export * from './validationErrors';
 export * from './button';
 export * from './fileUpload';
 export * from './imagePreview';
+export * from './table';

@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
 import { IGenericDataMap } from '../../client-utils';
-import { MarkedText } from '../../components';
+// import { MarkedText } from '../../components';
 
 import Table, { TableBody, TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 import { PaginationInjectedProps } from '../pagination';
 
-export type SortType = 'string'|'number'|'date';
-export type OrderType = 'asc'|'desc';
+type SortType = 'string'|'number'|'date';
+type OrderType = 'asc'|'desc';
 
 export interface IGenericTableColumn {
   title: string;
@@ -138,8 +138,12 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
   }
 
   render() {
-    const { columns, dataMap, pageData } = this.props;
-    const { order, orderBy, filters: {search} } = this.state;
+    const { columns, dataMap, pageData = Object.keys(this.props.dataMap) } = this.props;
+    const {
+      order,
+      orderBy,
+      // filters: {search}
+    } = this.state;
     return (
       <Table>
         <TableHead>
@@ -167,21 +171,22 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
         </TableHead>
         <TableBody>
           {
-            pageData.map((id, i) => {
-              const row = dataMap[id];
+            pageData.slice(0, 5).map((id, i) => {
+              const row = dataMap[id] as any;
               if (row) {
                 return (
-                  <TableRow key={i}>
+                  <TableRow key={row.id}>
                     {
                       columns.map((colItem, index) => {
                         const column = colItem.dataProp ? row[colItem.dataProp] : '';
                         const formattedColumn = colItem.format ? colItem.format(column) : column;
                         return (
                           <TableCell key={index}>
-                            <MarkedText
+                            {/* <MarkedText
                               fullText={formattedColumn}
                               markedText={search}
-                            />
+                            /> */}
+                            {formattedColumn}
                           </TableCell>
                         );
                       })

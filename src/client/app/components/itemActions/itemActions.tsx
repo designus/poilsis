@@ -1,65 +1,57 @@
 import * as React from 'react';
 import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/ModeEdit';
-import Button from 'material-ui/Button';
 import styled from 'styled-components';
-import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router';
 import { red, indigo, blueGrey } from 'material-ui/colors';
 
 const StyledActions = styled.div`
   display: flex;
-`;
 
-const styles = theme => ({
-  button: {
-    width: '36px',
-    height: '36px',
-    boxShadow: 'none',
-    margin: '0 5px',
-    '&:active': {
-      boxShadow: 'none',
-    },
-  },
-  edit: {
-    backgroundColor: blueGrey[100],
-    '&:hover': {
-      backgroundColor: indigo[700],
-    },
-  },
-  delete: {
-    backgroundColor: blueGrey[100],
-    '&:hover': {
-      backgroundColor: red[600],
-    },
-  },
-  icon: {
-    color: '#fff',
-  },
-});
+  a {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    margin: 0 5px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    svg {
+      color: #fff;
+    }
+
+    &.edit {
+      background: ${blueGrey[100]};
+      &:hover {
+        background: ${indigo[700]};
+      }
+    }
+
+    &.delete {
+      background: ${blueGrey[100]};
+      &:hover {
+        background: ${red[600]};
+      }
+    }
+  }
+`;
 
 interface IItemActions {
   editLink: string;
   onDelete: any;
-  classes?: any;
 }
 
-const ItemActionsComponent = (props: IItemActions) => {
-  const {classes} = props;
+export const ItemActions = (props: IItemActions) => {
   return (
     <StyledActions>
-      <Link	to={props.editLink}>
-        <Button fab aria-label="Edit" className={`${classes.button} ${classes.edit}`}>
-          <EditIcon className={classes.icon} />
-        </Button>
+      <Link className="edit" to={props.editLink}>
+        <EditIcon />
       </Link>
-      <div onClick={props.onDelete}>
-        <Button fab aria-label="Delete" className={`${classes.button} ${classes.delete}`}>
-          <DeleteIcon className={classes.icon} />
-        </Button>
-      </div>
+      <a className="delete" onClick={props.onDelete}>
+        <DeleteIcon />
+      </a>
     </StyledActions>
   );
 };
-
-export const ItemActions = withStyles(styles)<IItemActions>(ItemActionsComponent);
