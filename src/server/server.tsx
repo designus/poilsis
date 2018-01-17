@@ -4,28 +4,24 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const { ReduxAsyncConnect, loadOnServer } = require('redux-connect');
-
 import * as React from 'react';
 
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
-import { match } from 'react-router';
 
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import { rootReducer } from '../client/app/reducers';
-import routes from '../client/app/routes';
+import { routes } from '../client/app/routes';
 import { apiRouter } from './controllers';
+import StaticRouter from 'react-router-dom/StaticRouter';
+import { matchRoutes, renderRoutes } from 'react-router-config';
 
-import { JssProvider, SheetsRegistry } from 'react-jss';
-const create = require('jss').create;
-
-import preset from 'jss-preset-default';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
+import { JssProvider } from 'react-jss';
+import { MuiThemeProvider } from 'material-ui/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import { getMaterialUiCSSParams } from './server-utils';
 
 // const favicon = require('serve-favicon');
 
@@ -34,7 +30,6 @@ const port = 3000;
 
 // db config
 mongoose.connect('mongodb://localhost:27017/poilsis');
-
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
@@ -52,43 +47,34 @@ app.get('/favicon.ico', (req, res) => {
 app.get('*', (req, res) => {
   const location = req.url;
   const store = createStore(rootReducer, undefined, applyMiddleware(thunkMiddleware));
-  match({routes, location}, (error, redirectLocation, renderProps) => {
-    if (error) {
-      res.status(500).send(error.message);
-    } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-    } else if (renderProps) {
-      loadOnServer({ ...renderProps, store })
-        .then(() => {
-          const sheetsRegistry = new SheetsRegistry();
-          const theme = createMuiTheme();
-          const jss = create(preset());
-          jss.options.createGenerateClassName = createGenerateClassName;
-
-          const sheet: any = new ServerStyleSheet();
-          const responseHtml = renderToString(
-            <StyleSheetManager sheet={sheet.instance}>
-              <JssProvider registry={sheetsRegistry} jss={jss}>
-                <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-                  <Provider store={store} key="provider">
-                    <ReduxAsyncConnect {...renderProps} />
-                  </Provider>
-                </MuiThemeProvider>
-              </JssProvider>
-            </StyleSheetManager>,
-          );
-          const css = sheetsRegistry.toString();
-          const styleTags = sheet.getStyleTags();
-
-          const finalState = store.getState();
-          res.status(200).send(renderFullPage(responseHtml, css, styleTags, finalState));
-      })
-      .catch((err) => console.error(err));
-
-    } else {
-      res.status(404).send('Not found');
-    }
+  const branch = matchRoutes(routes, location);
+  const promises = branch.map(({route, match}) => {
+    const fetchData = route.component.fetchData;
+    return fetchData instanceof Function ? fetchData(store, match.params) : Promise.resolve(null);
   });
+
+  return Promise.all(promises).then((data) => {
+    const sheet: any = new ServerStyleSheet();
+    const context = {};
+    const styleTags = sheet.getStyleTags();
+    const finalState = store.getState();
+    const {sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
+    const responseHtml = renderToString(
+      <StyleSheetManager sheet={sheet.instance}>
+        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+          <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+            <Provider store={store} key="provider">
+              <StaticRouter location={location} context={context}>
+                {renderRoutes(routes)}
+              </StaticRouter>
+            </Provider>
+          </MuiThemeProvider>
+        </JssProvider>
+      </StyleSheetManager>,
+    );
+    res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
+  });
+
 });
 
 function renderFullPage(html, css1, css2, preloadedState) {
@@ -103,7 +89,7 @@ function renderFullPage(html, css1, css2, preloadedState) {
         <style id="jss-server-side">${css1}</style>
         <style id="styled-css">${css2}</style>
         <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
+          window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
         </script>
         <script src="http://localhost:8080/public/app.js"></script>
       </body>

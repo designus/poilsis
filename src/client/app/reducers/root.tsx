@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import { reducer as reduxAsyncConnect } from 'redux-connect';
+// import { reducer as reduxAsyncConnect } from 'redux-connect';
 
 import { TItemState } from 'pages';
 import { cities, ICityState } from './cities';
 import { types } from './types';
 import { items, IItemsState } from './items';
-import { newItem } from './newItem';
+// import { newItem } from './newItem';
 import { initialData, IInitialDataState } from './initialData';
 import { loader, ILoadingState } from './loader';
 import { toast, IToastState } from './toast';
@@ -28,8 +28,8 @@ export const rootReducer = combineReducers({
   cities,
   types,
   items,
-  newItem,
-  reduxAsyncConnect,
+  // newItem,
+  // reduxAsyncConnect,
   initialData,
   loader,
   toast,

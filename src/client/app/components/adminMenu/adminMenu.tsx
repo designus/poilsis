@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
@@ -47,12 +47,12 @@ export const AdminMenu = ({items}: IAdminMenuProps) => {
               disableGutters={true}
               className={item.isDisabled ? 'disabled' : ''}
             >
-              <Link to={item.link} activeClassName="active">
+              <NavLink to={item.link} exact={true} activeClassName="active">
                 <ListItemIcon>
                   {item.icon()}
                 </ListItemIcon>
                 <ListItemText primary={item.text} />
-              </Link>
+              </NavLink>
             </StyledListItem>
           );
         })

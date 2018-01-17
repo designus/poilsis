@@ -36,7 +36,7 @@ const PhotosForm = extendWithForm(Form);
 class PhotosPageComponent extends React.Component<any, any> {
 
   state: IGenericFormState<IImageFields> = getInitialFormState(photosModel);
-  isCreatePage = !Boolean(this.props.params.id);
+  isCreatePage = !Boolean(this.props.match.params.id);
 
   constructor(props) {
     super(props);
@@ -76,7 +76,6 @@ class PhotosPageComponent extends React.Component<any, any> {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
     updateImages: (itemId: string, images: IImage[], loaderId: string) => dispatch(updatePhotos(itemId, images, loaderId)),
   };
 };

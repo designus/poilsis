@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
 import HomeIcon from 'material-ui-icons/Home';
 import PhotoIcon from 'material-ui-icons/Photo';
 import BackIcon from 'material-ui-icons/ArrowBack';
@@ -14,10 +15,18 @@ export const CREATE_EDIT_ITEM_LOADER = 'createEditItem';
 
 class CreateEditItemPageComponent extends React.Component<any, any> {
 
-  isCreatePage = !Boolean(this.props.params.id);
+  isCreatePage = !Boolean(this.props.match.params.id);
 
   constructor(props) {
     super(props);
+  }
+
+  static fetchData(store, params) {
+    if (params.id) {
+      return store.dispatch(getItem(params.id, ITEM_LOADER_ID));
+    } else {
+      return Promise.resolve(null);
+    }
   }
 
   getMenuItems(id?: string): IAdminMenuItem[] {
@@ -42,26 +51,25 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.props.setMenuItems(this.getMenuItems(this.props.params.id));
+    this.props.setMenuItems(this.getMenuItems(this.props.match.params.id));
     if (!this.isCreatePage) {
-      this.props.getItem(this.props.params.id);
+      this.props.getItem(this.props.match.params.id);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.isCreatePage = !Boolean(nextProps.params.id);
-    this.props.setMenuItems(this.getMenuItems(nextProps.params.id));
+    this.isCreatePage = !Boolean(nextProps.match.params.id);
+    this.props.setMenuItems(this.getMenuItems(nextProps.match.params.id));
   }
 
   render() {
-
-    const loadedItem = this.props.itemsMap[this.props.params.id];
-    const { itemsMap, citiesMap, typesMap, children } = this.props;
+    const loadedItem = this.props.itemsMap[this.props.match.params.id];
+    const { itemsMap, citiesMap, typesMap } = this.props;
 
     if (loadedItem || this.isCreatePage) {
       return (
         <div>
-          {React.cloneElement(children, {loadedItem, itemsMap, citiesMap, typesMap})}
+          {renderRoutes(this.props.route.routes, {loadedItem, itemsMap, citiesMap, typesMap})}
         </div>
       );
     } else {
@@ -84,4 +92,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export const CreateEditItemPage = connect(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent);
+export const CreateEditItemPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent);

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
-import { asyncConnect} from 'redux-connect';
 import Typography from 'material-ui/Typography';
 import { IAppState } from '../../../reducers';
 import { getItems, deleteItem } from '../../../actions';
@@ -9,41 +8,34 @@ import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID, adminRoutes } from '../../../cl
 import { ITEMS } from '../../../../../data-strings';
 import { AdminHeader } from '../../../global-styles';
 import {
-  // GenericTable,
   EnhancedTable,
   IGenericTableColumn,
   ItemTypesList,
-  // extendWithPagination,
   extendWithLoader,
   ItemActions,
   DeleteModal,
   AdminPageActions,
 } from '../../../components';
 
-// const PaginatedTable = extendWithLoader(extendWithPagination(GenericTable));
 const Table = extendWithLoader(EnhancedTable);
 
-@asyncConnect([{
-  key: 'items',
-  promise: ({params, store}) => {
-
-    const appState: IAppState = store.getState();
-    const itemsState = appState.items;
-
-    if (itemsState.allItemsLoaded) {
-      return Promise.resolve();
-    } else {
-      return store.dispatch(getItems(ITEMS_LOADER_ID));
-    }
-  },
-}])
 class AdminItemsPageComponent extends React.Component<any, any> {
+
+  static fetchData(store) {
+    return store.dispatch(getItems(ITEMS_LOADER_ID));
+  }
 
   state = {
     isDeleteModalOpen: false,
     deleteId: '',
     search: '',
   };
+
+  componentDidMount() {
+    if (!this.props.areAllItemsLoaded) {
+      this.props.getItems(ITEMS_LOADER_ID);
+    }
+  }
 
   get columns(): IGenericTableColumn[] {
     return [
@@ -152,12 +144,14 @@ const mapStateToProps = (state: IAppState) => {
     itemsMap: state.items.dataMap,
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,
+    areAllItemsLoaded: state.items.allItemsLoaded,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (itemId) => dispatch(deleteItem(itemId, DELETE_ITEM_LOADER_ID)),
+    getItems: (itemId) => dispatch(getItems(ITEMS_LOADER_ID)),
   };
 };
 

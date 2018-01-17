@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { browserHistory } from 'react-router';
-import { asyncConnect } from 'redux-connect';
-
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -11,9 +8,8 @@ import ArrowBackIcon from 'material-ui-icons/ArrowBack';
 import MenuIcon from 'material-ui-icons/Menu';
 import Hidden from 'material-ui/Hidden';
 import Typography from 'material-ui/Typography';
-
 import { styles } from './styles';
-import { initialDataProps, removeInjectedStyles, adminRoutes } from '../../../client-utils';
+import { removeInjectedStyles, adminRoutes, clientRoutes } from '../../../client-utils';
 import {
   Toast,
   AdminMenu,
@@ -22,9 +18,14 @@ import {
   UserMenu,
 } from '../../../components';
 import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';
+import { getInitialData } from '../../../actions';
+import { renderRoutes } from 'react-router-config';
 
-@asyncConnect([initialDataProps])
 class AdminLayoutPageComponent extends React.Component<any, any> {
+
+  static fetchData(store) {
+    return store.dispatch(getInitialData());
+  }
 
   state = {
     mobileDrawerOpen: false,
@@ -33,8 +34,18 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
-    if (browserHistory) {
-      browserHistory.listen(this.routeChangeCallback.bind(this));
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.routeChangeCallback();
+    }
+  }
+
+  componentDidMount() {
+    if (!this.props.state.initialData.isLoaded) {
+      removeInjectedStyles();
+      this.props.dispatch(getInitialData());
     }
   }
 
@@ -51,10 +62,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     this.handleDrawerClose();
   }
 
-  componentDidMount() {
-    removeInjectedStyles();
-  }
-
   get menuItems(): IAdminMenuItem[] {
     return [
       {
@@ -64,7 +71,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
       },
       {
         icon: () => (<ArrowBackIcon />),
-        link: '/',
+        link: clientRoutes.landing.getLink(),
         text: GO_TO_WEBSITE,
       },
     ];
@@ -110,9 +117,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
             <AdminMenu items={this.state.menuItems} />
           </Drawer>
           <main className={classes.content}>
-            {React.cloneElement(this.props.children, {
-              setMenuItems: this.setMenuItems,
-            })}
+            {renderRoutes(this.props.route.routes, {setMenuItems: this.setMenuItems})}
           </main>
         </div>
         <Toast />

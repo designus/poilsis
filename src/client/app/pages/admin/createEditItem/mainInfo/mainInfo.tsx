@@ -37,7 +37,7 @@ const MainInfoForm = extendWithForm(Form);
 class MainInfoPageComponent extends React.Component<any, any> {
 
   state: IGenericFormState<IMainInfoFields> = getInitialFormState(mainInfoModel);
-  isCreatePage = !Boolean(this.props.params.id);
+  isCreatePage = !Boolean(this.props.match.params.id);
 
   constructor(props) {
     super(props);

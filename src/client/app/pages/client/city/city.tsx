@@ -1,37 +1,40 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { asyncConnect} from 'redux-connect';
+// import { asyncConnect} from 'redux-connect';
 import { IAppState } from '../../../reducers';
-import { getItems, selectCity } from '../../../actions';
-import { getSelectedCity, ITEMS_LOADER_ID } from '../../../client-utils';
+// import { getItems, selectCity } from '../../../actions';
+import {
+  // getSelectedCity,
+  ITEMS_LOADER_ID,
+ } from '../../../client-utils';
 import { ItemsList, NotFound, extendWithLoader } from '../../../components';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
-@asyncConnect([{
-  key: 'items',
-  promise: ({params, store}) => {
+// @asyncConnect([{
+//   key: 'items',
+//   promise: ({params, store}) => {
 
-    const appState: IAppState = store.getState();
-    const citiesState = appState.cities;
-    const itemsState = appState.items;
-    const allItemsLoaded = itemsState.allItemsLoaded;
+//     const appState: IAppState = store.getState();
+//     const citiesState = appState.cities;
+//     const itemsState = appState.items;
+//     const allItemsLoaded = itemsState.allItemsLoaded;
 
-    return getSelectedCity(citiesState, params.city)
-      .then(({id}) => {
-        store.dispatch(selectCity(id));
-        const selectedCity = citiesState.dataMap[id];
-        if (selectedCity && !allItemsLoaded && !itemsState.itemsByCity[id]) {
-          return store.dispatch(getItems(ITEMS_LOADER_ID, id));
-        } else {
-          return Promise.resolve();
-        }
-    }).catch((e) => {
-      console.error('Err', e);
-      return Promise.resolve();
-    });
-  },
-}])
+//     return getSelectedCity(citiesState, params.city)
+//       .then(({id}) => {
+//         store.dispatch(selectCity(id));
+//         const selectedCity = citiesState.dataMap[id];
+//         if (selectedCity && !allItemsLoaded && !itemsState.itemsByCity[id]) {
+//           return store.dispatch(getItems(ITEMS_LOADER_ID, id));
+//         } else {
+//           return Promise.resolve();
+//         }
+//     }).catch((e) => {
+//       console.error('Err', e);
+//       return Promise.resolve();
+//     });
+//   },
+// }])
 class CityPageComponent extends React.Component<any, any> {
 
   render() {

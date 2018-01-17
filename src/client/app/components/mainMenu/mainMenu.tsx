@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 export const getSubmenu = (cityAlias, types, typesMap) => {
   return (
@@ -8,12 +8,12 @@ export const getSubmenu = (cityAlias, types, typesMap) => {
         const type = typesMap[typeId];
         return (
           <li key={typeId}>
-            <Link
+            <NavLink
               activeStyle={{ color: 'red' }}
               to={`/${cityAlias}/${type.alias}`}
             >
               {type.name}
-            </Link>
+            </NavLink>
           </li>
         );
       })}
@@ -34,12 +34,12 @@ export const MainMenu = (props) => {
           const isSubmenuVisible = showSubmenu && typesMap && types.length > 0 && selectedCityId === cityId;
           return (
             <li key={cityId}>
-              <Link
+              <NavLink
                 activeStyle={{ color: 'red' }}
                 to={`/${city.alias}`}
               >
                 {city.name}
-              </Link>
+              </NavLink>
               {isSubmenuVisible ? getSubmenu(city.alias, types, typesMap) : ''}
             </li>
           );

@@ -1,3 +1,5 @@
+import * as React from 'react';
+import { Route } from 'react-router-dom';
 import { ValueType, IKeyMap, IGenericState, TGenericFormModel, IGenericFormState  } from './types';
 import { IItemsMap, IItemsByCity, ItemsDataMap, ICityState } from '../reducers';
 
@@ -136,4 +138,18 @@ export function onUploadProgress(e, callback) {
     const loadedPercent = Math.round((e.loaded * 100) / totalLength - 10);
     callback(loadedPercent);
   }
+};
+
+export const renderMergedProps = (component, ...rest) => {
+  const finalProps = Object.assign({}, ...rest);
+  return (
+    React.createElement(component, finalProps)
+  );
+};
+
+export const PropsRoute = ({ component, ...rest }) => {
+  return (
+    // tslint:disable-next-line
+    <Route {...rest} render={routeProps => renderMergedProps(component, routeProps, rest)} />
+  );
 };

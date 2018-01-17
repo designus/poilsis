@@ -2,7 +2,7 @@ import * as React from 'react';
 import DeleteIcon from 'material-ui-icons/Delete';
 import EditIcon from 'material-ui-icons/ModeEdit';
 import styled from 'styled-components';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { red, indigo, blueGrey } from 'material-ui/colors';
 
 const StyledActions = styled.div`

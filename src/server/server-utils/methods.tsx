@@ -1,4 +1,7 @@
 const fs = require('fs');
+import { SheetsRegistry } from 'react-jss';
+import { createMuiTheme } from 'material-ui/styles';
+import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
 
 import { IMulterFile, FileUploadErrors } from './types';
 import {
@@ -121,3 +124,13 @@ export function saveImageInfoToDatabase(dbModel, id, images, res, next) {
     });
   });
 }
+
+export const getMaterialUiCSSParams = () => {
+  const sheetsRegistry = new SheetsRegistry();
+  const theme = createMuiTheme();
+  const generateClassName = createGenerateClassName();
+  const sheetsManager = new Map();
+  const materialCSS = sheetsRegistry.toString();
+
+  return {sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS};
+};
