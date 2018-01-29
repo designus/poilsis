@@ -155,4 +155,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export const AdminItemsPage = connect(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent);
+export const AdminItemsPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent);

@@ -3,10 +3,10 @@ import { Route } from 'react-router-dom';
 import { ValueType, IKeyMap, IGenericState, TGenericFormModel, IGenericFormState  } from './types';
 import { IItemsMap, IItemsByCity, ItemsDataMap, ICityState } from '../reducers';
 
-export function getSelectedCity(citiesState: ICityState, reqParam: string) {
+export function getSelectedCity(citiesState: ICityState, city: string) {
   return new Promise((resolve, reject) => {
     const {aliases} = citiesState;
-    const selectedCity = aliases.find(({alias, id}) => alias === reqParam);
+    const selectedCity = aliases.find(({alias, id}) => alias === city);
     if (selectedCity) {
       resolve(selectedCity);
     } else {

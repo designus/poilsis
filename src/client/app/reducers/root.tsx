@@ -1,6 +1,4 @@
 import { combineReducers } from 'redux';
-// import { reducer as reduxAsyncConnect } from 'redux-connect';
-
 import { TItemState } from 'pages';
 import { cities, ICityState } from './cities';
 import { types } from './types';
@@ -29,7 +27,6 @@ export const rootReducer = combineReducers({
   types,
   items,
   // newItem,
-  // reduxAsyncConnect,
   initialData,
   loader,
   toast,

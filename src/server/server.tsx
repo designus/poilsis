@@ -48,34 +48,41 @@ app.get('*', (req, res) => {
   const location = req.url;
   const store = createStore(rootReducer, undefined, applyMiddleware(thunkMiddleware));
   const branch = matchRoutes(routes, location);
-  const promises = branch.map(({route, match}) => {
-    const fetchData = route.component.fetchData;
-    return fetchData instanceof Function ? fetchData(store, match.params) : Promise.resolve(null);
-  });
 
-  return Promise.all(promises).then((data) => {
-    const sheet: any = new ServerStyleSheet();
-    const context = {};
-    const styleTags = sheet.getStyleTags();
-    const finalState = store.getState();
-    const {sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
-    const responseHtml = renderToString(
-      <StyleSheetManager sheet={sheet.instance}>
-        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-          <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-            <Provider store={store} key="provider">
-              <StaticRouter location={location} context={context}>
-                {renderRoutes(routes)}
-              </StaticRouter>
-            </Provider>
-          </MuiThemeProvider>
-        </JssProvider>
-      </StyleSheetManager>,
-    );
-    res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
-  });
+  const promises = branch
+    .map(({route, match}) => ({fetchData: route.component.fetchData, params: match.params}))
+    .filter(({fetchData}) => Boolean(fetchData))
+    .map(({fetchData, params}) => fetchData.bind(null, store, params));
 
+  const [getInitialData, ...getOtherData] = promises;
+
+  return getInitialData().then(() => {
+    return Promise.all(getOtherData.map(fn => fn())).then(() => sendResponse(res, store, location));
+  });
 });
+
+function sendResponse(res, store, location) {
+  const sheet: any = new ServerStyleSheet();
+  const context = {};
+  const styleTags = sheet.getStyleTags();
+  const finalState = store.getState();
+  const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
+
+  const responseHtml = renderToString(
+    <StyleSheetManager sheet={sheet.instance}>
+      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+          <Provider store={store} key="provider">
+            <StaticRouter location={location} context={context}>
+              {renderRoutes(routes)}
+            </StaticRouter>
+          </Provider>
+        </MuiThemeProvider>
+      </JssProvider>
+    </StyleSheetManager>,
+  );
+  res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
+}
 
 function renderFullPage(html, css1, css2, preloadedState) {
   return `

@@ -51,7 +51,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
   onItemSubmit = (item: IMainInfoFields) => {
     if (this.isCreatePage) {
       this.props.postItem(item)
-        .then(id => this.props.router.push(adminRoutes.editItemMain.getLink(id)))
+        .then(id => this.props.history.push(adminRoutes.editItemMain.getLink(id)))
         .catch(this.handleErrors);
     } else {
       this.props.updateMainInfo(item).catch(this.handleErrors);

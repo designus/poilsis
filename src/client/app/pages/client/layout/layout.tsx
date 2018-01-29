@@ -1,18 +1,25 @@
 import * as React from 'react';
-// import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { IndexLink, Link } from 'react-router';
-
+import { renderRoutes } from 'react-router-config';
 import { MainMenu } from '../../../components';
-import {
-  // initialDataProps,
-  adminRoutes,
-} from '../../../client-utils';
+import { adminRoutes, removeInjectedStyles } from '../../../client-utils';
+import { getInitialData } from '../../../actions';
+
 import { IAppState } from '../../../reducers';
 
-// @asyncConnect([initialDataProps])
 class ClientLayoutPageComponent extends React.Component<any, any> {
+
+  static fetchData(store) {
+    return store.dispatch(getInitialData());
+  }
+
+  componentDidMount() {
+    if (!this.props.state.initialData.isLoaded) {
+      removeInjectedStyles();
+      this.props.dispatch(getInitialData());
+    }
+  }
 
   render() {
     return (
@@ -21,13 +28,12 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
           This is header
         </div>
         <div className="top-menu">
-          {/* <IndexLink to="/" activeClassName="active">Home</IndexLink>&nbsp; */}
           <Link to="/pasiskelbti">Pasiskelbkite</Link>&nbsp;
           <Link to={adminRoutes.items.getLink()}>Admin</Link>
         </div>
         <div className="content">
-          <MainMenu {...this.props} showSubmenu={true} />
-          {React.cloneElement(this.props.children, {...this.props})}
+          <MainMenu {...this.props} showSubmenu={false} />
+          {renderRoutes(this.props.route.routes)}
         </div>
         <div className="footer">
           This is footer

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+import { clientRoutes } from '../../client-utils';
 
 export const getSubmenu = (cityAlias, types, typesMap) => {
   return (
@@ -36,7 +37,7 @@ export const MainMenu = (props) => {
             <li key={cityId}>
               <NavLink
                 activeStyle={{ color: 'red' }}
-                to={`/${city.alias}`}
+                to={`${clientRoutes.items.getLink(city.alias)}`}
               >
                 {city.name}
               </NavLink>

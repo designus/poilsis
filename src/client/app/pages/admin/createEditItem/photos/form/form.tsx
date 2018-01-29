@@ -1,8 +1,18 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Button, FileUpload, ImagePreview, ValidationErrors } from '../../../../../components';
+import {
+  Button,
+  FileUpload,
+  ImagePreview,
+  ValidationErrors,
+} from '../../../../../components';
 import { IAddItemProps } from '../../../../../pages';
-import { SAVE_LABEL, IMAGES_LABEL, IMAGES_KEY, ERROR_HEADER } from '../../../../../../../data-strings';
+import {
+  SAVE_LABEL,
+  IMAGES_LABEL,
+  IMAGES_KEY,
+  ERROR_HEADER,
+} from '../../../../../../../data-strings';
 import {
   IImage,
   maxFileCount,

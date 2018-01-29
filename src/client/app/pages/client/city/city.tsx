@@ -1,45 +1,46 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-// import { asyncConnect} from 'redux-connect';
-import { IAppState } from '../../../reducers';
-// import { getItems, selectCity } from '../../../actions';
-import {
-  // getSelectedCity,
-  ITEMS_LOADER_ID,
- } from '../../../client-utils';
+import { IAppState, ICityState, IItemsState } from '../../../reducers';
+import { getItems, selectCity } from '../../../actions';
+import { getSelectedCity, ITEMS_LOADER_ID } from '../../../client-utils';
 import { ItemsList, NotFound, extendWithLoader } from '../../../components';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
-// @asyncConnect([{
-//   key: 'items',
-//   promise: ({params, store}) => {
+export const fetchCitiesData = (citiesState: ICityState, itemsState: IItemsState, city: string, dispatch) => {
+  return getSelectedCity(citiesState, city).then(({id}) => {
+    dispatch(selectCity(id));
+    const selectedCity = citiesState.dataMap[id];
+    const allItemsLoaded = itemsState.allItemsLoaded;
+    const isCityItemsLoaded = itemsState.itemsByCity[id];
+    if (selectedCity && !allItemsLoaded && !isCityItemsLoaded) {
+      return dispatch(getItems(ITEMS_LOADER_ID, id));
+    }
+  }).catch(console.error);
+};
 
-//     const appState: IAppState = store.getState();
-//     const citiesState = appState.cities;
-//     const itemsState = appState.items;
-//     const allItemsLoaded = itemsState.allItemsLoaded;
-
-//     return getSelectedCity(citiesState, params.city)
-//       .then(({id}) => {
-//         store.dispatch(selectCity(id));
-//         const selectedCity = citiesState.dataMap[id];
-//         if (selectedCity && !allItemsLoaded && !itemsState.itemsByCity[id]) {
-//           return store.dispatch(getItems(ITEMS_LOADER_ID, id));
-//         } else {
-//           return Promise.resolve();
-//         }
-//     }).catch((e) => {
-//       console.error('Err', e);
-//       return Promise.resolve();
-//     });
-//   },
-// }])
 class CityPageComponent extends React.Component<any, any> {
+
+  static fetchData(store, params) {
+    const appState: IAppState = store.getState();
+    const citiesState = appState.cities;
+    const itemsState = appState.items;
+    return fetchCitiesData(citiesState, itemsState, params.city, store.dispatch);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      fetchCitiesData(this.props.cities, this.props.items, this.props.match.params.city, this.props.dispatch);
+    }
+  }
+
+  componentDidMount() {
+    fetchCitiesData(this.props.cities, this.props.items, this.props.match.params.city, this.props.dispatch);
+  }
 
   render() {
 
-    const {selectedCity, cityItems, itemsMap, typesMap} = this.props;
+    const {selectedCity, selectedCityItems, itemsMap, typesMap} = this.props;
 
     if (selectedCity) {
       return (
@@ -48,7 +49,7 @@ class CityPageComponent extends React.Component<any, any> {
           <p>{selectedCity.description}</p>
           <ItemsListWithLoader
             loaderId={ITEMS_LOADER_ID}
-            items={cityItems}
+            items={selectedCityItems}
             itemsMap={itemsMap}
             typesMap={typesMap}
           />
@@ -62,11 +63,14 @@ class CityPageComponent extends React.Component<any, any> {
 
 const mapStateToProps = (state: IAppState) => {
   const selectedCityId = state.cities.selectedId;
+  const selectedCityItems = state.items.itemsByCity[selectedCityId];
   return {
     selectedCity: state.cities.dataMap[selectedCityId],
     itemsMap: state.items.dataMap,
-    cityItems: state.items.itemsByCity[selectedCityId] || [],
+    selectedCityItems: selectedCityItems || [],
     typesMap: state.types.dataMap,
+    cities: state.cities,
+    items: state.items,
   };
 };
 
