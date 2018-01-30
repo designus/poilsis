@@ -36,7 +36,30 @@ export interface ITableProps {
   classes?: any;
 }
 
+export interface ITableFilters {
+  search: string;
+}
+
+export interface ISearchableColumn {
+  dataProp: string;
+  format: any;
+}
+
+export interface ITableState {
+  order: OrderType;
+  orderBy: string;
+  selected: string[];
+  data: string[];
+  page: number;
+  rowsPerPage: number;
+  filters: ITableFilters;
+  searchableColumns: ISearchableColumn[];
+}
+
 export class EnhancedTable extends React.Component<ITableProps, any> {
+
+  state: ITableState;
+
   constructor(props: ITableProps, context) {
     super(props, context);
 
@@ -47,6 +70,10 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
       data: Object.keys(props.dataMap),
       page: 0,
       rowsPerPage: props.limit,
+      filters: {
+        search: props.search || '',
+      },
+      searchableColumns: this.getSearchableColumns(props.columns),
     };
   }
 
@@ -55,6 +82,45 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
     if (data.length !== this.state.data.length) {
       this.setState({data});
     }
+    if (nextProps.search !== this.state.filters.search) {
+      this.handleSearch(nextProps.search);
+    }
+  }
+
+  getSearchableColumns(columns: ITableColumn[]) {
+    return columns
+      .filter((column: ITableColumn) => column.searchable)
+      .map((column: ITableColumn) => ({dataProp: column.dataProp, format: column.format}));
+  }
+
+  handleSearch(search: string) {
+    const data = this.getFilteredData({search});
+    this.setState({data, page: 0, order: null, orderBy: null});
+  }
+
+  getFilteredData(newFilters: ITableFilters) {
+
+    const {filters} = this.state;
+    const initialData = Object.keys(this.props.dataMap);
+    const allFilters = newFilters ? {...filters, ...newFilters} : filters;
+
+    return Object.keys(allFilters).reduce((filteredData, filter) => {
+      if (filter === 'search' && allFilters[filter]) {
+        return this.searchData(filteredData, allFilters[filter]);
+      }
+      return filteredData;
+    }, initialData);
+  }
+
+  searchData(data: string[], search: string) {
+    return data.filter(id => {
+      const item = this.props.dataMap[id];
+      return this.state.searchableColumns.some((column: ISearchableColumn) => {
+        const itemVal = item[column.dataProp];
+        const formattedItem = column.format ? column.format(itemVal) : itemVal;
+        return formattedItem && formattedItem.search(new RegExp(search, 'i')) !== -1;
+      });
+    });
   }
 
   handleRequestSort = (event, property, sortType: SortType) => {
@@ -147,7 +213,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
           />
           <TableBody>
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(id => {
-              const row = dataMap[id] as any;
+              const row = dataMap[id];
               const isSelected = this.isSelected(id);
               return (
                 <TableRow
@@ -190,10 +256,6 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
                 count={data.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                // backIconButtonProps={{'aria-label': 'Previous Page'}
-                // nextIconButtonProps={{
-                //   'aria-label': 'Next Page',
-                // }}
                 onChangePage={this.handleChangePage}
                 onChangeRowsPerPage={this.handleChangeRowsPerPage}
               />

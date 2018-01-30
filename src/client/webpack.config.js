@@ -46,6 +46,12 @@ var config = {
         loader: 'tslint-loader'
       },
       {
+        test: /\.tsx$/,
+        loader: 'lodash-ts-imports-loader',
+        exclude: /node_modules/,
+        enforce: "pre"
+      },
+      {
         test: /\.tsx?$/,
         loader: 'awesome-typescript-loader'
       },

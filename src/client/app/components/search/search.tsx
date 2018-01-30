@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Input from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
 import SearchIcon from 'material-ui-icons/Search';
-// import debounce from 'lodash-es/debounce';
+import { debounce } from 'lodash';
 import { indigo } from 'material-ui/colors';
 import { DIVIDER_COLOR } from '../../global-styles';
 
@@ -51,8 +51,7 @@ class SearchComponent extends React.Component<ISearchBoxProps, any> {
     };
   }
 
-  // search = debounce(this.searchCallback, 500);
-  search = this.searchCallback;
+  search = debounce(this.searchCallback, 500);
 
   searchCallback() {
     this.props.search(this.state.value);

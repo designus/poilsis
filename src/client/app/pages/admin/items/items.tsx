@@ -9,7 +9,7 @@ import { ITEMS } from '../../../../../data-strings';
 import { AdminHeader } from '../../../global-styles';
 import {
   EnhancedTable,
-  IGenericTableColumn,
+  ITableColumn,
   ItemTypesList,
   extendWithLoader,
   ItemActions,
@@ -37,7 +37,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     }
   }
 
-  get columns(): IGenericTableColumn[] {
+  get columns(): ITableColumn[] {
     return [
       {
         title: 'Id',
@@ -124,7 +124,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           dataMap={this.props.itemsMap}
           search={this.state.search}
           columns={this.columns}
-          limit={20}
+          limit={10}
         />
         <DeleteModal
           loaderId={DELETE_ITEM_LOADER_ID}
