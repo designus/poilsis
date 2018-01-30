@@ -96,7 +96,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
             <Toolbar>
               <Hidden lgUp implementation="css">
                 <IconButton
-                  color="contrast"
+                  color="default"
                   aria-label="Open Drawer"
                   onClick={this.handleDrawerToggle}
                 >
@@ -104,14 +104,14 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
                 </IconButton>
               </Hidden>
               <Typography className={classes.appBarTitle} type="title" color="inherit" noWrap>
-                Admin panel
+                Admin panel32423
               </Typography>
               <UserMenu />
             </Toolbar>
           </AppBar>
           <Drawer
             className={classes.drawer}
-            onRequestClose={this.handleDrawerClose}
+            onClose={this.handleDrawerClose}
             mobileDrawerOpen={this.state.mobileDrawerOpen}
           >
             <AdminMenu items={this.state.menuItems} />

@@ -7,7 +7,6 @@ import { ALLOWED_MIME_TYPES, MAX_FILE_SIZE_B } from '../../../../global-utils';
 import FileUploadIcon from 'material-ui-icons/FileUpload';
 import ClearIcon from 'material-ui-icons/Clear';
 import Typography from 'material-ui/Typography';
-
 export interface IFileUploadProps {
   id: string;
   onDrop: (acceptedImages: any[], rejectedImages?: any[]) => void;
@@ -37,7 +36,12 @@ export const FileUpload = ({id, onDrop, showUploadButtons, clearImages, uploadIm
       </Dropzone>
       {showUploadButtons ?
         <UploadButtons>
-          <Button type="button" color="accent" onClick={clearImages} style={{margin: '0 2px 0 0'}}>
+          <Button
+            type="button"
+            color="secondary"
+            onClick={clearImages}
+            style={{margin: '0 2px 0 0'}}
+          >
             <ClearIcon />
             {CLEAR_IMAGES}
           </Button>

@@ -109,7 +109,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
       <div>
         <Dialog
           open={this.state.isModalOpen}
-          onRequestClose={this.closeModal}
+          onClose={this.closeModal}
           classes={{
             paper: classes.paper,
           }}

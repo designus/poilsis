@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ActionButton from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
+import { PropTypes } from 'material-ui';
 import { voidFn } from '../../client-utils';
 
 const defaultStyles = theme => ({
@@ -23,7 +24,7 @@ export interface IButtonProps {
   onClick?: () => void;
   children?: any;
   type?: 'submit'|'button';
-  color?: 'default'|'primary'|'accent'|'contrast';
+  color?: PropTypes.Color;
   classes?: any;
   style?: object;
 }

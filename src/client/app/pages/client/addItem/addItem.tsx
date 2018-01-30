@@ -98,4 +98,4 @@ export const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export const AddItemPage = connect(mapStateToProps, mapDispatchToProps)(AddItemPageComponent);
+export const AddItemPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(AddItemPageComponent);

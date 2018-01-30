@@ -93,7 +93,7 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
     }, initialData);
   }
 
-  getSortedData(data, sortParams: ISortParams) {
+  getSortedData(data, sortParams: ISortParams|any) {
     return sortParams.order ? data.sort(this.sortData(sortParams)) : data;
   }
 

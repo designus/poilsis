@@ -16,8 +16,8 @@ export const theme = createMuiTheme({
   // userAgent: navigator.userAgent,
 });
 
-const injectTapEventPlugin = require('react-tap-event-plugin');
-injectTapEventPlugin();
+// const injectTapEventPlugin = require('react-tap-event-plugin');
+// injectTapEventPlugin();
 
 render(
   <MuiThemeProvider theme={theme}>

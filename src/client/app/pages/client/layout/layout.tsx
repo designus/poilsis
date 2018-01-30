@@ -50,4 +50,4 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-export const ClientLayoutPage = connect(mapStateToProps)(ClientLayoutPageComponent);
+export const ClientLayoutPage = connect<any, any, {}>(mapStateToProps)(ClientLayoutPageComponent);

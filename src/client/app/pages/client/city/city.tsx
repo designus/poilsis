@@ -74,4 +74,4 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-export const CityPage = connect(mapStateToProps)(CityPageComponent);
+export const CityPage = connect<any, any, {}>(mapStateToProps)(CityPageComponent);

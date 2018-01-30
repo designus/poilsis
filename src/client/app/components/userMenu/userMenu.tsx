@@ -46,7 +46,7 @@ class MenuComponent extends React.Component<any, any> {
           id="menuRight"
           anchorEl={this.state.dropdownAnchorEl}
           open={this.state.dropdownMenuOpen}
-          onRequestClose={this.handleMenuclose}
+          onClose={this.handleMenuclose}
         >
           <div>
             <MenuItem>My account</MenuItem>

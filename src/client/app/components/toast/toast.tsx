@@ -66,7 +66,7 @@ class ToastComponent extends React.Component<any, any> {
           }}
           open={show}
           autoHideDuration={4000}
-          onRequestClose={this.handleRequestClose}
+          onClose={this.handleRequestClose}
           message={message}
           action={
             <CloseButton

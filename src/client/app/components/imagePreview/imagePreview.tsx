@@ -48,7 +48,7 @@ export const ImagePreview = ({
             >
               <ImageSource>
                 <img src={src} onLoad={onLoadImage} draggable={!isTemporary} />
-                <Button fab color="accent" aria-label="remove" onClick={onDeleteImage(index, isTemporary)}>
+                <Button fab color="secondary" aria-label="remove" onClick={onDeleteImage(index, isTemporary)}>
                   <DeleteIcon />
                 </Button>
               </ImageSource>
