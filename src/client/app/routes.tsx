@@ -6,23 +6,6 @@ export const routes = [
     component: App,
     routes: [
       {
-        path: clientRoutes.landing.path,
-        component: clientRoutes.landing.getComponent(),
-        exact: false,
-        routes: [
-          {
-            path: clientRoutes.items.path,
-            component: clientRoutes.items.getComponent(),
-            exact: true,
-          },
-          {
-            path: clientRoutes.item.path,
-            component: clientRoutes.item.getComponent(),
-            exact: true,
-          },
-        ],
-      },
-      {
         path: adminRoutes.landing.path,
         component: adminRoutes.landing.getComponent(),
         exact: false,
@@ -60,6 +43,23 @@ export const routes = [
                 exact: false,
               },
             ],
+          },
+        ],
+      },
+      {
+        path: clientRoutes.landing.path,
+        component: clientRoutes.landing.getComponent(),
+        exact: false,
+        routes: [
+          {
+            path: clientRoutes.items.path,
+            component: clientRoutes.items.getComponent(),
+            exact: true,
+          },
+          {
+            path: clientRoutes.item.path,
+            component: clientRoutes.item.getComponent(),
+            exact: true,
           },
         ],
       },

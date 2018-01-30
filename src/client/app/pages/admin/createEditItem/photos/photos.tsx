@@ -7,12 +7,12 @@ import {
   getInitialFormState,
   voidFn,
   TGenericFormModel,
+  CONTENT_LOADER_ID,
   IGenericFormState,
   getKeyMap,
   maxLength,
 } from '../../../../client-utils';
 import { Form } from './form';
-import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
 import { IMAGES_LABEL, ID_LABEL, FILES_KEY, PHOTO_GALLERY } from '../../../../../../data-strings';
 import { IImage, MAX_FILE_COUNT } from '../../../../../../global-utils';
 import Typography from 'material-ui/Typography';
@@ -46,7 +46,7 @@ class PhotosPageComponent extends React.Component<any, any> {
     if (this.isCreatePage) {
       this.setState(getInitialFormState(photosModel));
     } else {
-      this.props.updateImages(item.id, item.images, CREATE_EDIT_ITEM_LOADER);
+      this.props.updateImages(item.id, item.images);
     }
   }
 
@@ -60,7 +60,7 @@ class PhotosPageComponent extends React.Component<any, any> {
         <div>
           <Typography type="headline">{PHOTO_GALLERY}</Typography>
           <PhotosForm
-            loaderId={CREATE_EDIT_ITEM_LOADER}
+            loaderId={CONTENT_LOADER_ID}
             onItemSubmit={this.onItemSubmit}
             initialState={finalState}
             citiesMap={this.props.citiesMap}
@@ -76,7 +76,7 @@ class PhotosPageComponent extends React.Component<any, any> {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateImages: (itemId: string, images: IImage[], loaderId: string) => dispatch(updatePhotos(itemId, images, loaderId)),
+    updateImages: (itemId: string, images: IImage[], loaderId: string) => dispatch(updatePhotos(itemId, images)),
   };
 };
 

@@ -1,4 +1,4 @@
-import {START_LOADING, END_LOADING} from '../actions';
+import {START_LOADING, END_LOADING, STOP_ALL_LOADERS} from '../actions';
 
 export interface ILoadingState {
   [key: string]: {
@@ -6,22 +6,26 @@ export interface ILoadingState {
   };
 }
 
+export const getLoadingState = (state: ILoadingState, id: string, isLoading: boolean) => {
+  return {
+    ...state,
+    [id]: {
+      isLoading,
+    },
+  };
+};
+
 export const loader = (state: ILoadingState = {}, action) => {
   switch (action.type) {
     case START_LOADING:
-      return {
-        ...state,
-        [action.id]: {
-          isLoading: true,
-        },
-      };
+      return getLoadingState(state, action.id, true);
     case END_LOADING:
-      return {
-        ...state,
-        [action.id]: {
-          isLoading: false,
-        },
-      };
+      return getLoadingState(state, action.id, false);
+    case STOP_ALL_LOADERS:
+      return Object.keys(state).reduce((acc, loaderId) => {
+        acc[loaderId] = false;
+        return acc;
+      }, {});
     default:
       return state;
   }

@@ -6,6 +6,8 @@ import {
   getItemsByCity,
   IAlias,
   objectToFormData,
+  CONTENT_LOADER_ID,
+  DIALOG_LOADER_ID,
   onUploadProgress,
   // getFormData,
  } from '../client-utils';
@@ -69,14 +71,14 @@ export const receiveImages = (id: string, images: IImage[]) => {
   };
 };
 
-export const getItems = (loaderId, cityId = null) => {
+export const getItems = (cityId = null) => {
   const endpoint = cityId	?
     `http://localhost:3000/api/items/city/${cityId}` :
     'http://localhost:3000/api/items';
 
   return (dispatch) => {
 
-    dispatch(startLoading(loaderId));
+    dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.get(endpoint)
       .then(response => {
@@ -88,28 +90,32 @@ export const getItems = (loaderId, cityId = null) => {
         const allItemsLoaded = !cityId;
 
         dispatch(receiveItems(dataMap, aliases, allItemsLoaded, itemsByCity));
+        dispatch(endLoading(CONTENT_LOADER_ID));
 
       })
       .catch(err => {
         console.error(err);
-      })
-      .then(dispatch(endLoading(loaderId)));
+        dispatch(endLoading(CONTENT_LOADER_ID));
+      });
   };
 };
 
-export const getItem = (itemId, loaderId) => {
+export const getItem = (itemId) => {
 
   return dispatch => {
 
-    dispatch(startLoading(loaderId));
+    dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
       .then(response => response.data)
-      .then(item => dispatch(receiveItem(item)))
-      .catch(err => {
-        console.error(err);
+      .then(item => {
+        dispatch(receiveItem(item));
+        dispatch(endLoading(CONTENT_LOADER_ID));
       })
-      .then(dispatch(endLoading(loaderId)));
+      .catch(err => {
+        dispatch(endLoading(CONTENT_LOADER_ID));
+        console.error(err);
+      });
   };
 };
 
@@ -143,9 +149,9 @@ export const uploadPhotos = (itemId, files) => (dispatch) => {
   });
 };
 
-export const updatePhotos = (itemId: string, images: IImage[], loaderId: string) => (dispatch) => {
+export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {
   return new Promise((resolve, reject) => {
-    dispatch(startLoading(loaderId));
+    dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.put(`http://localhost:3000/api/items/item/photos/${itemId}`, {images})
       .then(response => response.data)
@@ -165,15 +171,15 @@ export const updatePhotos = (itemId: string, images: IImage[], loaderId: string)
         console.error(err);
         dispatch(showToast(Toast.error, IMAGES_UPDATE_ERROR));
       })
-      .then(dispatch(endLoading(loaderId)));
+      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
 
   });
 };
 
-export const updateMainInfo = (item: IMainInfoFields, loaderId) => (dispatch, getState) => {
+export const updateMainInfo = (item: IMainInfoFields) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
 
-    dispatch(startLoading(loaderId));
+    dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.put(`http://localhost:3000/api/items/item/mainInfo/${item.id}`, item)
       .then(response => response.data)
@@ -191,15 +197,15 @@ export const updateMainInfo = (item: IMainInfoFields, loaderId) => (dispatch, ge
         console.error(err);
         dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
       })
-      .then(dispatch(endLoading(loaderId)));
+      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
   });
 };
 
-export const postItem = (item, loaderId) => (dispatch) => {
+export const postItem = (item) => (dispatch) => {
 
   return new Promise((resolve, reject) => {
 
-    dispatch(startLoading(loaderId));
+    dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.post('http://localhost:3000/api/items', item)
       .then(response => response.data)
@@ -217,15 +223,15 @@ export const postItem = (item, loaderId) => (dispatch) => {
         console.error(err);
         dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
       })
-      .then(dispatch(endLoading(loaderId)));
+      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
   });
 };
 
-export const deleteItem = (itemId, loaderId) => (dispatch) => {
+export const deleteItem = (itemId) => (dispatch) => {
 
   return new Promise(resolve => {
 
-    dispatch(startLoading(loaderId));
+    dispatch(startLoading(DIALOG_LOADER_ID));
 
     return axios.delete(`http://localhost:3000/api/items/item/${itemId}`)
       .then(response => response.data)
@@ -238,6 +244,6 @@ export const deleteItem = (itemId, loaderId) => (dispatch) => {
         }
       })
       .catch(console.error)
-      .then(dispatch(endLoading(loaderId)));
+      .then(dispatch(endLoading(DIALOG_LOADER_ID)));
   });
 };

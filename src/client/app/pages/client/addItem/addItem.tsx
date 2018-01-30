@@ -92,7 +92,7 @@ export const mapStateToProps = (state) => {
 export const mapDispatchToProps = (dispatch) => {
   return {
     addNewItemState: (state) => dispatch(addNewItemState(state)),
-    postItem: (item, loaderId) => dispatch(postItem(item, loaderId)),
+    postItem: (item, loaderId) => dispatch(postItem(item)),
     showBackendErrors: (errors) => dispatch(showBackendValidationErrors(errors)),
     clearFormFields: () => dispatch(clearFields()),
   };

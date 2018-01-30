@@ -8,10 +8,8 @@ import BackIcon from 'material-ui-icons/ArrowBack';
 import { IAppState } from '../../../reducers';
 import { getItem } from '../../../actions';
 import { IAdminMenuItem } from '../../../components';
-import { ITEM_LOADER_ID, adminRoutes } from '../../../client-utils';
+import { adminRoutes } from '../../../client-utils';
 import { MAIN_INFO, PHOTO_GALLERY, GO_BACK } from '../../../../../data-strings';
-
-export const CREATE_EDIT_ITEM_LOADER = 'createEditItem';
 
 class CreateEditItemPageComponent extends React.Component<any, any> {
 
@@ -23,7 +21,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 
   static fetchData(store, params) {
     if (params.id) {
-      return store.dispatch(getItem(params.id, ITEM_LOADER_ID));
+      return store.dispatch(getItem(params.id));
     } else {
       return Promise.resolve(null);
     }
@@ -88,7 +86,7 @@ const mapStateToProps = (state: IAppState) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getItem: (itemId) => dispatch(getItem(itemId, ITEM_LOADER_ID)),
+    getItem: (itemId) => dispatch(getItem(itemId)),
   };
 };
 

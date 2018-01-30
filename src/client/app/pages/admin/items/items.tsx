@@ -3,8 +3,8 @@ import * as moment from 'moment';
 import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
 import { IAppState } from '../../../reducers';
-import { getItems, deleteItem } from '../../../actions';
-import { ITEMS_LOADER_ID, DELETE_ITEM_LOADER_ID, adminRoutes } from '../../../client-utils';
+import { getItems, deleteItem, stopAllLoaders } from '../../../actions';
+import { CONTENT_LOADER_ID, DIALOG_LOADER_ID, adminRoutes } from '../../../client-utils';
 import { ITEMS } from '../../../../../data-strings';
 import { AdminHeader } from '../../../global-styles';
 import {
@@ -22,7 +22,7 @@ const Table = extendWithLoader(EnhancedTable);
 class AdminItemsPageComponent extends React.Component<any, any> {
 
   static fetchData(store) {
-    return store.dispatch(getItems(ITEMS_LOADER_ID));
+    return store.dispatch(getItems());
   }
 
   state = {
@@ -33,7 +33,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 
   componentDidMount() {
     if (!this.props.areAllItemsLoaded) {
-      this.props.getItems(ITEMS_LOADER_ID);
+      this.props.getItems();
     }
   }
 
@@ -104,7 +104,11 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   }
 
   onDelete = (itemId) => {
-    return this.props.deleteItem(itemId, DELETE_ITEM_LOADER_ID);
+    return this.props.deleteItem(itemId);
+  }
+
+  componentWillUnmount() {
+    this.props.stopAllLoaders();
   }
 
   render() {
@@ -120,14 +124,15 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           />
         </AdminHeader>
         <Table
-          loaderId={ITEMS_LOADER_ID}
+          loaderId={CONTENT_LOADER_ID}
+          showLoadingOverlay={true}
           dataMap={this.props.itemsMap}
           search={this.state.search}
           columns={this.columns}
           limit={10}
         />
         <DeleteModal
-          loaderId={DELETE_ITEM_LOADER_ID}
+          loaderId={DIALOG_LOADER_ID}
           itemId={this.state.deleteId}
           isDeleteModalOpen={this.state.isDeleteModalOpen}
           onDelete={this.onDelete}
@@ -150,8 +155,9 @@ const mapStateToProps = (state: IAppState) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteItem: (itemId) => dispatch(deleteItem(itemId, DELETE_ITEM_LOADER_ID)),
-    getItems: (itemId) => dispatch(getItems(ITEMS_LOADER_ID)),
+    deleteItem: (itemId) => dispatch(deleteItem(itemId)),
+    getItems: () => dispatch(getItems()),
+    stopAllLoaders: () => dispatch(stopAllLoaders()),
   };
 };
 

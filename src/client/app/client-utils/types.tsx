@@ -48,6 +48,7 @@ export interface IFormProps {
   handleInputChange?: (key: string) => (event) => void;
   handleCheckboxToggle?: any;
   loaderId?: string;
+  showLoadingOverlay?: boolean;
   setNewState?: (key: string) => (value: any) => void;
   state?: IGenericFormState<object>;
 }

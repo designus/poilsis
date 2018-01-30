@@ -23,18 +23,18 @@ export type RoutesConfig = {
 
 export const clientRoutes: RoutesConfig = {
   landing: {
-    path: '/client',
+    path: '/',
     getLink: () => '/',
     getComponent: () => ClientLayoutPage,
   },
   items: {
-    path: '/client/:city',
-    getLink: (city) => `/client/${city}`,
+    path: '/:city',
+    getLink: (city) => `/${city}`,
     getComponent: () => CityPage,
   },
   item: {
-    path: '/client/:city/:item',
-    getLink: (city, item) => `/client/${city}/${item}`,
+    path: '/:city/:item',
+    getLink: (city, item) => `/${city}/${item}`,
     getComponent: () => ItemPage,
   },
 };

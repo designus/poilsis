@@ -6,7 +6,7 @@ import {
   getFormStateWithData,
   getInitialFormState,
   getBackendErrors,
-  ITEM_LOADER_ID,
+  CONTENT_LOADER_ID,
   voidFn,
   TGenericFormModel,
   IGenericFormState,
@@ -16,7 +16,6 @@ import {
   maxLength,
 } from '../../../../client-utils';
 import { Form } from './form';
-import { CREATE_EDIT_ITEM_LOADER } from '../createEditItem';
 import { ID_LABEL, NAME_LABEL, CITY_LABEL, TYPES_LABEL, ADDRESS_LABEL, MAIN_INFO } from '../../../../../../data-strings';
 import { IMainInfoFields } from '../../../../../../global-utils';
 import { adminRoutes } from '../../../../client-utils';
@@ -72,7 +71,8 @@ class MainInfoPageComponent extends React.Component<any, any> {
         <div>
           <Typography type="headline">{MAIN_INFO}</Typography>
           <MainInfoForm
-            loaderId={CREATE_EDIT_ITEM_LOADER}
+            loaderId={CONTENT_LOADER_ID}
+            showLoadingOverlay={true}
             onItemSubmit={this.onItemSubmit}
             initialState={finalState}
             citiesMap={this.props.citiesMap}
@@ -89,8 +89,8 @@ class MainInfoPageComponent extends React.Component<any, any> {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateMainInfo: (item) => dispatch(updateMainInfo(item, ITEM_LOADER_ID)),
-    postItem: (item) => dispatch(postItem(item, ITEM_LOADER_ID)),
+    updateMainInfo: (item) => dispatch(updateMainInfo(item)),
+    postItem: (item) => dispatch(postItem(item)),
   };
 };
 
