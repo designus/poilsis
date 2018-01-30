@@ -96,7 +96,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
             <Toolbar>
               <Hidden lgUp implementation="css">
                 <IconButton
-                  color="default"
+                  color="inherit"
                   aria-label="Open Drawer"
                   onClick={this.handleDrawerToggle}
                 >
@@ -104,7 +104,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
                 </IconButton>
               </Hidden>
               <Typography className={classes.appBarTitle} type="title" color="inherit" noWrap>
-                Admin panel32423
+                Admin panel
               </Typography>
               <UserMenu />
             </Toolbar>

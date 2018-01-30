@@ -40,21 +40,21 @@ export interface IDrawerProps {
   className: string;
   classes: any;
   mobileDrawerOpen: boolean;
-  onRequestClose: () => void;
+  onClose: () => void;
   children: any;
 }
 
 function DrawerComponent(props: IDrawerProps, context) {
-  const { classes, className, mobileDrawerOpen, onRequestClose, children } = props;
+  const { classes, className, mobileDrawerOpen, onClose, children } = props;
 
   const drawer = (
     <div>
       <Hidden lgUp implementation="css">
-      <div className={classes.drawerHeader}>
-        <IconButton onClick={onRequestClose}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={onClose}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
       </Hidden>
       {children}
     </div>
@@ -62,14 +62,15 @@ function DrawerComponent(props: IDrawerProps, context) {
 
   return (
     <div className={className}>
-      <Hidden lgUp>
+      <Hidden mdUp>
         <AppDrawer
           classes={{
             paper: classes.paperMobile,
           }}
+          anchor="left"
           type="temporary"
           open={mobileDrawerOpen}
-          onRequestClose={onRequestClose}
+          onClose={onClose}
           ModalProps={{
             keepMounted: true,
           }}
@@ -78,7 +79,7 @@ function DrawerComponent(props: IDrawerProps, context) {
         </AppDrawer>
       </Hidden>
 
-      <Hidden lgDown implementation="css">
+      <Hidden smDown implementation="css">
         <AppDrawer
           classes={{
             paper: classes.paper,
