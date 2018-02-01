@@ -17,6 +17,8 @@ import {
   ITEM_UPDATE_ERROR,
   ITEM_CREATE_SUCCESS,
   ITEM_CREATE_ERROR,
+  DELETE_ITEM_ERROR,
+  DELETE_ITEM_SUCCESS,
   IMAGES_UPLOAD_ERROR,
   IMAGES_UPLOAD_SUCCESS,
   IMAGES_UPDATE_SUCCESS,
@@ -230,21 +232,26 @@ export const postItem = (item) => (dispatch) => {
 
 export const deleteItem = (itemId) => (dispatch) => {
 
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
 
     dispatch(startLoading(DIALOG_LOADER_ID));
 
     return axios.delete(`http://localhost:3000/api/items/item/${itemId}`)
       .then(response => response.data)
       .then(item => {
+        dispatch(endLoading(DIALOG_LOADER_ID));
         if (item.errors) {
-          resolve(item.errors);
+          dispatch(showToast(Toast.error, DELETE_ITEM_ERROR));
+          reject(item.errors);
         } else {
           dispatch(removeItem(item));
+          dispatch(showToast(Toast.success, DELETE_ITEM_SUCCESS));
           resolve();
         }
       })
-      .catch(console.error)
-      .then(dispatch(endLoading(DIALOG_LOADER_ID)));
+      .catch(err => {
+        console.error(err);
+        dispatch(endLoading(DIALOG_LOADER_ID));
+      });
   });
 };

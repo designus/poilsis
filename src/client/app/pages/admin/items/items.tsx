@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
 import { IAppState } from '../../../reducers';
 import { getItems, deleteItem, stopAllLoaders } from '../../../actions';
-import { CONTENT_LOADER_ID, DIALOG_LOADER_ID, adminRoutes } from '../../../client-utils';
+import { CONTENT_LOADER_ID, adminRoutes } from '../../../client-utils';
 import { ITEMS } from '../../../../../data-strings';
 import { AdminHeader } from '../../../global-styles';
 import {
@@ -132,7 +132,6 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           limit={10}
         />
         <DeleteModal
-          loaderId={DIALOG_LOADER_ID}
           itemId={this.state.deleteId}
           isDeleteModalOpen={this.state.isDeleteModalOpen}
           onDelete={this.onDelete}
