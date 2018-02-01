@@ -5,7 +5,7 @@ import HomeIcon from 'material-ui-icons/Home';
 import PhotoIcon from 'material-ui-icons/Photo';
 import BackIcon from 'material-ui-icons/ArrowBack';
 
-import { IAppState } from '../../../reducers';
+import { IAppState, IItemsMap } from '../../../reducers';
 import { getItem } from '../../../actions';
 import { IAdminMenuItem } from '../../../components';
 import { adminRoutes } from '../../../client-utils';
@@ -25,6 +25,10 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
     } else {
       return Promise.resolve(null);
     }
+  }
+
+  getLoadedItem(): IItemsMap {
+    return this.props.itemsMap[this.props.match.params.id];
   }
 
   getMenuItems(id?: string): IAdminMenuItem[] {
@@ -49,8 +53,9 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    const loadedItem = this.getLoadedItem();
     this.props.setMenuItems(this.getMenuItems(this.props.match.params.id));
-    if (!this.isCreatePage) {
+    if (!this.isCreatePage && (!loadedItem || !loadedItem.isFullyLoaded)) {
       this.props.getItem(this.props.match.params.id);
     }
   }
@@ -61,7 +66,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
   }
 
   render() {
-    const loadedItem = this.props.itemsMap[this.props.match.params.id];
+    const loadedItem = this.getLoadedItem();
     const { itemsMap, citiesMap, typesMap } = this.props;
 
     if (loadedItem || this.isCreatePage) {

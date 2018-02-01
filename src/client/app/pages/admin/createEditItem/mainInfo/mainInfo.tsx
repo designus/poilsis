@@ -57,13 +57,11 @@ class MainInfoPageComponent extends React.Component<any, any> {
     }
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
 
-    const finalState = this.props.loadedItem && getFormStateWithData(this.props.loadedItem, this.state) || this.state;
+    const initialState = this.props.loadedItem && this.props.loadedItem.isFullyLoaded
+      ? getFormStateWithData(this.props.loadedItem, this.state)
+      : this.state;
 
     if (this.props.loadedItem || this.isCreatePage) {
 
@@ -74,7 +72,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
             loaderId={CONTENT_LOADER_ID}
             showLoadingOverlay={true}
             onItemSubmit={this.onItemSubmit}
-            initialState={finalState}
+            initialState={initialState}
             citiesMap={this.props.citiesMap}
             typesMap={this.props.typesMap}
             isCreate={this.isCreatePage}

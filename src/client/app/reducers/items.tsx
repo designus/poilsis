@@ -10,6 +10,7 @@ export interface IItemsMap {
   name: string;
   types: string[];
   images?: IImage[];
+  isFullyLoaded?: boolean;
 }
 
 export interface IItemsByCity {
@@ -72,7 +73,7 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
           [action.item.id]: {
             ...(state.dataMap[action.item.id] || {}),
             ...action.item,
-            fullInfo: true,
+            isFullyLoaded: true,
           },
         },
       };
