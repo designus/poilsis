@@ -215,15 +215,16 @@ export const postItem = (item) => (dispatch) => {
           reject(item.errors);
         } else {
           dispatch(receiveItem(item));
+          dispatch(endLoading(CONTENT_LOADER_ID));
           dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
           resolve(item.id);
         }
       })
       .catch(err => {
         console.error(err);
+        dispatch(endLoading(CONTENT_LOADER_ID));
         dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
-      })
-      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
+      });
   });
 };
 
