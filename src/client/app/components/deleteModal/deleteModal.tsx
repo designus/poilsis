@@ -77,14 +77,15 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
     error: null,
   };
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.isDeleteModalOpen !== this.state.isModalOpen) {
-      this.setState({isModalOpen: newProps.isDeleteModalOpen});
+  componentWillReceiveProps(newProps: IDeleteModalProps) {
+    if (newProps.isDeleteModalOpen !== this.state.isModalOpen && newProps.itemName) {
+      this.setState({isModalOpen: newProps.isDeleteModalOpen, error: null});
     }
   }
 
-  openModal(id) {
-    this.setState({isModalOpen: true, error: null});
+  // TODO: Performance optimization
+  shouldComponentUpdate() {
+    return true;
   }
 
   closeModal = () => {
@@ -93,7 +94,7 @@ class DeleteModalComponent extends React.Component<IDeleteModalProps & { classes
 
   deleteItem = () => {
     this.props.onDelete(this.props.itemId)
-      .then(() => this.setState({error: null, isModalOpen: false}))
+      .then(() => this.closeModal())
       .catch(error => this.setState({error}));
   }
 

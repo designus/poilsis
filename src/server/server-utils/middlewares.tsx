@@ -1,6 +1,7 @@
 const fs = require('fs');
 const multer = require('multer');
 const Jimp = require('jimp');
+const rimraf = require('rimraf');
 
 import { getFileExtension, getFilePath, getUploadPath, handleFileUploadErrors, getSourceFiles, removeFiles } from './methods';
 import { IMulterFile, FileUploadErrors } from './types';
@@ -23,6 +24,14 @@ export const createUploadPath = (req, res, next) => {
          next();
        });
      }
+  });
+};
+
+export const removeImagesDir = (req, res, next) => {
+  const uploadPath = getUploadPath(req.params.itemId);
+  rimraf(uploadPath, (err) => {
+    if (err) { return next(err); }
+    next();
   });
 };
 

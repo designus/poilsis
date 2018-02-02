@@ -3,7 +3,7 @@ const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFromFs } from '../server-utils';
+import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFromFs, removeImagesDir } from '../server-utils';
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT, IMainInfoFields } from '../../global-utils';
 import { FILES_KEY } from '../../data-strings';
@@ -45,7 +45,7 @@ router.route('/item/:itemId')
       res.json(item);
     });
   })
-  .delete((req, res) => {
+  .delete(removeImagesDir, (req, res) => {
     ItemsModel.findOneAndRemove({id: req.params.itemId}, (err, item, result) => {
       if (err) {
         res.send(err);
@@ -102,7 +102,6 @@ router.route('/item/upload-photos/:itemId')
 
       resizeImages(req, res)
         .then(() => {
-          console.log('Images is resized');
           const images = getImages(req.files);
 
           ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
