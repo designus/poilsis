@@ -8,15 +8,17 @@ import { ItemsList, NotFound, extendWithLoader } from '../../../components';
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
 export const fetchCitiesData = (citiesState: ICityState, itemsState: IItemsState, city: string, dispatch) => {
-  return getSelectedCity(citiesState, city).then(({id}) => {
-    dispatch(selectCity(id));
-    const selectedCity = citiesState.dataMap[id];
-    const allItemsLoaded = itemsState.allItemsLoaded;
-    const isCityItemsLoaded = itemsState.itemsByCity[id];
-    if (selectedCity && !allItemsLoaded && !isCityItemsLoaded) {
-      return dispatch(getItems(id));
-    }
-  }).catch(console.error);
+  return getSelectedCity(citiesState, city)
+    .then(({id}) => {
+      dispatch(selectCity(id));
+      const selectedCity = citiesState.dataMap[id];
+      const allItemsLoaded = itemsState.allItemsLoaded;
+      const isCityItemsLoaded = itemsState.itemsByCity[id];
+      if (selectedCity && !allItemsLoaded && !isCityItemsLoaded) {
+        return dispatch(getItems(id));
+      }
+    })
+    .catch(console.error);
 };
 
 class CityPageComponent extends React.Component<any, any> {
@@ -39,7 +41,6 @@ class CityPageComponent extends React.Component<any, any> {
   }
 
   render() {
-
     const {selectedCity, selectedCityItems, itemsMap, typesMap} = this.props;
 
     if (selectedCity) {

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
+import { Route } from 'react-router-dom';
 import { MainMenu } from '../../../components';
-import { adminRoutes, removeInjectedStyles } from '../../../client-utils';
+import { adminRoutes, clientRoutes, removeInjectedStyles } from '../../../client-utils';
 import { getInitialData } from '../../../actions';
 
 import { IAppState } from '../../../reducers';
@@ -15,7 +15,7 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    if (!this.props.state.initialData.isLoaded) {
+    if (!this.props.isInitialDataLoaded) {
       removeInjectedStyles();
       this.props.dispatch(getInitialData());
     }
@@ -33,7 +33,7 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
         </div>
         <div className="content">
           <MainMenu {...this.props} showSubmenu={false} />
-          {renderRoutes(this.props.route.routes)}
+          <Route path={clientRoutes.items.path} component={clientRoutes.items.getComponent()} />
         </div>
         <div className="footer">
           This is footer
@@ -47,6 +47,7 @@ const mapStateToProps = (state: IAppState) => {
   return {
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,
+    isInitialDataLoaded: state.initialData.isLoaded,
   };
 };
 

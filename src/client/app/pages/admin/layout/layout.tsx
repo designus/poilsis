@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { withStyles } from 'material-ui/styles';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
@@ -9,17 +10,20 @@ import MenuIcon from 'material-ui-icons/Menu';
 import Hidden from 'material-ui/Hidden';
 import Typography from 'material-ui/Typography';
 import { styles } from './styles';
-import { removeInjectedStyles, adminRoutes, clientRoutes } from '../../../client-utils';
+import { removeInjectedStyles, adminRoutes, clientRoutes, PropsRoute } from '../../../client-utils';
+import { IAppState } from '../../../reducers';
 import {
   Toast,
   AdminMenu,
   IAdminMenuItem,
   Drawer,
   UserMenu,
+  NotFound,
 } from '../../../components';
+import { AdminItemsPage, CreateEditItemPage } from '../../../pages';
 import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';
 import { getInitialData } from '../../../actions';
-import { renderRoutes } from 'react-router-config';
+import { Switch } from 'react-router-dom';
 
 class AdminLayoutPageComponent extends React.Component<any, any> {
 
@@ -43,7 +47,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    if (!this.props.state.initialData.isLoaded) {
+    if (!this.props.isInitialDataLoaded) {
       removeInjectedStyles();
       this.props.dispatch(getInitialData());
     }
@@ -117,7 +121,25 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
             <AdminMenu items={this.state.menuItems} />
           </Drawer>
           <main className={classes.content}>
-            {renderRoutes(this.props.route.routes, {setMenuItems: this.setMenuItems})}
+            <Switch>
+              <PropsRoute
+                exact
+                path={'/admin/items'}
+                component={AdminItemsPage}
+                setMenuItems={this.setMenuItems}
+              />
+              <PropsRoute
+                path={'/admin/item/create'}
+                component={CreateEditItemPage}
+                setMenuItems={this.setMenuItems}
+              />
+              <PropsRoute
+                path={'/admin/item/edit/:id'}
+                component={CreateEditItemPage}
+                setMenuItems={this.setMenuItems}
+              />
+              <PropsRoute component={NotFound}/>
+            </Switch>
           </main>
         </div>
         <Toast />
@@ -126,4 +148,10 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   }
 };
 
-export const AdminLayoutPage = withStyles(styles)(AdminLayoutPageComponent);
+const mapStateToProps = (state: IAppState) => {
+  return {
+    isInitialDataLoaded: state.initialData.isLoaded,
+  };
+};
+
+export const AdminLayoutPage = connect(mapStateToProps)(withStyles(styles)(AdminLayoutPageComponent));

@@ -51,28 +51,28 @@ export const adminRoutes: RoutesConfig = {
     getComponent: () => AdminItemsPage,
   },
   createItem: {
-    path: '/admin/items/create',
-    getLink: () => '/admin/items/create',
+    path: '/admin/item/create',
+    getLink: () => '/admin/item/create',
     getComponent: () => CreateEditItemPage,
   },
   createItemMain: {
-    path: '/admin/items/create/main',
-    getLink: () => '/admin/items/create/main',
+    path: '/admin/item/create',
+    getLink: () => '/admin/item/create',
     getComponent: () => MainInfoPage,
   },
   editItem: {
-    path: '/admin/items/edit/:id',
-    getLink: (id) => `/admin/items/edit/${id}`,
+    path: '/admin/item/edit/:id',
+    getLink: (id) => `/admin/item/edit/${id}`,
     getComponent: () => CreateEditItemPage,
   },
   editItemMain: {
-    path: '/admin/items/edit/:id/main',
-    getLink: (id) => `/admin/items/edit/${id}/main`,
+    path: '/admin/item/edit/:id',
+    getLink: (id) => `/admin/item/edit/${id}`,
     getComponent: () => MainInfoPage,
   },
   editItemPhotos: {
-    path: '/admin/items/edit/:id/photos',
-    getLink: (id) => `/admin/items/edit/${id}/photos`,
+    path: '/admin/item/edit/:id/photos',
+    getLink: (id) => `/admin/item/edit/${id}/photos`,
     getComponent: () => PhotosPage,
   },
 };

@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { renderRoutes } from 'react-router-config';
 import HomeIcon from 'material-ui-icons/Home';
 import PhotoIcon from 'material-ui-icons/Photo';
 import BackIcon from 'material-ui-icons/ArrowBack';
 
 import { IAppState, IItemsMap } from '../../../reducers';
 import { getItem } from '../../../actions';
-import { IAdminMenuItem } from '../../../components';
-import { adminRoutes } from '../../../client-utils';
+import { IAdminMenuItem, NotFound } from '../../../components';
+import { adminRoutes, PropsRoute } from '../../../client-utils';
 import { MAIN_INFO, PHOTO_GALLERY, GO_BACK } from '../../../../../data-strings';
+import { Switch } from 'react-router-dom';
+import { MainInfoPage, PhotosPage } from '../../../pages';
 
 class CreateEditItemPageComponent extends React.Component<any, any> {
 
@@ -67,12 +68,30 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 
   render() {
     const loadedItem = this.getLoadedItem();
-    const { itemsMap, citiesMap, typesMap } = this.props;
+    const childProps = {...this.props, loadedItem };
 
     if (loadedItem || this.isCreatePage) {
       return (
         <div>
-          {renderRoutes(this.props.route.routes, {loadedItem, itemsMap, citiesMap, typesMap})}
+          <Switch>
+            <PropsRoute
+              path={'/admin/item/create'}
+              exact
+              component={MainInfoPage}
+              {...childProps}
+            />
+            <PropsRoute
+              path={'/admin/item/edit/:id/photos'}
+              component={PhotosPage}
+              {...childProps}
+            />
+            <PropsRoute
+              path={'/admin/item/edit/:id'}
+              component={MainInfoPage}
+              {...childProps}
+            />
+            <PropsRoute component={NotFound}/>
+          </Switch>
         </div>
       );
     } else {

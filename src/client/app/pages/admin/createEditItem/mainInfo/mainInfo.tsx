@@ -58,7 +58,6 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 
   render() {
-
     const initialState = this.props.loadedItem && this.props.loadedItem.isFullyLoaded
       ? getFormStateWithData(this.props.loadedItem, this.state)
       : this.state;

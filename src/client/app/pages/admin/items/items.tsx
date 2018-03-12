@@ -112,6 +112,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   }
 
   render() {
+    console.log('Admin items props', this.props);
     return (
       <div>
         <AdminHeader>

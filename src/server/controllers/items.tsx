@@ -7,6 +7,7 @@ import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFr
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT, IMainInfoFields } from '../../global-utils';
 import { FILES_KEY } from '../../data-strings';
+// import * as passport from 'passport';
 
 router.route('/')
   .get((req, res) => {

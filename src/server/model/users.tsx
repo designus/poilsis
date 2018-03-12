@@ -14,13 +14,13 @@ const usersSchema = new mongoose.Schema({
   name: String,
   role: String,
   username: {
-      type: String,
-      required: [true, 'Username is required'],
-      unique: true,
+    type: String,
+    required: [true, 'Username is required'],
+    unique: true,
   },
   password: {
-      type: String,
-      required: [true, 'Password is required'],
+    type: String,
+    required: [true, 'Password is required'],
   },
 }, {
   timestamps: {
@@ -31,23 +31,23 @@ const usersSchema = new mongoose.Schema({
 
 usersSchema.pre('save', (next) => {
   bcrypt.hash(this.password, 10, (err, hash) => {
-      this.password = hash;
-      next();
+    this.password = hash;
+    next();
   });
 });
 
 usersSchema.pre('update', (next) => {
   bcrypt.hash(this.password, 10, (err, hash) => {
-      this.password = hash;
-      next();
+    this.password = hash;
+    next();
   });
 });
 
-usersSchema.methods.comparePassword = function (candidatePassword: string): Promise<boolean> {
+usersSchema.methods.comparePassword = (candidatePassword: string): Promise<boolean> => {
   const password = this.password;
   return new Promise((resolve, reject) => {
     bcrypt.compare(candidatePassword, password, (err, success) => {
-      if (err) { return reject(err) };
+      if (err) { return reject(err); };
       return resolve(success);
     });
   });

@@ -23,7 +23,6 @@ export const getSubmenu = (cityAlias, types, typesMap) => {
 };
 
 export const MainMenu = (props) => {
-
   const {citiesMap, typesMap, selectedCityId, showSubmenu} = props;
 
   return (
