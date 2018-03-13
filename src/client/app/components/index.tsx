@@ -23,3 +23,5 @@ export * from './button';
 export * from './fileUpload';
 export * from './imagePreview';
 export * from './table';
+export * from './propsRoute';
+export * from './protectedRoute';

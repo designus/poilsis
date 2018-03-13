@@ -10,7 +10,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import Hidden from 'material-ui/Hidden';
 import Typography from 'material-ui/Typography';
 import { styles } from './styles';
-import { removeInjectedStyles, adminRoutes, clientRoutes, PropsRoute } from '../../../client-utils';
+import { removeInjectedStyles, adminRoutes, clientRoutes } from '../../../client-utils';
 import { IAppState } from '../../../reducers';
 import {
   Toast,
@@ -19,6 +19,7 @@ import {
   Drawer,
   UserMenu,
   NotFound,
+  PropsRoute,
 } from '../../../components';
 import { AdminItemsPage, CreateEditItemPage } from '../../../pages';
 import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';

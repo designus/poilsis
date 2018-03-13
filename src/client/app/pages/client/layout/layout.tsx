@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { MainMenu } from '../../../components';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from '../../../client-utils';
 import { getInitialData } from '../../../actions';
-
+import { LoginPage, CityPage } from '../../../pages';
 import { IAppState } from '../../../reducers';
 
 class ClientLayoutPageComponent extends React.Component<any, any> {
@@ -33,7 +33,10 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
         </div>
         <div className="content">
           <MainMenu {...this.props} showSubmenu={false} />
-          <Route path={clientRoutes.items.path} component={clientRoutes.items.getComponent()} />
+          <Switch>
+            <Route path={'/login'} component={LoginPage} />
+            <Route path={clientRoutes.items.path} component={CityPage} />
+          </Switch>
         </div>
         <div className="footer">
           This is footer

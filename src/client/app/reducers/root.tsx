@@ -8,9 +8,11 @@ import { initialData, IInitialDataState } from './initialData';
 import { loader, ILoadingState } from './loader';
 import { toast, IToastState } from './toast';
 import { uploadProgress, IUploadProgress  } from './uploadProgress';
+import { auth, IAuthState } from './auth';
 
 export interface IAppState {
   cities: ICityState;
+  auth: IAuthState;
   global: any;
   items: IItemsState;
   newItem: TItemState;
@@ -25,6 +27,7 @@ export interface IAppState {
 export const rootReducer = combineReducers({
   cities,
   types,
+  auth,
   items,
   // newItem,
   initialData,

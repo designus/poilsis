@@ -6,8 +6,8 @@ import BackIcon from 'material-ui-icons/ArrowBack';
 
 import { IAppState, IItemsMap } from '../../../reducers';
 import { getItem } from '../../../actions';
-import { IAdminMenuItem, NotFound } from '../../../components';
-import { adminRoutes, PropsRoute } from '../../../client-utils';
+import { IAdminMenuItem, NotFound, PropsRoute } from '../../../components';
+import { adminRoutes } from '../../../client-utils';
 import { MAIN_INFO, PHOTO_GALLERY, GO_BACK } from '../../../../../data-strings';
 import { Switch } from 'react-router-dom';
 import { MainInfoPage, PhotosPage } from '../../../pages';
