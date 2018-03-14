@@ -60,7 +60,7 @@ app.get('*', (req, res, next) => {
     .filter(({fetchData}) => Boolean(fetchData))
     .map(({fetchData, params}) => fetchData.bind(null, store, params));
 
-  if (location.includes('admin2')) {
+  if (location.includes('admin')) {
     return auth.authenticate((err, user, info) => {
       console.log('Authenticate user', user);
       if (err) {
