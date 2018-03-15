@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-import {CitiesModel} from '../model';
+import { CitiesModel } from '../model';
 
 router.route('/')
   .get((req, res) => {

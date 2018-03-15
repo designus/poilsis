@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from '../actions';
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actions';
 
 export interface IUser {
   name: string;
@@ -17,13 +17,6 @@ export const auth = (state: IAuthState = {isLoggedIn: false, user: null}, action
         ...state,
         user: action.user,
         isLoggedIn: true,
-      };
-    }
-    case LOGIN_FAILURE: {
-      return {
-        ...state,
-        user: null,
-        isLoggedIn: false,
       };
     }
     case LOGOUT_SUCCESS: {

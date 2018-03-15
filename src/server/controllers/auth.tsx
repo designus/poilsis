@@ -3,7 +3,6 @@ import * as passport from 'passport';
 import * as moment from 'moment';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { UsersModel as User, IUser } from '../model/users';
-// import { voidFn } from '../../client/app/client-utils';
 
 class Auth {
 
@@ -21,7 +20,7 @@ class Auth {
     return {
       token: 'JWT ' + token,
       expires: moment.unix(expires).format(),
-      user: user._id,
+      userId: user._id,
     };
   }
 

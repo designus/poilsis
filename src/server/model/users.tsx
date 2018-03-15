@@ -1,18 +1,20 @@
 'use strict';
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
+const shortId = require('shortid');
 
 export interface IUser extends mongoose.Document {
   name: string;
   username: string;
   password: string;
   role: string;
-  comparePassword(candidatePassword: string): Promise<boolean>;
+  comparePassword(password: string): Promise<boolean>;
 }
 
 const usersSchema = new mongoose.Schema({
   name: String,
   role: String,
+  id: {type: String, unique: true, default: shortId.generate, required: true},
   username: {
     type: String,
     required: [true, 'Username is required'],
@@ -43,10 +45,9 @@ usersSchema.pre('update', (next) => {
   });
 });
 
-usersSchema.methods.comparePassword = (candidatePassword: string): Promise<boolean> => {
-  const password = this.password;
+usersSchema.methods.comparePassword = function(password: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(candidatePassword, password, (err, success) => {
+    bcrypt.compare(password, this.password, (err, success) => {
       if (err) { return reject(err); };
       return resolve(success);
     });
