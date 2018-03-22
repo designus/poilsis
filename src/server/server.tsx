@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const cookieParser = require('cookie-parser');
 
 import * as React from 'react';
 
@@ -17,11 +18,7 @@ import { rootReducer } from '../client/app/reducers';
 import { routes } from '../client/app/routes';
 import { apiRouter } from './controllers';
 import StaticRouter from 'react-router-dom/StaticRouter';
-import {
-   matchRoutes,
-  //  renderRoutes
-  } from 'react-router-config';
-
+import { matchRoutes } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from 'material-ui/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
@@ -41,6 +38,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
+app.use(cookieParser());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(expressValidator());
@@ -52,17 +50,17 @@ app.get('/favicon.ico', (req, res) => {
 });
 
 app.get('*', (req, res, next) => {
-  const location = req.url;
-  const store = createStore(rootReducer, undefined, applyMiddleware(thunkMiddleware));
-  const branch = matchRoutes(routes, location);
-  const promises = branch
-    .map(({route, match}) => ({fetchData: route.component.fetchData, params: match.params}))
-    .filter(({fetchData}) => Boolean(fetchData))
-    .map(({fetchData, params}) => fetchData.bind(null, store, params));
+  return auth.authenticate((err, user, info) => {
+    const location = req.url;
+    const initialState = user ? {auth: {token: req.cookies.jwt, user: null, isLoggedIn: false}} : undefined;
+    const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
+    const branch = matchRoutes(routes, location);
+    const promises = branch
+      .map(({route, match}) => ({fetchData: route.component.fetchData, params: match.params}))
+      .filter(({fetchData}) => Boolean(fetchData))
+      .map(({fetchData, params}) => fetchData.bind(null, store, params));
 
-  if (location.includes('admin')) {
-    return auth.authenticate((err, user, info) => {
-      console.log('Authenticate user', user);
+    if (location.includes('admin')) {
       if (err) {
         return next(err);
       } else if (!user) {
@@ -71,11 +69,10 @@ app.get('*', (req, res, next) => {
       } else {
         return preloadData(promises).then(() => sendResponse(res, store, location));
       }
-    })(req, res, next);
-  }
-
-  return preloadData(promises).then(() => sendResponse(res, store, location));
-
+    } else {
+      return preloadData(promises).then(() => sendResponse(res, store, location));
+    }
+  })(req, res, next);
 });
 
 function sendResponse(res, store, location) {
@@ -92,7 +89,6 @@ function sendResponse(res, store, location) {
           <Provider store={store} key="provider">
             <StaticRouter location={location} context={context}>
               <App />
-              {/* {renderRoutes(routes)} */}
             </StaticRouter>
           </Provider>
         </MuiThemeProvider>

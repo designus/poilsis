@@ -7,6 +7,7 @@ import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFr
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT, IMainInfoFields } from '../../global-utils';
 import { FILES_KEY } from '../../data-strings';
+import auth from './auth';
 
 router.route('/')
   .get((req, res) => {
@@ -45,7 +46,7 @@ router.route('/item/:itemId')
       res.json(item);
     });
   })
-  .delete(removeImagesDir, (req, res) => {
+  .delete(auth.authenticate(), removeImagesDir, (req, res) => {
     ItemsModel.findOneAndRemove({id: req.params.itemId}, (err, item, result) => {
       if (err) {
         res.send(err);
@@ -55,7 +56,7 @@ router.route('/item/:itemId')
   });
 
 router.route('/item/mainInfo/:itemId')
-  .put((req, res, next) => {
+  .put(auth.authenticate(), (req, res, next) => {
     const item: IMainInfoFields = req.body;
     const name = sanitize(item.name);
     const city = sanitize(item.city);
@@ -73,7 +74,7 @@ router.route('/item/mainInfo/:itemId')
   });
 
 router.route('/item/photos/:itemId')
-  .put(removeImagesFromFs, (req, res, next) => {
+  .put(auth.authenticate(), removeImagesFromFs, (req, res, next) => {
     ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
       if (err) {
         // TODO: Rollback deleted files
@@ -94,7 +95,7 @@ router.route('/item/photos/:itemId')
   });
 
 router.route('/item/upload-photos/:itemId')
-  .put(createUploadPath, (req, res, next) => {
+  .put(auth.authenticate(), createUploadPath, (req, res, next) => {
     const uploadPhotos = uploadImages.array(`${FILES_KEY}[]`, MAX_FILE_COUNT);
 
     uploadPhotos(req, res, (err) => {

@@ -7,3 +7,4 @@ export * from './types';
 export * from './objectToFormData';
 export * from './custom-icons';
 export * from './routes';
+export * from './cookie';

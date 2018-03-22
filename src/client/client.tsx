@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-// import { renderRoutes } from 'react-router-config';
 import { injectGlobal } from 'styled-components';
 // import { routes } from './app/routes';
 import { Provider } from 'react-redux';
@@ -24,7 +23,6 @@ render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store} key="provider">
       <BrowserRouter>
-        {/* {renderRoutes(routes)} */}
         <App />
       </BrowserRouter>
     </Provider>

@@ -1,7 +1,7 @@
 import * as jwt from 'jwt-simple';
 import * as passport from 'passport';
 import * as moment from 'moment';
-import { Strategy, ExtractJwt } from 'passport-jwt';
+import { Strategy } from 'passport-jwt';
 import { UsersModel as User, IUser } from '../model/users';
 
 class Auth {
@@ -11,17 +11,17 @@ class Auth {
     return passport.initialize();
   }
 
-  public authenticate = (callback) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
+  public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
   private genToken = (user: IUser): object => {
-    const expires = moment().utc().add({ days: 7 }).unix();
-    const token = jwt.encode({exp: expires, username: user.username, role: user.role}, process.env.JWT_SECRET);
-
-    return {
-      token: 'JWT ' + token,
-      expires: moment.unix(expires).format(),
+    const expires = moment().utc().add({ minutes: 3 }).unix();
+    const claims = {
+      exp: expires,
       userId: user._id,
     };
+    const token = jwt.encode(claims, process.env.JWT_SECRET);
+
+    return { token };
   }
 
   public login = async (req, res) => {
@@ -51,16 +51,19 @@ class Auth {
     }
   }
 
+  private extractFromCookie(req) {
+    return req && req.cookies ? req.cookies.jwt : null;
+  }
+
   private getStrategy = (): Strategy => {
     const params = {
       secretOrKey: process.env.JWT_SECRET,
-      jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
+      jwtFromRequest: this.extractFromCookie,
       passReqToCallback: true,
     };
 
     return new Strategy(params, (req, payload: any, done) => {
-      console.log('Payload inside strategy', payload);
-      User.findOne({username: payload.username }, (err, user) => {
+      User.findOne({ _id: payload.userId }, (err, user) => {
         if (err) { return done(err); }
         if (user === null) {
           return done(null, false, { message: 'The user in the token was not found' });
