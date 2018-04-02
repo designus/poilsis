@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS, RECEIVE_LOGGED_IN_USER, SET_ACCESS_TOKEN } from '../actions';
+import { LOGIN_SUCCESS, LOGOUT_SUCCESS, RECEIVE_LOGGED_IN_USER, SET_ACCESS_TOKEN, SET_AUTH_TIMEOUT_ID } from '../actions';
 
 export interface IUser {
   name: string;
@@ -9,6 +9,7 @@ export interface IAuthState {
   isLoggedIn: boolean;
   user: IUser;
   accessToken: string;
+  timeoutId?: number;
 }
 
 export const auth = (state: IAuthState = {isLoggedIn: false, user: null, accessToken: null}, action) => {
@@ -44,6 +45,12 @@ export const auth = (state: IAuthState = {isLoggedIn: false, user: null, accessT
         accessToken: action.accessToken,
         user: null,
         isLoggedIn: false,
+      };
+    }
+    case SET_AUTH_TIMEOUT_ID: {
+      return {
+        ...state,
+        timeoutId: action.timeoutId,
       };
     }
     default:

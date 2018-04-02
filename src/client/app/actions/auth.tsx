@@ -1,16 +1,18 @@
 import axios from 'axios';
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
+import * as JWT from 'jwt-decode';
 import { startLoading, endLoading, showToast } from '../actions';
 import { Toast, IAppState } from '../reducers';
 import { DIALOG_LOADER_ID } from '../client-utils';
-import * as JWT from 'jwt-decode';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const SET_AUTH_TIMEOUT_ID = 'SET_AUTH_TIMEOUT_ID';
 
 export const loginSuccess = (user, accesToken) => ({type: LOGIN_SUCCESS, user, accesToken});
 export const logoutSuccess = () => ({type: LOGOUT_SUCCESS});
+export const setAuthTimeoutId = (timeoutId) => ({type: SET_AUTH_TIMEOUT_ID, timeoutId});
 
 export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
@@ -18,6 +20,22 @@ export const handleError = (dispatch, error, isLogin: boolean) => {
   console.error(response);
   dispatch(endLoading(DIALOG_LOADER_ID));
   dispatch(showToast(Toast.error, `${errorType}: ${response.data.message}`));
+};
+
+export const showRefreshTokenNotification = (expires: number) => (dispatch, getState) => {
+  const state: IAppState = getState();
+  const timeoutId = state.auth.timeoutId;
+  const now = moment().utc().unix();
+  const duration = 30;
+  const delayCandidate = expires - duration - now;
+  const delay = delayCandidate > 0 ? delayCandidate : expires - now;
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  const newTimeoutId = setTimeout(() => {
+    console.log('Something happened');
+  }, delay * 1000);
+  dispatch(setAuthTimeoutId(newTimeoutId));
 };
 
 export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
@@ -30,6 +48,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
       const jwt: any = JWT(accessToken);
       const {userId, exp} = jwt;
       const expires = moment.unix(exp).utc().toDate();
+
       return axios.get(`http://localhost:3000/api/users/profile/${userId}`)
         .then(response => response.data)
         .then(user => {
@@ -37,6 +56,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           dispatch(loginSuccess(user, accessToken));
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
+          dispatch(showRefreshTokenNotification(exp));
           Cookies.set('jwt', accessToken, {expires});
           localStorage.setItem('refreshToken', refreshToken);
         })
@@ -56,5 +76,5 @@ export const logout = () => (dispatch, getState) => {
       localStorage.removeItem('refreshToken');
       dispatch(logoutSuccess());
     })
-    .catch((error) => handleError(dispatch, error, false));
+    .catch(error => handleError(dispatch, error, false));
 };
