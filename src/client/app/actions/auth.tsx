@@ -1,26 +1,23 @@
 import axios from 'axios';
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
-import {
-  startLoading,
-  endLoading,
-  showToast,
-} from '../actions';
-import { Toast } from '../reducers';
+import { startLoading, endLoading, showToast } from '../actions';
+import { Toast, IAppState } from '../reducers';
 import { DIALOG_LOADER_ID } from '../client-utils';
 import * as JWT from 'jwt-decode';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
-export const loginSuccess = (user, token) => ({type: LOGIN_SUCCESS, user, token});
+export const loginSuccess = (user, accesToken) => ({type: LOGIN_SUCCESS, user, accesToken});
 export const logoutSuccess = () => ({type: LOGOUT_SUCCESS});
 
-export const handleLoginError = (dispatch, error) => {
+export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
+  const errorType = isLogin ? 'Login failed' : 'Logout failed';
   console.error(response);
   dispatch(endLoading(DIALOG_LOADER_ID));
-  dispatch(showToast(Toast.error, `Login failed: ${response.data.message}`));
+  dispatch(showToast(Toast.error, `${errorType}: ${response.data.message}`));
 };
 
 export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
@@ -29,23 +26,35 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
   return axios.post('http://localhost:3000/api/users/login', credentials)
     .then(response => response.data)
     .then(data => {
-      const jwt: any = JWT(data.token);
+      const { accessToken, refreshToken } = data;
+      const jwt: any = JWT(accessToken);
       const {userId, exp} = jwt;
       const expires = moment.unix(exp).utc().toDate();
       return axios.get(`http://localhost:3000/api/users/profile/${userId}`)
         .then(response => response.data)
         .then(user => {
-          dispatch(loginSuccess(user, data.token));
+          console.log('User', user);
+          dispatch(loginSuccess(user, accessToken));
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
-          Cookies.set('jwt', data.token, {expires});
+          Cookies.set('jwt', accessToken, {expires});
+          localStorage.setItem('refreshToken', refreshToken);
         })
-        .catch(error => handleLoginError(dispatch, error));
+        .catch(error => handleError(dispatch, error, true));
     })
-    .catch(error => handleLoginError(dispatch, error));
+    .catch(error => handleError(dispatch, error, true));
 };
 
-export const logout = () => dispatch => {
-  Cookies.remove('jwt');
-  dispatch(logoutSuccess());
+export const logout = () => (dispatch, getState) => {
+  const state: IAppState = getState();
+  const accessToken = state.auth.accessToken;
+  const {userId} = JWT(accessToken);
+  return axios.delete(`http://localhost:3000/api/tokens/${userId}`)
+    .then(response => response.data)
+    .then(() => {
+      Cookies.remove('jwt');
+      localStorage.removeItem('refreshToken');
+      dispatch(logoutSuccess());
+    })
+    .catch((error) => handleError(dispatch, error, false));
 };

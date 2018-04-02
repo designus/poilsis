@@ -24,6 +24,7 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { getMaterialUiCSSParams, preloadData } from './server-utils';
 import { App } from '../client/app/pages';
+import { setAccessToken } from '../client/app/actions';
 import auth from './controllers/auth';
 require('dotenv').config();
 // const favicon = require('serve-favicon');
@@ -52,7 +53,7 @@ app.get('/favicon.ico', (req, res) => {
 app.get('*', (req, res, next) => {
   return auth.authenticate((err, user, info) => {
     const location = req.url;
-    const initialState = user ? {auth: {token: req.cookies.jwt, user: null, isLoggedIn: false}} : undefined;
+    const initialState = user ? {auth: setAccessToken(req.cookies.jwt)} : undefined;
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
     const branch = matchRoutes(routes, location);
     const promises = branch

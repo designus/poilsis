@@ -3,8 +3,13 @@ import * as passport from 'passport';
 import * as moment from 'moment';
 import { Strategy } from 'passport-jwt';
 import { UsersModel as User, IUser } from '../model/users';
+import { TokensModel } from '../model/tokens';
+
+const randToken = require('rand-token');
 
 class Auth {
+
+  public refreshTokens = {};
 
   public initialize = () => {
     passport.use('jwt', this.getStrategy());
@@ -13,15 +18,13 @@ class Auth {
 
   public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
-  private genToken = (user: IUser): object => {
+  private genToken = (user: IUser) => {
     const expires = moment().utc().add({ minutes: 3 }).unix();
-    const claims = {
-      exp: expires,
-      userId: user._id,
-    };
+    const userId = user._id;
+    const claims = { exp: expires, userId };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 
-    return { token };
+    return token;
   }
 
   public login = async (req, res) => {
@@ -40,14 +43,22 @@ class Auth {
         throw new Error('User not found');
       }
 
+      const userId = user._id;
       const success = await user.comparePassword(req.body.password);
+
       if (success === false) {
         throw new Error('');
       }
 
-      res.status(200).json(this.genToken(user));
+      const tokenItem = await TokensModel.findOneAndUpdate({userId}, {refreshToken: randToken.uid(32)}, {upsert: true, new: true});
+
+      if (!tokenItem) {
+        throw new Error('Failed to create refresh Token');
+      }
+
+      res.status(200).json({accessToken: this.genToken(user), refreshToken: tokenItem.refreshToken});
     } catch (err) {
-      res.status(401).json({ message: 'Invalid credentials', errors: err });
+      res.status(401).json({message: 'Invalid credentials', errors: err});
     }
   }
 
