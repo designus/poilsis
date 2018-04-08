@@ -2,7 +2,7 @@ export * from './adminMenu';
 export * from './adminPageActions';
 export * from './checkboxGroup';
 export * from './drawer';
-export * from './deleteModal';
+export * from './modals';
 export * from './form';
 export * from './genericTable';
 export * from './loader';
