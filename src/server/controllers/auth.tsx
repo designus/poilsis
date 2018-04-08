@@ -19,7 +19,7 @@ class Auth {
   public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
   private genToken = (user: IUser) => {
-    const expires = moment().utc().add({ minutes: 3 }).unix();
+    const expires = moment().utc().add({ minutes: 1 }).unix();
     const userId = user._id;
     const claims = { exp: expires, userId };
     const token = jwt.encode(claims, process.env.JWT_SECRET);

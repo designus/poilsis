@@ -1,4 +1,11 @@
-import { LOGIN_SUCCESS, LOGOUT_SUCCESS, RECEIVE_LOGGED_IN_USER, SET_ACCESS_TOKEN, SET_AUTH_TIMEOUT_ID } from '../actions';
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  RECEIVE_LOGGED_IN_USER,
+  SET_ACCESS_TOKEN,
+  SET_AUTH_TIMEOUT_ID,
+  SHOW_KEEP_ME_LOGGED_MODAL,
+} from '../actions';
 
 export interface IUser {
   name: string;
@@ -10,9 +17,18 @@ export interface IAuthState {
   user: IUser;
   accessToken: string;
   timeoutId?: number;
+  showKeepMeLoggedModal?: boolean;
+  timeToCloseModal?: number;
 }
 
-export const auth = (state: IAuthState = {isLoggedIn: false, user: null, accessToken: null}, action) => {
+export const auth = (state: IAuthState = {
+  isLoggedIn: false,
+  user: null,
+  accessToken: null,
+  showKeepMeLoggedModal: false,
+  timeToCloseModal: 0,
+  timeoutId: null,
+}, action): IAuthState => {
   switch (action.type) {
     case LOGIN_SUCCESS: {
       return {
@@ -28,6 +44,8 @@ export const auth = (state: IAuthState = {isLoggedIn: false, user: null, accessT
         user: null,
         accessToken: null,
         isLoggedIn: false,
+        showKeepMeLoggedModal: false,
+        timeToCloseModal: null,
       };
     }
     case RECEIVE_LOGGED_IN_USER: {
@@ -51,6 +69,13 @@ export const auth = (state: IAuthState = {isLoggedIn: false, user: null, accessT
       return {
         ...state,
         timeoutId: action.timeoutId,
+      };
+    }
+    case SHOW_KEEP_ME_LOGGED_MODAL: {
+      return {
+        ...state,
+        showKeepMeLoggedModal: true,
+        timeToCloseModal: action.time,
       };
     }
     default:

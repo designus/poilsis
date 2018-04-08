@@ -9,10 +9,12 @@ import { DIALOG_LOADER_ID } from '../client-utils';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const SET_AUTH_TIMEOUT_ID = 'SET_AUTH_TIMEOUT_ID';
+export const SHOW_KEEP_ME_LOGGED_MODAL = 'SHOW_KEEP_ME_LOGGED_MODAL';
 
-export const loginSuccess = (user, accesToken) => ({type: LOGIN_SUCCESS, user, accesToken});
+export const loginSuccess = (user, accessToken) => ({type: LOGIN_SUCCESS, user, accessToken});
 export const logoutSuccess = () => ({type: LOGOUT_SUCCESS});
 export const setAuthTimeoutId = (timeoutId) => ({type: SET_AUTH_TIMEOUT_ID, timeoutId});
+export const showKeepMeLoggedModal = (time) => ({type: SHOW_KEEP_ME_LOGGED_MODAL, time});
 
 export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
@@ -22,19 +24,23 @@ export const handleError = (dispatch, error, isLogin: boolean) => {
   dispatch(showToast(Toast.error, `${errorType}: ${response.data.message}`));
 };
 
-export const showRefreshTokenNotification = (expires: number) => (dispatch, getState) => {
-  const state: IAppState = getState();
-  const timeoutId = state.auth.timeoutId;
+export const getKeepMeLoggedModalDelay = (expires, timeInSeconds) => {
   const now = moment().utc().unix();
-  const duration = 30;
-  const delayCandidate = expires - duration - now;
+  const delayBuffer = 10;
+  const delayCandidate = expires - delayBuffer - timeInSeconds - now;
   const delay = delayCandidate > 0 ? delayCandidate : expires - now;
+  return delay;
+};
+
+export const initiateExpiredLoginNotification = (expires: number) => (dispatch, getState) => {
+  const state: IAppState = getState();
+  const timeInSeconds = 30;
+  const timeoutId = state.auth.timeoutId;
+  const delayInSeconds = getKeepMeLoggedModalDelay(expires, timeInSeconds);
   if (timeoutId) {
     clearTimeout(timeoutId);
   }
-  const newTimeoutId = setTimeout(() => {
-    console.log('Something happened');
-  }, delay * 1000);
+  const newTimeoutId = setTimeout(() => dispatch(showKeepMeLoggedModal(timeInSeconds)), delayInSeconds * 1000);
   dispatch(setAuthTimeoutId(newTimeoutId));
 };
 
@@ -56,7 +62,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           dispatch(loginSuccess(user, accessToken));
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
-          dispatch(showRefreshTokenNotification(exp));
+          dispatch(initiateExpiredLoginNotification(exp));
           Cookies.set('jwt', accessToken, {expires});
           localStorage.setItem('refreshToken', refreshToken);
         })

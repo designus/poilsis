@@ -5,7 +5,7 @@ import { Switch } from 'react-router-dom';
 import { adminRoutes, clientRoutes } from '../client-utils';
 import { AdminLayoutPage } from './admin';
 import { ClientLayoutPage } from './client';
-import { PropsRoute, ProtectedRoute } from '../components';
+import { PropsRoute, ProtectedRoute, KeepMeLoggedModal } from '../components';
 class AppComponent extends React.Component<any, any> {
   render() {
     return (
@@ -14,6 +14,7 @@ class AppComponent extends React.Component<any, any> {
           <ProtectedRoute path={adminRoutes.landing.path} component={AdminLayoutPage} />
           <PropsRoute path={clientRoutes.landing.path} component={ClientLayoutPage} />
         </Switch>
+        <KeepMeLoggedModal />
       </div>
     );
   }
