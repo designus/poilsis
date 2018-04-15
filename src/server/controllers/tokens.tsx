@@ -18,4 +18,6 @@ router.route('/:userId')
     }
   });
 
+router.post('/reauthenticate', auth.reauthenticate);
+
 export default router;

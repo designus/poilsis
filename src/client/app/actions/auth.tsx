@@ -10,11 +10,13 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const SET_AUTH_TIMEOUT_ID = 'SET_AUTH_TIMEOUT_ID';
 export const SHOW_KEEP_ME_LOGGED_MODAL = 'SHOW_KEEP_ME_LOGGED_MODAL';
+export const REAUTHENTICATE_SUCCESS = 'REAUTHENTICATE_SUCCESS';
 
 export const loginSuccess = (user, accessToken) => ({type: LOGIN_SUCCESS, user, accessToken});
 export const logoutSuccess = () => ({type: LOGOUT_SUCCESS});
 export const setAuthTimeoutId = (timeoutId) => ({type: SET_AUTH_TIMEOUT_ID, timeoutId});
 export const showKeepMeLoggedModal = (time) => ({type: SHOW_KEEP_ME_LOGGED_MODAL, time});
+export const reauthenticateSuccess = (accessToken) => ({type: REAUTHENTICATE_SUCCESS, accessToken});
 
 export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
@@ -22,6 +24,7 @@ export const handleError = (dispatch, error, isLogin: boolean) => {
   console.error(response);
   dispatch(endLoading(DIALOG_LOADER_ID));
   dispatch(showToast(Toast.error, `${errorType}: ${response.data.message}`));
+  dispatch(logout());
 };
 
 export const getKeepMeLoggedModalDelay = (expires, timeInSeconds) => {
@@ -67,6 +70,27 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           localStorage.setItem('refreshToken', refreshToken);
         })
         .catch(error => handleError(dispatch, error, true));
+    })
+    .catch(error => handleError(dispatch, error, true));
+};
+
+export const keepUserLogged = () => (dispatch, getState) => {
+  dispatch(startLoading(DIALOG_LOADER_ID));
+  const state: IAppState = getState();
+  const oldAccessToken = state.auth.accessToken;
+  const refreshToken = localStorage.getItem('refreshToken');
+  const {userId} = JWT(oldAccessToken);
+  return axios.post('http://localhost:3000/api/tokens/reauthenticate', {userId, refreshToken})
+    .then(response => response.data)
+    .then((data) => {
+      const accessToken = data.accessToken;
+      const {exp} = JWT(accessToken);
+      const expires = moment.unix(exp).utc().toDate();
+      dispatch(endLoading(DIALOG_LOADER_ID));
+      dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
+      dispatch(reauthenticateSuccess(accessToken));
+      dispatch(initiateExpiredLoginNotification(exp));
+      Cookies.set('jwt', accessToken, {expires});
     })
     .catch(error => handleError(dispatch, error, true));
 };

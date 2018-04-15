@@ -6,12 +6,13 @@ import { DIALOG_LOADER_ID } from '../../../client-utils';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 import { IAppState } from '../../../reducers';
-import { logout } from '../../../actions';
+import { logout, keepUserLogged } from '../../../actions';
 
 export interface IKeepMeLoggedModalProps {
   isModalOpen?: boolean;
   timeToCloseModal?: number;
   onCloseModal?: () => void;
+  keepUserLogged?: () => void;
 }
 
 class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps & { classes: any }, any> {
@@ -22,10 +23,6 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
   };
 
   timerId = null;
-
-  keepUserLogged = () => {
-    console.log('Keep user logged');
-  }
 
   setCounter(timeToCloseModal) {
     clearInterval(this.timerId);
@@ -90,7 +87,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
             closeLabel={'No'}
             submitLabel={'Yes'}
             onClose={this.onCloseModal}
-            onSubmit={this.keepUserLogged}
+            onSubmit={this.props.keepUserLogged}
           />
         </Dialog>
       </div>
@@ -106,6 +103,7 @@ const mapStateToProps = (state: IAppState) => {
 };
 const mapDispatchToProps = (dispatch) => ({
   onCloseModal: () => dispatch(logout()),
+  keepUserLogged: () => dispatch(keepUserLogged()),
 });
 
 export const KeepMeLoggedModal = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(

@@ -2,14 +2,12 @@ import * as jwt from 'jwt-simple';
 import * as passport from 'passport';
 import * as moment from 'moment';
 import { Strategy } from 'passport-jwt';
-import { UsersModel as User, IUser } from '../model/users';
+import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
 
 const randToken = require('rand-token');
 
 class Auth {
-
-  public refreshTokens = {};
 
   public initialize = () => {
     passport.use('jwt', this.getStrategy());
@@ -18,13 +16,40 @@ class Auth {
 
   public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
-  private genToken = (user: IUser) => {
-    const expires = moment().utc().add({ minutes: 1 }).unix();
-    const userId = user._id;
+  private genToken = (userId: string) => {
+    const expires = moment().utc().add({ minutes: 5 }).unix();
     const claims = { exp: expires, userId };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 
     return token;
+  }
+
+  public reauthenticate = async (req, res) => {
+    try {
+      req.checkBody('refreshToken').notEmpty();
+      req.checkBody('userId').notEmpty();
+
+      const errors = req.validationErrors();
+
+      if (errors) {
+        throw errors;
+      }
+
+      const userId = req.body.userId;
+      const token = await TokensModel.findOne({userId}).exec();
+
+      if (token === null) {
+        throw new Error('Refresh token not found');
+      }
+
+      if (token.refreshToken !== req.body.refreshToken) {
+        throw new Error('Wrong refresh token');
+      }
+
+      res.status(200).json({accessToken: this.genToken(userId)});
+    } catch (err) {
+      res.status(401).json({message: 'Invalid credentials', errors: err});
+    }
   }
 
   public login = async (req, res) => {
@@ -56,7 +81,7 @@ class Auth {
         throw new Error('Failed to create refresh Token');
       }
 
-      res.status(200).json({accessToken: this.genToken(user), refreshToken: tokenItem.refreshToken});
+      res.status(200).json({accessToken: this.genToken(userId), refreshToken: tokenItem.refreshToken});
     } catch (err) {
       res.status(401).json({message: 'Invalid credentials', errors: err});
     }

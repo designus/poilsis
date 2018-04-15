@@ -5,6 +5,7 @@ import {
   SET_ACCESS_TOKEN,
   SET_AUTH_TIMEOUT_ID,
   SHOW_KEEP_ME_LOGGED_MODAL,
+  REAUTHENTICATE_SUCCESS,
 } from '../actions';
 
 export interface IUser {
@@ -46,6 +47,13 @@ export const auth = (state: IAuthState = {
         isLoggedIn: false,
         showKeepMeLoggedModal: false,
         timeToCloseModal: null,
+      };
+    }
+    case REAUTHENTICATE_SUCCESS: {
+      return {
+        ...state,
+        accessToken: action.accessToken,
+        showKeepMeLoggedModal: false,
       };
     }
     case RECEIVE_LOGGED_IN_USER: {
