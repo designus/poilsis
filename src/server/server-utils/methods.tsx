@@ -135,6 +135,9 @@ export const getMaterialUiCSSParams = () => {
   return {sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS};
 };
 
-export const preloadData = ([loadInitialData, ...loadOtherData]) => {
+export const preloadData = ([loadInitialData, ...loadOtherData], loadInitialDataOnly = false) => {
+  if (loadInitialDataOnly) {
+    return loadInitialData();
+  }
   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));
-}
+};

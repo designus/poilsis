@@ -19,7 +19,8 @@ import {
   Drawer,
   UserMenu,
   NotFound,
-  PropsRoute,
+  // PropsRoute,
+  ProtectedRoute,
 } from '../../../components';
 import { AdminItemsPage, CreateEditItemPage } from '../../../pages';
 import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';
@@ -123,23 +124,23 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
           </Drawer>
           <main className={classes.content}>
             <Switch>
-              <PropsRoute
+              <ProtectedRoute
                 exact
                 path={'/admin/items'}
                 component={AdminItemsPage}
                 setMenuItems={this.setMenuItems}
               />
-              <PropsRoute
+              <ProtectedRoute
                 path={'/admin/item/create'}
                 component={CreateEditItemPage}
                 setMenuItems={this.setMenuItems}
               />
-              <PropsRoute
+              <ProtectedRoute
                 path={'/admin/item/edit/:id'}
                 component={CreateEditItemPage}
                 setMenuItems={this.setMenuItems}
               />
-              <PropsRoute component={NotFound}/>
+              <ProtectedRoute component={NotFound}/>
             </Switch>
           </main>
         </div>

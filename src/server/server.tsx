@@ -57,19 +57,14 @@ app.get('*', (req, res, next) => {
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
     const branch = matchRoutes(routes, location);
     const promises = branch
-      .map(({route, match}) => ({fetchData: route.component.fetchData, params: match.params}))
+      .map(({route, match}) => ({fetchData: (route.component as any).fetchData, params: match.params}))
       .filter(({fetchData}) => Boolean(fetchData))
       .map(({fetchData, params}) => fetchData.bind(null, store, params));
 
     if (location.includes('admin')) {
-      if (err) {
-        return next(err);
-      } else if (!user) {
-        const message = info.name === 'TokenExpiredError' ? 'Your token has expired. Please generate a new one' : info.message;
-        return res.status(401).json({message});
-      } else {
-        return preloadData(promises).then(() => sendResponse(res, store, location));
-      }
+      // when we are in admin that requires authentication and we are not logged in, we only preload initial data
+      const loadInitialDataOnly = !user;
+      return err ? next(err) : preloadData(promises, loadInitialDataOnly).then(() => sendResponse(res, store, location));
     } else {
       return preloadData(promises).then(() => sendResponse(res, store, location));
     }
@@ -82,7 +77,6 @@ function sendResponse(res, store, location) {
   const styleTags = sheet.getStyleTags();
   const finalState = store.getState();
   const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
-
   const responseHtml = renderToString(
     <StyleSheetManager sheet={sheet.instance}>
       <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>

@@ -8,6 +8,7 @@ export interface IProtectedRouteProps {
   component?: React.ComponentClass;
   isAuthenticated?: boolean;
   path?: string;
+  exact?: any;
 }
 
 class Protected extends React.Component<IProtectedRouteProps, any> {
@@ -33,4 +34,4 @@ const mapStateToProps = (state: IAppState) => ({
   isAuthenticated: state.auth.isLoggedIn,
 });
 
-export const ProtectedRoute = connect<any, any, IProtectedRouteProps>(mapStateToProps)(Protected);
+export const ProtectedRoute = connect<any, any, any>(mapStateToProps)(Protected);

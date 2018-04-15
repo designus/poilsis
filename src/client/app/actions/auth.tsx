@@ -68,6 +68,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           dispatch(initiateExpiredLoginNotification(exp));
           Cookies.set('jwt', accessToken, {expires});
           localStorage.setItem('refreshToken', refreshToken);
+          return Promise.resolve();
         })
         .catch(error => handleError(dispatch, error, true));
     })
