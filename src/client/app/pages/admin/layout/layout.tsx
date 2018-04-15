@@ -19,7 +19,6 @@ import {
   Drawer,
   UserMenu,
   NotFound,
-  // PropsRoute,
   ProtectedRoute,
 } from '../../../components';
 import { AdminItemsPage, CreateEditItemPage } from '../../../pages';

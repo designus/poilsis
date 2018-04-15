@@ -8,7 +8,6 @@ export interface IProtectedRouteProps {
   component?: React.ComponentClass;
   isAuthenticated?: boolean;
   path?: string;
-  exact?: any;
 }
 
 class Protected extends React.Component<IProtectedRouteProps, any> {
