@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
 import { ValueType, IKeyMap, IGenericState, TGenericFormModel, IGenericFormState  } from './types';
 import { IItemsMap, IItemsByCity, ItemsDataMap, ICityState } from '../reducers';
 
@@ -144,12 +143,5 @@ export const renderMergedProps = (component, ...rest) => {
   const finalProps = Object.assign({}, ...rest);
   return (
     React.createElement(component, finalProps)
-  );
-};
-
-export const PropsRoute = ({ component, ...rest }) => {
-  return (
-    // tslint:disable-next-line
-    <Route {...rest} render={routeProps => renderMergedProps(component, routeProps, rest)} />
   );
 };

@@ -51,7 +51,6 @@ class PhotosPageComponent extends React.Component<any, any> {
   }
 
   render() {
-
     const finalState = this.props.loadedItem && getFormStateWithData(this.props.loadedItem, this.state) || this.state;
 
     if (this.props.loadedItem || this.isCreatePage) {

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
 import { injectGlobal } from 'styled-components';
-import { routes } from './app/routes';
+// import { routes } from './app/routes';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 const rootElement = document.getElementById('app');
+import { App } from './app/pages';
 
 import { MuiThemeProvider } from 'material-ui/styles';
 import createMuiTheme from 'material-ui/styles/createMuiTheme';
@@ -23,7 +23,7 @@ render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store} key="provider">
       <BrowserRouter>
-        {renderRoutes(routes)}
+        <App />
       </BrowserRouter>
     </Provider>
   </MuiThemeProvider>,

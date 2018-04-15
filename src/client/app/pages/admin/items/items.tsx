@@ -98,6 +98,10 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     this.setState({isDeleteModalOpen: true, deleteId: id});
   }
 
+  closeDeleteModal = () => {
+    this.setState({isDeleteModalOpen: false});
+  }
+
   get deleteItemName() {
     const item = this.props.itemsMap[this.state.deleteId];
     return item && item.name;
@@ -133,7 +137,8 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         />
         <DeleteModal
           itemId={this.state.deleteId}
-          isDeleteModalOpen={this.state.isDeleteModalOpen}
+          isModalOpen={this.state.isDeleteModalOpen}
+          onCloseModal={this.closeDeleteModal}
           onDelete={this.onDelete}
           itemName={this.deleteItemName}
         />
