@@ -11,7 +11,7 @@ import {
   onUploadProgress,
   // getFormData,
  } from '../client-utils';
-import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
+import { ItemsDataMap, Toast, IItemsByCity, IItemsMap, IAppState } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -73,23 +73,43 @@ export const receiveImages = (id: string, images: IImage[]) => {
   };
 };
 
-export const getItems = (cityId = null) => {
-  const endpoint = cityId	?
-    `http://localhost:3000/api/items/city/${cityId}` :
-    'http://localhost:3000/api/items';
+export const getUserItems = () => (dispatch, getState) => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
+  const state: IAppState = getState();
+  const user = state.auth.user;
+  const isAdmin = user.role === 'admin';
+  const endpoint = isAdmin ?
+    'http://localhost:3000/api/items' :
+    `http://localhost:3000/api/items/user/${user.id}`;
 
+  return axios.get(endpoint)
+    .then(response => response.data)
+    .then(data => {
+      const { dataMap, aliases } = getNormalizedData(data);
+      const itemsByCity = getItemsByCity(dataMap);
+      const allItemsLoaded = isAdmin;
+
+      dispatch(receiveItems(dataMap, aliases, allItemsLoaded, itemsByCity));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    });
+};
+
+export const getCityItems = (cityId) => {
   return (dispatch) => {
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.get(endpoint)
-      .then(response => {
+    return axios.get(`http://localhost:3000/api/items/city/${cityId}`)
+      .then(response => response.data)
+      .then(data => {
 
-        const { data } = response;
         const { dataMap, aliases } = getNormalizedData(data);
-
-        const itemsByCity = cityId ? {[cityId]: Object.keys(dataMap)} : getItemsByCity(dataMap);
-        const allItemsLoaded = !cityId;
+        const itemsByCity = { [cityId]: Object.keys(dataMap) };
+        const allItemsLoaded = false;
 
         dispatch(receiveItems(dataMap, aliases, allItemsLoaded, itemsByCity));
         dispatch(endLoading(CONTENT_LOADER_ID));

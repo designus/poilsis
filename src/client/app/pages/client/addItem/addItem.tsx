@@ -83,13 +83,13 @@ class AddItemPageComponent extends React.Component<any, any> {
   }
 }
 
-export const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     initialState: state.newItem,
   };
 };
 
-export const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     addNewItemState: (state) => dispatch(addNewItemState(state)),
     postItem: (item, loaderId) => dispatch(postItem(item)),

@@ -141,4 +141,14 @@ router.route('/city/:cityId')
     });
   });
 
+router.route('/user/:userId')
+  .get((req, res) => {
+    ItemsModel.find({user: req.params.userId}, (err, items) => {
+      if (err) {
+        res.send(err);
+      }
+      res.json(items);
+    });
+  });
+
 export default router;

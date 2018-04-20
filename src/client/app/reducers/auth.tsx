@@ -11,6 +11,7 @@ import {
 export interface IUser {
   name: string;
   role: string;
+  id: string;
 }
 
 export interface IAuthState {

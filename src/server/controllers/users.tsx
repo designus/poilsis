@@ -12,7 +12,8 @@ router.get('/profile/:userId', async (req, res) => {
       throw new Error('User not found');
     }
 
-    res.status(200).send({name: user.name, role: user.role});
+    const {name, role, id} = user;
+    res.status(200).send({name, role, id});
   } catch (err) {
     res.status(401).send({message: err});
   }

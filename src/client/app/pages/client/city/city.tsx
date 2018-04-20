@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppState, ICityState, IItemsState } from '../../../reducers';
-import { getItems, selectCity } from '../../../actions';
+import { getCityItems, selectCity } from '../../../actions';
 import { getSelectedCity, CONTENT_LOADER_ID } from '../../../client-utils';
 import { ItemsList, NotFound, extendWithLoader } from '../../../components';
 
@@ -15,7 +15,7 @@ export const fetchCitiesData = (citiesState: ICityState, itemsState: IItemsState
       const allItemsLoaded = itemsState.allItemsLoaded;
       const isCityItemsLoaded = itemsState.itemsByCity[id];
       if (selectedCity && !allItemsLoaded && !isCityItemsLoaded) {
-        return dispatch(getItems(id));
+        return dispatch(getCityItems(id));
       }
     })
     .catch(console.error);

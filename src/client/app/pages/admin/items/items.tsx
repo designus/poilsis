@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
 import { IAppState } from '../../../reducers';
-import { getItems, deleteItem, stopAllLoaders } from '../../../actions';
+import { getUserItems, deleteItem, stopAllLoaders } from '../../../actions';
 import { CONTENT_LOADER_ID, adminRoutes } from '../../../client-utils';
 import { ITEMS } from '../../../../../data-strings';
 import { AdminHeader } from '../../../global-styles';
@@ -22,7 +22,7 @@ const Table = extendWithLoader(EnhancedTable);
 class AdminItemsPageComponent extends React.Component<any, any> {
 
   static fetchData(store) {
-    return store.dispatch(getItems());
+    return store.dispatch(getUserItems());
   }
 
   state = {
@@ -33,7 +33,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 
   componentDidMount() {
     if (!this.props.areAllItemsLoaded) {
-      this.props.getItems();
+      this.props.getUserItems();
     }
   }
 
@@ -160,7 +160,7 @@ const mapStateToProps = (state: IAppState) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (itemId) => dispatch(deleteItem(itemId)),
-    getItems: () => dispatch(getItems()),
+    getUserItems: () => dispatch(getUserItems()),
     stopAllLoaders: () => dispatch(stopAllLoaders()),
   };
 };

@@ -19,6 +19,7 @@ import {
   Drawer,
   UserMenu,
   NotFound,
+  NotAuthorized,
   ProtectedRoute,
 } from '../../../components';
 import { AdminItemsPage, CreateEditItemPage } from '../../../pages';
@@ -138,6 +139,10 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
                 path={'/admin/item/edit/:id'}
                 component={CreateEditItemPage}
                 setMenuItems={this.setMenuItems}
+              />
+              <ProtectedRoute
+                path={'/admin/not-authorized'}
+                component={NotAuthorized}
               />
               <ProtectedRoute component={NotFound}/>
             </Switch>
