@@ -135,8 +135,8 @@ export const getItem = (itemId) => {
         dispatch(endLoading(CONTENT_LOADER_ID));
       })
       .catch(err => {
-        dispatch(endLoading(CONTENT_LOADER_ID));
         console.error(err);
+        dispatch(endLoading(CONTENT_LOADER_ID));
       });
   };
 };

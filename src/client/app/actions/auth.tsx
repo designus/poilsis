@@ -47,9 +47,8 @@ export const initiateExpiredLoginNotification = (expires: number) => (dispatch, 
   dispatch(setAuthTimeoutId(newTimeoutId));
 };
 
-export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
+export const login = (credentials = {username: 'tomas', password: 'tomas'}) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-
   return axios.post('http://localhost:3000/api/users/login', credentials)
     .then(response => response.data)
     .then(data => {
@@ -80,8 +79,8 @@ export const keepUserLogged = () => (dispatch, getState) => {
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
   const refreshToken = localStorage.getItem('refreshToken');
-  const {userId} = JWT(oldAccessToken);
-  return axios.post('http://localhost:3000/api/tokens/reauthenticate', {userId, refreshToken})
+  const {userId, userRole} = JWT(oldAccessToken);
+  return axios.post('http://localhost:3000/api/tokens/reauthenticate', {userId, userRole, refreshToken})
     .then(response => response.data)
     .then((data) => {
       const accessToken = data.accessToken;

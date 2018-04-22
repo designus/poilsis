@@ -6,7 +6,7 @@ import { UsersModel as User } from '../model/users';
 router.post('/login', Auth.login);
 router.get('/profile/:userId', async (req, res) => {
   try {
-    const user = await User.findOne({_id: req.params.userId }).exec();
+    const user = await User.findOne({id: req.params.userId }).exec();
 
     if (user === null) {
       throw new Error('User not found');

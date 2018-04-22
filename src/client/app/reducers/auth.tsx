@@ -62,6 +62,8 @@ export const auth = (state: IAuthState = {
         ...state,
         user: action.user,
         isLoggedIn: true,
+        showKeepMeLoggedModal: false,
+        timeToCloseModal: null,
       };
     }
     /* During page reload we extract accessToken from cookies and put it into our state. After this we make
