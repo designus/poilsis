@@ -11,7 +11,7 @@ import {
   onUploadProgress,
   // getFormData,
  } from '../client-utils';
-import { ItemsDataMap, Toast, IItemsByCity, IItemsMap, IAppState } from '../reducers';
+import { ItemsDataMap, Toast, IItemsGroupedByCity, IItemsMap, IAppState } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -41,12 +41,12 @@ export const selectItem = (id: string) => {
   };
 };
 
-export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], allItemsLoaded: boolean, itemsByCity: IItemsByCity) => {
+export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoaded: boolean, itemsByCity: IItemsGroupedByCity) => {
   return {
     type: RECEIVE_ITEMS,
     dataMap,
     aliases,
-    allItemsLoaded,
+    isAllLoaded,
     itemsByCity,
   };
 };
@@ -86,10 +86,10 @@ export const getUserItems = () => (dispatch, getState) => {
     .then(response => response.data)
     .then(data => {
       const { dataMap, aliases } = getNormalizedData(data);
-      const itemsByCity = getItemsByCity(dataMap);
-      const allItemsLoaded = isAdmin;
+      const areAllItemsLoaded = isAdmin;
+      const itemsByCity = getItemsByCity(dataMap, areAllItemsLoaded);
 
-      dispatch(receiveItems(dataMap, aliases, allItemsLoaded, itemsByCity));
+      dispatch(receiveItems(dataMap, aliases, areAllItemsLoaded, itemsByCity));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {
@@ -99,7 +99,18 @@ export const getUserItems = () => (dispatch, getState) => {
 };
 
 export const getCityItems = (cityId) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+
+    const state: IAppState = getState();
+    const selectedCity = state.cities.dataMap[cityId];
+    const items = state.items;
+    const selectedCityItems = items.itemsByCity[cityId];
+    const isAllItemsLoaded = items.isAllLoaded;
+    const isAllSelectedCityItemsLoaded = selectedCityItems && selectedCityItems.isAllLoaded;
+
+    if (!selectedCity || isAllItemsLoaded || isAllSelectedCityItemsLoaded) {
+      return;
+    }
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
@@ -108,10 +119,15 @@ export const getCityItems = (cityId) => {
       .then(data => {
 
         const { dataMap, aliases } = getNormalizedData(data);
-        const itemsByCity = { [cityId]: Object.keys(dataMap) };
-        const allItemsLoaded = false;
+        const areAllItemsLoaded = false;
+        const itemsByCity: IItemsGroupedByCity = {
+          [cityId]: {
+            list: Object.keys(dataMap),
+            isAllLoaded: true,
+          },
+        };
 
-        dispatch(receiveItems(dataMap, aliases, allItemsLoaded, itemsByCity));
+        dispatch(receiveItems(dataMap, aliases, areAllItemsLoaded, itemsByCity));
         dispatch(endLoading(CONTENT_LOADER_ID));
 
       })

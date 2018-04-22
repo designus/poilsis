@@ -153,7 +153,7 @@ const mapStateToProps = (state: IAppState) => {
     itemsMap: state.items.dataMap,
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,
-    areAllItemsLoaded: state.items.allItemsLoaded,
+    areAllItemsLoaded: state.items.isAllLoaded,
   };
 };
 

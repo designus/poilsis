@@ -47,7 +47,7 @@ export const initiateExpiredLoginNotification = (expires: number) => (dispatch, 
   dispatch(setAuthTimeoutId(newTimeoutId));
 };
 
-export const login = (credentials = {username: 'tomas', password: 'tomas'}) => dispatch => {
+export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   return axios.post('http://localhost:3000/api/users/login', credentials)
     .then(response => response.data)

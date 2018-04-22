@@ -13,43 +13,55 @@ export interface IItemsMap {
   isFullyLoaded?: boolean;
 }
 
-export interface IItemsByCity {
-  [key: string]: string[];
+export interface ICityItems {
+  list: string[];
+  isAllLoaded: boolean;
+}
+
+export interface IItemsGroupedByCity {
+  [key: string]: ICityItems;
 }
 
 export type ItemsDataMap = IGenericState<IItemsMap>;
 
 export interface IItemsState extends ItemsDataMap {
   selectedId?: string;
-  allItemsLoaded?: boolean;
-  itemsByCity?: IItemsByCity;
+  isAllLoaded?: boolean;
+  itemsByCity?: IItemsGroupedByCity;
 }
 
 const initialItemsState = {
   dataMap: {},
   aliases: [],
-  allItemsLoaded: false,
+  isAllLoaded: false,
   itemsByCity: {},
 };
 
-export const removeItemFromCityState = (state: IItemsState, item: IItemsMap) => {
-  return [...state.itemsByCity[item.city].filter(id => id !== item.id)];
+export const changeItemCity = (removeItem: boolean) => (state: IItemsState, item: IItemsMap): ICityItems => {
+  const oldList = state.itemsByCity[item.city].list;
+  const { isAllLoaded } = state.itemsByCity[item.city];
+  const list = removeItem ? [...oldList.filter(id => id !== item.id)] : [...(oldList || []), item.id].filter(removeDuplicates);
+
+  return { list, isAllLoaded };
 };
+
+export const removeItemFromCityState = changeItemCity(true);
+export const addItemToCityState = changeItemCity(false);
 
 export const getItemsByCityState = (state: IItemsState, newItem: IItemsMap) => {
 
   const oldItem = state.dataMap[newItem.id];
-  const cityItems = [...(state.itemsByCity[newItem.city] || []), newItem.id].filter(removeDuplicates);
+  const cityWasChanged = oldItem.city !== newItem.city;
 
-  if (oldItem && oldItem.city !== newItem.city) {
+  if (oldItem && cityWasChanged) {
     return {
       ...state.itemsByCity,
       [oldItem.city]: removeItemFromCityState(state, oldItem),
-      [newItem.city]: cityItems,
+      [newItem.city]: addItemToCityState(state, newItem),
     };
   }
 
-  return {...state.itemsByCity, [newItem.city]: cityItems};
+  return {...state.itemsByCity, [newItem.city]: addItemToCityState(state, newItem)};
 };
 
 export const items = (state: IItemsState = initialItemsState, action): IItemsState => {
@@ -61,7 +73,7 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
         ...state,
         dataMap: {...state.dataMap, ...action.dataMap},
         aliases: [...state.aliases, ...action.aliases],
-        allItemsLoaded: action.allItemsLoaded,
+        isAllLoaded: action.isAllLoaded,
         itemsByCity: {...state.itemsByCity, ...action.itemsByCity},
       };
     case RECEIVE_ITEM:
