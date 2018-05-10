@@ -68,7 +68,7 @@ const mapStateToProps = (state: IAppState) => {
     typesMap: state.types.dataMap,
     isInitialDataLoaded: state.initialData.isLoaded,
     isAuthenticated: state.auth.isLoggedIn,
-    user: state.auth.user && state.auth.user.name,
+    user: state.user.details && state.user.details.name,
   };
 };
 

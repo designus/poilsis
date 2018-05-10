@@ -3,13 +3,11 @@ import axios from 'axios';
 import { startLoading, endLoading, showToast, setUploadProgress, uploadError, uploadSuccess } from '../actions';
 import {
   getNormalizedData,
-  getItemsByCity,
   IAlias,
   objectToFormData,
   CONTENT_LOADER_ID,
   DIALOG_LOADER_ID,
   onUploadProgress,
-  // getFormData,
  } from '../client-utils';
 import { ItemsDataMap, Toast, IItemsGroupedByCity, IItemsMap, IAppState } from '../reducers';
 import {
@@ -41,7 +39,12 @@ export const selectItem = (id: string) => {
   };
 };
 
-export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoaded: boolean, itemsByCity: IItemsGroupedByCity) => {
+export const receiveItems = (
+  dataMap: ItemsDataMap,
+  aliases: IAlias[],
+  isAllLoaded: boolean,
+  itemsByCity: IItemsGroupedByCity,
+) => {
   return {
     type: RECEIVE_ITEMS,
     dataMap,
@@ -71,31 +74,6 @@ export const receiveImages = (id: string, images: IImage[]) => {
     id,
     images,
   };
-};
-
-export const getUserItems = () => (dispatch, getState) => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
-  const state: IAppState = getState();
-  const user = state.auth.user;
-  const isAdmin = user.role === 'admin';
-  const endpoint = isAdmin ?
-    'http://localhost:3000/api/items' :
-    `http://localhost:3000/api/items/user/${user.id}`;
-
-  return axios.get(endpoint)
-    .then(response => response.data)
-    .then(data => {
-      const { dataMap, aliases } = getNormalizedData(data);
-      const areAllItemsLoaded = isAdmin;
-      const itemsByCity = getItemsByCity(dataMap, areAllItemsLoaded);
-
-      dispatch(receiveItems(dataMap, aliases, areAllItemsLoaded, itemsByCity));
-      dispatch(endLoading(CONTENT_LOADER_ID));
-    })
-    .catch(err => {
-      console.error(err);
-      dispatch(endLoading(CONTENT_LOADER_ID));
-    });
 };
 
 export const getCityItems = (cityId) => {

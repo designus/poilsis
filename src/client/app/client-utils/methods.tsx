@@ -21,10 +21,7 @@ export function getItemsByCity(dataMap: ItemsDataMap, isAllLoaded: boolean) {
     if (state) {
       state.list.push(itemId);
     } else {
-      acc[item.city] = {
-        list: [itemId],
-        isAllLoaded,
-      };
+      acc[item.city] = { list: [itemId], isAllLoaded };
     }
     return acc;
   }, {});

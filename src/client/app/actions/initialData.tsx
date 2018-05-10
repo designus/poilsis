@@ -2,29 +2,14 @@ import axios from 'axios';
 import * as JWT from 'jwt-decode';
 import { getNormalizedData } from '../client-utils';
 import { IAppState } from '../reducers';
+import { receiveUserDetails, loginSuccess } from '../actions';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
-export const RECEIVE_LOGGED_IN_USER = 'RECEIVE_LOGGED_IN_USER';
-export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 
 export const receiveInitialData = (data) => {
   return {
     type: RECEIVE_INITIAL_DATA,
     data,
-  };
-};
-
-export const receiveLoggedInUser = (user) => {
-  return {
-    type: RECEIVE_LOGGED_IN_USER,
-    user,
-  };
-};
-
-export const setAccessToken = (accessToken) => {
-  return {
-    type: SET_ACCESS_TOKEN,
-    accessToken,
   };
 };
 
@@ -49,7 +34,9 @@ export const getInitialData = () => {
         const types = getNormalizedData(typesResponse.data);
         dispatch(receiveInitialData({cities, types}));
         if (userResponse) {
-          dispatch(receiveLoggedInUser(userResponse.data));
+          dispatch(loginSuccess(token));
+          dispatch(receiveUserDetails(userResponse.data));
+          // TODO: Invoke initiateExpiredLoginNotification action
         }
       }))
       .catch(err => {

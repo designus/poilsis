@@ -1,3 +1,4 @@
+export * from './auth';
 export * from './cities';
 export * from './types';
 export * from './items';
@@ -7,3 +8,4 @@ export * from './loader';
 export * from './toast';
 export * from './root';
 export * from './uploadProgress';
+export * from './user';

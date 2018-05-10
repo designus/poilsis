@@ -1,22 +1,30 @@
 import { combineReducers } from 'redux';
 import { TItemState } from 'pages';
-import { cities, ICityState } from './cities';
-import { types } from './types';
-import { items, IItemsState } from './items';
-// import { newItem } from './newItem';
-import { initialData, IInitialDataState } from './initialData';
-import { loader, ILoadingState } from './loader';
-import { toast, IToastState } from './toast';
-import { uploadProgress, IUploadProgress  } from './uploadProgress';
-import { auth, IAuthState } from './auth';
+import {
+  cities,
+  types,
+  items,
+  initialData,
+  loader,
+  ILoadingState,
+  toast,
+  auth,
+  ICityState,
+  IInitialDataState,
+  IToastState,
+  IAuthState,
+  IItemsState,
+} from '../reducers';
 
+import { uploadProgress, IUploadProgress } from './uploadProgress';
+import { user, IUserState } from './user';
 export interface IAppState {
   cities: ICityState;
   auth: IAuthState;
   global: any;
+  user: IUserState;
   items: IItemsState;
   newItem: TItemState;
-  reduxAsyncConnect: any;
   types: any;
   initialData: IInitialDataState;
   loader: ILoadingState;
@@ -34,4 +42,5 @@ export const rootReducer = combineReducers({
   loader,
   toast,
   uploadProgress,
+  user,
 });

@@ -28,6 +28,7 @@ export interface IItemsState extends ItemsDataMap {
   selectedId?: string;
   isAllLoaded?: boolean;
   itemsByCity?: IItemsGroupedByCity;
+  userItems?: string[];
 }
 
 const initialItemsState = {
@@ -35,6 +36,7 @@ const initialItemsState = {
   aliases: [],
   isAllLoaded: false,
   itemsByCity: {},
+  userItems: [],
 };
 
 export const changeItemCity = (removeItem: boolean) => (state: IItemsState, item: IItemsMap): ICityItems => {
