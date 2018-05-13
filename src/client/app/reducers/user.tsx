@@ -1,4 +1,4 @@
-import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS } from '../actions';
+import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_USER_ITEM } from '../actions';
 
 export interface IUser {
   name: string;
@@ -23,6 +23,12 @@ export const user = (state: IUserState = { details: null, items: [] }, action): 
       return {
         ...state,
         items: action.userItems,
+      };
+    }
+    case REMOVE_USER_ITEM: {
+      return {
+        ...state,
+        items: state.items.filter(itemId => itemId !== action.itemId),
       };
     }
     default:

@@ -3,7 +3,7 @@ import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
 import * as JWT from 'jwt-decode';
 import { startLoading, endLoading, showToast, receiveUserDetails } from '../actions';
-import { Toast, IAppState } from '../reducers';
+import { Toast, IAppState, IUser } from '../reducers';
 import { DIALOG_LOADER_ID } from '../client-utils';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -62,7 +62,8 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
 
       return axios.get(`http://localhost:3000/api/users/profile/${userId}`)
         .then(response => response.data)
-        .then(user => {
+        .then((user: IUser) => {
+          console.log('User', user);
           dispatch(loginSuccess(accessToken));
           dispatch(receiveUserDetails(user));
           dispatch(endLoading(DIALOG_LOADER_ID));

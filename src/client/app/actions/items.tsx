@@ -1,6 +1,14 @@
 import axios from 'axios';
 
-import { startLoading, endLoading, showToast, setUploadProgress, uploadError, uploadSuccess } from '../actions';
+import {
+  startLoading,
+  endLoading,
+  showToast,
+  setUploadProgress,
+  uploadError,
+  uploadSuccess,
+  removeUserItem,
+} from '../actions';
 import {
   getNormalizedData,
   IAlias,
@@ -244,7 +252,7 @@ export const postItem = (item) => (dispatch) => {
   });
 };
 
-export const deleteItem = (itemId) => (dispatch) => {
+export const deleteItem = (itemId: string) => (dispatch) => {
 
   return new Promise((resolve, reject) => {
 
@@ -259,6 +267,7 @@ export const deleteItem = (itemId) => (dispatch) => {
           reject(item.errors);
         } else {
           dispatch(removeItem(item));
+          dispatch(removeUserItem(itemId));
           dispatch(showToast(Toast.success, DELETE_ITEM_SUCCESS));
           resolve();
         }

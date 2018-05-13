@@ -1,22 +1,30 @@
 import axios from 'axios';
 import { getNormalizedData, getItemsByCity, CONTENT_LOADER_ID } from '../client-utils';
 import { startLoading, endLoading, receiveItems } from '../actions';
-import { IAppState } from '../reducers';
+import { IAppState, IUser } from '../reducers';
 
 export const RECEIVE_USER_ITEMS = 'RECEIVE_USER_ITEMS';
 export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
+export const REMOVE_USER_ITEM = 'REMOVE_USER_ITEM';
 
-export const receiveUserItems = (userItems) => {
+export const receiveUserItems = (userItems: string[]) => {
   return {
     type: RECEIVE_USER_ITEMS,
     userItems,
   };
 };
 
-export const receiveUserDetails = (userDetails) => {
+export const receiveUserDetails = (userDetails: IUser) => {
   return {
     type: RECEIVE_USER_DETAILS,
     userDetails,
+  };
+};
+
+export const removeUserItem = (itemId: string) => {
+  return {
+    type: REMOVE_USER_ITEM,
+    itemId,
   };
 };
 
