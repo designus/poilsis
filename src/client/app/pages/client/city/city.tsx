@@ -33,7 +33,7 @@ class CityPageComponent extends React.Component<any, any> {
   }
 
   render() {
-    const {selectedCity, selectedCityItems, itemsMap, typesMap} = this.props;
+    const {selectedCity, items, types} = this.props;
 
     if (selectedCity) {
       return (
@@ -42,9 +42,9 @@ class CityPageComponent extends React.Component<any, any> {
           <p>{selectedCity.description}</p>
           <ItemsListWithLoader
             loaderId={CONTENT_LOADER_ID}
-            items={selectedCityItems}
-            itemsMap={itemsMap}
-            typesMap={typesMap}
+            items={selectedCity.items}
+            itemsMap={items.dataMap}
+            typesMap={types.dataMap}
           />
         </div>
       );
@@ -56,15 +56,11 @@ class CityPageComponent extends React.Component<any, any> {
 
 const mapStateToProps = (state: IAppState) => {
   const {cities, items, types} = state;
-  const selectedCityId = cities.selectedId;
-  const selectedCityItems = items.itemsByCity[selectedCityId];
   return {
-    selectedCity: cities.dataMap[selectedCityId],
-    itemsMap: items.dataMap,
-    selectedCityItems: selectedCityItems && selectedCityItems.list || [],
-    typesMap: types.dataMap,
+    selectedCity: cities.dataMap[cities.selectedId],
     cities,
     items,
+    types,
   };
 };
 

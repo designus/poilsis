@@ -10,14 +10,13 @@ import {
   removeUserItem,
 } from '../actions';
 import {
-  getNormalizedData,
   IAlias,
   objectToFormData,
   CONTENT_LOADER_ID,
   DIALOG_LOADER_ID,
   onUploadProgress,
  } from '../client-utils';
-import { ItemsDataMap, Toast, IItemsGroupedByCity, IItemsMap, IAppState } from '../reducers';
+import { ItemsDataMap, Toast, IItemsMap } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -33,7 +32,6 @@ import {
 } from '../../../data-strings';
 import { IImage, IMainInfoFields } from 'global-utils';
 
-// const objectToFormData = require('object-to-formdata');
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
@@ -47,18 +45,12 @@ export const selectItem = (id: string) => {
   };
 };
 
-export const receiveItems = (
-  dataMap: ItemsDataMap,
-  aliases: IAlias[],
-  isAllLoaded: boolean,
-  itemsByCity: IItemsGroupedByCity,
-) => {
+export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoaded: boolean) => {
   return {
     type: RECEIVE_ITEMS,
     dataMap,
     aliases,
     isAllLoaded,
-    itemsByCity,
   };
 };
 
@@ -81,46 +73,6 @@ export const receiveImages = (id: string, images: IImage[]) => {
     type: RECEIVE_IMAGES,
     id,
     images,
-  };
-};
-
-export const getCityItems = (cityId) => {
-  return (dispatch, getState) => {
-
-    const state: IAppState = getState();
-    const selectedCity = state.cities.dataMap[cityId];
-    const items = state.items;
-    const selectedCityItems = items.itemsByCity[cityId];
-    const isAllItemsLoaded = items.isAllLoaded;
-    const isAllSelectedCityItemsLoaded = selectedCityItems && selectedCityItems.isAllLoaded;
-
-    if (!selectedCity || isAllItemsLoaded || isAllSelectedCityItemsLoaded) {
-      return;
-    }
-
-    dispatch(startLoading(CONTENT_LOADER_ID));
-
-    return axios.get(`http://localhost:3000/api/items/city/${cityId}`)
-      .then(response => response.data)
-      .then(data => {
-
-        const { dataMap, aliases } = getNormalizedData(data);
-        const areAllItemsLoaded = false;
-        const itemsByCity: IItemsGroupedByCity = {
-          [cityId]: {
-            list: Object.keys(dataMap),
-            isAllLoaded: true,
-          },
-        };
-
-        dispatch(receiveItems(dataMap, aliases, areAllItemsLoaded, itemsByCity));
-        dispatch(endLoading(CONTENT_LOADER_ID));
-
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
-      });
   };
 };
 

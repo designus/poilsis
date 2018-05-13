@@ -30,7 +30,7 @@ export const getInitialData = () => {
 
     return axios.all(promises)
       .then(axios.spread((citiesResponse, typesResponse, userResponse) => {
-        const cities = getNormalizedData(citiesResponse.data);
+        const cities = getNormalizedData(citiesResponse.data, {items: [], isAllLoaded: false});
         const types = getNormalizedData(typesResponse.data);
         dispatch(receiveInitialData({cities, types}));
         if (userResponse) {

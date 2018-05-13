@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getNormalizedData, getItemsByCity, CONTENT_LOADER_ID } from '../client-utils';
-import { startLoading, endLoading, receiveItems } from '../actions';
+import { getNormalizedData, getCityItems, CONTENT_LOADER_ID } from '../client-utils';
+import { startLoading, endLoading, receiveItems, receiveCityItems } from '../actions';
 import { IAppState, IUser } from '../reducers';
 
 export const RECEIVE_USER_ITEMS = 'RECEIVE_USER_ITEMS';
@@ -40,13 +40,14 @@ export const getUserItems = () => (dispatch, getState) => {
   return axios.get(endpoint)
     .then(response => response.data)
     .then(data => {
-      const { dataMap, aliases } = getNormalizedData(data);
+      const { dataMap: itemsMap, aliases } = getNormalizedData(data);
       const areAllItemsLoaded = isAdmin;
-      const itemsByCity = getItemsByCity(dataMap, areAllItemsLoaded);
-      const userItems = Object.keys(dataMap);
+      const cityItems = getCityItems(itemsMap, areAllItemsLoaded);
+      const userItems = Object.keys(itemsMap);
 
+      dispatch(receiveItems(itemsMap, aliases, areAllItemsLoaded));
+      dispatch(receiveCityItems(cityItems));
       dispatch(receiveUserItems(userItems));
-      dispatch(receiveItems(dataMap, aliases, areAllItemsLoaded, itemsByCity));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {
