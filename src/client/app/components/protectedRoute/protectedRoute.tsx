@@ -1,37 +1,53 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { renderMergedProps } from '../../client-utils';
+import { renderMergedProps, UserRoles } from '../../client-utils';
 import { IAppState } from '../../reducers';
 
 export interface IProtectedRouteProps {
   component?: React.ComponentClass;
   isAuthenticated?: boolean;
+  userRole?: string;
   allowedRoles?: string[];
   path?: string;
 }
 
 class Protected extends React.Component<IProtectedRouteProps, any> {
+
+  renderComponent = (routeProps, restProps) => {
+    const { component, allowedRoles = [UserRoles.admin, UserRoles.user] } = this.props;
+    return allowedRoles.indexOf(this.props.userRole) !== -1 ?
+      renderMergedProps(component, routeProps, restProps) :
+      this.redirectTo404();
+  }
+
+  redirectTo404 = () => {
+    // TODO: Add 404 page
+    return null;
+  }
+
+  redirectToLogin = (routeProps) => {
+    return (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: routeProps.location },
+      }} />
+    );
+  }
+
   render() {
-    const { component, allowedRoles = ['admin', 'user'], isAuthenticated, ...rest } = this.props;
+    const { component, allowedRoles = [UserRoles.admin, UserRoles.user], isAuthenticated, ...rest } = this.props;
     return (
       // tslint:disable-next-line
       <Route {...rest} render={routeProps => {
-        return isAuthenticated ? (
-          renderMergedProps(component, routeProps, rest)
-        ) : (
-          <Redirect to={{
-            pathname: '/login',
-            state: { from: routeProps.location },
-          }} />
-        );
+        return isAuthenticated ? this.renderComponent(routeProps, rest) : this.redirectToLogin(routeProps);
       }} />
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  userRole: state.user.details.role,
+  userRole: state.user.details ? state.user.details.role : null,
   isAuthenticated: state.auth.isLoggedIn,
 });
 
