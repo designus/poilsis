@@ -7,12 +7,13 @@ import { IAppState } from '../../reducers';
 export interface IProtectedRouteProps {
   component?: React.ComponentClass;
   isAuthenticated?: boolean;
+  allowedRoles?: string[];
   path?: string;
 }
 
 class Protected extends React.Component<IProtectedRouteProps, any> {
   render() {
-    const { component, isAuthenticated, ...rest } = this.props;
+    const { component, allowedRoles = ['admin', 'user'], isAuthenticated, ...rest } = this.props;
     return (
       // tslint:disable-next-line
       <Route {...rest} render={routeProps => {
@@ -30,6 +31,7 @@ class Protected extends React.Component<IProtectedRouteProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
+  userRole: state.user.details.role,
   isAuthenticated: state.auth.isLoggedIn,
 });
 

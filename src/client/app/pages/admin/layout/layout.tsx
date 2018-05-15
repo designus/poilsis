@@ -79,6 +79,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
         icon: () => (<ListIcon />),
         link: adminRoutes.types.getLink(),
         text: TYPES,
+        allowedRoles: adminRoutes.types.allowedRoles,
       },
       {
         icon: () => (<ArrowBackIcon />),
@@ -139,6 +140,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
                 exact
                 path={adminRoutes.types.path}
                 component={AdminTypesPage}
+                allowedRoles={adminRoutes.types.allowedRoles}
                 setMenuItems={this.setMenuItems}
               />
               <ProtectedRoute

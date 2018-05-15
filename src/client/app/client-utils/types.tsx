@@ -56,3 +56,8 @@ export interface IFormProps {
 export type IGenericModelSchema<T> = {
   [I in keyof T]: any;
 };
+
+export enum UserRoles {
+  admin = 'admin',
+  user = 'user',
+}

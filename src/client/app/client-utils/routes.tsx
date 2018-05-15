@@ -9,10 +9,13 @@ import {
   ItemPage,
 } from '../pages';
 
+import { UserRoles } from '../client-utils';
+
 export interface IRoute {
   path: string;
   getLink: (arg1?, arg2?, arg3?) => string;
   getComponent?: () => any;
+  allowedRoles?: string[];
 }
 
 export type RouteKeys = 'landing'|'items'|'item'|'createItem'|'createItemMain'|'editItem'|'editItemMain'|'editItemPhotos'|'types';
@@ -78,5 +81,6 @@ export const adminRoutes: RoutesConfig = {
   types: {
     path: '/admin/types',
     getLink: () => '/admin/types',
+    allowedRoles: [UserRoles.admin],
   },
 };
