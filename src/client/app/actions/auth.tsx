@@ -37,8 +37,7 @@ export const getKeepMeLoggedModalDelay = (expires, timeInSeconds) => {
   return delay;
 };
 
-// TODO: setLogoutTimer
-export const initiateExpiredLoginNotification = (expires: number) => (dispatch, getState) => {
+export const setLogoutTimer = (expires: number) => (dispatch, getState) => {
   const state: IAppState = getState();
   const timeInSeconds = 30;
   const timeoutId = state.auth.timeoutId;
@@ -63,12 +62,11 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
       return axios.get(`http://localhost:3000/api/users/profile/${userId}`)
         .then(response => response.data)
         .then((user: IUser) => {
-          console.log('User', user);
           dispatch(loginSuccess(accessToken));
           dispatch(receiveUserDetails(user));
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
-          dispatch(initiateExpiredLoginNotification(exp));
+          dispatch(setLogoutTimer(exp));
           Cookies.set('jwt', accessToken, {expires});
           localStorage.setItem('refreshToken', refreshToken);
           return Promise.resolve();
@@ -93,7 +91,7 @@ export const keepUserLogged = () => (dispatch, getState) => {
       dispatch(endLoading(DIALOG_LOADER_ID));
       dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
       dispatch(reauthenticateSuccess(accessToken));
-      dispatch(initiateExpiredLoginNotification(exp));
+      dispatch(setLogoutTimer(exp));
       Cookies.set('jwt', accessToken, {expires});
     })
     .catch(error => handleError(dispatch, error, true));

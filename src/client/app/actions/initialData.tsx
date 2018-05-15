@@ -36,7 +36,6 @@ export const getInitialData = () => {
         if (userResponse) {
           dispatch(loginSuccess(token));
           dispatch(receiveUserDetails(userResponse.data));
-          // TODO: Invoke initiateExpiredLoginNotification action
         }
       }))
       .catch(err => {

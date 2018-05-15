@@ -15,7 +15,7 @@ export interface IRoute {
   getComponent?: () => any;
 }
 
-export type RouteKeys = 'landing'|'items'|'item'|'createItem'|'createItemMain'|'editItem'|'editItemMain'|'editItemPhotos';
+export type RouteKeys = 'landing'|'items'|'item'|'createItem'|'createItemMain'|'editItem'|'editItemMain'|'editItemPhotos'|'types';
 
 export type RoutesConfig = {
   [P in RouteKeys]?: IRoute;
@@ -74,5 +74,9 @@ export const adminRoutes: RoutesConfig = {
     path: '/admin/item/edit/:id/photos',
     getLink: (id) => `/admin/item/edit/${id}/photos`,
     getComponent: () => PhotosPage,
+  },
+  types: {
+    path: '/admin/types',
+    getLink: () => '/admin/types',
   },
 };

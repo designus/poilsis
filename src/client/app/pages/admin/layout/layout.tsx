@@ -22,8 +22,8 @@ import {
   NotAuthorized,
   ProtectedRoute,
 } from '../../../components';
-import { AdminItemsPage, CreateEditItemPage } from '../../../pages';
-import { ITEMS, GO_TO_WEBSITE } from '../../../../../data-strings';
+import { AdminItemsPage, AdminTypesPage, CreateEditItemPage } from '../../../pages';
+import { ITEMS, GO_TO_WEBSITE, TYPES } from '../../../../../data-strings';
 import { getInitialData } from '../../../actions';
 import { Switch } from 'react-router-dom';
 
@@ -76,6 +76,11 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
         text: ITEMS,
       },
       {
+        icon: () => (<ListIcon />),
+        link: adminRoutes.types.getLink(),
+        text: TYPES,
+      },
+      {
         icon: () => (<ArrowBackIcon />),
         link: clientRoutes.landing.getLink(),
         text: GO_TO_WEBSITE,
@@ -126,17 +131,23 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
             <Switch>
               <ProtectedRoute
                 exact
-                path={'/admin/items'}
+                path={adminRoutes.items.path}
                 component={AdminItemsPage}
                 setMenuItems={this.setMenuItems}
               />
               <ProtectedRoute
-                path={'/admin/item/create'}
+                exact
+                path={adminRoutes.types.path}
+                component={AdminTypesPage}
+                setMenuItems={this.setMenuItems}
+              />
+              <ProtectedRoute
+                path={adminRoutes.createItem.path}
                 component={CreateEditItemPage}
                 setMenuItems={this.setMenuItems}
               />
               <ProtectedRoute
-                path={'/admin/item/edit/:id'}
+                path={adminRoutes.editItem.path}
                 component={CreateEditItemPage}
                 setMenuItems={this.setMenuItems}
               />
