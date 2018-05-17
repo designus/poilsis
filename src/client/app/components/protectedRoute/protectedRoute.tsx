@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { renderMergedProps, UserRoles } from '../../client-utils';
 import { IAppState } from '../../reducers';
+import { NotAuthorized } from '../../components';
 
 export interface IProtectedRouteProps {
   component?: React.ComponentClass;
@@ -18,12 +19,7 @@ class Protected extends React.Component<IProtectedRouteProps, any> {
     const { component, allowedRoles = [UserRoles.admin, UserRoles.user] } = this.props;
     return allowedRoles.indexOf(this.props.userRole) !== -1 ?
       renderMergedProps(component, routeProps, restProps) :
-      this.redirectTo404();
-  }
-
-  redirectTo404 = () => {
-    // TODO: Add 404 page
-    return null;
+      <NotAuthorized />;
   }
 
   redirectToLogin = (routeProps) => {
