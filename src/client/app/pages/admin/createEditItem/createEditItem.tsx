@@ -74,6 +74,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
       return (
         <div>
           <Switch>
+            {/* TODO: User protected route here */}
             <PropsRoute
               path={'/admin/item/create'}
               exact
@@ -103,8 +104,6 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 const mapStateToProps = (state: IAppState) => {
   return {
     itemsMap: state.items.dataMap,
-    citiesMap: state.cities.dataMap,
-    typesMap: state.types.dataMap,
   };
 };
 

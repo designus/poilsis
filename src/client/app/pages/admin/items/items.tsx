@@ -76,6 +76,15 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         format: (date: string) => moment(date).format('YYYY-MM-DD'),
       },
       {
+        title: 'User',
+        dataProp: 'userId',
+        sortType: 'string',
+        format: (userId: string) => {
+          const user = this.props.usersMap[userId];
+          return user && user.name || null;
+        },
+      },
+      {
         title: 'Actions',
         dataProp: 'id',
         format: (id) => {
@@ -152,6 +161,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 const mapStateToProps = (state: IAppState) => {
   return {
     itemsMap: state.items.dataMap,
+    usersMap: state.users.dataMap,
     userItems: state.currentUser.items,
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,

@@ -7,7 +7,6 @@ import {
   getInitialFormState,
   getBackendErrors,
   CONTENT_LOADER_ID,
-  voidFn,
   TGenericFormModel,
   IGenericFormState,
   getKeyMap,
@@ -28,6 +27,7 @@ import {
 import { IMainInfoFields } from '../../../../../../global-utils';
 import { adminRoutes } from '../../../../client-utils';
 import Typography from 'material-ui/Typography';
+import { IAppState } from '../../../../reducers';
 
 export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
 
@@ -83,6 +83,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
             initialState={initialState}
             citiesMap={this.props.citiesMap}
             typesMap={this.props.typesMap}
+            usersMap={this.props.usersMap}
             isCreate={this.isCreatePage}
           />
         </div>
@@ -93,6 +94,14 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 };
 
+const mapStateToProps = (state: IAppState) => {
+  return {
+    usersMap: state.users.dataMap,
+    citiesMap: state.cities.dataMap,
+    typesMap: state.types.dataMap,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     updateMainInfo: (item) => dispatch(updateMainInfo(item)),
@@ -100,4 +109,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export const MainInfoPage = connect(voidFn, mapDispatchToProps)(MainInfoPageComponent);
+export const MainInfoPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent);

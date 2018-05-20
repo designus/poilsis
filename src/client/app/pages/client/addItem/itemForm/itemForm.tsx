@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from 'material-ui/Button';
 
 import { CheckboxGroup,	SelectBox, TextInput } from '../../../../components';
-import { ICity, ITypesMap, IItemsMap } from '../../../../reducers';
+import { ICity, ITypesMap, IItemsMap, IUser } from '../../../../reducers';
 import { IFormProps, IGenericDataMap, IGenericFormState } from '../../../../client-utils';
 import {
   NAME_LABEL,
@@ -19,6 +19,7 @@ import {
 export interface IAddItemProps extends IFormProps {
   citiesMap?: IGenericDataMap<ICity>;
   typesMap?: IGenericDataMap<ITypesMap>;
+  usersMap?: IGenericDataMap<IUser>;
   state?: IGenericFormState<IItemsMap>;
   uploadImages?: (itemId: string, files: any[]) => Promise<any>;
   isCreate?: boolean;
