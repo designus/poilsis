@@ -16,7 +16,15 @@ import {
   maxLength,
 } from '../../../../client-utils';
 import { Form } from './form';
-import { ID_LABEL, NAME_LABEL, CITY_LABEL, TYPES_LABEL, ADDRESS_LABEL, MAIN_INFO } from '../../../../../../data-strings';
+import {
+  ID_LABEL,
+  NAME_LABEL,
+  CITY_LABEL,
+  TYPES_LABEL,
+  ADDRESS_LABEL,
+  MAIN_INFO,
+  USER_LABEL,
+} from '../../../../../../data-strings';
 import { IMainInfoFields } from '../../../../../../global-utils';
 import { adminRoutes } from '../../../../client-utils';
 import Typography from 'material-ui/Typography';
@@ -29,6 +37,7 @@ export const mainInfoModel: TMainInfoModel = {
   city: getKeyMap('', CITY_LABEL, [required]),
   types: getKeyMap([], TYPES_LABEL, [required, minLength(1, true), maxLength(3, true)]),
   address: getKeyMap('', ADDRESS_LABEL, [required]),
+  userId: getKeyMap('', USER_LABEL, []),
 };
 
 const MainInfoForm = extendWithForm(Form);

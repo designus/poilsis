@@ -4,6 +4,7 @@ export const CITY_LABEL = 'City';
 export const TYPES_LABEL = 'Types';
 export const ADDRESS_LABEL = 'Address';
 export const DESCRIPTION_LABEL = 'Description';
+export const USER_LABEL = 'User';
 export const SEND_LABEL = 'Send';
 export const NAME_KEY = 'name';
 export const CITY_KEY = 'city';

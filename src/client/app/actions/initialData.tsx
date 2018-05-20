@@ -22,6 +22,7 @@ export const getInitialData = () => {
     const promises = [
       axios.get('http://localhost:3000/api/cities'),
       axios.get('http://localhost:3000/api/types'),
+      axios.get('http://localhost:3000/api/users'),
     ];
 
     if (userId) {
@@ -29,13 +30,14 @@ export const getInitialData = () => {
     }
 
     return axios.all(promises)
-      .then(axios.spread((citiesResponse, typesResponse, userResponse) => {
+      .then(axios.spread((citiesResponse, typesResponse, usersResponse, loggedInUser) => {
         const cities = getNormalizedData(citiesResponse.data, {items: [], isAllLoaded: false});
         const types = getNormalizedData(typesResponse.data);
-        dispatch(receiveInitialData({cities, types}));
-        if (userResponse) {
+        const users = getNormalizedData(usersResponse.data);
+        dispatch(receiveInitialData({cities, types, users}));
+        if (loggedInUser) {
           dispatch(loginSuccess(token));
-          dispatch(receiveUserDetails(userResponse.data));
+          dispatch(receiveUserDetails(loggedInUser.data));
         }
       }))
       .catch(err => {

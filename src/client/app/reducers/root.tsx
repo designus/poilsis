@@ -14,6 +14,8 @@ import {
   IToastState,
   IAuthState,
   IItemsState,
+  users,
+  IUsersState,
 } from '../reducers';
 
 import { uploadProgress, IUploadProgress } from './uploadProgress';
@@ -23,6 +25,7 @@ export interface IAppState {
   auth: IAuthState;
   global: any;
   user: IUserState;
+  users: IUsersState;
   items: IItemsState;
   newItem: TItemState;
   types: any;
@@ -43,4 +46,5 @@ export const rootReducer = combineReducers({
   toast,
   uploadProgress,
   user,
+  users,
 });

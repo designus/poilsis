@@ -9,3 +9,4 @@ export * from './toast';
 export * from './root';
 export * from './uploadProgress';
 export * from './user';
+export * from './users';

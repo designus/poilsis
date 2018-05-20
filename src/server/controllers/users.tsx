@@ -1,12 +1,20 @@
 const express = require('express');
 const router = express.Router();
 import Auth from './auth';
-import { UsersModel as User } from '../model/users';
+import { UsersModel as Users } from '../model/users';
 
+router.get('/', (req, res) => {
+  Users.find({}, 'id name role', (err, users) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(users);
+  });
+});
 router.post('/login', Auth.login);
 router.get('/profile/:userId', async (req, res) => {
   try {
-    const user = await User.findOne({id: req.params.userId }).exec();
+    const user = await Users.findOne({id: req.params.userId }).exec();
 
     if (user === null) {
       throw new Error('User not found');

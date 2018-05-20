@@ -29,4 +29,5 @@ export interface IMainInfoFields {
   city?: string;
   name?: string;
   types?: string[];
+  userId?: string;
 }
