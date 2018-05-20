@@ -20,6 +20,8 @@ import {
   USER_LABEL,
   USER_KEY,
 } from '../../../../../../../data-strings';
+import { isAdmin } from '../../../../../../../global-utils';
+
 export const Form = (props: IAddItemProps) => {
   const {showErrors, errors, fields} = props.state;
   return (
@@ -40,14 +42,16 @@ export const Form = (props: IAddItemProps) => {
         errors={errors[CITY_KEY]}
         data={props.citiesMap}
       />
-      <SelectBox
-        label={USER_LABEL}
-        value={fields[USER_KEY]}
-        onChange={props.handleInputChange(USER_KEY)}
-        showErrors={showErrors}
-        errors={errors[USER_KEY]}
-        data={props.usersMap}
-      />
+      {isAdmin(this.props.userRole) &&
+        <SelectBox
+          label={USER_LABEL}
+          value={fields[USER_KEY]}
+          onChange={props.handleInputChange(USER_KEY)}
+          showErrors={showErrors}
+          errors={errors[USER_KEY]}
+          data={props.usersMap}
+        />
+      }
       <CheckboxGroup
         label={TYPES_LABEL}
         showErrors={showErrors}

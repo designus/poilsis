@@ -31,3 +31,10 @@ export interface IMainInfoFields {
   types?: string[];
   userId?: string;
 }
+
+export enum UserRoles {
+  admin = 'admin',
+  user = 'user',
+}
+
+export const isAdmin = (userRole: string) => userRole === UserRoles.admin;

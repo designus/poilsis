@@ -5,6 +5,7 @@ import * as JWT from 'jwt-decode';
 import { Strategy } from 'passport-jwt';
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
+import { isAdmin } from '../../global-utils';
 
 const randToken = require('rand-token');
 
@@ -17,9 +18,9 @@ class Auth {
 
   public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
-  public authorize = (userRole: 'admin'|'user') => (req, res, next) => {
+  public authorize = (userRole: string) => (req, res, next) => {
     const accessToken: any = this.getAccessTokenClaims(req);
-    if (accessToken.userRole === 'admin' || accessToken.userRole === userRole) {
+    if (isAdmin(accessToken.userRole) || accessToken.userRole === userRole) {
       req.body.userId = accessToken.userId;
       req.body.userRole = accessToken.userRole;
       return next();
@@ -88,7 +89,7 @@ class Auth {
       }
 
       const tokenItem = await TokensModel.findOneAndUpdate({userId},
-        {$set: {userId, refreshToken: randToken.uid(32)}}, {upsert: true, new: true}
+        {$set: {userId, refreshToken: randToken.uid(32)}}, {upsert: true, new: true},
       );
 
       if (!tokenItem) {

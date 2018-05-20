@@ -20,6 +20,7 @@ export interface IAddItemProps extends IFormProps {
   citiesMap?: IGenericDataMap<ICity>;
   typesMap?: IGenericDataMap<ITypesMap>;
   usersMap?: IGenericDataMap<IUser>;
+  userRole?: string;
   state?: IGenericFormState<IItemsMap>;
   uploadImages?: (itemId: string, files: any[]) => Promise<any>;
   isCreate?: boolean;

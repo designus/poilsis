@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { renderMergedProps, UserRoles } from '../../client-utils';
+import { renderMergedProps } from '../../client-utils';
 import { IAppState } from '../../reducers';
 import { NotAuthorized } from '../../components';
+import { UserRoles } from '../../../../global-utils';
 
 export interface IProtectedRouteProps {
   component?: React.ComponentClass;

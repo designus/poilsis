@@ -81,6 +81,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
             showLoadingOverlay={true}
             onItemSubmit={this.onItemSubmit}
             initialState={initialState}
+            userRole={this.props.userRole}
             citiesMap={this.props.citiesMap}
             typesMap={this.props.typesMap}
             usersMap={this.props.usersMap}
@@ -99,6 +100,7 @@ const mapStateToProps = (state: IAppState) => {
     usersMap: state.users.dataMap,
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,
+    userRole: state.currentUser.details.role,
   };
 };
 

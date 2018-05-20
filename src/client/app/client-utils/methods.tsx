@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ValueType, IKeyMap, IGenericState, TGenericFormModel, IGenericFormState  } from './types';
+import { ValueType, IKeyMap, IGenericState, TGenericFormModel, IGenericFormState } from './types';
 import { IItemsMap, ItemsDataMap, ICityState, ICityItems } from '../reducers';
 
 export function getSelectedCity(citiesState: ICityState, city: string) {

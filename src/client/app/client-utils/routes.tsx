@@ -9,7 +9,7 @@ import {
   ItemPage,
 } from '../pages';
 
-import { UserRoles } from '../client-utils';
+import { UserRoles } from '../../../global-utils';
 
 export interface IRoute {
   path: string;
