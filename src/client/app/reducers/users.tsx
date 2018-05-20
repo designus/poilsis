@@ -9,7 +9,7 @@ export interface IUser {
 
 export interface IUsersState extends IGenericState<IUser> {};
 
-export const users = (state: IUsersState, action): IUsersState => {
+export const users = (state: IUsersState = null, action): IUsersState => {
   switch (action.type) {
     case RECEIVE_INITIAL_DATA: {
       return {...state, ...action.users };

@@ -7,4 +7,4 @@ export * from './newItem';
 export * from './types';
 export * from './toast';
 export * from './upload';
-export * from './user';
+export * from './currentUser';

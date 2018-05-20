@@ -80,7 +80,7 @@ class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
 
 const mapStateToProps = (state: IAppState) => {
   return {
-    userRole: state.user.details.role,
+    userRole: state.currentUser.details.role,
   };
 };
 

@@ -43,7 +43,7 @@ class Protected extends React.Component<IProtectedRouteProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  userRole: state.user.details ? state.user.details.role : null,
+  userRole: state.currentUser.details ? state.currentUser.details.role : null,
   isAuthenticated: state.auth.isLoggedIn,
 });
 

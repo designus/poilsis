@@ -14,17 +14,16 @@ import {
   IToastState,
   IAuthState,
   IItemsState,
-  users,
-  IUsersState,
 } from '../reducers';
 
 import { uploadProgress, IUploadProgress } from './uploadProgress';
-import { user, IUserState } from './user';
+import { currentUser, ICurrentUserState } from './currentUser';
+import { users, IUsersState } from './users';
 export interface IAppState {
   cities: ICityState;
   auth: IAuthState;
   global: any;
-  user: IUserState;
+  currentUser: ICurrentUserState;
   users: IUsersState;
   items: IItemsState;
   newItem: TItemState;
@@ -45,6 +44,6 @@ export const rootReducer = combineReducers({
   loader,
   toast,
   uploadProgress,
-  user,
+  currentUser,
   users,
 });
