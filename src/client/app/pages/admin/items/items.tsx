@@ -131,6 +131,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           dataMap={this.props.itemsMap}
+          items={this.props.userItems}
           search={this.state.search}
           columns={this.columns}
           limit={10}
@@ -151,6 +152,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 const mapStateToProps = (state: IAppState) => {
   return {
     itemsMap: state.items.dataMap,
+    userItems: state.currentUser.items,
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,
     areAllItemsLoaded: state.items.isAllLoaded,

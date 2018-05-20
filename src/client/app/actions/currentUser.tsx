@@ -29,7 +29,6 @@ export const removeUserItem = (itemId: string) => {
 };
 
 export const getUserItems = () => (dispatch, getState) => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
   const state: IAppState = getState();
   const { currentUser } = state;
   const user = currentUser.details;
@@ -42,6 +41,8 @@ export const getUserItems = () => (dispatch, getState) => {
   if (isAllItemsLoaded) {
     return;
   }
+
+  dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.get(endpoint)
     .then(response => response.data)
