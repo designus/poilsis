@@ -18,7 +18,7 @@ router.route('/')
       res.json(items);
     });
   })
-  .post(auth.authenticate(), auth.authorize('user'), (req, res, next) => {
+  .post(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
 
     const id = shortId.generate();
     const name = sanitize(req.body.name);
@@ -56,7 +56,7 @@ router.route('/item/:itemId')
   });
 
 router.route('/item/mainInfo/:itemId')
-  .put(auth.authenticate(), auth.authorize('user'), (req, res, next) => {
+  .put(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
     const item: IMainInfoFields = req.body;
     const name = sanitize(item.name);
     const city = sanitize(item.city);
@@ -64,9 +64,7 @@ router.route('/item/mainInfo/:itemId')
     const address = sanitize(item.address);
     const types = item.types;
     const updatedAt = new Date();
-
-    const userId = req.body.userId;
-    // const userRole = req.body.userRole;
+    const userId = item.userId;
 
     const updatedItem = {name, city, alias, types, address, updatedAt, userId};
 

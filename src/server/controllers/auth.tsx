@@ -5,7 +5,6 @@ import * as JWT from 'jwt-decode';
 import { Strategy } from 'passport-jwt';
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
-import { isAdmin } from '../../global-utils';
 
 const randToken = require('rand-token');
 
@@ -18,10 +17,12 @@ class Auth {
 
   public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
-  public authorize = (userRole: string) => (req, res, next) => {
+  public authorize = (roles: string[]) => (req, res, next) => {
     const accessToken: any = this.getAccessTokenClaims(req);
-    if (isAdmin(accessToken.userRole) || accessToken.userRole === userRole) {
-      req.body.userId = accessToken.userId;
+    const userRole = accessToken.userRole;
+    if (roles.indexOf(userRole) !== -1) {
+      // If userId is not explicitely specified, let's use userId from accessToken
+      req.body.userId = req.body.userId || accessToken.userId;
       req.body.userRole = accessToken.userRole;
       return next();
     }

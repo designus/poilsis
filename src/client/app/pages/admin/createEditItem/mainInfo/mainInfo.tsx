@@ -71,27 +71,22 @@ class MainInfoPageComponent extends React.Component<any, any> {
       ? getFormStateWithData(this.props.loadedItem, this.state)
       : this.state;
 
-    if (this.props.loadedItem || this.isCreatePage) {
-
-      return (
-        <div>
-          <Typography type="headline">{MAIN_INFO}</Typography>
-          <MainInfoForm
-            loaderId={CONTENT_LOADER_ID}
-            showLoadingOverlay={true}
-            onItemSubmit={this.onItemSubmit}
-            initialState={initialState}
-            userRole={this.props.userRole}
-            citiesMap={this.props.citiesMap}
-            typesMap={this.props.typesMap}
-            usersMap={this.props.usersMap}
-            isCreate={this.isCreatePage}
-          />
-        </div>
-      );
-    } else {
-      return null;
-    }
+    return (this.props.loadedItem || this.isCreatePage) && (
+      <div>
+        <Typography type="headline">{MAIN_INFO}</Typography>
+        <MainInfoForm
+          loaderId={CONTENT_LOADER_ID}
+          showLoadingOverlay={true}
+          onItemSubmit={this.onItemSubmit}
+          initialState={initialState}
+          userRole={this.props.userRole}
+          citiesMap={this.props.citiesMap}
+          typesMap={this.props.typesMap}
+          usersMap={this.props.usersMap}
+          isCreate={this.isCreatePage}
+        />
+      </div>
+    );
   }
 };
 

@@ -42,7 +42,7 @@ export const Form = (props: IAddItemProps) => {
         errors={errors[CITY_KEY]}
         data={props.citiesMap}
       />
-      {isAdmin(this.props.userRole) &&
+      {isAdmin(props.userRole) &&
         <SelectBox
           label={USER_LABEL}
           value={fields[USER_KEY]}
