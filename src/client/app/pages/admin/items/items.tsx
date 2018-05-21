@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
 import { IAppState } from '../../../reducers';
-import { getItems, deleteItem, stopAllLoaders } from '../../../actions';
+import { getUserItems, deleteItem, stopAllLoaders } from '../../../actions';
 import { CONTENT_LOADER_ID, adminRoutes } from '../../../client-utils';
 import { ITEMS } from '../../../../../data-strings';
 import { AdminHeader } from '../../../global-styles';
@@ -22,7 +22,7 @@ const Table = extendWithLoader(EnhancedTable);
 class AdminItemsPageComponent extends React.Component<any, any> {
 
   static fetchData(store) {
-    return store.dispatch(getItems());
+    return store.dispatch(getUserItems());
   }
 
   state = {
@@ -33,7 +33,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 
   componentDidMount() {
     if (!this.props.areAllItemsLoaded) {
-      this.props.getItems();
+      this.props.getUserItems();
     }
   }
 
@@ -74,6 +74,15 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         dataProp: 'createdAt',
         sortType: 'date',
         format: (date: string) => moment(date).format('YYYY-MM-DD'),
+      },
+      {
+        title: 'User',
+        dataProp: 'userId',
+        sortType: 'string',
+        format: (userId: string) => {
+          const user = this.props.usersMap[userId];
+          return user && user.name || null;
+        },
       },
       {
         title: 'Actions',
@@ -131,6 +140,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           dataMap={this.props.itemsMap}
+          items={this.props.userItems}
           search={this.state.search}
           columns={this.columns}
           limit={10}
@@ -151,16 +161,18 @@ class AdminItemsPageComponent extends React.Component<any, any> {
 const mapStateToProps = (state: IAppState) => {
   return {
     itemsMap: state.items.dataMap,
+    usersMap: state.users.dataMap,
+    userItems: state.currentUser.items,
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,
-    areAllItemsLoaded: state.items.allItemsLoaded,
+    areAllItemsLoaded: state.items.isAllLoaded,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (itemId) => dispatch(deleteItem(itemId)),
-    getItems: () => dispatch(getItems()),
+    getUserItems: () => dispatch(getUserItems()),
     stopAllLoaders: () => dispatch(stopAllLoaders()),
   };
 };

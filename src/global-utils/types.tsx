@@ -29,4 +29,12 @@ export interface IMainInfoFields {
   city?: string;
   name?: string;
   types?: string[];
+  userId?: string;
 }
+
+export enum UserRoles {
+  admin = 'admin',
+  user = 'user',
+}
+
+export const isAdmin = (userRole: string) => userRole === UserRoles.admin;

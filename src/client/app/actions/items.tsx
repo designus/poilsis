@@ -1,17 +1,22 @@
 import axios from 'axios';
 
-import { startLoading, endLoading, showToast, setUploadProgress, uploadError, uploadSuccess } from '../actions';
 import {
-  getNormalizedData,
-  getItemsByCity,
+  startLoading,
+  endLoading,
+  showToast,
+  setUploadProgress,
+  uploadError,
+  uploadSuccess,
+  removeUserItem,
+} from '../actions';
+import {
   IAlias,
   objectToFormData,
   CONTENT_LOADER_ID,
   DIALOG_LOADER_ID,
   onUploadProgress,
-  // getFormData,
  } from '../client-utils';
-import { ItemsDataMap, Toast, IItemsByCity, IItemsMap } from '../reducers';
+import { ItemsDataMap, Toast, IItemsMap } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -27,7 +32,6 @@ import {
 } from '../../../data-strings';
 import { IImage, IMainInfoFields } from 'global-utils';
 
-// const objectToFormData = require('object-to-formdata');
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
@@ -41,13 +45,12 @@ export const selectItem = (id: string) => {
   };
 };
 
-export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], allItemsLoaded: boolean, itemsByCity: IItemsByCity) => {
+export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoaded: boolean) => {
   return {
     type: RECEIVE_ITEMS,
     dataMap,
     aliases,
-    allItemsLoaded,
-    itemsByCity,
+    isAllLoaded,
   };
 };
 
@@ -73,35 +76,6 @@ export const receiveImages = (id: string, images: IImage[]) => {
   };
 };
 
-export const getItems = (cityId = null) => {
-  const endpoint = cityId	?
-    `http://localhost:3000/api/items/city/${cityId}` :
-    'http://localhost:3000/api/items';
-
-  return (dispatch) => {
-
-    dispatch(startLoading(CONTENT_LOADER_ID));
-
-    return axios.get(endpoint)
-      .then(response => {
-
-        const { data } = response;
-        const { dataMap, aliases } = getNormalizedData(data);
-
-        const itemsByCity = cityId ? {[cityId]: Object.keys(dataMap)} : getItemsByCity(dataMap);
-        const allItemsLoaded = !cityId;
-
-        dispatch(receiveItems(dataMap, aliases, allItemsLoaded, itemsByCity));
-        dispatch(endLoading(CONTENT_LOADER_ID));
-
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
-      });
-  };
-};
-
 export const getItem = (itemId) => {
 
   return dispatch => {
@@ -115,8 +89,8 @@ export const getItem = (itemId) => {
         dispatch(endLoading(CONTENT_LOADER_ID));
       })
       .catch(err => {
-        dispatch(endLoading(CONTENT_LOADER_ID));
         console.error(err);
+        dispatch(endLoading(CONTENT_LOADER_ID));
       });
   };
 };
@@ -180,7 +154,6 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
 
 export const updateMainInfo = (item: IMainInfoFields) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-
     dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.put(`http://localhost:3000/api/items/item/mainInfo/${item.id}`, item)
@@ -230,7 +203,7 @@ export const postItem = (item) => (dispatch) => {
   });
 };
 
-export const deleteItem = (itemId) => (dispatch) => {
+export const deleteItem = (itemId: string) => (dispatch) => {
 
   return new Promise((resolve, reject) => {
 
@@ -245,6 +218,7 @@ export const deleteItem = (itemId) => (dispatch) => {
           reject(item.errors);
         } else {
           dispatch(removeItem(item));
+          dispatch(removeUserItem(itemId));
           dispatch(showToast(Toast.success, DELETE_ITEM_SUCCESS));
           resolve();
         }

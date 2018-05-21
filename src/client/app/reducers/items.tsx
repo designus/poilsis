@@ -1,5 +1,5 @@
 import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES } from '../actions';
-import { IGenericState, removeDuplicates } from '../client-utils';
+import { IGenericState } from '../client-utils';
 import { IImage } from 'global-utils';
 
 export interface IItemsMap {
@@ -13,43 +13,17 @@ export interface IItemsMap {
   isFullyLoaded?: boolean;
 }
 
-export interface IItemsByCity {
-  [key: string]: string[];
-}
-
 export type ItemsDataMap = IGenericState<IItemsMap>;
 
 export interface IItemsState extends ItemsDataMap {
   selectedId?: string;
-  allItemsLoaded?: boolean;
-  itemsByCity?: IItemsByCity;
+  isAllLoaded?: boolean;
 }
 
 const initialItemsState = {
   dataMap: {},
   aliases: [],
-  allItemsLoaded: false,
-  itemsByCity: {},
-};
-
-export const removeItemFromCityState = (state: IItemsState, item: IItemsMap) => {
-  return [...state.itemsByCity[item.city].filter(id => id !== item.id)];
-};
-
-export const getItemsByCityState = (state: IItemsState, newItem: IItemsMap) => {
-
-  const oldItem = state.dataMap[newItem.id];
-  const cityItems = [...(state.itemsByCity[newItem.city] || []), newItem.id].filter(removeDuplicates);
-
-  if (oldItem && oldItem.city !== newItem.city) {
-    return {
-      ...state.itemsByCity,
-      [oldItem.city]: removeItemFromCityState(state, oldItem),
-      [newItem.city]: cityItems,
-    };
-  }
-
-  return {...state.itemsByCity, [newItem.city]: cityItems};
+  isAllLoaded: false,
 };
 
 export const items = (state: IItemsState = initialItemsState, action): IItemsState => {
@@ -61,13 +35,11 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
         ...state,
         dataMap: {...state.dataMap, ...action.dataMap},
         aliases: [...state.aliases, ...action.aliases],
-        allItemsLoaded: action.allItemsLoaded,
-        itemsByCity: {...state.itemsByCity, ...action.itemsByCity},
+        isAllLoaded: action.isAllLoaded,
       };
     case RECEIVE_ITEM:
       return {
         ...state,
-        itemsByCity: getItemsByCityState(state, action.item),
         dataMap: {
           ...state.dataMap,
           [action.item.id]: {
@@ -82,10 +54,6 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
       return {
         ...state,
         dataMap,
-        itemsByCity: {
-          ...state.itemsByCity,
-          [removedItem.city]: removeItemFromCityState(state, removedItem),
-        },
       };
     case RECEIVE_IMAGES:
       return {

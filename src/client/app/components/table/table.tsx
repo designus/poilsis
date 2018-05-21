@@ -30,6 +30,7 @@ export interface ITableProps {
   order?: OrderType;
   orderBy?: string;
   dataMap?: IGenericDataMap<object>;
+  items?: string[];
   columns?: ITableColumn[];
   search?: string;
   limit?: number;
@@ -67,7 +68,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
       order: props.order || null,
       orderBy: props.orderBy || null,
       selected: [],
-      data: Object.keys(props.dataMap),
+      data: props.items,
       page: 0,
       rowsPerPage: props.limit,
       filters: {
@@ -78,7 +79,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
   }
 
   componentWillReceiveProps(nextProps: ITableProps) {
-    const data = Object.keys(nextProps.dataMap);
+    const data = nextProps.items;
     if (data.length !== this.state.data.length) {
       this.setState({data});
     }

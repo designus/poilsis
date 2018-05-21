@@ -2,29 +2,14 @@ import axios from 'axios';
 import * as JWT from 'jwt-decode';
 import { getNormalizedData } from '../client-utils';
 import { IAppState } from '../reducers';
+import { receiveUserDetails, loginSuccess } from '../actions';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
-export const RECEIVE_LOGGED_IN_USER = 'RECEIVE_LOGGED_IN_USER';
-export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 
 export const receiveInitialData = (data) => {
   return {
     type: RECEIVE_INITIAL_DATA,
     data,
-  };
-};
-
-export const receiveLoggedInUser = (user) => {
-  return {
-    type: RECEIVE_LOGGED_IN_USER,
-    user,
-  };
-};
-
-export const setAccessToken = (accessToken) => {
-  return {
-    type: SET_ACCESS_TOKEN,
-    accessToken,
   };
 };
 
@@ -37,6 +22,7 @@ export const getInitialData = () => {
     const promises = [
       axios.get('http://localhost:3000/api/cities'),
       axios.get('http://localhost:3000/api/types'),
+      axios.get('http://localhost:3000/api/users'),
     ];
 
     if (userId) {
@@ -44,12 +30,14 @@ export const getInitialData = () => {
     }
 
     return axios.all(promises)
-      .then(axios.spread((citiesResponse, typesResponse, userResponse) => {
-        const cities = getNormalizedData(citiesResponse.data);
+      .then(axios.spread((citiesResponse, typesResponse, usersResponse, loggedInUser) => {
+        const cities = getNormalizedData(citiesResponse.data, {items: [], isAllLoaded: false});
         const types = getNormalizedData(typesResponse.data);
-        dispatch(receiveInitialData({cities, types}));
-        if (userResponse) {
-          dispatch(receiveLoggedInUser(userResponse.data));
+        const users = getNormalizedData(usersResponse.data);
+        dispatch(receiveInitialData({cities, types, users}));
+        if (loggedInUser) {
+          dispatch(loginSuccess(token));
+          dispatch(receiveUserDetails(loggedInUser.data));
         }
       }))
       .catch(err => {

@@ -21,6 +21,10 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
     }
   }
 
+  login = (credentials) => () => {
+    this.props.login(credentials);
+  }
+
   render() {
     return (
       <div className="app-container">
@@ -31,7 +35,10 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
               Hello, <strong>{this.props.user}</strong>
               <div onClick={this.props.logout}>Log out</div>
             </div> :
-            <div onClick={this.props.login}>Log in</div>
+            <div>
+              <div onClick={this.login({username: 'admin', password: 'admin'})}>Log in with admin</div>
+              <div onClick={this.login({username: 'tomas', password: 'tomas'})}>Log in with user</div>
+            </div>
           }
         </div>
         <hr />
@@ -61,13 +68,13 @@ const mapStateToProps = (state: IAppState) => {
     typesMap: state.types.dataMap,
     isInitialDataLoaded: state.initialData.isLoaded,
     isAuthenticated: state.auth.isLoggedIn,
-    user: state.auth.user && state.auth.user.name,
+    user: state.currentUser.details && state.currentUser.details.name,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: () => dispatch(login()),
+    login: (credentials) => dispatch(login(credentials)),
     logout: () => dispatch(logout()),
   };
 };

@@ -7,7 +7,6 @@ import {
   getInitialFormState,
   getBackendErrors,
   CONTENT_LOADER_ID,
-  voidFn,
   TGenericFormModel,
   IGenericFormState,
   getKeyMap,
@@ -16,10 +15,19 @@ import {
   maxLength,
 } from '../../../../client-utils';
 import { Form } from './form';
-import { ID_LABEL, NAME_LABEL, CITY_LABEL, TYPES_LABEL, ADDRESS_LABEL, MAIN_INFO } from '../../../../../../data-strings';
+import {
+  ID_LABEL,
+  NAME_LABEL,
+  CITY_LABEL,
+  TYPES_LABEL,
+  ADDRESS_LABEL,
+  MAIN_INFO,
+  USER_LABEL,
+} from '../../../../../../data-strings';
 import { IMainInfoFields } from '../../../../../../global-utils';
 import { adminRoutes } from '../../../../client-utils';
 import Typography from 'material-ui/Typography';
+import { IAppState } from '../../../../reducers';
 
 export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
 
@@ -29,6 +37,7 @@ export const mainInfoModel: TMainInfoModel = {
   city: getKeyMap('', CITY_LABEL, [required]),
   types: getKeyMap([], TYPES_LABEL, [required, minLength(1, true), maxLength(3, true)]),
   address: getKeyMap('', ADDRESS_LABEL, [required]),
+  userId: getKeyMap('', USER_LABEL, []),
 };
 
 const MainInfoForm = extendWithForm(Form);
@@ -62,26 +71,32 @@ class MainInfoPageComponent extends React.Component<any, any> {
       ? getFormStateWithData(this.props.loadedItem, this.state)
       : this.state;
 
-    if (this.props.loadedItem || this.isCreatePage) {
-
-      return (
-        <div>
-          <Typography type="headline">{MAIN_INFO}</Typography>
-          <MainInfoForm
-            loaderId={CONTENT_LOADER_ID}
-            showLoadingOverlay={true}
-            onItemSubmit={this.onItemSubmit}
-            initialState={initialState}
-            citiesMap={this.props.citiesMap}
-            typesMap={this.props.typesMap}
-            isCreate={this.isCreatePage}
-          />
-        </div>
-      );
-    } else {
-      return null;
-    }
+    return (this.props.loadedItem || this.isCreatePage) && (
+      <div>
+        <Typography type="headline">{MAIN_INFO}</Typography>
+        <MainInfoForm
+          loaderId={CONTENT_LOADER_ID}
+          showLoadingOverlay={true}
+          onItemSubmit={this.onItemSubmit}
+          initialState={initialState}
+          userRole={this.props.userRole}
+          citiesMap={this.props.citiesMap}
+          typesMap={this.props.typesMap}
+          usersMap={this.props.usersMap}
+          isCreate={this.isCreatePage}
+        />
+      </div>
+    );
   }
+};
+
+const mapStateToProps = (state: IAppState) => {
+  return {
+    usersMap: state.users.dataMap,
+    citiesMap: state.cities.dataMap,
+    typesMap: state.types.dataMap,
+    userRole: state.currentUser.details.role,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -91,4 +106,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export const MainInfoPage = connect(voidFn, mapDispatchToProps)(MainInfoPageComponent);
+export const MainInfoPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent);

@@ -2,8 +2,8 @@ import axios from 'axios';
 import * as Cookies from 'js-cookie';
 import * as moment from 'moment';
 import * as JWT from 'jwt-decode';
-import { startLoading, endLoading, showToast } from '../actions';
-import { Toast, IAppState } from '../reducers';
+import { startLoading, endLoading, showToast, receiveUserDetails } from '../actions';
+import { Toast, IAppState, IUser } from '../reducers';
 import { DIALOG_LOADER_ID } from '../client-utils';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -11,12 +11,14 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const SET_AUTH_TIMEOUT_ID = 'SET_AUTH_TIMEOUT_ID';
 export const SHOW_KEEP_ME_LOGGED_MODAL = 'SHOW_KEEP_ME_LOGGED_MODAL';
 export const REAUTHENTICATE_SUCCESS = 'REAUTHENTICATE_SUCCESS';
+export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 
-export const loginSuccess = (user, accessToken) => ({type: LOGIN_SUCCESS, user, accessToken});
+export const loginSuccess = (accessToken) => ({type: LOGIN_SUCCESS, accessToken});
 export const logoutSuccess = () => ({type: LOGOUT_SUCCESS});
 export const setAuthTimeoutId = (timeoutId) => ({type: SET_AUTH_TIMEOUT_ID, timeoutId});
 export const showKeepMeLoggedModal = (time) => ({type: SHOW_KEEP_ME_LOGGED_MODAL, time});
 export const reauthenticateSuccess = (accessToken) => ({type: REAUTHENTICATE_SUCCESS, accessToken});
+export const setAccessToken = (accessToken) => ({type: SET_ACCESS_TOKEN, accessToken});
 
 export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
@@ -35,7 +37,7 @@ export const getKeepMeLoggedModalDelay = (expires, timeInSeconds) => {
   return delay;
 };
 
-export const initiateExpiredLoginNotification = (expires: number) => (dispatch, getState) => {
+export const setLogoutTimer = (expires: number) => (dispatch, getState) => {
   const state: IAppState = getState();
   const timeInSeconds = 30;
   const timeoutId = state.auth.timeoutId;
@@ -49,7 +51,6 @@ export const initiateExpiredLoginNotification = (expires: number) => (dispatch, 
 
 export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-
   return axios.post('http://localhost:3000/api/users/login', credentials)
     .then(response => response.data)
     .then(data => {
@@ -60,12 +61,12 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
 
       return axios.get(`http://localhost:3000/api/users/profile/${userId}`)
         .then(response => response.data)
-        .then(user => {
-          console.log('User', user);
-          dispatch(loginSuccess(user, accessToken));
+        .then((user: IUser) => {
+          dispatch(loginSuccess(accessToken));
+          dispatch(receiveUserDetails(user));
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
-          dispatch(initiateExpiredLoginNotification(exp));
+          dispatch(setLogoutTimer(exp));
           Cookies.set('jwt', accessToken, {expires});
           localStorage.setItem('refreshToken', refreshToken);
           return Promise.resolve();
@@ -80,8 +81,8 @@ export const keepUserLogged = () => (dispatch, getState) => {
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
   const refreshToken = localStorage.getItem('refreshToken');
-  const {userId} = JWT(oldAccessToken);
-  return axios.post('http://localhost:3000/api/tokens/reauthenticate', {userId, refreshToken})
+  const {userId, userRole} = JWT(oldAccessToken);
+  return axios.post('http://localhost:3000/api/tokens/reauthenticate', {userId, userRole, refreshToken})
     .then(response => response.data)
     .then((data) => {
       const accessToken = data.accessToken;
@@ -90,7 +91,7 @@ export const keepUserLogged = () => (dispatch, getState) => {
       dispatch(endLoading(DIALOG_LOADER_ID));
       dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
       dispatch(reauthenticateSuccess(accessToken));
-      dispatch(initiateExpiredLoginNotification(exp));
+      dispatch(setLogoutTimer(exp));
       Cookies.set('jwt', accessToken, {expires});
     })
     .catch(error => handleError(dispatch, error, true));
@@ -106,6 +107,7 @@ export const logout = () => (dispatch, getState) => {
       Cookies.remove('jwt');
       localStorage.removeItem('refreshToken');
       dispatch(logoutSuccess());
+      dispatch(receiveUserDetails(null));
     })
     .catch(error => handleError(dispatch, error, false));
 };

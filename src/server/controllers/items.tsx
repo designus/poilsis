@@ -18,7 +18,7 @@ router.route('/')
       res.json(items);
     });
   })
-  .post((req, res, next) => {
+  .post(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
 
     const id = shortId.generate();
     const name = sanitize(req.body.name);
@@ -26,8 +26,8 @@ router.route('/')
     const alias = sanitize(req.body.alias) || name;
     const address = sanitize(req.body.address);
     const types = req.body.types;
-
-    const newItem = {id, name, city, alias, types, address};
+    const userId = req.body.userId;
+    const newItem = {id, name, city, alias, types, address, userId};
 
     new ItemsModel(newItem).save((err, item) => {
       if (err) {
@@ -56,7 +56,7 @@ router.route('/item/:itemId')
   });
 
 router.route('/item/mainInfo/:itemId')
-  .put(auth.authenticate(), (req, res, next) => {
+  .put(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
     const item: IMainInfoFields = req.body;
     const name = sanitize(item.name);
     const city = sanitize(item.city);
@@ -64,8 +64,9 @@ router.route('/item/mainInfo/:itemId')
     const address = sanitize(item.address);
     const types = item.types;
     const updatedAt = new Date();
+    const userId = item.userId;
 
-    const updatedItem = {name, city, alias, types, address, updatedAt};
+    const updatedItem = {name, city, alias, types, address, updatedAt, userId};
 
     ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true }, (err, item) => {
       if (err) { return next(err); }
@@ -134,6 +135,16 @@ router.route('/item/upload-photos/:itemId')
 router.route('/city/:cityId')
   .get((req, res) => {
     ItemsModel.find({city: req.params.cityId}, (err, items) => {
+      if (err) {
+        res.send(err);
+      }
+      res.json(items);
+    });
+  });
+
+router.route('/user/:userId')
+  .get((req, res) => {
+    ItemsModel.find({userId: req.params.userId}, (err, items) => {
       if (err) {
         res.send(err);
       }

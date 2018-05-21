@@ -1,21 +1,14 @@
 import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
-  RECEIVE_LOGGED_IN_USER,
   SET_ACCESS_TOKEN,
   SET_AUTH_TIMEOUT_ID,
   SHOW_KEEP_ME_LOGGED_MODAL,
   REAUTHENTICATE_SUCCESS,
 } from '../actions';
 
-export interface IUser {
-  name: string;
-  role: string;
-}
-
 export interface IAuthState {
   isLoggedIn: boolean;
-  user: IUser;
   accessToken: string;
   timeoutId?: number;
   showKeepMeLoggedModal?: boolean;
@@ -24,7 +17,6 @@ export interface IAuthState {
 
 export const auth = (state: IAuthState = {
   isLoggedIn: false,
-  user: null,
   accessToken: null,
   showKeepMeLoggedModal: false,
   timeToCloseModal: 0,
@@ -34,15 +26,16 @@ export const auth = (state: IAuthState = {
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        user: action.user,
         accessToken: action.accessToken,
         isLoggedIn: true,
+        showKeepMeLoggedModal: false,
+        timeToCloseModal: null,
       };
     }
     case LOGOUT_SUCCESS: {
       return {
         ...state,
-        user: null,
+        // user: null,
         accessToken: null,
         isLoggedIn: false,
         showKeepMeLoggedModal: false,
@@ -56,20 +49,13 @@ export const auth = (state: IAuthState = {
         showKeepMeLoggedModal: false,
       };
     }
-    case RECEIVE_LOGGED_IN_USER: {
-      return {
-        ...state,
-        user: action.user,
-        isLoggedIn: true,
-      };
-    }
     /* During page reload we extract accessToken from cookies and put it into our state. After this we make
     additional request to get user profile data in getInitialData method call */
     case SET_ACCESS_TOKEN: {
       return {
         ...state,
         accessToken: action.accessToken,
-        user: null,
+        // user: null,
         isLoggedIn: false,
       };
     }

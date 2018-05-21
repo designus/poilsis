@@ -10,6 +10,7 @@ interface IItemsSchemaMap extends TGenericSchemaMap<INewItemFields> {
   createdAt: any;
   updatedAt: any;
   id: any;
+  userId: any;
 }
 
 const mongoose = require('mongoose');
@@ -37,6 +38,7 @@ const ItemsSchemaMap: IItemsSchemaMap = {
   address: {type: String, required: [true, isRequired(ADDRESS_KEY)]},
   types: {type: Array, required: [true, 'At least one type must be selected']},
   alias: {type: String, lowercase: true, trim: true, required: true, set: formatAlias },
+  userId: {type: String, required: true},
   createdAt: {type: Date },
   updatedAt: {type: Date },
   images: {
