@@ -16,7 +16,7 @@ import {
   IMAGES_LABEL,
 } from '../../../../../data-strings';
 
-import { IImage } from 'global-utils';
+import { IImage } from '../../../../../global-utils';
 
 export interface INewItemFields {
   id?: string;

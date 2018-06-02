@@ -2,5 +2,14 @@
   "extends": "../../tsconfig",
   "files": [
     "./client.tsx"
-  ]
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "sourceMap": true,
+    "module": "commonjs",
+    "importHelpers": true,
+    "outDir": "../../build/client",
+    "lib": ["es2015", "dom"],
+    "jsx": "react"
+  },
 }

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TItemState } from 'pages';
+import { TItemState } from '../pages';
 import {
   cities,
   types,

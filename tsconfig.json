@@ -11,17 +11,11 @@
       "global-styles": ["./src/client/app/global-styles"],
       "global-utils": ["./src/global-utils"]
     },
-    "outDir": "./build",
-    "module": "commonjs",
-    "target": "es2015",
-    "sourceMap": true,
     "inlineSourceMap": false,
     "inlineSources": false,
     "experimentalDecorators": true,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "jsx": "react",
-    "moduleResolution": "node"
   },
   "exclude": [
     "./node_modules",

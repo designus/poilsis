@@ -28,7 +28,7 @@ const usersSchema = new mongoose.Schema({
   timestamps: {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-  }
+  },
 });
 
 usersSchema.pre('save', (next) => {

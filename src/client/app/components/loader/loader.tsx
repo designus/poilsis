@@ -2,7 +2,7 @@ import * as React from 'react';
 import { CircularProgress } from 'material-ui/Progress';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { IAppState, ILoadingState } from 'reducers';
+import { IAppState, ILoadingState } from '../../reducers';
 
 const Wrapper = styled.div`
   position: relative;
@@ -23,6 +23,7 @@ export interface ILoaderProps {
   loaderId: string;
   showLoadingOverlay?: boolean;
   loadingState?: ILoadingState;
+  isLoading?: boolean;
 }
 
 export function extendWithLoader<TOriginalProps extends {}>(

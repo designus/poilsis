@@ -1,4 +1,3 @@
-
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -24,18 +23,19 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { getMaterialUiCSSParams, preloadData } from './server-utils';
 import { App } from '../client/app/pages';
-// import { setAccessToken } from '../client/app/actions';
 import auth from './controllers/auth';
 require('dotenv').config();
 // const favicon = require('serve-favicon');
 
 const app = express();
 const port = 3000;
-
+console.log('Public', path.join(__dirname, '../../public'));
+console.log('Dir name', __dirname);
+console.log('Uploads', path.join(__dirname, '../../uploads'));
 // db config
 mongoose.connect('mongodb://localhost:27017/poilsis');
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, '../../public')));
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
@@ -107,7 +107,7 @@ function renderFullPage(html, css1, css2, preloadedState) {
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
         </script>
-        <script src="http://localhost:8080/public/app.js"></script>
+        <script src="http://localhost:3000/public/app.js"></script>
       </body>
     </html>
     `;

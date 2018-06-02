@@ -108,28 +108,30 @@ export function removeDuplicates(item, i, arr) {
 }
 
 export function removeInjectedStyles() {
-  const jssStyles = document.getElementById('jss-server-side');
-  if (jssStyles && jssStyles.parentNode) {
-    jssStyles.parentNode.removeChild(jssStyles);
+  if (document) {
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
   }
 }
 
-export function getFormData(item) {
-  const formData = new FormData();
+// export function getFormData(item) {
+//   const formData = new FormData();
 
-  Object.keys(item)
-    .forEach(key => {
-      if (key === 'files') {
-        item[key].forEach(elem => {
-          formData.append(key + '[]', elem);
-        });
-      } else {
-        formData.append(key, item[key]);
-      }
-    });
+//   Object.keys(item)
+//     .forEach(key => {
+//       if (key === 'files') {
+//         item[key].forEach(elem => {
+//           formData.append(key + '[]', elem);
+//         });
+//       } else {
+//         formData.append(key, item[key]);
+//       }
+//     });
 
-  return formData;
-}
+//   return formData;
+// }
 
 export function onUploadProgress(e, callback) {
   const totalLength = e.lengthComputable ?

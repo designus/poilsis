@@ -99,7 +99,7 @@ class FormComponent extends React.Component<IPhotosFormProps, any> {
     });
   }
 
-  onDeleteImage = (index: number, isTemporary: boolean) => (e: MouseEvent) => {
+  onDeleteImage = (index: number, isTemporary: boolean) => (e: any) => {
     e.stopPropagation();
     if (isTemporary) {
       const droppedImages = this.state.droppedImages;

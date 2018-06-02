@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IImage } from 'global-utils';
 import { SortableImage } from './sortableImage';
 import DeleteIcon from 'material-ui-icons/Clear';
 import Button from 'material-ui/Button';
@@ -7,6 +6,7 @@ import { InputLabel } from 'material-ui/Input';
 import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox, Image, Images, ImagePreviewWrapper } from './style';
 import { IUploadProgress } from '../../reducers';
 import { SuccessIcon, ErrorIcon } from '../../client-utils';
+import { IImage } from '../../../../global-utils';
 
 export interface IImagePreview extends IUploadProgress {
   isTemporary: boolean;
