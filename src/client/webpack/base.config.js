@@ -9,9 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
-
-const projectRoot = path.join(__dirname, '..', '..');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const projectRoot = path.join(__dirname, '..', '..', '..');
 
 module.exports = {
   resolve: {
@@ -29,7 +27,7 @@ module.exports = {
   },
   
   output: {
-    path: path.join(projectRoot, 'build', 'public'),    
+    path: path.join(projectRoot, 'build', 'client'),    
     publicPath: '/public/',
     filename: '[name].js',
     pathinfo: true
@@ -40,7 +38,12 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.tsx?$/,
-        loader: 'tslint-loader'
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: {}
+          }
+        ]
       },
       {
         test: /\.tsx$/,

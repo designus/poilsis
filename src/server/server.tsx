@@ -31,13 +31,11 @@ const app = express();
 const expressPort = 3000;
 const webpackPort = 8080;
 const staticFilesPort = app.get('env') === 'production' ? expressPort : webpackPort;
-
-console.log('Environment', app.get('env'));
-
+console.log('Uploads', path.join(__dirname, '../../../uploads'));
 // db config
 mongoose.connect('mongodb://localhost:27017/poilsis');
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
-app.use('/public', express.static(path.join(__dirname, '../../public')));
+app.use('/public', express.static(path.join(__dirname, '../../client')));
 app.use('/uploads', express.static(path.join(__dirname, '../../../uploads')));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
