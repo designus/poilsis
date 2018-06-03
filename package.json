@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf build",
-    "start": "node ./build/server/server/server.js",
-    "start:prod": "cross-env NODE_ENV=production node ./build/server/server.js",
-    "build-client": "cd ./src/client && cross-env NODE_ENV=production webpack",
-    "dev-client": "cd ./src/client && webpack-dev-server -w",
+    "start": "cross-env NODE_ENV=production node ./build/server/server/server.js",
+    "build-client": "cd ./src/client && cross-env NODE_ENV=production webpack --env prod",
+    "dev-client": "cd ./src/client && webpack-dev-server -w --env dev",
     "build-server": "tsc -p ./src/server",
     "dev-server": "tsc-watch -p ./src/server --onSuccess \"node ./build/server/server.js\"",
     "dev": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run dev-server\" \"npm run dev-client\"",
@@ -83,7 +82,8 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-dev-server": "^2.9.4",
     "webpack-hot-middleware": "^2.18.0",
-    "webpack-manifest-plugin": "^1.1.0"
+    "webpack-manifest-plugin": "^1.1.0",
+    "webpack-merge": "^4.1.2"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -126,6 +126,7 @@
     "redux-thunk": "^2.2.0",
     "rimraf": "^2.6.2",
     "styled-components": "^2.1.2",
-    "typeface-roboto": "0.0.35"
+    "typeface-roboto": "0.0.35",
+    "webpack-merge": "^4.1.2"
   }
 }
