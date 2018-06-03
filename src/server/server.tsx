@@ -28,15 +28,15 @@ require('dotenv').config();
 // const favicon = require('serve-favicon');
 
 const app = express();
-const port = 3000;
-console.log('Public', path.join(__dirname, '../../public'));
-console.log('Dir name', __dirname);
-console.log('Uploads', path.join(__dirname, '../../uploads'));
+const expressPort = 3000;
+const webpackPort = 8080;
+const staticFilesPort = app.get('env') === 'production' ? expressPort : webpackPort;
+
 // db config
 mongoose.connect('mongodb://localhost:27017/poilsis');
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use('/public', express.static(path.join(__dirname, '../../public')));
-app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '../../../uploads')));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
 app.use(cookieParser());
@@ -107,16 +107,16 @@ function renderFullPage(html, css1, css2, preloadedState) {
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
         </script>
-        <script src="http://localhost:3000/public/app.js"></script>
+        <script src="http://localhost:${staticFilesPort}/public/app.js"></script>
       </body>
     </html>
     `;
 }
 
-app.listen(port, (error) => {
+app.listen(expressPort, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`==> 🌎  Listening on port ${port}. Open up http://localhost:${port}/ in your browser.`);
+    console.info(`==> 🌎  Listening on port ${expressPort}. Open up http://localhost:${expressPort}/ in your browser.`);
   }
 });

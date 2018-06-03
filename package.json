@@ -7,7 +7,7 @@
     "clean": "rimraf build",
     "start": "node ./build/server/server/server.js",
     "start:prod": "cross-env NODE_ENV=production node ./build/server/server.js",
-    "build-client": "cd ./src/client && cross-env NODE_ENV=production webpack -p",
+    "build-client": "cd ./src/client && cross-env NODE_ENV=production webpack",
     "dev-client": "cd ./src/client && webpack-dev-server -w",
     "build-server": "tsc -p ./src/server",
     "dev-server": "tsc-watch -p ./src/server --onSuccess \"node ./build/server/server.js\"",
