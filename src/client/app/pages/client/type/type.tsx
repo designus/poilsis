@@ -6,4 +6,4 @@ export class TypePage extends React.Component<any, any> {
       <div>This is Type page</div>
     );
   }
-};
+}

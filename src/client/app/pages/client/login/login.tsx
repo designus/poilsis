@@ -19,17 +19,17 @@ class Login extends React.PureComponent<any, any> {
     this.redirectTo = state && state.from;
     return (
       <div>
-        <h1>This is Login page</h1>           
+        <h1>This is Login page</h1>
         {
           this.redirectTo ? (
-            <div>You tried to reach <strong>{this.redirectTo.pathname}</strong> page, which requires authentication. Please 
+            <div>You tried to reach <strong>{this.redirectTo.pathname}</strong> page, which requires authentication. Please
             login first</div>
           ) : ''
         }
         <div onClick={this.login}><strong>Login</strong></div>
       </div>
     );
-  };
+  }
 }
 
 export const mapDispatchToProps = (dispatch) => ({

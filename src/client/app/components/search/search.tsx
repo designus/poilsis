@@ -81,6 +81,6 @@ class SearchComponent extends React.Component<ISearchBoxProps, any> {
       </SearchWrapper>
     );
   }
-};
+}
 
 export const SearchBox = withStyles(styles)(SearchComponent) as any;

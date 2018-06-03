@@ -25,9 +25,9 @@ export interface IGenericFormState<T> {
   errors: TGenericFormErrors<T>;
   showErrors: boolean;
   model: TGenericFormModel<T>;
-};
+}
 
-export type ValueType = string|string[];
+export type ValueType = string | string[];
 
 export interface IKeyMap {
   value: ValueType;

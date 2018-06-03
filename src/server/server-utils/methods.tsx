@@ -103,7 +103,7 @@ export function removeFiles(files, next) {
         }
      });
   }
-};
+}
 
 export function saveImageInfoToDatabase(dbModel, id, images, res, next) {
   dbModel.findOne({id}, (err, item) => {

@@ -23,7 +23,7 @@ const defaultStyles = theme => ({
 export interface IButtonProps {
   onClick?: () => void;
   children?: any;
-  type?: 'submit'|'button';
+  type?: 'submit' | 'button';
   color?: PropTypes.Color;
   classes?: any;
   style?: object;

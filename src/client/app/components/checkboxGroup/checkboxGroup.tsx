@@ -29,4 +29,4 @@ export function CheckboxGroup({data, label, showErrors, errors, onChange, checke
       />
     </Wrapper>
   );
-};
+}

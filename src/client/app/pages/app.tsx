@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Switch } from 'react-router-dom';
 import { adminRoutes, clientRoutes } from '../client-utils';
 import { AdminLayoutPage } from './admin';
 import { ClientLayoutPage } from './client';

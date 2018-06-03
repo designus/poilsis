@@ -33,6 +33,7 @@
     "no-shadowed-variable": false,
     "no-empty-interface": false,
     "only-arrow-functions": [false],
+    "no-submodule-imports": false,
     "no-console": [
       false
     ],

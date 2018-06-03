@@ -6,7 +6,7 @@ export enum Toast {
   success = 'success',
 }
 
-export type ToastType = Toast.warning|Toast.error|Toast.success;
+export type ToastType = Toast.warning | Toast.error | Toast.success;
 
 export interface IToastState {
   toastType?: ToastType;

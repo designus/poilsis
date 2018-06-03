@@ -18,7 +18,8 @@ export interface IRoute {
   allowedRoles?: string[];
 }
 
-export type RouteKeys = 'landing'|'items'|'item'|'createItem'|'createItemMain'|'editItem'|'editItemMain'|'editItemPhotos'|'types';
+export type RouteKeys = 'landing' | 'items' | 'item' | 'createItem' | 'createItemMain' | 'editItem' | 'editItemMain'
+| 'editItemPhotos' | 'types';
 
 export type RoutesConfig = {
   [P in RouteKeys]?: IRoute;

@@ -22,7 +22,7 @@ export const PaginationLinks = styled.div`
   ul {
     margin: 0;
     padding: 0;
-  }	
+  }
 `;
 
 export const PaginationLink = styled.li`

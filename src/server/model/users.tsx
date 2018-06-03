@@ -48,7 +48,7 @@ usersSchema.pre('update', (next) => {
 usersSchema.methods.comparePassword = function(password: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, success) => {
-      if (err) { return reject(err); };
+      if (err) { return reject(err); }
       return resolve(success);
     });
   });

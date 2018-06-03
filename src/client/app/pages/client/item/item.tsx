@@ -6,4 +6,4 @@ export class ItemPage extends React.Component<any, any> {
       <div>This is Item page</div>
     );
   }
-};
+}

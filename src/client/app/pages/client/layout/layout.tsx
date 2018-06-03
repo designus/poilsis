@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { MainMenu, Toast } from '../../../components';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from '../../../client-utils';
 import { getInitialData, login, logout } from '../../../actions';

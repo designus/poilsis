@@ -60,4 +60,4 @@ export function extendWithLoader<TOriginalProps extends {}>(
     }
 
     return connect<{}, {}, any>(mapStateToProps)(LoaderComponent);
-};
+}

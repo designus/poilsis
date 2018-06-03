@@ -51,7 +51,7 @@ const ItemsSchema = new Schema(ItemsSchemaMap);
 
 ItemsSchema.pre('save', function(next) {
   const now = new Date();
-  if ( !this.createdAt ) {
+  if (!this.createdAt) {
     this.createdAt = now;
   }
   next();

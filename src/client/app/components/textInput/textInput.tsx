@@ -60,6 +60,6 @@ function InputComponent({label, value, showErrors, errors, onChange, onBlur, cla
       />
     </Wrapper>
   );
-};
+}
 
 export const TextInput = withStyles(styles)<ITextInputProps>(InputComponent);

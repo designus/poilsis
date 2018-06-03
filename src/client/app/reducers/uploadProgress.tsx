@@ -5,7 +5,7 @@ export interface IUploadProgress {
   isUploaded?: boolean;
   hasError?: boolean;
   isUploading?: boolean;
-};
+}
 
 const initialState = {
   progress: 0,

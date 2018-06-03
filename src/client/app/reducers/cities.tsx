@@ -24,7 +24,7 @@ export type ICitiesMap = IGenericDataMap<ICity>;
 
 export interface ICityState extends IGenericState<ICity> {
   selectedId?: string;
-};
+}
 
 export const changeCityItem = (removeItem: boolean) => (cityItems: string[], itemId): string[] => {
   if (removeItem) {

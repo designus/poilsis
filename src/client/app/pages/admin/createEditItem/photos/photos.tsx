@@ -71,7 +71,7 @@ class PhotosPageComponent extends React.Component<any, any> {
       return null;
     }
   }
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {

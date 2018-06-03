@@ -29,4 +29,4 @@ export function SelectBox({data, dataKey, label, value, onChange, showErrors, er
       />
     </Wrapper>
   );
-};
+}

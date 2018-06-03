@@ -5,9 +5,9 @@ import { IGenericDataMap } from '../../../client-utils';
 import { withStyles } from 'material-ui/styles';
 
 export interface ICheckboxOptionsParams {
-  data: any[]|IGenericDataMap<object>;
+  data: any[] | IGenericDataMap<object>;
   onChange: any;
-  checkedItems: string[]|number[];
+  checkedItems: string[] | number[];
   labelKey?: string;
   label?: string;
   classes?: any;
@@ -67,6 +67,6 @@ function CheckboxOptionsComponent(props: ICheckboxOptionsParams) {
       </FormGroup>
     </FormControl>
   );
-};
+}
 
 export const CheckboxOptions = withStyles(styles)<ICheckboxOptionsParams>(CheckboxOptionsComponent);

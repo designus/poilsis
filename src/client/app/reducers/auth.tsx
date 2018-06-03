@@ -15,13 +15,15 @@ export interface IAuthState {
   timeToCloseModal?: number;
 }
 
-export const auth = (state: IAuthState = {
+const initialAuthState: IAuthState = {
   isLoggedIn: false,
   accessToken: null,
   showKeepMeLoggedModal: false,
   timeToCloseModal: 0,
   timeoutId: null,
-}, action): IAuthState => {
+};
+
+export const auth = (state: IAuthState = initialAuthState, action): IAuthState => {
   switch (action.type) {
     case LOGIN_SUCCESS: {
       return {
@@ -35,7 +37,6 @@ export const auth = (state: IAuthState = {
     case LOGOUT_SUCCESS: {
       return {
         ...state,
-        // user: null,
         accessToken: null,
         isLoggedIn: false,
         showKeepMeLoggedModal: false,
@@ -55,7 +56,6 @@ export const auth = (state: IAuthState = {
       return {
         ...state,
         accessToken: action.accessToken,
-        // user: null,
         isLoggedIn: false,
       };
     }

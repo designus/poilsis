@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 const FlexContainer = styled.div`
   display: flex;
   border-radius: 30px;
-  padding: 5px 10px;  
+  padding: 5px 10px;
   justify-content: space-between;
 
   a {
@@ -62,7 +62,7 @@ const PageActionsComponent = ({classes, createLink, search}: IAdminPageActions) 
             <AddIcon className={classes.icon} />
           </Button>
         </Link>
-      </FlexContainer>  
+      </FlexContainer>
     </Wrapper>
   );
 };

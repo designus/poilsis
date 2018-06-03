@@ -61,7 +61,7 @@ export const CreateItem = (props: IAddItemProps) => {
         errors={errors[ADDRESS_KEY]}
         onChange={props.handleInputChange(ADDRESS_KEY)}
         onBlur={props.handleOnBlur}
-      />		
+      />
       <Button
         raised
         color="primary"

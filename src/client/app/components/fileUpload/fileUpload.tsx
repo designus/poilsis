@@ -14,7 +14,7 @@ export interface IFileUploadProps {
   clearImages: () => void;
   uploadImages: () => void;
   children: any;
-};
+}
 
 export const FileUpload = ({id, onDrop, showUploadButtons, clearImages, uploadImages, children}: IFileUploadProps) => {
   return (

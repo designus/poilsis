@@ -7,7 +7,7 @@ export interface IUser {
   role: string;
 }
 
-export interface IUsersState extends IGenericState<IUser> {};
+export interface IUsersState extends IGenericState<IUser> {}
 
 export const users = (state: IUsersState = null, action): IUsersState => {
   switch (action.type) {

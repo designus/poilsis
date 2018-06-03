@@ -35,7 +35,7 @@ export function extendWithForm<T extends IFormProps>(
       return Object.keys(model).reduce((errors, key: string) => {
         return {...errors, [key]: this.getSingleFieldValidationErrors(key, fields[key], model)};
       }, {});
-    };
+    }
 
     getSingleFieldValidationErrors(key: string, value: any, model: TGenericFormModel<object>) {
       return model[key].validators.reduce((acc: string[], errorMessageFn) => {
@@ -121,4 +121,4 @@ export function extendWithForm<T extends IFormProps>(
       );
     }
   };
-};
+}

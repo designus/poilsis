@@ -19,7 +19,7 @@ export const StyledListItem = styled(ListItem)`
     pointer-events: none;
     opacity: .5;
   }
-  
+
   > a.active h3 {
     color: red;
     text-decoration: none;
@@ -76,7 +76,7 @@ class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
       </List>
     );
   }
-};
+}
 
 const mapStateToProps = (state: IAppState) => {
   return {

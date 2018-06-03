@@ -154,9 +154,8 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         />
       </div>
     );
-
-  };
-};
+  }
+}
 
 const mapStateToProps = (state: IAppState) => {
   return {

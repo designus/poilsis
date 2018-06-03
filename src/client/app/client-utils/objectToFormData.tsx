@@ -43,4 +43,4 @@ export function objectToFormData(obj, fd?, pre?) {
   });
 
   return fd;
-};
+}

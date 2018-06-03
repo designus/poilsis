@@ -99,7 +99,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
       return null;
     }
   }
-};
+}
 
 const mapStateToProps = (state: IAppState) => {
   return {

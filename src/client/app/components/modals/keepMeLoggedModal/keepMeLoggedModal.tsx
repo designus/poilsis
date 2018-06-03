@@ -80,7 +80,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
             showLoadingOverlay={true}
             contentClass={classes.dialogContent}
           >
-            Your login session will expire in <strong>{this.state.timeToCloseModal}</strong> seconds. Do you want us to keep you logged in? 
+            Your login session will expire in <strong>{this.state.timeToCloseModal}</strong> seconds. Do you want us to keep you logged in?
           </DialogContent>
           <DialogFooter
             classes={classes}

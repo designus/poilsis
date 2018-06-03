@@ -13,6 +13,7 @@ import {
   required,
   minLength,
   maxLength,
+  adminRoutes,
 } from '../../../../client-utils';
 import { Form } from './form';
 import {
@@ -25,7 +26,6 @@ import {
   USER_LABEL,
 } from '../../../../../../data-strings';
 import { IMainInfoFields } from '../../../../../../global-utils';
-import { adminRoutes } from '../../../../client-utils';
 import Typography from 'material-ui/Typography';
 import { IAppState } from '../../../../reducers';
 
@@ -88,7 +88,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state: IAppState) => {
   return {

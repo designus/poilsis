@@ -91,7 +91,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
 
   isDifferentMenuItems(arr1: IAdminMenuItem[], arr2: IAdminMenuItem[], key: keyof IAdminMenuItem) {
     return arr1.length !== arr2.length || arr1.every((item, index) => item[key] !== arr2[index][key]);
-  };
+  }
 
   setMenuItems = (menuItems: IAdminMenuItem[]) => {
     if (this.isDifferentMenuItems(menuItems, this.state.menuItems, 'text')) {
@@ -165,7 +165,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state: IAppState) => {
   return {

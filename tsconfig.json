@@ -15,7 +15,7 @@
     "inlineSources": false,
     "experimentalDecorators": true,
     "noUnusedParameters": false,
-    "noUnusedLocals": true,
+    "noUnusedLocals": true
   },
   "exclude": [
     "./node_modules",

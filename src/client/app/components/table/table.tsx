@@ -15,8 +15,8 @@ const TableWrapper = styled.div`
   margin-top: 20px;
 `;
 
-export type SortType = 'string'|'number'|'date';
-export type OrderType = 'asc'|'desc';
+export type SortType = 'string' | 'number' | 'date';
+export type OrderType = 'asc' | 'desc';
 
 export interface ITableColumn {
   title: string;

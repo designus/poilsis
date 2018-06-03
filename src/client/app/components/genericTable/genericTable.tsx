@@ -6,8 +6,8 @@ import { IGenericDataMap } from '../../client-utils';
 import Table, { TableBody, TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
 import { PaginationInjectedProps } from '../pagination';
 
-type SortType = 'string'|'number'|'date';
-type OrderType = 'asc'|'desc';
+type SortType = 'string' | 'number' | 'date';
+type OrderType = 'asc' | 'desc';
 
 export interface IGenericTableColumn {
   title: string;
@@ -93,7 +93,7 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
     }, initialData);
   }
 
-  getSortedData(data, sortParams: ISortParams|any) {
+  getSortedData(data, sortParams: ISortParams | any) {
     return sortParams.order ? data.sort(this.sortData(sortParams)) : data;
   }
 
@@ -167,7 +167,7 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
                 );
               })
             }
-          </TableRow>	
+          </TableRow>
         </TableHead>
         <TableBody>
           {
@@ -201,4 +201,4 @@ export class GenericTable extends React.Component<IGenericTableProps & Paginatio
       </Table>
     );
   }
-};
+}

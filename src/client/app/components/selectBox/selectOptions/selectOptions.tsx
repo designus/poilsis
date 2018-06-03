@@ -8,7 +8,7 @@ import { IGenericDataMap } from '../../../client-utils';
 import { INPUT_WIDTH, INPUT_STYLE_MIXIN } from '../../../global-styles';
 
 export interface ISelectOptionProps {
-  data?: any[]|IGenericDataMap<object>;
+  data?: any[] | IGenericDataMap<object>;
   dataKey?: string;
   label?: string;
   value?: string;
@@ -68,6 +68,6 @@ function SelectField({data, label = 'select', dataKey = 'name', value, onChange,
       </Select>
     </FormControl>
   );
-};
+}
 
 export const SelectOptions = withStyles(styles)(SelectField);

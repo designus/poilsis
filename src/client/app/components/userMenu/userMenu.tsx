@@ -2,8 +2,7 @@ import * as React from 'react';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import AccountIcon from 'material-ui-icons/AccountCircle';
-import { MenuItem } from 'material-ui/Menu';
-import Menu from 'material-ui/Menu';
+import Menu, { MenuItem } from 'material-ui/Menu';
 
 const styles = theme => ({
   icon: {
@@ -56,6 +55,6 @@ class MenuComponent extends React.Component<any, any> {
       </div>
     );
   }
-};
+}
 
 export const UserMenu = withStyles(styles)(MenuComponent) as any;

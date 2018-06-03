@@ -67,7 +67,7 @@ export const ImagePreview = ({
                 {hasError ?
                   <ErrorIcon viewBox={viewbox} /> :
                   <SuccessIcon viewBox={viewbox} />
-                }              
+                }
               </UploadResult>
             </ImgWrapper>
           );

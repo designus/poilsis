@@ -8,6 +8,6 @@ class AdminTypesPageComponent extends React.Component<any, any> {
       </div>
     );
   }
-};
+}
 
 export const AdminTypesPage = AdminTypesPageComponent;
