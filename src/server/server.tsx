@@ -15,15 +15,15 @@ import thunkMiddleware from 'redux-thunk';
 
 import { rootReducer } from '../client/app/reducers';
 import { routes } from '../client/app/routes';
-import { apiRouter } from './controllers';
+import { apiRouter } from './app/controllers';
 import StaticRouter from 'react-router-dom/StaticRouter';
 import { matchRoutes } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from 'material-ui/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import { getMaterialUiCSSParams, preloadData } from './server-utils';
+import { getMaterialUiCSSParams, preloadData } from './app/server-utils';
 import { App } from '../client/app/pages';
-import auth from './controllers/auth';
+import auth from './app/controllers/auth';
 require('dotenv').config();
 // const favicon = require('serve-favicon');
 
@@ -34,8 +34,8 @@ const staticFilesPort = app.get('env') === 'production' ? expressPort : webpackP
 // db config
 mongoose.connect('mongodb://localhost:27017/poilsis');
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
-app.use('/public', express.static(path.join(__dirname, '../../client')));
-app.use('/uploads', express.static(path.join(__dirname, '../../../uploads')));
+app.use('/public', express.static(path.join(__dirname, 'build', 'client')));
+app.use('/uploads', express.static(path.join(__dirname, 'build', 'uploads')));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
 app.use(cookieParser());

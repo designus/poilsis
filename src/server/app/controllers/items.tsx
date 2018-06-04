@@ -5,8 +5,8 @@ const shortId = require('shortid');
 
 import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFromFs, removeImagesDir } from '../server-utils';
 import { ItemsModel } from '../model';
-import { MAX_FILE_COUNT, IMainInfoFields } from '../../global-utils';
-import { FILES_KEY } from '../../data-strings';
+import { MAX_FILE_COUNT, IMainInfoFields } from '../../../global-utils';
+import { FILES_KEY } from '../../../data-strings';
 import auth from './auth';
 
 router.route('/')

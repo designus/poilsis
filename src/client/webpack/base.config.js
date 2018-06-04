@@ -12,6 +12,17 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const projectRoot = path.join(__dirname, '..', '..', '..');
 
 module.exports = {
+  entry: {
+    app: [
+      './client.tsx'
+    ]
+  },
+  output: {
+    path: path.join(projectRoot, 'build', 'client'),    
+    publicPath: '/public/',
+    filename: '[name].js',
+    pathinfo: true
+  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [path.resolve(__dirname), 'node_modules', 'app'],
@@ -19,20 +30,6 @@ module.exports = {
       new TsConfigPathsPlugin()
     ]
   },
-
-  entry: {
-    app: [
-      './client.tsx'
-    ]
-  },
-  
-  output: {
-    path: path.join(projectRoot, 'build', 'client'),    
-    publicPath: '/public/',
-    filename: '[name].js',
-    pathinfo: true
-  },
-
   module: {
     rules: [
       {

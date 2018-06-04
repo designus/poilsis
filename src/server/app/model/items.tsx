@@ -1,9 +1,9 @@
 'use strict';
 
-import { NAME_KEY, CITY_KEY, ADDRESS_KEY, IMAGES_KEY } from '../../data-strings';
-import { TGenericSchemaMap } from '../../client/app/client-utils';
-import { INewItemFields } from '../../client/app/pages';
-import { IImage, isRequired, maxFileCount, MAX_FILE_COUNT } from '../../global-utils';
+import { NAME_KEY, CITY_KEY, ADDRESS_KEY, IMAGES_KEY } from '../../../data-strings';
+import { TGenericSchemaMap } from '../../../client/app/client-utils';
+import { INewItemFields } from '../../../client/app/pages';
+import { IImage, isRequired, maxFileCount, MAX_FILE_COUNT } from '../../../global-utils';
 
 interface IItemsSchemaMap extends TGenericSchemaMap<INewItemFields> {
   alias: any;

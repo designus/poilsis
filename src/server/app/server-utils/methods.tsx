@@ -15,9 +15,9 @@ import {
   MAX_FILE_SIZE_MB,
   MAX_FILE_COUNT,
   ALLOWED_MIME_TYPES,
-} from '../../global-utils';
+} from '../../../global-utils';
 
-import { IMAGES_KEY } from '../../data-strings';
+import { IMAGES_KEY } from '../../../data-strings';
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {

@@ -5,7 +5,7 @@ const rimraf = require('rimraf');
 
 import { getFileExtension, getFilePath, getUploadPath, handleFileUploadErrors, getSourceFiles, removeFiles } from './methods';
 import { IMulterFile, FileUploadErrors } from './types';
-import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize, IImage } from '../../global-utils';
+import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize, IImage } from '../../../global-utils';
 
 export const createUploadPath = (req, res, next) => {
 
