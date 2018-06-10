@@ -20,9 +20,6 @@ export const showKeepMeLoggedModal = (time) => ({type: SHOW_KEEP_ME_LOGGED_MODAL
 export const reauthenticateSuccess = (accessToken) => ({type: REAUTHENTICATE_SUCCESS, accessToken});
 export const setAccessToken = (accessToken) => ({type: SET_ACCESS_TOKEN, accessToken});
 
-export const isNode =  typeof module !== 'undefined';
-export const isBrowser = new Function('try {return this===window;}catch(e){ return false;}');
-
 export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
   const errorType = isLogin ? 'Login failed' : 'Logout failed';
@@ -70,10 +67,8 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
           dispatch(setLogoutTimer(exp));
-          if (isBrowser()) {
-            Cookies.set('jwt', accessToken, {expires});
-            localStorage.setItem('refreshToken', refreshToken);
-          }
+          Cookies.set('jwt', accessToken, {expires});
+          localStorage.setItem('refreshToken', refreshToken);
           return Promise.resolve();
         })
         .catch(error => handleError(dispatch, error, true));
@@ -85,7 +80,7 @@ export const keepUserLogged = () => (dispatch, getState) => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
-  const refreshToken = isBrowser() ? localStorage.getItem('refreshToken') : '';
+  const refreshToken = localStorage.getItem('refreshToken');
   const {userId, userRole} = JWT(oldAccessToken);
   return axios.post('http://localhost:3000/api/tokens/reauthenticate', {userId, userRole, refreshToken})
     .then(response => response.data)
@@ -109,10 +104,8 @@ export const logout = () => (dispatch, getState) => {
   return axios.delete(`http://localhost:3000/api/tokens/${userId}`)
     .then(response => response.data)
     .then(() => {
-      if (isBrowser()) {
-        Cookies.remove('jwt');
-        localStorage.removeItem('refreshToken');
-      }
+      Cookies.remove('jwt');
+      localStorage.removeItem('refreshToken');
       dispatch(logoutSuccess());
       dispatch(receiveUserDetails(null));
     })
