@@ -1,4 +1,4 @@
-const path = require('path');
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -9,11 +9,9 @@ import * as React from 'react';
 
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
-
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-
-import { rootReducer } from '../client/app/reducers';
+import { rootReducer } from 'reducers';
 import { routes } from '../client/app/routes';
 import { apiRouter } from './app/controllers';
 import StaticRouter from 'react-router-dom/StaticRouter';
@@ -22,20 +20,16 @@ import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from 'material-ui/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { getMaterialUiCSSParams, preloadData } from './app/server-utils';
-import { App } from '../client/app/pages';
+import { App } from 'pages';
 import auth from './app/controllers/auth';
-require('dotenv').config();
-// const favicon = require('serve-favicon');
-
 const app = express();
 const expressPort = 3000;
 const webpackPort = 8080;
 const staticFilesPort = app.get('env') === 'production' ? expressPort : webpackPort;
-// db config
 mongoose.connect('mongodb://localhost:27017/poilsis');
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
-app.use('/public', express.static(path.join(__dirname, 'build', 'client')));
-app.use('/uploads', express.static(path.join(__dirname, 'build', 'uploads')));
+app.use('/public', express.static('build/client'));
+app.use('/uploads', express.static('uploads'));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body
 app.use(cookieParser());
@@ -44,7 +38,6 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(expressValidator());
 app.use(auth.initialize());
 app.use('/api', apiRouter());
-
 app.get('/favicon.ico', (req, res) => {
   res.send(204);
 });

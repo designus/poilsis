@@ -15,7 +15,8 @@
     "inlineSources": false,
     "experimentalDecorators": true,
     "noUnusedParameters": false,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "jsx": "react"
   },
   "exclude": [
     "./node_modules",
