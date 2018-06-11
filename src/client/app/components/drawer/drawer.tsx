@@ -1,11 +1,10 @@
 import * as React from 'react';
 
-import withStyles from 'material-ui/styles/withStyles';
-import MaterialDrawer from 'material-ui/Drawer';
-import Hidden from 'material-ui/Hidden';
-
-import IconButton from 'material-ui/IconButton';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
+import { withStyles } from '@material-ui/core/styles';
+import MaterialDrawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import {DRAWER_WIDTH, DRAWER_TOP} from '../../global-styles';
 

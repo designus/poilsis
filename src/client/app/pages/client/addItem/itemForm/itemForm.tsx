@@ -1,6 +1,5 @@
 import * as React from 'react';
-import Button from 'material-ui/Button';
-
+import Button from '@material-ui/core/Button';
 import { CheckboxGroup,	SelectBox, TextInput } from '../../../../components';
 import { ICity, ITypesMap, IItemsMap, IUser } from '../../../../reducers';
 import { IFormProps, IGenericDataMap, IGenericFormState } from '../../../../client-utils';
@@ -63,7 +62,6 @@ export const CreateItem = (props: IAddItemProps) => {
         onBlur={props.handleOnBlur}
       />
       <Button
-        raised
         color="primary"
         type="submit"
         style={{marginTop: 12, marginBottom: 20, display: 'block'}}

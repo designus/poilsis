@@ -4,9 +4,9 @@ import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 import { Button } from '../../components';
 import { START_UPLOAD, UPLOAD_PLACEHOLDER, CLEAR_IMAGES } from '../../../../data-strings';
 import { ALLOWED_MIME_TYPES, MAX_FILE_SIZE_B } from '../../../../global-utils';
-import FileUploadIcon from 'material-ui-icons/FileUpload';
-import ClearIcon from 'material-ui-icons/Clear';
-import Typography from 'material-ui/Typography';
+import FileUploadIcon from '@material-ui/icons/FileUpload';
+import ClearIcon from '@material-ui/icons/Clear';
+import Typography from '@material-ui/core/Typography';
 export interface IFileUploadProps {
   id: string;
   onDrop: (acceptedImages: any[], rejectedImages?: any[]) => void;
@@ -29,7 +29,7 @@ export const FileUpload = ({id, onDrop, showUploadButtons, clearImages, uploadIm
         multiple={true}>
         {children}
         <UploadPlaceholder>
-          <Typography type="body1">
+          <Typography variant="body1">
             {UPLOAD_PLACEHOLDER}
           </Typography>
         </UploadPlaceholder>

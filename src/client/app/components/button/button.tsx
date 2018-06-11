@@ -1,7 +1,7 @@
 import * as React from 'react';
-import ActionButton from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
-import { PropTypes } from 'material-ui';
+import ActionButton from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import { voidFn } from '../../client-utils';
 
 const defaultStyles = theme => ({
@@ -44,7 +44,6 @@ export const ButtonComponent = ({
         label: classes.label,
       }}
       onClick={onClick}
-      raised
       color={color}
       type={type}
       style={style}

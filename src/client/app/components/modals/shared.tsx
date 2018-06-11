@@ -1,14 +1,13 @@
 import * as React from 'react';
 
-import {
-  DialogActions,
-  DialogContent as DialogContentBox,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import ClearIcon from 'material-ui-icons/Clear';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContentBox from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import ClearIcon from '@material-ui/icons/Clear';
 import { extendWithLoader } from '../loader';
 
 export const DialogContentWrapper = (props) => (
@@ -36,9 +35,9 @@ export const DialogHeader = ({title, className, closeModal}) => (
 
 export const DialogFooter = ({classes, onClose, onSubmit, closeLabel = 'Cancel', submitLabel = 'Proceed'}) => (
   <DialogActions classes={{
-    root: classes.actionWrapper,
-    action: classes.buttonWrapper,
-    button: classes.button,
+    // root: classes.actionWrapper,
+    // action: classes.buttonWrapper,
+    // button: classes.button,
   }}>
     <Button onClick={onClose} className={classes.cancel}>
       Cancel

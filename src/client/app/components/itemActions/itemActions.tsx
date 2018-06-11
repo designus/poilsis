@@ -1,9 +1,11 @@
 import * as React from 'react';
-import DeleteIcon from 'material-ui-icons/Delete';
-import EditIcon from 'material-ui-icons/ModeEdit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/ModeEdit';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { red, indigo, blueGrey } from 'material-ui/colors';
+import red from '@material-ui/core/colors/red';
+import indigo from '@material-ui/core/colors/indigo';
+import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const StyledActions = styled.div`
   display: flex;

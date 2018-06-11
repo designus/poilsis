@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { IAppState } from '../../reducers';
 import { connect } from 'react-redux';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { IAppState } from '../../reducers';
 
 export const StyledListItem = styled(ListItem)`
   padding: 0!important;

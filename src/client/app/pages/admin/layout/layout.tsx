@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import ListIcon from 'material-ui-icons/List';
-import ArrowBackIcon from 'material-ui-icons/ArrowBack';
-import MenuIcon from 'material-ui-icons/Menu';
-import Hidden from 'material-ui/Hidden';
-import Typography from 'material-ui/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import ListIcon from '@material-ui/icons/List';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import MenuIcon from '@material-ui/icons/Menu';
+import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import { removeInjectedStyles, adminRoutes, clientRoutes } from '../../../client-utils';
 import { IAppState } from '../../../reducers';
@@ -115,7 +115,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
                   <MenuIcon />
                 </IconButton>
               </Hidden>
-              <Typography className={classes.appBarTitle} type="title" color="inherit" noWrap>
+              <Typography className={classes.appBarTitle} variant="title" color="inherit" noWrap>
                 Admin panel
               </Typography>
               <UserMenu />
@@ -173,4 +173,4 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-export const AdminLayoutPage = connect(mapStateToProps)(withStyles(styles)(AdminLayoutPageComponent));
+export const AdminLayoutPage = connect<any, any, {}>(mapStateToProps)(withStyles(styles)(AdminLayoutPageComponent));

@@ -3,7 +3,12 @@ import * as autoBind from 'react-autobind';
 import { IGenericDataMap } from '../../client-utils';
 // import { MarkedText } from '../../components';
 
-import Table, { TableBody, TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { PaginationInjectedProps } from '../pagination';
 
 type SortType = 'string' | 'number' | 'date';

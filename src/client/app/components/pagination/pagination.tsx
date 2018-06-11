@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as autoBind from 'react-autobind';
-import IconButton from 'material-ui/IconButton';
-import ChevronLeft from 'material-ui-icons/ChevronLeft';
-import ChevronRight from 'material-ui-icons/ChevronRight';
+import IconButton from '@material-ui/core/IconButton';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
 import styled from 'styled-components';
 import { SelectBox } from '../selectBox';
 import {

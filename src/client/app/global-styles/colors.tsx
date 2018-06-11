@@ -1,4 +1,5 @@
-import { grey, indigo } from 'material-ui/colors';
+import grey from '@material-ui/core/colors/grey';
+import indigo from '@material-ui/core/colors/indigo';
 
 export const INPUT_LABEL_COLOR = grey[500];
 export const INPUT_BORDER_COLOR = grey[500];

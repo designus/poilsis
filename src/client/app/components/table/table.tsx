@@ -1,12 +1,11 @@
 import * as React from 'react';
-import Table, {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TablePagination,
-  TableRow,
-} from 'material-ui/Table';
-import Checkbox from 'material-ui/Checkbox';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
+import Checkbox from '@material-ui/core/Checkbox';
 import { IGenericDataMap } from '../../client-utils';
 import styled from 'styled-components';
 import { EnhancedTableHead } from './tableHead';

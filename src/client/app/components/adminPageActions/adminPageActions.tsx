@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
-import { indigo } from 'material-ui/colors';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import indigo from '@material-ui/core/colors/indigo';
 import { SearchBox } from '../search';
 
 const Wrapper = styled.div`
@@ -58,7 +58,7 @@ const PageActionsComponent = ({classes, createLink, search}: IAdminPageActions) 
           null
         }
         <Link to={createLink}>
-          <Button fab aria-label="Create" className={`${classes.button}`}>
+          <Button variant="fab" aria-label="Create" className={`${classes.button}`}>
             <AddIcon className={classes.icon} />
           </Button>
         </Link>

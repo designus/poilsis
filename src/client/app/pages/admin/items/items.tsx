@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import { IAppState } from '../../../reducers';
 import { getUserItems, deleteItem, stopAllLoaders } from '../../../actions';
 import { CONTENT_LOADER_ID, adminRoutes } from '../../../client-utils';
@@ -128,7 +128,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     return (
       <div>
         <AdminHeader>
-          <Typography type="headline">
+          <Typography variant="headline">
             {ITEMS}
           </Typography>
           <AdminPageActions

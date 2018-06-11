@@ -17,7 +17,7 @@ import { apiRouter } from './app/controllers';
 import StaticRouter from 'react-router-dom/StaticRouter';
 import { matchRoutes } from 'react-router-config';
 import { JssProvider } from 'react-jss';
-import { MuiThemeProvider } from 'material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { getMaterialUiCSSParams, preloadData } from './app/server-utils';
 import { App } from 'pages';

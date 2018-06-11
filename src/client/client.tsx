@@ -7,9 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 const rootElement = document.getElementById('app');
 import { App } from './app/pages';
-
-import { MuiThemeProvider } from 'material-ui/styles';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
   palette: {},

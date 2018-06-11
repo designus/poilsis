@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { IAppState, ILoadingState } from '../../reducers';

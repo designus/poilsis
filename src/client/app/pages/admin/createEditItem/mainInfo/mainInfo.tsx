@@ -26,7 +26,7 @@ import {
   USER_LABEL,
 } from '../../../../../../data-strings';
 import { IMainInfoFields } from '../../../../../../global-utils';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import { IAppState } from '../../../../reducers';
 
 export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
@@ -73,7 +73,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
 
     return (this.props.loadedItem || this.isCreatePage) && (
       <div>
-        <Typography type="headline">{MAIN_INFO}</Typography>
+        <Typography variant="headline">{MAIN_INFO}</Typography>
         <MainInfoForm
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}

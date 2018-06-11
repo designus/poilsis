@@ -1,4 +1,6 @@
-import { blue, blueGrey, grey } from 'material-ui/colors';
+import blue from '@material-ui/core/colors/blue';
+import blueGrey from '@material-ui/core/colors/blueGrey';
+import grey from '@material-ui/core/colors/grey';
 
 export const modalStyles = theme => ({
   paper: {
@@ -8,11 +10,11 @@ export const modalStyles = theme => ({
   actionWrapper: {
     margin: '8px 0 0 0',
   },
-  buttonWrapper: {
-    width: '50%',
-    textAlign: 'center',
-    margin: '0',
-  },
+  // buttonWrapper: {
+  //   width: '50%',
+  //   textAlign: 'center',
+  //   margin: '0',
+  // },
   button: {
     width: '100%',
     borderRadius: '0',

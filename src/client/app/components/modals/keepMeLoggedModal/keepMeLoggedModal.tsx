@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import Dialog from 'material-ui/Dialog';
+import { withStyles } from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
 import { DIALOG_LOADER_ID } from '../../../client-utils';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';

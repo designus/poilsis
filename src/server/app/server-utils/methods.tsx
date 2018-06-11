@@ -1,8 +1,6 @@
 const fs = require('fs');
 import { SheetsRegistry } from 'react-jss';
-import { createMuiTheme } from 'material-ui/styles';
-import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
-
+import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 import { IMulterFile, FileUploadErrors } from './types';
 import {
   ImageSize,

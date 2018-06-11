@@ -15,7 +15,7 @@ import {
 import { Form } from './form';
 import { IMAGES_LABEL, ID_LABEL, FILES_KEY, PHOTO_GALLERY } from '../../../../../../data-strings';
 import { IImage, MAX_FILE_COUNT } from '../../../../../../global-utils';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 
 export interface IImageFields {
   id?: string;
@@ -57,7 +57,7 @@ class PhotosPageComponent extends React.Component<any, any> {
 
       return (
         <div>
-          <Typography type="headline">{PHOTO_GALLERY}</Typography>
+          <Typography variant="headline">{PHOTO_GALLERY}</Typography>
           <PhotosForm
             loaderId={CONTENT_LOADER_ID}
             onItemSubmit={this.onItemSubmit}

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import Select from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
-import { withStyles } from 'material-ui/styles';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import { withStyles } from '@material-ui/core/styles';
 import { IGenericDataMap } from '../../../client-utils';
 import { INPUT_WIDTH, INPUT_STYLE_MIXIN } from '../../../global-styles';
 

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { withStyles } from 'material-ui/styles';
-import IconButton from 'material-ui/IconButton';
-import AccountIcon from 'material-ui-icons/AccountCircle';
-import Menu, { MenuItem } from 'material-ui/Menu';
+import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import AccountIcon from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 const styles = theme => ({
   icon: {

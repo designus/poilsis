@@ -1,6 +1,6 @@
 'use strict';
 import * as React from 'react';
-import {ItemTypesList} from '../itemTypesList';
+import { ItemTypesList } from '../itemTypesList';
 
 export interface IItemsListProps {
   items: string[];

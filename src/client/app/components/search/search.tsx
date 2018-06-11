@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Input from 'material-ui/Input';
-import { withStyles } from 'material-ui/styles';
-import SearchIcon from 'material-ui-icons/Search';
+import Input from '@material-ui/core/Input';
+import { withStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
 import { debounce } from 'lodash';
-import { indigo } from 'material-ui/colors';
+import indigo from '@material-ui/core/colors/indigo';
 import { DIVIDER_COLOR } from '../../global-styles';
 
 const SearchWrapper = styled.div`

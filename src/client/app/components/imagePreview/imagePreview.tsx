@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { SortableImage } from './sortableImage';
-import DeleteIcon from 'material-ui-icons/Clear';
-import Button from 'material-ui/Button';
-import { InputLabel } from 'material-ui/Input';
+import DeleteIcon from '@material-ui/icons/Clear';
+import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
 import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox, Image, Images, ImagePreviewWrapper } from './style';
 import { IUploadProgress } from '../../reducers';
 import { SuccessIcon, ErrorIcon } from '../../client-utils';
@@ -48,7 +48,7 @@ export const ImagePreview = ({
             >
               <ImageSource>
                 <img src={src} onLoad={onLoadImage} draggable={!isTemporary} />
-                <Button fab color="secondary" aria-label="remove" onClick={onDeleteImage(index, isTemporary)}>
+                <Button variant="fab" color="secondary" aria-label="remove" onClick={onDeleteImage(index, isTemporary)}>
                   <DeleteIcon />
                 </Button>
               </ImageSource>

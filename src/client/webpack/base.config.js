@@ -21,7 +21,6 @@ module.exports = {
     path: path.join(projectRoot, 'build', 'client'),    
     publicPath: '/public/',
     filename: '[name].js',
-    pathinfo: true
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -50,7 +49,15 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader'
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              experimentalWatchApi: true,
+            },
+          },
+        ],
       },
       {
         test: /\.jsx$/,

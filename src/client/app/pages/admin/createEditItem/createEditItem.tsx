@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import HomeIcon from 'material-ui-icons/Home';
-import PhotoIcon from 'material-ui-icons/Photo';
-import BackIcon from 'material-ui-icons/ArrowBack';
+import HomeIcon from '@material-ui/icons/Home';
+import PhotoIcon from '@material-ui/icons/Photo';
+import BackIcon from '@material-ui/icons/ArrowBack';
 
 import { IAppState, IItemsMap } from '../../../reducers';
 import { getItem } from '../../../actions';

@@ -1,8 +1,11 @@
 import * as React from 'react';
-import Checkbox from 'material-ui/Checkbox';
-import { FormLabel, FormControl, FormGroup, FormControlLabel } from 'material-ui/Form';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/core/styles';
 import { IGenericDataMap } from '../../../client-utils';
-import { withStyles } from 'material-ui/styles';
 
 export interface ICheckboxOptionsParams {
   data: any[] | IGenericDataMap<object>;
@@ -52,9 +55,6 @@ function CheckboxOptionsComponent(props: ICheckboxOptionsParams) {
                 }}
                 control={
                   <Checkbox
-                    classes={{
-                      default: classes.default,
-                    }}
                     onChange={onChange(option)}
                     checked={isCheckboxChecked(checkedItems, option)}
                   />
