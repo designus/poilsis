@@ -29,6 +29,7 @@ const staticFilesPort = app.get('env') === 'production' ? expressPort : webpackP
 mongoose.connect('mongodb://localhost:27017/poilsis');
 // app.use(favicon(path.join(__dirname, 'public/favicon.ico')));
 app.use('/public', express.static('build/client'));
+app.use('/images', express.static('static/images'));
 app.use('/uploads', express.static('uploads'));
 
 // now we should configure the API to use bodyParser and look for JSON data in the request body

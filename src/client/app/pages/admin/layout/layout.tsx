@@ -6,7 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import ListIcon from '@material-ui/icons/List';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import MenuIcon from '@material-ui/icons/Menu';
+import TypesIcon from '@material-ui/icons/Gesture';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
@@ -74,12 +76,17 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
   get menuItems(): IAdminMenuItem[] {
     return [
       {
+        icon: () => (<DashboardIcon />),
+        link: adminRoutes.landing.getLink(),
+        text: 'Dashboard',
+      },
+      {
         icon: () => (<ListIcon />),
         link: adminRoutes.items.getLink(),
         text: ITEMS,
       },
       {
-        icon: () => (<ListIcon />),
+        icon: () => (<TypesIcon />),
         link: adminRoutes.types.getLink(),
         text: TYPES,
         allowedRoles: adminRoutes.types.allowedRoles,
@@ -125,7 +132,6 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
             </Toolbar>
           </AppBar>
           <Drawer
-            className={classes.drawer}
             onClose={this.handleDrawerClose}
             mobileDrawerOpen={this.state.mobileDrawerOpen}
           >

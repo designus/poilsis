@@ -3,19 +3,17 @@ import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
   button: {
-    padding: '3px 5px',
+    padding: '3px 10px',
     '&.disabled': {
       pointerEvents: 'none',
       opacity: .5,
     },
-    '& $icon': {
-      color: '#fff',
-    },
     '& > a': {
       display: 'flex',
       width: '100%',
-      padding: '10px 5px',
-      borderRadius: '4px',
+      padding: '12px 10px',
+      borderRadius: '2px',
+      fontWeight: 300,
       textDecoration: 'none',
     },
     '& > a:hover, & > a.active': {
@@ -30,5 +28,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   icon: {
     marginRight: '5px',
+    color: 'rgba(255, 255, 255, 0.8)',
   },
 });

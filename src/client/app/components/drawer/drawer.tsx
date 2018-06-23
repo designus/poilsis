@@ -1,46 +1,16 @@
 import * as React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
+import { WithStyles } from '@material-ui/core';
 import MaterialDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-
-import { DRAWER_WIDTH, DRAWER_TOP } from '../../global-styles';
+import { styles } from './styles';
 
 const AppDrawer = MaterialDrawer as any;
 
-const styles = theme => ({
-  paper: {
-    width: DRAWER_WIDTH,
-    backgroundColor: '#232323',
-    top: DRAWER_TOP,
-    zIndex: 1,
-  },
-  paperMobile: {
-    top: 0,
-    width: DRAWER_WIDTH,
-    backgroundColor: '#232323',
-    zIndex: 1,
-  },
-  anchor: {
-    color: theme.palette.text.secondary,
-  },
-  closeButton: {
-    color: '#fff',
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-});
-
-export interface IDrawerProps {
-  className: string;
-  classes: any;
+export interface IDrawerProps extends WithStyles<typeof styles> {
   mobileDrawerOpen: boolean;
   onClose: () => void;
   children: any;
@@ -48,31 +18,34 @@ export interface IDrawerProps {
 
 const DrawerContent = ({ classes, onClose, children }) => {
   return (
-    <div>
-      <Hidden mdUp implementation="css">
-        <div className={classes.drawerHeader}>
-          <Button
-            className={classes.closeButton}
-            onClick={onClose}
-            variant="text"
-            size="small"
-            color="secondary"
-          >
-            <ChevronLeftIcon />
-            Close
-          </Button>
-        </div>
-      </Hidden>
-      {children}
+    <div className={classes.drawerContentWrapper}>
+      <div className={classes.drawerContent}>
+        <Hidden mdUp implementation="css">
+          <div className={classes.drawerHeader}>
+            <Button
+              className={classes.closeButton}
+              onClick={onClose}
+              variant="text"
+              size="small"
+              color="secondary"
+            >
+              <ChevronLeftIcon />
+              Close
+            </Button>
+          </div>
+        </Hidden>
+        {children}
+      </div>
+      <div className={classes.bgImage} />
     </div>
   );
 };
 
 const DrawerComponent = (props: IDrawerProps, context) => {
-  const { classes, className, mobileDrawerOpen, onClose, children } = props;
+  const { classes, mobileDrawerOpen, onClose, children } = props;
 
   return (
-    <div className={className}>
+    <div className={classes.drawer}>
       <Hidden mdUp>
         <AppDrawer
           classes={{
@@ -113,4 +86,4 @@ const DrawerComponent = (props: IDrawerProps, context) => {
   );
 };
 
-export const Drawer = withStyles(styles)(DrawerComponent) as any;
+export const Drawer = withStyles(styles)(DrawerComponent);

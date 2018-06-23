@@ -72,4 +72,4 @@ const mapStateToProps = (state: IAppState) => ({
 const connectedComponent = connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenuComponent);
 const styledComponent = withStyles(styles)(connectedComponent);
 
-export const AdminMenu = withRouter(styledComponent);
+export const AdminMenu = withRouter<any>(styledComponent);

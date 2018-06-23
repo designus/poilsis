@@ -1,4 +1,4 @@
-import { DRAWER_TOP, DRAWER_WIDTH } from '../../../global-styles';
+import { DRAWER_WIDTH } from '../../../global-styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
 
@@ -38,12 +38,6 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     width: '100%',
     height: '100%',
-  },
-  drawer: {
-    top: DRAWER_TOP,
-    [theme.breakpoints.up('lg')]: {
-      width: DRAWER_WIDTH,
-    },
   },
   content: {
     width: '100%',
