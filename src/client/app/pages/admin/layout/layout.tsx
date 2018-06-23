@@ -112,32 +112,32 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
   render() {
     const classes = this.props.classes;
     return (
-      <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <AppBar>
-            <Toolbar>
-              <Hidden lgUp implementation="css">
-                <IconButton
-                  color="inherit"
-                  aria-label="Open Drawer"
-                  onClick={this.handleDrawerToggle}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Hidden>
-              <Typography className={classes.appBarTitle} variant="title" color="inherit" noWrap>
-                Admin panel
-              </Typography>
-              <UserMenu />
-            </Toolbar>
-          </AppBar>
+      <div>
+        <AppBar>
+          <Toolbar>
+            <Hidden mdUp implementation="css">
+              <IconButton
+                color="inherit"
+                aria-label="Open Drawer"
+                onClick={this.handleDrawerToggle}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
+            <Typography className={classes.appBarTitle} variant="title" color="inherit" noWrap>
+              Admin panel
+            </Typography>
+            <UserMenu />
+          </Toolbar>
+        </AppBar>
+        <main className={classes.main}>
           <Drawer
             onClose={this.handleDrawerClose}
             mobileDrawerOpen={this.state.mobileDrawerOpen}
           >
             <AdminMenu items={this.state.menuItems} />
           </Drawer>
-          <main className={classes.content}>
+          <div className={classes.content}>
             <Switch>
               <ProtectedRoute
                 exact
@@ -168,8 +168,8 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               />
               <ProtectedRoute component={NotFound}/>
             </Switch>
-          </main>
-        </div>
+          </div>
+        </main>
         <Toast />
       </div>
     );

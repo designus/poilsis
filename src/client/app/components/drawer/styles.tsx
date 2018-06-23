@@ -35,6 +35,9 @@ export const styles = (theme: Theme) => createStyles({
     top: DRAWER_TOP,
     zIndex: 1,
   },
+  docked: {
+    width: DRAWER_WIDTH,
+  },
   paperMobile: {
     top: 0,
     width: DRAWER_WIDTH,
@@ -46,12 +49,17 @@ export const styles = (theme: Theme) => createStyles({
   },
   closeButton: {
     color: '#fff',
+    textTransform: 'initial',
+  },
+  closeButtonText: {
+    color: '#fff',
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: '0 8px',
+    borderBottom: '1px dashed rgba(255, 255, 255, .6)',
     ...theme.mixins.toolbar,
   },
   drawerContentWrapper: {

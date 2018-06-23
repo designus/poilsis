@@ -6,6 +6,8 @@ import MaterialDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Typography from '@material-ui/core/Typography';
+
 import { styles } from './styles';
 
 const AppDrawer = MaterialDrawer as any;
@@ -23,14 +25,15 @@ const DrawerContent = ({ classes, onClose, children }) => {
         <Hidden mdUp implementation="css">
           <div className={classes.drawerHeader}>
             <Button
-              className={classes.closeButton}
               onClick={onClose}
+              className={classes.closeButton}
               variant="text"
               size="small"
-              color="secondary"
             >
               <ChevronLeftIcon />
-              Close
+              <Typography className={classes.closeButtonText} variant="body1">
+                Close
+              </Typography>
             </Button>
           </div>
         </Hidden>
@@ -46,10 +49,11 @@ const DrawerComponent = (props: IDrawerProps, context) => {
 
   return (
     <div className={classes.drawer}>
-      <Hidden mdUp>
+      <Hidden smUp implementation="css">
         <AppDrawer
           classes={{
             paper: classes.paperMobile,
+            docked: classes.docked,
           }}
           anchor="left"
           variant="temporary"
@@ -71,6 +75,7 @@ const DrawerComponent = (props: IDrawerProps, context) => {
         <AppDrawer
           classes={{
             paper: classes.paper,
+            docked: classes.docked,
           }}
           variant="permanent"
           open
