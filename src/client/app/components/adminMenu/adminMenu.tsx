@@ -1,33 +1,14 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { withStyles } from '@material-ui/core/styles';
+import { WithStyles } from '@material-ui/core';
 import { IAppState } from '../../reducers';
-
-export const StyledListItem = styled(ListItem)`
-  padding: 0!important;
-
-  a {
-    display: flex;
-    padding: 8px 12px;
-    flex: 1;
-    text-decoration: none;
-  }
-
-  &.disabled {
-    pointer-events: none;
-    opacity: .5;
-  }
-
-  > a.active h3 {
-    color: red;
-    text-decoration: none;
-  }
-` as any;
+import { styles } from './styles';
 
 export interface IAdminMenuItem {
   icon?: () => React.ReactElement<any>;
@@ -37,54 +18,58 @@ export interface IAdminMenuItem {
   allowedRoles?: string[];
 }
 
-export interface IAdminMenuProps {
+export interface IAdminMenuProps extends WithStyles<typeof styles> {
   items: IAdminMenuItem[];
   userRole?: string;
 }
 
 class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
 
-  renderItem = (item: IAdminMenuItem, index: number) => {
+  renderItemContent = (item: IAdminMenuItem, index: number) => {
+    const { button, icon, text } = this.props.classes;
     return (
-      <StyledListItem button
+      <ListItem
         key={index}
-        divider={true}
-        disableGutters={true}
+        disableGutters
         className={item.isDisabled ? 'disabled' : ''}
+        classes={{ root: button }}
       >
-        <NavLink to={item.link} exact={true} activeClassName="active">
-          <ListItemIcon>
+        <NavLink to={item.link} activeClassName="active" exact>
+          <ListItemIcon className={icon}>
             {item.icon()}
           </ListItemIcon>
-          <ListItemText primary={item.text} />
+          <ListItemText className={text} inset primary={item.text} />
         </NavLink>
-      </StyledListItem>
+      </ListItem>
     );
   }
 
-  shouldItemBeVisible = (item: IAdminMenuItem) => {
+  isItemVisible = (item: IAdminMenuItem) => {
     return !item.allowedRoles || item.allowedRoles.indexOf(this.props.userRole) !== -1;
+  }
+
+  renderItem = (item: IAdminMenuItem, index) => {
+    return this.isItemVisible(item) ?
+      this.renderItemContent(item, index) :
+      null;
   }
 
   render() {
     return (
       <List>
         {
-          this.props.items.map((item: IAdminMenuItem, index) => {
-            return this.shouldItemBeVisible(item) ?
-              this.renderItem(item, index) :
-              null;
-          })
+          this.props.items.map(this.renderItem)
         }
       </List>
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    userRole: state.currentUser.details.role,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  userRole: state.currentUser.details.role,
+});
 
-export const AdminMenu = connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenuComponent);
+const connectedComponent = connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenuComponent);
+const styledComponent = withStyles(styles)(connectedComponent);
+
+export const AdminMenu = withRouter(styledComponent);

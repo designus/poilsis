@@ -25,7 +25,7 @@ export class EnhancedTableHead extends React.Component<ITableHead, any> {
   render() {
     const {
       onSelectAllClick,
-      order,
+      // order,
       orderBy,
       numSelected,
       rowCount,

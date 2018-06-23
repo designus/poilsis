@@ -9,6 +9,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { removeInjectedStyles, adminRoutes, clientRoutes } from '../../../client-utils';
 import { IAppState } from '../../../reducers';
@@ -27,7 +28,13 @@ import { ITEMS, GO_TO_WEBSITE, TYPES } from '../../../../../data-strings';
 import { getInitialData } from '../../../actions';
 import { Switch } from 'react-router-dom';
 
-class AdminLayoutPageComponent extends React.Component<any, any> {
+interface IAdminLayoutProps extends WithStyles<typeof styles>  {
+  isInitialDataLoaded: boolean;
+  location: any;
+  dispatch: any;
+}
+
+class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, any> {
 
   static fetchData(store) {
     return store.dispatch(getInitialData());
@@ -37,10 +44,6 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     mobileDrawerOpen: false,
     menuItems: this.menuItems,
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
@@ -104,7 +107,7 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <AppBar className={classes.appBar}>
+          <AppBar>
             <Toolbar>
               <Hidden lgUp implementation="css">
                 <IconButton
@@ -167,10 +170,10 @@ class AdminLayoutPageComponent extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    isInitialDataLoaded: state.initialData.isLoaded,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  isInitialDataLoaded: state.initialData.isLoaded,
+});
 
-export const AdminLayoutPage = connect<any, any, {}>(mapStateToProps)(withStyles(styles)(AdminLayoutPageComponent));
+const connectedComponent = connect<any, any, IAdminLayoutProps>(mapStateToProps)(AdminLayoutPageComponent);
+
+export const AdminLayoutPage = withStyles(styles)(connectedComponent);

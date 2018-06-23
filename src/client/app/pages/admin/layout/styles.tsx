@@ -1,6 +1,8 @@
-import {DRAWER_TOP, DRAWER_WIDTH} from '../../../global-styles';
+import { DRAWER_TOP, DRAWER_WIDTH } from '../../../global-styles';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { createStyles } from '@material-ui/core/styles';
 
-export const styles = theme => ({
+export const styles = (theme: Theme) => createStyles({
   '@global': {
     html: {
       background: theme.palette.background.default,
@@ -57,4 +59,4 @@ export const styles = theme => ({
       padding: theme.spacing.unit * 3,
     },
   },
-}) as any;
+});
