@@ -1,11 +1,10 @@
 
-import { DRAWER_WIDTH, DRAWER_TOP } from '../../global-styles';
+import { DRAWER_WIDTH } from '../../global-styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
   drawer: {
-    top: DRAWER_TOP,
     [theme.breakpoints.up('lg')]: {
       width: DRAWER_WIDTH,
     },
@@ -32,11 +31,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   paper: {
     width: DRAWER_WIDTH,
-    top: DRAWER_TOP,
     zIndex: 1,
   },
   docked: {
     width: DRAWER_WIDTH,
+  },
+  paperAnchorDockedLeft: {
+    borderRight: 'none',
   },
   paperMobile: {
     top: 0,

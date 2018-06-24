@@ -27,19 +27,27 @@ export const styles = (theme: Theme) => createStyles({
   appBarTitle: {
     flex: 1,
   },
-  main: {
-    paddingTop: '56px',
+  wrapper: {
     display: 'flex',
     justifyContent: 'space-between',
   },
-  content: {
+  main: {
     padding: '25px',
-    height: 'calc(100% - 56px)',
-    [theme.breakpoints.up('md')]: {
-      width: 'calc(100% - ' + DRAWER_WIDTH + 'px)',
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: '85px',
     },
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
+  },
+  appBar: {
+    zIndex: 0,
+    position: 'relative',
+    display: 'block',
+    [theme.breakpoints.down('sm')]: {
+      position: 'fixed',
+      zIndex: 1,
     },
+  },
+  content: {
+    minWidth: `calc(100% - ${DRAWER_WIDTH}px)`,
+    width: '100%',
   },
 });

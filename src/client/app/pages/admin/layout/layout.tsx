@@ -10,7 +10,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import MenuIcon from '@material-ui/icons/Menu';
 import TypesIcon from '@material-ui/icons/Gesture';
 import Hidden from '@material-ui/core/Hidden';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -113,32 +112,32 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
   render() {
     const classes = this.props.classes;
     return (
-      <div>
-        <AppBar>
-          <Toolbar>
-            <Hidden mdUp implementation="css">
-              <IconButton
-                color="inherit"
-                aria-label="Open Drawer"
-                onClick={this.handleDrawerToggle}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Hidden>
-            <Typography className={classes.appBarTitle} variant="title" color="inherit" noWrap>
-              Admin panel
-            </Typography>
-            <UserMenu />
-          </Toolbar>
-        </AppBar>
-        <main className={classes.main}>
-          <Drawer
-            onClose={this.handleDrawerClose}
-            mobileDrawerOpen={this.state.mobileDrawerOpen}
-          >
-            <AdminMenu items={this.state.menuItems} />
-          </Drawer>
-          <div className={classes.content}>
+      <div className={classes.wrapper}>
+        <Drawer
+          onClose={this.handleDrawerClose}
+          mobileDrawerOpen={this.state.mobileDrawerOpen}
+        >
+          <AdminMenu items={this.state.menuItems} />
+        </Drawer>
+        <div className={classes.content}>
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <Hidden mdUp implementation="css">
+                <IconButton
+                  color="inherit"
+                  aria-label="Open Drawer"
+                  onClick={this.handleDrawerToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+              <Typography className={classes.appBarTitle} variant="title" color="inherit" noWrap>
+                Admin panel
+              </Typography>
+              <UserMenu />
+            </Toolbar>
+          </AppBar>
+          <main className={classes.main}>
             <Switch>
               <ProtectedRoute
                 exact
@@ -169,8 +168,8 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               />
               <ProtectedRoute component={NotFound}/>
             </Switch>
-          </div>
-        </main>
+          </main>
+        </div>
         <Toast />
       </div>
     );

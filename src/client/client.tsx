@@ -4,10 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { injectGlobal } from 'styled-components';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
-const rootElement = document.getElementById('app');
 import { App } from './app/pages';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+const rootElement = document.getElementById('app');
 export const theme = createMuiTheme({
   overrides: {
     MuiButton: {
@@ -16,11 +16,7 @@ export const theme = createMuiTheme({
       },
     },
   },
-  // userAgent: navigator.userAgent,
 });
-
-// const injectTapEventPlugin = require('react-tap-event-plugin');
-// injectTapEventPlugin();
 
 render(
   <MuiThemeProvider theme={theme}>

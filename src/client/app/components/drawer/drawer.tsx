@@ -54,6 +54,7 @@ const DrawerComponent = (props: IDrawerProps, context) => {
           classes={{
             paper: classes.paperMobile,
             docked: classes.docked,
+            paperAnchorDockedLeft: classes.paperAnchorDockedLeft,
           }}
           anchor="left"
           variant="temporary"
@@ -76,6 +77,7 @@ const DrawerComponent = (props: IDrawerProps, context) => {
           classes={{
             paper: classes.paper,
             docked: classes.docked,
+            paperAnchorDockedLeft: classes.paperAnchorDockedLeft,
           }}
           variant="permanent"
           open
