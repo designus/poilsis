@@ -10,6 +10,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import MenuIcon from '@material-ui/icons/Menu';
 import TypesIcon from '@material-ui/icons/Gesture';
 import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';

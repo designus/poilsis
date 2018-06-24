@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import { WithStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import { DIALOG_LOADER_ID } from '../../../client-utils';
 import { modalStyles } from '../styles';
@@ -8,14 +9,14 @@ import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 import { IAppState } from '../../../reducers';
 import { logout, keepUserLogged } from '../../../actions';
 
-export interface IKeepMeLoggedModalProps {
+export interface IKeepMeLoggedModalProps extends WithStyles<typeof modalStyles> {
   isModalOpen?: boolean;
   timeToCloseModal?: number;
   onCloseModal?: () => void;
   keepUserLogged?: () => void;
 }
 
-class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps & { classes: any }, any> {
+class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps, any> {
 
   state = {
     error: null,
@@ -55,13 +56,13 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
   }
 
   render() {
-    const {classes} = this.props;
-    const {error} = this.state;
+    const { classes, isModalOpen, keepUserLogged } = this.props;
+    const { error, timeToCloseModal } = this.state;
 
     return (
       <div>
         <Dialog
-          open={this.props.isModalOpen}
+          open={isModalOpen}
           onClose={this.onCloseModal}
           disableBackdropClick={true}
           disableEscapeKeyDown={true}
@@ -80,14 +81,14 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
             showLoadingOverlay={true}
             contentClass={classes.dialogContent}
           >
-            Your login session will expire in <strong>{this.state.timeToCloseModal}</strong> seconds. Do you want us to keep you logged in?
+            Your login session will expire in <strong>{timeToCloseModal}</strong> seconds. Do you want us to keep you logged in?
           </DialogContent>
           <DialogFooter
             classes={classes}
-            closeLabel={'No'}
-            submitLabel={'Yes'}
+            closeLabel="No"
+            submitLabel="Yes"
             onClose={this.onCloseModal}
-            onSubmit={this.props.keepUserLogged}
+            onSubmit={keepUserLogged}
           />
         </Dialog>
       </div>
@@ -95,17 +96,16 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    isModalOpen: state.auth.showKeepMeLoggedModal,
-    timeToCloseModal: state.auth.timeToCloseModal,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  isModalOpen: state.auth.showKeepMeLoggedModal,
+  timeToCloseModal: state.auth.timeToCloseModal,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onCloseModal: () => dispatch(logout()),
   keepUserLogged: () => dispatch(keepUserLogged()),
 });
 
-export const KeepMeLoggedModal = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(
-  withStyles(modalStyles)(KeepMeLoggedModalComponent),
-);
+const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);
+
+export const KeepMeLoggedModal = withStyles(modalStyles)(connectedComponent);

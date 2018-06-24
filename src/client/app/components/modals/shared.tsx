@@ -35,14 +35,13 @@ export const DialogHeader = ({title, className, closeModal}) => (
 
 export const DialogFooter = ({classes, onClose, onSubmit, closeLabel = 'Cancel', submitLabel = 'Proceed'}) => (
   <DialogActions classes={{
-    // root: classes.actionWrapper,
-    // action: classes.buttonWrapper,
-    // button: classes.button,
+    root: classes.actionWrapper,
+    action: classes.buttonWrapper,
   }}>
-    <Button onClick={onClose} className={classes.cancel}>
+    <Button variant="raised" onClick={onClose} className={classes.cancel}>
       Cancel
     </Button>
-    <Button onClick={onSubmit} className={classes.submit}>
+    <Button color="primary" variant="raised" onClick={onSubmit} className={classes.submit}>
       Proceed
     </Button>
   </DialogActions>

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { ERROR_COLOR, INPUT_WIDTH, INPUT_STYLE_MIXIN } from '../../global-styles';
+import { ERROR_COLOR, INPUT_WIDTH } from '../../global-styles';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -20,7 +20,6 @@ const styles = theme => ({
       backgroundColor: ERROR_COLOR,
     },
   },
-  ...INPUT_STYLE_MIXIN,
 });
 
 export interface ITextInputProps {

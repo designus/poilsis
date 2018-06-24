@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { WithStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import { DIALOG_LOADER_ID } from '../../../client-utils';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 
-export interface IDeleteModalProps {
+export interface IDeleteModalProps extends WithStyles<typeof modalStyles> {
   isModalOpen: boolean;
   itemId: string;
   itemName: string;
@@ -13,7 +14,7 @@ export interface IDeleteModalProps {
   onCloseModal?: any;
 }
 
-class DeleteModalComponent extends React.PureComponent<IDeleteModalProps & { classes: any }, any> {
+class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
 
   state = {
     error: null,
@@ -30,14 +31,13 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps & { cla
   }
 
   render() {
-    const {classes, itemName} = this.props;
-    const {error} = this.state;
-
+    const { classes, itemName, onCloseModal, isModalOpen } = this.props;
+    const { error } = this.state;
     return (
       <div>
         <Dialog
-          open={this.props.isModalOpen}
-          onClose={this.props.onCloseModal}
+          open={isModalOpen}
+          onClose={onCloseModal}
           classes={{
             paper: classes.paper,
           }}
@@ -45,7 +45,7 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps & { cla
           <DialogHeader
             title={`Delete "${itemName}"`}
             className={classes.close}
-            closeModal={this.props.onCloseModal}
+            closeModal={onCloseModal}
           />
           <DialogContent
             error={error}
@@ -57,7 +57,7 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps & { cla
           </DialogContent>
           <DialogFooter
             classes={classes}
-            onClose={this.props.onCloseModal}
+            onClose={onCloseModal}
             onSubmit={this.deleteItem}
           />
         </Dialog>
@@ -66,4 +66,4 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps & { cla
   }
 }
 
-export const DeleteModal = withStyles(modalStyles)<IDeleteModalProps>(DeleteModalComponent);
+export const DeleteModal = withStyles(modalStyles)(DeleteModalComponent);

@@ -1,8 +1,7 @@
-import blue from '@material-ui/core/colors/blue';
-import blueGrey from '@material-ui/core/colors/blueGrey';
-import grey from '@material-ui/core/colors/grey';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { createStyles } from '@material-ui/core/styles';
 
-export const modalStyles = theme => ({
+export const modalStyles = (theme: Theme) => createStyles({
   paper: {
     borderRadius: '0',
     minWidth: '300px',
@@ -10,33 +9,16 @@ export const modalStyles = theme => ({
   actionWrapper: {
     margin: '8px 0 0 0',
   },
-  // buttonWrapper: {
-  //   width: '50%',
-  //   textAlign: 'center',
-  //   margin: '0',
-  // },
-  button: {
-    width: '100%',
-    borderRadius: '0',
-  },
-  submit: {
-    background: blue[800],
-    color: '#fff',
-    '&:hover': {
-      background: blue[900],
-    },
+  buttonWrapper: {
+    width: '50%',
+    textAlign: 'center',
+    margin: '0',
   },
   dialogContent: {
-    paddingTop: '6px!important',
-  },
-  cancel: {
-    background: grey[100],
-    '&:hover': {
-      background: blueGrey[100],
-    },
+    paddingTop: '6px',
   },
   close: {
-    position: 'absolute' as 'absolute',
+    position: 'absolute',
     top: '0',
     right: '0',
   },

@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
 import { IGenericDataMap } from '../../../client-utils';
-import { INPUT_WIDTH, INPUT_STYLE_MIXIN } from '../../../global-styles';
+import { INPUT_WIDTH } from '../../../global-styles';
 
 export interface ISelectOptionProps {
   data?: any[] | IGenericDataMap<object>;
@@ -30,7 +30,6 @@ const styles = theme => ({
       background: 'none',
     },
   },
-  ...INPUT_STYLE_MIXIN,
 });
 
 function SelectField({data, label = 'select', dataKey = 'name', value, onChange, classes, hasErrors}: ISelectOptionProps) {

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { injectGlobal } from 'styled-components';
-// import { routes } from './app/routes';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 const rootElement = document.getElementById('app');
@@ -10,7 +9,13 @@ import { App } from './app/pages';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
-  palette: {},
+  overrides: {
+    MuiButton: {
+      root: {
+        borderRadius: 0,
+      },
+    },
+  },
   // userAgent: navigator.userAgent,
 });
 
