@@ -49,7 +49,7 @@ const Message = ({ text, toastType, classes }) => {
 class ToastComponent extends React.Component<IToastProps, any> {
 
   handleRequestClose = (event, reason) => {
-    // this.props.dispatch(hideToast());
+    this.props.dispatch(hideToast());
   }
 
   render() {

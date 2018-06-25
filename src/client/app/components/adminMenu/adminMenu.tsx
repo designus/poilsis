@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 import { IAppState } from '../../reducers';
-import { styles } from './styles';
+import { styles } from './verticalMenu/styles';
 
 export interface IAdminMenuItem {
   icon?: () => React.ReactElement<any>;
@@ -18,7 +18,7 @@ export interface IAdminMenuItem {
   allowedRoles?: string[];
 }
 
-export interface IAdminMenuProps extends WithStyles<typeof styles> {
+export interface IAdminMenuProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
   items: IAdminMenuItem[];
   userRole?: string;
 }
@@ -70,6 +70,5 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const connectedComponent = connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenuComponent);
-const styledComponent = withStyles(styles)(connectedComponent);
 
-export const AdminMenu = withRouter<any>(styledComponent);
+export const AdminMenu = withRouter(connectedComponent);

@@ -34,7 +34,6 @@ export const ButtonComponent = ({
   children,
   classes,
   style = {},
-  type = 'submit',
   color = 'primary',
 }: IButtonProps) => {
   return (
@@ -45,7 +44,7 @@ export const ButtonComponent = ({
       }}
       onClick={onClick}
       color={color}
-      type={type}
+      variant="raised"
       style={style}
     >
       {children}

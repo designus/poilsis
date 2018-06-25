@@ -17,7 +17,7 @@ import { removeInjectedStyles, adminRoutes, clientRoutes } from '../../../client
 import { IAppState } from '../../../reducers';
 import {
   Toast,
-  AdminMenu,
+  VerticalMenu,
   IAdminMenuItem,
   Drawer,
   UserMenu,
@@ -117,7 +117,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
           onClose={this.handleDrawerClose}
           mobileDrawerOpen={this.state.mobileDrawerOpen}
         >
-          <AdminMenu items={this.state.menuItems} />
+          <VerticalMenu items={this.state.menuItems} />
         </Drawer>
         <div className={classes.content}>
           <AppBar className={classes.appBar}>

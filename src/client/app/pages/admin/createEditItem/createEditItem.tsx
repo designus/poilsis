@@ -6,7 +6,7 @@ import BackIcon from '@material-ui/icons/ArrowBack';
 
 import { IAppState, IItemsMap } from '../../../reducers';
 import { getItem } from '../../../actions';
-import { IAdminMenuItem, NotFound, PropsRoute } from '../../../components';
+import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu } from '../../../components';
 import { adminRoutes } from '../../../client-utils';
 import { MAIN_INFO, PHOTO_GALLERY, GO_BACK } from '../../../../../data-strings';
 import { Switch } from 'react-router-dom';
@@ -55,7 +55,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 
   componentDidMount() {
     const loadedItem = this.getLoadedItem();
-    this.props.setMenuItems(this.getMenuItems(this.props.match.params.id));
+    // this.props.setMenuItems(this.getMenuItems(this.props.match.params.id));
     if (!this.isCreatePage && (!loadedItem || !loadedItem.isFullyLoaded)) {
       this.props.getItem(this.props.match.params.id);
     }
@@ -63,7 +63,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 
   componentWillReceiveProps(nextProps) {
     this.isCreatePage = !Boolean(nextProps.match.params.id);
-    this.props.setMenuItems(this.getMenuItems(nextProps.match.params.id));
+    // this.props.setMenuItems(this.getMenuItems(nextProps.match.params.id));
   }
 
   render() {
@@ -73,6 +73,7 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
     if (loadedItem || this.isCreatePage) {
       return (
         <div>
+          <HorizontalMenu items={this.getMenuItems()} />
           <Switch>
             {/* TODO: User protected route here */}
             <PropsRoute
