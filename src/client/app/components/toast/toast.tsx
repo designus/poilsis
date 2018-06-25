@@ -3,35 +3,25 @@ import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import SuccesIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/ErrorOutline';
+import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
+import { WithStyles } from '@material-ui/core';
 import { IAppState } from '../../reducers';
+import { IToastState, Toast as ToastEnum } from '../../reducers/toast';
 import { hideToast } from '../../actions';
+import { styles } from './styles';
 
-const green = '#00c133';
-const yellow = '#fcc205';
-const red = '#ff3030';
+interface IToastProps extends IToastState, WithStyles<typeof styles>  {
+  dispatch?: any;
+}
 
-const styles = theme => ({
-  close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4,
-  },
-  success: {
-    '& > div': {
-      backgroundColor: green,
-    },
-  },
-  warning: {
-    '& > div': {
-      backgroundColor: yellow,
-    },
-  },
-  error: {
-    '& > div': {
-      backgroundColor: red,
-    },
-  },
-});
+const icon = {
+  [ToastEnum.success]: () => <SuccesIcon />,
+  [ToastEnum.error]: () => <ErrorIcon />,
+  [ToastEnum.warning]: () => <WarningIcon />,
+};
 
 const CloseButton = ({className, handleRequestClose}): React.ReactElement<any> => {
   return (
@@ -47,10 +37,19 @@ const CloseButton = ({className, handleRequestClose}): React.ReactElement<any> =
   );
 };
 
-class ToastComponent extends React.Component<any, any> {
+const Message = ({ text, toastType, classes }) => {
+  return (
+    <div className={classes.message}>
+      {icon[toastType]()}
+      {text}
+    </div>
+  );
+};
+
+class ToastComponent extends React.Component<IToastProps, any> {
 
   handleRequestClose = (event, reason) => {
-    this.props.dispatch(hideToast());
+    // this.props.dispatch(hideToast());
   }
 
   render() {
@@ -66,7 +65,7 @@ class ToastComponent extends React.Component<any, any> {
           open={show}
           autoHideDuration={4000}
           onClose={this.handleRequestClose}
-          message={message}
+          message={<Message classes={classes} text={message} toastType={toastType} />}
           action={
             <CloseButton
               className={classes.close}
@@ -80,7 +79,7 @@ class ToastComponent extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: IAppState) => {
-  const {message, toastType, show} = state.toast;
+  const { message, toastType, show } = state.toast;
   return {
     message,
     toastType,
@@ -88,5 +87,5 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-const StyledToastComponent = withStyles(styles)(ToastComponent) as any;
-export const Toast = connect(mapStateToProps)(StyledToastComponent);
+const StyledToastComponent = withStyles(styles)(ToastComponent);
+export const Toast = connect<any, any, {}>(mapStateToProps)(StyledToastComponent);

@@ -15,6 +15,19 @@ export const theme = createMuiTheme({
         borderRadius: 0,
       },
     },
+    MuiSnackbar: {
+      root: {
+        width: '100%',
+      },
+    },
+    MuiSnackbarContent: {
+      root: {
+        borderRadius: '0!important',
+        boxShadow: 'none',
+        width: '100%',
+        padding: '10px 20px',
+      },
+    },
   },
 });
 
