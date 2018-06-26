@@ -2,13 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
-import BackIcon from '@material-ui/icons/ArrowBack';
 
 import { IAppState, IItemsMap } from '../../../reducers';
 import { getItem } from '../../../actions';
 import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu } from '../../../components';
 import { adminRoutes } from '../../../client-utils';
-import { MAIN_INFO, PHOTO_GALLERY, GO_BACK } from '../../../../../data-strings';
+import { MAIN_INFO, PHOTO_GALLERY } from '../../../../../data-strings';
 import { Switch } from 'react-router-dom';
 import { MainInfoPage, PhotosPage } from '../../../pages';
 
@@ -45,11 +44,6 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
         text: PHOTO_GALLERY,
         isDisabled: this.isCreatePage,
       },
-      {
-        icon: () => (<BackIcon />),
-        link: adminRoutes.items.getLink(),
-        text: GO_BACK,
-      },
     ];
   }
 
@@ -69,11 +63,12 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
   render() {
     const loadedItem = this.getLoadedItem();
     const childProps = {...this.props, loadedItem };
+    const itemId = this.isCreatePage ? undefined : this.props.match.params.id;
 
     if (loadedItem || this.isCreatePage) {
       return (
         <div>
-          <HorizontalMenu items={this.getMenuItems()} />
+          <HorizontalMenu items={this.getMenuItems(itemId)} />
           <Switch>
             {/* TODO: User protected route here */}
             <PropsRoute

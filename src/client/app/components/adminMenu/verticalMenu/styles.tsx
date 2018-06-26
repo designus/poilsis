@@ -30,4 +30,5 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: '5px',
     color: 'rgba(255, 255, 255, 0.8)',
   },
+  link: {},
 });

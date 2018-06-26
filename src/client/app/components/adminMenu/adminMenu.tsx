@@ -26,7 +26,7 @@ export interface IAdminMenuProps extends RouteComponentProps<any>, WithStyles<ty
 class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
 
   renderItemContent = (item: IAdminMenuItem, index: number) => {
-    const { button, icon, text } = this.props.classes;
+    const { button, icon, text, link } = this.props.classes;
     return (
       <ListItem
         key={index}
@@ -34,7 +34,7 @@ class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
         className={item.isDisabled ? 'disabled' : ''}
         classes={{ root: button }}
       >
-        <NavLink to={item.link} activeClassName="active" exact>
+        <NavLink to={item.link} className={link} activeClassName="active" exact>
           <ListItemIcon className={icon}>
             {item.icon()}
           </ListItemIcon>
