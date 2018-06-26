@@ -49,7 +49,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.routeChangeCallback();
+      this.handleDrawerClose();
     }
   }
 
@@ -66,11 +66,6 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
 
   handleDrawerToggle = () => {
     this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
-  }
-
-  routeChangeCallback() {
-    this.setMenuItems(this.menuItems);
-    this.handleDrawerClose();
   }
 
   get menuItems(): IAdminMenuItem[] {
@@ -103,12 +98,6 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
     return arr1.length !== arr2.length || arr1.every((item, index) => item[key] !== arr2[index][key]);
   }
 
-  setMenuItems = (menuItems: IAdminMenuItem[]) => {
-    if (this.isDifferentMenuItems(menuItems, this.state.menuItems, 'text')) {
-      this.setState({menuItems});
-    }
-  }
-
   render() {
     const classes = this.props.classes;
     return (
@@ -117,7 +106,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
           onClose={this.handleDrawerClose}
           mobileDrawerOpen={this.state.mobileDrawerOpen}
         >
-          <VerticalMenu items={this.state.menuItems} />
+          <VerticalMenu items={this.menuItems} />
         </Drawer>
         <div className={classes.content}>
           <AppBar className={classes.appBar}>
@@ -143,24 +132,20 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
                 exact
                 path={adminRoutes.items.path}
                 component={AdminItemsPage}
-                setMenuItems={this.setMenuItems}
               />
               <ProtectedRoute
                 exact
                 path={adminRoutes.types.path}
                 component={AdminTypesPage}
                 allowedRoles={adminRoutes.types.allowedRoles}
-                setMenuItems={this.setMenuItems}
               />
               <ProtectedRoute
                 path={adminRoutes.createItem.path}
                 component={CreateEditItemPage}
-                setMenuItems={this.setMenuItems}
               />
               <ProtectedRoute
                 path={adminRoutes.editItem.path}
                 component={CreateEditItemPage}
-                setMenuItems={this.setMenuItems}
               />
               <ProtectedRoute
                 path={'/admin/not-authorized'}
