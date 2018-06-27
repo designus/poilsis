@@ -2,18 +2,27 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
+import { Switch, RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItemsMap } from '../../../reducers';
+import { IAppState, IItemsMap, ItemsDataMap } from '../../../reducers';
 import { getItem } from '../../../actions';
-import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu } from '../../../components';
+import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute } from '../../../components';
 import { adminRoutes } from '../../../client-utils';
 import { MAIN_INFO, PHOTO_GALLERY } from '../../../../../data-strings';
-import { Switch } from 'react-router-dom';
 import { MainInfoPage, PhotosPage } from '../../../pages';
 
-class CreateEditItemPageComponent extends React.Component<any, any> {
+interface IMatchParams {
+  itemId: string;
+  userId: string;
+}
+interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams> {
+  itemsMap: ItemsDataMap;
+  getItem: (id) => void;
+}
 
-  isCreatePage = !Boolean(this.props.match.params.id);
+class CreateEditItemPageComponent extends React.Component<ICreateEditItemPageProps, any> {
+
+  isCreatePage = !Boolean(this.props.match.params.itemId);
 
   constructor(props) {
     super(props);
@@ -21,26 +30,26 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
 
   static fetchData(store, params) {
     if (params.id) {
-      return store.dispatch(getItem(params.id));
+      return store.dispatch(getItem(params.itemId));
     } else {
       return Promise.resolve(null);
     }
   }
 
   getLoadedItem(): IItemsMap {
-    return this.props.itemsMap[this.props.match.params.id];
+    return this.props.itemsMap[this.props.match.params.itemId];
   }
 
-  getMenuItems(id?: string): IAdminMenuItem[] {
+  getMenuItems(userId?: string, itemId?: string): IAdminMenuItem[] {
     return [
       {
         icon: () => (<HomeIcon />),
-        link: id ? adminRoutes.editItemMain.getLink(id) : adminRoutes.createItemMain.getLink(),
+        link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
         text: MAIN_INFO,
       },
       {
         icon: () => (<PhotoIcon />),
-        link: adminRoutes.editItemPhotos.getLink(id),
+        link: adminRoutes.editItemPhotos.getLink(userId, itemId),
         text: PHOTO_GALLERY,
         isDisabled: this.isCreatePage,
       },
@@ -50,38 +59,37 @@ class CreateEditItemPageComponent extends React.Component<any, any> {
   componentDidMount() {
     const loadedItem = this.getLoadedItem();
     if (!this.isCreatePage && (!loadedItem || !loadedItem.isFullyLoaded)) {
-      this.props.getItem(this.props.match.params.id);
+      this.props.getItem(this.props.match.params.itemId);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.isCreatePage = !Boolean(nextProps.match.params.id);
+    this.isCreatePage = !Boolean(nextProps.match.params.itemId);
   }
 
   render() {
     const loadedItem = this.getLoadedItem();
     const childProps = {...this.props, loadedItem };
-    const itemId = this.isCreatePage ? undefined : this.props.match.params.id;
+    const { userId, itemId } = this.props.match.params;
 
     if (loadedItem || this.isCreatePage) {
       return (
         <div>
-          <HorizontalMenu items={this.getMenuItems(itemId)} />
+          <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
           <Switch>
-            {/* TODO: User protected route here */}
-            <PropsRoute
-              path={'/admin/item/create'}
+            <ProtectedRoute
+              path={adminRoutes.createItem.path}
               exact
               component={MainInfoPage}
               {...childProps}
             />
-            <PropsRoute
-              path={'/admin/item/edit/:id/photos'}
+            <ProtectedRoute
+              path={adminRoutes.editItemPhotos.path}
               component={PhotosPage}
               {...childProps}
             />
-            <PropsRoute
-              path={'/admin/item/edit/:id'}
+            <ProtectedRoute
+              path={adminRoutes.editItemMain.path}
               component={MainInfoPage}
               {...childProps}
             />

@@ -87,11 +87,12 @@ class AdminItemsPageComponent extends React.Component<any, any> {
       {
         title: 'Actions',
         dataProp: 'id',
-        format: (id) => {
+        formatProps: ['userId', 'id'],
+        format: (userId: string, itemId: string) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editItemMain.getLink(id)}
-              onDelete={this.openDeleteModal.bind(this, id)}
+              editLink={adminRoutes.editItemMain.getLink(userId, itemId)}
+              onDelete={this.openDeleteModal.bind(this, itemId)}
             />
           );
         },

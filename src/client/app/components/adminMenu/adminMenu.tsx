@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
+import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

@@ -19,7 +19,8 @@ export type OrderType = 'asc' | 'desc';
 
 export interface ITableColumn {
   title: string;
-  dataProp?: string;
+  dataProp: string;
+  formatProps?: string[];
   sortType?: SortType;
   searchable?: boolean;
   format?: any;
@@ -187,6 +188,16 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
+  getColumnValue = (row, column: ITableColumn) => {
+    const defaultValue = row[column.dataProp];
+    if (column.format) {
+      const args = column.formatProps ? column.formatProps.map(prop => row[prop]) : [defaultValue];
+      return column.format(...args);
+    } else {
+      return defaultValue;
+    }
+  }
+
   render() {
     const { columns, dataMap } = this.props;
     const {
@@ -231,12 +242,10 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
                     <Checkbox checked={isSelected} />
                   </TableCell>
                   {
-                    columns.map((colItem, index) => {
-                      const column = colItem.dataProp ? row[colItem.dataProp] : '';
-                      const formattedColumn = colItem.format ? colItem.format(column) : column;
+                    columns.map((column, index) => {
                       return (
                         <TableCell key={index}>
-                          {formattedColumn}
+                          {this.getColumnValue(row, column)}
                         </TableCell>
                       );
                     })
