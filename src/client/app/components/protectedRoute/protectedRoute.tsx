@@ -11,7 +11,7 @@ interface IMatchParams {
 }
 
 interface IProtectedRouteProps {
-  component?: React.ComponentClass;
+  component?: any;
   isAuthenticated?: boolean;
   userId?: string;
   userRole?: string;

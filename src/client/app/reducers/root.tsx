@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import { TItemState } from '../pages';
 import {
   cities,
@@ -46,4 +47,5 @@ export const rootReducer = combineReducers({
   uploadProgress,
   currentUser,
   users,
+  form: formReducer,
 });

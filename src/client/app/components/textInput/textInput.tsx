@@ -1,65 +1,42 @@
 import * as React from 'react';
+import { WrappedFieldProps } from 'redux-form';
 import { ValidationErrors } from '../../components';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { ERROR_COLOR, INPUT_WIDTH } from '../../global-styles';
-import styled from 'styled-components';
+import { WithStyles } from '@material-ui/core';
+import { styles } from './styles';
 
-const Wrapper = styled.div`
-  padding: 10px 0;
-`;
+export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {}
 
-const styles = theme => ({
-  formControl: {
-    width: INPUT_WIDTH,
-  },
-  error: {
-    '&:after': {
-      backgroundColor: ERROR_COLOR,
-    },
-  },
-});
+export const InputComponent = (props: ITextInputProps) => {
+  const { classes, input, label, meta } = props;
+  const showError = Boolean(meta.dirty && meta.invalid && meta.error);
 
-export interface ITextInputProps {
-  label: string;
-  value: string;
-  showErrors: boolean;
-  errors: string[];
-  onChange?: (event) => void;
-  onBlur?: (event) => void;
-  classes?: any;
-}
-
-function InputComponent({label, value, showErrors, errors, onChange, onBlur, classes}: ITextInputProps) {
   return (
-    <Wrapper>
-      <FormControl className={classes.formControl} error={showErrors && errors.length > 0}>
-        <InputLabel
-          htmlFor={label}
-        >
+    <div className={classes.wrapper}>
+      <FormControl className={classes.formControl} error={showError}>
+        <InputLabel htmlFor={label}>
           {label}
         </InputLabel>
         <Input
           id={label}
-          value={value}
-          onChange={onChange}
+          value={input.value}
+          onChange={input.onChange}
           classes={{
             error: classes.error,
-            underline: classes.underline,
-            focused: classes.focused,
           }}
           margin="dense"
-          onBlur={onBlur}
+          onBlur={input.onBlur}
         />
       </FormControl>
       <ValidationErrors
-        showErrors={showErrors}
-        errors={errors}
+        showError={showError}
+        error={meta.error}
       />
-    </Wrapper>
+    </div>
   );
-}
+};
 
-export const TextInput = withStyles(styles)<ITextInputProps>(InputComponent);
+export const TextInput = withStyles(styles)(InputComponent) as any;

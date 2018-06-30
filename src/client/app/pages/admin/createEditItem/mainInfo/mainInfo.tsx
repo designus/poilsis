@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+// import { debounce } from 'lodash';
 import { updateMainInfo, postItem } from '../../../../actions';
-import { extendWithForm } from '../../../../components';
+// import { extendWithForm } from '../../../../components';
 import {
-  getFormStateWithData,
+  // getFormStateWithData,
   getInitialFormState,
   getBackendErrors,
-  CONTENT_LOADER_ID,
+  // CONTENT_LOADER_ID,
   TGenericFormModel,
   IGenericFormState,
   getKeyMap,
@@ -15,7 +16,8 @@ import {
   maxLength,
   adminRoutes,
 } from '../../../../client-utils';
-import { Form } from './form';
+// import { Form } from './form';
+import Form from './form/form2';
 import {
   ID_LABEL,
   NAME_LABEL,
@@ -28,6 +30,7 @@ import {
 import { IMainInfoFields } from '../../../../../../global-utils';
 import Typography from '@material-ui/core/Typography';
 import { IAppState } from '../../../../reducers';
+// import { Field, reduxForm } from 'redux-form';
 
 export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
 
@@ -40,7 +43,7 @@ export const mainInfoModel: TMainInfoModel = {
   userId: getKeyMap('', USER_LABEL, []),
 };
 
-const MainInfoForm = extendWithForm(Form);
+// const MainInfoForm = extendWithForm(Form);
 
 class MainInfoPageComponent extends React.Component<any, any> {
 
@@ -67,14 +70,15 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 
   render() {
-    const initialState = this.props.loadedItem && this.props.loadedItem.isFullyLoaded
-      ? getFormStateWithData(this.props.loadedItem, this.state)
-      : this.state;
+    // const initialState = this.props.loadedItem && this.props.loadedItem.isFullyLoaded
+    //   ? getFormStateWithData(this.props.loadedItem, this.state)
+    //   : this.state;
 
     return (this.props.loadedItem || this.isCreatePage) && (
       <div>
         <Typography variant="headline">{MAIN_INFO}</Typography>
-        <MainInfoForm
+        <Form handleSubmit={this.onItemSubmit} />
+        {/* <MainInfoForm
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           onItemSubmit={this.onItemSubmit}
@@ -84,7 +88,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
           typesMap={this.props.typesMap}
           usersMap={this.props.usersMap}
           isCreate={this.isCreatePage}
-        />
+        /> */}
       </div>
     );
   }
