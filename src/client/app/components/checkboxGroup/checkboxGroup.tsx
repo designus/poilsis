@@ -1,32 +1,81 @@
 import * as React from 'react';
+import { WrappedFieldProps } from 'redux-form';
 import { ValidationErrors } from '../../components';
-import { CheckboxOptions, ICheckboxOptionsParams } from './checkboxOptions';
-import styled from 'styled-components';
+import { WithStyles } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/core/styles';
+import { IGenericDataMap } from '../../client-utils';
+import { styles } from './styles';
 
-interface ICheckboxGroupParams extends ICheckboxOptionsParams {
-  label: string;
-  showErrors: boolean;
-  errors: string[];
+export interface ICheckboxGroupParams extends WrappedFieldProps, WithStyles<typeof styles> {
+  data: IGenericDataMap<object>;
+  dataKey: string;
 }
 
-const Wrapper = styled.div`
-  padding: 10px 0 0;
-`;
+class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
 
-export function CheckboxGroup({data, label, showErrors, errors, onChange, checkedItems}: ICheckboxGroupParams) {
-  return (
-    <Wrapper>
-      <CheckboxOptions
-        data={data}
-        onChange={onChange}
-        checkedItems={checkedItems}
-        label={label}
-        hasErrors={showErrors && errors.length > 0}
+  onChange = (value) => (event) => {
+    const newValue = this.props.input.value ? [...this.props.input.value] : [];
+    if (event.target.checked) {
+      newValue.push(value);
+    } else {
+      newValue.splice(newValue.indexOf(value), 1);
+    }
+    return this.props.input.onChange(newValue);
+  }
+
+  renderCheckbox = (value: string[]) => {
+    const { input, classes } = this.props;
+    return (
+      <Checkbox
+        className={classes.checkbox}
+        checked={input.value.indexOf(value) !== -1}
+        onChange={this.onChange(value)}
       />
-      <ValidationErrors
-        showErrors={showErrors}
-        errors={errors}
+    );
+  }
+
+  renderOption = (isDataArray: boolean) => (option) => {
+    const { data, classes, dataKey } = this.props;
+    const checkboxLabel = isDataArray ? option : data[option][dataKey];
+    return (
+      <FormControlLabel
+        key={option}
+        classes={{
+          root: classes.formControlLabel,
+        }}
+        control={this.renderCheckbox(option)}
+        label={checkboxLabel}
       />
-    </Wrapper>
+    );
+  }
+
+  render() {
+    const { data, classes, label, meta } = this.props;
+    const showError = Boolean(meta.dirty && meta.invalid && meta.error);
+    const isDataArray = data.constructor === Array;
+    const options: any = isDataArray ? data : Object.keys(data);
+    return (
+      <div className={classes.wrapper}>
+        <FormControl>
+          <FormLabel classes={{root: classes.label}} error={showError}>{label}</FormLabel>
+          <FormGroup row>
+            {
+              options.map(this.renderOption(isDataArray))
+            }
+          </FormGroup>
+        </FormControl>
+        <ValidationErrors
+          showError={showError}
+          error={meta.error}
+        />
+      </div>
   );
+  }
 }
+
+export const CheckboxGroup = withStyles(styles)(CheckboxGroupComponent) as any;

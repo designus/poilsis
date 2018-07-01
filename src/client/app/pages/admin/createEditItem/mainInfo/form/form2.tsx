@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {
-  // CheckboxGroup,
+  CheckboxGroup,
   SelectBox,
   TextInput,
   // Button,
@@ -15,6 +15,8 @@ const minLength = min => value => value && value.length < min ? `Field must be $
 // const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined;
 
 const minLength3 = minLength(3);
+const minLength1 = minLength(1);
+const maxLength3 = maxLength(3);
 const maxLength15 = maxLength(15);
 
 const MainInfoForm = props => {
@@ -46,6 +48,21 @@ const MainInfoForm = props => {
           dataKey="name"
         />
       }
+      <Field
+        name="types"
+        component={CheckboxGroup}
+        validate={[minLength1, maxLength3]}
+        label="Types"
+        data={props.typesMap}
+        dataKey="name"
+      />
+       <Field
+        name="address"
+        type="text"
+        component={TextInput}
+        validate={[required]}
+        label="Address"
+      />
       <div>
         <button type="submit" disabled={pristine || submitting}>
           Submit
