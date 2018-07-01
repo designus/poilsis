@@ -70,6 +70,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 
   render() {
+    // console.log('Loaded item', this.props.loadedItem);
     // const initialState = this.props.loadedItem && this.props.loadedItem.isFullyLoaded
     //   ? getFormStateWithData(this.props.loadedItem, this.state)
     //   : this.state;
@@ -77,7 +78,14 @@ class MainInfoPageComponent extends React.Component<any, any> {
     return (this.props.loadedItem || this.isCreatePage) && (
       <div>
         <Typography variant="headline">{MAIN_INFO}</Typography>
-        <Form handleSubmit={this.onItemSubmit} />
+        <Form
+          handleSubmit={this.onItemSubmit}
+          citiesMap={this.props.citiesMap}
+          typesMap={this.props.typesMap}
+          userRole={this.props.userRole}
+          usersMap={this.props.usersMap}
+          initialValues={this.props.loadedItem}
+        />
         {/* <MainInfoForm
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}

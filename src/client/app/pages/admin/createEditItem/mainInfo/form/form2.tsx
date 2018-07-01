@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {
   // CheckboxGroup,
-  // SelectBox,
+  SelectBox,
   TextInput,
   // Button,
 } from '../../../../../components';
+import { isAdmin } from '../../../../../../../global-utils';
 
 const required = value => value ? undefined : 'This field is required';
 const maxLength = max => value => value && value.length > max ? `Field must be ${max} characters or less` : undefined;
@@ -18,24 +19,36 @@ const maxLength15 = maxLength(15);
 
 const MainInfoForm = props => {
   const { handleSubmit, pristine, submitting } = props;
-  console.log('Main info props', props);
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
-      <div>
+      <Field
+        name="name"
+        type="text"
+        component={TextInput}
+        validate={[required, minLength3, maxLength15]}
+        label="Name"
+      />
+      <Field
+        name="city"
+        component={SelectBox}
+        validate={[required]}
+        label="City"
+        data={props.citiesMap}
+        dataKey="name"
+      />
+      {isAdmin(props.userRole) &&
         <Field
-          name="name"
-          type="text"
-          component={TextInput}
-          validate={[required, minLength3, maxLength15]}
-          label="Name"
+          name="userId"
+          component={SelectBox}
+          validate={[required]}
+          label="User"
+          data={props.usersMap}
+          dataKey="name"
         />
-      </div>
+      }
       <div>
         <button type="submit" disabled={pristine || submitting}>
           Submit
-        </button>
-        <button type="button" disabled={pristine || submitting}>
-          Clear Values
         </button>
       </div>
     </form>
