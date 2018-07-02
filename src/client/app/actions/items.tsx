@@ -192,7 +192,7 @@ export const postItem = (item) => (dispatch) => {
           dispatch(receiveItem(item));
           dispatch(endLoading(CONTENT_LOADER_ID));
           dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
-          resolve(item.id);
+          resolve({itemId: item.id, userId: item.userId});
         }
       })
       .catch(err => {

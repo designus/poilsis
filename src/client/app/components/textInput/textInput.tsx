@@ -12,8 +12,7 @@ export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof st
 
 export const InputComponent = (props: ITextInputProps) => {
   const { classes, input, label, meta } = props;
-  const showError = Boolean(meta.dirty && meta.invalid && meta.error);
-
+  const showError = Boolean(meta.touched && meta.invalid && meta.error);
   return (
     <div className={classes.wrapper}>
       <FormControl className={classes.formControl} error={showError}>
@@ -28,7 +27,6 @@ export const InputComponent = (props: ITextInputProps) => {
             error: classes.error,
           }}
           margin="dense"
-          onBlur={input.onBlur}
         />
       </FormControl>
       <ValidationErrors

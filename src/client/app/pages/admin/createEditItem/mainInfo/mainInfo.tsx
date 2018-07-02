@@ -5,14 +5,14 @@ import {
   getBackendErrors,
   adminRoutes,
 } from '../../../../client-utils';
-import { MainInfoForm } from './form';
+import MainInfoForm from './form/form';
 import { IMainInfoFields } from '../../../../../../global-utils';
 import Typography from '@material-ui/core/Typography';
 import { IAppState } from '../../../../reducers';
 
 class MainInfoPageComponent extends React.Component<any, any> {
 
-  isCreatePage = !Boolean(this.props.match.params.id);
+  isCreatePage = !Boolean(this.props.match.params.itemId);
 
   constructor(props) {
     super(props);
@@ -23,10 +23,12 @@ class MainInfoPageComponent extends React.Component<any, any> {
     this.setState({errors: newErrors, showErrors: true});
   }
 
-  onItemSubmit = (item: IMainInfoFields) => {
+  onSubmit = (item) => {
     if (this.isCreatePage) {
       this.props.postItem(item)
-        .then(id => this.props.history.push(adminRoutes.editItemMain.getLink(id)))
+        .then(({userId, itemId}) => {
+          this.props.history.push(adminRoutes.editItemMain.getLink(userId, itemId));
+        })
         .catch(this.handleErrors);
     } else {
       this.props.updateMainInfo(item).catch(this.handleErrors);
@@ -38,7 +40,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
       <div>
         <Typography variant="headline">Main info</Typography>
         <MainInfoForm
-          handleSubmit={this.onItemSubmit}
+          onSubmit={this.onSubmit}
           citiesMap={this.props.citiesMap}
           typesMap={this.props.typesMap}
           userRole={this.props.userRole}

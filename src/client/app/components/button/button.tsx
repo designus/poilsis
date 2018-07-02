@@ -27,14 +27,16 @@ export interface IButtonProps {
   color?: PropTypes.Color;
   classes?: any;
   style?: object;
+  disabled?: boolean;
 }
 
 export const ButtonComponent = ({
   onClick = voidFn,
   children,
   classes,
-  style = {},
   color = 'primary',
+  type = 'button',
+  disabled = false,
 }: IButtonProps) => {
   return (
     <ActionButton
@@ -42,10 +44,11 @@ export const ButtonComponent = ({
         root: classes.root,
         label: classes.label,
       }}
+      disabled={disabled}
       onClick={onClick}
       color={color}
       variant="raised"
-      style={style}
+      type={type}
     >
       {children}
     </ActionButton>

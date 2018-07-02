@@ -9,16 +9,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { styles } from './styles';
 import { ValidationErrors } from '../../components';
+import { IGenericDataMap } from '../../client-utils';
 
 export interface ISelectboxProps extends WrappedFieldProps, WithStyles<typeof styles> {
-  data: any;
+  data: IGenericDataMap<object>;
   dataKey: string;
 }
 
 const SelectBoxComponent = (props: ISelectboxProps) => {
   const { data, classes, meta, input, label, dataKey } = props;
   const isDataArray = data.constructor === Array;
-  const showError = Boolean(meta.dirty && meta.invalid && meta.error);
+  const showError = Boolean(meta.touched && meta.invalid && meta.error);
   const options: any = isDataArray ? data : Object.keys(data);
   return (
     <div>
