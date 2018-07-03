@@ -11,13 +11,13 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   wrapper: {
-    padding: '10px 0',
+    padding: '20px 0',
   },
   default: {
     height: '30px',
   },
   label: {
     paddingBottom: '15px',
-    fontSize: '13px',
+    fontSize: '16px',
   },
 });

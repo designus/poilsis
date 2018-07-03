@@ -20,6 +20,13 @@ export const theme = createMuiTheme({
         width: '100%',
       },
     },
+    MuiInput: {
+      underline: {
+        '&:hover:not($disabled):not($focused):not($error):before': {
+          borderBottomWidth: '1px',
+        },
+      },
+    },
     MuiSnackbarContent: {
       root: {
         borderRadius: '0!important',

@@ -28,6 +28,13 @@ const Form = props => {
         label="Name"
       />
       <Field
+        name="address"
+        type="text"
+        component={TextInput}
+        validate={[required]}
+        label="Address"
+      />
+      <Field
         name="city"
         component={SelectBox}
         validate={[required]}
@@ -52,13 +59,6 @@ const Form = props => {
         label="Types"
         data={props.typesMap}
         dataKey="name"
-      />
-       <Field
-        name="address"
-        type="text"
-        component={TextInput}
-        validate={[required]}
-        label="Address"
       />
       <div>
         <Button type="submit" disabled={submitting}>

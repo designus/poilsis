@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
-import { ValidationErrors } from '../../components';
 import { WithStyles } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -8,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import { IGenericDataMap } from '../../client-utils';
 import { styles } from './styles';
 
@@ -61,18 +61,16 @@ class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
     const options: any = isDataArray ? data : Object.keys(data);
     return (
       <div className={classes.wrapper}>
-        <FormControl>
-          <FormLabel classes={{root: classes.label}} error={showError}>{label}</FormLabel>
-          <FormGroup row>
-            {
-              options.map(this.renderOption(isDataArray))
-            }
-          </FormGroup>
-        </FormControl>
-        <ValidationErrors
-          showError={showError}
-          error={meta.error}
-        />
+        <Tooltip open={showError} title={meta.error} placement="right-end">
+          <FormControl>
+            <FormLabel classes={{root: classes.label}} error={showError}>{label}</FormLabel>
+            <FormGroup row>
+              {
+                options.map(this.renderOption(isDataArray))
+              }
+            </FormGroup>
+          </FormControl>
+        </Tooltip>
       </div>
   );
   }

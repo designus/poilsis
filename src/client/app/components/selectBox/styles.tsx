@@ -9,6 +9,9 @@ export const styles = (theme: Theme) => createStyles({
   root: {
     paddingBottom: '1px',
   },
+  wrapper: {
+    padding: '10px 0',
+  },
   select: {
     '&:focus': {
       background: 'none',

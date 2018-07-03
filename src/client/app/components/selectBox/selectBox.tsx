@@ -7,8 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Tooltip from '@material-ui/core/Tooltip';
 import { styles } from './styles';
-import { ValidationErrors } from '../../components';
 import { IGenericDataMap } from '../../client-utils';
 
 export interface ISelectboxProps extends WrappedFieldProps, WithStyles<typeof styles> {
@@ -21,35 +21,34 @@ const SelectBoxComponent = (props: ISelectboxProps) => {
   const isDataArray = data.constructor === Array;
   const showError = Boolean(meta.touched && meta.invalid && meta.error);
   const options: any = isDataArray ? data : Object.keys(data);
+
   return (
-    <div>
-      <FormControl className={classes.formControl} error={showError}>
-        <InputLabel htmlFor="select">{label}</InputLabel>
-        <Select
-          value={input.value}
-          onChange={input.onChange}
-          classes={{ select: classes.select }}
-          input={<Input classes={{ root: classes.root }} id="select" />}
-        >
-          {
-            options.map((option, i) => {
-              const primaryText = isDataArray ? option : data[option][dataKey];
-              return (
-                <MenuItem
-                  value={option}
-                  key={i}
-                >
-                  {primaryText}
-                </MenuItem>
-              );
-            })
-          }
-        </Select>
-      </FormControl>
-      <ValidationErrors
-        showError={showError}
-        error={meta.error}
-      />
+    <div className={classes.wrapper}>
+      <Tooltip open={showError} title={meta.error} placement="right-end">
+        <FormControl className={classes.formControl} error={showError}>
+          <InputLabel htmlFor="select">{label}</InputLabel>
+          <Select
+            value={input.value}
+            onChange={input.onChange}
+            classes={{ select: classes.select }}
+            input={<Input classes={{ root: classes.root }} id="select" />}
+          >
+            {
+              options.map((option, i) => {
+                const primaryText = isDataArray ? option : data[option][dataKey];
+                return (
+                  <MenuItem
+                    value={option}
+                    key={i}
+                  >
+                    {primaryText}
+                  </MenuItem>
+                );
+              })
+            }
+          </Select>
+        </FormControl>
+      </Tooltip>
     </div>
   );
 };

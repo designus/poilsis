@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
-import { ValidationErrors } from '../../components';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Tooltip from '@material-ui/core/Tooltip';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 
@@ -15,24 +15,22 @@ export const InputComponent = (props: ITextInputProps) => {
   const showError = Boolean(meta.touched && meta.invalid && meta.error);
   return (
     <div className={classes.wrapper}>
-      <FormControl className={classes.formControl} error={showError}>
-        <InputLabel htmlFor={label}>
-          {label}
-        </InputLabel>
-        <Input
-          id={label}
-          value={input.value}
-          onChange={input.onChange}
-          classes={{
-            error: classes.error,
-          }}
-          margin="dense"
-        />
-      </FormControl>
-      <ValidationErrors
-        showError={showError}
-        error={meta.error}
-      />
+      <Tooltip open={showError} title={meta.error} placement="right-end">
+        <FormControl className={classes.formControl} error={showError}>
+          <InputLabel htmlFor={label}>
+            {label}
+          </InputLabel>
+          <Input
+            id={label}
+            value={input.value}
+            onChange={input.onChange}
+            classes={{
+              error: classes.error,
+            }}
+            margin="dense"
+          />
+        </FormControl>
+      </Tooltip>
     </div>
   );
 };
