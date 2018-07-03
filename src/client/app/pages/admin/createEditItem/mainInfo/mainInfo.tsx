@@ -6,7 +6,6 @@ import {
   adminRoutes,
 } from '../../../../client-utils';
 import MainInfoForm from './form/form';
-import { IMainInfoFields } from '../../../../../../global-utils';
 import Typography from '@material-ui/core/Typography';
 import { IAppState } from '../../../../reducers';
 

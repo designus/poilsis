@@ -56,7 +56,6 @@ class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
 
   render() {
     const { data, classes, label, meta } = this.props;
-    console.log('Checkbox props', this.props);
     const showError = Boolean(meta.touched && meta.invalid && meta.error);
     const isDataArray = data.constructor === Array;
     const options: any = isDataArray ? data : Object.keys(data);
