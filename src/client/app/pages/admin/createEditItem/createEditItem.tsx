@@ -63,13 +63,9 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.isCreatePage = !Boolean(nextProps.match.params.itemId);
-  // }
-
   render() {
     const loadedItem = this.getLoadedItem();
-    const childProps = {...this.props, loadedItem };
+    const childProps = {...this.props, loadedItem, isCreatePage: this.isCreatePage };
     const { userId, itemId } = this.props.match.params;
 
     if (loadedItem || this.isCreatePage) {

@@ -15,7 +15,7 @@ export const InputComponent = (props: ITextInputProps) => {
   const showError = Boolean(meta.touched && meta.invalid && meta.error);
   return (
     <div className={classes.wrapper}>
-      <Tooltip open={showError} title={meta.error} placement="right-end">
+      <Tooltip open={showError} title={meta.error || ''} placement="right-end">
         <FormControl className={classes.formControl} error={showError}>
           <InputLabel htmlFor={label}>
             {label}

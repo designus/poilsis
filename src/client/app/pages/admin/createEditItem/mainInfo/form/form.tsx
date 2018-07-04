@@ -5,16 +5,13 @@ import {
   SelectBox,
   TextInput,
   Button,
-} from '../../../../../components';
-import { isAdmin } from '../../../../../../../global-utils';
+} from 'components';
+import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
 
-const required = value => value ? undefined : 'This field is required';
-const maxTextLength = max => value => value && value.length > max ? `Field must be ${max} characters or less` : undefined;
-const minTextLength = min => value => value && value.length < min ? `Field must be ${min} characters or more` : undefined;
-const minCheckedLength = min => value => !value || value.length < min ? `Please select at least ${min} options` : undefined;
-const maxCheckedLength = max => value => !value || value.length > max ? `Please select no more than ${max} options` : undefined;
-// const number = value => value && isNaN(Number(value)) ? 'Field must be a number' : undefined;
-// const email = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined;
+const minTextLength3 = minTextLength(3);
+const maxTextLength15 = maxTextLength(15);
+const minCheckedLength1 = minCheckedLength(1);
+const maxCheckedLength3 = maxCheckedLength(3);
 
 const Form = props => {
   const { handleSubmit, submitting } = props;
@@ -24,20 +21,19 @@ const Form = props => {
         name="name"
         type="text"
         component={TextInput}
-        validate={[required, minTextLength(3), maxTextLength(15)]}
+        validate={[isRequired, minTextLength3, maxTextLength15]}
         label="Name"
       />
       <Field
         name="address"
         type="text"
         component={TextInput}
-        validate={[required]}
         label="Address"
       />
       <Field
         name="city"
         component={SelectBox}
-        validate={[required]}
+        validate={[isRequired]}
         label="City"
         data={props.citiesMap}
         dataKey="name"
@@ -46,7 +42,7 @@ const Form = props => {
         <Field
           name="userId"
           component={SelectBox}
-          validate={[required]}
+          validate={[isRequired]}
           label="User"
           data={props.usersMap}
           dataKey="name"
@@ -55,7 +51,7 @@ const Form = props => {
       <Field
         name="types"
         component={CheckboxGroup}
-        validate={[minCheckedLength(1), maxCheckedLength(3)]}
+        validate={[minCheckedLength1, maxCheckedLength3]}
         label="Types"
         data={props.typesMap}
         dataKey="name"

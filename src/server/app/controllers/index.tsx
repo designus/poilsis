@@ -4,7 +4,6 @@ import typesRouter from './types';
 import itemsRouter from './items';
 import usersRouter from './users';
 import tokensRouter from './tokens';
-import { handleItemsErrors } from '../server-utils';
 
 export function apiRouter() {
   const router = express.Router();
@@ -12,7 +11,7 @@ export function apiRouter() {
   router.get('/', (req, res) => res.json({message: 'API initialized'}));
   router.use('/cities', citiesRouter);
   router.use('/types', typesRouter);
-  router.use('/items', itemsRouter, handleItemsErrors);
+  router.use('/items', itemsRouter);
   router.use('/users', usersRouter);
   router.use('/tokens', tokensRouter);
 

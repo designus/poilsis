@@ -24,7 +24,7 @@ const SelectBoxComponent = (props: ISelectboxProps) => {
 
   return (
     <div className={classes.wrapper}>
-      <Tooltip open={showError} title={meta.error} placement="right-end">
+      <Tooltip open={showError} title={meta.error || ''} placement="right-end">
         <FormControl className={classes.formControl} error={showError}>
           <InputLabel htmlFor="select">{label}</InputLabel>
           <Select

@@ -2,15 +2,25 @@
 
 import { NAME_KEY, CITY_KEY, ADDRESS_KEY, IMAGES_KEY } from '../../../data-strings';
 import { TGenericSchemaMap } from '../../../client/app/client-utils';
-import { INewItemFields } from '../../../client/app/pages';
-import { IImage, isRequired, maxFileCount, MAX_FILE_COUNT } from '../../../global-utils';
+// import { INewItemFields } from '../../../client/app/pages';
+import { IImage, isRequired, maxFileCount, MAX_FILE_COUNT, REQUIRED_MESSAGE } from '../../../global-utils';
 
-interface IItemsSchemaMap extends TGenericSchemaMap<INewItemFields> {
+interface IItemFields {
+  id?: string;
+  address?: string;
+  city?: string;
+  description?: string;
+  name?: string;
+  types?: string[];
+  images?: IImage[];
+  files?: any[];
+  userId?: string;
+}
+
+interface IItemsSchemaMap extends TGenericSchemaMap<IItemFields> {
   alias: any;
   createdAt: any;
   updatedAt: any;
-  id: any;
-  userId: any;
 }
 
 const mongoose = require('mongoose');
@@ -35,7 +45,7 @@ const ItemsSchemaMap: IItemsSchemaMap = {
   id: {type: String, unique: true, default: shortId.generate, required: true},
   name: {type: String, minLength: 6, required: [true, isRequired(NAME_KEY)]},
   city: {type: String, required: [true, isRequired(CITY_KEY)] },
-  address: {type: String, required: [true, isRequired(ADDRESS_KEY)]},
+  address: {type: String, required: [true, REQUIRED_MESSAGE]},
   types: {type: Array, required: [true, 'At least one type must be selected']},
   alias: {type: String, lowercase: true, trim: true, required: true, set: formatAlias },
   userId: {type: String, required: true},

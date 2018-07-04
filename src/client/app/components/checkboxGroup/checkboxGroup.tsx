@@ -61,7 +61,7 @@ class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
     const options: any = isDataArray ? data : Object.keys(data);
     return (
       <div className={classes.wrapper}>
-        <Tooltip open={showError} title={meta.error} placement="right-end">
+        <Tooltip open={showError} title={meta.error || ''} placement="right-end">
           <FormControl>
             <FormLabel classes={{root: classes.label}} error={showError}>{label}</FormLabel>
             <FormGroup row>

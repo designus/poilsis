@@ -10,10 +10,10 @@ import { FILES_KEY } from '../../../data-strings';
 import auth from './auth';
 
 router.route('/')
-  .get((req, res) => {
+  .get((req, res, next) => {
     ItemsModel.find((err, items) => {
       if (err) {
-        res.send(err);
+        return next(err);
       }
       res.json(items);
     });
@@ -38,18 +38,18 @@ router.route('/')
   });
 
 router.route('/item/:itemId')
-  .get((req, res) => {
+  .get((req, res, next) => {
     ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
       if (err) {
-        res.send(err);
+        return next(err);
       }
       res.json(item);
     });
   })
-  .delete(auth.authenticate(), removeImagesDir, (req, res) => {
+  .delete(auth.authenticate(), removeImagesDir, (req, res, next) => {
     ItemsModel.findOneAndRemove({id: req.params.itemId}, (err, item, result) => {
       if (err) {
-        res.send(err);
+        return next(err);
       }
       res.send(item);
     });

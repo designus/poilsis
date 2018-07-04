@@ -1,41 +1,39 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { updateMainInfo, postItem } from '../../../../actions';
+import Typography from '@material-ui/core/Typography';
+import { SubmissionError } from 'redux-form';
+import { IAppState } from 'reducers';
+import { updateMainInfo, postItem } from 'actions';
 import {
   getBackendErrors,
   adminRoutes,
-} from '../../../../client-utils';
+} from 'client-utils';
 import MainInfoForm from './form/form';
-import Typography from '@material-ui/core/Typography';
-import { IAppState } from '../../../../reducers';
 
 class MainInfoPageComponent extends React.Component<any, any> {
-
-  isCreatePage = !Boolean(this.props.match.params.itemId);
 
   constructor(props) {
     super(props);
   }
 
   handleErrors(errors) {
-    const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
-    this.setState({errors: newErrors, showErrors: true});
+    throw new SubmissionError(getBackendErrors(errors));
   }
 
   onSubmit = (item) => {
-    if (this.isCreatePage) {
-      this.props.postItem(item)
+    if (this.props.isCreatePage) {
+      return this.props.postItem(item)
         .then(({userId, itemId}) => {
           this.props.history.push(adminRoutes.editItemMain.getLink(userId, itemId));
         })
         .catch(this.handleErrors);
     } else {
-      this.props.updateMainInfo(item).catch(this.handleErrors);
+      return this.props.updateMainInfo(item).catch(this.handleErrors);
     }
   }
 
   render() {
-    return (this.props.loadedItem || this.isCreatePage) && (
+    return (this.props.loadedItem || this.props.isCreatePage) && (
       <div>
         <Typography variant="headline">Main info</Typography>
         <MainInfoForm
@@ -45,6 +43,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
           userRole={this.props.userRole}
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
+          handleErrors={this.handleErrors}
         />
       </div>
     );
