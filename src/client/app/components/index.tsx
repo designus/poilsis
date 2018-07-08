@@ -16,6 +16,7 @@ export * from './markedText';
 export * from './modals';
 export * from './notFound';
 export * from './notAuthorized';
+export * from './navigationPrompt';
 export * from './pagination';
 export * from './selectBox';
 export * from './search';

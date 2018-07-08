@@ -76,6 +76,12 @@ export const receiveImages = (id: string, images: IImage[]) => {
   };
 };
 
+export const stopLoading = (isError, toastMessage, loaderId) => dispatch => {
+  const toastType = isError ? Toast.error : Toast.success;
+  dispatch(endLoading(loaderId));
+  dispatch(showToast(toastType, toastMessage));
+};
+
 export const getItem = (itemId) => {
 
   return dispatch => {
@@ -186,19 +192,17 @@ export const postItem = (item) => (dispatch) => {
       .then(response => response.data)
       .then(item => {
         if (item.errors) {
-          dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+          dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
           reject(item.errors);
         } else {
           dispatch(receiveItem(item));
-          dispatch(endLoading(CONTENT_LOADER_ID));
-          dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
+          dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
           resolve({itemId: item.id, userId: item.userId});
         }
       })
       .catch(err => {
         console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
-        dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+        dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
       });
   });
 };

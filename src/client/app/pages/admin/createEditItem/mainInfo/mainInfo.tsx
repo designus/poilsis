@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError } from 'redux-form';
+import { SubmissionError, isDirty } from 'redux-form';
 import { IAppState } from 'reducers';
 import { updateMainInfo, postItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { extendWithLoader } from 'components';
+import { extendWithLoader, NavigationPrompt } from 'components';
 import { MainInfoForm } from './form';
 
 const FormWithLoader = extendWithLoader(MainInfoForm);
@@ -31,6 +31,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 
   render() {
+    console.log('Is form dirty', this.props.isFormDirty);
     return (this.props.loadedItem || this.props.isCreatePage) && (
       <div>
         <Typography variant="headline">Main info</Typography>
@@ -44,6 +45,15 @@ class MainInfoPageComponent extends React.Component<any, any> {
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
         />
+        <NavigationPrompt when={this.props.isFormDirty}>
+          {(isOpen, onConfirm, onCancel) => {
+            return isOpen && (
+              <div>
+                Do you really want to leave?
+              </div>
+            );
+          }}
+        </NavigationPrompt>
       </div>
     );
   }
@@ -54,6 +64,7 @@ const mapStateToProps = (state: IAppState) => ({
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
   userRole: state.currentUser.details.role,
+  isFormDirty: isDirty('MainInfoForm')(state),
 });
 
 const mapDispatchToProps = (dispatch) => {

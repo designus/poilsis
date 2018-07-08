@@ -4,12 +4,12 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItemsMap, ItemsDataMap } from '../../../reducers';
-import { getItem } from '../../../actions';
-import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute } from '../../../components';
-import { adminRoutes } from '../../../client-utils';
-import { MAIN_INFO, PHOTO_GALLERY } from '../../../../../data-strings';
-import { MainInfoPage, PhotosPage } from '../../../pages';
+import { IAppState, IItemsMap, ItemsDataMap } from 'reducers';
+import { getItem } from 'actions';
+import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute } from 'components';
+import { adminRoutes } from 'client-utils';
+import { MAIN_INFO, PHOTO_GALLERY } from 'data-strings';
+import { MainInfoPage, PhotosPage } from 'pages';
 
 interface IMatchParams {
   itemId: string;
