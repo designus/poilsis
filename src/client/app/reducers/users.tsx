@@ -1,5 +1,5 @@
 import { RECEIVE_INITIAL_DATA } from '../actions';
-import { IGenericState } from '../client-utils';
+import { IGenericState, IGenericDataMap } from '../client-utils';
 
 export interface IUser {
   id: string;
@@ -7,6 +7,7 @@ export interface IUser {
   role: string;
 }
 
+export type IUsersMap = IGenericDataMap<IUser>;
 export interface IUsersState extends IGenericState<IUser> {}
 
 export const users = (state: IUsersState = null, action): IUsersState => {

@@ -4,11 +4,11 @@ import Typography from '@material-ui/core/Typography';
 import { SubmissionError } from 'redux-form';
 import { IAppState } from 'reducers';
 import { updateMainInfo, postItem } from 'actions';
-import {
-  getBackendErrors,
-  adminRoutes,
-} from 'client-utils';
-import MainInfoForm from './form/form';
+import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
+import { extendWithLoader } from 'components';
+import { MainInfoForm } from './form';
+
+const FormWithLoader = extendWithLoader(MainInfoForm);
 
 class MainInfoPageComponent extends React.Component<any, any> {
 
@@ -21,43 +21,40 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 
   onSubmit = (item) => {
-    if (this.props.isCreatePage) {
-      return this.props.postItem(item)
-        .then(({userId, itemId}) => {
-          this.props.history.push(adminRoutes.editItemMain.getLink(userId, itemId));
-        })
+    const { isCreatePage, postItem, history, updateMainInfo } = this.props;
+    if (isCreatePage) {
+      return postItem(item)
+        .then(({userId, itemId}) => history.push(adminRoutes.editItemMain.getLink(userId, itemId)))
         .catch(this.handleErrors);
-    } else {
-      return this.props.updateMainInfo(item).catch(this.handleErrors);
     }
+    return updateMainInfo(item).catch(this.handleErrors);
   }
 
   render() {
     return (this.props.loadedItem || this.props.isCreatePage) && (
       <div>
         <Typography variant="headline">Main info</Typography>
-        <MainInfoForm
+        <FormWithLoader
+          loaderId={CONTENT_LOADER_ID}
           onSubmit={this.onSubmit}
+          showLoadingOverlay={true}
           citiesMap={this.props.citiesMap}
           typesMap={this.props.typesMap}
           userRole={this.props.userRole}
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
-          handleErrors={this.handleErrors}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    usersMap: state.users.dataMap,
-    citiesMap: state.cities.dataMap,
-    typesMap: state.types.dataMap,
-    userRole: state.currentUser.details.role,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  usersMap: state.users.dataMap,
+  citiesMap: state.cities.dataMap,
+  typesMap: state.types.dataMap,
+  userRole: state.currentUser.details.role,
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {

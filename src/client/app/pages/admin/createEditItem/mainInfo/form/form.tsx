@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import {
   CheckboxGroup,
   SelectBox,
@@ -7,13 +7,21 @@ import {
   Button,
 } from 'components';
 import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
+import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
 
 const minTextLength3 = minTextLength(3);
 const maxTextLength15 = maxTextLength(15);
 const minCheckedLength1 = minCheckedLength(1);
 const maxCheckedLength3 = maxCheckedLength(3);
 
-const Form = props => {
+interface ICustomProps {
+  citiesMap: ICitiesMap;
+  typesMap: ITypesMap;
+  usersMap: IUsersMap;
+  userRole: string;
+}
+
+const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   const { handleSubmit, submitting } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
@@ -65,4 +73,4 @@ const Form = props => {
   );
 };
 
-export default reduxForm({ form: 'MainInfoForm' })(Form) as any;
+export const MainInfoForm = reduxForm<{}, ICustomProps>({ form: 'MainInfoForm' })(Form);
