@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, submit } from 'redux-form';
+import { SubmissionError, isDirty } from 'redux-form';
 import { IAppState } from 'reducers';
 import { updateMainInfo, postItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { extendWithLoader, NavigationPrompt, SaveModal } from 'components';
+import { extendWithLoader, NavigationPrompt } from 'components';
 import { MainInfoForm } from './form';
 
 const FormWithLoader = extendWithLoader(MainInfoForm);
@@ -44,15 +44,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
         />
-        <NavigationPrompt when={this.props.isFormDirty}>
-          {(isOpen, onConfirm, onCancel) => (
-            <SaveModal
-              isModalOpen={isOpen}
-              onConfirm={onConfirm}
-              onCancel={onCancel}
-            />
-          )}
-        </NavigationPrompt>
+        <NavigationPrompt when={this.props.isFormDirty} />
       </div>
     );
   }
@@ -70,7 +62,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateMainInfo: (item) => dispatch(updateMainInfo(item)),
     postItem: (item) => dispatch(postItem(item)),
-    remoteSubmit: () => dispatch(submit('MainInfoForm')),
   };
 };
 

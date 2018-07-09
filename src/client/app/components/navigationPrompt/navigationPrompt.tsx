@@ -1,28 +1,10 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { TransitionPromptHook } from 'history';
-
-/**
- * A replacement component for the react-router `Prompt`.
- * Allows for more flexible dialogs.
- *
- * @example
- * <NavigationPrompt when={this.props.isDirty}>
- *   {(isOpen, onConfirm, onCancel) => (
- *     <Modal show={isOpen}>
- *       <div>
- *         <p>Do you really want to leave?</p>
- *         <button onClick={onCancel}>Cancel</button>
- *         <button onClick={onConfirm}>Ok</button>
- *       </div>
- *     </Modal>
- *   )}
- * </NavigationPrompt>
- */
+import { SaveModal } from '../modals';
 
 interface INavigationPromptProps extends RouteComponentProps<any> {
   when: boolean;
-  children: any;
 }
 
 class NavigationPromptComponent extends React.Component<INavigationPromptProps, any> {
@@ -66,9 +48,11 @@ class NavigationPromptComponent extends React.Component<INavigationPromptProps, 
 
   render() {
     return (
-      <div>
-        {this.props.children(this.state.openModal, this.onConfirm, this.onCancel)}
-      </div>
+      <SaveModal
+        isModalOpen={this.state.openModal}
+        onConfirm={this.onConfirm}
+        onCancel={this.onCancel}
+      />
     );
   }
 }
