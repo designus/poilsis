@@ -8,7 +8,6 @@ import FileUploadIcon from '@material-ui/icons/FileUpload';
 import ClearIcon from '@material-ui/icons/Clear';
 import Typography from '@material-ui/core/Typography';
 export interface IFileUploadProps {
-  id: string;
   onDrop: (acceptedImages: any[], rejectedImages?: any[]) => void;
   showUploadButtons: boolean;
   clearImages: () => void;
@@ -16,7 +15,7 @@ export interface IFileUploadProps {
   children: any;
 }
 
-export const FileUpload = ({id, onDrop, showUploadButtons, clearImages, uploadImages, children}: IFileUploadProps) => {
+export const FileUpload = ({onDrop, showUploadButtons, clearImages, uploadImages, children}: IFileUploadProps) => {
   return (
     <ImageUpload>
       <Dropzone

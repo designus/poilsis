@@ -9,7 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
 import { styles } from './styles';
-import { IGenericDataMap } from '../../client-utils';
+import { IGenericDataMap } from 'client-utils';
 
 export interface ISelectboxProps extends WrappedFieldProps, WithStyles<typeof styles> {
   data: IGenericDataMap<object>;

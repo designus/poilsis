@@ -8,7 +8,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import { IGenericDataMap } from '../../client-utils';
+import { IGenericDataMap } from 'client-utils';
 import { styles } from './styles';
 
 export interface ICheckboxGroupParams extends WrappedFieldProps, WithStyles<typeof styles> {

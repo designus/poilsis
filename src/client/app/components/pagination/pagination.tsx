@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import styled from 'styled-components';
-import { SelectBox } from '../selectBox';
+import { SelectBox } from 'components';
 import {
   PaginationToolbar,
   PaginationNav,
