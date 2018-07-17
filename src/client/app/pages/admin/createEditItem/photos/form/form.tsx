@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { DropzoneInput, UploadedImages, Button } from 'components';
 import { maxUploadedPhotos } from 'global-utils';
-import { UPLOADED_ANIMATION_DURATION } from 'client-utils';
 
 const validators = [
   maxUploadedPhotos,
@@ -21,11 +20,9 @@ class FormComponent extends React.Component<FormProps> {
     this.props.change('files', []);
   }
 
-  onLoadImage = (e) => {
-    setTimeout(() => {
-      this.props.setInitialUploadState();
-      this.clearDroppedImages();
-    }, UPLOADED_ANIMATION_DURATION);
+  onLoadedImages = () => {
+    this.props.setInitialUploadState();
+    this.clearDroppedImages();
   }
 
   submitImages = (images) => {
@@ -46,7 +43,7 @@ class FormComponent extends React.Component<FormProps> {
         <Field
           name="images"
           component={UploadedImages}
-          onLoadImage={this.onLoadImage}
+          onLoadedImages={this.onLoadedImages}
         />
         <Button onClick={handleSubmit(this.submitImages)}>
           Save
