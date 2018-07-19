@@ -22,7 +22,7 @@ class DropzoneInputComponent extends React.Component<IUploadedPhotosParams, any>
 
   onDeleteImage = (index: number) => (e: any) => {
     e.stopPropagation();
-    const files = this.props.input.value;
+    const files = [...this.props.input.value];
     files.splice(index, 1);
     this.props.input.onChange(files);
   }

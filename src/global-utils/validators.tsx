@@ -16,6 +16,8 @@ export const isEmail = value => value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,
    undefined;
 
 export const maxUploadedPhotos = (value, formState) => {
+  console.log('Value', value);
+  console.log('Form state', formState);
   return value && (formState.images.length + formState.files.length) > MAX_FILE_COUNT ?
     `You are not allowed to uploade more than ${MAX_FILE_COUNT} photos` :
     undefined;

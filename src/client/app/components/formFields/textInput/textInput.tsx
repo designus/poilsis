@@ -43,7 +43,7 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
 
   render() {
     const { classes, label, meta } = this.props;
-    const showError = Boolean(meta.touched && meta.invalid && meta.error);
+    const showError = Boolean(meta.invalid && meta.error);
     return (
       <div className={classes.wrapper}>
         <Tooltip open={showError} title={meta.error || ''} placement="right-end">

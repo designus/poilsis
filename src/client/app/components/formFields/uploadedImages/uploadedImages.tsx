@@ -36,7 +36,7 @@ class UploadedImagesComponent extends React.Component<IUploadedImagesParams, any
 
   onDeleteImage = (index: number) => (e: any) => {
     e.stopPropagation();
-    const images = this.props.input.value;
+    const images = [...this.props.input.value];
     images.splice(index, 1);
     this.setState({ images });
     this.loadedImages--;
