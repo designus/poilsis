@@ -2,6 +2,7 @@ import * as React from 'react';
 import { WrappedFieldProps, submit } from 'redux-form';
 import { WithStyles } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
 import {
   FileUpload,
@@ -33,26 +34,27 @@ class DropzoneInputComponent extends React.Component<IUploadedPhotosParams, any>
   }
 
   render() {
-    console.log('Props', this.props);
+    const { meta, input, clearDroppedImages, uploadImages, hasError, progress, isUploaded, isUploading } = this.props;
+    const showTooltip = Boolean(meta.invalid && meta.error);
     return (
-      <div>
+      <Tooltip open={showTooltip} title={meta.error || ''} placement="top-start">
         <FileUpload
           onDrop={this.onDrop}
-          showUploadButtons={this.props.input.value.length}
-          clearImages={this.props.clearDroppedImages}
-          uploadImages={this.props.uploadImages}
+          showUploadButtons={input.value.length}
+          clearImages={clearDroppedImages}
+          uploadImages={uploadImages}
         >
           <ImagePreview
-            images={this.props.input.value}
+            images={input.value}
             onDeleteImage={this.onDeleteImage}
-            hasError={this.props.hasError}
-            progress={this.props.progress}
-            isUploaded={this.props.isUploaded}
-            isUploading={this.props.isUploading}
+            hasError={hasError}
+            progress={progress}
+            isUploaded={isUploaded}
+            isUploading={isUploading}
             isTemporary={true}
           />
         </FileUpload>
-      </div>
+      </Tooltip>
     );
   }
 }

@@ -30,7 +30,7 @@ class FormComponent extends React.Component<FormProps> {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <form autoComplete="off">
         <Field
@@ -45,7 +45,7 @@ class FormComponent extends React.Component<FormProps> {
           component={UploadedImages}
           onLoadedImages={this.onLoadedImages}
         />
-        <Button onClick={handleSubmit(this.submitImages)}>
+        <Button onClick={handleSubmit(this.submitImages)} disabled={submitting || pristine}>
           Save
         </Button>
       </form>
