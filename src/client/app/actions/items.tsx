@@ -158,27 +158,28 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
   });
 };
 
-export const updateMainInfo = (item: IMainInfoFields) => (dispatch, getState) => {
+export const updateMainInfo = (item: IMainInfoFields) => (dispatch) => {
   return new Promise((resolve, reject) => {
     dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.put(`http://localhost:3000/api/items/item/mainInfo/${item.id}`, item)
       .then(response => response.data)
       .then(item => {
+        dispatch(endLoading(CONTENT_LOADER_ID));
         if (item.errors) {
           dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
           reject(item.errors);
         } else {
           dispatch(receiveItem(item));
           dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
-          resolve();
+          resolve(item);
         }
       })
       .catch(err => {
         console.error(err);
+        dispatch(endLoading(CONTENT_LOADER_ID));
         dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
-      })
-      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
+      });
   });
 };
 

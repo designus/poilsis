@@ -22,7 +22,7 @@ interface ICustomProps {
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
-  const { handleSubmit, submitting } = props;
+  const { handleSubmit, submitting, pristine } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -65,7 +65,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         dataKey="name"
       />
       <div>
-        <Button type="submit" disabled={submitting}>
+        <Button type="submit" disabled={submitting || pristine}>
           Submit
         </Button>
       </div>

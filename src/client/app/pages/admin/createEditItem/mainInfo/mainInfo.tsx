@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty } from 'redux-form';
+import { SubmissionError, isDirty, initialize } from 'redux-form';
 import { IAppState } from 'reducers';
 import { updateMainInfo, postItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
@@ -21,13 +21,18 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 
   onSubmit = (item) => {
-    const { isCreatePage, postItem, history, updateMainInfo } = this.props;
-    if (isCreatePage) {
-      return postItem(item)
-        .then(({userId, itemId}) => history.push(adminRoutes.editItemMain.getLink(userId, itemId)))
-        .catch(this.handleErrors);
-    }
-    return updateMainInfo(item).catch(this.handleErrors);
+    const { isCreatePage, postItem, history, updateMainInfo, initializeForm } = this.props;
+    const submitFn = isCreatePage ? postItem : updateMainInfo;
+
+    return submitFn(item)
+      .then(item => {
+        if (isCreatePage) {
+          history.push(adminRoutes.editItemMain.getLink(item.userId, item.itemId));
+        } else {
+          initializeForm(item);
+        }
+      })
+      .catch(this.handleErrors);
   }
 
   render() {
@@ -62,6 +67,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateMainInfo: (item) => dispatch(updateMainInfo(item)),
     postItem: (item) => dispatch(postItem(item)),
+    initializeForm: (data) => dispatch(initialize('MainInfoForm', data)),
   };
 };
 
