@@ -4,19 +4,19 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItemsMap, ItemsDataMap } from '../../../reducers';
-import { getItem } from '../../../actions';
-import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute } from '../../../components';
-import { adminRoutes } from '../../../client-utils';
-import { MAIN_INFO, PHOTO_GALLERY } from '../../../../../data-strings';
-import { MainInfoPage, PhotosPage } from '../../../pages';
+import { IAppState, IItem, IItemsMap } from 'reducers';
+import { getItem } from 'actions';
+import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute } from 'components';
+import { adminRoutes } from 'client-utils';
+import { MAIN_INFO, PHOTO_GALLERY } from 'data-strings';
+import { MainInfoPage, PhotosPage } from 'pages';
 
 interface IMatchParams {
   itemId: string;
   userId: string;
 }
 interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams> {
-  itemsMap: ItemsDataMap;
+  itemsMap: IItemsMap;
   getItem: (id) => void;
 }
 
@@ -36,7 +36,7 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
     }
   }
 
-  getLoadedItem(): IItemsMap {
+  getLoadedItem(): IItem {
     return this.props.itemsMap[this.props.match.params.itemId];
   }
 
@@ -63,43 +63,35 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.isCreatePage = !Boolean(nextProps.match.params.itemId);
-  }
-
   render() {
     const loadedItem = this.getLoadedItem();
-    const childProps = {...this.props, loadedItem };
+    const childProps = {...this.props, loadedItem, isCreatePage: this.isCreatePage };
     const { userId, itemId } = this.props.match.params;
 
-    if (loadedItem || this.isCreatePage) {
-      return (
-        <div>
-          <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
-          <Switch>
-            <ProtectedRoute
-              path={adminRoutes.createItem.path}
-              exact
-              component={MainInfoPage}
-              {...childProps}
-            />
-            <ProtectedRoute
-              path={adminRoutes.editItemPhotos.path}
-              component={PhotosPage}
-              {...childProps}
-            />
-            <ProtectedRoute
-              path={adminRoutes.editItemMain.path}
-              component={MainInfoPage}
-              {...childProps}
-            />
-            <PropsRoute component={NotFound}/>
-          </Switch>
-        </div>
-      );
-    } else {
-      return null;
-    }
+    return (loadedItem || this.isCreatePage) && (
+      <div>
+        <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
+        <Switch>
+          <ProtectedRoute
+            path={adminRoutes.createItem.path}
+            exact
+            component={MainInfoPage}
+            {...childProps}
+          />
+          <ProtectedRoute
+            path={adminRoutes.editItemPhotos.path}
+            component={PhotosPage}
+            {...childProps}
+          />
+          <ProtectedRoute
+            path={adminRoutes.editItemMain.path}
+            component={MainInfoPage}
+            {...childProps}
+          />
+          <PropsRoute component={NotFound}/>
+        </Switch>
+      </div>
+    );
   }
 }
 

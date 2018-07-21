@@ -11,7 +11,7 @@ interface IMatchParams {
 }
 
 interface IProtectedRouteProps {
-  component?: React.ComponentClass;
+  component?: any;
   isAuthenticated?: boolean;
   userId?: string;
   userRole?: string;
@@ -29,9 +29,12 @@ class Protected extends React.Component<TProtectedRouteProps, any> {
   }
 
   isUserTryingToAccessOwnContent = (userId, userRole) => {
-    return this.props.match && userRole !== UserRoles.admin ?
-      this.props.match.params.userId === userId :
-      true;
+    const match = this.props.match;
+    if (match && userRole !== UserRoles.admin) {
+      return !match.params.userId || match.params.userId === userId;
+    }
+
+    return true;
   }
 
   isUserAllowedToEnter = (allowedRoles, userRole, userId) => {
@@ -57,7 +60,6 @@ class Protected extends React.Component<TProtectedRouteProps, any> {
 
   render() {
     const { component, allowedRoles = [UserRoles.admin, UserRoles.user], isAuthenticated, ...rest } = this.props;
-    console.log('Props', this.props);
     return (
       // tslint:disable-next-line
       <Route {...rest} render={routeProps => {

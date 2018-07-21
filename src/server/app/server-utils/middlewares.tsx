@@ -117,9 +117,9 @@ export const resizeImages = (req, res) => {
 };
 
 export const handleItemsErrors = (err, req, res, next) => {
-  if (req.route.path === '/item/upload-photos/:itemId') {
+  if (req.route && req.route.path === '/item/upload-photos/:itemId') {
     handleFileUploadErrors(err, res);
   } else {
-    return next(err);
+    res.send(err);
   }
 };

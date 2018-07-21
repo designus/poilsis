@@ -16,7 +16,7 @@ import {
   DIALOG_LOADER_ID,
   onUploadProgress,
  } from '../client-utils';
-import { ItemsDataMap, Toast, IItemsMap } from '../reducers';
+import { IItemsMap, Toast, IItem } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -29,8 +29,8 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR,
   IMAGES_KEY,
-} from '../../../data-strings';
-import { IImage, IMainInfoFields } from '../../../global-utils';
+} from 'data-strings';
+import { IImage, IItemFields } from 'global-utils';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
@@ -45,7 +45,7 @@ export const selectItem = (id: string) => {
   };
 };
 
-export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoaded: boolean) => {
+export const receiveItems = (dataMap: IItemsMap, aliases: IAlias[], isAllLoaded: boolean) => {
   return {
     type: RECEIVE_ITEMS,
     dataMap,
@@ -54,14 +54,14 @@ export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoad
   };
 };
 
-export const receiveItem = (item: IItemsMap) => {
+export const receiveItem = (item: IItem) => {
   return {
     type: RECEIVE_ITEM,
     item,
   };
 };
 
-export const removeItem = (item: IItemsMap) => {
+export const removeItem = (item: IItem) => {
   return {
     type: REMOVE_ITEM,
     item,
@@ -74,6 +74,12 @@ export const receiveImages = (id: string, images: IImage[]) => {
     id,
     images,
   };
+};
+
+export const stopLoading = (isError, toastMessage, loaderId) => dispatch => {
+  const toastType = isError ? Toast.error : Toast.success;
+  dispatch(endLoading(loaderId));
+  dispatch(showToast(toastType, toastMessage));
 };
 
 export const getItem = (itemId) => {
@@ -112,10 +118,10 @@ export const uploadPhotos = (itemId, files) => (dispatch) => {
           reject(images.errors);
         } else {
           dispatch(receiveImages(itemId, images));
-          setUploadProgress(100);
+          dispatch(setUploadProgress(100));
           dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
           dispatch(uploadSuccess());
-          resolve();
+          resolve(images);
         }
       })
       .catch(err => {
@@ -152,27 +158,28 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
   });
 };
 
-export const updateMainInfo = (item: IMainInfoFields) => (dispatch, getState) => {
+export const updateMainInfo = (item: IItemFields) => (dispatch) => {
   return new Promise((resolve, reject) => {
     dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.put(`http://localhost:3000/api/items/item/mainInfo/${item.id}`, item)
       .then(response => response.data)
       .then(item => {
+        dispatch(endLoading(CONTENT_LOADER_ID));
         if (item.errors) {
           dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
           reject(item.errors);
         } else {
           dispatch(receiveItem(item));
           dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
-          resolve();
+          resolve(item);
         }
       })
       .catch(err => {
         console.error(err);
+        dispatch(endLoading(CONTENT_LOADER_ID));
         dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
-      })
-      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
+      });
   });
 };
 
@@ -186,19 +193,17 @@ export const postItem = (item) => (dispatch) => {
       .then(response => response.data)
       .then(item => {
         if (item.errors) {
-          dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+          dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
           reject(item.errors);
         } else {
           dispatch(receiveItem(item));
-          dispatch(endLoading(CONTENT_LOADER_ID));
-          dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
-          resolve(item.id);
+          dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
+          resolve({itemId: item.id, userId: item.userId});
         }
       })
       .catch(err => {
         console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
-        dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+        dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
       });
   });
 };

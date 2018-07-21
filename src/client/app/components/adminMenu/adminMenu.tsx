@@ -24,21 +24,43 @@ export interface IAdminMenuProps extends RouteComponentProps<any>, WithStyles<ty
 
 class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
 
-  renderItemContent = (item: IAdminMenuItem, index: number) => {
-    const { button, icon, text, link } = this.props.classes;
+  renderItemContent = (item: IAdminMenuItem) => {
+    const { icon, text } = this.props.classes;
+    return (
+      <>
+        <ListItemIcon className={icon}>
+          {item.icon()}
+        </ListItemIcon>
+        <ListItemText className={text} inset primary={item.text} />
+      </>
+    );
+  }
+
+  renderLink = (item: IAdminMenuItem) => {
+    return (
+      <NavLink to={item.link} className={this.props.classes.link} activeClassName="active" exact>
+        {this.renderItemContent(item)}
+      </NavLink>
+    );
+  }
+
+  renderSpan = (item: IAdminMenuItem) => {
+    return (
+      <span className={this.props.classes.span}>
+        {this.renderItemContent(item)}
+      </span>
+    );
+  }
+
+  renderListItem = (item: IAdminMenuItem, index: number) => {
     return (
       <ListItem
         key={index}
         disableGutters
         className={item.isDisabled ? 'disabled' : ''}
-        classes={{ root: button }}
+        classes={{ root: this.props.classes.button }}
       >
-        <NavLink to={item.link} className={link} activeClassName="active" exact>
-          <ListItemIcon className={icon}>
-            {item.icon()}
-          </ListItemIcon>
-          <ListItemText className={text} inset primary={item.text} />
-        </NavLink>
+        {item.isDisabled ? this.renderSpan(item) : this.renderLink(item)}
       </ListItem>
     );
   }
@@ -49,7 +71,7 @@ class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
 
   renderItem = (item: IAdminMenuItem, index) => {
     return this.isItemVisible(item) ?
-      this.renderItemContent(item, index) :
+      this.renderListItem(item, index) :
       null;
   }
 

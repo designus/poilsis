@@ -1,11 +1,9 @@
 export interface IImage {
   id?: string;
   name?: string;
-  order?: number;
   fileName?: string;
   path?: string;
   thumbName?: string;
-  preview?: string;
 }
 
 export enum ImageSize {
@@ -22,19 +20,21 @@ export interface IResponseError {
   };
 }
 
-export interface IMainInfoFields {
+export interface IItemFields {
   id?: string;
   address?: string;
-  alias?: string;
-  city?: string;
+  cityId?: string;
+  description?: string;
   name?: string;
   types?: string[];
+  images?: IImage[];
   userId?: string;
+  alias?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export enum UserRoles {
   admin = 'admin',
   user = 'user',
 }
-
-export const isAdmin = (userRole: string) => userRole === UserRoles.admin;

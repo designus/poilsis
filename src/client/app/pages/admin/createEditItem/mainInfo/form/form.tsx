@@ -1,76 +1,71 @@
 import * as React from 'react';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { CheckboxGroup, SelectBox, TextInput, Button } from 'components';
+import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
+import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
 
-import {
-  CheckboxGroup,
-  SelectBox,
-  TextInput,
-  Button,
-} from '../../../../../components';
-import { IAddItemProps } from '../../../../../pages';
-import {
-  NAME_LABEL,
-  CITY_LABEL,
-  TYPES_LABEL,
-  ADDRESS_LABEL,
-  SAVE_LABEL,
-  NAME_KEY,
-  CITY_KEY,
-  TYPES_KEY,
-  ADDRESS_KEY,
-  USER_LABEL,
-  USER_KEY,
-} from '../../../../../../../data-strings';
-import { isAdmin } from '../../../../../../../global-utils';
+const minTextLength3 = minTextLength(3);
+const maxTextLength15 = maxTextLength(15);
+const minCheckedLength1 = minCheckedLength(1);
+const maxCheckedLength3 = maxCheckedLength(3);
 
-export const Form = (props: IAddItemProps) => {
-  const {showErrors, errors, fields} = props.state;
+interface ICustomProps {
+  citiesMap: ICitiesMap;
+  typesMap: ITypesMap;
+  usersMap: IUsersMap;
+  userRole: string;
+}
+
+const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
+  const { handleSubmit, submitting, pristine } = props;
   return (
-    <form onSubmit={props.handleSubmit} autoComplete="off">
-      <TextInput
-        label={NAME_LABEL}
-        value={fields[NAME_KEY]}
-        showErrors={showErrors}
-        errors={errors[NAME_KEY]}
-        onChange={props.handleInputChange(NAME_KEY)}
-        onBlur={props.handleOnBlur}
+    <form onSubmit={handleSubmit} autoComplete="off">
+      <Field
+        name="name"
+        type="text"
+        component={TextInput}
+        validate={[isRequired, minTextLength3, maxTextLength15]}
+        label="Name"
       />
-      <SelectBox
-        label={CITY_LABEL}
-        value={fields[CITY_KEY]}
-        onChange={props.handleInputChange(CITY_KEY)}
-        showErrors={showErrors}
-        errors={errors[CITY_KEY]}
+      <Field
+        name="address"
+        type="text"
+        component={TextInput}
+        label="Address"
+      />
+      <Field
+        name="cityId"
+        component={SelectBox}
+        validate={[isRequired]}
+        label="City"
         data={props.citiesMap}
+        dataKey="name"
       />
       {isAdmin(props.userRole) &&
-        <SelectBox
-          label={USER_LABEL}
-          value={fields[USER_KEY]}
-          onChange={props.handleInputChange(USER_KEY)}
-          showErrors={showErrors}
-          errors={errors[USER_KEY]}
+        <Field
+          name="userId"
+          component={SelectBox}
+          validate={[isRequired]}
+          label="User"
           data={props.usersMap}
+          dataKey="name"
         />
       }
-      <CheckboxGroup
-        label={TYPES_LABEL}
-        showErrors={showErrors}
-        errors={errors[TYPES_KEY]}
-        onChange={props.handleCheckboxToggle(TYPES_KEY)}
+      <Field
+        name="types"
+        component={CheckboxGroup}
+        validate={[minCheckedLength1, maxCheckedLength3]}
+        label="Types"
         data={props.typesMap}
-        checkedItems={fields[TYPES_KEY]}
+        dataKey="name"
       />
-      <TextInput
-        label={ADDRESS_LABEL}
-        value={fields[ADDRESS_KEY]}
-        showErrors={showErrors}
-        errors={errors[ADDRESS_KEY]}
-        onChange={props.handleInputChange(ADDRESS_KEY)}
-        onBlur={props.handleOnBlur}
-      />
-      <Button>
-        {SAVE_LABEL}
-      </Button>
+      <div>
+        <Button type="submit" disabled={submitting || pristine}>
+          Submit
+        </Button>
+      </div>
     </form>
   );
 };
+
+export const MainInfoForm = reduxForm<{}, ICustomProps>({ form: 'MainInfoForm' })(Form);

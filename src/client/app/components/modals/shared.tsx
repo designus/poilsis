@@ -39,10 +39,10 @@ export const DialogFooter = ({classes, onClose, onSubmit, closeLabel = 'Cancel',
     action: classes.buttonWrapper,
   }}>
     <Button variant="raised" onClick={onClose} className={classes.cancel}>
-      Cancel
+      {closeLabel}
     </Button>
     <Button color="primary" variant="raised" onClick={onSubmit} className={classes.submit}>
-      Proceed
+      {submitLabel}
     </Button>
   </DialogActions>
 );

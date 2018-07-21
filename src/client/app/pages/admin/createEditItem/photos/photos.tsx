@@ -1,69 +1,45 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { updatePhotos } from '../../../../actions';
-import { extendWithForm } from '../../../../components';
-import {
-  getFormStateWithData,
-  getInitialFormState,
-  voidFn,
-  TGenericFormModel,
-  CONTENT_LOADER_ID,
-  IGenericFormState,
-  getKeyMap,
-  maxLength,
-} from '../../../../client-utils';
-import { Form } from './form';
-import { IMAGES_LABEL, ID_LABEL, FILES_KEY, PHOTO_GALLERY } from '../../../../../../data-strings';
-import { IImage, MAX_FILE_COUNT } from '../../../../../../global-utils';
+import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
+import { voidFn } from 'client-utils';
+import { IImage } from 'global-utils';
 import Typography from '@material-ui/core/Typography';
+import { change } from 'redux-form';
+import { PhotosForm } from './form';
 
-export interface IImageFields {
-  id?: string;
-  images?: IImage[];
-  files?: any[];
+export interface IPhotosFormFields {
+  images: IImage[];
+  files: File[];
+  isUpdateAction?: boolean;
 }
 
-export type TPhotosModel = TGenericFormModel<IImageFields>;
-
-export const photosModel: TPhotosModel = {
-  id: getKeyMap('', ID_LABEL, []),
-  images: getKeyMap([], IMAGES_LABEL, [maxLength(MAX_FILE_COUNT, true)]),
-  files: getKeyMap([], FILES_KEY, []),
-};
-
-const PhotosForm = extendWithForm(Form);
-
 class PhotosPageComponent extends React.Component<any, any> {
-
-  state: IGenericFormState<IImageFields> = getInitialFormState(photosModel);
-  isCreatePage = !Boolean(this.props.match.params.id);
 
   constructor(props) {
     super(props);
   }
 
-  onItemSubmit = (item: IImageFields) => {
-    if (this.isCreatePage) {
-      this.setState(getInitialFormState(photosModel));
+  onSubmit = (state: IPhotosFormFields) => {
+    const itemId = this.props.loadedItem.id;
+    if (state.isUpdateAction) {
+      this.props.updateImages(itemId, state.images);
     } else {
-      this.props.updateImages(item.id, item.images);
+      this.props.uploadImages(itemId, state.files).then(images => this.props.addImagesToFormState(images));
     }
   }
 
   render() {
-    const finalState = this.props.loadedItem && getFormStateWithData(this.props.loadedItem, this.state) || this.state;
-
-    if (this.props.loadedItem || this.isCreatePage) {
+    if (this.props.loadedItem) {
+      const images = this.props.loadedItem.images || [];
+      const initialValues = { images, files: [] };
 
       return (
         <div>
-          <Typography variant="headline">{PHOTO_GALLERY}</Typography>
+          <Typography variant="headline">Photo gallery</Typography>
           <PhotosForm
-            loaderId={CONTENT_LOADER_ID}
-            onItemSubmit={this.onItemSubmit}
-            initialState={finalState}
-            citiesMap={this.props.citiesMap}
-            typesMap={this.props.typesMap}
+            onSubmit={this.onSubmit}
+            initialValues={initialValues}
+            setInitialUploadState={this.props.setInitialUploadState}
           />
         </div>
       );
@@ -75,7 +51,10 @@ class PhotosPageComponent extends React.Component<any, any> {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateImages: (itemId: string, images: IImage[], loaderId: string) => dispatch(updatePhotos(itemId, images)),
+    uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
+    updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
+    setInitialUploadState: () => dispatch(setInitialUploadState()),
+    addImagesToFormState: (images) => dispatch(change('PhotosForm', 'images', images)),
   };
 };
 

@@ -1,108 +1,74 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { updateMainInfo, postItem } from '../../../../actions';
-import { extendWithForm } from '../../../../components';
-import {
-  getFormStateWithData,
-  getInitialFormState,
-  getBackendErrors,
-  CONTENT_LOADER_ID,
-  TGenericFormModel,
-  IGenericFormState,
-  getKeyMap,
-  required,
-  minLength,
-  maxLength,
-  adminRoutes,
-} from '../../../../client-utils';
-import { Form } from './form';
-import {
-  ID_LABEL,
-  NAME_LABEL,
-  CITY_LABEL,
-  TYPES_LABEL,
-  ADDRESS_LABEL,
-  MAIN_INFO,
-  USER_LABEL,
-} from '../../../../../../data-strings';
-import { IMainInfoFields } from '../../../../../../global-utils';
 import Typography from '@material-ui/core/Typography';
-import { IAppState } from '../../../../reducers';
+import { SubmissionError, isDirty, initialize } from 'redux-form';
+import { IAppState } from 'reducers';
+import { updateMainInfo, postItem } from 'actions';
+import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
+import { IItemFields } from 'global-utils';
+import { extendWithLoader, NavigationPrompt } from 'components';
+import { MainInfoForm } from './form';
 
-export type TMainInfoModel = TGenericFormModel<IMainInfoFields>;
-
-export const mainInfoModel: TMainInfoModel = {
-  id: getKeyMap('', ID_LABEL, []),
-  name: getKeyMap('', NAME_LABEL, [required]),
-  city: getKeyMap('', CITY_LABEL, [required]),
-  types: getKeyMap([], TYPES_LABEL, [required, minLength(1, true), maxLength(3, true)]),
-  address: getKeyMap('', ADDRESS_LABEL, [required]),
-  userId: getKeyMap('', USER_LABEL, []),
-};
-
-const MainInfoForm = extendWithForm(Form);
+const FormWithLoader = extendWithLoader(MainInfoForm);
 
 class MainInfoPageComponent extends React.Component<any, any> {
-
-  state: IGenericFormState<IMainInfoFields> = getInitialFormState(mainInfoModel);
-  isCreatePage = !Boolean(this.props.match.params.id);
 
   constructor(props) {
     super(props);
   }
 
   handleErrors(errors) {
-    const newErrors = {...this.state.errors, ...getBackendErrors(errors)};
-    this.setState({errors: newErrors, showErrors: true});
+    throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onItemSubmit = (item: IMainInfoFields) => {
-    if (this.isCreatePage) {
-      this.props.postItem(item)
-        .then(id => this.props.history.push(adminRoutes.editItemMain.getLink(id)))
-        .catch(this.handleErrors);
-    } else {
-      this.props.updateMainInfo(item).catch(this.handleErrors);
-    }
+  onSubmit = (item: IItemFields) => {
+    const { isCreatePage, postItem, history, updateMainInfo, initializeForm } = this.props;
+    const submitFn = isCreatePage ? postItem : updateMainInfo;
+
+    return submitFn(item)
+      .then(item => {
+        if (isCreatePage) {
+          history.push(adminRoutes.editItemMain.getLink(item.userId, item.itemId));
+        } else {
+          initializeForm(item);
+        }
+      })
+      .catch(this.handleErrors);
   }
 
   render() {
-    const initialState = this.props.loadedItem && this.props.loadedItem.isFullyLoaded
-      ? getFormStateWithData(this.props.loadedItem, this.state)
-      : this.state;
-
-    return (this.props.loadedItem || this.isCreatePage) && (
+    return (this.props.loadedItem || this.props.isCreatePage) && (
       <div>
-        <Typography variant="headline">{MAIN_INFO}</Typography>
-        <MainInfoForm
+        <Typography variant="headline">Main info</Typography>
+        <FormWithLoader
           loaderId={CONTENT_LOADER_ID}
+          onSubmit={this.onSubmit}
           showLoadingOverlay={true}
-          onItemSubmit={this.onItemSubmit}
-          initialState={initialState}
-          userRole={this.props.userRole}
           citiesMap={this.props.citiesMap}
           typesMap={this.props.typesMap}
+          userRole={this.props.userRole}
           usersMap={this.props.usersMap}
-          isCreate={this.isCreatePage}
+          initialValues={this.props.loadedItem}
         />
+        <NavigationPrompt when={this.props.isFormDirty} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    usersMap: state.users.dataMap,
-    citiesMap: state.cities.dataMap,
-    typesMap: state.types.dataMap,
-    userRole: state.currentUser.details.role,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  usersMap: state.users.dataMap,
+  citiesMap: state.cities.dataMap,
+  typesMap: state.types.dataMap,
+  userRole: state.currentUser.details.role,
+  isFormDirty: isDirty('MainInfoForm')(state),
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateMainInfo: (item) => dispatch(updateMainInfo(item)),
     postItem: (item) => dispatch(postItem(item)),
+    initializeForm: (data) => dispatch(initialize('MainInfoForm', data)),
   };
 };
 

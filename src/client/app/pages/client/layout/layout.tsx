@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Link } from 'react-router-dom';
-import { MainMenu, Toast } from '../../../components';
-import { adminRoutes, clientRoutes, removeInjectedStyles } from '../../../client-utils';
-import { getInitialData, login, logout } from '../../../actions';
-import { LoginPage, CityPage } from '../../../pages';
-import { IAppState } from '../../../reducers';
+import { MainMenu, Toast } from 'components';
+import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
+import { getInitialData, login, logout } from 'actions';
+import { LoginPage, CityPage } from 'pages';
+import { IAppState } from 'reducers';
 
 class ClientLayoutPageComponent extends React.Component<any, any> {
 

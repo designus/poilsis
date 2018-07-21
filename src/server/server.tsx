@@ -19,7 +19,7 @@ import { matchRoutes } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import { getMaterialUiCSSParams, preloadData } from './app/server-utils';
+import { getMaterialUiCSSParams, preloadData, handleItemsErrors } from './app/server-utils';
 import { App } from '../client/app/pages';
 import auth from './app/controllers/auth';
 const app = express();
@@ -38,7 +38,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(expressValidator());
 app.use(auth.initialize());
-app.use('/api', apiRouter());
+app.use('/api', apiRouter(), handleItemsErrors);
 app.get('/favicon.ico', (req, res) => {
   res.send(204);
 });

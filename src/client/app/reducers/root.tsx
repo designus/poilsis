@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TItemState } from '../pages';
+import { reducer as formReducer } from 'redux-form';
 import {
   cities,
   types,
@@ -26,7 +26,6 @@ export interface IAppState {
   currentUser: ICurrentUserState;
   users: IUsersState;
   items: IItemsState;
-  newItem: TItemState;
   types: any;
   initialData: IInitialDataState;
   loader: ILoadingState;
@@ -39,11 +38,11 @@ export const rootReducer = combineReducers({
   types,
   auth,
   items,
-  // newItem,
   initialData,
   loader,
   toast,
   uploadProgress,
   currentUser,
   users,
+  form: formReducer,
 });

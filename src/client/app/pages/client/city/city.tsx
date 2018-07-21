@@ -19,17 +19,17 @@ class CityPageComponent extends React.Component<any, any> {
   static fetchData(store, params) {
     const appState: IAppState = store.getState();
     const citiesState = appState.cities;
-    return fetchCitiesData(citiesState, params.city, store.dispatch);
+    return fetchCitiesData(citiesState, params.cityName, store.dispatch);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      fetchCitiesData(this.props.cities, this.props.match.params.city, this.props.dispatch);
+      fetchCitiesData(this.props.cities, this.props.match.params.cityName, this.props.dispatch);
     }
   }
 
   componentDidMount() {
-    fetchCitiesData(this.props.cities, this.props.match.params.city, this.props.dispatch);
+    fetchCitiesData(this.props.cities, this.props.match.params.cityName, this.props.dispatch);
   }
 
   render() {
