@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import {
-  CheckboxGroup,
-  SelectBox,
-  TextInput,
-  Button,
-} from 'components';
+import { CheckboxGroup, SelectBox, TextInput, Button } from 'components';
 import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
 

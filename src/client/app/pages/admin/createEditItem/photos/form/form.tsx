@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { DropzoneInput, UploadedImages, Button } from 'components';
 import { maxUploadedPhotos } from 'global-utils';
+import { IPhotosFormFields } from '../photos';
 
 const validators = [
   maxUploadedPhotos,
@@ -25,12 +26,11 @@ class FormComponent extends React.Component<FormProps> {
     this.clearDroppedImages();
   }
 
-  submitImages = (images) => {
-    this.props.onSubmit({ ...images, isUpdateAction: true });
+  submitImages = (fields: IPhotosFormFields) => {
+    this.props.onSubmit({ ...fields, isUpdateAction: true });
   }
 
   render() {
-    const { handleSubmit, submitting, pristine } = this.props;
     return (
       <form autoComplete="off">
         <Field
@@ -45,7 +45,7 @@ class FormComponent extends React.Component<FormProps> {
           component={UploadedImages}
           onLoadedImages={this.onLoadedImages}
         />
-        <Button onClick={handleSubmit(this.submitImages)} disabled={submitting || pristine}>
+        <Button onClick={this.props.handleSubmit(this.submitImages)}>
           Save
         </Button>
       </form>

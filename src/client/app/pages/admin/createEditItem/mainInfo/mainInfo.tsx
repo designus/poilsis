@@ -5,6 +5,7 @@ import { SubmissionError, isDirty, initialize } from 'redux-form';
 import { IAppState } from 'reducers';
 import { updateMainInfo, postItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
+import { IItemFields } from 'global-utils';
 import { extendWithLoader, NavigationPrompt } from 'components';
 import { MainInfoForm } from './form';
 
@@ -20,7 +21,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onSubmit = (item) => {
+  onSubmit = (item: IItemFields) => {
     const { isCreatePage, postItem, history, updateMainInfo, initializeForm } = this.props;
     const submitFn = isCreatePage ? postItem : updateMainInfo;
 

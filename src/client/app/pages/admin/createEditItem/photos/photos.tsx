@@ -2,15 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
 import { voidFn } from 'client-utils';
-import { PHOTO_GALLERY } from 'data-strings';
 import { IImage } from 'global-utils';
 import Typography from '@material-ui/core/Typography';
 import { change } from 'redux-form';
 import { PhotosForm } from './form';
 
-interface IPhotosState {
+export interface IPhotosFormFields {
   images: IImage[];
-  files: any[];
+  files: File[];
   isUpdateAction?: boolean;
 }
 
@@ -20,14 +19,12 @@ class PhotosPageComponent extends React.Component<any, any> {
     super(props);
   }
 
-  onSubmit = (state: IPhotosState) => {
+  onSubmit = (state: IPhotosFormFields) => {
     const itemId = this.props.loadedItem.id;
     if (state.isUpdateAction) {
       this.props.updateImages(itemId, state.images);
     } else {
-      this.props.uploadImages(itemId, state.files).then(images => {
-        this.props.addImagesToFormState(images);
-      });
+      this.props.uploadImages(itemId, state.files).then(images => this.props.addImagesToFormState(images));
     }
   }
 
@@ -38,7 +35,7 @@ class PhotosPageComponent extends React.Component<any, any> {
 
       return (
         <div>
-          <Typography variant="headline">{PHOTO_GALLERY}</Typography>
+          <Typography variant="headline">Photo gallery</Typography>
           <PhotosForm
             onSubmit={this.onSubmit}
             initialValues={initialValues}
