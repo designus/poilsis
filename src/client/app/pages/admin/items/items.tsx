@@ -2,11 +2,11 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { IAppState } from '../../../reducers';
-import { getUserItems, deleteItem, stopAllLoaders } from '../../../actions';
-import { CONTENT_LOADER_ID, adminRoutes } from '../../../client-utils';
-import { ITEMS } from '../../../../../data-strings';
-import { AdminHeader } from '../../../global-styles';
+import { IAppState } from 'reducers';
+import { getUserItems, deleteItem, endLoading } from 'actions';
+import { adminRoutes } from 'client-utils';
+import { ITEMS } from 'data-strings';
+import { AdminHeader } from 'global-styles';
 import {
   EnhancedTable,
   ITableColumn,
@@ -15,7 +15,7 @@ import {
   ItemActions,
   DeleteModal,
   AdminPageActions,
-} from '../../../components';
+} from 'components';
 
 const Table = extendWithLoader(EnhancedTable);
 
@@ -122,7 +122,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   }
 
   componentWillUnmount() {
-    this.props.stopAllLoaders();
+    this.props.endLoading();
   }
 
   render() {
@@ -138,7 +138,6 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           />
         </AdminHeader>
         <Table
-          loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           dataMap={this.props.itemsMap}
           items={this.props.userItems}
@@ -173,7 +172,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (itemId) => dispatch(deleteItem(itemId)),
     getUserItems: () => dispatch(getUserItems()),
-    stopAllLoaders: () => dispatch(stopAllLoaders()),
+    endLoading: () => dispatch(endLoading()),
   };
 };
 

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { getNormalizedData, getCityItems, CONTENT_LOADER_ID } from '../client-utils';
+import { getNormalizedData, getCityItems } from '../client-utils';
 import { startLoading, endLoading, receiveItems, receiveCityItems } from '../actions';
 import { IAppState, ICurrentUser } from '../reducers';
-import { isAdmin } from '../../../global-utils';
+import { isAdmin } from 'global-utils';
 
 export const RECEIVE_USER_ITEMS = 'RECEIVE_USER_ITEMS';
 export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
@@ -43,7 +43,7 @@ export const getUserItems = () => (dispatch, getState) => {
     return;
   }
 
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(startLoading());
 
   return axios.get(endpoint)
     .then(response => response.data)
@@ -56,10 +56,10 @@ export const getUserItems = () => (dispatch, getState) => {
       dispatch(receiveItems(itemsMap, aliases, areAllItemsLoaded));
       dispatch(receiveCityItems(cityItems));
       dispatch(receiveUserItems(userItems));
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(endLoading());
     })
     .catch(err => {
       console.error(err);
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(endLoading());
     });
 };

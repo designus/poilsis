@@ -10,6 +10,6 @@ export const setUploadProgress = (progress: number) => (dispatch) => {
   });
 };
 
-export const uploadSuccess = () => ({type: UPLOAD_SUCCESS});
-export const uploadError = () => ({type: UPLOAD_ERROR});
-export const setInitialUploadState = () => ({type: SET_INITIAL_UPLOAD_STATE});
+export const uploadSuccess = () => ({ type: UPLOAD_SUCCESS });
+export const uploadError = () => ({ type: UPLOAD_ERROR });
+export const setInitialUploadState = () => ({ type: SET_INITIAL_UPLOAD_STATE });

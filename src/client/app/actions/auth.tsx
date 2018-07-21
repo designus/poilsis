@@ -4,7 +4,6 @@ import * as moment from 'moment';
 import * as JWT from 'jwt-decode';
 import { startLoading, endLoading, showToast, receiveUserDetails } from '../actions';
 import { Toast, IAppState, IUser } from '../reducers';
-import { DIALOG_LOADER_ID } from '../client-utils';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
@@ -24,7 +23,7 @@ export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
   const errorType = isLogin ? 'Login failed' : 'Logout failed';
   console.error(response);
-  dispatch(endLoading(DIALOG_LOADER_ID));
+  dispatch(endLoading());
   dispatch(showToast(Toast.error, `${errorType}: ${response.data.message}`));
   dispatch(logout());
 };
@@ -50,7 +49,7 @@ export const setLogoutTimer = (expires: number) => (dispatch, getState) => {
 };
 
 export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
-  dispatch(startLoading(DIALOG_LOADER_ID));
+  dispatch(startLoading());
   return axios.post('http://localhost:3000/api/users/login', credentials)
     .then(response => response.data)
     .then(data => {
@@ -64,7 +63,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
         .then((user: IUser) => {
           dispatch(loginSuccess(accessToken));
           dispatch(receiveUserDetails(user));
-          dispatch(endLoading(DIALOG_LOADER_ID));
+          dispatch(endLoading());
           dispatch(showToast(Toast.success, 'User logged in successfully'));
           dispatch(setLogoutTimer(exp));
           Cookies.set('jwt', accessToken, {expires});
@@ -77,7 +76,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
 };
 
 export const keepUserLogged = () => (dispatch, getState) => {
-  dispatch(startLoading(DIALOG_LOADER_ID));
+  dispatch(startLoading());
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
   const refreshToken = localStorage.getItem('refreshToken');
@@ -88,7 +87,7 @@ export const keepUserLogged = () => (dispatch, getState) => {
       const accessToken = data.accessToken;
       const {exp} = JWT(accessToken);
       const expires = moment.unix(exp).utc().toDate();
-      dispatch(endLoading(DIALOG_LOADER_ID));
+      dispatch(endLoading());
       dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
       dispatch(reauthenticateSuccess(accessToken));
       dispatch(setLogoutTimer(exp));

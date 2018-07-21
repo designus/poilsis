@@ -12,8 +12,6 @@ import {
 import {
   IAlias,
   objectToFormData,
-  CONTENT_LOADER_ID,
-  DIALOG_LOADER_ID,
   onUploadProgress,
  } from '../client-utils';
 import { IItemsMap, Toast, IItem } from '../reducers';
@@ -76,9 +74,9 @@ export const receiveImages = (id: string, images: IImage[]) => {
   };
 };
 
-export const stopLoading = (isError, toastMessage, loaderId) => dispatch => {
+export const stopLoading = (isError, toastMessage) => dispatch => {
   const toastType = isError ? Toast.error : Toast.success;
-  dispatch(endLoading(loaderId));
+  dispatch(endLoading());
   dispatch(showToast(toastType, toastMessage));
 };
 
@@ -86,17 +84,17 @@ export const getItem = (itemId) => {
 
   return dispatch => {
 
-    dispatch(startLoading(CONTENT_LOADER_ID));
+    dispatch(startLoading());
 
     return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
       .then(response => response.data)
       .then(item => {
         dispatch(receiveItem(item));
-        dispatch(endLoading(CONTENT_LOADER_ID));
+        dispatch(endLoading());
       })
       .catch(err => {
         console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
+        dispatch(endLoading());
       });
   };
 };
@@ -133,7 +131,7 @@ export const uploadPhotos = (itemId, files) => (dispatch) => {
 
 export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {
   return new Promise((resolve, reject) => {
-    dispatch(startLoading(CONTENT_LOADER_ID));
+    dispatch(startLoading());
 
     return axios.put(`http://localhost:3000/api/items/item/photos/${itemId}`, {images})
       .then(response => response.data)
@@ -153,19 +151,19 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
         console.error(err);
         dispatch(showToast(Toast.error, IMAGES_UPDATE_ERROR));
       })
-      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
+      .then(dispatch(endLoading()));
 
   });
 };
 
 export const updateMainInfo = (item: IItemFields) => (dispatch) => {
   return new Promise((resolve, reject) => {
-    dispatch(startLoading(CONTENT_LOADER_ID));
+    dispatch(startLoading());
 
     return axios.put(`http://localhost:3000/api/items/item/mainInfo/${item.id}`, item)
       .then(response => response.data)
       .then(item => {
-        dispatch(endLoading(CONTENT_LOADER_ID));
+        dispatch(endLoading());
         if (item.errors) {
           dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
           reject(item.errors);
@@ -177,7 +175,7 @@ export const updateMainInfo = (item: IItemFields) => (dispatch) => {
       })
       .catch(err => {
         console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
+        dispatch(endLoading());
         dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
       });
   });
@@ -187,23 +185,23 @@ export const postItem = (item) => (dispatch) => {
 
   return new Promise((resolve, reject) => {
 
-    dispatch(startLoading(CONTENT_LOADER_ID));
+    dispatch(startLoading());
 
     return axios.post('http://localhost:3000/api/items', item)
       .then(response => response.data)
       .then(item => {
         if (item.errors) {
-          dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
+          dispatch(stopLoading(true, ITEM_CREATE_ERROR));
           reject(item.errors);
         } else {
           dispatch(receiveItem(item));
-          dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
+          dispatch(stopLoading(false, ITEM_CREATE_SUCCESS));
           resolve({itemId: item.id, userId: item.userId});
         }
       })
       .catch(err => {
         console.error(err);
-        dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
+        dispatch(stopLoading(true, ITEM_CREATE_ERROR));
       });
   });
 };
@@ -212,12 +210,12 @@ export const deleteItem = (itemId: string) => (dispatch) => {
 
   return new Promise((resolve, reject) => {
 
-    dispatch(startLoading(DIALOG_LOADER_ID));
+    dispatch(startLoading());
 
     return axios.delete(`http://localhost:3000/api/items/item/${itemId}`)
       .then(response => response.data)
       .then(item => {
-        dispatch(endLoading(DIALOG_LOADER_ID));
+        dispatch(endLoading());
         if (item.errors) {
           dispatch(showToast(Toast.error, DELETE_ITEM_ERROR));
           reject(item.errors);
@@ -230,7 +228,7 @@ export const deleteItem = (itemId: string) => (dispatch) => {
       })
       .catch(err => {
         console.error(err);
-        dispatch(endLoading(DIALOG_LOADER_ID));
+        dispatch(endLoading());
       });
   });
 };

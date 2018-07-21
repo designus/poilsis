@@ -5,8 +5,7 @@ import {
   types,
   items,
   initialData,
-  loader,
-  ILoadingState,
+  isLoading,
   toast,
   auth,
   ICityState,
@@ -28,7 +27,7 @@ export interface IAppState {
   items: IItemsState;
   types: any;
   initialData: IInitialDataState;
-  loader: ILoadingState;
+  isLoading: boolean;
   toast: IToastState;
   uploadProgress: IUploadProgress;
 }
@@ -39,7 +38,7 @@ export const rootReducer = combineReducers({
   auth,
   items,
   initialData,
-  loader,
+  isLoading,
   toast,
   uploadProgress,
   currentUser,

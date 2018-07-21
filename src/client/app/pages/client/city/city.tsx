@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAppState, ICityState } from '../../../reducers';
-import { getCityItems, selectCity } from '../../../actions';
-import { getSelectedCity, CONTENT_LOADER_ID } from '../../../client-utils';
-import { ItemsList, NotFound, extendWithLoader } from '../../../components';
+import { IAppState, ICityState } from 'reducers';
+import { getCityItems, selectCity } from 'actions';
+import { getSelectedCity } from 'client-utils';
+import { ItemsList, NotFound, extendWithLoader } from 'components';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
@@ -33,7 +33,7 @@ class CityPageComponent extends React.Component<any, any> {
   }
 
   render() {
-    const {selectedCity, items, types} = this.props;
+    const { selectedCity, items, types } = this.props;
 
     if (selectedCity) {
       return (
@@ -41,7 +41,6 @@ class CityPageComponent extends React.Component<any, any> {
           <h1>{selectedCity.name}</h1>
           <p>{selectedCity.description}</p>
           <ItemsListWithLoader
-            loaderId={CONTENT_LOADER_ID}
             items={selectedCity.items}
             itemsMap={items.dataMap}
             typesMap={types.dataMap}

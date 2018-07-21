@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
-import { DIALOG_LOADER_ID } from '../../../client-utils';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
-import { IAppState } from '../../../reducers';
-import { logout, keepUserLogged } from '../../../actions';
+import { IAppState } from 'reducers';
+import { logout, keepUserLogged } from 'actions';
 
 export interface IKeepMeLoggedModalProps extends WithStyles<typeof modalStyles> {
   isModalOpen?: boolean;
@@ -77,7 +76,6 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
           />
           <DialogContent
             error={error}
-            loaderId={DIALOG_LOADER_ID}
             showLoadingOverlay={true}
             contentClass={classes.dialogContent}
           >
