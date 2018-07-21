@@ -4,7 +4,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItemsMap, ItemsDataMap } from 'reducers';
+import { IAppState, IItem, IItemsMap } from 'reducers';
 import { getItem } from 'actions';
 import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute } from 'components';
 import { adminRoutes } from 'client-utils';
@@ -16,7 +16,7 @@ interface IMatchParams {
   userId: string;
 }
 interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams> {
-  itemsMap: ItemsDataMap;
+  itemsMap: IItemsMap;
   getItem: (id) => void;
 }
 
@@ -36,7 +36,7 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
     }
   }
 
-  getLoadedItem(): IItemsMap {
+  getLoadedItem(): IItem {
     return this.props.itemsMap[this.props.match.params.itemId];
   }
 

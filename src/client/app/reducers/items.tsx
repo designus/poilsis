@@ -1,8 +1,8 @@
 import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES } from '../actions';
-import { IGenericState } from '../client-utils';
-import { IImage } from '../../../global-utils';
+import { IGenericState, IGenericDataMap } from 'client-utils';
+import { IImage } from 'global-utils';
 
-export interface IItemsMap {
+export interface IItem {
   alias: string;
   city: string;
   createdAt: string;
@@ -13,9 +13,9 @@ export interface IItemsMap {
   isFullyLoaded?: boolean;
 }
 
-export type ItemsDataMap = IGenericState<IItemsMap>;
+export type IItemsMap = IGenericDataMap<IItem>;
 
-export interface IItemsState extends ItemsDataMap {
+export interface IItemsState extends IGenericState<IItem> {
   selectedId?: string;
   isAllLoaded?: boolean;
 }

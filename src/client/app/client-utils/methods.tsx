@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IGenericState } from './types';
-import { IItemsMap, ItemsDataMap, ICityState, ICityItems } from '../reducers';
+import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
 export function getSelectedCity(citiesState: ICityState, city: string) {
   return new Promise((resolve, reject) => {
@@ -14,9 +14,9 @@ export function getSelectedCity(citiesState: ICityState, city: string) {
   });
 }
 
-export const getCityItems = (dataMap: ItemsDataMap, haveAllItemsLoaded: boolean) => {
+export const getCityItems = (dataMap: IItemsMap, haveAllItemsLoaded: boolean) => {
   return Object.keys(dataMap).reduce((acc: ICityItems, itemId: string) => {
-    const item: IItemsMap = dataMap[itemId];
+    const item: IItem = dataMap[itemId];
     const state = acc[item.city];
     if (state) {
       state.items.push(itemId);

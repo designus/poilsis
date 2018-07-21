@@ -16,7 +16,7 @@ import {
   DIALOG_LOADER_ID,
   onUploadProgress,
  } from '../client-utils';
-import { ItemsDataMap, Toast, IItemsMap } from '../reducers';
+import { IItemsMap, Toast, IItem } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -45,7 +45,7 @@ export const selectItem = (id: string) => {
   };
 };
 
-export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoaded: boolean) => {
+export const receiveItems = (dataMap: IItemsMap, aliases: IAlias[], isAllLoaded: boolean) => {
   return {
     type: RECEIVE_ITEMS,
     dataMap,
@@ -54,14 +54,14 @@ export const receiveItems = (dataMap: ItemsDataMap, aliases: IAlias[], isAllLoad
   };
 };
 
-export const receiveItem = (item: IItemsMap) => {
+export const receiveItem = (item: IItem) => {
   return {
     type: RECEIVE_ITEM,
     item,
   };
 };
 
-export const removeItem = (item: IItemsMap) => {
+export const removeItem = (item: IItem) => {
   return {
     type: REMOVE_ITEM,
     item,
