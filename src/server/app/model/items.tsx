@@ -1,14 +1,13 @@
 'use strict';
 
-import { NAME_KEY, CITY_KEY, ADDRESS_KEY, IMAGES_KEY } from '../../../data-strings';
-import { TGenericSchemaMap } from '../../../client/app/client-utils';
-// import { INewItemFields } from '../../../client/app/pages';
-import { IImage, isRequired, maxFileCount, MAX_FILE_COUNT, REQUIRED_MESSAGE } from '../../../global-utils';
+import { TGenericSchemaMap } from 'client-utils';
+import { IMAGES_KEY } from 'data-strings';
+import { IImage, maxFileCount, MAX_FILE_COUNT, REQUIRED_MESSAGE } from 'global-utils';
 
 interface IItemFields {
   id?: string;
   address?: string;
-  city?: string;
+  cityId?: string;
   description?: string;
   name?: string;
   types?: string[];
@@ -43,8 +42,8 @@ const ImageSchemaMap: TGenericSchemaMap<IImage> = {
 
 const ItemsSchemaMap: IItemsSchemaMap = {
   id: {type: String, unique: true, default: shortId.generate, required: true},
-  name: {type: String, minLength: 6, required: [true, isRequired(NAME_KEY)]},
-  city: {type: String, required: [true, isRequired(CITY_KEY)] },
+  name: {type: String, minLength: 6, required: [true, REQUIRED_MESSAGE]},
+  cityId: {type: String, required: [true, REQUIRED_MESSAGE] },
   address: {type: String, required: [true, REQUIRED_MESSAGE]},
   types: {type: Array, required: [true, 'At least one type must be selected']},
   alias: {type: String, lowercase: true, trim: true, required: true, set: formatAlias },
@@ -53,7 +52,7 @@ const ItemsSchemaMap: IItemsSchemaMap = {
   updatedAt: {type: Date },
   images: {
     type: [ImageSchemaMap],
-    validate: [arrayLimit, maxFileCount(MAX_FILE_COUNT)(IMAGES_KEY)],
+    validate: [arrayLimit, maxFileCount(MAX_FILE_COUNT)('images')],
   },
 };
 

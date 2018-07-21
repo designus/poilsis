@@ -68,34 +68,30 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
     const childProps = {...this.props, loadedItem, isCreatePage: this.isCreatePage };
     const { userId, itemId } = this.props.match.params;
 
-    if (loadedItem || this.isCreatePage) {
-      return (
-        <div>
-          <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
-          <Switch>
-            <ProtectedRoute
-              path={adminRoutes.createItem.path}
-              exact
-              component={MainInfoPage}
-              {...childProps}
-            />
-            <ProtectedRoute
-              path={adminRoutes.editItemPhotos.path}
-              component={PhotosPage}
-              {...childProps}
-            />
-            <ProtectedRoute
-              path={adminRoutes.editItemMain.path}
-              component={MainInfoPage}
-              {...childProps}
-            />
-            <PropsRoute component={NotFound}/>
-          </Switch>
-        </div>
-      );
-    } else {
-      return null;
-    }
+    return (loadedItem || this.isCreatePage) && (
+      <div>
+        <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
+        <Switch>
+          <ProtectedRoute
+            path={adminRoutes.createItem.path}
+            exact
+            component={MainInfoPage}
+            {...childProps}
+          />
+          <ProtectedRoute
+            path={adminRoutes.editItemPhotos.path}
+            component={PhotosPage}
+            {...childProps}
+          />
+          <ProtectedRoute
+            path={adminRoutes.editItemMain.path}
+            component={MainInfoPage}
+            {...childProps}
+          />
+          <PropsRoute component={NotFound}/>
+        </Switch>
+      </div>
+    );
   }
 }
 

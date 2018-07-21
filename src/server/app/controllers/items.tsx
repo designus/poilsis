@@ -6,7 +6,6 @@ const shortId = require('shortid');
 import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFromFs, removeImagesDir } from '../server-utils';
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT, IMainInfoFields } from '../../../global-utils';
-import { FILES_KEY } from '../../../data-strings';
 import auth from './auth';
 
 router.route('/')
@@ -22,12 +21,12 @@ router.route('/')
 
     const id = shortId.generate();
     const name = sanitize(req.body.name);
-    const city = sanitize(req.body.city);
+    const cityId = sanitize(req.body.cityId);
     const alias = sanitize(req.body.alias) || name;
     const address = sanitize(req.body.address);
     const types = req.body.types;
     const userId = req.body.userId;
-    const newItem = {id, name, city, alias, types, address, userId};
+    const newItem = {id, name, cityId, alias, types, address, userId};
 
     new ItemsModel(newItem).save((err, item) => {
       if (err) {
@@ -59,14 +58,14 @@ router.route('/item/mainInfo/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
     const item: IMainInfoFields = req.body;
     const name = sanitize(item.name);
-    const city = sanitize(item.city);
+    const cityId = sanitize(item.cityId);
     const alias = sanitize(item.alias) || name;
     const address = sanitize(item.address);
     const types = item.types;
     const updatedAt = new Date();
     const userId = item.userId;
 
-    const updatedItem = {name, city, alias, types, address, updatedAt, userId};
+    const updatedItem = {name, cityId, alias, types, address, updatedAt, userId};
 
     ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true }, (err, item) => {
       if (err) { return next(err); }
@@ -97,7 +96,7 @@ router.route('/item/photos/:itemId')
 
 router.route('/item/upload-photos/:itemId')
   .put(auth.authenticate(), createUploadPath, (req, res, next) => {
-    const uploadPhotos = uploadImages.array(`${FILES_KEY}[]`, MAX_FILE_COUNT);
+    const uploadPhotos = uploadImages.array(`files[]`, MAX_FILE_COUNT);
 
     uploadPhotos(req, res, (err) => {
       if (err) { return next(err); }
@@ -134,7 +133,7 @@ router.route('/item/upload-photos/:itemId')
 
 router.route('/city/:cityId')
   .get((req, res) => {
-    ItemsModel.find({city: req.params.cityId}, (err, items) => {
+    ItemsModel.find({cityId: req.params.cityId}, (err, items) => {
       if (err) {
         res.send(err);
       }

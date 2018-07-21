@@ -4,3 +4,6 @@ export const ITEM_CREATE_SUCCESS = 'Item created successfully';
 export const ITEM_CREATE_ERROR = 'Item failed to create';
 export const DELETE_ITEM_ERROR = 'Item failed to delete';
 export const DELETE_ITEM_SUCCESS = 'Item was deleted successfully';
+export const IMAGES_KEY = 'images';
+export const PHOTO_GALLERY = 'Photo gallery';
+export const MAIN_INFO = 'Main info';

@@ -39,7 +39,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         label="Address"
       />
       <Field
-        name="city"
+        name="cityId"
         component={SelectBox}
         validate={[isRequired]}
         label="City"

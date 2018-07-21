@@ -52,7 +52,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
       },
       {
         title: 'City',
-        dataProp: 'city',
+        dataProp: 'cityId',
         sortType: 'string',
         format: (cityId: string) => this.props.citiesMap[cityId].name,
         searchable: true,

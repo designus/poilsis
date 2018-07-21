@@ -4,7 +4,7 @@ import { IImage } from 'global-utils';
 
 export interface IItem {
   alias: string;
-  city: string;
+  cityId: string;
   createdAt: string;
   id: string;
   name: string;

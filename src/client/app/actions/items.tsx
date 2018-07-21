@@ -29,8 +29,8 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR,
   IMAGES_KEY,
-} from '../../../data-strings';
-import { IImage, IMainInfoFields } from '../../../global-utils';
+} from 'data-strings';
+import { IImage, IMainInfoFields } from 'global-utils';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';

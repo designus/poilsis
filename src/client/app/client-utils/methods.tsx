@@ -4,8 +4,9 @@ import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
 export function getSelectedCity(citiesState: ICityState, city: string) {
   return new Promise((resolve, reject) => {
-    const {aliases} = citiesState;
-    const selectedCity = aliases.find(({alias, id}) => alias === city);
+    const { aliases } = citiesState;
+    const selectedCity = aliases.find(({ alias, id }) => alias === city);
+    console.log('Selected city', selectedCity);
     if (selectedCity) {
       resolve(selectedCity);
     } else {
@@ -17,11 +18,11 @@ export function getSelectedCity(citiesState: ICityState, city: string) {
 export const getCityItems = (dataMap: IItemsMap, haveAllItemsLoaded: boolean) => {
   return Object.keys(dataMap).reduce((acc: ICityItems, itemId: string) => {
     const item: IItem = dataMap[itemId];
-    const state = acc[item.city];
+    const state = acc[item.cityId];
     if (state) {
       state.items.push(itemId);
     } else {
-      acc[item.city] = {
+      acc[item.cityId] = {
         items: [itemId],
         haveAllItemsLoaded,
       };
