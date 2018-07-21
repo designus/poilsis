@@ -2,7 +2,6 @@ export * from './adminMenu';
 export * from './adminPageActions';
 export * from './button';
 export * from './drawer';
-export * from './form';
 export * from './formFields';
 export * from './fileUpload';
 export * from './genericTable';
