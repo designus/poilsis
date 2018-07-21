@@ -1,15 +1,8 @@
-import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES } from '../actions';
+import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES } from 'actions';
 import { IGenericState, IGenericDataMap } from 'client-utils';
-import { IImage } from 'global-utils';
+import { IItemFields } from 'global-utils';
 
-export interface IItem {
-  alias: string;
-  cityId: string;
-  createdAt: string;
-  id: string;
-  name: string;
-  types: string[];
-  images?: IImage[];
+export interface IItem extends IItemFields {
   isFullyLoaded?: boolean;
 }
 

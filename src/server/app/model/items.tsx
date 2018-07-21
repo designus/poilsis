@@ -2,25 +2,9 @@
 
 import { TGenericSchemaMap } from 'client-utils';
 import { IMAGES_KEY } from 'data-strings';
-import { IImage, maxFileCount, MAX_FILE_COUNT, REQUIRED_MESSAGE } from 'global-utils';
+import { IImage, maxFileCount, MAX_FILE_COUNT, REQUIRED_MESSAGE, IItemFields } from 'global-utils';
 
-interface IItemFields {
-  id?: string;
-  address?: string;
-  cityId?: string;
-  description?: string;
-  name?: string;
-  types?: string[];
-  images?: IImage[];
-  files?: any[];
-  userId?: string;
-}
-
-interface IItemsSchemaMap extends TGenericSchemaMap<IItemFields> {
-  alias: any;
-  createdAt: any;
-  updatedAt: any;
-}
+interface IItemsSchemaMap extends TGenericSchemaMap<IItemFields> {}
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -52,7 +36,7 @@ const ItemsSchemaMap: IItemsSchemaMap = {
   updatedAt: {type: Date },
   images: {
     type: [ImageSchemaMap],
-    validate: [arrayLimit, maxFileCount(MAX_FILE_COUNT)('images')],
+    validate: [arrayLimit, maxFileCount(MAX_FILE_COUNT)(IMAGES_KEY)],
   },
 };
 

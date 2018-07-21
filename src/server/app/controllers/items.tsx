@@ -5,7 +5,7 @@ const shortId = require('shortid');
 
 import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFromFs, removeImagesDir } from '../server-utils';
 import { ItemsModel } from '../model';
-import { MAX_FILE_COUNT, IMainInfoFields } from '../../../global-utils';
+import { MAX_FILE_COUNT, IItemFields } from '../../../global-utils';
 import auth from './auth';
 
 router.route('/')
@@ -56,7 +56,7 @@ router.route('/item/:itemId')
 
 router.route('/item/mainInfo/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
-    const item: IMainInfoFields = req.body;
+    const item: IItemFields = req.body;
     const name = sanitize(item.name);
     const cityId = sanitize(item.cityId);
     const alias = sanitize(item.alias) || name;

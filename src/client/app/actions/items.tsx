@@ -30,7 +30,7 @@ import {
   IMAGES_UPDATE_ERROR,
   IMAGES_KEY,
 } from 'data-strings';
-import { IImage, IMainInfoFields } from 'global-utils';
+import { IImage, IItemFields } from 'global-utils';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
@@ -158,7 +158,7 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
   });
 };
 
-export const updateMainInfo = (item: IMainInfoFields) => (dispatch) => {
+export const updateMainInfo = (item: IItemFields) => (dispatch) => {
   return new Promise((resolve, reject) => {
     dispatch(startLoading(CONTENT_LOADER_ID));
 
