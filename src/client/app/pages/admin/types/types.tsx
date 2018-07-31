@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { IAppState } from 'reducers';
+import { IAppState, ITypesMap } from 'reducers';
 import { AdminHeader } from 'global-styles';
 import { adminRoutes } from 'client-utils';
 import {
   EnhancedTable,
   ITableColumn,
-  ItemTypesList,
   extendWithLoader,
   ItemActions,
   DeleteModal,
@@ -16,7 +15,21 @@ import {
 
 const Table = extendWithLoader(EnhancedTable);
 
-class AdminTypesPageComponent extends React.Component<any, any> {
+interface ITypesPageParams {
+  typesMap: ITypesMap;
+}
+
+class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
+
+  state = {
+    isDeleteModalOpen: false,
+    deleteId: '',
+  };
+
+  get deleteTypeName() {
+    const type = this.props.typesMap[this.state.deleteId];
+    return type && type.name;
+  }
 
   get columns(): ITableColumn[] {
     return [
@@ -49,7 +62,15 @@ class AdminTypesPageComponent extends React.Component<any, any> {
   }
 
   openDeleteModal = (typeId) => () => {
-    console.log('Open delete modal', typeId);
+    this.setState({ isDeleteModalOpen: true, deleteId: typeId });
+  }
+
+  handleModalClose = () => {
+    this.setState({ isDeleteModalOpen: false });
+  }
+
+  handleTypeDelete = (typeId) => {
+    console.log('Deleting ', typeId);
   }
 
   render() {
@@ -67,6 +88,13 @@ class AdminTypesPageComponent extends React.Component<any, any> {
           items={Object.keys(this.props.typesMap)}
           columns={this.columns}
           limit={10}
+        />
+        <DeleteModal
+          itemId={this.state.deleteId}
+          isModalOpen={this.state.isDeleteModalOpen}
+          onClose={this.handleModalClose}
+          onDelete={this.handleTypeDelete}
+          itemName={this.deleteTypeName}
         />
       </div>
     );

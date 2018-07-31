@@ -92,7 +92,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           return (
             <ItemActions
               editLink={adminRoutes.editItemMain.getLink(userId, itemId)}
-              onDelete={this.openDeleteModal.bind(this, itemId)}
+              onDelete={this.openDeleteModal(itemId)}
             />
           );
         },
@@ -104,12 +104,12 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     this.setState({search});
   }
 
-  openDeleteModal(id) {
-    this.setState({isDeleteModalOpen: true, deleteId: id});
+  openDeleteModal = (itemId) => () => {
+    this.setState({ isDeleteModalOpen: true, deleteId: itemId });
   }
 
-  closeDeleteModal = () => {
-    this.setState({isDeleteModalOpen: false});
+  handleModalClose = () => {
+    this.setState({ isDeleteModalOpen: false });
   }
 
   get deleteItemName() {
@@ -117,7 +117,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     return item && item.name;
   }
 
-  onDelete = (itemId) => {
+  handleItemDelete = (itemId) => {
     return this.props.deleteItem(itemId);
   }
 
@@ -148,8 +148,8 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         <DeleteModal
           itemId={this.state.deleteId}
           isModalOpen={this.state.isDeleteModalOpen}
-          onCloseModal={this.closeDeleteModal}
-          onDelete={this.onDelete}
+          onClose={this.handleModalClose}
+          onDelete={this.handleItemDelete}
           itemName={this.deleteItemName}
         />
       </div>

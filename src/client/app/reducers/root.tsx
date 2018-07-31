@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import {
   cities,
-  types,
   items,
   initialData,
   isLoading,
@@ -15,6 +14,7 @@ import {
   IItemsState,
 } from '../reducers';
 
+import { types, ITypesState } from './types';
 import { uploadProgress, IUploadProgress } from './uploadProgress';
 import { currentUser, ICurrentUserState } from './currentUser';
 import { users, IUsersState } from './users';
@@ -25,7 +25,7 @@ export interface IAppState {
   currentUser: ICurrentUserState;
   users: IUsersState;
   items: IItemsState;
-  types: any;
+  types: ITypesState;
   initialData: IInitialDataState;
   isLoading: boolean;
   toast: IToastState;

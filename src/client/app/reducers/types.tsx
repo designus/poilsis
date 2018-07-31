@@ -1,14 +1,15 @@
 import { SELECT_TYPE, RECEIVE_INITIAL_DATA } from '../actions';
-import { IGenericState } from '../client-utils';
+import { IGenericState, IGenericDataMap } from '../client-utils';
 
-export interface ITypesMap {
+export interface IType {
   id: string;
   alias: string;
   description: string;
   name: string;
 }
 
-export interface ITypesState extends IGenericState<ITypesMap> {}
+export type ITypesMap = IGenericDataMap<IType>;
+export interface ITypesState extends IGenericState<IType> {}
 
 export const types = (state: ITypesState = null, action) => {
   switch (action.type) {
