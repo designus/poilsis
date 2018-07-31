@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
-import { IAppState } from 'reducers';
+import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { getUserItems, deleteItem, endLoading } from 'actions';
 import { adminRoutes } from 'client-utils';
 import { ITEMS } from 'data-strings';
@@ -19,7 +20,19 @@ import {
 
 const Table = extendWithLoader(EnhancedTable);
 
-class AdminItemsPageComponent extends React.Component<any, any> {
+interface IItemsPageParams {
+  itemsMap: IItemsMap;
+  usersMap: IUsersMap;
+  citiesMap: ICitiesMap;
+  typesMap: ITypesMap;
+  areAllItemsLoaded: boolean;
+  userItems: string[];
+  deleteItem: (itemId) => void;
+  getUserItems: () => void;
+  endLoading: () => void;
+}
+
+class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
 
   static fetchData(store) {
     return store.dispatch(getUserItems());
@@ -157,23 +170,23 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    itemsMap: state.items.dataMap,
-    usersMap: state.users.dataMap,
-    userItems: state.currentUser.items,
-    citiesMap: state.cities.dataMap,
-    typesMap: state.types.dataMap,
-    areAllItemsLoaded: state.items.isAllLoaded,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  itemsMap: state.items.dataMap,
+  usersMap: state.users.dataMap,
+  userItems: state.currentUser.items,
+  citiesMap: state.cities.dataMap,
+  typesMap: state.types.dataMap,
+  areAllItemsLoaded: state.items.isAllLoaded,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteItem: (itemId) => dispatch(deleteItem(itemId)),
-    getUserItems: () => dispatch(getUserItems()),
-    endLoading: () => dispatch(endLoading()),
-  };
-};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      deleteItem,
+      getUserItems,
+      endLoading,
+    },
+    dispatch,
+  );
 
 export const AdminItemsPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent);

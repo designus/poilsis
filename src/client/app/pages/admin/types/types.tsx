@@ -101,11 +101,9 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    typesMap: state.types.dataMap,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  typesMap: state.types.dataMap,
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
