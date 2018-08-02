@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, initialize } from 'redux-form';
 import { IAppState } from 'reducers';
 import { updateMainInfo, postItem } from 'actions';
-import { getBackendErrors, adminRoutes } from 'client-utils';
+import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { IItemFields } from 'global-utils';
 import { extendWithLoader, NavigationPrompt } from 'components';
 import { MainInfoForm } from './form';
@@ -42,6 +42,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
         <Typography variant="headline">Main info</Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
+          loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           citiesMap={this.props.citiesMap}
           typesMap={this.props.typesMap}

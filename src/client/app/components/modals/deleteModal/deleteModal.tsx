@@ -2,6 +2,7 @@ import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
+import { DIALOG_LOADER_ID } from 'client-utils';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 
@@ -49,6 +50,7 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
           <DialogContent
             error={error}
             showLoadingOverlay={true}
+            loaderId={DIALOG_LOADER_ID}
             contentClass={classes.dialogContent}
           >
             Delete is permanent, you can not revert this action.

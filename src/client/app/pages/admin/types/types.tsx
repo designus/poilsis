@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { IAppState, ITypesMap } from 'reducers';
 import { AdminHeader } from 'global-styles';
-import { adminRoutes } from 'client-utils';
+import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import {
   EnhancedTable,
   ITableColumn,
@@ -84,6 +84,7 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
         </AdminHeader>
         <Table
           showLoadingOverlay={true}
+          loaderId={CONTENT_LOADER_ID}
           dataMap={this.props.typesMap}
           items={Object.keys(this.props.typesMap)}
           columns={this.columns}

@@ -6,6 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 import { IAppState } from 'reducers';
+import { DIALOG_LOADER_ID } from 'client-utils';
 import { logout, keepUserLogged } from 'actions';
 
 export interface IKeepMeLoggedModalProps extends WithStyles<typeof modalStyles> {
@@ -77,6 +78,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
           <DialogContent
             error={error}
             showLoadingOverlay={true}
+            loaderId={DIALOG_LOADER_ID}
             contentClass={classes.dialogContent}
           >
             Your login session will expire in <strong>{timeToCloseModal}</strong> seconds. Do you want us to keep you logged in?

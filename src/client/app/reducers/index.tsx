@@ -4,7 +4,7 @@ export * from './types';
 export * from './items';
 export * from './initialData';
 export * from './toast';
-export * from './isLoading';
+export * from './loader';
 export * from './root';
 export * from './uploadProgress';
 export * from './currentUser';

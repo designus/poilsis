@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { getUserItems, deleteItem, endLoading } from 'actions';
-import { adminRoutes } from 'client-utils';
+import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { ITEMS } from 'data-strings';
 import { AdminHeader } from 'global-styles';
 import {
@@ -29,7 +29,7 @@ interface IItemsPageParams {
   userItems: string[];
   deleteItem: (itemId) => void;
   getUserItems: () => void;
-  endLoading: () => void;
+  endLoading: (loaderId) => void;
 }
 
 class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
@@ -135,7 +135,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
   }
 
   componentWillUnmount() {
-    this.props.endLoading();
+    this.props.endLoading(CONTENT_LOADER_ID);
   }
 
   render() {
@@ -152,6 +152,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         </AdminHeader>
         <Table
           showLoadingOverlay={true}
+          loaderId={CONTENT_LOADER_ID}
           dataMap={this.props.itemsMap}
           items={this.props.userItems}
           search={this.state.search}
