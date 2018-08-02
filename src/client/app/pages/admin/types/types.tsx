@@ -48,11 +48,10 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
       {
         title: 'Actions',
         dataProp: 'id',
-        formatProps: ['userId', 'id'],
-        format: (userId: string, typeId: string) => {
+        format: (typeId: string) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editItemMain.getLink(userId, typeId)}
+              editLink={adminRoutes.editType.getLink(typeId)}
               onDelete={this.openDeleteModal(typeId)}
             />
           );
@@ -80,7 +79,7 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
           <Typography variant="headline">
             Types
           </Typography>
-          <AdminPageActions createLink={adminRoutes.createItemMain.getLink()} />
+          <AdminPageActions createLink={adminRoutes.createType.getLink()} />
         </AdminHeader>
         <Table
           showLoadingOverlay={true}

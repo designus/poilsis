@@ -13,8 +13,8 @@ import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { removeInjectedStyles, adminRoutes, clientRoutes } from '../../../client-utils';
-import { IAppState } from '../../../reducers';
+import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
+import { IAppState } from 'reducers';
 import {
   Toast,
   VerticalMenu,
@@ -24,10 +24,10 @@ import {
   NotFound,
   NotAuthorized,
   ProtectedRoute,
-} from '../../../components';
-import { AdminItemsPage, AdminTypesPage, CreateEditItemPage } from '../../../pages';
-import { ITEMS, GO_TO_WEBSITE, TYPES } from '../../../../../data-strings';
-import { getInitialData } from '../../../actions';
+} from 'components';
+import { AdminItemsPage, AdminTypesPage, CreateEditItemPage, CreateEditTypePage } from 'pages';
+import { ITEMS, GO_TO_WEBSITE, TYPES } from 'data-strings';
+import { getInitialData } from 'actions';
 import { Switch } from 'react-router-dom';
 
 interface IAdminLayoutProps extends WithStyles<typeof styles>  {
@@ -146,6 +146,14 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               <ProtectedRoute
                 path={adminRoutes.editItem.path}
                 component={CreateEditItemPage}
+              />
+              <ProtectedRoute
+                path={adminRoutes.createType.path}
+                component={CreateEditTypePage}
+              />
+              <ProtectedRoute
+                path={adminRoutes.editType.path}
+                component={CreateEditTypePage}
               />
               <ProtectedRoute
                 path={'/admin/not-authorized'}

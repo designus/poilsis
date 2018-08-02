@@ -22,8 +22,8 @@ class MainInfoPageComponent extends React.Component<any, any> {
   }
 
   onSubmit = (item: IItemFields) => {
-    const { isCreatePage, postItem, history, updateMainInfo, initializeForm } = this.props;
-    const submitFn = isCreatePage ? postItem : updateMainInfo;
+    const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
+    const submitFn = isCreatePage ? createItem : updateItem;
 
     return submitFn(item)
       .then(item => {
@@ -66,8 +66,8 @@ const mapStateToProps = (state: IAppState) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateMainInfo: (item) => dispatch(updateMainInfo(item)),
-    postItem: (item) => dispatch(postItem(item)),
+    updateItem: (item) => dispatch(updateMainInfo(item)),
+    createItem: (item) => dispatch(postItem(item)),
     initializeForm: (data) => dispatch(initialize('MainInfoForm', data)),
   };
 };
