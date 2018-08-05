@@ -34,6 +34,13 @@ export interface IItemFields {
   updatedAt?: string;
 }
 
+export interface ITypeFields {
+  id?: string;
+  name: string;
+  description: string;
+  alias: string;
+}
+
 export enum UserRoles {
   admin = 'admin',
   user = 'user',

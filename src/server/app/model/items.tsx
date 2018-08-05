@@ -1,19 +1,14 @@
 'use strict';
 
-import { TGenericSchemaMap } from 'client-utils';
 import { IMAGES_KEY } from 'data-strings';
 import { IImage, maxFileCount, MAX_FILE_COUNT, REQUIRED_MESSAGE, IItemFields } from 'global-utils';
+import { formatAlias, TGenericSchemaMap } from '../server-utils';
 
 interface IItemsSchemaMap extends TGenericSchemaMap<IItemFields> {}
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const shortId = require('shortid');
-
-const formatAlias = (alias) => alias
-  .split(/\s+/)
-  .join('-')
-  .toLowerCase();
 
 const arrayLimit = (val) => val.length <= MAX_FILE_COUNT;
 
