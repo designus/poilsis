@@ -16,14 +16,14 @@ export const types = (state: ITypesState = null, action) => {
         ...state,
         dataMap: {
           ...state.dataMap,
-          [action.type.id]: {
-            ...(state.dataMap[action.type.id] || {}),
-            ...action.type,
+          [action.newType.id]: {
+            ...(state.dataMap[action.newType.id] || {}),
+            ...action.newType,
           },
         },
       };
     case REMOVE_TYPE:
-      const {[action.item.id]: removedItem, ...dataMap} = state.dataMap;
+      const {[action.removedType.id]: removedType, ...dataMap} = state.dataMap;
       return {
         ...state,
         dataMap,

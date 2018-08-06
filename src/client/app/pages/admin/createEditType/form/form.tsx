@@ -15,10 +15,15 @@ const Form = (props: InjectedFormProps<{}, {}>) => {
         label="Name"
       />
       <Field
+        name="alias"
+        type="text"
+        component={TextInput}
+        label="Alias"
+      />
+      <Field
         name="description"
         type="text"
         component={TextInput}
-        validate={[isRequired]}
         label="Description"
       />
       <div>

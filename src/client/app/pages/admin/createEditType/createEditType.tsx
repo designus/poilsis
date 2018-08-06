@@ -4,7 +4,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, initialize } from 'redux-form';
 
-import { getBackendErrors, CONTENT_LOADER_ID } from 'client-utils';
+import { ITypeFields } from 'global-utils';
+import { createType, updateType } from 'actions';
+import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
 import { extendWithLoader, NavigationPrompt } from 'components';
 import { IAppState, IType } from 'reducers';
 import { TypeForm } from './form';
@@ -18,6 +20,10 @@ interface IMatchParams {
 interface ICreateEditTypePageProps extends RouteComponentProps<IMatchParams> {
   loadedType: IType;
   isFormDirty: boolean;
+  wasFormSubmitted: boolean;
+  createType: (type: ITypeFields) => Promise<any>;
+  updateType: (type: ITypeFields) => Promise<any>;
+  initializeForm: any;
 }
 
 class CreateEditTypePageComponent extends React.Component<ICreateEditTypePageProps, any> {
@@ -28,19 +34,22 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
     super(props);
   }
 
-  onSubmit = (type) => {
-    // const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
-    // const submitFn = isCreatePage ? createItem : updateItem;
+  handleErrors(errors) {
+    throw new SubmissionError(getBackendErrors(errors));
+  }
 
-    // return submitFn(item)
-    //   .then(item => {
-    //     if (isCreatePage) {
-    //       history.push(adminRoutes.editItemMain.getLink(item.userId, item.itemId));
-    //     } else {
-    //       initializeForm(item);
-    //     }
-    //   })
-    //   .catch(this.handleErrors);
+  onSubmit = (type: ITypeFields) => {
+    const { createType, history, updateType, initializeForm } = this.props;
+    const submitFn = this.isCreatePage ? createType : updateType;
+    return submitFn(type)
+      .then(newType => {
+        if (this.isCreatePage) {
+          history.push(adminRoutes.editType.getLink(newType.id));
+        } else {
+          initializeForm(newType);
+        }
+      })
+      .catch(this.handleErrors);
   }
 
   render() {
@@ -64,4 +73,10 @@ const mapStateToProps = (state: IAppState, props: ICreateEditTypePageProps) => (
   isFormDirty: isDirty('TypeForm')(state),
 });
 
-export const CreateEditTypePage = connect<{}, {}, any>(mapStateToProps)(CreateEditTypePageComponent);
+const mapDispatchToProps = (dispatch) => ({
+  createType: (type: ITypeFields) => dispatch(createType(type)),
+  updateType: (type: ITypeFields) => dispatch(updateType(type)),
+  initializeForm: (type: ITypeFields) => dispatch(initialize('TypeForm', type)),
+});
+
+export const CreateEditTypePage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent);
