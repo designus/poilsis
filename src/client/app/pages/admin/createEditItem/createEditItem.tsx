@@ -15,7 +15,7 @@ interface IMatchParams {
   itemId: string;
   userId: string;
 }
-interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams> {
+export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams> {
   itemsMap: IItemsMap;
   getItem: (id) => void;
 }
@@ -95,16 +95,12 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    itemsMap: state.items.dataMap,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  itemsMap: state.items.dataMap,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getItem: (itemId) => dispatch(getItem(itemId)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  getItem: (itemId) => dispatch(getItem(itemId)),
+});
 
 export const CreateEditItemPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent);

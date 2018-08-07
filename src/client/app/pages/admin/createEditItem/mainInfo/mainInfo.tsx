@@ -1,17 +1,32 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, initialize } from 'redux-form';
-import { IAppState } from 'reducers';
+import { SubmissionError, isDirty, initialize, isSubmitting } from 'redux-form';
+
+import { IAppState, IItem, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { updateMainInfo, postItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { IItemFields } from 'global-utils';
 import { extendWithLoader, NavigationPrompt } from 'components';
-import { MainInfoForm } from './form';
+import { ICreateEditItemPageProps } from '../createEditItem';
+import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(MainInfoForm);
 
-class MainInfoPageComponent extends React.Component<any, any> {
+interface IMainInfoProps extends ICreateEditItemPageProps {
+  usersMap: IUsersMap;
+  citiesMap: ICitiesMap;
+  typesMap: ITypesMap;
+  userRole: string;
+  showNavigationPrompt: boolean;
+  isCreatePage: boolean;
+  loadedItem: IItem;
+  createItem: (item: IItemFields) => Promise<any>;
+  updateItem: (item: IItemFields) => Promise<any>;
+  initializeForm: (item: IItemFields) => void;
+}
+
+class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
 
   constructor(props) {
     super(props);
@@ -50,7 +65,7 @@ class MainInfoPageComponent extends React.Component<any, any> {
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
         />
-        <NavigationPrompt when={this.props.isFormDirty} />
+        <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>
     );
   }
@@ -61,15 +76,13 @@ const mapStateToProps = (state: IAppState) => ({
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
   userRole: state.currentUser.details.role,
-  isFormDirty: isDirty('MainInfoForm')(state),
+  showNavigationPrompt: isDirty(MAIN_INFO_FORM_NAME)(state) && !isSubmitting(MAIN_INFO_FORM_NAME)(state),
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateItem: (item) => dispatch(updateMainInfo(item)),
-    createItem: (item) => dispatch(postItem(item)),
-    initializeForm: (data) => dispatch(initialize('MainInfoForm', data)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  updateItem: (item) => dispatch(updateMainInfo(item)),
+  createItem: (item) => dispatch(postItem(item)),
+  initializeForm: (data) => dispatch(initialize(MAIN_INFO_FORM_NAME, data)),
+});
 
 export const MainInfoPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent);

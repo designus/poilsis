@@ -3,6 +3,8 @@ import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { TextInput, Button } from 'components';
 import { isRequired } from 'global-utils';
 
+export const TYPE_FORM_NAME = 'TypeForm';
+
 const Form = (props: InjectedFormProps<{}, {}>) => {
   const { handleSubmit } = props;
   return (
@@ -35,4 +37,4 @@ const Form = (props: InjectedFormProps<{}, {}>) => {
   );
 };
 
-export const TypeForm = reduxForm<{}, any>({ form: 'TypeForm' })(Form);
+export const TypeForm = reduxForm<{}, any>({ form: TYPE_FORM_NAME })(Form);

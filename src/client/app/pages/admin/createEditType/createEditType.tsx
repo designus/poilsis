@@ -2,14 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, initialize } from 'redux-form';
+import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
 
 import { ITypeFields } from 'global-utils';
 import { createType, updateType } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
 import { extendWithLoader, NavigationPrompt } from 'components';
 import { IAppState, IType } from 'reducers';
-import { TypeForm } from './form';
+import { TypeForm, TYPE_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(TypeForm);
 
@@ -19,11 +19,10 @@ interface IMatchParams {
 
 interface ICreateEditTypePageProps extends RouteComponentProps<IMatchParams> {
   loadedType: IType;
-  isFormDirty: boolean;
-  wasFormSubmitted: boolean;
+  showNavigationPrompt: boolean;
   createType: (type: ITypeFields) => Promise<any>;
   updateType: (type: ITypeFields) => Promise<any>;
-  initializeForm: any;
+  initializeForm: (type: ITypeFields) => void;
 }
 
 class CreateEditTypePageComponent extends React.Component<ICreateEditTypePageProps, any> {
@@ -62,7 +61,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
           showLoadingOverlay={true}
           initialValues={this.props.loadedType}
         />
-        <NavigationPrompt when={this.props.isFormDirty} />
+        <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>
     );
   }
@@ -70,13 +69,13 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
 
 const mapStateToProps = (state: IAppState, props: ICreateEditTypePageProps) => ({
   loadedType: state.types.dataMap[props.match.params.typeId],
-  isFormDirty: isDirty('TypeForm')(state),
+  showNavigationPrompt: isDirty(TYPE_FORM_NAME)(state) && !isSubmitting(TYPE_FORM_NAME)(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   createType: (type: ITypeFields) => dispatch(createType(type)),
   updateType: (type: ITypeFields) => dispatch(updateType(type)),
-  initializeForm: (type: ITypeFields) => dispatch(initialize('TypeForm', type)),
+  initializeForm: (type: ITypeFields) => dispatch(initialize(TYPE_FORM_NAME, type)),
 });
 
 export const CreateEditTypePage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent);

@@ -9,6 +9,8 @@ const maxTextLength15 = maxTextLength(15);
 const minCheckedLength1 = minCheckedLength(1);
 const maxCheckedLength3 = maxCheckedLength(3);
 
+export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
+
 interface ICustomProps {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
@@ -68,4 +70,4 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   );
 };
 
-export const MainInfoForm = reduxForm<{}, ICustomProps>({ form: 'MainInfoForm' })(Form);
+export const MainInfoForm = reduxForm<{}, ICustomProps>({ form: MAIN_INFO_FORM_NAME })(Form);
