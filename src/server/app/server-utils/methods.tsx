@@ -1,6 +1,7 @@
 const fs = require('fs');
 import { SheetsRegistry } from 'react-jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
+import { Response, NextFunction } from 'express';
 import { IMulterFile, FileUploadErrors } from './types';
 import {
   ImageSize,
@@ -138,4 +139,16 @@ export const preloadData = ([loadInitialData, ...loadOtherData], loadInitialData
     return loadInitialData();
   }
   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));
+};
+
+export const formatAlias = alias => alias
+  .split(/\s+/)
+  .join('-')
+  .toLowerCase();
+
+export const genericCallback = (res: Response, next: NextFunction) => (err, result) => {
+  if (err) {
+    return next(err);
+  }
+  res.json(result);
 };

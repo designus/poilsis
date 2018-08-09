@@ -1,3 +1,4 @@
+import { SchemaTypeOpts } from 'mongoose';
 export interface IMulterFile {
   path: string;
   mimetype: string;
@@ -12,3 +13,7 @@ export enum FileUploadErrors {
   limitFileCount = 'LIMIT_FILE_COUNT',
   wrongFileType = 'WRONG_FILE_TYPE',
 }
+
+export type TGenericSchemaMap<T> = {
+  [I in keyof T]: SchemaTypeOpts<any>;
+};

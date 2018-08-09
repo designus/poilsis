@@ -11,7 +11,3 @@ export interface IGenericState<T> {
   aliases: IAlias[];
   dataMap: IGenericDataMap<T>;
 }
-
-export type TGenericSchemaMap<T> = {
-  [I in keyof T]: any;
-};

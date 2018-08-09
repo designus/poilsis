@@ -226,7 +226,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(id => {
               const row = dataMap[id];
               const isSelected = this.isSelected(id);
-              return (
+              return row && (
                 <TableRow
                   hover
                   role="checkbox"

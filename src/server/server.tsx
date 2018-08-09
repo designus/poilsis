@@ -1,12 +1,5 @@
 require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const expressValidator = require('express-validator');
-const cookieParser = require('cookie-parser');
-
 import * as React from 'react';
-
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -22,6 +15,14 @@ import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { getMaterialUiCSSParams, preloadData, handleItemsErrors } from './app/server-utils';
 import { App } from '../client/app/pages';
 import auth from './app/controllers/auth';
+
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+const cookieParser = require('cookie-parser');
+const mongoSanitize = require('express-mongo-sanitize');
+
 const app = express();
 const expressPort = 3000;
 const webpackPort = 8080;
@@ -36,6 +37,7 @@ app.use('/uploads', express.static('uploads'));
 app.use(cookieParser());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(mongoSanitize());
 app.use(expressValidator());
 app.use(auth.initialize());
 app.use('/api', apiRouter(), handleItemsErrors);

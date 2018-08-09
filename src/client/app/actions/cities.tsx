@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ICitiesItems, IAppState } from '../reducers';
 import { startLoading, endLoading, receiveItems } from '../actions';
-import { getNormalizedData } from '../client-utils';
+import { getNormalizedData, CONTENT_LOADER_ID } from '../client-utils';
 
 export const SELECT_CITY = 'SELECT_CITY';
 export const RECEIVE_CITY_ITEMS = 'RECEIVE_CITY_ITEMS';
@@ -52,7 +52,7 @@ export const getCityItems = (cityId) => {
       return;
     }
 
-    dispatch(startLoading());
+    dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.get(`http://localhost:3000/api/items/city/${cityId}`)
       .then(response => response.data)
@@ -69,12 +69,12 @@ export const getCityItems = (cityId) => {
 
         dispatch(receiveItems(itemsMap, aliases, areAllItemsLoaded));
         dispatch(receiveCityItems(cityItems));
-        dispatch(endLoading());
+        dispatch(endLoading(CONTENT_LOADER_ID));
 
       })
       .catch(err => {
         console.error(err);
-        dispatch(endLoading());
+        dispatch(endLoading(CONTENT_LOADER_ID));
       });
   };
 };

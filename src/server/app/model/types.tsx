@@ -1,13 +1,22 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { ITypeFields, REQUIRED_MESSAGE } from 'global-utils';
+import { Document, Model, model, Schema } from 'mongoose';
+import { formatAlias, TGenericSchemaMap } from '../server-utils';
 
-const TypesSchema = new Schema({
-  name: String,
+const shortId = require('shortid');
+const SchemaClass = require('mongoose').Schema;
+
+export interface ITypeModel extends ITypeFields, Document {}
+interface ITypesSchema extends TGenericSchemaMap<ITypeFields> {}
+
+const TypesSchemaMap: ITypesSchema = {
+  id: { type: String, unique: true, default: shortId.generate, required: true },
+  name: { type: String, required: [true, REQUIRED_MESSAGE]},
   description: String,
-  alias: String,
-  id: String,
-});
+  alias: { type: String, lowercase: true, trim: true, required: true, set: formatAlias },
+};
 
-export const TypesModel = mongoose.model('Types', TypesSchema);
+const TypesSchema: Schema = new SchemaClass(TypesSchemaMap);
+
+export const TypesModel: Model<ITypeModel> = model<ITypeModel>('Types', TypesSchema);

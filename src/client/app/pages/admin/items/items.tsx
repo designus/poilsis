@@ -1,10 +1,11 @@
 import * as React from 'react';
 import * as moment from 'moment';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
-import { IAppState } from 'reducers';
+import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { getUserItems, deleteItem, endLoading } from 'actions';
-import { adminRoutes } from 'client-utils';
+import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { ITEMS } from 'data-strings';
 import { AdminHeader } from 'global-styles';
 import {
@@ -19,7 +20,19 @@ import {
 
 const Table = extendWithLoader(EnhancedTable);
 
-class AdminItemsPageComponent extends React.Component<any, any> {
+interface IItemsPageParams {
+  itemsMap: IItemsMap;
+  usersMap: IUsersMap;
+  citiesMap: ICitiesMap;
+  typesMap: ITypesMap;
+  areAllItemsLoaded: boolean;
+  userItems: string[];
+  deleteItem: (itemId) => void;
+  getUserItems: () => void;
+  endLoading: (loaderId) => void;
+}
+
+class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
 
   static fetchData(store) {
     return store.dispatch(getUserItems());
@@ -92,7 +105,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
           return (
             <ItemActions
               editLink={adminRoutes.editItemMain.getLink(userId, itemId)}
-              onDelete={this.openDeleteModal.bind(this, itemId)}
+              onDelete={this.openDeleteModal(itemId)}
             />
           );
         },
@@ -104,12 +117,12 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     this.setState({search});
   }
 
-  openDeleteModal(id) {
-    this.setState({isDeleteModalOpen: true, deleteId: id});
+  openDeleteModal = (itemId) => () => {
+    this.setState({ isDeleteModalOpen: true, deleteId: itemId });
   }
 
-  closeDeleteModal = () => {
-    this.setState({isDeleteModalOpen: false});
+  handleModalClose = () => {
+    this.setState({ isDeleteModalOpen: false });
   }
 
   get deleteItemName() {
@@ -117,12 +130,12 @@ class AdminItemsPageComponent extends React.Component<any, any> {
     return item && item.name;
   }
 
-  onDelete = (itemId) => {
+  handleItemDelete = (itemId) => {
     return this.props.deleteItem(itemId);
   }
 
   componentWillUnmount() {
-    this.props.endLoading();
+    this.props.endLoading(CONTENT_LOADER_ID);
   }
 
   render() {
@@ -139,6 +152,7 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         </AdminHeader>
         <Table
           showLoadingOverlay={true}
+          loaderId={CONTENT_LOADER_ID}
           dataMap={this.props.itemsMap}
           items={this.props.userItems}
           search={this.state.search}
@@ -148,8 +162,8 @@ class AdminItemsPageComponent extends React.Component<any, any> {
         <DeleteModal
           itemId={this.state.deleteId}
           isModalOpen={this.state.isDeleteModalOpen}
-          onCloseModal={this.closeDeleteModal}
-          onDelete={this.onDelete}
+          onClose={this.handleModalClose}
+          onDelete={this.handleItemDelete}
           itemName={this.deleteItemName}
         />
       </div>
@@ -157,23 +171,23 @@ class AdminItemsPageComponent extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    itemsMap: state.items.dataMap,
-    usersMap: state.users.dataMap,
-    userItems: state.currentUser.items,
-    citiesMap: state.cities.dataMap,
-    typesMap: state.types.dataMap,
-    areAllItemsLoaded: state.items.isAllLoaded,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  itemsMap: state.items.dataMap,
+  usersMap: state.users.dataMap,
+  userItems: state.currentUser.items,
+  citiesMap: state.cities.dataMap,
+  typesMap: state.types.dataMap,
+  areAllItemsLoaded: state.items.isAllLoaded,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteItem: (itemId) => dispatch(deleteItem(itemId)),
-    getUserItems: () => dispatch(getUserItems()),
-    endLoading: () => dispatch(endLoading()),
-  };
-};
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      deleteItem,
+      getUserItems,
+      endLoading,
+    },
+    dispatch,
+  );
 
 export const AdminItemsPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent);
