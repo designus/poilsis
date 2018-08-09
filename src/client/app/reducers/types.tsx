@@ -23,7 +23,7 @@ export const types = (state: ITypesState = null, action) => {
         },
       };
     case REMOVE_TYPE:
-      const {[action.removedType.id]: removedType, ...dataMap} = state.dataMap;
+      const {[action.typeId]: removedType, ...dataMap} = state.dataMap;
       return {
         ...state,
         dataMap,

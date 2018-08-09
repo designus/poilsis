@@ -13,7 +13,7 @@ const Form = (props: InjectedFormProps<{}, {}>) => {
         name="name"
         type="text"
         component={TextInput}
-        // validate={[isRequired]}
+        validate={[isRequired]}
         label="Name"
       />
       <Field

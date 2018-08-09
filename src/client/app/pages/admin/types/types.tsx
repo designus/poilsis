@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAppState, ITypesMap } from 'reducers';
 import { AdminHeader } from 'global-styles';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
+import { deleteType } from 'actions';
 import {
   EnhancedTable,
   ITableColumn,
@@ -17,6 +18,7 @@ const Table = extendWithLoader(EnhancedTable);
 
 interface ITypesPageParams {
   typesMap: ITypesMap;
+  deleteType: (typeId) => Promise<any>;
 }
 
 class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
@@ -69,7 +71,7 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
   }
 
   handleTypeDelete = (typeId) => {
-    console.log('Deleting ', typeId);
+    return this.props.deleteType(typeId);
   }
 
   render() {
@@ -105,12 +107,8 @@ const mapStateToProps = (state: IAppState) => ({
   typesMap: state.types.dataMap,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // deleteItem: (itemId) => dispatch(deleteItem(itemId)),
-    // getUserItems: () => dispatch(getUserItems()),
-    // endLoading: () => dispatch(endLoading()),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  deleteType: (typeId) => dispatch(deleteType(typeId)),
+});
 
 export const AdminTypesPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminTypesPageComponent);
