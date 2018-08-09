@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { AxiosResponse as IResponse } from 'axios';
+
 import { IGenericState } from './types';
 import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
@@ -6,7 +8,6 @@ export function getSelectedCity(citiesState: ICityState, city: string) {
   return new Promise((resolve, reject) => {
     const { aliases } = citiesState;
     const selectedCity = aliases.find(({ alias, id }) => alias === city);
-    console.log('Selected city', selectedCity);
     if (selectedCity) {
       resolve(selectedCity);
     } else {
@@ -77,4 +78,11 @@ export const renderMergedProps = (component, ...rest) => {
   return (
     React.createElement(component, finalProps)
   );
+};
+
+export const handleApiResponse = (response: IResponse) => {
+  if (response.data.errors) {
+    throw response.data.errors;
+  }
+  return response.data;
 };
