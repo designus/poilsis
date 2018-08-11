@@ -7,10 +7,10 @@ import { formatAlias, TGenericSchemaMap } from '../server-utils';
 const shortId = require('shortid');
 const SchemaClass = require('mongoose').Schema;
 
-export interface ITypeModel extends ITypeFields, Document {}
-interface ITypesSchema extends TGenericSchemaMap<ITypeFields> {}
+interface ITypeModel extends ITypeFields, Document {}
+interface ITypeSchema extends TGenericSchemaMap<ITypeFields> {}
 
-const TypesSchemaMap: ITypesSchema = {
+const TypesSchemaMap: ITypeSchema = {
   id: { type: String, unique: true, default: shortId.generate, required: true },
   name: { type: String, required: [true, REQUIRED_MESSAGE]},
   description: String,

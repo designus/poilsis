@@ -1,3 +1,4 @@
+import { ICityFields } from 'global-utils';
 import { SELECT_CITY, RECEIVE_INITIAL_DATA, RECEIVE_CITY_ITEMS, REMOVE_CITY_ITEM, ADD_CITY_ITEM } from '../actions';
 import { IGenericState, removeDuplicates, IGenericDataMap } from '../client-utils';
 
@@ -10,15 +11,7 @@ export interface ICitiesItems {
   [key: string]: ICityItems;
 }
 
-export interface ICity {
-  id: string;
-  alias: string;
-  description: string;
-  name: string;
-  types: string[];
-  items: string[];
-  haveAllItemsLoaded: boolean;
-}
+export interface ICity extends ICityFields, ICityItems {}
 
 export type ICitiesMap = IGenericDataMap<ICity>;
 
