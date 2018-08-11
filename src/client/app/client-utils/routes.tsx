@@ -4,6 +4,7 @@ import {
   CreateEditItemPage,
   CreateEditTypePage,
   AdminTypesPage,
+  AdminCitiesPage,
   MainInfoPage,
   PhotosPage,
   ClientLayoutPage,
@@ -19,8 +20,21 @@ export interface IRoute {
   allowedRoles?: string[];
 }
 
-export type RouteKeys = 'landing' | 'items' | 'item' | 'createItem' | 'createItemMain' | 'editItem' | 'editItemMain'
-| 'editItemPhotos' | 'types' | 'createType' | 'editType';
+export type RouteKeys =
+  | 'landing'
+  | 'items'
+  | 'item'
+  | 'createItem'
+  | 'createItemMain'
+  | 'editItem'
+  | 'editItemMain'
+  | 'editItemPhotos'
+  | 'types'
+  | 'createType'
+  | 'editType'
+  | 'cities'
+  | 'createCity'
+  | 'editCity' ;
 
 export type RoutesConfig = {
   [P in RouteKeys]?: IRoute;
@@ -97,5 +111,11 @@ export const adminRoutes: RoutesConfig = {
     getLink: (typeId) => `/admin/type/edit/${typeId}`,
     allowedRoles: [UserRoles.admin],
     getComponent: () => CreateEditTypePage,
+  },
+  cities: {
+    path: '/admin/cities',
+    getLink: () => '/admin/cities',
+    allowedRoles: [UserRoles.admin],
+    getComponent: () => AdminCitiesPage,
   },
 };
