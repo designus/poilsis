@@ -9,6 +9,7 @@ import {
   uploadSuccess,
   removeUserItem,
 } from '../actions';
+import { stopLoading } from './utils';
 import {
   IAlias,
   objectToFormData,
@@ -74,12 +75,6 @@ export const receiveImages = (id: string, images: IImage[]) => {
     id,
     images,
   };
-};
-
-export const stopLoading = (isError, toastMessage, loaderId) => dispatch => {
-  const toastType = isError ? Toast.error : Toast.success;
-  dispatch(endLoading(loaderId));
-  dispatch(showToast(toastType, toastMessage));
 };
 
 export const getItem = (itemId) => {
