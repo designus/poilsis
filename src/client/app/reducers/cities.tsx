@@ -52,6 +52,7 @@ export const cities = (state: ICityState = null, action): ICityState => {
     case RECEIVE_CITY:
       return {
         ...state,
+        aliases: [...state.aliases, { id: action.newCity.id, alias: action.newCity.alias }],
         dataMap: {
           ...state.dataMap,
           [action.newCity.id]: {
@@ -61,10 +62,11 @@ export const cities = (state: ICityState = null, action): ICityState => {
         },
       };
     case REMOVE_CITY:
-      const {[action.cityId]: removedCity, ...dataMap} = state.dataMap;
+      const { [action.cityId]: removedCity, ...dataMap } = state.dataMap;
       return {
         ...state,
         dataMap,
+        aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)],
       };
     case RECEIVE_INITIAL_DATA:
       return {...state, ...action.data.cities};

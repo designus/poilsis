@@ -3,6 +3,7 @@ import {
   AdminItemsPage,
   CreateEditItemPage,
   CreateEditTypePage,
+  CreateEditCityPage,
   AdminTypesPage,
   AdminCitiesPage,
   MainInfoPage,
@@ -117,5 +118,17 @@ export const adminRoutes: RoutesConfig = {
     getLink: () => '/admin/cities',
     allowedRoles: [UserRoles.admin],
     getComponent: () => AdminCitiesPage,
+  },
+  createCity: {
+    path: '/admin/city/create',
+    getLink: () => '/admin/city/create',
+    allowedRoles: [UserRoles.admin],
+    getComponent: () => CreateEditCityPage,
+  },
+  editCity: {
+    path: '/admin/city/edit/:cityId',
+    getLink: (cityId) => `/admin/city/edit/${cityId}`,
+    allowedRoles: [UserRoles.admin],
+    getComponent: () => CreateEditCityPage,
   },
 };

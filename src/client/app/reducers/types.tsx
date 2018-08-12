@@ -5,15 +5,18 @@ import { ITypeFields } from 'global-utils';
 export interface IType extends ITypeFields {}
 
 export type ITypesMap = IGenericDataMap<IType>;
-export interface ITypesState extends IGenericState<IType> {}
+export interface ITypesState extends IGenericState<IType> {
+  selectedId?: string;
+}
 
-export const types = (state: ITypesState = null, action) => {
+export const types = (state: ITypesState = null, action): ITypesState => {
   switch (action.type) {
     case RECEIVE_INITIAL_DATA:
       return {...state, ...action.data.types};
     case RECEIVE_TYPE:
       return {
         ...state,
+        aliases: [...state.aliases, { id: action.newType.id, alias: action.newType.alias }],
         dataMap: {
           ...state.dataMap,
           [action.newType.id]: {
@@ -23,10 +26,11 @@ export const types = (state: ITypesState = null, action) => {
         },
       };
     case REMOVE_TYPE:
-      const {[action.typeId]: removedType, ...dataMap} = state.dataMap;
+      const { [action.typeId]: removedType, ...dataMap } = state.dataMap;
       return {
         ...state,
         dataMap,
+        aliases: [...state.aliases.filter(alias => alias.id !== action.typeId)],
       };
     case SELECT_TYPE:
       return {...state, selectedId: action.typeId};

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAppState, ICitiesMap, ITypesMap } from 'reducers';
 import { AdminHeader } from 'global-styles';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { deleteType } from 'actions';
+import { deleteCity } from 'actions';
 import {
   EnhancedTable,
   ITableColumn,
@@ -20,7 +20,7 @@ const Table = extendWithLoader(EnhancedTable);
 interface ICitiesPageParams {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  deleteType: (typeId) => Promise<any>;
+  deleteCity: (typeId) => Promise<any>;
 }
 
 class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
@@ -63,7 +63,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
         format: (cityId: string) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editType.getLink(cityId)}
+              editLink={adminRoutes.editCity.getLink(cityId)}
               onDelete={this.openDeleteModal(cityId)}
             />
           );
@@ -81,7 +81,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
   }
 
   handleCityDelete = (cityId) => {
-    // return this.props.deleteType(cityId);
+    return this.props.deleteCity(cityId);
   }
 
   render() {
@@ -91,7 +91,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
           <Typography variant="headline">
             Cities
           </Typography>
-          <AdminPageActions createLink={adminRoutes.createType.getLink()} />
+          <AdminPageActions createLink={adminRoutes.createCity.getLink()} />
         </AdminHeader>
         <Table
           showLoadingOverlay={true}
@@ -119,7 +119,7 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteCity: (cityId) => dispatch(deleteType(cityId)),
+  deleteCity: (cityId) => dispatch(deleteCity(cityId)),
 });
 
 export const AdminCitiesPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent);

@@ -13,9 +13,12 @@ import CitiesIcon from '@material-ui/icons/BeachAccess';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { Switch } from 'react-router-dom';
+
 import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
 import { IAppState } from 'reducers';
+import { ITEMS, GO_TO_WEBSITE, TYPES } from 'data-strings';
+import { getInitialData } from 'actions';
 import {
   Toast,
   VerticalMenu,
@@ -26,11 +29,8 @@ import {
   NotAuthorized,
   ProtectedRoute,
 } from 'components';
-import { AdminItemsPage, AdminTypesPage, CreateEditItemPage, CreateEditTypePage } from 'pages';
-import { ITEMS, GO_TO_WEBSITE, TYPES } from 'data-strings';
-import { getInitialData } from 'actions';
-import { Switch } from 'react-router-dom';
 
+import { styles } from './styles';
 interface IAdminLayoutProps extends WithStyles<typeof styles>  {
   isInitialDataLoaded: boolean;
   location: any;
@@ -138,7 +138,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               <ProtectedRoute
                 exact
                 path={adminRoutes.items.path}
-                component={AdminItemsPage}
+                component={adminRoutes.items.getComponent()}
               />
               <ProtectedRoute
                 exact
@@ -154,19 +154,27 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               />
               <ProtectedRoute
                 path={adminRoutes.createItem.path}
-                component={CreateEditItemPage}
+                component={adminRoutes.createItem.getComponent()}
               />
               <ProtectedRoute
                 path={adminRoutes.editItem.path}
-                component={CreateEditItemPage}
+                component={adminRoutes.editItem.getComponent()}
               />
               <ProtectedRoute
                 path={adminRoutes.createType.path}
-                component={CreateEditTypePage}
+                component={adminRoutes.createType.getComponent()}
               />
               <ProtectedRoute
                 path={adminRoutes.editType.path}
-                component={CreateEditTypePage}
+                component={adminRoutes.editType.getComponent()}
+              />
+              <ProtectedRoute
+                path={adminRoutes.createCity.path}
+                component={adminRoutes.createCity.getComponent()}
+              />
+              <ProtectedRoute
+                path={adminRoutes.editCity.path}
+                component={adminRoutes.editCity.getComponent()}
               />
               <ProtectedRoute
                 path={'/admin/not-authorized'}
