@@ -1,6 +1,14 @@
 import { ICityFields } from 'global-utils';
-import { SELECT_CITY, RECEIVE_INITIAL_DATA, RECEIVE_CITY_ITEMS, REMOVE_CITY_ITEM, ADD_CITY_ITEM } from '../actions';
-import { IGenericState, removeDuplicates, IGenericDataMap } from '../client-utils';
+import { IGenericState, removeDuplicates, IGenericDataMap } from 'client-utils';
+import {
+  SELECT_CITY,
+  RECEIVE_INITIAL_DATA,
+  RECEIVE_CITY_ITEMS,
+  REMOVE_CITY_ITEM,
+  ADD_CITY_ITEM,
+  RECEIVE_CITY,
+  REMOVE_CITY,
+} from 'actions';
 
 export interface ICityItems {
   items: string[];
@@ -41,6 +49,23 @@ export const cities = (state: ICityState = null, action): ICityState => {
   switch (action.type) {
     case SELECT_CITY:
       return {...state, selectedId: action.cityId};
+    case RECEIVE_CITY:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.newCity.id]: {
+            ...(state.dataMap[action.newCity.id] || {}),
+            ...action.newCity,
+          },
+        },
+      };
+    case REMOVE_CITY:
+      const {[action.cityId]: removedCity, ...dataMap} = state.dataMap;
+      return {
+        ...state,
+        dataMap,
+      };
     case RECEIVE_INITIAL_DATA:
       return {...state, ...action.data.cities};
     case RECEIVE_CITY_ITEMS:
