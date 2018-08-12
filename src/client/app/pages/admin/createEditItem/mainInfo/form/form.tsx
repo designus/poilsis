@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { CheckboxGroup, SelectBox, TextInput, Button } from 'components';
+import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'components';
 import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
 
@@ -61,6 +61,13 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         data={props.typesMap}
         dataKey="name"
       />
+      {isAdmin(props.userRole) &&
+        <Field
+          name="isEnabled"
+          component={Switcher}
+          label="Is Enabled"
+        />
+      }
       <div>
         <Button type="submit" disabled={submitting || pristine}>
           Submit

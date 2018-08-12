@@ -32,6 +32,7 @@ export interface IItemFields {
   alias?: string;
   createdAt?: string;
   updatedAt?: string;
+  isEnabled?: boolean;
 }
 
 export interface ITypeFields {
