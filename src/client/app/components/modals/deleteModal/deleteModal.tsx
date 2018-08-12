@@ -26,10 +26,6 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
       .catch(error => this.setState({ error }));
   }
 
-  // openModal(id) {
-  //   this.setState({isModalOpen: true, deleteId: id});
-  // }
-
   render() {
     const { classes, itemName, onClose, isModalOpen } = this.props;
     const { error } = this.state;
