@@ -146,7 +146,7 @@ export const formatAlias = alias => alias
   .join('-')
   .toLowerCase();
 
-export const genericCallback = (res: Response, next: NextFunction) => (err, result) => {
+export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
   if (err) {
     return next(err);
   }
