@@ -1,5 +1,14 @@
-import { SELECT_CITY, RECEIVE_INITIAL_DATA, RECEIVE_CITY_ITEMS, REMOVE_CITY_ITEM, ADD_CITY_ITEM } from '../actions';
-import { IGenericState, removeDuplicates, IGenericDataMap } from '../client-utils';
+import { ICityFields } from 'global-utils';
+import { IGenericState, removeDuplicates, IGenericDataMap } from 'client-utils';
+import {
+  SELECT_CITY,
+  RECEIVE_INITIAL_DATA,
+  RECEIVE_CITY_ITEMS,
+  REMOVE_CITY_ITEM,
+  ADD_CITY_ITEM,
+  RECEIVE_CITY,
+  REMOVE_CITY,
+} from 'actions';
 
 export interface ICityItems {
   items: string[];
@@ -10,15 +19,7 @@ export interface ICitiesItems {
   [key: string]: ICityItems;
 }
 
-export interface ICity {
-  id: string;
-  alias: string;
-  description: string;
-  name: string;
-  types: string[];
-  items: string[];
-  haveAllItemsLoaded: boolean;
-}
+export interface ICity extends ICityFields, ICityItems {}
 
 export type ICitiesMap = IGenericDataMap<ICity>;
 
@@ -48,6 +49,25 @@ export const cities = (state: ICityState = null, action): ICityState => {
   switch (action.type) {
     case SELECT_CITY:
       return {...state, selectedId: action.cityId};
+    case RECEIVE_CITY:
+      return {
+        ...state,
+        aliases: [...state.aliases, { id: action.newCity.id, alias: action.newCity.alias }],
+        dataMap: {
+          ...state.dataMap,
+          [action.newCity.id]: {
+            ...(state.dataMap[action.newCity.id] || {}),
+            ...action.newCity,
+          },
+        },
+      };
+    case REMOVE_CITY:
+      const { [action.cityId]: removedCity, ...dataMap } = state.dataMap;
+      return {
+        ...state,
+        dataMap,
+        aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)],
+      };
     case RECEIVE_INITIAL_DATA:
       return {...state, ...action.data.cities};
     case RECEIVE_CITY_ITEMS:

@@ -41,6 +41,14 @@ export interface ITypeFields {
   alias: string;
 }
 
+export interface ICityFields {
+  id?: string;
+  name: string;
+  description: string;
+  types: string[];
+  alias: string;
+}
+
 export enum UserRoles {
   admin = 'admin',
   user = 'user',

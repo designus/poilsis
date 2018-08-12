@@ -9,12 +9,16 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import MenuIcon from '@material-ui/icons/Menu';
 import TypesIcon from '@material-ui/icons/Gesture';
+import CitiesIcon from '@material-ui/icons/BeachAccess';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
-import { styles } from './styles';
+import { Switch } from 'react-router-dom';
+
 import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
 import { IAppState } from 'reducers';
+import { ITEMS, GO_TO_WEBSITE, TYPES } from 'data-strings';
+import { getInitialData } from 'actions';
 import {
   Toast,
   VerticalMenu,
@@ -25,11 +29,8 @@ import {
   NotAuthorized,
   ProtectedRoute,
 } from 'components';
-import { AdminItemsPage, AdminTypesPage, CreateEditItemPage, CreateEditTypePage } from 'pages';
-import { ITEMS, GO_TO_WEBSITE, TYPES } from 'data-strings';
-import { getInitialData } from 'actions';
-import { Switch } from 'react-router-dom';
 
+import { styles } from './styles';
 interface IAdminLayoutProps extends WithStyles<typeof styles>  {
   isInitialDataLoaded: boolean;
   location: any;
@@ -87,6 +88,12 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
         allowedRoles: adminRoutes.types.allowedRoles,
       },
       {
+        icon: () => (<CitiesIcon />),
+        link: adminRoutes.cities.getLink(),
+        text: 'Cities',
+        allowedRoles: adminRoutes.cities.allowedRoles,
+      },
+      {
         icon: () => (<ArrowBackIcon />),
         link: clientRoutes.landing.getLink(),
         text: GO_TO_WEBSITE,
@@ -131,29 +138,43 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               <ProtectedRoute
                 exact
                 path={adminRoutes.items.path}
-                component={AdminItemsPage}
+                component={adminRoutes.items.getComponent()}
               />
               <ProtectedRoute
                 exact
                 path={adminRoutes.types.path}
-                component={AdminTypesPage}
+                component={adminRoutes.types.getComponent()}
                 allowedRoles={adminRoutes.types.allowedRoles}
               />
               <ProtectedRoute
+                exact
+                path={adminRoutes.cities.path}
+                component={adminRoutes.cities.getComponent()}
+                allowedRoles={adminRoutes.cities.allowedRoles}
+              />
+              <ProtectedRoute
                 path={adminRoutes.createItem.path}
-                component={CreateEditItemPage}
+                component={adminRoutes.createItem.getComponent()}
               />
               <ProtectedRoute
                 path={adminRoutes.editItem.path}
-                component={CreateEditItemPage}
+                component={adminRoutes.editItem.getComponent()}
               />
               <ProtectedRoute
                 path={adminRoutes.createType.path}
-                component={CreateEditTypePage}
+                component={adminRoutes.createType.getComponent()}
               />
               <ProtectedRoute
                 path={adminRoutes.editType.path}
-                component={CreateEditTypePage}
+                component={adminRoutes.editType.getComponent()}
+              />
+              <ProtectedRoute
+                path={adminRoutes.createCity.path}
+                component={adminRoutes.createCity.getComponent()}
+              />
+              <ProtectedRoute
+                path={adminRoutes.editCity.path}
+                component={adminRoutes.editCity.getComponent()}
               />
               <ProtectedRoute
                 path={'/admin/not-authorized'}

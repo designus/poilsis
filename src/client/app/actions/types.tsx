@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ITypeFields } from 'global-utils';
 import { startLoading } from './loader';
-import { stopLoading } from './items';
+import { stopLoading, handleApiErrors } from './utils';
 import { CONTENT_LOADER_ID, handleApiResponse, DIALOG_LOADER_ID } from '../client-utils';
 import {
   TYPE_CREATE_SUCCESS,
@@ -32,12 +32,6 @@ export const removeType = (typeId) => ({
   typeId,
 });
 
-const handleTypeErrors = (message, loaderId, dispatch) => err => {
-  console.error(err);
-  dispatch(stopLoading(true, message, loaderId));
-  return Promise.reject(err);
-};
-
 export const createType = (type: ITypeFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
@@ -48,7 +42,7 @@ export const createType = (type: ITypeFields) => dispatch => {
       dispatch(stopLoading(false, TYPE_CREATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(type);
     })
-    .catch(handleTypeErrors(TYPE_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
+    .catch(handleApiErrors(TYPE_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const updateType = (type: ITypeFields) => dispatch => {
@@ -61,7 +55,7 @@ export const updateType = (type: ITypeFields) => dispatch => {
       dispatch(stopLoading(false, TYPE_UPDATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(type);
     })
-    .catch(handleTypeErrors(TYPE_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
+    .catch(handleApiErrors(TYPE_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
@@ -74,5 +68,5 @@ export const deleteType = (typeId: string) => dispatch => {
       dispatch(stopLoading(false, TYPE_DELETE_SUCCESS, DIALOG_LOADER_ID));
       return Promise.resolve();
     })
-    .catch(handleTypeErrors(TYPE_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
+    .catch(handleApiErrors(TYPE_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
