@@ -17,7 +17,7 @@ import {
   ItemActions,
   DeleteModal,
   AdminPageActions,
-  ToggleAction
+  ToggleAction,
 } from 'components';
 
 const Table = extendWithLoader(EnhancedTable);
@@ -104,7 +104,10 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         dataProp: 'isEnabled',
         sortType: 'string',
         format: (isEnabled: boolean) => (
-          <ToggleAction isEnabled={isEnabled} />
+          <ToggleAction
+            isEnabled={isEnabled}
+            toggle={this.toggleItemVisibility}
+          />
         ),
       },
       {
@@ -121,6 +124,10 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         },
       },
     ];
+  }
+
+  toggleItemVisibility = (shouldDisable: boolean) => () => {
+    console.log('Toggled');
   }
 
   setSearch = (search) => {
