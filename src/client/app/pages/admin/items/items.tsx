@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
+
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { getUserItems, deleteItem, endLoading } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
@@ -16,6 +17,7 @@ import {
   ItemActions,
   DeleteModal,
   AdminPageActions,
+  ToggleAction
 } from 'components';
 
 const Table = extendWithLoader(EnhancedTable);
@@ -96,6 +98,14 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
           const user = this.props.usersMap[userId];
           return user && user.name || null;
         },
+      },
+      {
+        title: 'Is enabled?',
+        dataProp: 'isEnabled',
+        sortType: 'string',
+        format: (isEnabled: boolean) => (
+          <ToggleAction isEnabled={isEnabled} />
+        ),
       },
       {
         title: 'Actions',

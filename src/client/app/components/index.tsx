@@ -20,6 +20,7 @@ export * from './pagination';
 export * from './search';
 export * from './userMenu';
 export * from './toast';
+export * from './toggleAction';
 export * from './validationErrors';
 export * from './table';
 export * from './propsRoute';
