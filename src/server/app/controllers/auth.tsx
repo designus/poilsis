@@ -2,9 +2,11 @@ import * as jwt from 'jwt-simple';
 import * as passport from 'passport';
 import * as moment from 'moment';
 import * as JWT from 'jwt-decode';
+import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
+import { UserRoles } from 'global-utils';
 
 const randToken = require('rand-token');
 
@@ -17,16 +19,19 @@ class Auth {
 
   public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
-  public authorize = (roles: string[]) => (req, res, next) => {
+  public authorize = (roles: string[]) => (req: Request, res: Response, next: NextFunction) => {
     const accessToken: any = this.getAccessTokenClaims(req);
-    const userRole = accessToken.userRole;
-    if (roles.indexOf(userRole) !== -1) {
-      // If userId is not explicitely specified, let's use userId from accessToken
-      req.body.userId = req.body.userId || accessToken.userId;
-      req.body.userRole = accessToken.userRole;
+    const { userRole, userId } = accessToken;
+    const ownerId = req.body.userId;
+    // If userId is not explicitely specified, let's use userId from accessToken
+    const isOwner = userRole === UserRoles.admin || (ownerId && ownerId === userId);
+    const hasAccessRights = req.method === 'GET' && roles.indexOf(userRole) !== -1;
+    if (hasAccessRights || isOwner) {
+      req.body.userId = ownerId || userId;
+      req.body.userRole = userRole;
       return next();
     }
-    res.status(401).json({message: 'You are not authorized to view this resource'});
+    res.status(401).json({ message: 'You are not authorized to view this resource' });
   }
 
   private genToken = (userId: string, userRole: string) => {

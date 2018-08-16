@@ -1,5 +1,7 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
 
 export const styles = (theme: Theme) => createStyles({
   button: {
@@ -13,13 +15,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   icon: {
     color: '#fff',
-    width: '18px',
-    height: '18px',
+    width: '16px',
+    height: '16px',
   },
   green: {
-    background: 'green',
+    background: green[500],
   },
   red: {
-    background: 'red',
+    background: red[500],
   },
 });

@@ -1,21 +1,24 @@
+import { ItemsModel } from '../model';
+import { MAX_FILE_COUNT, IItemFields } from 'global-utils';
+import auth from './auth';
+import {
+  createUploadPath,
+  uploadImages,
+  resizeImages,
+  getImages,
+  removeImagesFromFs,
+  removeImagesDir,
+  sendResponse,
+} from '../server-utils';
+
 const express = require('express');
 const sanitize = require('mongo-sanitize');
 const router = express.Router();
 const shortId = require('shortid');
 
-import { createUploadPath, uploadImages, resizeImages, getImages, removeImagesFromFs, removeImagesDir } from '../server-utils';
-import { ItemsModel } from '../model';
-import { MAX_FILE_COUNT, IItemFields } from 'global-utils';
-import auth from './auth';
-
 router.route('/')
   .get((req, res, next) => {
-    ItemsModel.find((err, items) => {
-      if (err) {
-        return next(err);
-      }
-      res.json(items);
-    });
+    ItemsModel.find(sendResponse(res, next));
   })
   .post(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
 
@@ -28,30 +31,15 @@ router.route('/')
     const userId = req.body.userId;
     const newItem = {id, name, cityId, alias, types, address, userId};
 
-    new ItemsModel(newItem).save((err, item) => {
-      if (err) {
-        return next(err);
-      }
-      res.json(item);
-    });
+    new ItemsModel(newItem).save(sendResponse(res, next));
   });
 
 router.route('/item/:itemId')
   .get((req, res, next) => {
-    ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
-      if (err) {
-        return next(err);
-      }
-      res.json(item);
-    });
+    ItemsModel.findOne({ id: req.params.itemId }, sendResponse(res, next));
   })
-  .delete(auth.authenticate(), removeImagesDir, (req, res, next) => {
-    ItemsModel.findOneAndRemove({id: req.params.itemId}, (err, item, result) => {
-      if (err) {
-        return next(err);
-      }
-      res.send(item);
-    });
+  .delete(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesDir, (req, res, next) => {
+    ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
   });
 
 router.route('/item/mainInfo/:itemId')
@@ -67,14 +55,14 @@ router.route('/item/mainInfo/:itemId')
 
     const updatedItem = {name, cityId, alias, types, address, updatedAt, userId};
 
-    ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true }, (err, item) => {
-      if (err) { return next(err); }
-      res.send(item);
-    });
+    ItemsModel.findOneAndUpdate(
+      { id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true },
+      sendResponse(res, next),
+    );
   });
 
 router.route('/item/photos/:itemId')
-  .put(auth.authenticate(), removeImagesFromFs, (req, res, next) => {
+  .put(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesFromFs, (req, res, next) => {
     ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
       if (err) {
         // TODO: Rollback deleted files
@@ -95,7 +83,7 @@ router.route('/item/photos/:itemId')
   });
 
 router.route('/item/upload-photos/:itemId')
-  .put(auth.authenticate(), createUploadPath, (req, res, next) => {
+  .put(auth.authenticate(), auth.authorize(['admin', 'user']), createUploadPath, (req, res, next) => {
     const uploadPhotos = uploadImages.array(`files[]`, MAX_FILE_COUNT);
 
     uploadPhotos(req, res, (err) => {
@@ -132,23 +120,13 @@ router.route('/item/upload-photos/:itemId')
 });
 
 router.route('/city/:cityId')
-  .get((req, res) => {
-    ItemsModel.find({cityId: req.params.cityId}, (err, items) => {
-      if (err) {
-        res.send(err);
-      }
-      res.json(items);
-    });
+  .get((req, res, next) => {
+    ItemsModel.find({ cityId: req.params.cityId }, sendResponse(res, next));
   });
 
 router.route('/user/:userId')
-  .get((req, res) => {
-    ItemsModel.find({userId: req.params.userId}, (err, items) => {
-      if (err) {
-        res.send(err);
-      }
-      res.json(items);
-    });
+  .get((req, res, next) => {
+    ItemsModel.find({ userId: req.params.userId }, sendResponse(res, next));
   });
 
 export default router;
