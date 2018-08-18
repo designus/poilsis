@@ -1,18 +1,19 @@
 'use strict';
 import * as React from 'react';
 import { ItemTypesList } from '../itemTypesList';
+import { IItemsMap, ITypesMap } from 'reducers';
 
 export interface IItemsListProps {
   items: string[];
-  itemsMap: any;
-  typesMap: any;
+  itemsMap: IItemsMap;
+  typesMap: ITypesMap;
 }
 
 export class ItemsList extends React.Component<IItemsListProps, {}> {
 
   renderItem = itemId => {
     const item = this.props.itemsMap[itemId];
-    return (
+    return item.isEnabled && (
       <div className="item" key={itemId}>
         {item.name}<br />
         <ItemTypesList typeIds={item.types} typesMap={this.props.typesMap} />

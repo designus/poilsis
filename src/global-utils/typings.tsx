@@ -22,17 +22,17 @@ export interface IResponseError {
 
 export interface IItemFields {
   id?: string;
-  address?: string;
-  cityId?: string;
-  description?: string;
-  name?: string;
-  types?: string[];
-  images?: IImage[];
-  userId?: string;
-  alias?: string;
   createdAt?: string;
   updatedAt?: string;
-  isEnabled?: boolean;
+  address: string;
+  cityId: string;
+  description: string;
+  name: string;
+  types: string[];
+  images: IImage[];
+  userId: string;
+  alias: string;
+  isEnabled: boolean;
 }
 
 export interface ITypeFields {
