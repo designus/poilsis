@@ -9,7 +9,7 @@ import {
   uploadSuccess,
   removeUserItem,
 } from '../actions';
-import { stopLoading } from './utils';
+import { stopLoading, handleApiResponse } from './utils';
 import {
   IAlias,
   objectToFormData,
@@ -17,7 +17,7 @@ import {
   CONTENT_LOADER_ID,
   DIALOG_LOADER_ID,
  } from '../client-utils';
-import { IItemsMap, Toast, IItem } from '../reducers';
+import { IItemsMap, IAppState, Toast, IItem } from '../reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -38,44 +38,41 @@ export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
+export const TOGGLE_ITEM_VISIBILITY = 'TOGGLE_ITEM_VISIBILITY';
 
-export const selectItem = (id: string) => {
-  return {
-    type: SELECT_ITEM,
-    itemId: id,
-  };
-};
+export const selectItem = (id: string) => ({
+  type: SELECT_ITEM,
+  itemId: id,
+});
 
-export const receiveItems = (dataMap: IItemsMap, aliases: IAlias[], isAllLoaded: boolean) => {
-  return {
-    type: RECEIVE_ITEMS,
-    dataMap,
-    aliases,
-    isAllLoaded,
-  };
-};
+export const receiveItems = (dataMap: IItemsMap, aliases: IAlias[], isAllLoaded: boolean) => ({
+  type: RECEIVE_ITEMS,
+  dataMap,
+  aliases,
+  isAllLoaded,
+});
 
-export const receiveItem = (item: IItem) => {
-  return {
-    type: RECEIVE_ITEM,
-    item,
-  };
-};
+export const receiveItem = (item: IItem) => ({
+  type: RECEIVE_ITEM,
+  item,
+});
 
-export const removeItem = (item: IItem) => {
-  return {
-    type: REMOVE_ITEM,
-    item,
-  };
-};
+export const removeItem = (item: IItem) => ({
+  type: REMOVE_ITEM,
+  item,
+});
 
-export const receiveImages = (id: string, images: IImage[]) => {
-  return {
-    type: RECEIVE_IMAGES,
-    id,
-    images,
-  };
-};
+export const receiveImages = (id: string, images: IImage[]) => ({
+  type: RECEIVE_IMAGES,
+  id,
+  images,
+});
+
+export const toggleItemVisibility = (itemId, isEnabled) => ({
+  type: TOGGLE_ITEM_VISIBILITY,
+  itemId,
+  isEnabled,
+});
 
 export const getItem = (itemId) => {
 
@@ -228,4 +225,15 @@ export const deleteItem = (itemId: string) => (dispatch) => {
         dispatch(endLoading(DIALOG_LOADER_ID));
       });
   });
+};
+
+export const toggleItem = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
+  const appState: IAppState = getState();
+  const userId = appState.items.dataMap[itemId].userId;
+  return axios.patch(`http://localhost:3000/api/items/item/toggle/${itemId}`, { userId, isEnabled })
+    .then(handleApiResponse)
+    .then(() => {
+      dispatch(toggleItemVisibility(itemId, isEnabled));
+    })
+    .catch(err => console.error('Err', err));
 };

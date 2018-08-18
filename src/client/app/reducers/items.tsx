@@ -1,4 +1,4 @@
-import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES } from 'actions';
+import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES, TOGGLE_ITEM_VISIBILITY } from 'actions';
 import { IGenericState, IGenericDataMap } from 'client-utils';
 import { IItemFields } from 'global-utils';
 
@@ -39,6 +39,17 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
             ...(state.dataMap[action.item.id] || {}),
             ...action.item,
             isFullyLoaded: true,
+          },
+        },
+      };
+    case TOGGLE_ITEM_VISIBILITY:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
+            isEnabled: action.isEnabled,
           },
         },
       };

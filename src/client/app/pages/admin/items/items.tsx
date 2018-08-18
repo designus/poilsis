@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
-import { getUserItems, deleteItem, endLoading } from 'actions';
+import { getUserItems, deleteItem, endLoading, toggleItem } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { ITEMS } from 'data-strings';
 import { AdminHeader } from 'global-styles';
@@ -32,6 +32,7 @@ interface IItemsPageParams {
   deleteItem: (itemId) => void;
   getUserItems: () => void;
   endLoading: (loaderId) => void;
+  toggleItem: (itemId: string, isEnabled: boolean) => void;
 }
 
 class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
@@ -103,10 +104,11 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         title: 'Is enabled?',
         dataProp: 'isEnabled',
         sortType: 'string',
-        format: (isEnabled: boolean) => (
+        formatProps: ['id', 'isEnabled'],
+        format: (itemId: string, isEnabled: boolean) => (
           <ToggleAction
             isEnabled={isEnabled}
-            toggle={this.toggleItemVisibility}
+            onToggle={this.toggleItemVisibility(itemId, !isEnabled)}
           />
         ),
       },
@@ -126,8 +128,8 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
     ];
   }
 
-  toggleItemVisibility = (shouldDisable: boolean) => () => {
-    console.log('Toggled');
+  toggleItemVisibility = (itemId: string, isEnabled: boolean) => () => {
+    this.props.toggleItem(itemId, isEnabled);
   }
 
   setSearch = (search) => {
@@ -203,6 +205,7 @@ const mapDispatchToProps = dispatch =>
       deleteItem,
       getUserItems,
       endLoading,
+      toggleItem,
     },
     dispatch,
   );

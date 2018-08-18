@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ICityFields } from 'global-utils';
 import { ICitiesItems, IAppState } from 'reducers';
 import { startLoading, endLoading, receiveItems } from 'actions';
-import { getNormalizedData, handleApiResponse, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
+import { getNormalizedData, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import {
   CITY_CREATE_SUCCESS,
   CITY_UPDATE_SUCCESS,
@@ -12,7 +12,7 @@ import {
   CITY_UPDATE_ERROR,
   CITY_DELETE_ERROR,
 } from 'data-strings';
-import { stopLoading, handleApiErrors } from './utils';
+import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 
 export const SELECT_CITY = 'SELECT_CITY';
 export const RECEIVE_CITY_ITEMS = 'RECEIVE_CITY_ITEMS';

@@ -1,5 +1,6 @@
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT, IItemFields } from 'global-utils';
+import { Request, Response, NextFunction } from 'express';
 import auth from './auth';
 import {
   createUploadPath,
@@ -127,6 +128,15 @@ router.route('/city/:cityId')
 router.route('/user/:userId')
   .get((req, res, next) => {
     ItemsModel.find({ userId: req.params.userId }, sendResponse(res, next));
+  });
+
+router.route('/item/toggle/:itemId')
+  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), (req: Request, res: Response, next: NextFunction) => {
+
+    ItemsModel.findOneAndUpdate(
+      { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
+      sendResponse(res, next),
+    );
   });
 
 export default router;

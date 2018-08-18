@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import { ITypeFields } from 'global-utils';
 import { startLoading } from './loader';
-import { stopLoading, handleApiErrors } from './utils';
-import { CONTENT_LOADER_ID, handleApiResponse, DIALOG_LOADER_ID } from '../client-utils';
+import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
+import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from '../client-utils';
 import {
   TYPE_CREATE_SUCCESS,
   TYPE_UPDATE_SUCCESS,

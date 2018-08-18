@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { AxiosResponse as IResponse } from 'axios';
-
 import { IGenericState } from './types';
 import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
@@ -78,11 +76,4 @@ export const renderMergedProps = (component, ...rest) => {
   return (
     React.createElement(component, finalProps)
   );
-};
-
-export const handleApiResponse = (response: IResponse) => {
-  if (response.data.errors) {
-    throw response.data.errors;
-  }
-  return response.data;
 };
