@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-import auth from './auth';
+import { auth } from '../controllers';
 import { TokensModel } from '../model/tokens';
 
 router.route('/:userId')

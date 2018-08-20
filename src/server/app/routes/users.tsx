@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-import Auth from './auth';
+import { auth } from '../controllers';
 import { UsersModel as Users } from '../model/users';
 
 router.get('/', (req, res) => {
@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     res.json(users);
   });
 });
-router.post('/login', Auth.login);
+router.post('/login', auth.login);
 router.get('/profile/:userId', async (req, res) => {
   try {
     const user = await Users.findOne({id: req.params.userId }).exec();

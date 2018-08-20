@@ -4,9 +4,10 @@ import * as moment from 'moment';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
+import { UserRoles } from 'global-utils';
+
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
-import { UserRoles } from 'global-utils';
 
 const randToken = require('rand-token');
 
@@ -139,4 +140,4 @@ class Auth {
 
 }
 
-export default new Auth();
+export const auth = new Auth();

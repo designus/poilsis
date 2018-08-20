@@ -3,7 +3,7 @@ import { Request, Response, NextFunction, Router } from 'express';
 import { ITypeFields } from 'global-utils';
 import { TypesModel } from '../model';
 import { sendResponse } from '../server-utils';
-import auth from './auth';
+import { auth } from '../controllers';
 
 const router = Router();
 const shortId = require('shortid');

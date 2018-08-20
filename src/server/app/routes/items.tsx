@@ -1,7 +1,7 @@
 import { ItemsModel } from '../model';
 import { MAX_FILE_COUNT, IItemFields } from 'global-utils';
 import { Request, Response, NextFunction } from 'express';
-import auth from './auth';
+import { auth } from '../controllers';
 import {
   createUploadPath,
   uploadImages,

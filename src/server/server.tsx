@@ -4,17 +4,14 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { rootReducer } from '../client/app/reducers';
-import { routes } from '../client/app/routes';
-import { apiRouter } from './app/controllers';
 import StaticRouter from 'react-router-dom/StaticRouter';
 import { matchRoutes } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import { getMaterialUiCSSParams, preloadData, handleItemsErrors } from './app/server-utils';
-import { App } from '../client/app/pages';
-import auth from './app/controllers/auth';
+
+import { App, rootReducer, routes } from '../client/app';
+import { auth, apiRouter, getMaterialUiCSSParams, preloadData, handleItemsErrors } from './app';
 
 const express = require('express');
 const mongoose = require('mongoose');
