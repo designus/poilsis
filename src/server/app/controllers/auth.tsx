@@ -110,6 +110,20 @@ class Auth {
     }
   }
 
+  public logout = async (req, res) => {
+    try {
+      const token = await TokensModel.findOneAndRemove({ userId: req.params.userId }).exec();
+
+      if (!token) {
+        throw new Error('Token not found');
+      }
+
+      res.status(200).send({message: ''});
+    } catch (err) {
+      res.status(401).send({message: err});
+    }
+  }
+
   private extractFromCookie(req) {
     return req && req.cookies ? req.cookies.jwt : null;
   }
