@@ -81,7 +81,7 @@ class Auth {
         throw errors;
       }
 
-      const user = await User.findOne({username: req.body.username }).exec();
+      const user = await User.findOne({ username: req.body.username }).exec();
 
       if (user === null) {
         throw new Error('User not found');
