@@ -13,6 +13,7 @@ import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 import { App, rootReducer, routes } from '../client/app/index';
 import { auth, apiRouter, getMaterialUiCSSParams, preloadData, handleItemsErrors } from './app/index';
+import { config } from '../../config';
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -22,12 +23,11 @@ const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
-const expressPort = 3000;
 const webpackPort = 8080;
-const staticFilesPort = app.get('env') === 'production' ? expressPort : webpackPort;
+const staticFilesPort = app.get('env') === 'production' ? config.port : webpackPort;
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/poilsis');
+mongoose.connect(config.db);
 
 app.use('/public', express.static('build/client'));
 app.use('/images', express.static('static/images'));
@@ -106,11 +106,3 @@ function renderFullPage(html, css1, css2, preloadedState) {
 }
 
 export default app;
-
-// app.listen(expressPort, (error) => {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.info(`==> 🌎  Listening on port ${expressPort}. Open up http://localhost:${expressPort}/ in your browser.`);
-//   }
-// });

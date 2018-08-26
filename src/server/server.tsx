@@ -1,11 +1,10 @@
 import app from './app';
+import { config } from '../../config';
 
-const expressPort = 3000;
-
-app.listen(expressPort, (error) => {
+app.listen(config.port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`==> 🌎  Listening on port ${expressPort}. Open up http://localhost:${expressPort}/ in your browser.`);
+    console.info(`==> 🌎  Listening on port ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
   }
 });

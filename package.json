@@ -5,21 +5,19 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf build",
-    "start": "cross-env NODE_ENV=development node ./build/server/app.js",
+    "start": "cross-env NODE_ENV=production node ./build/server/app.js",
     "start-client": "npm run clean && npm run build-server && cross-env NODE_ENV=development node ./build/server/app.js",
     "build-client": "cd ./src/client && cross-env NODE_ENV=production webpack --env prod",
-    "dev-client": "cd ./src/client && webpack-dev-server -w --env dev",
     "build-server": "cd ./src/server && cross-env NODE_ENV=production webpack",
+    "dev-client": "cd ./src/client && webpack-dev-server -w --env dev",
     "dev-server": "\"ts-node-dev\" -r tsconfig-paths/register --project src/server/tsconfig.json --respawn --transpileOnly src/server/server.tsx",
     "dev": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run dev-server\" \"npm run dev-client\"",
     "build": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run build-server\" \"npm run build-client\"",
-    "lint": "tslint \"src/**/**.ts*\""
+    "lint": "tslint \"src/**/**.ts*\"",
+    "test-node": "NODE_ENV=test jest --env=node"
   },
   "author": "",
   "license": "ISC",
-  "jest": {
-    "testEnvironment": "node"
-  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.1",
     "@types/chai": "^3.4.34",
@@ -73,9 +71,7 @@
     "history": "^4.7.2",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^23.5.0",
-    "jest-environment-node": "^23.4.0",
     "lodash-ts-imports-loader": "^1.2.0",
-    "mongodb-memory-server": "^2.0.1",
     "react-addons-perf": "^15.4.2",
     "react-hot-loader": "^3.0.0-beta.7",
     "serve-favicon": "^2.4.3",
