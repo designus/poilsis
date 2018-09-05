@@ -1,17 +1,17 @@
 require('dotenv').config();
 
-import * as React from 'react';
-import { renderToString } from 'react-dom/server';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import StaticRouter from 'react-router-dom/StaticRouter';
-import { matchRoutes } from 'react-router-config';
-import { JssProvider } from 'react-jss';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+// import * as React from 'react';
+// import { renderToString } from 'react-dom/server';
+// import { Provider } from 'react-redux';
+// import { createStore, applyMiddleware } from 'redux';
+// import thunkMiddleware from 'redux-thunk';
+// import StaticRouter from 'react-router-dom/StaticRouter';
+// import { matchRoutes } from 'react-router-config';
+// import { JssProvider } from 'react-jss';
+// import { MuiThemeProvider } from '@material-ui/core/styles';
+// import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
-import { App, rootReducer, routes } from '../client/app/index';
+// import { App, rootReducer, routes } from '../client/app/index';
 import { auth, apiRouter, getMaterialUiCSSParams, preloadData, handleItemsErrors } from './app/index';
 import { config } from '../../config';
 
@@ -42,48 +42,50 @@ app.use(expressValidator());
 app.use(auth.initialize());
 app.use('/api', apiRouter(), handleItemsErrors);
 
-app.get('*', (req, res, next) => {
-  return auth.authenticate((err, user, info) => {
-    const location = req.url;
-    const initialState = user ? {auth: {accessToken: req.cookies.jwt}} : undefined;
-    const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
-    const branch = matchRoutes(routes, location);
-    const promises = branch
-      .map(({route, match}) => ({fetchData: (route.component as any).fetchData, params: match.params}))
-      .filter(({fetchData}) => Boolean(fetchData))
-      .map(({fetchData, params}) => fetchData.bind(null, store, params));
+// if (app.get('env') !== 'test') {
+//   app.get('*', (req, res, next) => {
+//     return auth.authenticate((err, user, info) => {
+//       const location = req.url;
+//       const initialState = user ? {auth: {accessToken: req.cookies.jwt}} : undefined;
+//       const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
+//       const branch = matchRoutes(routes, location);
+//       const promises = branch
+//         .map(({route, match}) => ({fetchData: (route.component as any).fetchData, params: match.params}))
+//         .filter(({fetchData}) => Boolean(fetchData))
+//         .map(({fetchData, params}) => fetchData.bind(null, store, params));
 
-    if (location.includes('admin')) {
-      // when we are in admin that requires authentication and we are not logged in, we only preload initial data
-      const loadInitialDataOnly = !user;
-      return err ? next(err) : preloadData(promises, loadInitialDataOnly).then(() => sendResponse(res, store, location));
-    } else {
-      return preloadData(promises).then(() => sendResponse(res, store, location));
-    }
-  })(req, res, next);
-});
+//       if (location.includes('admin')) {
+//         // when we are in admin that requires authentication and we are not logged in, we only preload initial data
+//         const loadInitialDataOnly = !user;
+//         return err ? next(err) : preloadData(promises, loadInitialDataOnly).then(() => sendResponse(res, store, location));
+//       } else {
+//         return preloadData(promises).then(() => sendResponse(res, store, location));
+//       }
+//     })(req, res, next);
+//   });
+// }
 
-function sendResponse(res, store, location) {
-  const sheet: any = new ServerStyleSheet();
-  const context = {};
-  const styleTags = sheet.getStyleTags();
-  const finalState = store.getState();
-  const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
-  const responseHtml = renderToString(
-    <StyleSheetManager sheet={sheet.instance}>
-      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-          <Provider store={store} key="provider">
-            <StaticRouter location={location} context={context}>
-              <App />
-            </StaticRouter>
-          </Provider>
-        </MuiThemeProvider>
-      </JssProvider>
-    </StyleSheetManager>,
-  );
-  res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
-}
+// function sendResponse(res, store, location) {
+//   const sheet: any = new ServerStyleSheet();
+//   const context = {};
+//   const styleTags = sheet.getStyleTags();
+//   const finalState = store.getState();
+//   const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
+//   const responseHtml = renderToString(
+//     <StyleSheetManager sheet={sheet.instance}>
+//       <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+//         <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+//           <Provider store={store} key="provider">
+//             <StaticRouter location={location} context={context}>
+//               <App />
+//             </StaticRouter>
+//           </Provider>
+//         </MuiThemeProvider>
+//       </JssProvider>
+//     </StyleSheetManager>,
+//   );
+//   res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
+// }
 
 function renderFullPage(html, css1, css2, preloadedState) {
   return `

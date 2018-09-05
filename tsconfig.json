@@ -19,17 +19,11 @@
     "jsx": "react"
   },
   "exclude": [
-    "./node_modules",
-    "./build",
-    "./typings/main",
-    "./typings/main.d.ts"
+    "node_modules",
+    "**/*.spec.ts"
   ],
   "include": [
-    "./src/**/*"
-  ],
-  "typeRoots": [
-    "./node_modules/@types",
-    "custom-typings"
+    "src/**/*"
   ],
   "awesomeTypescriptLoaderOptions": {
     "useCache": true,
