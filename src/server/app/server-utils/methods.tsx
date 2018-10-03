@@ -150,5 +150,5 @@ export const sendResponse = (res: Response, next: NextFunction) => (err, result)
   if (err) {
     return next(err);
   }
-  res.json(result);
+  res.status(200).json(result);
 };

@@ -6,6 +6,7 @@ module.exports = {
   testPathIgnorePatterns: ["/lib/", "/node_modules/"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   // collectCoverage: true,
+  setupFiles: ['<rootDir>/testSetup.js'],
   moduleNameMapper: {
     "global-utils": "<rootDir>/src/global-utils/",
     "data-strings": "<rootDir>/src/data-strings/",

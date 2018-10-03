@@ -4,7 +4,7 @@ import { IMAGES_KEY } from 'data-strings';
 import { IImage, maxFileCount, MAX_FILE_COUNT, REQUIRED_MESSAGE, IItemFields } from 'global-utils';
 import { formatAlias, TGenericSchemaMap } from '../server-utils';
 
-interface IItemsSchemaMap extends TGenericSchemaMap<IItemFields> {}
+interface IItemsSchema extends TGenericSchemaMap<IItemFields> {}
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -19,7 +19,7 @@ const ImageSchemaMap: TGenericSchemaMap<IImage> = {
   thumbName: {type: String, required: true},
 };
 
-const ItemsSchemaMap: IItemsSchemaMap = {
+const ItemsSchemaMap: IItemsSchema = {
   id: {type: String, unique: true, default: shortId.generate, required: true},
   name: {type: String, minLength: 6, required: [true, REQUIRED_MESSAGE]},
   cityId: {type: String, required: [true, REQUIRED_MESSAGE] },

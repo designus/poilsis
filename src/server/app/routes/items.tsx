@@ -31,7 +31,7 @@ router.route('/item/:itemId')
 router.route('/item/mainInfo/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateMainInfo);
 
-router.route('/item/photos/:itemId')
+router.route('/item/update-photos/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesFromFs, updatePhotos);
 
 router.route('/item/upload-photos/:itemId')

@@ -127,7 +127,7 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
   return new Promise((resolve, reject) => {
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.put(`http://localhost:3000/api/items/item/photos/${itemId}`, {images})
+    return axios.put(`http://localhost:3000/api/items/item/update-photos/${itemId}`, {images})
       .then(response => response.data)
       .then(images => {
         if (images.errors) {

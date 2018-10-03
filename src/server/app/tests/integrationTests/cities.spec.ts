@@ -1,7 +1,6 @@
 import { login, logout, testDB, testData, adminUser, regularUser } from '../utils';
+import * as request from 'supertest';
 import app from '../../../app';
-
-const request = require('supertest');
 
 const newCityId = '123456';
 const newCity = {
