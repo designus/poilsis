@@ -6,3 +6,4 @@ build
 uploads/*
 .env
 /coverage
+testUploads/items
