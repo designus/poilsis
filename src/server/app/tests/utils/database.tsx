@@ -24,12 +24,12 @@ class Database {
         this.db = db;
         return Promise.resolve();
       })
-      .catch(done);
+      .catch(() => done());
   }
 
   disconnect = (done) => {
     this.db.close()
-      .then(done);
+      .then(() => done());
   }
 
   initialize = (testData, done) => {
@@ -55,7 +55,7 @@ class Database {
       .then((collections: Collection[]) => {
         return Promise.all(collections.map(this.dropCollection(testData)));
       })
-      .catch(done);
+      .catch(() => done());
   }
 
   createDirectory = (path: string) => {
@@ -123,12 +123,12 @@ class Database {
             }
           });
       })
-      .catch(done);
+      .catch(() => done());
   }
 
   addTestData = (data, done) => () => {
     const createCollections = Object.keys(data.collections).map(this.createCollection(data, done));
-    return Promise.all(createCollections).then(done);
+    return Promise.all(createCollections).then(() => done());
   }
 }
 

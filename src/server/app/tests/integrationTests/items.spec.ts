@@ -37,34 +37,34 @@ describe('Integration tests: Items', () => {
         });
     });
 
-    // it('should get a single item', () => {
-    //   return request(app)
-    //     .get(`/api/items/item/${adminItem.id}`)
-    //     .expect(200)
-    //     .then(response => {
-    //       expect(response.body.name).toBe('Almuka');
-    //     });
-    // });
+    it('should get a single item', () => {
+      return request(app)
+        .get(`/api/items/item/${adminItem.id}`)
+        .expect(200)
+        .then(response => {
+          expect(response.body.name).toBe('Almuka');
+        });
+    });
 
-    // it('should not be able to add a new item', () => {
-    //   return request(app)
-    //     .post('/api/items')
-    //     .send(newItem)
-    //     .expect(401);
-    // });
+    it('should not be able to add a new item', () => {
+      return request(app)
+        .post('/api/items')
+        .send(newItem)
+        .expect(401);
+    });
 
-    // it('should not be able to delete existing item', () => {
-    //   return request(app)
-    //     .delete(`/api/items/item/${adminItem.id}`)
-    //     .expect(401);
-    // });
+    it('should not be able to delete existing item', () => {
+      return request(app)
+        .delete(`/api/items/item/${adminItem.id}`)
+        .expect(401);
+    });
 
-    // it('should not be able to update main info', () => {
-    //   return request(app)
-    //     .put(`/api/items/item/mainInfo/${adminItem.id}`)
-    //     .send({ ...adminItem, name: 'Almuka updated' })
-    //     .expect(401);
-    // });
+    it('should not be able to update main info', () => {
+      return request(app)
+        .put(`/api/items/item/mainInfo/${adminItem.id}`)
+        .send({ ...adminItem, name: 'Almuka updated' })
+        .expect(401);
+    });
   });
 
   // describe('User: admin', () => {

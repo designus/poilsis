@@ -27,6 +27,7 @@ const ItemsSchemaMap: IItemsSchema = {
   types: {type: Array, required: [true, 'At least one type must be selected']},
   alias: {type: String, lowercase: true, trim: true, required: true, set: formatAlias },
   userId: {type: String, required: true},
+  description: {type: String},
   isEnabled: Boolean,
   createdAt: {type: Date },
   updatedAt: {type: Date },
