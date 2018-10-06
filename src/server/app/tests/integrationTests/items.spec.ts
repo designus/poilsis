@@ -65,6 +65,18 @@ describe('Integration tests: Items', () => {
         .send({ ...adminItem, name: 'Almuka updated' })
         .expect(401);
     });
+
+    it('should not be able to update photos', () => {
+      const images = adminItem.images.slice(0, 1);
+      return request(app)
+        .put(`/api/items/item/update-photos${adminItem.id}`)
+        .send({ ...adminItem, images })
+        .expect(401);
+    });
+
+    it('should not be able to upload photos', () => {
+      
+    });
   });
 
   // describe('User: admin', () => {
