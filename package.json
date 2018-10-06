@@ -14,7 +14,7 @@
     "dev": "cross-env NODE_ENV=development npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run dev-server\" \"npm run dev-client\"",
     "build": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run build-server\" \"npm run build-client\"",
     "lint": "tslint \"src/**/**.ts*\"",
-    "test-node": "jest --env=node --forceExit"
+    "test-node": "jest --env=node --forceExit --runInBand"
   },
   "author": "",
   "license": "ISC",

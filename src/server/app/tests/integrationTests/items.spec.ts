@@ -1,7 +1,9 @@
+
+import * as request from 'supertest';
+
+import { checkIfDirectoryExists, getUploadPath, readDirectoryContent } from '../../server-utils';
 import { login, logout, testDB, testData, adminUser, regularUser } from '../utils';
 import app from '../../../app';
-
-const request = require('supertest');
 
 const adminItem  = testData.collections.items[0];
 const userItem = testData.collections.items[1];
@@ -69,31 +71,97 @@ describe('Integration tests: Items', () => {
     it('should not be able to update photos', () => {
       const images = adminItem.images.slice(0, 1);
       return request(app)
-        .put(`/api/items/item/update-photos${adminItem.id}`)
+        .put(`/api/items/item/update-photos/${adminItem.id}`)
         .send({ ...adminItem, images })
         .expect(401);
     });
 
-    it('should not be able to upload photos', () => {
-      
-    });
   });
 
-  // describe('User: admin', () => {
-  //   let accessToken;
+  describe('User: admin', () => {
+    let accessToken;
 
-  //   beforeAll((done) => {
-  //     login(request(app), adminUser, (token) => {
-  //       accessToken = token;
-  //       done();
-  //     });
-  //   });
+    beforeAll((done) => {
+      login(request(app), adminUser, (token) => {
+        accessToken = token;
+        done();
+      });
+    });
 
-  //   afterAll((done) => {
-  //     logout(request(app), adminUser.id, () => {
-  //       accessToken = null;
-  //       done();
-  //     });
-  //   });
-  // });
+    afterAll((done) => {
+      logout(request(app), adminUser.id, () => {
+        accessToken = null;
+        done();
+      });
+    });
+
+    it('should be able to create new item', () => {
+      return request(app)
+        .post('/api/items')
+        .set('Cookie', `jwt=${accessToken}`)
+        .send(newItem)
+        .expect(200);
+    });
+
+    it('should be able to update main info of existing item', () => {
+      return request(app)
+        .put(`/api/items/item/mainInfo/${adminItem.id}`)
+        .send({ ...adminItem, name: 'Almuka 2'})
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(200)
+        .then(response => {
+          expect(response.body.name).toBe('Almuka 2');
+        });
+    });
+
+    it('should be able to upload photos', () => {
+      const uploadDirectory = getUploadPath(newItem.id);
+
+      return request(app)
+        .put(`/api/items/item/upload-photos/${newItem.id}`)
+        .attach('files[]', 'testUploads/src.jpeg')
+        .set('Cookie', `jwt=${accessToken}`)
+        .then(() => checkIfDirectoryExists(uploadDirectory))
+        .then(exists => readDirectoryContent(uploadDirectory))
+        .then(files => {
+          expect(files.length).toBe(2);
+        });
+    });
+
+    it('should be able to update photos', () => {
+      const images = adminItem.images.slice(0, 1);
+      const uploadDirectory = getUploadPath(adminItem.id);
+
+      return request(app)
+        .put(`/api/items/item/update-photos/${adminItem.id}`)
+        .send({ images })
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(200)
+        .then(() => readDirectoryContent(uploadDirectory))
+        .then(files => {
+          expect(files.length).toBe(2);
+        });
+    });
+
+    it('should be able to toggle off an item', () => {
+      return request(app)
+        .patch(`/api/items/item/toggle/${adminItem.id}`)
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(200)
+        .then(response => {
+          expect(response.body.isEnabled).toBe(false);
+        });
+    });
+
+    it('should be able to delete existing item', () => {
+      return request(app)
+        .delete(`/api/items/item/${adminItem.id}`)
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(200)
+        .then(() => checkIfDirectoryExists(adminItem.images[0].path))
+        .then(exists => {
+          expect(exists).toBe(false);
+        });
+    });
+  });
 });

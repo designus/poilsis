@@ -1,7 +1,10 @@
-const fs = require('fs');
 import { SheetsRegistry } from 'react-jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 import { Response, NextFunction } from 'express';
+import { exists, mkdir, readFile, writeFile, unlink, readdir, lstat, lstatSync } from 'fs';
+import { promisify } from 'util';
+import * as rimraf from 'rimraf';
+
 import { IMulterFile, FileUploadErrors } from './types';
 import {
   ImageSize,
@@ -14,9 +17,17 @@ import {
   MAX_FILE_SIZE_MB,
   MAX_FILE_COUNT,
   ALLOWED_MIME_TYPES,
-} from '../../../global-utils';
+} from 'global-utils';
 
-import { IMAGES_KEY } from '../../../data-strings';
+import { IMAGES_KEY } from 'data-strings';
+
+export const checkIfDirectoryExists = promisify(exists);
+export const createDirectory = promisify(mkdir);
+export const removeDirectory = promisify(rimraf);
+export const readFileFromDisk = promisify(readFile);
+export const writeFileToDisk = promisify(writeFile);
+export const getDirectoryStatus = promisify(lstat);
+export const readDirectoryContent = promisify(readdir);
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {
@@ -27,20 +38,6 @@ export const getFileExtension = (mimeType) => {
     return '.gif';
   } else {
     return '';
-  }
-};
-
-export const copySync = (src, dest, overwrite) => {
-  if (overwrite && fs.existsSync(dest)) {
-    fs.unlinkSync(dest);
-  }
-  const data = fs.readFileSync(src);
-  fs.writeFileSync(dest, data);
-};
-
-export const createIfDoesntExist = dest => {
-  if (!fs.existsSync(dest)) {
-    fs.mkdirSync(dest);
   }
 };
 
@@ -85,7 +82,7 @@ export const handleFileUploadErrors = (err, response) => {
   }
 };
 
-export const getUploadPath = (itemId) => `uploads/items/${itemId}`;
+export const getUploadPath = (itemId) =>  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
 
 export const getSourceFiles = (files) => files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
 
@@ -94,7 +91,7 @@ export function removeFiles(files, next) {
     next();
   } else {
      const file = files.pop();
-     fs.unlink(file, (err) => {
+     unlink(file, (err) => {
         if (err) {
           return next(err);
         } else {

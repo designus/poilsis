@@ -1,45 +1,51 @@
-const fs = require('fs');
+import { readdir } from 'fs';
+import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize, IImage } from 'global-utils';
+
+import { IMulterFile, FileUploadErrors } from './types';
+import {
+  getFileExtension,
+  getFilePath,
+  getUploadPath,
+  handleFileUploadErrors,
+  getSourceFiles,
+  removeFiles,
+  removeDirectory,
+  createDirectory,
+  checkIfDirectoryExists,
+} from './methods';
+
 const multer = require('multer');
 const Jimp = require('jimp');
-const rimraf = require('rimraf');
-
-import { getFileExtension, getFilePath, getUploadPath, handleFileUploadErrors, getSourceFiles, removeFiles } from './methods';
-import { IMulterFile, FileUploadErrors } from './types';
-import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize, IImage } from '../../../global-utils';
 
 export const createUploadPath = (req, res, next) => {
 
   const itemId = req.params.itemId;
-  const uploadPath = `./uploads/items/${itemId}`;
-
-  fs.exists(uploadPath, (exists) => {
-     if (exists) {
-       next();
-     } else {
-       fs.mkdir(uploadPath, (err) => {
-         if (err) {
-           console.log('Error in folder creation', err);
-           next();
-         }
-         next();
-       });
-     }
-  });
+  const uploadPath = getUploadPath(itemId);
+  checkIfDirectoryExists(uploadPath)
+    .then(exists => {
+      if (exists) {
+        next();
+      } else {
+        createDirectory(uploadPath)
+          .then(() => next())
+          .catch(next);
+      }
+    })
+    .catch(next);
 };
 
 export const removeImagesDir = (req, res, next) => {
   const uploadPath = getUploadPath(req.params.itemId);
-  rimraf(uploadPath, (err) => {
-    if (err) { return next(err); }
-    next();
-  });
+  removeDirectory(uploadPath)
+    .then(() => next())
+    .catch(next);
 };
 
 export const removeImagesFromFs = (req, res, next) => {
   const itemId = req.params.itemId;
   const images = req.body.images;
   const uploadPath = getUploadPath(itemId);
-  fs.readdir(getUploadPath(itemId), (err, files: string[]) => {
+  readdir(getUploadPath(itemId), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
     if (err) {
       return next(err);
@@ -57,7 +63,7 @@ export const removeImagesFromFs = (req, res, next) => {
 
 export const fileFilter = (req, file, cb) => {
   const itemId = req.params.itemId;
-  fs.readdir(getUploadPath(itemId), (err, files: string[]) => {
+  readdir(getUploadPath(itemId), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
     if (sourceFiles.length >= MAX_FILE_COUNT) {
       cb({code: FileUploadErrors.limitFileCount}, false);

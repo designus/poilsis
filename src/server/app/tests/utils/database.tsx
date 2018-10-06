@@ -1,18 +1,17 @@
 import { MongoClient, Db, Collection } from 'mongodb';
-import { exists, mkdir, readFile, writeFile } from 'fs';
 import { join } from 'path';
-import { promisify } from 'util';
 import { flatMap } from 'lodash';
-import * as rimraf from 'rimraf';
 
 import { IImage, IItemFields } from 'global-utils';
 import { config } from '../../../../../config';
-
-const checkIfExists = promisify(exists);
-const createDirectory = promisify(mkdir);
-const removeDirectory = promisify(rimraf);
-const readFileFromDisk = promisify(readFile);
-const writeFileToDisk = promisify(writeFile);
+import {
+  checkIfDirectoryExists,
+  readDirectoryContent,
+  createDirectory,
+  removeDirectory,
+  readFileFromDisk,
+  writeFileToDisk,
+} from '../../server-utils';
 
 class Database {
   db: Db = null;
@@ -34,32 +33,35 @@ class Database {
 
   initialize = (testData, done) => {
     this.connect(done)
-      .then(this.removeTestData(testData, done))
+      .then(this.removeTestData(done))
       .then(this.addTestData(testData, done));
   }
 
-  dropCollection = testData => (collection: Collection) => {
+  dropCollection = (collection: Collection) => {
     return collection.remove({}).then(() => {
       if (collection.collectionName === 'items') {
-        const imagePaths = this.getImagePaths(testData.collections[collection.collectionName]);
-        const removeDirectories = imagePaths.map(path => this.removeDirectory(path));
-        return Promise.all(removeDirectories);
+        const uploadPath = 'testUploads/items/';
+        return readDirectoryContent(uploadPath)
+          .then(directories => {
+            const removeDirectories = directories.map(name => this.removeDirectory(uploadPath + name));
+            return Promise.all(removeDirectories);
+          });
       } else {
         return Promise.resolve({});
       }
     });
   }
 
-  removeTestData = (testData, done) => () => {
+  removeTestData = done => () => {
     return this.db.collections()
       .then((collections: Collection[]) => {
-        return Promise.all(collections.map(this.dropCollection(testData)));
+        return Promise.all(collections.map(this.dropCollection));
       })
       .catch(() => done());
   }
 
   createDirectory = (path: string) => {
-    return checkIfExists(path)
+    return checkIfDirectoryExists(path)
       .then(exists => {
         if (exists) {
           return Promise.resolve();
@@ -70,7 +72,7 @@ class Database {
   }
 
   removeDirectory = (path: string) => {
-    return checkIfExists(path)
+    return checkIfDirectoryExists(path)
       .then(exists => {
         if (exists) {
           return removeDirectory(path);
