@@ -76,6 +76,25 @@ describe('Integration tests: Items', () => {
         .expect(401);
     });
 
+    it('should get items filtered by cityId', () => {
+      return request(app)
+        .get(`/api/items/city/${userItem.cityId}`)
+        .expect(200)
+        .then(response => {
+          expect(response.body.length).toBe(1);
+          expect(response.body[0].name).toBe(userItem.name);
+        });
+    });
+
+    it('should get items filtered by userId', () => {
+      return request(app)
+        .get(`/api/items/user/${userItem.userId}`)
+        .expect(200)
+        .then(response => {
+          expect(response.body.length).toBe(1);
+          expect(response.body[0].name).toBe(userItem.name);
+        });
+    });
   });
 
   describe('User: admin', () => {

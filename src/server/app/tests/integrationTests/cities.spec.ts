@@ -4,10 +4,10 @@ import app from '../../../app';
 
 const newCityId = '123456';
 const newCity = {
-  name : 'Sventoji',
+  name : 'Nida',
   description : '',
   types : ['abc'],
-  alias : 'sventoji',
+  alias : 'nida',
   id: newCityId,
 };
 
@@ -28,7 +28,7 @@ describe('Integration tests: Cities', () => {
         .get('/api/cities')
         .expect(200)
         .then(response => {
-          expect(response.body.length).toBe(1);
+          expect(response.body.length).toBe(2);
         });
     });
 
@@ -42,10 +42,7 @@ describe('Integration tests: Cities', () => {
     it('should not be able to update existing city', () => {
       return request(app)
         .put(`/api/cities/city/${newCityId}`)
-        .send({
-          ...newCity,
-          name: 'Nida',
-        })
+        .send({ ...newCity, name: 'Klaipeda' })
         .expect(401);
     });
 
@@ -81,21 +78,18 @@ describe('Integration tests: Cities', () => {
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
         .then(response => {
-          expect(response.body.name).toBe('Sventoji');
+          expect(response.body.name).toBe(newCity.name);
         });
     });
 
     it('should be able to update existing city', () => {
       return request(app)
         .put(`/api/cities/city/${newCityId}`)
-        .send({
-          ...newCity,
-          name: 'Nida',
-        })
+        .send({ ...newCity,  name: 'Klaipeda' })
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
         .then(response => {
-          expect(response.body.name).toBe('Nida');
+          expect(response.body.name).toBe('Klaipeda');
         });
     });
 
@@ -136,10 +130,7 @@ describe('Integration tests: Cities', () => {
     it('should not be able to upate existing city', () => {
       return request(app)
         .put(`/api/cities/city/${existingCity.id}`)
-        .send({
-          ...existingCity,
-          name: 'Nida',
-        })
+        .send({ ...existingCity,  name: 'Klaipeda' })
         .set('Cookie', `jwt=${accessToken}`)
         .expect(401);
     });
@@ -151,5 +142,4 @@ describe('Integration tests: Cities', () => {
         .expect(401);
     });
   });
-
 });

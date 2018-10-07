@@ -8,6 +8,13 @@ export const testData = {
         alias : 'palanga',
         id : 'eWRhpRV',
       },
+      {
+        name : 'Sventoji',
+        description : '',
+        types: ['dogPzIz8', 'sYrnfYEv', 'a4vhAoFG', 'hwX6aOr7'],
+        alias : 'sventoji',
+        id : 'a3lkp4z',
+      },
     ],
     users: [
       {
@@ -73,7 +80,7 @@ export const testData = {
           },
         ],
         userId: 'jLw5lp92c',
-        cityId: 'eWRhpRV',
+        cityId: 'a3lkp4z',
         isEnabled: true,
       },
     ],
