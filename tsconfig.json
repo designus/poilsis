@@ -4,6 +4,7 @@
     "paths": {
       "components": ["./src/client/app/components"],
       "client-utils": ["./src/client/app/client-utils"],
+      "selectors": ["./src/client/app/selectors"],
       "reducers": ["./src/client/app/reducers"],
       "actions": ["./src/client/app/actions"],
       "pages": ["./src/client/app/pages"],

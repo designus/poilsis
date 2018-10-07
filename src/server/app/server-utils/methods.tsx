@@ -1,7 +1,7 @@
 import { SheetsRegistry } from 'react-jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 import { Response, NextFunction } from 'express';
-import { exists, mkdir, readFile, writeFile, unlink, readdir, lstat, lstatSync } from 'fs';
+import { exists, mkdir, readFile, writeFile, unlink, readdir, lstat } from 'fs';
 import { promisify } from 'util';
 import * as rimraf from 'rimraf';
 

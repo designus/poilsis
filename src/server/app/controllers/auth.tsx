@@ -23,7 +23,7 @@ class Auth {
   public authorize = (roles: string[]) => (req: Request, res: Response, next: NextFunction) => {
     const accessToken: any = this.getAccessTokenClaims(req);
     const { userRole, userId } = accessToken;
-    const ownerId = req.body.userId;
+    const ownerId = req.body.userId || req.params.userId;
     // If userId is not explicitely specified, let's use userId from accessToken
     const isOwner = userRole === UserRoles.admin || (ownerId && ownerId === userId);
     const hasAccessRights = req.method === 'GET' && roles.indexOf(userRole) !== -1;

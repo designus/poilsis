@@ -1,9 +1,9 @@
-import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_USER_ITEM } from '../actions';
+import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_USER_ITEM, LOGOUT_SUCCESS } from '../actions';
 
 export interface ICurrentUser {
-  name: string;
-  role: string;
-  id: string;
+  name?: string;
+  role?: string;
+  id?: string;
 }
 
 export interface ICurrentUserState {
@@ -12,13 +12,22 @@ export interface ICurrentUserState {
   isAllLoaded?: boolean;
 }
 
-export const currentUser = (state: ICurrentUserState = { details: null, items: [] }, action): ICurrentUserState => {
+const getInitialState = () => ({
+  details: {},
+  items: [],
+  isAllLoaded: false,
+});
+
+export const currentUser = (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
   switch (action.type) {
     case RECEIVE_USER_DETAILS: {
       return {
         ...state,
         details: action.userDetails,
       };
+    }
+    case LOGOUT_SUCCESS: {
+      return getInitialState();
     }
     case RECEIVE_USER_ITEMS: {
       return {
