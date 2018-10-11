@@ -1,4 +1,4 @@
-import { login, logout, testDB, testData, adminUser, regularUser } from '../utils';
+import { login, logout, testDB, testData, adminUser, regularUser } from '../../test-utils';
 import * as request from 'supertest';
 import app from '../../../app';
 
@@ -15,7 +15,7 @@ const existingCity = testData.collections.cities[0];
 
 describe('Integration tests: Cities', () => {
   beforeAll((done) => {
-    testDB.initialize(testData, done);
+    testDB.initialize(done);
   });
 
   afterAll(done => {
@@ -58,17 +58,19 @@ describe('Integration tests: Cities', () => {
     let accessToken;
 
     beforeAll((done) => {
-      login(request(app), adminUser, (token) => {
-        accessToken = token;
-        done();
-      });
+      login(adminUser)
+        .then(token => {
+          accessToken = token;
+          done();
+        });
     });
 
     afterAll((done) => {
-      logout(request(app), adminUser.id, () => {
-        accessToken = null;
-        done();
-      });
+      logout(adminUser.id)
+        .then(() => {
+          accessToken = null;
+          done();
+        });
     });
 
     it('should be able to create new city', () => {
@@ -106,17 +108,19 @@ describe('Integration tests: Cities', () => {
     let accessToken;
 
     beforeAll((done) => {
-      login(request(app), regularUser, (token) => {
-        accessToken = token;
-        done();
-      });
+      login(regularUser)
+        .then(token => {
+          accessToken = token;
+          done();
+        });
     });
 
     afterAll((done) => {
-      logout(request(app), regularUser.id, () => {
-        accessToken = null;
-        done();
-      });
+      logout(regularUser.id)
+        .then(() => {
+          accessToken = null;
+          done();
+        });
     });
 
     it('should not be able to create new city', () => {

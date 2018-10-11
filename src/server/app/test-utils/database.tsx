@@ -3,7 +3,7 @@ import { join } from 'path';
 import { flatMap } from 'lodash';
 
 import { IImage, IItemFields } from 'global-utils';
-import { config } from '../../../../../config';
+import { config } from '../../../../config';
 import {
   checkIfDirectoryExists,
   readDirectoryContent,
@@ -11,7 +11,9 @@ import {
   removeDirectory,
   readFileFromDisk,
   writeFileToDisk,
-} from '../../server-utils';
+} from '../server-utils';
+
+import { testData } from './testData';
 
 class Database {
   db: Db = null;
@@ -31,10 +33,18 @@ class Database {
       .then(() => done());
   }
 
-  initialize = (testData, done) => {
+  initialize = (done) => {
     this.connect(done)
-      .then(this.removeTestData(done))
-      .then(this.addTestData(testData, done));
+      .then(() => this.removeTestData(done))
+      .then(() => this.addTestData(done));
+  }
+
+  swapTestData = () => {
+    const callback = () => ({});
+    // return this.removeTestData(callback)()
+    //   .then(this.addTestData(callback));
+    // return Promise.resolve({});
+    return this.removeTestData(callback).then(() => this.addTestData(callback));
   }
 
   dropCollection = (collection: Collection) => {
@@ -52,7 +62,7 @@ class Database {
     });
   }
 
-  removeTestData = done => () => {
+  removeTestData = done => {
     return this.db.collections()
       .then((collections: Collection[]) => {
         return Promise.all(collections.map(this.dropCollection));
@@ -128,8 +138,8 @@ class Database {
       .catch(() => done());
   }
 
-  addTestData = (data, done) => () => {
-    const createCollections = Object.keys(data.collections).map(this.createCollection(data, done));
+  addTestData = (done) => {
+    const createCollections = Object.keys(testData.collections).map(this.createCollection(testData, done));
     return Promise.all(createCollections).then(() => done());
   }
 }

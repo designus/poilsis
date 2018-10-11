@@ -81,8 +81,8 @@ export const keepUserLogged = () => (dispatch, getState) => {
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
   const refreshToken = localStorage.getItem('refreshToken');
-  const {userId, userRole} = JWT(oldAccessToken);
-  return axios.post('http://localhost:3000/api/users/reauthenticate', {userId, userRole, refreshToken})
+  const { userId, userRole } = JWT(oldAccessToken);
+  return axios.post('http://localhost:3000/api/users/reauthenticate', { userId, userRole, refreshToken })
     .then(response => response.data)
     .then((data) => {
       const accessToken = data.accessToken;

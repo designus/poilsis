@@ -4,10 +4,11 @@ import * as moment from 'moment';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles } from 'global-utils';
+import { UserRoles, IItemFields } from 'global-utils';
 
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
+import { ItemsModel } from '../model/items';
 
 const randToken = require('rand-token');
 
@@ -22,25 +23,30 @@ class Auth {
 
   public authorize = (roles: string[]) => (req: Request, res: Response, next: NextFunction) => {
     const accessToken: any = this.getAccessTokenClaims(req);
-    const { userRole, userId } = accessToken;
-    const ownerId = req.body.userId || req.params.userId;
-    // If userId is not explicitely specified, let's use userId from accessToken
-    const isOwner = userRole === UserRoles.admin || (ownerId && ownerId === userId);
-    const hasAccessRights = req.method === 'GET' && roles.indexOf(userRole) !== -1;
-    if (hasAccessRights || isOwner) {
-      req.body.userId = ownerId || userId;
+    const { userRole, userId, userItems } = accessToken;
+    const hasAccess = roles.indexOf(userRole) !== -1;
+    const isOwner = userRole === UserRoles.admin || userItems.indexOf(req.params.itemId) !== -1;
+
+    if (hasAccess && isOwner) {
+      req.body.userId = userId;
       req.body.userRole = userRole;
       return next();
+    } else {
+      res.status(401).json({ message: 'You are not authorized to view this resource' });
     }
-    res.status(401).json({ message: 'You are not authorized to view this resource' });
   }
 
-  private genToken = (userId: string, userRole: string) => {
+  private genToken = (userId: string, userRole: string, userItems: string[]) => {
     const expires = moment().utc().add({ minutes: 10 }).unix();
-    const claims = { exp: expires, userId, userRole };
+    const claims = { exp: expires, userId, userRole, userItems };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 
     return token;
+  }
+
+  private getUserItems = async (userRole: string, userId: string) => {
+    const itemDocs = userRole !== UserRoles.admin ? await ItemsModel.find({ userId }).exec() : [];
+    return itemDocs.length ? itemDocs.map((item: IItemFields) => item.id) : [];
   }
 
   public reauthenticate = async (req, res) => {
@@ -54,7 +60,7 @@ class Auth {
         throw errors;
       }
 
-      const {userId, userRole} = req.body;
+      const { userId, userRole } = req.body;
       const token = await TokensModel.findOne({userId}).exec();
 
       if (token === null) {
@@ -65,9 +71,11 @@ class Auth {
         throw new Error('Wrong refresh token');
       }
 
-      res.status(200).json({accessToken: this.genToken(userId, userRole)});
+      const userItems = await this.getUserItems(userRole, userId);
+
+      res.status(200).json({ accessToken: this.genToken(userId, userRole, userItems) });
     } catch (err) {
-      res.status(401).json({message: 'Invalid credentials', errors: err});
+      res.status(401).json({ message: 'Invalid credentials', errors: err });
     }
   }
 
@@ -103,8 +111,10 @@ class Auth {
         throw new Error('Failed to create refresh Token');
       }
 
+      const userItems = await this.getUserItems(userRole, userId);
+
       // TODO: Add Set-cookie http header
-      res.status(200).json({accessToken: this.genToken(userId, userRole), refreshToken: tokenItem.refreshToken});
+      res.status(200).json({accessToken: this.genToken(userId, userRole, userItems), refreshToken: tokenItem.refreshToken});
     } catch (err) {
       res.status(401).json({message: 'Invalid credentials', errors: err});
     }

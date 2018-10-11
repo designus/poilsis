@@ -2,7 +2,7 @@
 import * as request from 'supertest';
 
 import { checkIfDirectoryExists, getUploadPath, readDirectoryContent } from '../../server-utils';
-import { login, logout, testDB, testData, adminUser, regularUser } from '../utils';
+import { login, logout, testDB, testData, adminUser, regularUser } from '../../test-utils';
 import app from '../../../app';
 
 const adminItem  = testData.collections.items[0];
@@ -22,7 +22,7 @@ const newItem = {
 
 describe('Integration tests: Items', () => {
   beforeAll((done) => {
-    testDB.initialize(testData, done);
+    testDB.initialize(done);
   });
 
   afterAll(done => {
@@ -57,13 +57,13 @@ describe('Integration tests: Items', () => {
 
     it('should not be able to delete existing item', () => {
       return request(app)
-        .delete(`/api/items/item/${adminItem.id}/${adminUser.id}`)
+        .delete(`/api/items/item/${adminItem.id}`)
         .expect(401);
     });
 
     it('should not be able to update main info', () => {
       return request(app)
-        .put(`/api/items/item/mainInfo/${adminItem.id}/${adminUser.id}`)
+        .put(`/api/items/item/mainInfo/${adminItem.id}`)
         .send({ ...adminItem, name: 'Almuka updated' })
         .expect(401);
     });
@@ -101,17 +101,20 @@ describe('Integration tests: Items', () => {
     let accessToken;
 
     beforeAll((done) => {
-      login(request(app), adminUser, (token) => {
-        accessToken = token;
-        done();
-      });
+      testDB.swapTestData()
+        .then(() => login(adminUser))
+        .then(token => {
+          accessToken = token;
+          done();
+        });
     });
 
     afterAll((done) => {
-      logout(request(app), adminUser.id, () => {
-        accessToken = null;
-        done();
-      });
+      logout(adminUser.id)
+        .then(() => {
+          accessToken = null;
+          done();
+        });
     });
 
     it('should be able to create new item', () => {
@@ -174,7 +177,7 @@ describe('Integration tests: Items', () => {
 
     it('should be able to delete existing item', () => {
       return request(app)
-        .delete(`/api/items/item/${adminItem.id}/${adminUser.id}`)
+        .delete(`/api/items/item/${adminItem.id}`)
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
         .then(() => checkIfDirectoryExists(adminItem.images[0].path))
@@ -188,22 +191,25 @@ describe('Integration tests: Items', () => {
     let accessToken;
 
     beforeAll((done) => {
-      login(request(app), regularUser, (token) => {
-        accessToken = token;
-        done();
-      });
+      testDB.swapTestData()
+        .then(() => login(regularUser))
+        .then(token => {
+          accessToken = token;
+          done();
+        });
     });
 
     afterAll((done) => {
-      logout(request(app), regularUser.id, () => {
-        accessToken = null;
-        done();
-      });
+      logout(regularUser.id)
+        .then(() => {
+          accessToken = null;
+          done();
+        });
     });
 
     it('should be able to delete his own item', () => {
       return request(app)
-        .delete(`/api/items/item/${userItem.id}/${regularUser.id}`)
+        .delete(`/api/items/item/${userItem.id}`)
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
         .then(() => checkIfDirectoryExists(userItem.images[0].path))
@@ -212,9 +218,9 @@ describe('Integration tests: Items', () => {
         });
     });
 
-    it('should be not able to delete other user item', () => {
+    it('should not be able to delete other user item', () => {
       return request(app)
-        .delete(`/api/items/item/${adminItem.id}/${regularUser.id}`)
+        .delete(`/api/items/item/${adminItem.id}`)
         .set('Cookie', `jwt=${accessToken}`)
         .expect(401)
         .then(() => checkIfDirectoryExists(adminItem.images[0].path))
