@@ -18,7 +18,6 @@ const multer = require('multer');
 const Jimp = require('jimp');
 
 export const createUploadPath = (req, res, next) => {
-
   const itemId = req.params.itemId;
   const uploadPath = getUploadPath(itemId);
   checkIfDirectoryExists(uploadPath)

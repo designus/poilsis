@@ -30,9 +30,11 @@ class Auth {
     if (hasAccess && isOwner) {
       req.body.userId = userId;
       req.body.userRole = userRole;
-      return next();
+      next();
     } else {
-      res.status(401).json({ message: 'You are not authorized to view this resource' });
+      // res.status(401).json({ message: 'You are not authorized to view this resource' });
+      // res.status(401).send('You are not authorized');
+      res.sendStatus(401);
     }
   }
 

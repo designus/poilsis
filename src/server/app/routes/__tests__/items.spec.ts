@@ -4,7 +4,6 @@ import * as request from 'supertest';
 import { checkIfDirectoryExists, getUploadPath, readDirectoryContent } from '../../server-utils';
 import { login, logout, testDB, testData, adminUser, regularUser } from '../../test-utils';
 import app from '../../../app';
-
 const adminItem  = testData.collections.items[0];
 const userItem = testData.collections.items[1];
 const newItem = {
@@ -207,6 +206,69 @@ describe('Integration tests: Items', () => {
         });
     });
 
+    it('should be able to update main info of own item', () => {
+      return request(app)
+        .put(`/api/items/item/mainInfo/${userItem.id}`)
+        .send({ ...userItem, name: 'Almuka 2'})
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(200)
+        .then(response => {
+          expect(response.body.name).toBe('Almuka 2');
+        });
+    });
+
+    it('should not be able to update main info of other user item', () => {
+      return request(app)
+        .put(`/api/items/item/mainInfo/${adminItem.id}`)
+        .send({ ...adminItem, name: 'Almuka 2'})
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(401);
+    });
+
+    it('should be able to upload photos to his own item', () => {
+      const uploadDirectory = getUploadPath(userItem.id);
+      return request(app)
+        .put(`/api/items/item/upload-photos/${userItem.id}`)
+        .attach('files[]', 'testUploads/src.jpeg')
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(200)
+        .then(() => readDirectoryContent(uploadDirectory))
+        .then(files => {
+          expect(files.length).toBe(4);
+        });
+    });
+
+    it('should not be able to upload photos to other user item', () => {
+      // const uploadFile = join(__dirname, '../../../../../', 'testUploads', 'src.jpeg');
+      return request(app)
+        .put(`/api/items/item/upload-photos/${adminItem.id}`)
+        // TODO: Find out why Test files if we try to attach file
+        // .attach('files[]', uploadFile)
+        .set('Cookie', `jwt=${accessToken}`)
+        .expect(401);
+    });
+
+    it('should be able to update his own photos', () => {
+      const uploadDirectory = getUploadPath(userItem.id);
+      return request(app)
+        .put(`/api/items/item/update-photos/${userItem.id}`)
+        .set('Cookie', `jwt=${accessToken}`)
+        .send({ images: [] })
+        .expect(200)
+        .then(() => readDirectoryContent(uploadDirectory))
+        .then(files => {
+          expect(files.length).toBe(0);
+        });
+    });
+
+    it('should not be able to update other user content', () => {
+      return request(app)
+        .put(`/api/items/item/update-photos/${adminItem.id}`)
+        .set('Cookie', `jwt=${accessToken}`)
+        .send({ images: [] })
+        .expect(401);
+    });
+
     it('should be able to delete his own item', () => {
       return request(app)
         .delete(`/api/items/item/${userItem.id}`)
@@ -222,11 +284,7 @@ describe('Integration tests: Items', () => {
       return request(app)
         .delete(`/api/items/item/${adminItem.id}`)
         .set('Cookie', `jwt=${accessToken}`)
-        .expect(401)
-        .then(() => checkIfDirectoryExists(adminItem.images[0].path))
-        .then(exists => {
-          expect(exists).toBe(true);
-        });
+        .expect(401);
     });
 
   });

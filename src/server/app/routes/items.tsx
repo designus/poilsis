@@ -1,3 +1,5 @@
+import { Router } from 'express';
+
 import {
   auth,
   getItem,
@@ -17,8 +19,7 @@ import {
   removeImagesDir,
 } from '../server-utils';
 
-const express = require('express');
-const router = express.Router();
+const router = Router();
 
 router.route('/')
   .get(getAllItems)

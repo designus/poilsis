@@ -17,7 +17,8 @@
     "experimentalDecorators": true,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "jsx": "react"
+    "jsx": "react",
+    "sourceMap": true
   },
   "exclude": [
     "node_modules",

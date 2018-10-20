@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
-import { renderMergedProps } from '../../client-utils';
-import { IAppState } from '../../reducers';
-import { NotAuthorized } from '../../components';
-import { UserRoles } from '../../../../global-utils';
+import { Route, Redirect, match } from 'react-router-dom';
+import { renderMergedProps } from 'client-utils';
+import { IAppState } from 'reducers';
+import { NotAuthorized } from 'components';
+import { UserRoles } from 'global-utils';
 
 interface IMatchParams {
   userId: string;
@@ -18,9 +18,11 @@ interface IProtectedRouteProps {
   allowedRoles?: string[];
   path?: string;
   exact?: boolean;
+  match?: match<IMatchParams>;
 }
 
-type TProtectedRouteProps = IProtectedRouteProps & RouteComponentProps<IMatchParams>;
+// type TProtectedRouteProps = IProtectedRouteProps & RouteComponentProps<IMatchParams>;
+type TProtectedRouteProps = IProtectedRouteProps;
 
 class Protected extends React.Component<TProtectedRouteProps, any> {
 
