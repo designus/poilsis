@@ -32,9 +32,7 @@ class Auth {
       req.body.userRole = userRole;
       next();
     } else {
-      // res.status(401).json({ message: 'You are not authorized to view this resource' });
-      // res.status(401).send('You are not authorized');
-      res.sendStatus(401);
+      res.status(401).send('You are not authorized');
     }
   }
 

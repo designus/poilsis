@@ -101,26 +101,6 @@ export function removeFiles(files, next) {
   }
 }
 
-export function saveImageInfoToDatabase(dbModel, id, images, res, next) {
-  dbModel.findOne({id}, (err, item) => {
-    if (err) {
-      // TODO: Remove uploaded files or rollback deleted files
-      return next(err);
-    }
-
-    item.images = [...(item.images || []), ...images];
-
-    item.save((err, item) => {
-      if (err) {
-        // TODO: Remove uploaded files or rollback deleted files
-        return next(err);
-      }
-
-      res.send(item.images);
-    });
-  });
-}
-
 export const getMaterialUiCSSParams = () => {
   const sheetsRegistry = new SheetsRegistry();
   const theme = createMuiTheme();

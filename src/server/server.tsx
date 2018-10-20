@@ -8,8 +8,6 @@ import { matchRoutes } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import { join } from 'path';
-import { createReadStream } from 'fs';
 
 import app, { staticFilesPort } from './app';
 import { config } from '../../config';
@@ -80,15 +78,6 @@ function renderFullPage(html, css1, css2, preloadedState) {
 }
 
 app.listen(config.port, (error) => {
-
-  const src = join(__dirname, '../../', 'testUploads', 'src.jpeg');
-  const readableStream = createReadStream(src);
-  console.log('Src', src);
-
-  readableStream.on('data', (chunk) => {
-    console.log('Chunk', chunk);
-  });
-
   if (error) {
     console.error(error);
   } else {
