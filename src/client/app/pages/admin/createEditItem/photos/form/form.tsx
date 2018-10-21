@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { DropzoneInput, UploadedImages, Button } from 'components';
-import { maxUploadedPhotos } from 'global-utils';
+import { maxUploadedPhotos, maxUploadedPhotoSize } from 'global-utils';
 import { IPhotosFormFields } from '../photos';
 
 const validators = [
   maxUploadedPhotos,
+  maxUploadedPhotoSize,
 ];
 
 interface ICustomProps {

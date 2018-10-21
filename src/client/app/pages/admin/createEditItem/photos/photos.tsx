@@ -8,9 +8,12 @@ import { IImage, voidFn } from 'global-utils';
 import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
 import { PhotosForm } from './form';
 
-export interface IPhotosFormFields {
+export interface IPhotoFormState {
   images: IImage[];
   files: ImageFile[];
+}
+
+export interface IPhotosFormFields extends IPhotoFormState {
   isUpdateAction?: boolean;
 }
 

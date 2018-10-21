@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { SortableImage } from './sortableImage';
 import DeleteIcon from '@material-ui/icons/Clear';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
+import { ImageFile } from 'react-dropzone';
+
 import { IUploadProgress } from 'reducers';
 import { SuccessIcon, ErrorIcon } from 'client-utils';
 import { IImage } from 'global-utils';
+import { SortableImage } from './sortableImage';
 import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox, Image, Images, ImagePreviewWrapper } from './style';
 
 export interface IImagePreview extends IUploadProgress {
@@ -50,7 +52,7 @@ export class ImagePreview extends React.Component<IImagePreview> {
 
   renderImage = (image: IImage, index: number) => {
     const { isTemporary, onDeleteImage } = this.props;
-    const src = isTemporary ? image.preview : `http://localhost:3000/${image.path}/${image.thumbName}`;
+    const src = isTemporary ? (image as ImageFile).preview : `http://localhost:3000/${image.path}/${image.thumbName}`;
     return (
       <ImageSource>
         <img src={src} onLoad={this.props.onLoadImage} draggable={!isTemporary} />

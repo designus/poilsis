@@ -4,7 +4,6 @@ export interface IImage {
   fileName?: string;
   path?: string;
   thumbName?: string;
-  preview?: string;
 }
 
 export enum ImageSize {
