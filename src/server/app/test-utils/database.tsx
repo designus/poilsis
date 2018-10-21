@@ -2,7 +2,7 @@ import { MongoClient, Db, Collection } from 'mongodb';
 import { join } from 'path';
 import { flatMap } from 'lodash';
 
-import { IImage, IItemFields } from 'global-utils';
+import { IImage, IItemFields, voidFn } from 'global-utils';
 import { config } from '../../../../config';
 import {
   checkIfDirectoryExists,
@@ -40,11 +40,7 @@ class Database {
   }
 
   swapTestData = () => {
-    const callback = () => ({});
-    // return this.removeTestData(callback)()
-    //   .then(this.addTestData(callback));
-    // return Promise.resolve({});
-    return this.removeTestData(callback).then(() => this.addTestData(callback));
+    return this.removeTestData(voidFn).then(() => this.addTestData(voidFn));
   }
 
   dropCollection = (collection: Collection) => {

@@ -39,8 +39,6 @@ export function getNormalizedData(data: any[], additionalInfo?) {
   }, {dataMap: {}, aliases: []});
 }
 
-export const voidFn = (f) => f;
-
 export function getBackendErrors(errors) {
   return Object.keys(errors).reduce((acc, key) => {
     acc[key] = errors[key].message;

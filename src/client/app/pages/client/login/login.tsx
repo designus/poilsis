@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { login } from '../../../actions';
-import { voidFn } from '../../../client-utils/methods';
+import { login } from 'actions';
+import { voidFn } from 'global-utils';
 
 class Login extends React.PureComponent<any, any> {
 

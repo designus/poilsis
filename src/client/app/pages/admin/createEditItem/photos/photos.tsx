@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
-import { voidFn } from 'client-utils';
-import { IImage } from 'global-utils';
+import { IImage, voidFn } from 'global-utils';
 import Typography from '@material-ui/core/Typography';
 import { change } from 'redux-form';
 import { PhotosForm } from './form';

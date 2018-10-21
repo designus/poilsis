@@ -2,7 +2,7 @@ import * as React from 'react';
 import ActionButton from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { voidFn } from '../../client-utils';
+import { voidFn } from 'global-utils';
 
 const defaultStyles = theme => ({
   root: {
