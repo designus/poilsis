@@ -1,4 +1,4 @@
-import { REQUIRED_MESSAGE } from './error-messages';
+import { REQUIRED_MESSAGE } from './errorMessages';
 import { MAX_FILE_COUNT } from './constants';
 
 export const isRequired = value => value ? undefined : REQUIRED_MESSAGE;

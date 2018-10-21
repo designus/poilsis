@@ -1,10 +1,11 @@
 import * as React from 'react';
 import ActionButton from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { voidFn } from 'global-utils';
 
-const defaultStyles = theme => ({
+export const defaultStyles = (theme: Theme) => createStyles({
   root: {
     borderRadius: '20px',
     minWidth: '120px',

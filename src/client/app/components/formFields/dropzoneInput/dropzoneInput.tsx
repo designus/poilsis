@@ -4,18 +4,16 @@ import { WithStyles } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
-import {
-  FileUpload,
-  ImagePreview,
-} from 'components';
+import { ImageFile } from 'react-dropzone';
+import { FileUpload, ImagePreview } from 'components';
 import { IAppState, IUploadProgress } from 'reducers';
 import { setInitialUploadState } from 'actions';
 import { styles } from './styles';
 
 export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgress {
   formName: string;
-  uploadImages: any;
-  clearDroppedImages: any;
+  uploadImages: () => void;
+  clearDroppedImages: () => void;
 }
 
 class DropzoneInputComponent extends React.Component<IUploadedPhotosParams, any> {
@@ -27,7 +25,7 @@ class DropzoneInputComponent extends React.Component<IUploadedPhotosParams, any>
     this.props.input.onChange(files);
   }
 
-  onDrop = (acceptedFiles, rejectedFiles) => {
+  onDrop = (acceptedFiles: ImageFile[], rejectedFiles: ImageFile[]) => {
     const files = this.props.input.value;
     const newFiles = [...files, ...acceptedFiles];
     this.props.input.onChange(newFiles);
@@ -35,13 +33,14 @@ class DropzoneInputComponent extends React.Component<IUploadedPhotosParams, any>
 
   render() {
     const { meta, input, clearDroppedImages, uploadImages, hasError, progress, isUploaded, isUploading } = this.props;
-    const showTooltip = Boolean(meta.invalid && meta.error);
+    const hasValidationError = Boolean(meta.invalid && meta.error);
     return (
-      <Tooltip open={showTooltip} title={meta.error || ''} placement="top-start">
+      <Tooltip open={hasValidationError} title={meta.error || ''} placement="top-end">
         <FileUpload
           onDrop={this.onDrop}
           showUploadButtons={input.value.length}
           clearImages={clearDroppedImages}
+          hasValidationError={hasValidationError}
           uploadImages={uploadImages}
         >
           <ImagePreview

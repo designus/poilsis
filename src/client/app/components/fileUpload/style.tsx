@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { UPLOADED_PHOTO_HEIGHT } from '../../global-styles';
+import { UPLOADED_PHOTO_HEIGHT } from 'global-styles';
 
 export const ImageUpload = styled.div`
   margin: 10px 0;

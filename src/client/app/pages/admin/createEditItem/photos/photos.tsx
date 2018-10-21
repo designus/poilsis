@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
-import { IImage, voidFn } from 'global-utils';
-import Typography from '@material-ui/core/Typography';
 import { change } from 'redux-form';
+import Typography from '@material-ui/core/Typography';
+import { ImageFile } from 'react-dropzone';
+
+import { IImage, voidFn } from 'global-utils';
+import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
 import { PhotosForm } from './form';
 
 export interface IPhotosFormFields {
   images: IImage[];
-  files: File[];
+  files: ImageFile[];
   isUpdateAction?: boolean;
 }
 
@@ -48,13 +50,11 @@ class PhotosPageComponent extends React.Component<any, any> {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    uploadImages: (itemId: string, files: File[]) => dispatch(uploadPhotos(itemId, files)),
-    updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
-    setInitialUploadState: () => dispatch(setInitialUploadState()),
-    addImagesToFormState: (images: IImage[]) => dispatch(change('PhotosForm', 'images', images)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  uploadImages: (itemId: string, files: ImageFile[]) => dispatch(uploadPhotos(itemId, files)),
+  updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
+  setInitialUploadState: () => dispatch(setInitialUploadState()),
+  addImagesToFormState: (images: IImage[]) => dispatch(change('PhotosForm', 'images', images)),
+});
 
 export const PhotosPage = connect(voidFn, mapDispatchToProps)(PhotosPageComponent);

@@ -10,7 +10,7 @@ const validators = [
 
 interface ICustomProps {
   setInitialUploadState: () => void;
-  onSubmit: any;
+  onSubmit: (fields: IPhotosFormFields) => void;
 }
 
 type FormProps = ICustomProps & InjectedFormProps<{}, ICustomProps>;

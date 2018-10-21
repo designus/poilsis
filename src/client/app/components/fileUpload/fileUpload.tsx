@@ -1,21 +1,29 @@
 import * as React from 'react';
-import Dropzone from 'react-dropzone';
-import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
-import { Button } from '../../components';
-import { START_UPLOAD, UPLOAD_PLACEHOLDER, CLEAR_IMAGES } from '../../../../data-strings';
-import { ALLOWED_MIME_TYPES, MAX_FILE_SIZE_B } from '../../../../global-utils';
-import FileUploadIcon from '@material-ui/icons/FileUpload';
+import Dropzone, { ImageFile } from 'react-dropzone';
 import ClearIcon from '@material-ui/icons/Clear';
+import FileUploadIcon from '@material-ui/icons/FileUpload';
 import Typography from '@material-ui/core/Typography';
+
+import { Button } from 'components';
+import { ALLOWED_MIME_TYPES, MAX_FILE_SIZE_B } from 'global-utils';
+import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 export interface IFileUploadProps {
-  onDrop: (acceptedImages: any[], rejectedImages?: any[]) => void;
+  onDrop: (acceptedImages: ImageFile[], rejectedImages?: ImageFile[]) => void;
   showUploadButtons: boolean;
+  hasValidationError: boolean;
   clearImages: () => void;
   uploadImages: () => void;
   children: any;
 }
 
-export const FileUpload = ({onDrop, showUploadButtons, clearImages, uploadImages, children}: IFileUploadProps) => {
+export const FileUpload = ({
+  onDrop,
+  hasValidationError,
+  showUploadButtons,
+  clearImages,
+  uploadImages,
+  children,
+}: IFileUploadProps) => {
   return (
     <ImageUpload>
       <Dropzone
@@ -29,7 +37,7 @@ export const FileUpload = ({onDrop, showUploadButtons, clearImages, uploadImages
         {children}
         <UploadPlaceholder>
           <Typography variant="body1">
-            {UPLOAD_PLACEHOLDER}
+            Drag and drop or click to select a 550x550px file to upload.
           </Typography>
         </UploadPlaceholder>
       </Dropzone>
@@ -39,14 +47,17 @@ export const FileUpload = ({onDrop, showUploadButtons, clearImages, uploadImages
             type="button"
             color="secondary"
             onClick={clearImages}
-            style={{margin: '0 2px 0 0'}}
           >
             <ClearIcon />
-            {CLEAR_IMAGES}
+            Clear images
           </Button>
-          <Button type="button" onClick={uploadImages} style={{margin: '0 0 0 2px'}}>
+          <Button
+            type="button"
+            disabled={hasValidationError}
+            onClick={uploadImages}
+          >
             <FileUploadIcon />
-            {START_UPLOAD}
+            Upload
           </Button>
         </UploadButtons> :
         null

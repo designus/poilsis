@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { WithStyles } from '@material-ui/core';
-import { IAppState } from '../../reducers';
+import { IAppState } from 'reducers';
 import { styles } from './verticalMenu/styles';
 
 export interface IAdminMenuItem {
