@@ -5,3 +5,5 @@ build
 .vscode/settings.json
 uploads/*
 .env
+/coverage
+testUploads/items

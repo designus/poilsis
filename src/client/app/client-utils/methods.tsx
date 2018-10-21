@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as FormData from 'form-data';
 import { IGenericState } from './types';
 import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
@@ -38,8 +39,6 @@ export function getNormalizedData(data: any[], additionalInfo?) {
   }, {dataMap: {}, aliases: []});
 }
 
-export const voidFn = (f) => f;
-
 export function getBackendErrors(errors) {
   return Object.keys(errors).reduce((acc, key) => {
     acc[key] = errors[key].message;
@@ -76,4 +75,10 @@ export const renderMergedProps = (component, ...rest) => {
   return (
     React.createElement(component, finalProps)
   );
+};
+
+export const getFormDataFromFiles = (files: File[]) => {
+  const formData = new FormData();
+  files.forEach(file => formData.append('files[]', file));
+  return formData;
 };

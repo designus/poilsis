@@ -12,10 +12,10 @@ import {
 import { stopLoading, handleApiResponse } from './utils';
 import {
   IAlias,
-  objectToFormData,
   onUploadProgress,
   CONTENT_LOADER_ID,
   DIALOG_LOADER_ID,
+  getFormDataFromFiles,
  } from '../client-utils';
 import { IItemsMap, IAppState, Toast, IItem } from '../reducers';
 import {
@@ -93,11 +93,10 @@ export const getItem = (itemId) => {
   };
 };
 
-export const uploadPhotos = (itemId, files) => (dispatch) => {
+export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
   return new Promise((resolve, reject) => {
-    const formData = objectToFormData({files});
     return axios
-      .put(`http://localhost:3000/api/items/item/upload-photos/${itemId}`, formData, {
+      .put(`http://localhost:3000/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
         onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent))),
       })
       .then(response => response.data)
@@ -127,7 +126,7 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
   return new Promise((resolve, reject) => {
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.put(`http://localhost:3000/api/items/item/photos/${itemId}`, {images})
+    return axios.put(`http://localhost:3000/api/items/item/update-photos/${itemId}`, {images})
       .then(response => response.data)
       .then(images => {
         if (images.errors) {

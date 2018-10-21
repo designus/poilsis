@@ -1,142 +1,114 @@
 import { ItemsModel } from '../model';
-import { MAX_FILE_COUNT, IItemFields } from 'global-utils';
 import { Request, Response, NextFunction } from 'express';
-import auth from './auth';
 import {
-  createUploadPath,
   uploadImages,
   resizeImages,
   getImages,
-  removeImagesFromFs,
-  removeImagesDir,
   sendResponse,
 } from '../server-utils';
+import { IItemFields, MAX_FILE_COUNT } from 'global-utils';
 
-const express = require('express');
-const sanitize = require('mongo-sanitize');
-const router = express.Router();
 const shortId = require('shortid');
 
-router.route('/')
-  .get((req, res, next) => {
-    ItemsModel.find(sendResponse(res, next));
-  })
-  .post(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
+export const getAllItems = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.find(sendResponse(res, next));
+};
 
-    const id = shortId.generate();
-    const name = sanitize(req.body.name);
-    const cityId = sanitize(req.body.cityId);
-    const alias = sanitize(req.body.alias) || name;
-    const address = sanitize(req.body.address);
-    const types = req.body.types;
-    const userId = req.body.userId;
-    const newItem = {id, name, cityId, alias, types, address, userId};
+export const getCityItems = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.find({ cityId: req.params.cityId }, sendResponse(res, next));
+};
 
-    new ItemsModel(newItem).save(sendResponse(res, next));
-  });
+export const getUserItems = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.find({ userId: req.params.userId }, sendResponse(res, next));
+};
 
-router.route('/item/:itemId')
-  .get((req, res, next) => {
-    ItemsModel.findOne({ id: req.params.itemId }, sendResponse(res, next));
-  })
-  .delete(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesDir, (req, res, next) => {
-    ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
-  });
+export const toggleItem = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.findOneAndUpdate(
+    { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
+    sendResponse(res, next),
+  );
+};
 
-router.route('/item/mainInfo/:itemId')
-  .put(auth.authenticate(), auth.authorize(['admin', 'user']), (req, res, next) => {
-    const item: IItemFields = req.body;
-    const name = sanitize(item.name);
-    const cityId = sanitize(item.cityId);
-    const alias = sanitize(item.alias) || name;
-    const address = sanitize(item.address);
-    const types = item.types;
-    const updatedAt = new Date();
-    const userId = item.userId;
+export const addNewItem = (req: Request, res: Response, next: NextFunction) => {
+  const id = shortId.generate();
+  const item: IItemFields = req.body;
+  const alias = item.alias || item.name;
+  const newItem = { id, alias, ...item };
 
-    const updatedItem = {name, cityId, alias, types, address, updatedAt, userId};
+  new ItemsModel(newItem).save(sendResponse(res, next));
+};
 
-    ItemsModel.findOneAndUpdate(
-      { id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true },
-      sendResponse(res, next),
-    );
-  });
+export const getItem = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.findOne({ id: req.params.itemId }, sendResponse(res, next));
+};
 
-router.route('/item/photos/:itemId')
-  .put(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesFromFs, (req, res, next) => {
-    ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
+export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
+};
+
+export const updateMainInfo = (req: Request, res: Response, next: NextFunction) => {
+  const item: IItemFields = req.body;
+  const updatedAt = new Date();
+  const alias = item.alias || item.name;
+  const updatedItem = { ...item, alias, updatedAt };
+
+  ItemsModel.findOneAndUpdate(
+    { id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true },
+    sendResponse(res, next),
+  );
+};
+
+export const updatePhotos = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
+    if (err) {
+      // TODO: Rollback deleted files
+      return next(err);
+    }
+
+    item.images = req.body.images;
+
+    item.save((err, item) => {
       if (err) {
         // TODO: Rollback deleted files
         return next(err);
       }
 
-      item.images = req.body.images;
-
-      item.save((err, item) => {
-        if (err) {
-          // TODO: Rollback deleted files
-          return next(err);
-        }
-
-        res.send(item.images);
-      });
+      res.send(item.images);
     });
   });
+};
 
-router.route('/item/upload-photos/:itemId')
-  .put(auth.authenticate(), auth.authorize(['admin', 'user']), createUploadPath, (req, res, next) => {
-    const uploadPhotos = uploadImages.array(`files[]`, MAX_FILE_COUNT);
+export const uploadPhotos = (req, res: Response, next: NextFunction) => {
+  const uploadPhotos = uploadImages.array(`files[]`, MAX_FILE_COUNT);
 
-    uploadPhotos(req, res, (err) => {
-      if (err) { return next(err); }
+  uploadPhotos(req, res, (err) => {
+    if (err) { return next(err); }
 
-      resizeImages(req, res)
-        .then(() => {
-          const images = getImages(req.files);
+    resizeImages(req, res)
+      .then(() => {
+        const images = getImages(req.files);
 
-          ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
+        ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
+          if (err) {
+            // TODO: Remove uploaded files
+            return next(err);
+          }
+
+          item.images = [...(item.images || []), ...images];
+
+          item.save((err, item) => {
             if (err) {
               // TODO: Remove uploaded files
               return next(err);
             }
 
-            item.images = [...(item.images || []), ...images];
-
-            item.save((err, item) => {
-              if (err) {
-                // TODO: Remove uploaded files
-                return next(err);
-              }
-
-              res.send(item.images);
-            });
+            res.send(item.images);
           });
-        })
-        .catch(err => {
-          // TODO: Remove uploaded files
-          console.log(err);
         });
+      })
+      .catch(err => {
+        // TODO: Remove uploaded files
+        console.log(err);
+      });
   });
-
-});
-
-router.route('/city/:cityId')
-  .get((req, res, next) => {
-    ItemsModel.find({ cityId: req.params.cityId }, sendResponse(res, next));
-  });
-
-router.route('/user/:userId')
-  .get((req, res, next) => {
-    ItemsModel.find({ userId: req.params.userId }, sendResponse(res, next));
-  });
-
-router.route('/item/toggle/:itemId')
-  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), (req: Request, res: Response, next: NextFunction) => {
-
-    ItemsModel.findOneAndUpdate(
-      { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
-      sendResponse(res, next),
-    );
-  });
-
-export default router;
+};

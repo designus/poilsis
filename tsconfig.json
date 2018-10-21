@@ -4,6 +4,7 @@
     "paths": {
       "components": ["./src/client/app/components"],
       "client-utils": ["./src/client/app/client-utils"],
+      "selectors": ["./src/client/app/selectors"],
       "reducers": ["./src/client/app/reducers"],
       "actions": ["./src/client/app/actions"],
       "pages": ["./src/client/app/pages"],
@@ -16,20 +17,15 @@
     "experimentalDecorators": true,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "jsx": "react"
+    "jsx": "react",
+    "sourceMap": true
   },
   "exclude": [
-    "./node_modules",
-    "./build",
-    "./typings/main",
-    "./typings/main.d.ts"
+    "node_modules",
+    "**/*.spec.ts"
   ],
   "include": [
-    "./src/**/*"
-  ],
-  "typeRoots": [
-    "./node_modules/@types",
-    "custom-typings"
+    "src/**/*"
   ],
   "awesomeTypescriptLoaderOptions": {
     "useCache": true,
