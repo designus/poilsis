@@ -22,8 +22,6 @@ export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchPara
 
 class CreateEditItemPageComponent extends React.Component<ICreateEditItemPageProps, any> {
 
-  isCreatePage = !Boolean(this.props.match.params.itemId);
-
   constructor(props) {
     super(props);
   }
@@ -35,6 +33,8 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
       return Promise.resolve(null);
     }
   }
+
+  isCreatePage = () =>  !Boolean(this.props.match.params.itemId);
 
   getLoadedItem(): IItem {
     return this.props.itemsMap[this.props.match.params.itemId];
@@ -51,24 +51,24 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
         icon: () => (<PhotoIcon />),
         link: adminRoutes.editItemPhotos.getLink(userId, itemId),
         text: PHOTO_GALLERY,
-        isDisabled: this.isCreatePage,
+        isDisabled: this.isCreatePage(),
       },
     ];
   }
 
   componentDidMount() {
     const loadedItem = this.getLoadedItem();
-    if (!this.isCreatePage && (!loadedItem || !loadedItem.isFullyLoaded)) {
+    if (!this.isCreatePage() && (!loadedItem || !loadedItem.isFullyLoaded)) {
       this.props.getItem(this.props.match.params.itemId);
     }
   }
 
   render() {
     const loadedItem = this.getLoadedItem();
-    const childProps = {...this.props, loadedItem, isCreatePage: this.isCreatePage };
+    const childProps = {...this.props, loadedItem, isCreatePage: this.isCreatePage() };
     const { userId, itemId } = this.props.match.params;
 
-    return (loadedItem || this.isCreatePage) && (
+    return (loadedItem || this.isCreatePage()) && (
       <div>
         <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
         <Switch>

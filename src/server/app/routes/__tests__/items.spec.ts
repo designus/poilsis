@@ -206,6 +206,14 @@ describe('Integration tests: Items', () => {
         });
     });
 
+    it('should be able to create a new item', () => {
+      return request(app)
+        .post('/api/items')
+        .set('Cookie', `jwt=${accessToken}`)
+        .send({...newItem, userId: regularUser.id })
+        .expect(200);
+    });
+
     it('should be able to update main info of own item', () => {
       return request(app)
         .put(`/api/items/item/mainInfo/${userItem.id}`)

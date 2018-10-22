@@ -26,8 +26,7 @@ class Auth {
     const { userRole, userId, userItems } = accessToken;
     const hasAccess = roles.indexOf(userRole) !== -1;
     const isOwner = userRole === UserRoles.admin || userItems.indexOf(req.params.itemId) !== -1;
-
-    if (hasAccess && isOwner) {
+    if (hasAccess && (isOwner || req.method === 'POST')) {
       req.body.userId = userId;
       req.body.userRole = userRole;
       next();

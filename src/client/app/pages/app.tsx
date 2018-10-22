@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { withRouter, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { adminRoutes, clientRoutes } from '../client-utils';
 import { AdminLayoutPage } from './admin';
 import { ClientLayoutPage } from './client';
@@ -19,7 +18,4 @@ class AppComponent extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state) => ({state});
-const mapDispatchToProps = (dispatch) => ({dispatch});
-
-export const App = withRouter(connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AppComponent));
+export const App = withRouter(AppComponent);

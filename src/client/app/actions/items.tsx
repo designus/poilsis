@@ -8,6 +8,7 @@ import {
   uploadError,
   uploadSuccess,
   removeUserItem,
+  keepUserLogged,
 } from '../actions';
 import { stopLoading, handleApiResponse } from './utils';
 import {
@@ -189,6 +190,7 @@ export const postItem = (item) => (dispatch) => {
         } else {
           dispatch(receiveItem(item));
           dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
+          // dispatch(keepUserLogged());
           resolve({itemId: item.id, userId: item.userId});
         }
       })

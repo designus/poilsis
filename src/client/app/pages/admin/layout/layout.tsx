@@ -30,6 +30,15 @@ import {
   ProtectedRoute,
 } from 'components';
 
+import {
+  AdminItemsPage,
+  CreateEditItemPage,
+  CreateEditTypePage,
+  CreateEditCityPage,
+  AdminTypesPage,
+  AdminCitiesPage,
+} from 'pages';
+
 import { styles } from './styles';
 interface IAdminLayoutProps extends WithStyles<typeof styles>  {
   isInitialDataLoaded: boolean;
@@ -138,43 +147,43 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               <ProtectedRoute
                 exact
                 path={adminRoutes.items.path}
-                component={adminRoutes.items.getComponent()}
+                component={AdminItemsPage}
               />
               <ProtectedRoute
                 exact
                 path={adminRoutes.types.path}
-                component={adminRoutes.types.getComponent()}
+                component={AdminTypesPage}
                 allowedRoles={adminRoutes.types.allowedRoles}
               />
               <ProtectedRoute
                 exact
                 path={adminRoutes.cities.path}
-                component={adminRoutes.cities.getComponent()}
+                component={AdminCitiesPage}
                 allowedRoles={adminRoutes.cities.allowedRoles}
               />
               <ProtectedRoute
                 path={adminRoutes.createItem.path}
-                component={adminRoutes.createItem.getComponent()}
+                component={CreateEditItemPage}
               />
               <ProtectedRoute
                 path={adminRoutes.editItem.path}
-                component={adminRoutes.editItem.getComponent()}
+                component={CreateEditItemPage}
               />
               <ProtectedRoute
                 path={adminRoutes.createType.path}
-                component={adminRoutes.createType.getComponent()}
+                component={CreateEditTypePage}
               />
               <ProtectedRoute
                 path={adminRoutes.editType.path}
-                component={adminRoutes.editType.getComponent()}
+                component={CreateEditTypePage}
               />
               <ProtectedRoute
                 path={adminRoutes.createCity.path}
-                component={adminRoutes.createCity.getComponent()}
+                component={CreateEditCityPage}
               />
               <ProtectedRoute
                 path={adminRoutes.editCity.path}
-                component={adminRoutes.editCity.getComponent()}
+                component={CreateEditCityPage}
               />
               <ProtectedRoute
                 path={'/admin/not-authorized'}

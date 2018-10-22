@@ -39,7 +39,6 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
   onSubmit = (item: IItemFields) => {
     const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
     const submitFn = isCreatePage ? createItem : updateItem;
-
     return submitFn(item)
       .then(item => {
         if (isCreatePage) {
@@ -65,7 +64,7 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
         />
-        <NavigationPrompt when={this.props.showNavigationPrompt} />
+        {/* <NavigationPrompt when={this.props.showNavigationPrompt} /> */}
       </div>
     );
   }

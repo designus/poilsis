@@ -5,7 +5,7 @@ import FileUploadIcon from '@material-ui/icons/FileUpload';
 import Typography from '@material-ui/core/Typography';
 
 import { Button } from 'components';
-import { ALLOWED_MIME_TYPES, MAX_FILE_COUNT, MAX_FILE_SIZE_MB } from 'global-utils';
+import { ALLOWED_MIME_TYPES, MAX_FILE_COUNT, MAX_FILE_SIZE_MB, mapMimeTypesToTypes } from 'global-utils';
 import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 export interface IFileUploadProps {
   onDrop: (acceptedImages: ImageFile[], rejectedImages?: ImageFile[]) => void;
@@ -43,7 +43,8 @@ export const FileUpload = ({
       <Typography variant="caption" gutterBottom>
         {`
           Please select no more than ${MAX_FILE_COUNT} photos.
-          Each should not be bigger than ${MAX_FILE_SIZE_MB} mb.
+          Each photo should not be bigger than ${MAX_FILE_SIZE_MB} mb
+          and have one of the type: ${mapMimeTypesToTypes(ALLOWED_MIME_TYPES)}
         `}
       </Typography>
       {showUploadButtons ?

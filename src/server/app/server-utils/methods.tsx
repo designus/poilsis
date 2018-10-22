@@ -5,7 +5,6 @@ import { exists, mkdir, readFile, writeFile, unlink, readdir, lstat } from 'fs';
 import { promisify } from 'util';
 import * as rimraf from 'rimraf';
 
-import { IMulterFile, FileUploadErrors } from './types';
 import {
   ImageSize,
   IImage,
@@ -18,8 +17,9 @@ import {
   MAX_FILE_COUNT,
   ALLOWED_MIME_TYPES,
 } from 'global-utils';
-
 import { IMAGES_KEY } from 'data-strings';
+
+import { IMulterFile, FileUploadErrors } from './types';
 
 export const checkIfDirectoryExists = promisify(exists);
 export const createDirectory = promisify(mkdir);
