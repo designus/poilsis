@@ -7,13 +7,18 @@ import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 import { IAppState } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils';
-import { logout, reauthenticateUser } from 'actions';
+import { logout, reauthenticateUser, setLogoutTimer } from 'actions';
+import { getAccessTokenClaims } from 'global-utils';
 
 export interface IKeepMeLoggedModalProps extends WithStyles<typeof modalStyles> {
   isModalOpen?: boolean;
+  isLoggedIn?: boolean;
+  timeoutId?: number;
   timeToCloseModal?: number;
+  accessToken?: string;
   onCloseModal?: () => void;
   reauthenticateUser?: () => void;
+  setLogoutTimer?: (expires: number) => void;
 }
 
 class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps, any> {
@@ -41,6 +46,14 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
   componentWillReceiveProps(nextProps: IKeepMeLoggedModalProps) {
     if (nextProps.timeToCloseModal) {
       this.setCounter(nextProps.timeToCloseModal);
+    }
+  }
+
+  componentDidMount() {
+    // When we refresh the page and the user is logged we must trigger modal timeout
+    if (this.props.isLoggedIn && !this.props.timeoutId) {
+      const { expires } = getAccessTokenClaims(this.props.accessToken);
+      this.props.setLogoutTimer(expires);
     }
   }
 
@@ -97,6 +110,9 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
 }
 
 const mapStateToProps = (state: IAppState) => ({
+  accessToken: state.auth.accessToken,
+  timeoutId: state.auth.timeoutId,
+  isLoggedIn: state.auth.isLoggedIn,
   isModalOpen: state.auth.showKeepMeLoggedModal,
   timeToCloseModal: state.auth.timeToCloseModal,
 });
@@ -104,6 +120,7 @@ const mapStateToProps = (state: IAppState) => ({
 const mapDispatchToProps = (dispatch) => ({
   onCloseModal: () => dispatch(logout()),
   reauthenticateUser: () => dispatch(reauthenticateUser()),
+  setLogoutTimer: (expires) => dispatch(setLogoutTimer(expires)),
 });
 
 const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);

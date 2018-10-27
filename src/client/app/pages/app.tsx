@@ -5,6 +5,7 @@ import { AdminLayoutPage } from './admin';
 import { ClientLayoutPage } from './client';
 import { PropsRoute, ProtectedRoute, KeepMeLoggedModal } from '../components';
 class AppComponent extends React.Component<any, any> {
+
   render() {
     return (
       <div>

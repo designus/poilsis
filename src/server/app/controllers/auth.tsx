@@ -4,7 +4,7 @@ import * as day from 'dayjs';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles, IItemFields, SESSION_DURATION_MINUTES } from 'global-utils';
+import { UserRoles, IItemFields, SESSION_DURATION_MINUTES, IAccessTokenClaims } from 'global-utils';
 
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
@@ -22,7 +22,7 @@ class Auth {
   public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
   public authorize = (roles: string[]) => (req: Request, res: Response, next: NextFunction) => {
-    const accessToken: any = this.getAccessTokenClaims(req);
+    const accessToken = this.getAccessTokenClaims(req);
     const { userRole, userId, userItems } = accessToken;
     const hasAccess = roles.indexOf(userRole) !== -1;
     const isOwner = userRole === UserRoles.admin || userItems.indexOf(req.params.itemId) !== -1;
@@ -37,7 +37,7 @@ class Auth {
 
   private genToken = (userId: string, userRole: string, userItems: string[]) => {
     const expires = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
-    const claims = { exp: expires, userId, userRole, userItems };
+    const claims: IAccessTokenClaims = { expires, userId, userRole, userItems };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 
     return token;
@@ -137,7 +137,7 @@ class Auth {
     return req && req.cookies ? req.cookies.jwt : null;
   }
 
-  private getAccessTokenClaims(req) {
+  private getAccessTokenClaims(req): IAccessTokenClaims {
     const accessToken = this.extractFromCookie(req);
     return JWT(accessToken);
   }

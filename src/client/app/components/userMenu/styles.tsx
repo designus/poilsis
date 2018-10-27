@@ -12,4 +12,7 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  sessionTimer: {
+    paddingRight: '10px',
+  },
 });

@@ -54,3 +54,10 @@ export enum UserRoles {
   admin = 'admin',
   user = 'user',
 }
+
+export interface IAccessTokenClaims {
+  expires: number;
+  userId: string;
+  userRole: string;
+  userItems: string[];
+}

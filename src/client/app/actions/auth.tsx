@@ -1,12 +1,11 @@
 import axios from 'axios';
 import * as Cookies from 'js-cookie';
-import * as JWT from 'jwt-decode';
 import * as day from 'dayjs';
 
 import { startLoading, endLoading, showToast, receiveUserDetails } from 'actions';
 import { Toast, IAppState, IUser } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils';
-import { REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
+import { REAUTHENTICATE_DURATION_SECONDS, getAccessTokenClaims } from 'global-utils';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
@@ -59,9 +58,8 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
     .then(response => response.data)
     .then(data => {
       const { accessToken, refreshToken } = data;
-      const jwt: any = JWT(accessToken);
-      const {userId, exp} = jwt;
-      const expires = day(exp * 1000).toDate();
+      const { userId, expires } = getAccessTokenClaims(accessToken);
+      const expiryDate = day(expires * 1000).toDate();
       return axios.get(`http://localhost:3000/api/users/profile/${userId}`)
         .then(response => response.data)
         .then((user: IUser) => {
@@ -69,8 +67,8 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           dispatch(receiveUserDetails(user));
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
-          dispatch(setLogoutTimer(exp));
-          Cookies.set('jwt', accessToken, {expires});
+          dispatch(setLogoutTimer(expires));
+          Cookies.set('jwt', accessToken, {expires: expiryDate});
           localStorage.setItem('refreshToken', refreshToken);
           return Promise.resolve();
         })
@@ -84,18 +82,18 @@ export const reauthenticateUser = () => (dispatch, getState) => {
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
   const refreshToken = localStorage.getItem('refreshToken');
-  const { userId, userRole } = JWT(oldAccessToken);
+  const { userId, userRole } = getAccessTokenClaims(oldAccessToken);
   return axios.post('http://localhost:3000/api/users/reauthenticate', { userId, userRole, refreshToken })
     .then(response => response.data)
     .then((data) => {
       const accessToken = data.accessToken;
-      const {exp} = JWT(accessToken);
-      const expires = day(exp * 1000).toDate();
+      const { expires } = getAccessTokenClaims(accessToken);
+      const expiryDate = day(expires * 1000).toDate();
       dispatch(endLoading(DIALOG_LOADER_ID));
       dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
       dispatch(reauthenticateSuccess(accessToken));
-      dispatch(setLogoutTimer(exp));
-      Cookies.set('jwt', accessToken, {expires});
+      dispatch(setLogoutTimer(expires));
+      Cookies.set('jwt', accessToken, { expires: expiryDate });
     })
     .catch(error => handleError(dispatch, error, true));
 };
@@ -103,7 +101,7 @@ export const reauthenticateUser = () => (dispatch, getState) => {
 export const logout = () => (dispatch, getState) => {
   const state: IAppState = getState();
   const accessToken = state.auth.accessToken;
-  const {userId} = JWT(accessToken);
+  const { userId } = getAccessTokenClaims(accessToken);
   return axios.delete(`http://localhost:3000/api/users/logout/${userId}`)
     .then(response => response.data)
     .then(() => {

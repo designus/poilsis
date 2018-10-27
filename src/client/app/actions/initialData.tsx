@@ -1,8 +1,8 @@
 import axios from 'axios';
-import * as JWT from 'jwt-decode';
-import { getNormalizedData } from '../client-utils';
-import { IAppState } from '../reducers';
-import { receiveUserDetails, loginSuccess } from '../actions';
+import { getNormalizedData } from 'client-utils';
+import { IAppState } from 'reducers';
+import { receiveUserDetails, loginSuccess } from 'actions';
+import { getAccessTokenClaims } from 'global-utils';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
 
@@ -17,8 +17,8 @@ export const getInitialData = () => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
     const token = state.auth.accessToken;
-    const decodedToken: any = token ? JWT(token) : null;
-    const userId = decodedToken ? decodedToken.userId : null;
+    const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
+    const userId = accessTokenClaims ? accessTokenClaims.userId : null;
     const promises = [
       axios.get('http://localhost:3000/api/cities'),
       axios.get('http://localhost:3000/api/types'),
@@ -35,13 +35,12 @@ export const getInitialData = () => {
         const types = getNormalizedData(typesResponse.data);
         const users = getNormalizedData(usersResponse.data);
         dispatch(receiveInitialData({cities, types, users}));
+
         if (loggedInUser) {
           dispatch(loginSuccess(token));
           dispatch(receiveUserDetails(loggedInUser.data));
         }
       }))
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(console.error);
   };
 };
