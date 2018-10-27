@@ -2,7 +2,6 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   SET_ACCESS_TOKEN,
-  SET_AUTH_TIMEOUT_ID,
   SHOW_KEEP_ME_LOGGED_MODAL,
   REAUTHENTICATE_SUCCESS,
 } from '../actions';
@@ -10,17 +9,13 @@ import {
 export interface IAuthState {
   isLoggedIn: boolean;
   accessToken: string;
-  timeoutId?: number;
   showKeepMeLoggedModal?: boolean;
-  timeToCloseModal?: number;
 }
 
 const initialAuthState: IAuthState = {
   isLoggedIn: false,
   accessToken: null,
   showKeepMeLoggedModal: false,
-  timeToCloseModal: 0,
-  timeoutId: null,
 };
 
 export const auth = (state: IAuthState = initialAuthState, action): IAuthState => {
@@ -31,7 +26,6 @@ export const auth = (state: IAuthState = initialAuthState, action): IAuthState =
         accessToken: action.accessToken,
         isLoggedIn: true,
         showKeepMeLoggedModal: false,
-        timeToCloseModal: null,
       };
     }
     case LOGOUT_SUCCESS: {
@@ -40,7 +34,6 @@ export const auth = (state: IAuthState = initialAuthState, action): IAuthState =
         accessToken: null,
         isLoggedIn: false,
         showKeepMeLoggedModal: false,
-        timeToCloseModal: null,
       };
     }
     case REAUTHENTICATE_SUCCESS: {
@@ -59,17 +52,10 @@ export const auth = (state: IAuthState = initialAuthState, action): IAuthState =
         isLoggedIn: false,
       };
     }
-    case SET_AUTH_TIMEOUT_ID: {
-      return {
-        ...state,
-        timeoutId: action.timeoutId,
-      };
-    }
     case SHOW_KEEP_ME_LOGGED_MODAL: {
       return {
         ...state,
         showKeepMeLoggedModal: true,
-        timeToCloseModal: action.time,
       };
     }
     default:

@@ -3,74 +3,37 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
-import { modalStyles } from '../styles';
-import { DialogHeader, DialogContent, DialogFooter } from '../shared';
+import Countdown from 'react-countdown-now';
+
 import { IAppState } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils';
-import { logout, reauthenticateUser, setLogoutTimer } from 'actions';
+import { logout, reauthenticateUser } from 'actions';
 import { getAccessTokenClaims } from 'global-utils';
+import { modalStyles } from '../styles';
+import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 
 export interface IKeepMeLoggedModalProps extends WithStyles<typeof modalStyles> {
   isModalOpen?: boolean;
-  isLoggedIn?: boolean;
-  timeoutId?: number;
-  timeToCloseModal?: number;
   accessToken?: string;
   onCloseModal?: () => void;
   reauthenticateUser?: () => void;
-  setLogoutTimer?: (expires: number) => void;
 }
 
 class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps, any> {
 
-  state = {
-    error: null,
-    timeToCloseModal: 0,
-  };
-
-  timerId = null;
-
-  setCounter(timeToCloseModal) {
-    clearInterval(this.timerId);
-    this.setState({timeToCloseModal});
-    this.timerId = setInterval(() => {
-      const timeToCloseModal = this.state.timeToCloseModal - 1;
-      this.setState({timeToCloseModal});
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerId);
-  }
-
-  componentWillReceiveProps(nextProps: IKeepMeLoggedModalProps) {
-    if (nextProps.timeToCloseModal) {
-      this.setCounter(nextProps.timeToCloseModal);
-    }
-  }
-
-  componentDidMount() {
-    // When we refresh the page and the user is logged we must trigger modal timeout
-    if (this.props.isLoggedIn && !this.props.timeoutId) {
-      const { expires } = getAccessTokenClaims(this.props.accessToken);
-      this.props.setLogoutTimer(expires);
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.props.isModalOpen && (!this.state.timeToCloseModal || this.state.timeToCloseModal <= 0)) {
-      this.onCloseModal();
-    }
-  }
-
   onCloseModal = () => {
-    clearInterval(this.timerId);
     this.props.onCloseModal();
   }
 
+  renderCountdown = ({ seconds }) => {
+    return (
+      <span>Your login session will expire in <strong>{seconds}</strong> seconds. Do you want us to keep you logged in?</span>
+    );
+  }
+
   render() {
-    const { classes, isModalOpen, reauthenticateUser } = this.props;
-    const { error, timeToCloseModal } = this.state;
+    const { classes, isModalOpen, reauthenticateUser, accessToken } = this.props;
+    const expires = accessToken ? getAccessTokenClaims(accessToken).expires : null;
 
     return (
       <div>
@@ -89,12 +52,18 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
             closeModal={this.onCloseModal}
           />
           <DialogContent
-            error={error}
             showLoadingOverlay={true}
             loaderId={DIALOG_LOADER_ID}
             contentClass={classes.dialogContent}
           >
-            Your login session will expire in <strong>{timeToCloseModal}</strong> seconds. Do you want us to keep you logged in?
+            {expires &&
+              <Countdown
+                date={expires * 1000}
+                intervalDelay={0}
+                precision={3}
+                renderer={this.renderCountdown}
+              />
+            }
           </DialogContent>
           <DialogFooter
             classes={classes}
@@ -111,16 +80,12 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
 
 const mapStateToProps = (state: IAppState) => ({
   accessToken: state.auth.accessToken,
-  timeoutId: state.auth.timeoutId,
-  isLoggedIn: state.auth.isLoggedIn,
   isModalOpen: state.auth.showKeepMeLoggedModal,
-  timeToCloseModal: state.auth.timeToCloseModal,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCloseModal: () => dispatch(logout()),
   reauthenticateUser: () => dispatch(reauthenticateUser()),
-  setLogoutTimer: (expires) => dispatch(setLogoutTimer(expires)),
 });
 
 const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);

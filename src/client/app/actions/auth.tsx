@@ -5,19 +5,17 @@ import * as day from 'dayjs';
 import { startLoading, endLoading, showToast, receiveUserDetails } from 'actions';
 import { Toast, IAppState, IUser } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils';
-import { REAUTHENTICATE_DURATION_SECONDS, getAccessTokenClaims } from 'global-utils';
+import { getAccessTokenClaims } from 'global-utils';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const SET_AUTH_TIMEOUT_ID = 'SET_AUTH_TIMEOUT_ID';
 export const SHOW_KEEP_ME_LOGGED_MODAL = 'SHOW_KEEP_ME_LOGGED_MODAL';
 export const REAUTHENTICATE_SUCCESS = 'REAUTHENTICATE_SUCCESS';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 
 export const loginSuccess = (accessToken) => ({type: LOGIN_SUCCESS, accessToken});
 export const logoutSuccess = () => ({type: LOGOUT_SUCCESS});
-export const setAuthTimeoutId = (timeoutId) => ({type: SET_AUTH_TIMEOUT_ID, timeoutId});
-export const showKeepMeLoggedModal = (time) => ({type: SHOW_KEEP_ME_LOGGED_MODAL, time});
+export const showKeepMeLoggedModal = () => ({type: SHOW_KEEP_ME_LOGGED_MODAL});
 export const reauthenticateSuccess = (accessToken) => ({type: REAUTHENTICATE_SUCCESS, accessToken});
 export const setAccessToken = (accessToken) => ({type: SET_ACCESS_TOKEN, accessToken});
 
@@ -28,28 +26,6 @@ export const handleError = (dispatch, error, isLogin: boolean) => {
   dispatch(endLoading(DIALOG_LOADER_ID));
   dispatch(showToast(Toast.error, `${errorType}: ${response.data.message}`));
   dispatch(logout());
-};
-
-export const getKeepMeLoggedModalDelay = (expires, timeInSeconds) => {
-  const now = day().unix();
-  const delayBuffer = 1;
-  const delayCandidate = expires - delayBuffer - timeInSeconds - now;
-  const delay = delayCandidate > 0 ? delayCandidate : expires - now;
-  return delay;
-};
-
-export const setLogoutTimer = (expires: number) => (dispatch, getState) => {
-  const state: IAppState = getState();
-  const timeoutId: number = state.auth.timeoutId;
-  const delayInSeconds = getKeepMeLoggedModalDelay(expires, REAUTHENTICATE_DURATION_SECONDS);
-
-  if (timeoutId) clearTimeout(timeoutId);
-
-  const newTimeoutId = setTimeout(() =>
-    dispatch(showKeepMeLoggedModal(REAUTHENTICATE_DURATION_SECONDS)), delayInSeconds * 1000,
-  );
-
-  dispatch(setAuthTimeoutId(newTimeoutId));
 };
 
 export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
@@ -67,7 +43,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           dispatch(receiveUserDetails(user));
           dispatch(endLoading(DIALOG_LOADER_ID));
           dispatch(showToast(Toast.success, 'User logged in successfully'));
-          dispatch(setLogoutTimer(expires));
+          // dispatch(setLogoutTimer(expires));
           Cookies.set('jwt', accessToken, {expires: expiryDate});
           localStorage.setItem('refreshToken', refreshToken);
           return Promise.resolve();
@@ -92,7 +68,6 @@ export const reauthenticateUser = () => (dispatch, getState) => {
       dispatch(endLoading(DIALOG_LOADER_ID));
       dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
       dispatch(reauthenticateSuccess(accessToken));
-      dispatch(setLogoutTimer(expires));
       Cookies.set('jwt', accessToken, { expires: expiryDate });
     })
     .catch(error => handleError(dispatch, error, true));

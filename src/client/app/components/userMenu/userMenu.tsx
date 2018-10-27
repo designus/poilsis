@@ -8,16 +8,19 @@ import AccountIcon from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Countdown from 'react-countdown-now';
+import { throttle } from 'lodash';
 
-import { getAccessTokenClaims } from 'global-utils';
-import { logout } from 'actions';
-import { IAppState } from 'reducers';
+import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
+import { logout, showKeepMeLoggedModal } from 'actions';
+import { IAppState, ICurrentUser } from 'reducers';
 import { styles } from './styles';
 
 interface IMenuComponentProps extends WithStyles<typeof styles> {
-  userName?: string;
+  currentUser?: ICurrentUser;
   expires?: number;
+  isKeepMeLoggedModalVisible?: boolean;
   logout?: () => void;
+  showKeepMeLoggedModal?: () => void;
 }
 
 class MenuComponent extends React.Component<IMenuComponentProps, any> {
@@ -26,6 +29,20 @@ class MenuComponent extends React.Component<IMenuComponentProps, any> {
     dropdownAnchorEl: null,
     dropdownMenuOpen: false,
   };
+
+  handleTick = (props) => {
+    if (props.minutes === 0 && props.seconds <= REAUTHENTICATE_DURATION_SECONDS && !this.props.isKeepMeLoggedModalVisible) {
+      this.props.showKeepMeLoggedModal();
+    } else if (props.minutes === 0 && props.seconds === 0) {
+      this.props.logout();
+    }
+  }
+
+  onTick = throttle(this.handleTick, 1000);
+
+  onComplete = () => {
+    this.props.logout();
+  }
 
   handleMenuOpen = event => {
     this.setState({ dropdownMenuOpen: true, dropdownAnchorEl: event.currentTarget });
@@ -44,16 +61,17 @@ class MenuComponent extends React.Component<IMenuComponentProps, any> {
   }
 
   render() {
-    return (
+    return this.props.currentUser && (
       <div className={this.props.classes.wrapper}>
         <Countdown
           date={this.props.expires * 1000}
           intervalDelay={0}
           precision={3}
           renderer={this.renderCountdown}
+          onTick={this.onTick}
         />
         <Typography color="inherit" variant="body1" align="right">
-          Hello, {this.props.userName}
+          Hello, {this.props.currentUser.name}
         </Typography>
         <IconButton
           aria-label="More"
@@ -81,12 +99,14 @@ class MenuComponent extends React.Component<IMenuComponentProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  userName: state.currentUser.details.name,
+  isKeepMeLoggedModalVisible: state.auth.showKeepMeLoggedModal,
+  currentUser: state.currentUser.details,
   expires: getAccessTokenClaims(state.auth.accessToken).expires,
 });
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
+  showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal()),
 });
 
 const connectedComponent = connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(MenuComponent);

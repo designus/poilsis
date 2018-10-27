@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Link } from 'react-router-dom';
-import { MainMenu, Toast } from 'components';
+import { MainMenu, Toast, UserMenu } from 'components';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
 import { getInitialData, login, logout } from 'actions';
 import { LoginPage, CityPage } from 'pages';
@@ -31,8 +31,7 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
           This is header
           {this.props.isAuthenticated ?
             <div>
-              Hello, <strong>{this.props.user}</strong>
-              <div onClick={this.props.logout}>Log out</div>
+              <UserMenu />
             </div> :
             <div>
               <div onClick={this.login({username: 'admin', password: 'admin'})}>Log in with admin</div>
