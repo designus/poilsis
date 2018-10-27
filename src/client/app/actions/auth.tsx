@@ -1,10 +1,12 @@
 import axios from 'axios';
 import * as Cookies from 'js-cookie';
-import * as moment from 'moment';
 import * as JWT from 'jwt-decode';
-import { startLoading, endLoading, showToast, receiveUserDetails } from '../actions';
-import { Toast, IAppState, IUser } from '../reducers';
-import { DIALOG_LOADER_ID } from '../client-utils';
+import * as day from 'dayjs';
+
+import { startLoading, endLoading, showToast, receiveUserDetails } from 'actions';
+import { Toast, IAppState, IUser } from 'reducers';
+import { DIALOG_LOADER_ID } from 'client-utils';
+import { REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
@@ -30,8 +32,8 @@ export const handleError = (dispatch, error, isLogin: boolean) => {
 };
 
 export const getKeepMeLoggedModalDelay = (expires, timeInSeconds) => {
-  const now = moment().utc().unix();
-  const delayBuffer = 10;
+  const now = day().unix();
+  const delayBuffer = 1;
   const delayCandidate = expires - delayBuffer - timeInSeconds - now;
   const delay = delayCandidate > 0 ? delayCandidate : expires - now;
   return delay;
@@ -39,13 +41,15 @@ export const getKeepMeLoggedModalDelay = (expires, timeInSeconds) => {
 
 export const setLogoutTimer = (expires: number) => (dispatch, getState) => {
   const state: IAppState = getState();
-  const timeInSeconds = 30;
-  const timeoutId: any = state.auth.timeoutId;
-  const delayInSeconds = getKeepMeLoggedModalDelay(expires, timeInSeconds);
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-  const newTimeoutId = setTimeout(() => dispatch(showKeepMeLoggedModal(timeInSeconds)), delayInSeconds * 1000);
+  const timeoutId: number = state.auth.timeoutId;
+  const delayInSeconds = getKeepMeLoggedModalDelay(expires, REAUTHENTICATE_DURATION_SECONDS);
+
+  if (timeoutId) clearTimeout(timeoutId);
+
+  const newTimeoutId = setTimeout(() =>
+    dispatch(showKeepMeLoggedModal(REAUTHENTICATE_DURATION_SECONDS)), delayInSeconds * 1000,
+  );
+
   dispatch(setAuthTimeoutId(newTimeoutId));
 };
 
@@ -57,8 +61,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
       const { accessToken, refreshToken } = data;
       const jwt: any = JWT(accessToken);
       const {userId, exp} = jwt;
-      const expires = moment.unix(exp).utc().toDate();
-
+      const expires = day(exp * 1000).toDate();
       return axios.get(`http://localhost:3000/api/users/profile/${userId}`)
         .then(response => response.data)
         .then((user: IUser) => {
@@ -76,7 +79,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
     .catch(error => handleError(dispatch, error, true));
 };
 
-export const keepUserLogged = () => (dispatch, getState) => {
+export const reauthenticateUser = () => (dispatch, getState) => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
@@ -87,7 +90,7 @@ export const keepUserLogged = () => (dispatch, getState) => {
     .then((data) => {
       const accessToken = data.accessToken;
       const {exp} = JWT(accessToken);
-      const expires = moment.unix(exp).utc().toDate();
+      const expires = day(exp * 1000).toDate();
       dispatch(endLoading(DIALOG_LOADER_ID));
       dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
       dispatch(reauthenticateSuccess(accessToken));

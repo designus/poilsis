@@ -1,10 +1,10 @@
 import * as jwt from 'jwt-simple';
 import * as passport from 'passport';
-import * as moment from 'moment';
+import * as day from 'dayjs';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles, IItemFields } from 'global-utils';
+import { UserRoles, IItemFields, SESSION_DURATION_MINUTES } from 'global-utils';
 
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
@@ -36,7 +36,7 @@ class Auth {
   }
 
   private genToken = (userId: string, userRole: string, userItems: string[]) => {
-    const expires = moment().utc().add({ minutes: 10 }).unix();
+    const expires = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
     const claims = { exp: expires, userId, userRole, userItems };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 

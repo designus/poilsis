@@ -8,7 +8,7 @@ import {
   uploadError,
   uploadSuccess,
   removeUserItem,
-  keepUserLogged,
+  reauthenticateUser,
 } from '../actions';
 import { stopLoading, handleApiResponse } from './utils';
 import {
@@ -190,7 +190,7 @@ export const postItem = (item) => (dispatch) => {
         } else {
           dispatch(receiveItem(item));
           dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
-          // dispatch(keepUserLogged());
+          // dispatch(reauthenticateUser());
           resolve({itemId: item.id, userId: item.userId});
         }
       })
