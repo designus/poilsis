@@ -1,23 +1,26 @@
 'use strict';
 
-import { ICityFields, REQUIRED_MESSAGE } from 'global-utils';
+import { ICityFields, REQUIRED_MESSAGE, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { Document, model, Model } from 'mongoose';
 import { formatAlias, TGenericSchemaMap } from '../server-utils';
 
 const shortId = require('shortid');
-const SchemaClass = require('mongoose').Schema;
+const Schema = require('mongoose').Schema;
+const mongooseIntl = require('mongoose-intl');
 
 interface ICityModel extends ICityFields, Document {}
 interface ICitySchema extends TGenericSchemaMap<ICityFields> {}
 
 const schemaMap: ICitySchema = {
   id: { type: String, unique: true, default: shortId.generate, required: true },
-  name: { type: String, required: [true, REQUIRED_MESSAGE] },
-  description: String,
+  name: { type: String, required: [true, REQUIRED_MESSAGE], intl: true },
+  description: { type: String, intl: true },
   types: { type: [String] },
-  alias: { type: String, lowercase: true, trim: true, required: true, set: formatAlias },
+  alias: { type: String, lowercase: true, trim: true, required: true, set: formatAlias, intl: true },
 };
 
-const CitySchema = new SchemaClass(schemaMap);
+const CitySchema = new Schema(schemaMap);
+
+CitySchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
 
 export const CitiesModel: Model<ICityModel> = model<ICityModel>('Cities', CitySchema);

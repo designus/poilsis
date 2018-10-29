@@ -45,7 +45,7 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
           <Link to={adminRoutes.items.getLink()}>Admin</Link>
         </div>
         <div className="content">
-          <MainMenu {...this.props} showSubmenu={false} />
+          {/* <MainMenu {...this.props} showSubmenu={false} /> */}
           <Switch>
             <Route path={'/login'} component={LoginPage} />
             <Route path={clientRoutes.items.path} component={CityPage} />
