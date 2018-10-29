@@ -31,7 +31,7 @@ export const getInitialData = () => {
 
     return axios.all(promises)
       .then(axios.spread((citiesResponse, typesResponse, usersResponse, loggedInUser) => {
-        const cities = getNormalizedData(citiesResponse.data, {items: [], isAllLoaded: false});
+        const cities = getNormalizedData(citiesResponse.data);
         const types = getNormalizedData(typesResponse.data);
         const users = getNormalizedData(usersResponse.data);
         dispatch(receiveInitialData({cities, types, users}));

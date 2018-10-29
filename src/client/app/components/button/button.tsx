@@ -48,7 +48,7 @@ export const ButtonComponent = ({
       disabled={disabled}
       onClick={onClick}
       color={color}
-      variant="raised"
+      variant="contained"
       type={type}
     >
       {children}

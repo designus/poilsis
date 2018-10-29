@@ -38,12 +38,11 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   appBar: {
-    zIndex: 0,
+    zIndex: 2,
     position: 'relative',
     display: 'block',
     [theme.breakpoints.down('sm')]: {
       position: 'fixed',
-      zIndex: 1,
     },
   },
   content: {

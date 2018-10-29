@@ -48,9 +48,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
   };
 
   componentDidMount() {
-    if (!this.props.areAllItemsLoaded) {
-      this.props.getUserItems();
-    }
+    this.props.getUserItems();
   }
 
   get columns(): ITableColumn[] {

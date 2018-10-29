@@ -19,6 +19,7 @@ module.exports = {
     path: path.join(projectRoot, 'build', 'server'),    
     filename: 'app.js',
   },
+  devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [path.resolve(__dirname), 'node_modules', 'app'],

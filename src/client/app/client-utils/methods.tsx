@@ -31,9 +31,9 @@ export const getCityItems = (dataMap: IItemsMap, haveAllItemsLoaded: boolean) =>
   }, {});
 };
 
-export function getNormalizedData(data: any[], additionalInfo?) {
+export function getNormalizedData(data: any[]) {
   return data.reduce((acc: IGenericState<object>, item: any) => {
-    acc.dataMap[item.id] = additionalInfo ? {...item, ...additionalInfo} : item;
+    acc.dataMap[item.id] = item;
     acc.aliases.push({id: item.id, alias: item.alias});
     return acc;
   }, {dataMap: {}, aliases: []});

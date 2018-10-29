@@ -1,6 +1,6 @@
 import * as React from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/ModeEdit';
+import EditIcon from '@material-ui/icons/Create';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import red from '@material-ui/core/colors/red';

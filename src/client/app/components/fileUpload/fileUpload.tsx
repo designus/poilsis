@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Dropzone, { ImageFile } from 'react-dropzone';
 import ClearIcon from '@material-ui/icons/Clear';
-import FileUploadIcon from '@material-ui/icons/FileUpload';
+import FileUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
 
 import { Button } from 'components';

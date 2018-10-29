@@ -45,7 +45,12 @@ export const mergeCityItems = (citiesMap: ICitiesMap, cityItems: ICitiesItems) =
 export const removeCityItem = changeCityItem(true);
 export const addCityItem = changeCityItem(false);
 
-export const cities = (state: ICityState = null, action): ICityState => {
+const initialState = {
+  dataMap: {},
+  aliases: [],
+};
+
+export const cities = (state: ICityState = initialState, action): ICityState => {
   switch (action.type) {
     case SELECT_CITY:
       return {...state, selectedId: action.cityId};

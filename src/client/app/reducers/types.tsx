@@ -9,7 +9,12 @@ export interface ITypesState extends IGenericState<IType> {
   selectedId?: string;
 }
 
-export const types = (state: ITypesState = null, action): ITypesState => {
+const initialState = {
+  dataMap: {},
+  aliases: [],
+};
+
+export const types = (state: ITypesState = initialState, action): ITypesState => {
   switch (action.type) {
     case RECEIVE_INITIAL_DATA:
       return {...state, ...action.data.types};
