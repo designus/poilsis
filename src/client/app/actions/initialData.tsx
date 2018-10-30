@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getNormalizedData } from 'client-utils';
+import { getNormalizedData, getSelectedLanguage } from 'client-utils';
 import { IAppState } from 'reducers';
 import { receiveUserDetails, loginSuccess } from 'actions';
 import { getAccessTokenClaims } from 'global-utils';
@@ -20,7 +20,7 @@ export const getInitialData = () => {
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
     const userId = accessTokenClaims ? accessTokenClaims.userId : null;
     const promises = [
-      axios.get('http://localhost:3000/api/cities'),
+      axios.get('http://localhost:3000/api/cities', { headers: { 'Accept-Language': getSelectedLanguage() }}),
       axios.get('http://localhost:3000/api/types'),
       axios.get('http://localhost:3000/api/users'),
     ];

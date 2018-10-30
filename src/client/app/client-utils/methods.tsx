@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as FormData from 'form-data';
+import { DEFAULT_LANGUAGE } from 'global-utils';
 import { IGenericState } from './types';
 import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
@@ -82,3 +83,5 @@ export const getFormDataFromFiles = (files: File[]) => {
   files.forEach(file => formData.append('files[]', file));
   return formData;
 };
+
+export const getSelectedLanguage = () => DEFAULT_LANGUAGE;

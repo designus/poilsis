@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { ICityFields } from 'global-utils';
-
 import { CitiesModel } from '../model';
 import { sendResponse } from '../server-utils';
 

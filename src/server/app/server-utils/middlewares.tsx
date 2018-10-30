@@ -1,5 +1,13 @@
 import { readdir } from 'fs';
-import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, ALLOWED_MIME_TYPES, ImageSize, IImage } from 'global-utils';
+import {
+  MAX_FILE_COUNT,
+  MAX_FILE_SIZE_B,
+  ALLOWED_MIME_TYPES,
+  ImageSize,
+  IImage,
+  getLocalizedResponse,
+  LANGUAGES,
+} from 'global-utils';
 
 import { IMulterFile, FileUploadErrors } from './types';
 import {
@@ -127,4 +135,12 @@ export const handleItemsErrors = (err, req, res, next) => {
   } else {
     res.send(err);
   }
+};
+
+export const localizeResponse = (body, req: Request, res: Response) => {
+  const language = req.headers['accept-language'] as string;
+  if (LANGUAGES.indexOf(language) !== -1) {
+    return getLocalizedResponse(body, language);
+  }
+  return body;
 };
