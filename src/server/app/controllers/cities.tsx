@@ -7,6 +7,10 @@ export const getAllCities = (req: Request, res: Response, next: NextFunction) =>
   CitiesModel.find(sendResponse(res, next));
 };
 
+export const getCity = (req: Request, res: Response, next: NextFunction) => {
+  CitiesModel.find({ id: req.params.cityId }, sendResponse(res, next));
+};
+
 export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
   const city: ICityFields = req.body;
   const alias = city.alias || city.name;

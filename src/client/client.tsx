@@ -9,6 +9,9 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const rootElement = document.getElementById('app');
 export const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   overrides: {
     MuiButton: {
       root: {

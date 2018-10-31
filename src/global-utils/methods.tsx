@@ -9,7 +9,6 @@ export const voidFn = f => f;
 export const getAccessTokenClaims = (token: string): IAccessTokenClaims => JWT(token);
 
 export const getLocalizedResponse = <T extends {}>(list: T[], language: string) => {
-  // console.log('List', list);
   return list.map(document => {
     const item = document.toObject();
     return Object.keys(item).reduce((acc: T, key: string) => {
