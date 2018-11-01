@@ -18,9 +18,12 @@ import { types, ITypesState } from './types';
 import { uploadProgress, IUploadProgress } from './uploadProgress';
 import { currentUser, ICurrentUserState } from './currentUser';
 import { users, IUsersState } from './users';
+import { admin, IAdminState } from './admin';
+
 export interface IAppState {
   cities: ICityState;
   auth: IAuthState;
+  admin: IAdminState;
   global: any;
   currentUser: ICurrentUserState;
   users: IUsersState;
@@ -36,6 +39,7 @@ export const rootReducer = combineReducers({
   cities,
   types,
   auth,
+  admin,
   items,
   initialData,
   loader,

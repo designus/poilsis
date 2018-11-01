@@ -42,12 +42,23 @@ export interface ITypeFields {
   alias: string;
 }
 
-export interface ICityFields {
-  id?: string;
+export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
+
+export interface ICityFieldsAbstract {
+  id: string;
+  types: string[];
+}
+
+export interface ICityFieldsLocalized extends ICityFieldsAbstract {
   name: string;
   description: string;
-  types: string[];
   alias: string;
+}
+
+export interface ICityFields extends ICityFieldsAbstract {
+  name: TranslatableField;
+  description: TranslatableField;
+  alias: TranslatableField;
 }
 
 export enum UserRoles {

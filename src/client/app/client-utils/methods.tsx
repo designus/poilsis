@@ -85,3 +85,5 @@ export const getFormDataFromFiles = (files: File[]) => {
 };
 
 export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
+
+export const getAcceptLanguageHeader = () => ({ 'Accept-Language': getSelectedLanguage() });

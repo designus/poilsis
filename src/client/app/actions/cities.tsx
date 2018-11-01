@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import { ICityFields } from 'global-utils';
+import { ICityFieldsLocalized, ICityFields } from 'global-utils';
 import { ICitiesItems, IAppState } from 'reducers';
 import { startLoading, endLoading, receiveItems } from 'actions';
-import { getNormalizedData, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
+import { getNormalizedData, getAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import {
   CITY_CREATE_SUCCESS,
   CITY_UPDATE_SUCCESS,
@@ -43,7 +43,7 @@ export const addCityItem = (cityId, itemId) => ({
   itemId,
 });
 
-export const receiveCity = (newCity: ICityFields) => ({
+export const receiveCity = (newCity: ICityFieldsLocalized) => ({
   type: RECEIVE_CITY,
   newCity,
 });
@@ -96,9 +96,9 @@ export const getCityItems = (cityId) => {
 export const createCity = (city: ICityFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post('http://localhost:3000/api/cities', city)
+  return axios.post('http://localhost:3000/api/cities', city, { headers: getAcceptLanguageHeader() })
     .then(handleApiResponse)
-    .then((city: ICityFields) => {
+    .then((city: ICityFieldsLocalized) => {
       dispatch(receiveCity(city));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(city);
@@ -109,9 +109,9 @@ export const createCity = (city: ICityFields) => dispatch => {
 export const updateCity = (city: ICityFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`http://localhost:3000/api/cities/city/${city.id}`, city)
+  return axios.put(`http://localhost:3000/api/cities/city/${city.id}`, city, { headers: getAcceptLanguageHeader() })
     .then(handleApiResponse)
-    .then((city: ICityFields) => {
+    .then((city: ICityFieldsLocalized) => {
       dispatch(receiveCity(city));
       dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(city);

@@ -1,4 +1,4 @@
-import { ICityFields } from 'global-utils';
+import { ICityFieldsLocalized } from 'global-utils';
 import { IGenericState, removeDuplicates, IGenericDataMap } from 'client-utils';
 import {
   SELECT_CITY,
@@ -19,7 +19,7 @@ export interface ICitiesItems {
   [key: string]: ICityItems;
 }
 
-export interface ICity extends ICityFields, ICityItems {}
+export interface ICity extends ICityFieldsLocalized, ICityItems {}
 
 export type ICitiesMap = IGenericDataMap<ICity>;
 

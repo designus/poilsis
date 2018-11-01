@@ -20,12 +20,14 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         component={TextInput}
         validate={[isRequired]}
         label="Name"
+        intl
       />
       <Field
         name="alias"
         type="text"
         component={TextInput}
         label="Alias"
+        intl
       />
       <Field
         name="types"
@@ -39,6 +41,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         type="text"
         component={TextInput}
         label="Description"
+        intl
       />
       <div>
         <Button type="submit">
