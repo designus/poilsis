@@ -88,7 +88,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     return (
       <div>
         <AdminHeader>
-          <Typography variant="headline">
+          <Typography variant="h5">
             Cities
           </Typography>
           <AdminPageActions createLink={adminRoutes.createCity.getLink()} />

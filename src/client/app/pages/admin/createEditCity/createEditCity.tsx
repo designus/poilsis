@@ -62,7 +62,7 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
   render() {
     return (this.props.loadedCity || this.isCreatePage) && (
       <div>
-        <Typography variant="headline">{`${this.isCreatePage ? 'Create' : 'Edit'} city`}</Typography>
+        <Typography variant="h5">{`${this.isCreatePage ? 'Create' : 'Edit'} city`}</Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}

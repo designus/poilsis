@@ -159,7 +159,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
     return (
       <div>
         <AdminHeader>
-          <Typography variant="headline">
+          <Typography variant="h5">
             {ITEMS}
           </Typography>
           <AdminPageActions

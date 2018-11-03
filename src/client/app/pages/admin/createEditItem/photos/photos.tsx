@@ -39,7 +39,7 @@ class PhotosPageComponent extends React.Component<any, any> {
 
       return (
         <div>
-          <Typography variant="headline">Photo gallery</Typography>
+          <Typography variant="h5">Photo gallery</Typography>
           <PhotosForm
             onSubmit={this.onSubmit}
             initialValues={initialValues}

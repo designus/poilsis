@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { getSelectedLanguage } from 'client-utils';
 import { LANGUAGES } from 'global-utils';
-import { styles } from './styles';
+import { styles  } from './styles';
 
 interface IInjectedProps extends Partial<WithStyles<typeof styles>> {
   selectedLanguage?: string;

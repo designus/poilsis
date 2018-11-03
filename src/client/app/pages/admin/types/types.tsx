@@ -78,7 +78,7 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
     return (
       <div>
         <AdminHeader>
-          <Typography variant="headline">
+          <Typography variant="h5">
             Types
           </Typography>
           <AdminPageActions createLink={adminRoutes.createType.getLink()} />

@@ -54,7 +54,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
   render() {
     return (this.props.loadedType || this.isCreatePage) && (
       <div>
-        <Typography variant="headline">{`${this.isCreatePage ? 'Create' : 'Edit'} type`}</Typography>
+        <Typography variant="h5">{`${this.isCreatePage ? 'Create' : 'Edit'} type`}</Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}

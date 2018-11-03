@@ -53,7 +53,7 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
   render() {
     return (this.props.loadedItem || this.props.isCreatePage) && (
       <div>
-        <Typography variant="headline">Main info</Typography>
+        <Typography variant="h5">Main info</Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}

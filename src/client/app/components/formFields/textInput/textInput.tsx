@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { WithStyles } from '@material-ui/core';
 import { debounce } from 'lodash';
 
-import { LANGUAGES } from 'global-utils';
+import { LANGUAGES, hasLocalizedFields } from 'global-utils';
 import { styles } from './styles';
 
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
@@ -26,11 +26,16 @@ const getInitialValue = (value, isIntl: boolean) => {
 };
 
 class InputComponent extends React.PureComponent<ITextInputProps, any> {
+
+  initialValue = getInitialValue(this.props.input.value, this.props.intl);
+  hasLocalizedFields = hasLocalizedFields(this.initialValue);
+
   constructor(props: ITextInputProps) {
     super(props);
     this.state = {
-      value: getInitialValue(props.input.value, props.intl),
+      value: this.initialValue,
     };
+
   }
 
   handleChange = lang => event => {
@@ -76,14 +81,12 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
     );
   }
 
-  renderIntlInputs = () => {
-    return Object.keys(this.state.value).map((lang) =>
-      this.renderInput(this.state.value[lang], lang),
-    );
-  }
+  renderIntlInputs = () => LANGUAGES.map(lang => this.renderInput(this.state.value[lang], lang));
 
   render() {
-    return this.props.intl ?  this.renderIntlInputs() : this.renderInput(this.state.value);
+    return this.props.intl && this.hasLocalizedFields
+      ? this.renderIntlInputs()
+      : this.renderInput(this.state.value);
   }
 }
 

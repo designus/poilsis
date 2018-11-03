@@ -136,7 +136,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
                   <MenuIcon />
                 </IconButton>
               </Hidden>
-              <Typography className={classes.appBarTitle} variant="title" color="inherit" noWrap>
+              <Typography className={classes.appBarTitle} variant="h6" color="inherit" noWrap>
                 Admin panel
               </Typography>
               <UserMenu />
