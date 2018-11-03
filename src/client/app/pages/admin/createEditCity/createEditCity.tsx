@@ -41,7 +41,8 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
     }
   }
 
-  handleErrors(errors) {
+  handleErrors(errors: Record<string, any>) {
+    console.error('Errors', errors);
     throw new SubmissionError(getBackendErrors(errors));
   }
 

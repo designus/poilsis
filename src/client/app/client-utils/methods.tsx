@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as FormData from 'form-data';
-import { DEFAULT_LANGUAGE } from 'global-utils';
+import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils';
 import { IGenericState } from './types';
 import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
@@ -40,9 +40,14 @@ export function getNormalizedData(data: any[]) {
   }, {dataMap: {}, aliases: []});
 }
 
-export function getBackendErrors(errors) {
+export function getBackendErrors(errors: Record<string, any>) {
   return Object.keys(errors).reduce((acc, key) => {
-    acc[key] = errors[key].message;
+    // We only want to display validation errors to the user
+    if (errors[key].name === 'ValidatorError') {
+      const [field, language] = key.split('.');
+      const errorField = LANGUAGES.includes(language) ? field : key;
+      acc[errorField] = errors[key].message;
+    }
     return acc;
   }, {});
 }

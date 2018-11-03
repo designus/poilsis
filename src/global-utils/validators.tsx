@@ -5,7 +5,6 @@ import { DEFAULT_LANGUAGE, hasLocalizedFields } from 'global-utils';
 import { REQUIRED_MESSAGE } from './errorMessages';
 import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, MAX_FILE_SIZE_MB } from './constants';
 
-// export const isRequired = value => value ? undefined : REQUIRED_MESSAGE;
 export const isRequired = value => {
   if (value) {
     if (hasLocalizedFields(value) && !value[DEFAULT_LANGUAGE]) {
