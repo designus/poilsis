@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { WithStyles } from '@material-ui/core';
 import { debounce } from 'lodash';
 
-import { LANGUAGES, hasLocalizedFields } from 'global-utils';
+import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields } from 'global-utils';
 import { styles } from './styles';
 
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
@@ -53,16 +53,24 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
 
   onChange = debounce(this.updateStoreValue, 600);
 
+  showError = (language: string) => {
+    const { meta, selectedLanguage } = this.props;
+    const hasError = Boolean(meta.touched && meta.invalid && meta.error);
+    if (language) {
+      return hasError && selectedLanguage === DEFAULT_LANGUAGE && language === DEFAULT_LANGUAGE;
+    }
+    return hasError;
+  }
+
   renderInput = (value: string, language?: string) => {
     const { classes, label, meta, selectedLanguage } = this.props;
-    const showError = Boolean(meta.touched && meta.invalid && meta.error);
     return (
       <div
         className={`${classes.wrapper} ${language !== selectedLanguage ? classes.hidden : ''}`}
         key={language}
       >
-        <Tooltip open={showError} title={meta.error || ''} placement="right-end">
-          <FormControl className={classes.formControl} error={showError}>
+        <Tooltip open={this.showError(language)} title={meta.error || ''} placement="right-end">
+          <FormControl className={classes.formControl} error={this.showError(language)}>
             <InputLabel htmlFor={label}>
               {label}
             </InputLabel>

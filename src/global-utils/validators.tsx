@@ -1,10 +1,21 @@
 import { ImageFile } from 'react-dropzone';
 import { IPhotoFormState } from 'pages';
+import { DEFAULT_LANGUAGE, hasLocalizedFields } from 'global-utils';
 
 import { REQUIRED_MESSAGE } from './errorMessages';
-import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, MAX_FILE_SIZE_MB, ALLOWED_MIME_TYPES } from './constants';
+import { MAX_FILE_COUNT, MAX_FILE_SIZE_B, MAX_FILE_SIZE_MB } from './constants';
 
-export const isRequired = value => value ? undefined : REQUIRED_MESSAGE;
+// export const isRequired = value => value ? undefined : REQUIRED_MESSAGE;
+export const isRequired = value => {
+  if (value) {
+    if (hasLocalizedFields(value) && !value[DEFAULT_LANGUAGE]) {
+      return REQUIRED_MESSAGE;
+    }
+    return undefined;
+  }
+  return REQUIRED_MESSAGE;
+};
+
 export const maxTextLength = max => value => value && value.length > max ? `Field must be ${max} characters or less` : undefined;
 export const minTextLength = min => value => value && value.length < min ? `Field must be ${min} characters or more` : undefined;
 
