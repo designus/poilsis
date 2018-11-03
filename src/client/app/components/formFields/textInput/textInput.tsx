@@ -13,6 +13,7 @@ import { styles } from './styles';
 
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
   intl: boolean;
+  selectedLanguage: string;
 }
 
 // TODO: Memoize this fn
@@ -47,11 +48,14 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
 
   onChange = debounce(this.updateStoreValue, 600);
 
-  renderInput = (value: string, lang?: string, i?: number) => {
-    const { classes, label, meta } = this.props;
+  renderInput = (value: string, language?: string) => {
+    const { classes, label, meta, selectedLanguage } = this.props;
     const showError = Boolean(meta.touched && meta.invalid && meta.error);
     return (
-      <div className={classes.wrapper} key={i}>
+      <div
+        className={`${classes.wrapper} ${language !== selectedLanguage ? classes.hidden : ''}`}
+        key={language}
+      >
         <Tooltip open={showError} title={meta.error || ''} placement="right-end">
           <FormControl className={classes.formControl} error={showError}>
             <InputLabel htmlFor={label}>
@@ -60,9 +64,8 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
             <Input
               id={this.props.label}
               value={value}
-              onChange={this.handleChange(lang)}
+              onChange={this.handleChange(language)}
               margin="dense"
-              className={lang ? lang : ''}
               classes={{
                 error: this.props.classes.error,
               }}
@@ -74,8 +77,8 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
   }
 
   renderIntlInputs = () => {
-    return Object.keys(this.state.value).map((lang, i) =>
-      this.renderInput(this.state.value[lang], lang, i),
+    return Object.keys(this.state.value).map((lang) =>
+      this.renderInput(this.state.value[lang], lang),
     );
   }
 

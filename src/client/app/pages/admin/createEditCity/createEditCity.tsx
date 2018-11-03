@@ -7,11 +7,11 @@ import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
 import { ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
-import { extendWithLoader, NavigationPrompt } from 'components';
+import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
 import { IAppState, ICity, ITypesMap } from 'reducers';
 import { CityForm, CITY_FORM_NAME } from './form';
 
-const FormWithLoader = extendWithLoader(CityForm);
+const FormWithLoader = extendWithLoader(extendWithLanguage(CityForm));
 
 interface IMatchParams {
   cityId: string;

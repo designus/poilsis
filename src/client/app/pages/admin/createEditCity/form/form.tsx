@@ -8,10 +8,11 @@ export const CITY_FORM_NAME = 'CityForm';
 
 interface ICustomProps {
   typesMap: ITypesMap;
+  selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
-  const { handleSubmit } = props;
+  const { handleSubmit, selectedLanguage } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -21,6 +22,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         validate={[isRequired]}
         label="Name"
         intl
+        selectedLanguage={selectedLanguage}
       />
       <Field
         name="alias"
@@ -28,6 +30,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         component={TextInput}
         label="Alias"
         intl
+        selectedLanguage={selectedLanguage}
       />
       <Field
         name="types"
@@ -42,6 +45,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         component={TextInput}
         label="Description"
         intl
+        selectedLanguage={selectedLanguage}
       />
       <div>
         <Button type="submit">

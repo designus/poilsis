@@ -25,3 +25,4 @@ export * from './validationErrors';
 export * from './table';
 export * from './propsRoute';
 export * from './protectedRoute';
+export * from './formLanguage';
