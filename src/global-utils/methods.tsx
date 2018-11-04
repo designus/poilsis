@@ -11,8 +11,7 @@ export const getAccessTokenClaims = (token: string): IAccessTokenClaims => JWT(t
 
 export const hasLocalizedFields = (field) => Object.keys(field).some(field => LANGUAGES.indexOf(field) !== -1);
 
-export const localizeDocument = (document: MongooseDocument, language: string) => {
-  const item = document.toObject();
+export const localizeDocument = (item: object, language: string) => {
   return Object.keys(item).reduce((acc: any, key: string) => {
     if (key === '_id') {
       return acc;
@@ -27,6 +26,6 @@ export const localizeDocument = (document: MongooseDocument, language: string) =
 
 export const getLocalizedResponse = (data: any, language: string) => {
   return data.constructor === Array
-    ? data.map(document => localizeDocument(document, language))
-    : localizeDocument(data, language);
+    ? data.map(document => localizeDocument(document.toObject(), language))
+    : localizeDocument(data.toObject(), language);
 };

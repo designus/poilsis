@@ -1,28 +1,24 @@
-import { getLocalizedResponse } from '../methods';
+import { localizeDocument } from '../methods';
 
 describe('Global methods', () => {
-  it('getLocalizedResponse should return localized string', () => {
-    const list = [
-      {
-        _id: 123,
-        title: {
-          en: 'This is title',
-          lt: 'Tai yra pavadinimas',
-        },
-        message: {
-          en: 'This is message',
-          lt: 'Tai yra aprasymas',
-        },
+  it('localizeDocument() should return localized string', () => {
+    const item = {
+      _id: 123,
+      title: {
+        en: 'This is title',
+        lt: 'Tai yra pavadinimas',
       },
-    ];
-
-    const expectation = [
-      {
-        title: 'This is title',
-        message: 'This is message',
+      message: {
+        en: 'This is message',
+        lt: 'Tai yra aprasymas',
       },
-    ];
+    };
 
-    expect(getLocalizedResponse(list, 'en')).toEqual(expectation);
+    const expectation = {
+      title: 'This is title',
+      message: 'This is message',
+    };
+
+    expect(localizeDocument(item, 'en')).toEqual(expectation);
   });
 });

@@ -1,5 +1,6 @@
-import { login, logout, testDB, testData, adminUser, regularUser } from '../../test-utils';
 import * as request from 'supertest';
+import { login, logout, testDB, testData, adminUser, regularUser } from '../../test-utils';
+import { DEFAULT_LANGUAGE } from '../../../../global-utils';
 import app from '../../../app';
 
 const newCityId = '123456';
@@ -80,7 +81,7 @@ describe('Integration tests: Cities', () => {
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
         .then(response => {
-          expect(response.body.name).toBe(newCity.name);
+          expect(response.body.name[DEFAULT_LANGUAGE]).toBe(newCity.name);
         });
     });
 
