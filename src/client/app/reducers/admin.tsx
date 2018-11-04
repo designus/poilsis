@@ -1,9 +1,9 @@
 
-import { ICityFields } from 'global-utils';
-import { RECEIVE_ADMIN_CITY } from 'actions';
+import { TCityFields } from 'global-utils';
+import { RECEIVE_LOADED_CITY } from 'actions';
 
 export interface IAdminState {
-  cities: Record<string, ICityFields>;
+  cities: Record<string, TCityFields>;
 }
 
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
 
 export const admin = (state: IAdminState = initialState, action): IAdminState => {
   switch (action.type) {
-    case RECEIVE_ADMIN_CITY:
+    case RECEIVE_LOADED_CITY:
       return {
         ...state,
         cities: {

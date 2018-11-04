@@ -44,22 +44,15 @@ export interface ITypeFields {
 
 export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
 
-export interface ICityFieldsAbstract {
+export interface ICityFields<T = string> {
   id: string;
   types: string[];
+  name: T;
+  description: T;
+  alias: T;
 }
 
-export interface ICityFieldsLocalized extends ICityFieldsAbstract {
-  name: string;
-  description: string;
-  alias: string;
-}
-
-export interface ICityFields extends ICityFieldsAbstract {
-  name: TranslatableField;
-  description: TranslatableField;
-  alias: TranslatableField;
-}
+export type TCityFields = ICityFields<TranslatableField>;
 
 export enum UserRoles {
   admin = 'admin',

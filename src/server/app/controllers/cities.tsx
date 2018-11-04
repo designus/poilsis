@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ICityFieldsLocalized } from 'global-utils';
+import { ICityFields } from 'global-utils';
 import { CitiesModel } from '../model';
 import { sendResponse } from '../server-utils';
 
@@ -12,7 +12,7 @@ export const getCity = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
-  const city: ICityFieldsLocalized = req.body;
+  const city: ICityFields = req.body;
   const alias = city.alias || city.name;
   const newCity = { ...city, alias };
 
@@ -20,7 +20,7 @@ export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const updateCity = (req: Request, res: Response, next: NextFunction) => {
-  const city: ICityFieldsLocalized = req.body;
+  const city: ICityFields = req.body;
   const cityId = req.params.cityId;
 
   CitiesModel.findOneAndUpdate({ id: cityId },  { $set: city }, { new: true, runValidators: true },

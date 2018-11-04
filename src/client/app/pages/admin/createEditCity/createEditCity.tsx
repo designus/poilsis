@@ -4,8 +4,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
 
-import { ICityFields } from 'global-utils';
-import { createCity, updateCity, getAdminCity } from 'actions';
+import { TCityFields, ICityFields } from 'global-utils';
+import { createCity, updateCity, loadCity } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
 import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
 import { IAppState, ICity, ITypesMap } from 'reducers';
@@ -21,10 +21,10 @@ interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams> {
   loadedCity: ICity;
   showNavigationPrompt: boolean;
   typesMap: ITypesMap;
-  createCity: (city: ICityFields) => Promise<any>;
-  getCity: (cityId: string) => Promise<any>;
-  updateCity: (city: ICityFields) => Promise<any>;
-  initializeForm: (city: ICityFields) => void;
+  createCity: (city: TCityFields) => Promise<any>;
+  loadCity: (cityId: string) => Promise<any>;
+  updateCity: (city: TCityFields) => Promise<any>;
+  initializeForm: (city: TCityFields) => void;
 }
 
 class CreateEditCityPageComponent extends React.Component<ICreateEditCityPageProps, any> {
@@ -37,7 +37,7 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
 
   componentDidMount() {
     if (!this.props.loadedCity && !this.isCreatePage) {
-      this.props.getCity(this.props.match.params.cityId);
+      this.props.loadCity(this.props.match.params.cityId);
     }
   }
 
@@ -46,15 +46,16 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
     throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onSubmit = (city: ICityFields) => {
+  onSubmit = (city: TCityFields) => {
     const { createCity, history, updateCity, initializeForm } = this.props;
     const submitFn = this.isCreatePage ? createCity : updateCity;
     return submitFn(city)
-      .then(newCity => {
+      .then((newCity: ICityFields) => {
         if (this.isCreatePage) {
           history.push(adminRoutes.editCity.getLink(newCity.id));
         } else {
-          initializeForm(newCity);
+          // We should initialize form with internationalized fields
+          initializeForm(city);
         }
       })
       .catch(this.handleErrors);
@@ -84,10 +85,10 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCity: (id: string) => dispatch(getAdminCity(id)),
-  createCity: (city: ICityFields) => dispatch(createCity(city)),
-  updateCity: (city: ICityFields) => dispatch(updateCity(city)),
-  initializeForm: (city: ICityFields) => dispatch(initialize(CITY_FORM_NAME, city)),
+  loadCity: (id: string) => dispatch(loadCity(id)),
+  createCity: (city: TCityFields) => dispatch(createCity(city)),
+  updateCity: (city: TCityFields) => dispatch(updateCity(city)),
+  initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city)),
 });
 
 export const CreateEditCityPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent);
