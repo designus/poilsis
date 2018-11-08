@@ -4,11 +4,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContentBox from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
-import { extendWithLoader } from '../loader';
+
+import { extendWithLoader } from 'components';
 
 export const DialogContentWrapper = (props) => (
   <DialogContentBox classes={{root: props.contentClass}}>

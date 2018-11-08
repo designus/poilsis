@@ -7,7 +7,7 @@ import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
 import { TCityFields, ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
+import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
 import { IAppState, ITypesMap } from 'reducers';
 import { CityForm, CITY_FORM_NAME } from './form';
 
@@ -74,7 +74,7 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>
-    );
+    ) || <Loader isLoading={true} showLoadingOverlay={true} />;
   }
 }
 

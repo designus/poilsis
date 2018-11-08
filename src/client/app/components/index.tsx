@@ -11,6 +11,7 @@ export * from './itemsList';
 export * from './itemActions';
 export * from './loader';
 export * from './mainMenu';
+export * from './extendWithLoader';
 export * from './markedText';
 export * from './modals';
 export * from './notFound';
