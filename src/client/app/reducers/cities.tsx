@@ -6,7 +6,7 @@ import {
   RECEIVE_CITY_ITEMS,
   REMOVE_CITY_ITEM,
   ADD_CITY_ITEM,
-  RECEIVE_CITY,
+  RECEIVE_CLIENT_CITY,
   REMOVE_CITY,
 } from 'actions';
 
@@ -54,7 +54,7 @@ export const cities = (state: ICityState = initialState, action): ICityState => 
   switch (action.type) {
     case SELECT_CITY:
       return {...state, selectedId: action.cityId};
-    case RECEIVE_CITY:
+    case RECEIVE_CLIENT_CITY:
       return {
         ...state,
         aliases: [...state.aliases, { id: action.newCity.id, alias: action.newCity.alias }],

@@ -5,10 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
 
 import { TCityFields, ICityFields } from 'global-utils';
-import { createCity, updateCity, loadCity } from 'actions';
+import { createCity, updateCity, getAdminCity } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
 import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
-import { IAppState, ICity, ITypesMap } from 'reducers';
+import { IAppState, ITypesMap } from 'reducers';
 import { CityForm, CITY_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(CityForm));
@@ -18,11 +18,11 @@ interface IMatchParams {
 }
 
 interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams> {
-  loadedCity: ICity;
+  loadedCity: TCityFields;
   showNavigationPrompt: boolean;
   typesMap: ITypesMap;
   createCity: (city: TCityFields) => Promise<any>;
-  loadCity: (cityId: string) => Promise<any>;
+  getAdminCity: (cityId: string) => Promise<any>;
   updateCity: (city: TCityFields) => Promise<any>;
   initializeForm: (city: TCityFields) => void;
 }
@@ -37,7 +37,7 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
 
   componentDidMount() {
     if (!this.props.loadedCity && !this.isCreatePage) {
-      this.props.loadCity(this.props.match.params.cityId);
+      this.props.getAdminCity(this.props.match.params.cityId);
     }
   }
 
@@ -85,7 +85,7 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadCity: (id: string) => dispatch(loadCity(id)),
+  getAdminCity: (id: string) => dispatch(getAdminCity(id)),
   createCity: (city: TCityFields) => dispatch(createCity(city)),
   updateCity: (city: TCityFields) => dispatch(updateCity(city)),
   initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city)),

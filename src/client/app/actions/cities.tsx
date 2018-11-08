@@ -13,12 +13,13 @@ import {
   CITY_DELETE_ERROR,
 } from 'data-strings';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
+import { receiveAdminCity } from './admin';
 
 export const SELECT_CITY = 'SELECT_CITY';
 export const RECEIVE_CITY_ITEMS = 'RECEIVE_CITY_ITEMS';
 export const ADD_CITY_ITEM = 'ADD_CITY_ITEM';
 export const REMOVE_CITY_ITEM = 'REMOVE_CITY_ITEM';
-export const RECEIVE_CITY = 'RECEIVE_CITY';
+export const RECEIVE_CLIENT_CITY = 'RECEIVE_CLIENT_CITY';
 export const REMOVE_CITY = 'REMOVE_CITY';
 
 export const selectCity = (cityId) => ({
@@ -43,8 +44,8 @@ export const addCityItem = (cityId, itemId) => ({
   itemId,
 });
 
-export const receiveCity = (newCity: ICityFields) => ({
-  type: RECEIVE_CITY,
+export const receiveClientCity = (newCity: ICityFields) => ({
+  type: RECEIVE_CLIENT_CITY,
   newCity,
 });
 
@@ -93,28 +94,30 @@ export const getCityItems = (cityId) => {
   };
 };
 
-export const createCity = (city: TCityFields) => dispatch => {
+export const createCity = (adminCity: TCityFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post('http://localhost:3000/api/cities', city, { headers: getAcceptLanguageHeader() })
+  return axios.post('http://localhost:3000/api/cities', adminCity, { headers: getAcceptLanguageHeader() })
     .then(handleApiResponse)
-    .then((city: ICityFields) => {
-      dispatch(receiveCity(city));
+    .then((clientCity: ICityFields) => {
+      dispatch(receiveClientCity(clientCity));
+      dispatch(receiveAdminCity(clientCity.id, adminCity));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(city);
+      return Promise.resolve(clientCity);
     })
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (city: TCityFields) => dispatch => {
+export const updateCity = (adminCity: TCityFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`http://localhost:3000/api/cities/city/${city.id}`, city, { headers: getAcceptLanguageHeader() })
+  return axios.put(`http://localhost:3000/api/cities/city/${adminCity.id}`, adminCity, { headers: getAcceptLanguageHeader() })
     .then(handleApiResponse)
-    .then((city: ICityFields) => {
-      dispatch(receiveCity(city));
+    .then((clientCity: ICityFields) => {
+      dispatch(receiveClientCity(clientCity));
+      dispatch(receiveAdminCity(clientCity.id, adminCity));
       dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(city);
+      return Promise.resolve(clientCity);
     })
     .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
