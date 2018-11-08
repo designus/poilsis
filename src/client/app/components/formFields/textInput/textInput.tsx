@@ -19,7 +19,16 @@ export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof st
 // TODO: Memoize this fn
 const getInitialValue = (value, isIntl: boolean) => {
   if (isIntl) {
-    return value ? value : LANGUAGES.reduce((acc, lang) => ({...acc, [lang]: ''}), {});
+    const isLocalized = hasLocalizedFields(value);
+    return LANGUAGES.reduce((acc, lang) => {
+      // tslint:disable-next-line
+      if (isLocalized) {
+        acc[lang] = value[lang] || '';
+      } else {
+        acc[lang] = DEFAULT_LANGUAGE === lang ? value : '';
+      }
+      return acc;
+    }, {});
   }
 
   return value;
@@ -28,7 +37,6 @@ const getInitialValue = (value, isIntl: boolean) => {
 class InputComponent extends React.PureComponent<ITextInputProps, any> {
 
   initialValue = getInitialValue(this.props.input.value, this.props.intl);
-  hasLocalizedFields = hasLocalizedFields(this.initialValue);
 
   constructor(props: ITextInputProps) {
     super(props);
@@ -92,7 +100,7 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
   renderIntlInputs = () => LANGUAGES.map(lang => this.renderInput(this.state.value[lang], lang));
 
   render() {
-    return this.props.intl && this.hasLocalizedFields
+    return this.props.intl
       ? this.renderIntlInputs()
       : this.renderInput(this.state.value);
   }
