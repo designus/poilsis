@@ -9,6 +9,7 @@ export const styles = (theme: Theme) => createStyles({
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
       boxSizing: 'border-box',
+      height: '100%',
     },
     '*, *:before, *:after': {
       boxSizing: 'inherit',
@@ -20,7 +21,7 @@ export const styles = (theme: Theme) => createStyles({
       height: '100%',
       margin: 0,
     },
-    'div[id=root]': {
+    'div[id=app]': {
       height: '100%',
     },
   },
@@ -30,23 +31,27 @@ export const styles = (theme: Theme) => createStyles({
   wrapper: {
     display: 'flex',
     justifyContent: 'space-between',
+    height: '100%',
   },
   main: {
     padding: '25px',
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: '85px',
+    overflow: 'auto',
+    position: 'relative',
+    flex: 3,
+    '& > .loader': {
+      position: 'relative',
     },
   },
   appBar: {
     zIndex: 2,
     position: 'relative',
     display: 'block',
-    [theme.breakpoints.down('sm')]: {
-      position: 'fixed',
-    },
   },
   content: {
     minWidth: `calc(100% - ${DRAWER_WIDTH}px)`,
     width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });

@@ -62,19 +62,20 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
   }
 
   render() {
-    return (this.props.loadedCity || this.isCreatePage) && (
-      <div>
-        <Typography variant="h5">{`${this.isCreatePage ? 'Create' : 'Edit'} city`}</Typography>
-        <FormWithLoader
-          onSubmit={this.onSubmit}
-          loaderId={CONTENT_LOADER_ID}
-          showLoadingOverlay={true}
-          typesMap={this.props.typesMap}
-          initialValues={this.props.loadedCity}
-        />
-        <NavigationPrompt when={this.props.showNavigationPrompt} />
-      </div>
-    ) || <Loader isLoading={true} showLoadingOverlay={true} />;
+    return (this.props.loadedCity || this.isCreatePage) &&
+      (
+        <div>
+          <Typography variant="h5">{`${this.isCreatePage ? 'Create' : 'Edit'} city`}</Typography>
+          <FormWithLoader
+            onSubmit={this.onSubmit}
+            loaderId={CONTENT_LOADER_ID}
+            showLoadingOverlay={true}
+            typesMap={this.props.typesMap}
+            initialValues={this.props.loadedCity}
+          />
+          <NavigationPrompt when={this.props.showNavigationPrompt} />
+        </div>
+      ) || <Loader isLoading />;
   }
 }
 

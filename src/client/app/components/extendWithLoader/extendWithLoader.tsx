@@ -27,7 +27,6 @@ export function extendWithLoader<TOriginalProps extends {}>(
         const { loaderId, loadingState, showLoadingOverlay, classes } = this.props;
         const loader = loadingState[loaderId];
         const isLoading = loader && loader.isLoading;
-
         return (
           <div className={classes.wrapper}>
             <Loader isLoading={isLoading} showLoadingOverlay={showLoadingOverlay} />

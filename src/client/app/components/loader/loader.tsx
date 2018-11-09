@@ -11,13 +11,19 @@ export interface ILoaderProps extends WithStyles<typeof styles> {
 }
 
 class LoaderComponent extends React.PureComponent<ILoaderProps> {
+  static defaultProps = {
+    showLoadingOverlay: false,
+  };
+
   render() {
     const { classes, showLoadingOverlay, isLoading } = this.props;
     return (
-      <div className={`
-        ${classes.centeredLoader}
-        ${showLoadingOverlay ? classes.overlay : ''}
-        ${!isLoading ? classes.hidden : ''}
+      <div
+        className={`
+          loader
+          ${classes.centeredLoader}
+          ${showLoadingOverlay ? classes.overlay : ''}
+          ${!isLoading ? classes.hidden : ''}
         `}
       >
         <div className={classes.round}>

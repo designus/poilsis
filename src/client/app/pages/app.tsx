@@ -8,13 +8,13 @@ class AppComponent extends React.Component<any, any> {
 
   render() {
     return (
-      <div>
+      <>
         <Switch>
           <ProtectedRoute path={adminRoutes.landing.path} component={AdminLayoutPage} />
           <PropsRoute path={clientRoutes.landing.path} component={ClientLayoutPage} />
         </Switch>
         <KeepMeLoggedModal />
-      </div>
+      </>
     );
   }
 }
