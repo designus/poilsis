@@ -34,7 +34,7 @@ const getInitialValue = (value, isIntl: boolean) => {
   return value;
 };
 
-class InputComponent extends React.PureComponent<ITextInputProps, any> {
+class InputComponent extends React.Component<ITextInputProps, any> {
 
   initialValue = getInitialValue(this.props.input.value, this.props.intl);
 
@@ -43,7 +43,6 @@ class InputComponent extends React.PureComponent<ITextInputProps, any> {
     this.state = {
       value: this.initialValue,
     };
-
   }
 
   handleChange = lang => event => {

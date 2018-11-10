@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
+import { SubmissionError, isDirty, isSubmitting, initialize, reset } from 'redux-form';
 
 import { TCityFields, ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
@@ -29,17 +29,23 @@ interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams> {
 
 class CreateEditCityPageComponent extends React.Component<ICreateEditCityPageProps, any> {
 
-  isCreatePage = !Boolean(this.props.match.params.cityId);
-
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    if (!this.props.loadedCity && !this.isCreatePage) {
+    if (!this.props.loadedCity && !this.isCreatePage()) {
       this.props.getAdminCity(this.props.match.params.cityId);
     }
   }
+
+  componentDidUpdate(props: ICreateEditCityPageProps) {
+    if (props.location.pathname !== this.props.location.pathname) {
+      this.props.getAdminCity(this.props.match.params.cityId);
+    }
+  }
+
+  isCreatePage = () => !Boolean(this.props.match.params.cityId);
 
   handleErrors(errors: Record<string, any>) {
     console.error('Errors', errors);
@@ -48,10 +54,10 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
 
   onSubmit = (city: TCityFields) => {
     const { createCity, history, updateCity, initializeForm } = this.props;
-    const submitFn = this.isCreatePage ? createCity : updateCity;
+    const submitFn = this.isCreatePage() ? createCity : updateCity;
     return submitFn(city)
       .then((newCity: ICityFields) => {
-        if (this.isCreatePage) {
+        if (this.isCreatePage()) {
           history.push(adminRoutes.editCity.getLink(newCity.id));
         } else {
           // We should initialize form with internationalized fields
@@ -62,10 +68,10 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
   }
 
   render() {
-    return (this.props.loadedCity || this.isCreatePage) &&
+    return (this.props.loadedCity || this.isCreatePage()) &&
       (
         <div>
-          <Typography variant="h5">{`${this.isCreatePage ? 'Create' : 'Edit'} city`}</Typography>
+          <Typography variant="h5">{`${this.isCreatePage() ? 'Create' : 'Edit'} city`}</Typography>
           <FormWithLoader
             onSubmit={this.onSubmit}
             loaderId={CONTENT_LOADER_ID}

@@ -35,7 +35,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   main: {
     padding: '25px',
-    overflow: 'auto',
     position: 'relative',
     flex: 3,
     '& > .loader': {

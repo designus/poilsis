@@ -1,5 +1,5 @@
 import { ICityFields } from 'global-utils';
-import { IGenericState, removeDuplicates, IGenericDataMap } from 'client-utils';
+import { IGenericState, removeDuplicates, removeItemById, IGenericDataMap } from 'client-utils';
 import {
   SELECT_CITY,
   RECEIVE_INITIAL_DATA,
@@ -67,10 +67,9 @@ export const cities = (state: ICityState = initialState, action): ICityState => 
         },
       };
     case REMOVE_CITY:
-      const { [action.cityId]: removedCity, ...dataMap } = state.dataMap;
       return {
         ...state,
-        dataMap,
+        dataMap: removeItemById(action.cityId, state.dataMap),
         aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)],
       };
     case RECEIVE_INITIAL_DATA:

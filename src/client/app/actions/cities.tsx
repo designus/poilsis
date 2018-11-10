@@ -101,7 +101,7 @@ export const createCity = (adminCity: TCityFields) => dispatch => {
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));
-      dispatch(receiveAdminCity(clientCity.id, adminCity));
+      // dispatch(receiveAdminCity(clientCity.id, adminCity));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(clientCity);
     })
