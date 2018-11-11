@@ -5,8 +5,12 @@ import { isRequired } from 'global-utils';
 
 export const TYPE_FORM_NAME = 'TypeForm';
 
-const Form = (props: InjectedFormProps<{}, {}>) => {
-  const { handleSubmit } = props;
+interface ICustomProps {
+  selectedLanguage?: string;
+}
+
+const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
+  const { handleSubmit, selectedLanguage } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -15,18 +19,24 @@ const Form = (props: InjectedFormProps<{}, {}>) => {
         component={TextInput}
         validate={[isRequired]}
         label="Name"
+        selectedLanguage={selectedLanguage}
+        intl
       />
       <Field
         name="alias"
         type="text"
         component={TextInput}
         label="Alias"
+        selectedLanguage={selectedLanguage}
+        intl
       />
       <Field
         name="description"
         type="text"
         component={TextInput}
         label="Description"
+        selectedLanguage={selectedLanguage}
+        intl
       />
       <div>
         <Button type="submit">
@@ -37,4 +47,4 @@ const Form = (props: InjectedFormProps<{}, {}>) => {
   );
 };
 
-export const TypeForm = reduxForm<{}, any>({ form: TYPE_FORM_NAME })(Form);
+export const TypeForm = reduxForm<{}, ICustomProps>({ form: TYPE_FORM_NAME })(Form);

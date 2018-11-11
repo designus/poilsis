@@ -93,6 +93,8 @@ export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
 
 export const getAcceptLanguageHeader = () => ({ 'Accept-Language': getSelectedLanguage() });
 
+export const setAcceptLanguageHeader = () => ({ headers: getAcceptLanguageHeader() });
+
 export const removeItemById = (id: string, dataMap: Record<string, any>) => {
   const { [id]: removedItem, ...remainingItems } = dataMap;
   return remainingItems;

@@ -12,6 +12,8 @@ export enum ImageSize {
   Large = 'L',
 }
 
+export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
+
 export interface IResponseError {
   errors: {
     [key: string]: {
@@ -35,14 +37,14 @@ export interface IItemFields {
   isEnabled: boolean;
 }
 
-export interface ITypeFields {
-  id?: string;
-  name: string;
-  description: string;
-  alias: string;
+export interface ITypeFields<T = string> {
+  id: string;
+  name: T;
+  description: T;
+  alias: T;
 }
 
-export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
+export type TTypeFields = ITypeFields<TranslatableField>;
 
 export interface ICityFields<T = string> {
   id: string;

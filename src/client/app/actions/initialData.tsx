@@ -1,17 +1,15 @@
 import axios from 'axios';
-import { getNormalizedData, getAcceptLanguageHeader } from 'client-utils';
+import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils';
 import { IAppState } from 'reducers';
 import { receiveUserDetails, loginSuccess } from 'actions';
 import { getAccessTokenClaims } from 'global-utils';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
 
-export const receiveInitialData = (data) => {
-  return {
-    type: RECEIVE_INITIAL_DATA,
-    data,
-  };
-};
+export const receiveInitialData = (data) => ({
+  type: RECEIVE_INITIAL_DATA,
+  data,
+});
 
 export const getInitialData = () => {
   return (dispatch, getState) => {
@@ -20,8 +18,8 @@ export const getInitialData = () => {
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
     const userId = accessTokenClaims ? accessTokenClaims.userId : null;
     const promises = [
-      axios.get('http://localhost:3000/api/cities', { headers: getAcceptLanguageHeader() }),
-      axios.get('http://localhost:3000/api/types'),
+      axios.get('http://localhost:3000/api/cities', setAcceptLanguageHeader()),
+      axios.get('http://localhost:3000/api/types', setAcceptLanguageHeader()),
       axios.get('http://localhost:3000/api/users'),
     ];
 

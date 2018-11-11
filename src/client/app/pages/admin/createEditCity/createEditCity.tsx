@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, isSubmitting, initialize, reset } from 'redux-form';
+import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
 
 import { TCityFields, ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
@@ -22,8 +22,8 @@ interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams> {
   showNavigationPrompt: boolean;
   typesMap: ITypesMap;
   createCity: (city: TCityFields) => Promise<any>;
-  getAdminCity: (cityId: string) => Promise<any>;
   updateCity: (city: TCityFields) => Promise<any>;
+  getCity: (cityId: string) => Promise<any>;
   initializeForm: (city: TCityFields) => void;
 }
 
@@ -35,13 +35,14 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
 
   componentDidMount() {
     if (!this.props.loadedCity && !this.isCreatePage()) {
-      this.props.getAdminCity(this.props.match.params.cityId);
+      this.props.getCity(this.props.match.params.cityId);
     }
   }
 
   componentDidUpdate(props: ICreateEditCityPageProps) {
+    // When we navigate from create page to update we need to load updated city
     if (props.location.pathname !== this.props.location.pathname) {
-      this.props.getAdminCity(this.props.match.params.cityId);
+      this.props.getCity(this.props.match.params.cityId);
     }
   }
 
@@ -92,7 +93,7 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAdminCity: (id: string) => dispatch(getAdminCity(id)),
+  getCity: (id: string) => dispatch(getAdminCity(id)),
   createCity: (city: TCityFields) => dispatch(createCity(city)),
   updateCity: (city: TCityFields) => dispatch(updateCity(city)),
   initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city)),

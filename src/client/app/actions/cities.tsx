@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ICityFields, TCityFields } from 'global-utils';
 import { ICitiesItems, IAppState } from 'reducers';
 import { startLoading, endLoading, receiveItems } from 'actions';
-import { getNormalizedData, getAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
+import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import {
   CITY_CREATE_SUCCESS,
   CITY_UPDATE_SUCCESS,
@@ -97,11 +97,10 @@ export const getCityItems = (cityId) => {
 export const createCity = (adminCity: TCityFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post('http://localhost:3000/api/cities', adminCity, { headers: getAcceptLanguageHeader() })
+  return axios.post('http://localhost:3000/api/cities', adminCity, setAcceptLanguageHeader())
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));
-      // dispatch(receiveAdminCity(clientCity.id, adminCity));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(clientCity);
     })
@@ -111,7 +110,7 @@ export const createCity = (adminCity: TCityFields) => dispatch => {
 export const updateCity = (adminCity: TCityFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`http://localhost:3000/api/cities/city/${adminCity.id}`, adminCity, { headers: getAcceptLanguageHeader() })
+  return axios.put(`http://localhost:3000/api/cities/city/${adminCity.id}`, adminCity, setAcceptLanguageHeader())
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));
