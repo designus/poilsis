@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { getNormalizedData, getCityItems, CONTENT_LOADER_ID } from '../client-utils';
-import { startLoading, endLoading, receiveItems, receiveCityItems } from '../actions';
-import { IAppState, ICurrentUser } from '../reducers';
+import { getNormalizedData, getCityItems, CONTENT_LOADER_ID, setAcceptLanguageHeader } from 'client-utils';
+import { startLoading, endLoading, receiveItems, receiveCityItems } from 'actions';
+import { IAppState, ICurrentUser } from 'reducers';
 import { isAdmin } from 'global-utils';
 
 export const RECEIVE_USER_ITEMS = 'RECEIVE_USER_ITEMS';
 export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
-export const REMOVE_USER_ITEM = 'REMOVE_USER_ITEM';
 
 export const receiveUserItems = (userItems: string[]) => {
   return {
@@ -19,13 +18,6 @@ export const receiveUserDetails = (userDetails: ICurrentUser) => {
   return {
     type: RECEIVE_USER_DETAILS,
     userDetails,
-  };
-};
-
-export const removeUserItem = (itemId: string) => {
-  return {
-    type: REMOVE_USER_ITEM,
-    itemId,
   };
 };
 
@@ -45,7 +37,7 @@ export const getUserItems = () => (dispatch, getState) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(endpoint)
+  return axios.get(endpoint, setAcceptLanguageHeader())
     .then(response => response.data)
     .then(data => {
       const { dataMap: itemsMap, aliases } = getNormalizedData(data);

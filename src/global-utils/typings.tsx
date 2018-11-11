@@ -22,20 +22,22 @@ export interface IResponseError {
   };
 }
 
-export interface IItemFields {
-  id?: string;
+export interface IItemFields<T = string> {
+  id: string;
   createdAt?: string;
   updatedAt?: string;
   address: string;
   cityId: string;
-  description: string;
-  name: string;
   types: string[];
   images: IImage[];
   userId: string;
-  alias: string;
   isEnabled: boolean;
+  name: T;
+  alias: T;
+  description: T;
 }
+
+export type TItemFields = IItemFields<TranslatableField>;
 
 export interface ITypeFields<T = string> {
   id: string;

@@ -1,4 +1,4 @@
-import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_USER_ITEM, LOGOUT_SUCCESS } from '../actions';
+import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_ITEM, LOGOUT_SUCCESS } from '../actions';
 
 export interface ICurrentUser {
   name?: string;
@@ -36,10 +36,10 @@ export const currentUser = (state: ICurrentUserState = getInitialState(), action
         isAllLoaded: true,
       };
     }
-    case REMOVE_USER_ITEM: {
+    case REMOVE_ITEM: {
       return {
         ...state,
-        items: state.items.filter(itemId => itemId !== action.itemId),
+        items: state.items.filter(itemId => itemId !== action.item.id),
       };
     }
     default:

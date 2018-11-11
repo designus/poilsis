@@ -4,9 +4,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItem, IItemsMap } from 'reducers';
-import { getItem } from 'actions';
-import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute } from 'components';
+import { IAppState } from 'reducers';
+import { getAdminItem } from 'actions';
+import { TItemFields } from 'global-utils';
+import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
 import { MAIN_INFO, PHOTO_GALLERY } from 'data-strings';
 import { MainInfoPage, PhotosPage } from 'pages';
@@ -16,8 +17,8 @@ interface IMatchParams {
   userId: string;
 }
 export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams> {
-  itemsMap: IItemsMap;
-  getItem: (id) => void;
+  loadedItem: TItemFields;
+  getItem: (itemId: string) => Promise<void>;
 }
 
 class CreateEditItemPageComponent extends React.Component<ICreateEditItemPageProps, any> {
@@ -28,17 +29,13 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
 
   static fetchData(store, params) {
     if (params.id) {
-      return store.dispatch(getItem(params.itemId));
+      return store.dispatch(getAdminItem(params.itemId));
     } else {
       return Promise.resolve(null);
     }
   }
 
-  isCreatePage = () =>  !Boolean(this.props.match.params.itemId);
-
-  getLoadedItem(): IItem {
-    return this.props.itemsMap[this.props.match.params.itemId];
-  }
+  isCreatePage = () => !Boolean(this.props.match.params.itemId);
 
   getMenuItems(userId?: string, itemId?: string): IAdminMenuItem[] {
     return [
@@ -57,18 +54,25 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
   }
 
   componentDidMount() {
-    const loadedItem = this.getLoadedItem();
-    if (!this.isCreatePage() && (!loadedItem || !loadedItem.isFullyLoaded)) {
+    if (!this.isCreatePage() && !this.props.loadedItem) {
+      this.props.getItem(this.props.match.params.itemId);
+    }
+  }
+
+  componentDidUpdate(props: ICreateEditItemPageProps) {
+    // When we navigate from create page to update we need to load updated city
+    if (props.location.pathname !== this.props.location.pathname) {
       this.props.getItem(this.props.match.params.itemId);
     }
   }
 
   render() {
-    const loadedItem = this.getLoadedItem();
-    const childProps = {...this.props, loadedItem, isCreatePage: this.isCreatePage() };
+    const loadedItem = this.props.loadedItem;
+    const isCreatePage = this.isCreatePage();
+    const childProps = {...this.props, loadedItem, isCreatePage };
     const { userId, itemId } = this.props.match.params;
 
-    return (loadedItem || this.isCreatePage()) && (
+    return (loadedItem || isCreatePage) && (
       <div>
         <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
         <Switch>
@@ -91,16 +95,16 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
           <PropsRoute component={NotFound}/>
         </Switch>
       </div>
-    );
+    ) || <Loader isLoading />;
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
-  itemsMap: state.items.dataMap,
+const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
+  loadedItem: state.admin.items[props.match.params.itemId],
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getItem: (itemId) => dispatch(getItem(itemId)),
+  getItem: (itemId: string) => dispatch(getAdminItem(itemId)),
 });
 
 export const CreateEditItemPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent);

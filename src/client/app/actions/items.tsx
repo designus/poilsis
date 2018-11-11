@@ -7,43 +7,43 @@ import {
   setUploadProgress,
   uploadError,
   uploadSuccess,
-  removeUserItem,
-  reauthenticateUser,
-} from '../actions';
-import { stopLoading, handleApiResponse } from './utils';
+  receiveAdminItem,
+} from 'actions';
+import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
 import {
   IAlias,
   onUploadProgress,
   CONTENT_LOADER_ID,
   DIALOG_LOADER_ID,
   getFormDataFromFiles,
- } from '../client-utils';
-import { IItemsMap, IAppState, Toast, IItem } from '../reducers';
+  setAcceptLanguageHeader,
+ } from 'client-utils';
+import { IItemsMap, IAppState, Toast, IItem } from 'reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
   ITEM_CREATE_SUCCESS,
   ITEM_CREATE_ERROR,
-  DELETE_ITEM_ERROR,
-  DELETE_ITEM_SUCCESS,
+  ITEM_DELETE_SUCCESS,
+  ITEM_DELETE_ERROR,
   IMAGES_UPLOAD_ERROR,
   IMAGES_UPLOAD_SUCCESS,
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR,
   IMAGES_KEY,
 } from 'data-strings';
-import { IImage, IItemFields } from 'global-utils';
+import { IImage, IItemFields, TItemFields } from 'global-utils';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
-export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
 export const TOGGLE_ITEM_VISIBILITY = 'TOGGLE_ITEM_VISIBILITY';
+export const RECEIVE_CLIENT_ITEM = 'RECEIVE_CLIENT_ITEM';
 
-export const selectItem = (id: string) => ({
+export const selectItem = (itemId: string) => ({
   type: SELECT_ITEM,
-  itemId: id,
+  itemId,
 });
 
 export const receiveItems = (dataMap: IItemsMap, aliases: IAlias[], isAllLoaded: boolean) => ({
@@ -53,8 +53,8 @@ export const receiveItems = (dataMap: IItemsMap, aliases: IAlias[], isAllLoaded:
   isAllLoaded,
 });
 
-export const receiveItem = (item: IItem) => ({
-  type: RECEIVE_ITEM,
+export const receiveClientItem = (item: IItem) => ({
+  type: RECEIVE_CLIENT_ITEM,
   item,
 });
 
@@ -75,23 +75,18 @@ export const toggleItemVisibility = (itemId, isEnabled) => ({
   isEnabled,
 });
 
-export const getItem = (itemId) => {
-
-  return dispatch => {
-
-    dispatch(startLoading(CONTENT_LOADER_ID));
-
-    return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
-      .then(response => response.data)
-      .then(item => {
-        dispatch(receiveItem(item));
-        dispatch(endLoading(CONTENT_LOADER_ID));
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
-      });
-  };
+export const getItem = (itemId: string) => dispatch => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
+  return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
+    .then(handleApiResponse)
+    .then(item => {
+      dispatch(receiveClientItem(item));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    });
 };
 
 export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
@@ -150,82 +145,45 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
   });
 };
 
-export const updateMainInfo = (item: IItemFields) => (dispatch) => {
-  return new Promise((resolve, reject) => {
-    dispatch(startLoading(CONTENT_LOADER_ID));
+export const updateMainInfo = (adminItem: TItemFields) => dispatch => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.put(`http://localhost:3000/api/items/item/mainInfo/${item.id}`, item)
-      .then(response => response.data)
-      .then(item => {
-        dispatch(endLoading(CONTENT_LOADER_ID));
-        if (item.errors) {
-          dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
-          reject(item.errors);
-        } else {
-          dispatch(receiveItem(item));
-          dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
-          resolve(item);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(endLoading(CONTENT_LOADER_ID));
-        dispatch(showToast(Toast.error, ITEM_UPDATE_ERROR));
-      });
-  });
+  return axios.put(`http://localhost:3000/api/items/item/mainInfo/${adminItem.id}`, adminItem, setAcceptLanguageHeader())
+    .then(handleApiResponse)
+    .then((clientItem: IItemFields) => {
+      dispatch(receiveClientItem(clientItem));
+      dispatch(receiveAdminItem(adminItem.id, adminItem));
+      dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
+      return Promise.resolve(clientItem);
+    })
+    .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const postItem = (item) => (dispatch) => {
+export const createItem = (adminItem: TItemFields) => dispatch => {
 
-  return new Promise((resolve, reject) => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
 
-    dispatch(startLoading(CONTENT_LOADER_ID));
-
-    return axios.post('http://localhost:3000/api/items', item)
-      .then(response => response.data)
-      .then(item => {
-        if (item.errors) {
-          dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
-          reject(item.errors);
-        } else {
-          dispatch(receiveItem(item));
-          dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
-          // dispatch(reauthenticateUser());
-          resolve({itemId: item.id, userId: item.userId});
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(stopLoading(true, ITEM_CREATE_ERROR, CONTENT_LOADER_ID));
-      });
-  });
+  return axios.post('http://localhost:3000/api/items', adminItem, setAcceptLanguageHeader())
+    .then(handleApiResponse)
+    .then((clientItem: IItemFields) => {
+      dispatch(receiveClientItem(clientItem));
+      dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
+      return Promise.resolve(clientItem);
+    })
+    .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const deleteItem = (itemId: string) => (dispatch) => {
 
-  return new Promise((resolve, reject) => {
+  dispatch(startLoading(DIALOG_LOADER_ID));
 
-    dispatch(startLoading(DIALOG_LOADER_ID));
-
-    return axios.delete(`http://localhost:3000/api/items/item/${itemId}`)
-      .then(response => response.data)
-      .then(item => {
-        dispatch(endLoading(DIALOG_LOADER_ID));
-        if (item.errors) {
-          dispatch(showToast(Toast.error, DELETE_ITEM_ERROR));
-          reject(item.errors);
-        } else {
-          dispatch(removeItem(item));
-          dispatch(removeUserItem(itemId));
-          dispatch(showToast(Toast.success, DELETE_ITEM_SUCCESS));
-          resolve();
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(endLoading(DIALOG_LOADER_ID));
-      });
-  });
+  return axios.delete(`http://localhost:3000/api/items/item/${itemId}`)
+    .then(handleApiResponse)
+    .then(item => {
+      dispatch(removeItem(item));
+      dispatch(stopLoading(false, ITEM_DELETE_SUCCESS, CONTENT_LOADER_ID));
+    })
+    .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const toggleItem = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {

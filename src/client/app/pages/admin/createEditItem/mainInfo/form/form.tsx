@@ -16,10 +16,11 @@ interface ICustomProps {
   typesMap: ITypesMap;
   usersMap: IUsersMap;
   userRole: string;
+  selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
-  const { handleSubmit, submitting, pristine } = props;
+  const { handleSubmit, submitting, pristine, selectedLanguage } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -28,6 +29,8 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={TextInput}
         validate={[isRequired, minTextLength3, maxTextLength15]}
         label="Name"
+        intl
+        selectedLanguage={selectedLanguage}
       />
       <Field
         name="address"
