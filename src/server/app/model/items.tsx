@@ -71,7 +71,6 @@ const ItemsSchemaMap: IItemsSchema = {
     type: String,
     lowercase: true,
     trim: true,
-    required: true,
     set: formatAlias,
     intl: true,
   },

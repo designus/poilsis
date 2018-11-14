@@ -90,32 +90,26 @@ export const getItem = (itemId: string) => dispatch => {
 };
 
 export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
-  return new Promise((resolve, reject) => {
-    return axios
-      .put(`http://localhost:3000/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
-        onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent))),
-      })
-      .then(response => response.data)
-      .then(images => {
-        if (images.errors) {
-          const errors = images.errors[IMAGES_KEY];
-          const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
-          dispatch(showToast(Toast.error, message));
-          dispatch(uploadError());
-          reject(images.errors);
-        } else {
-          dispatch(receiveImages(itemId, images));
-          dispatch(setUploadProgress(100));
-          dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
-          dispatch(uploadSuccess());
-          resolve(images);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(showToast(Toast.error, IMAGES_UPLOAD_ERROR));
-      });
-  });
+  return axios
+    .put(`http://localhost:3000/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
+      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent))),
+    })
+    .then(handleApiResponse)
+    .then((images: IImage[]) => {
+      dispatch(receiveImages(itemId, images));
+      dispatch(setUploadProgress(100));
+      dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
+      dispatch(uploadSuccess());
+      return Promise.resolve(images);
+    })
+    .catch(err => {
+      console.error(err);
+      const errors = err[IMAGES_KEY];
+      const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
+      dispatch(uploadError());
+      dispatch(showToast(Toast.error, message));
+      return Promise.reject(errors);
+    });
 };
 
 export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {

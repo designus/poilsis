@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import { Switch, RouteComponentProps } from 'react-router-dom';
+import { isEqual } from 'lodash';
 
 import { IAppState } from 'reducers';
 import { getAdminItem } from 'actions';
@@ -61,7 +62,7 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
 
   componentDidUpdate(props: ICreateEditItemPageProps) {
     // When we navigate from create page to update we need to load updated city
-    if (props.location.pathname !== this.props.location.pathname) {
+    if (!isEqual(props.match.params, this.props.match.params)) {
       this.props.getItem(this.props.match.params.itemId);
     }
   }

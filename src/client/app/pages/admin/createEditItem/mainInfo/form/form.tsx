@@ -33,6 +33,14 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         selectedLanguage={selectedLanguage}
       />
       <Field
+        name="alias"
+        type="text"
+        component={TextInput}
+        label="Alias"
+        intl
+        selectedLanguage={selectedLanguage}
+      />
+      <Field
         name="address"
         type="text"
         component={TextInput}
