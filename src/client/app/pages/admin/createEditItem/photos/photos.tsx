@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { change } from 'redux-form';
+import { change, isDirty, isSubmitting } from 'redux-form';
 import Typography from '@material-ui/core/Typography';
 import { ImageFile } from 'react-dropzone';
 
-import { IImage, voidFn } from 'global-utils';
+import { IImage } from 'global-utils';
+import { CONTENT_LOADER_ID } from 'client-utils';
 import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
-import { PhotosForm } from './form';
+import { extendWithLoader } from 'components';
+import { PhotosForm, PHOTOS_FORM_NAME } from './form';
+
+const PhotosFormWithLoader = extendWithLoader(PhotosForm);
 
 export interface IPhotoFormState {
   images: IImage[];
@@ -40,9 +44,12 @@ class PhotosPageComponent extends React.Component<any, any> {
       return (
         <div>
           <Typography variant="h5">Photo gallery</Typography>
-          <PhotosForm
+          <PhotosFormWithLoader
             onSubmit={this.onSubmit}
+            loaderId={CONTENT_LOADER_ID}
+            showLoadingOverlay={true}
             initialValues={initialValues}
+            isDirty={this.props.isDirty}
             setInitialUploadState={this.props.setInitialUploadState}
           />
         </div>
@@ -53,6 +60,10 @@ class PhotosPageComponent extends React.Component<any, any> {
   }
 }
 
+const mapStateToProps = state => ({
+  isDirty: isDirty(PHOTOS_FORM_NAME)(state) && !isSubmitting(PHOTOS_FORM_NAME)(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   uploadImages: (itemId: string, files: ImageFile[]) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
@@ -60,4 +71,4 @@ const mapDispatchToProps = (dispatch) => ({
   addImagesToFormState: (images: IImage[]) => dispatch(change('PhotosForm', 'images', images)),
 });
 
-export const PhotosPage = connect(voidFn, mapDispatchToProps)(PhotosPageComponent);
+export const PhotosPage = connect(mapStateToProps, mapDispatchToProps)(PhotosPageComponent);

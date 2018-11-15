@@ -1,6 +1,6 @@
 import styled, {keyframes} from 'styled-components';
-import { UPLOADED_PHOTO_HEIGHT } from '../../global-styles';
-import { UPLOADED_ANIMATION_DURATION } from '../../client-utils';
+import { UPLOADED_PHOTO_HEIGHT } from 'global-styles';
+import { UPLOADED_ANIMATION_DURATION } from 'client-utils';
 
 const isUploadBarHidden = (props: any) => props.isUploaded || props.hasError || !props.isUploading;
 export const uploadIconSize = 54;
@@ -33,7 +33,6 @@ export const Image = styled.div`
 export const ImageSource = styled.div`
   position: relative;
   display: block;
-  z-index: 10;
   height: ${UPLOADED_PHOTO_HEIGHT}px;
 
   &:hover {

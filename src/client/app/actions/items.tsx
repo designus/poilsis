@@ -106,37 +106,31 @@ export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
       console.error(err);
       const errors = err[IMAGES_KEY];
       const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
-      dispatch(uploadError());
       dispatch(showToast(Toast.error, message));
+      dispatch(uploadError());
       return Promise.reject(errors);
     });
 };
 
 export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {
-  return new Promise((resolve, reject) => {
-    dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.put(`http://localhost:3000/api/items/item/update-photos/${itemId}`, {images})
-      .then(response => response.data)
-      .then(images => {
-        if (images.errors) {
-          const errors = images.errors[IMAGES_KEY];
-          const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
-          dispatch(showToast(Toast.error, message));
-          reject(images.errors);
-        } else {
-          dispatch(receiveImages(itemId, images));
-          dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
-          resolve();
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch(showToast(Toast.error, IMAGES_UPDATE_ERROR));
-      })
-      .then(dispatch(endLoading(CONTENT_LOADER_ID)));
-
-  });
+  return axios.put(`http://localhost:3000/api/items/item/update-photos/${itemId}`, {images})
+    .then(handleApiResponse)
+    .then((images: IImage[]) => {
+      dispatch(receiveImages(itemId, images));
+      dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+      return Promise.resolve();
+    })
+    .catch(err => {
+      console.error(err);
+      const errors = err[IMAGES_KEY];
+      const message = errors && errors.message || IMAGES_UPDATE_ERROR;
+      dispatch(showToast(Toast.error, message));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+      return Promise.reject(errors);
+    });
 };
 
 export const updateMainInfo = (adminItem: TItemFields) => dispatch => {

@@ -4,12 +4,15 @@ import { DropzoneInput, UploadedImages, Button } from 'components';
 import { maxUploadedPhotos, maxUploadedPhotoSize } from 'global-utils';
 import { IPhotosFormFields } from '../photos';
 
+export const PHOTOS_FORM_NAME = 'PhotosForm';
+
 const validators = [
   maxUploadedPhotos,
   maxUploadedPhotoSize,
 ];
 
 interface ICustomProps {
+  isDirty: boolean;
   setInitialUploadState: () => void;
   onSubmit: (fields: IPhotosFormFields) => void;
 }
@@ -46,7 +49,10 @@ class FormComponent extends React.Component<FormProps> {
           component={UploadedImages}
           onLoadedImages={this.onLoadedImages}
         />
-        <Button onClick={this.props.handleSubmit(this.submitImages)}>
+        <Button
+          onClick={this.props.handleSubmit(this.submitImages)}
+          disabled={!this.props.isDirty}
+        >
           Save
         </Button>
       </form>
@@ -54,4 +60,4 @@ class FormComponent extends React.Component<FormProps> {
   }
 }
 
-export const PhotosForm = reduxForm<{}, ICustomProps>({ form: 'PhotosForm' })(FormComponent);
+export const PhotosForm = reduxForm<{}, ICustomProps>({ form: PHOTOS_FORM_NAME })(FormComponent);
