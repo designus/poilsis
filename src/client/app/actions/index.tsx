@@ -8,3 +8,4 @@ export * from './types';
 export * from './toast';
 export * from './upload';
 export * from './currentUser';
+export * from './locale';

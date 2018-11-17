@@ -19,12 +19,13 @@ import { uploadProgress, IUploadProgress } from './uploadProgress';
 import { currentUser, ICurrentUserState } from './currentUser';
 import { users, IUsersState } from './users';
 import { admin, IAdminState } from './admin';
+import { locale } from './locale';
 
 export interface IAppState {
   cities: ICityState;
   auth: IAuthState;
+  locale: string;
   admin: IAdminState;
-  global: any;
   currentUser: ICurrentUserState;
   users: IUsersState;
   items: IItemsState;
@@ -46,6 +47,7 @@ export const rootReducer = combineReducers({
   toast,
   uploadProgress,
   currentUser,
+  locale,
   users,
   form: formReducer,
 });
