@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-// import { injectGlobal } from 'styled-components';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import { App } from './app/pages';
@@ -54,11 +53,3 @@ render(
   </MuiThemeProvider>,
   rootElement,
 );
-
-// tslint:disable-next-line
-// injectGlobal`
-//   body {
-//     padding: 0;
-//     margin: 0;
-//   }
-// `;

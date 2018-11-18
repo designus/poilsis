@@ -29,3 +29,5 @@ export const getLocalizedResponse = (data: any, language: string) => {
     ? data.map(document => localizeDocument(document.toObject(), language))
     : localizeDocument(data.toObject(), language);
 };
+
+export const getTranslationMessages = (locale: string) => require(`src/translations/${locale}.json`);
