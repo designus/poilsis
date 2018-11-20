@@ -1,3 +1,9 @@
 {
-  "common.send": "[RU] Send"
+  "common.send": "[RU] Send",
+  "admin.menu.dashboard": "[RU] Dashboard",
+  "admin.menu.items": "[RU] Items",
+  "admin.menu.types": "[RU] Types",
+  "admin.menu.cities": "[RU] Cities",
+  "admin.menu.go_to_website": "[RU] Go back to website",
+  "admin.header.title": "[RU] Admin Panel"
 }

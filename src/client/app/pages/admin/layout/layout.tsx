@@ -14,10 +14,10 @@ import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
 import { Switch } from 'react-router-dom';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
 import { IAppState } from 'reducers';
-import { ITEMS, GO_TO_WEBSITE, TYPES } from 'data-strings';
 import { getInitialData } from 'actions';
 import {
   Toast,
@@ -40,10 +40,10 @@ import {
 } from 'pages';
 
 import { styles } from './styles';
-interface IAdminLayoutProps extends WithStyles<typeof styles>  {
+interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps  {
   isInitialDataLoaded: boolean;
   location: any;
-  dispatch: any;
+  getInitialData: () => void;
 }
 
 class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, any> {
@@ -66,7 +66,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
   componentDidMount() {
     if (!this.props.isInitialDataLoaded) {
       removeInjectedStyles();
-      this.props.dispatch(getInitialData());
+      this.props.getInitialData();
     }
   }
 
@@ -79,39 +79,36 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
   }
 
   get menuItems(): IAdminMenuItem[] {
+    const { formatMessage } = this.props.intl;
     return [
       {
         icon: () => (<DashboardIcon />),
         link: adminRoutes.landing.getLink(),
-        text: 'Dashboard',
+        text: formatMessage({ id: 'admin.menu.dashboard' }),
       },
       {
         icon: () => (<ListIcon />),
         link: adminRoutes.items.getLink(),
-        text: ITEMS,
+        text: formatMessage({ id: 'admin.menu.items' }),
       },
       {
         icon: () => (<TypesIcon />),
         link: adminRoutes.types.getLink(),
-        text: TYPES,
+        text: formatMessage({ id: 'admin.menu.types' }),
         allowedRoles: adminRoutes.types.allowedRoles,
       },
       {
         icon: () => (<CitiesIcon />),
         link: adminRoutes.cities.getLink(),
-        text: 'Cities',
+        text: formatMessage({ id: 'admin.menu.cities' }),
         allowedRoles: adminRoutes.cities.allowedRoles,
       },
       {
         icon: () => (<ArrowBackIcon />),
         link: clientRoutes.landing.getLink(),
-        text: GO_TO_WEBSITE,
+        text: formatMessage({ id: 'admin.menu.go_to_website' }),
       },
     ];
-  }
-
-  isDifferentMenuItems(arr1: IAdminMenuItem[], arr2: IAdminMenuItem[], key: keyof IAdminMenuItem) {
-    return arr1.length !== arr2.length || arr1.every((item, index) => item[key] !== arr2[index][key]);
   }
 
   render() {
@@ -137,7 +134,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
                 </IconButton>
               </Hidden>
               <Typography className={classes.appBarTitle} variant="h6" color="inherit" noWrap>
-                Admin panel
+                <FormattedMessage id="admin.menu.dashboard" />
               </Typography>
               <UserMenu />
             </Toolbar>
@@ -203,6 +200,12 @@ const mapStateToProps = (state: IAppState) => ({
   isInitialDataLoaded: state.initialData.isLoaded,
 });
 
-const connectedComponent = connect<any, any, IAdminLayoutProps>(mapStateToProps)(AdminLayoutPageComponent);
+const mapDispatchToProps = dispatch => ({
+  getInitialData: () => dispatch(getInitialData()),
+});
+
+const connectedComponent = connect<any, any, IAdminLayoutProps>(mapStateToProps, mapDispatchToProps)(
+  injectIntl(AdminLayoutPageComponent),
+);
 
 export const AdminLayoutPage = withStyles(styles)(connectedComponent);

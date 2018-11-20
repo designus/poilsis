@@ -1,3 +1,9 @@
 {
-  "common.send": "[LT] Send"
+  "common.send": "Siųsti",
+  "admin.menu.dashboard": "Skydelis",
+  "admin.menu.items": "Įrašai",
+  "admin.menu.types": "Tipai",
+  "admin.menu.cities": "Miestai",
+  "admin.menu.go_to_website": "Grįžti į svetainę",
+  "admin.header.title": "Admin sąsaja"
 }
