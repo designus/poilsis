@@ -13,7 +13,7 @@ import CitiesIcon from '@material-ui/icons/BeachAccess';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from '@material-ui/core';
-import { Switch } from 'react-router-dom';
+import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
@@ -40,9 +40,8 @@ import {
 } from 'pages';
 
 import { styles } from './styles';
-interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps  {
+interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
   isInitialDataLoaded: boolean;
-  location: any;
   getInitialData: () => void;
 }
 
@@ -57,7 +56,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
     menuItems: this.menuItems,
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: IAdminLayoutProps) {
     if (this.props.location !== prevProps.location) {
       this.handleDrawerClose();
     }

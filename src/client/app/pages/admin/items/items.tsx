@@ -1,13 +1,12 @@
 import * as React from 'react';
-import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { getUserItems, deleteItem, endLoading, toggleItem } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { ITEMS } from 'data-strings';
 import { AdminHeader } from 'global-styles';
 import {
   EnhancedTable,
@@ -22,7 +21,7 @@ import {
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface IItemsPageParams {
+interface IItemsPageParams extends InjectedIntlProps {
   itemsMap: IItemsMap;
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
@@ -52,27 +51,28 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
   }
 
   get columns(): ITableColumn[] {
+    const { formatMessage, formatDate } = this.props.intl;
     return [
       {
-        title: 'Id',
+        title: formatMessage({ id: 'admin.items.columns.id' }),
         dataProp: 'id',
         searchable: true,
       },
       {
-        title: 'Name',
+        title: formatMessage({ id: 'admin.items.columns.name' }),
         dataProp: 'name',
         sortType: 'string',
         searchable: true,
       },
       {
-        title: 'City',
+        title: formatMessage({ id: 'admin.items.columns.city' }),
         dataProp: 'cityId',
         sortType: 'string',
         format: (cityId: string) => this.props.citiesMap[cityId].name,
         searchable: true,
       },
       {
-        title: 'Types',
+        title: formatMessage({ id: 'admin.items.columns.types' }),
         dataProp: 'types',
         format: (types: string[]) => {
           return (
@@ -84,13 +84,13 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         },
       },
       {
-        title: 'Created at',
+        title: formatMessage({ id: 'admin.items.columns.created_at' }),
         dataProp: 'createdAt',
         sortType: 'date',
-        format: (date: string) => moment(date).format('YYYY-MM-DD'),
+        format: (date: string) => formatDate(date),
       },
       {
-        title: 'User',
+        title: formatMessage({ id: 'admin.items.columns.user' }),
         dataProp: 'userId',
         sortType: 'string',
         format: (userId: string) => {
@@ -99,7 +99,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         },
       },
       {
-        title: 'Is enabled?',
+        title: formatMessage({ id: 'admin.items.columns.is_enabled' }),
         dataProp: 'isEnabled',
         sortType: 'string',
         formatProps: ['id', 'isEnabled'],
@@ -111,7 +111,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         ),
       },
       {
-        title: 'Actions',
+        title: formatMessage({ id: 'admin.items.columns.actions' }),
         dataProp: 'id',
         formatProps: ['userId', 'id'],
         format: (userId: string, itemId: string) => {
@@ -160,7 +160,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
       <div>
         <AdminHeader>
           <Typography variant="h5">
-            {ITEMS}
+            <FormattedMessage id="admin.menu.items" />
           </Typography>
           <AdminPageActions
             search={this.setSearch}
@@ -208,4 +208,6 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 
-export const AdminItemsPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent);
+export const AdminItemsPage = injectIntl(
+  connect<{}, {}, IItemsPageParams>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent),
+);

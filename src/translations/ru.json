@@ -5,5 +5,13 @@
   "admin.menu.types": "[RU] Types",
   "admin.menu.cities": "[RU] Cities",
   "admin.menu.go_to_website": "[RU] Go back to website",
+  "admin.items.columns.id": "[RU] Id",
+  "admin.items.columns.name": "[RU] Name",
+  "admin.items.columns.city": "[RU] City",
+  "admin.items.columns.types": "[RU] Types",
+  "admin.items.columns.created_at": "[RU] Created at",
+  "admin.items.columns.user": "[RU] User",
+  "admin.items.columns.is_enabled": "[RU] Is Enabled?",
+  "admin.items.columns.actions": "[RU] Actions",
   "admin.header.title": "[RU] Admin Panel"
 }

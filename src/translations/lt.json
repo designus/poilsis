@@ -5,5 +5,13 @@
   "admin.menu.types": "Tipai",
   "admin.menu.cities": "Miestai",
   "admin.menu.go_to_website": "Grįžti į svetainę",
+  "admin.items.columns.id": "Id",
+  "admin.items.columns.name": "Pavadinimas",
+  "admin.items.columns.city": "Miestas",
+  "admin.items.columns.types": "Tipai",
+  "admin.items.columns.created_at": "Sukūrimo data",
+  "admin.items.columns.user": "Vartotojas",
+  "admin.items.columns.is_enabled": "Įgalinta?",
+  "admin.items.columns.actions": "Veiksmai",
   "admin.header.title": "Admin sąsaja"
 }

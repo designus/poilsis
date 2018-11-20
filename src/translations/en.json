@@ -5,5 +5,13 @@
   "admin.menu.types": "Types",
   "admin.menu.cities": "Cities",
   "admin.menu.go_to_website": "Go back to website",
+  "admin.items.columns.id": "Id",
+  "admin.items.columns.name": "Name",
+  "admin.items.columns.city": "City",
+  "admin.items.columns.types": "Types",
+  "admin.items.columns.created_at": "Created at",
+  "admin.items.columns.user": "User",
+  "admin.items.columns.is_enabled": "Is Enabled?",
+  "admin.items.columns.actions": "Actions",
   "admin.header.title": "Admin Panel"
 }
