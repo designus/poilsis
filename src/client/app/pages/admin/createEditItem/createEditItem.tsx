@@ -4,20 +4,20 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { isEqual } from 'lodash';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState } from 'reducers';
 import { getAdminItem } from 'actions';
 import { TItemFields } from 'global-utils';
 import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
-import { MAIN_INFO, PHOTO_GALLERY } from 'data-strings';
 import { MainInfoPage, PhotosPage } from 'pages';
 
 interface IMatchParams {
   itemId: string;
   userId: string;
 }
-export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams> {
+export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
   loadedItem: TItemFields;
   getItem: (itemId: string) => Promise<void>;
 }
@@ -39,16 +39,17 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
   isCreatePage = () => !Boolean(this.props.match.params.itemId);
 
   getMenuItems(userId?: string, itemId?: string): IAdminMenuItem[] {
+    const { formatMessage } = this.props.intl;
     return [
       {
         icon: () => (<HomeIcon />),
         link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
-        text: MAIN_INFO,
+        text: formatMessage({ id: 'admin.menu.main_info' }),
       },
       {
         icon: () => (<PhotoIcon />),
         link: adminRoutes.editItemPhotos.getLink(userId, itemId),
-        text: PHOTO_GALLERY,
+        text: formatMessage({ id: 'admin.menu.photo_gallery' }),
         isDisabled: this.isCreatePage(),
       },
     ];
@@ -108,4 +109,6 @@ const mapDispatchToProps = (dispatch) => ({
   getItem: (itemId: string) => dispatch(getAdminItem(itemId)),
 });
 
-export const CreateEditItemPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent);
+export const CreateEditItemPage = injectIntl(
+  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent),
+);

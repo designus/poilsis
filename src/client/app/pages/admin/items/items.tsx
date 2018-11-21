@@ -54,25 +54,25 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
     const { formatMessage, formatDate } = this.props.intl;
     return [
       {
-        title: formatMessage({ id: 'admin.items.columns.id' }),
+        title: formatMessage({ id: 'admin.item_fields.id' }),
         dataProp: 'id',
         searchable: true,
       },
       {
-        title: formatMessage({ id: 'admin.items.columns.name' }),
+        title: formatMessage({ id: 'admin.item_fields.name' }),
         dataProp: 'name',
         sortType: 'string',
         searchable: true,
       },
       {
-        title: formatMessage({ id: 'admin.items.columns.city' }),
+        title: formatMessage({ id: 'admin.item_fields.city' }),
         dataProp: 'cityId',
         sortType: 'string',
         format: (cityId: string) => this.props.citiesMap[cityId].name,
         searchable: true,
       },
       {
-        title: formatMessage({ id: 'admin.items.columns.types' }),
+        title: formatMessage({ id: 'admin.item_fields.types' }),
         dataProp: 'types',
         format: (types: string[]) => {
           return (
@@ -84,13 +84,13 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         },
       },
       {
-        title: formatMessage({ id: 'admin.items.columns.created_at' }),
+        title: formatMessage({ id: 'admin.item_fields.created_at' }),
         dataProp: 'createdAt',
         sortType: 'date',
         format: (date: string) => formatDate(date),
       },
       {
-        title: formatMessage({ id: 'admin.items.columns.user' }),
+        title: formatMessage({ id: 'admin.item_fields.user' }),
         dataProp: 'userId',
         sortType: 'string',
         format: (userId: string) => {
@@ -99,7 +99,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         },
       },
       {
-        title: formatMessage({ id: 'admin.items.columns.is_enabled' }),
+        title: formatMessage({ id: 'admin.item_fields.is_enabled' }),
         dataProp: 'isEnabled',
         sortType: 'string',
         formatProps: ['id', 'isEnabled'],
@@ -111,7 +111,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         ),
       },
       {
-        title: formatMessage({ id: 'admin.items.columns.actions' }),
+        title: formatMessage({ id: 'admin.items.actions' }),
         dataProp: 'id',
         formatProps: ['userId', 'id'],
         format: (userId: string, itemId: string) => {

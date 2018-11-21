@@ -5,5 +5,3 @@ export const ITEM_CREATE_ERROR = 'Item failed to create';
 export const ITEM_DELETE_ERROR = 'Item failed to delete';
 export const ITEM_DELETE_SUCCESS = 'Item was deleted successfully';
 export const IMAGES_KEY = 'images';
-export const PHOTO_GALLERY = 'Photo gallery';
-export const MAIN_INFO = 'Main info';

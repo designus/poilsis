@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'components';
 import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
@@ -16,11 +17,12 @@ interface ICustomProps {
   typesMap: ITypesMap;
   usersMap: IUsersMap;
   userRole: string;
+  formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
   selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
-  const { handleSubmit, submitting, pristine, selectedLanguage } = props;
+  const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -28,7 +30,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         type="text"
         component={TextInput}
         validate={[isRequired, minTextLength3, maxTextLength15]}
-        label="Name"
+        label={formatMessage({ id: 'admin.item_fields.name'})}
         intl
         selectedLanguage={selectedLanguage}
       />
@@ -36,7 +38,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="alias"
         type="text"
         component={TextInput}
-        label="Alias"
+        label={formatMessage({ id: 'admin.item_fields.alias'})}
         intl
         selectedLanguage={selectedLanguage}
       />
@@ -44,13 +46,13 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="address"
         type="text"
         component={TextInput}
-        label="Address"
+        label={formatMessage({ id: 'admin.item_fields.address'})}
       />
       <Field
         name="cityId"
         component={SelectBox}
         validate={[isRequired]}
-        label="City"
+        label={formatMessage({ id: 'admin.item_fields.city'})}
         data={props.citiesMap}
         dataKey="name"
       />
@@ -59,7 +61,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
           name="userId"
           component={SelectBox}
           validate={[isRequired]}
-          label="User"
+          label={formatMessage({ id: 'admin.item_fields.user'})}
           data={props.usersMap}
           dataKey="name"
         />
@@ -68,7 +70,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="types"
         component={CheckboxGroup}
         validate={[minCheckedLength1, maxCheckedLength3]}
-        label="Types"
+        label={formatMessage({ id: 'admin.item_fields.types'})}
         data={props.typesMap}
         dataKey="name"
       />
@@ -76,12 +78,12 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         <Field
           name="isEnabled"
           component={Switcher}
-          label="Is Enabled"
+          label={formatMessage({ id: 'admin.item_fields.is_enabled'})}
         />
       }
       <div>
         <Button type="submit" disabled={submitting || pristine}>
-          Submit
+          <FormattedMessage id="common.submit" />
         </Button>
       </div>
     </form>
