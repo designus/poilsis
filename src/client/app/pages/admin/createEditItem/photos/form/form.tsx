@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+
 import { DropzoneInput, UploadedImages, Button } from 'components';
 import { maxUploadedPhotos, maxUploadedPhotoSize } from 'global-utils';
 import { IPhotosFormFields } from '../photos';
@@ -53,7 +55,7 @@ class FormComponent extends React.Component<FormProps> {
           onClick={this.props.handleSubmit(this.submitImages)}
           disabled={!this.props.isDirty}
         >
-          Save
+          <FormattedMessage id="common.save" />
         </Button>
       </form>
     );

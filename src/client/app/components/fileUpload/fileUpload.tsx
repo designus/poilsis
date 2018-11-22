@@ -3,6 +3,7 @@ import Dropzone, { ImageFile } from 'react-dropzone';
 import ClearIcon from '@material-ui/icons/Clear';
 import FileUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
+import { FormattedMessage } from 'react-intl';
 
 import { Button } from 'components';
 import { ALLOWED_MIME_TYPES, MAX_FILE_COUNT, MAX_FILE_SIZE_MB, mapMimeTypesToTypes } from 'global-utils';
@@ -36,16 +37,19 @@ export const FileUpload = ({
         {children}
         <UploadPlaceholder>
           <Typography variant="body1">
-            Drag and drop or click to select a 550x550px file to upload.
+            <FormattedMessage id="admin.file_upload.placeholder"  />
           </Typography>
         </UploadPlaceholder>
       </Dropzone>
       <Typography variant="caption" gutterBottom>
-        {`
-          Please select no more than ${MAX_FILE_COUNT} photos.
-          Each photo should not be bigger than ${MAX_FILE_SIZE_MB} mb
-          and have one of the type: ${mapMimeTypesToTypes(ALLOWED_MIME_TYPES)}
-        `}
+        <FormattedMessage
+          id="admin.file_upload.caption"
+          values={{
+            count: MAX_FILE_COUNT,
+            size: MAX_FILE_SIZE_MB,
+            types: mapMimeTypesToTypes(ALLOWED_MIME_TYPES),
+          }}
+        />
       </Typography>
       {showUploadButtons ?
         <UploadButtons>
@@ -55,7 +59,7 @@ export const FileUpload = ({
             onClick={clearImages}
           >
             <ClearIcon />
-            Clear images
+            <FormattedMessage id="admin.file_upload.clear_label" />
           </Button>
           <Button
             type="button"
@@ -63,7 +67,7 @@ export const FileUpload = ({
             onClick={uploadImages}
           >
             <FileUploadIcon />
-            Upload
+            <FormattedMessage id="admin.file_upload.upload_label" />
           </Button>
         </UploadButtons> :
         null

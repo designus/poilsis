@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { change, isDirty, isSubmitting } from 'redux-form';
 import Typography from '@material-ui/core/Typography';
 import { ImageFile } from 'react-dropzone';
+import { FormattedMessage } from 'react-intl';
 
 import { IImage } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils';
@@ -43,7 +44,9 @@ class PhotosPageComponent extends React.Component<any, any> {
 
       return (
         <div>
-          <Typography variant="h5">Photo gallery</Typography>
+          <Typography variant="h5">
+            <FormattedMessage id="admin.menu.photo_gallery" />
+          </Typography>
           <PhotosFormWithLoader
             onSubmit={this.onSubmit}
             loaderId={CONTENT_LOADER_ID}

@@ -1,5 +1,6 @@
 {
   "common.submit": "[RU] Send",
+  "common.save": "[RU] Save",
   "admin.menu.dashboard": "[RU] Dashboard",
   "admin.menu.items": "[RU] Items",
   "admin.menu.types": "[RU] Types",
@@ -17,5 +18,10 @@
   "admin.item_fields.user": "[RU] User",
   "admin.item_fields.is_enabled": "[RU] Is Enabled?",
   "admin.items.actions": "[RU] Actions",
-  "admin.header.title": "[RU] Admin Panel"
+  "admin.header.title": "[RU] Admin Panel",
+  "admin.file_upload.placeholder": "[RU] Drag and drop or click to select a 550x550px file to upload.",
+  "admin.file_upload.caption": "[RU] Please select no more than {count} photos. Each photo should not be bigger than {size} mb  and have one of the type: {types}",
+  "admin.file_upload.upload_label": "[RU] Upload",
+  "admin.file_upload.clear_label": "[RU] Clear images",
+  "admin.file_upload.image_preview_label": "[RU] Images ({uploadedCount} of {totalCount})"
 }
