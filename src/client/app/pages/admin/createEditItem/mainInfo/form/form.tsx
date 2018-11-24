@@ -30,7 +30,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         type="text"
         component={TextInput}
         validate={[isRequired, minTextLength3, maxTextLength15]}
-        label={formatMessage({ id: 'admin.item_fields.name'})}
+        label={formatMessage({ id: 'admin.common_fields.name'})}
         intl
         selectedLanguage={selectedLanguage}
       />
@@ -38,7 +38,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="alias"
         type="text"
         component={TextInput}
-        label={formatMessage({ id: 'admin.item_fields.alias'})}
+        label={formatMessage({ id: 'admin.common_fields.alias'})}
         intl
         selectedLanguage={selectedLanguage}
       />
@@ -46,13 +46,13 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="address"
         type="text"
         component={TextInput}
-        label={formatMessage({ id: 'admin.item_fields.address'})}
+        label={formatMessage({ id: 'admin.common_fields.address'})}
       />
       <Field
         name="cityId"
         component={SelectBox}
         validate={[isRequired]}
-        label={formatMessage({ id: 'admin.item_fields.city'})}
+        label={formatMessage({ id: 'admin.common_fields.city'})}
         data={props.citiesMap}
         dataKey="name"
       />
@@ -61,7 +61,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
           name="userId"
           component={SelectBox}
           validate={[isRequired]}
-          label={formatMessage({ id: 'admin.item_fields.user'})}
+          label={formatMessage({ id: 'admin.common_fields.user'})}
           data={props.usersMap}
           dataKey="name"
         />
@@ -70,7 +70,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="types"
         component={CheckboxGroup}
         validate={[minCheckedLength1, maxCheckedLength3]}
-        label={formatMessage({ id: 'admin.item_fields.types'})}
+        label={formatMessage({ id: 'admin.common_fields.types'})}
         data={props.typesMap}
         dataKey="name"
       />
@@ -78,7 +78,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         <Field
           name="isEnabled"
           component={Switcher}
-          label={formatMessage({ id: 'admin.item_fields.is_enabled'})}
+          label={formatMessage({ id: 'admin.common_fields.is_enabled'})}
         />
       }
       <div>

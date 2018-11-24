@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { ITypeFields, TTypeFields } from 'global-utils';
 import { createType, updateType, getAdminType } from 'actions';
@@ -17,7 +18,7 @@ interface IMatchParams {
   typeId: string;
 }
 
-interface ICreateEditTypePageProps extends RouteComponentProps<IMatchParams> {
+interface ICreateEditTypePageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
   loadedType: TTypeFields;
   showNavigationPrompt: boolean;
   getType: (typeId: string) => Promise<any>;
@@ -68,9 +69,12 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
   render() {
     return (this.props.loadedType || this.isCreatePage()) && (
       <div>
-        <Typography variant="h5">{`${this.isCreatePage() ? 'Create' : 'Edit'} type`}</Typography>
+        <Typography variant="h5">
+          <FormattedMessage id={`admin.type.${this.isCreatePage() ? 'create' : 'edit'}_title`} />
+        </Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
+          formatMessage={this.props.intl.formatMessage}
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           initialValues={this.props.loadedType}
@@ -93,4 +97,6 @@ const mapDispatchToProps = (dispatch) => ({
   initializeForm: (type: TTypeFields) => dispatch(initialize(TYPE_FORM_NAME, type)),
 });
 
-export const CreateEditTypePage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent);
+export const CreateEditTypePage = injectIntl(
+  connect<{}, {}, ICreateEditTypePageProps>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent),
+);
