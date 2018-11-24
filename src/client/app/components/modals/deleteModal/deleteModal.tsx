@@ -2,16 +2,18 @@ import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
+import { FormattedMessage } from 'react-intl';
+
 import { DIALOG_LOADER_ID } from 'client-utils';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 
-export interface IDeleteModalProps extends WithStyles<typeof modalStyles> {
+export interface IDeleteModalProps extends Partial<WithStyles<typeof modalStyles>> {
   isModalOpen: boolean;
   itemId: string;
   itemName: string;
-  onDelete: any;
-  onClose: any;
+  onDelete: (id: string) => Promise<void>;
+  onClose: () => void;
 }
 
 class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
@@ -39,17 +41,18 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
           }}
         >
           <DialogHeader
-            title={`Delete "${itemName}"`}
             className={classes.close}
             closeModal={onClose}
-          />
+          >
+            <FormattedMessage id="admin.delete_modal.title" values={{ item: itemName }}/>
+          </DialogHeader>
           <DialogContent
             error={error}
             showLoadingOverlay={true}
             loaderId={DIALOG_LOADER_ID}
             contentClass={classes.dialogContent}
           >
-            Delete is permanent, you can not revert this action.
+            <FormattedMessage id="admin.delete_modal.description" />
           </DialogContent>
           <DialogFooter
             classes={classes}

@@ -1,6 +1,10 @@
 {
   "common.submit": "Siųsti",
   "common.save": "Išsaugoti",
+  "common.cancel": "Atšaukti",
+  "common.proceed": "Tęsti",
+  "common.yes": "Taip",
+  "common.no": "Ne",
   "admin.menu.dashboard": "Skydelis",
   "admin.menu.items": "Įrašai",
   "admin.menu.types": "Tipai",
@@ -26,5 +30,11 @@
   "admin.file_upload.clear_label": "Išvalyti nuotraukas",
   "admin.file_upload.image_preview_label": "Nuotraukos ({uploadedCount} iš {totalCount})",
   "admin.type.create_title": "Sukurti tipą",
-  "admin.type.edit_title": "Redaguoti tipą"
+  "admin.type.edit_title": "Redaguoti tipą",
+  "admin.delete_modal.title": "Ar norite ištrinti {item} įrašą?",
+  "admin.delete_modal.description": "Ištrynus įrašą jo sugražinti nebegalėsite.",
+  "admin.reauthenticate_modal.title": "Jūsų sesija tuoj baigsis",
+  "admin.reauthenticate_modal.description": "Jūsų sesija baigsis už <strong>{seconds}</strong> sekundžių. Ar norite naršyti toliau?",
+  "admin.save_modal.title": "Ar norite išeiti?",
+  "admin.save_modal.description": "Jūsų atlikote pakeitimų. Jei išeisite dabar pakeitimai nebus išsaugoti. Ar norite išeiti?"
 }

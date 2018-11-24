@@ -1,6 +1,10 @@
 {
   "common.submit": "[RU] Send",
   "common.save": "[RU] Save",
+  "common.cancel": "[RU] Cancel",
+  "common.proceed": "[RU] Proceed",
+  "common.yes": "[RU] Yes",
+  "common.no": "[RU] No",
   "admin.menu.dashboard": "[RU] Dashboard",
   "admin.menu.items": "[RU] Items",
   "admin.menu.types": "[RU] Types",
@@ -26,5 +30,11 @@
   "admin.file_upload.clear_label": "[RU] Clear images",
   "admin.file_upload.image_preview_label": "[RU] Images ({uploadedCount} of {totalCount})",
   "admin.type.create_title": "[RU] Create type",
-  "admin.type.edit_title": "[RU] Edit type"
+  "admin.type.edit_title": "[RU] Edit type",
+  "admin.delete_modal.title": "[RU] Do you want to Delete {item}?",
+  "admin.delete_modal.description": "[RU] Delete is permanent, you can not revert this action.",
+  "admin.reauthenticate_modal.title": "[RU] Your session is about to expire",
+  "admin.reauthenticate_modal.description": "[RU] Your login session will expire in <strong>{seconds}</strong> seconds. Do you want us to keep you logged in?",
+  "admin.save_modal.title": "[RU] Proceed without saving?",
+  "admin.save_modal.description": "[RU] You made some changes to the form. Do you want to proceed without saving?"
 }

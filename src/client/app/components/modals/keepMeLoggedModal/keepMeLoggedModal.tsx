@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import Countdown from 'react-countdown-now';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 
 import { IAppState } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils';
@@ -27,7 +28,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
 
   renderCountdown = ({ seconds }) => {
     return (
-      <span>Your login session will expire in <strong>{seconds}</strong> seconds. Do you want us to keep you logged in?</span>
+      <FormattedHTMLMessage id="admin.reauthenticate_modal.description" values={{ seconds }} />
     );
   }
 
@@ -47,10 +48,11 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
           }}
         >
           <DialogHeader
-            title={'Your session is about to expire'}
             className={classes.close}
             closeModal={this.onCloseModal}
-          />
+          >
+            <FormattedMessage id="admin.reauthenticate_modal.title" />
+          </DialogHeader>
           <DialogContent
             showLoadingOverlay={true}
             loaderId={DIALOG_LOADER_ID}
@@ -67,8 +69,8 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
           </DialogContent>
           <DialogFooter
             classes={classes}
-            closeLabel="No"
-            submitLabel="Yes"
+            closeLabelId="common.no"
+            submitLabelId="common.yes"
             onClose={this.onCloseModal}
             onSubmit={reauthenticateUser}
           />
