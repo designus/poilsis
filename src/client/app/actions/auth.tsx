@@ -21,7 +21,7 @@ export const setAccessToken = (accessToken) => ({type: SET_ACCESS_TOKEN, accessT
 
 export const handleError = (dispatch, error, isLogin: boolean) => {
   const response = error.response;
-  const errorType = isLogin ? 'Login failed' : 'Logout failed';
+  const errorType = `admin.authenticate.${isLogin ? 'login' : 'logout'}_failure`;
   console.error(response);
   dispatch(endLoading(DIALOG_LOADER_ID));
   dispatch(showToast(Toast.error, `${errorType}: ${response.data.message}`));
@@ -42,7 +42,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
           dispatch(loginSuccess(accessToken));
           dispatch(receiveUserDetails(user));
           dispatch(endLoading(DIALOG_LOADER_ID));
-          dispatch(showToast(Toast.success, 'User logged in successfully'));
+          dispatch(showToast(Toast.success, 'admin.authenticate.login_success'));
           // dispatch(setLogoutTimer(expires));
           Cookies.set('jwt', accessToken, {expires: expiryDate});
           localStorage.setItem('refreshToken', refreshToken);
@@ -66,7 +66,7 @@ export const reauthenticateUser = () => (dispatch, getState) => {
       const { expires } = getAccessTokenClaims(accessToken);
       const expiryDate = day(expires * 1000).toDate();
       dispatch(endLoading(DIALOG_LOADER_ID));
-      dispatch(showToast(Toast.success, 'User reauthenticated successfully'));
+      dispatch(showToast(Toast.success, 'admin.authenticate.reauthenticate_success'));
       dispatch(reauthenticateSuccess(accessToken));
       Cookies.set('jwt', accessToken, { expires: expiryDate });
     })

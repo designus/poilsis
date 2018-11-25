@@ -3,25 +3,21 @@ import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import SuccesIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/ErrorOutline';
+import SuccesIcon from '@material-ui/icons/SentimentVerySatisfied';
+import ErrorIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
 import { WithStyles } from '@material-ui/core';
-import { IAppState } from '../../reducers';
-import { IToastState, Toast as ToastEnum } from '../../reducers/toast';
-import { hideToast } from '../../actions';
+import { FormattedMessage } from 'react-intl';
+
+import { IToastState, IAppState, Toast as ToastEnum } from 'reducers';
+import { hideToast } from 'actions';
 import { styles } from './styles';
 
 interface IToastProps extends IToastState, WithStyles<typeof styles>  {
-  dispatch?: any;
+  toast?: IToastState;
+  hideToast?: () => void;
 }
-
-const icon = {
-  [ToastEnum.success]: () => <SuccesIcon />,
-  [ToastEnum.error]: () => <ErrorIcon />,
-  [ToastEnum.warning]: () => <WarningIcon />,
-};
 
 const CloseButton = ({className, handleRequestClose}): React.ReactElement<any> => {
   return (
@@ -37,55 +33,60 @@ const CloseButton = ({className, handleRequestClose}): React.ReactElement<any> =
   );
 };
 
-const Message = ({ text, toastType, classes }) => {
-  return (
-    <div className={classes.message}>
-      {icon[toastType]()}
-      {text}
-    </div>
-  );
-};
-
 class ToastComponent extends React.Component<IToastProps, any> {
 
-  handleRequestClose = (event, reason) => {
-    this.props.dispatch(hideToast());
+  icon = {
+    [ToastEnum.success]: () => <SuccesIcon />,
+    [ToastEnum.error]: () => <ErrorIcon />,
+    [ToastEnum.warning]: () => <WarningIcon />,
+  };
+
+  handleRequestClose = () => {
+    this.props.hideToast();
+  }
+
+  renderToastMessage = () => {
+    const { classes, toast: { toastType, message } } = this.props;
+    return (
+      <div className={classes.message}>
+        {this.icon[toastType]()}
+        <FormattedMessage id={message} />
+      </div>
+    );
   }
 
   render() {
-    const { classes, show, message, toastType } = this.props;
+    const { classes, toast: { show, toastType } } = this.props;
     return (
-      <div>
-        <Snackbar
-          className={classes[toastType]}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={show}
-          autoHideDuration={4000}
-          onClose={this.handleRequestClose}
-          message={<Message classes={classes} text={message} toastType={toastType} />}
-          action={
-            <CloseButton
-              className={classes.close}
-              handleRequestClose={this.handleRequestClose}
-            />
-          }
-        />
-      </div>
+      <Snackbar
+        className={classes[toastType]}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        open={show}
+        autoHideDuration={4000}
+        onClose={this.handleRequestClose}
+        message={this.renderToastMessage()}
+        action={
+          <CloseButton
+            className={classes.close}
+            handleRequestClose={this.handleRequestClose}
+          />
+        }
+      />
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  const { message, toastType, show } = state.toast;
-  return {
-    message,
-    toastType,
-    show,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  toast: state.toast,
+});
 
-const StyledToastComponent = withStyles(styles)(ToastComponent);
-export const Toast = connect<any, any, {}>(mapStateToProps)(StyledToastComponent);
+const mapDispatchToProps = dispatch => ({
+  hideToast: () => dispatch(hideToast()),
+});
+
+export const Toast = withStyles(styles)(
+  connect<any, any, IToastProps>(mapStateToProps, mapDispatchToProps)(ToastComponent),
+);

@@ -38,6 +38,15 @@
   "admin.save_modal.title": "Ar norite išeiti?",
   "admin.save_modal.description": "Jūsų atlikote pakeitimų. Jei išeisite dabar pakeitimai nebus išsaugoti. Ar norite išeiti?",
   "admin.city.create_title": "Pridėti miestą",
-  "admin.city.edit_title:": "Redaguoti miestą"
-
+  "admin.city.edit_title:": "Redaguoti miestą",
+  "admin.city.create_success": "Sveikiname sukūrus naują miestą!",
+  "admin.city.create_error": "Deja, naujo miesto sukurti nepavyko.",
+  "admin.city.update_success": "Sveikiname, jūs sėkmingai atnaujinote esamo miesto informaciją!",
+  "admin.city.update_error": "Deja, esamo miesto atnaujinti nepavyko",
+  "admin.city.delete_success": "Sveikiname, jūs sėkmingai atsikratėte nepageidaujamo miesto!",
+  "admin.city.delete_error": "Deja, esamo miesto ištrinti nepavyko",
+  "admin.authenticate.login_success": "Jūs prisijungėte sėkmingai",
+  "admin.authenticate.login_failure": "Nepavyko prisijungti",
+  "admin.authenticate.logout_failure": "Nepavyko atsijungti",
+  "admin.authenticate.reauthenticate_success": "Jūs sėkmingai pratęsėte savo prisijungimo galiojimo laiką"
 }

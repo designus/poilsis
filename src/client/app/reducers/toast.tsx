@@ -14,7 +14,13 @@ export interface IToastState {
   show?: boolean;
 }
 
-export const toast = (state: IToastState = {show: false}, action) => {
+const initialState = {
+  show: false,
+  message: '',
+  toastType: Toast.success,
+};
+
+export const toast = (state: IToastState = initialState, action) => {
   switch (action.type) {
     case SHOW_TOAST:
       return {

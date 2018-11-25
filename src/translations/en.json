@@ -38,6 +38,16 @@
   "admin.save_modal.title": "Proceed without saving?",
   "admin.save_modal.description": "You made some changes to the form. Do you want to proceed without saving?",
   "admin.city.create_title": "Create city",
-  "admin.city.edit_title:": "Edit city"
+  "admin.city.edit_title:": "Edit city",
+  "admin.city.create_success": "New city was created successfully.",
+  "admin.city.create_error": "Failed to create a new city.",
+  "admin.city.update_success": "City was updated successfully.",
+  "admin.city.update_error": "Failed to update the city.",
+  "admin.city.delete_success": "City was deleted successfully.",
+  "admin.city.delete_error": "Failed to delete city.",
+  "admin.authenticate.login_success": "You have logged in in successfully.",
+  "admin.authenticate.login_failure": "Login failed",
+  "admin.authenticate.logout_failure": "Logout failed",
+  "admin.authenticate.reauthenticate_success": "You have reauthenticated successfully."
   
 }
