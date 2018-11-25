@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { TCityFields, ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
@@ -17,7 +18,7 @@ interface IMatchParams {
   cityId: string;
 }
 
-interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams> {
+interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
   loadedCity: TCityFields;
   showNavigationPrompt: boolean;
   typesMap: ITypesMap;
@@ -72,10 +73,13 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
     return (this.props.loadedCity || this.isCreatePage()) &&
       (
         <div>
-          <Typography variant="h5">{`${this.isCreatePage() ? 'Create' : 'Edit'} city`}</Typography>
+          <Typography variant="h5">
+            <FormattedMessage id={`admin.city.${this.isCreatePage() ? 'create' : 'edit'}_title`} />
+          </Typography>
           <FormWithLoader
             onSubmit={this.onSubmit}
             loaderId={CONTENT_LOADER_ID}
+            formatMessage={this.props.intl.formatMessage}
             showLoadingOverlay={true}
             typesMap={this.props.typesMap}
             initialValues={this.props.loadedCity}
@@ -99,4 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
   initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city)),
 });
 
-export const CreateEditCityPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent);
+export const CreateEditCityPage = injectIntl(
+  connect<{}, {}, ICreateEditCityPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent),
+);

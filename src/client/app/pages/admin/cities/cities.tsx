@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+
 import { IAppState, ICitiesMap, ITypesMap } from 'reducers';
 import { AdminHeader } from 'global-styles';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
@@ -17,10 +19,10 @@ import {
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface ICitiesPageParams {
+interface ICitiesPageParams extends InjectedIntlProps {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  deleteCity: (typeId) => Promise<any>;
+  deleteCity: (typeId: string) => Promise<void>;
 }
 
 class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
@@ -36,17 +38,18 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
   }
 
   get columns(): ITableColumn[] {
+    const { formatMessage } = this.props.intl;
     return [
       {
-        title: 'Id',
+        title: formatMessage({ id: 'admin.common_fields.id'}),
         dataProp: 'id',
       },
       {
-        title: 'Name',
+        title: formatMessage({ id: 'admin.common_fields.name'}),
         dataProp: 'name',
       },
       {
-        title: 'Types',
+        title: formatMessage({ id: 'admin.common_fields.types'}),
         dataProp: 'types',
         format: (types: string[]) => {
           return (
@@ -58,7 +61,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
         },
       },
       {
-        title: 'Actions',
+        title: formatMessage({ id: 'admin.common_fields.actions'}),
         dataProp: 'id',
         format: (cityId: string) => {
           return (
@@ -89,7 +92,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
       <div>
         <AdminHeader>
           <Typography variant="h5">
-            Cities
+            <FormattedMessage id="admin.menu.cities" />
           </Typography>
           <AdminPageActions createLink={adminRoutes.createCity.getLink()} />
         </AdminHeader>
@@ -122,4 +125,6 @@ const mapDispatchToProps = (dispatch) => ({
   deleteCity: (cityId) => dispatch(deleteCity(cityId)),
 });
 
-export const AdminCitiesPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent);
+export const AdminCitiesPage = injectIntl(
+  connect<{}, {}, ICitiesPageParams>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent),
+);

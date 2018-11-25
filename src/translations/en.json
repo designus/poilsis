@@ -36,6 +36,8 @@
   "admin.reauthenticate_modal.title": "Your session is about to expire",
   "admin.reauthenticate_modal.description": "Your login session will expire in <strong>{seconds}</strong> seconds. Do you want us to keep you logged in?",
   "admin.save_modal.title": "Proceed without saving?",
-  "admin.save_modal.description": "You made some changes to the form. Do you want to proceed without saving?"
+  "admin.save_modal.description": "You made some changes to the form. Do you want to proceed without saving?",
+  "admin.city.create_title": "Create city",
+  "admin.city.edit_title:": "Edit city"
   
 }

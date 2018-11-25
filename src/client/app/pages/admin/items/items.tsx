@@ -28,7 +28,7 @@ interface IItemsPageParams extends InjectedIntlProps {
   typesMap: ITypesMap;
   areAllItemsLoaded: boolean;
   userItems: string[];
-  deleteItem: (itemId) => void;
+  deleteItem: (itemId: string) => Promise<void>;
   getUserItems: () => void;
   endLoading: (loaderId) => void;
   toggleItem: (itemId: string, isEnabled: boolean) => void;
@@ -147,7 +147,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
     return item && item.name;
   }
 
-  handleItemDelete = (itemId) => {
+  handleItemDelete = (itemId: string) => {
     return this.props.deleteItem(itemId);
   }
 
