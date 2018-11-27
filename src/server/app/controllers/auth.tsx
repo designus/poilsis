@@ -4,7 +4,7 @@ import * as day from 'dayjs';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles, IItemFields, SESSION_DURATION_MINUTES, IAccessTokenClaims } from 'global-utils';
+import { UserRoles, IItemFields, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
 
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
@@ -12,6 +12,7 @@ import { ItemsModel } from '../model/items';
 
 const randToken = require('rand-token');
 
+type TokenParams = Omit<IAccessTokenClaims, 'expires'>;
 class Auth {
 
   public initialize = () => {
@@ -35,9 +36,9 @@ class Auth {
     }
   }
 
-  private genToken = (userId: string, userRole: string, userItems: string[]) => {
+  private genToken = (params: TokenParams) => {
     const expires = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
-    const claims: IAccessTokenClaims = { expires, userId, userRole, userItems };
+    const claims: IAccessTokenClaims = { ...params, expires };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 
     return token;
@@ -59,7 +60,7 @@ class Auth {
         throw errors;
       }
 
-      const { userId, userRole } = req.body;
+      const { userId, userRole, userName } = req.body;
       const token = await TokensModel.findOne({userId}).exec();
 
       if (token === null) {
@@ -72,7 +73,7 @@ class Auth {
 
       const userItems = await this.getUserItems(userRole, userId);
 
-      res.status(200).json({ accessToken: this.genToken(userId, userRole, userItems) });
+      res.status(200).json({ accessToken: this.genToken({ userId, userRole, userItems, userName}) });
     } catch (err) {
       res.status(401).json({ message: 'Invalid credentials', errors: err });
     }
@@ -96,6 +97,7 @@ class Auth {
 
       const userId = user.id;
       const userRole = user.role;
+      const userName = user.name;
       const success = await user.comparePassword(req.body.password);
 
       if (success === false) {
@@ -113,7 +115,10 @@ class Auth {
       const userItems = await this.getUserItems(userRole, userId);
 
       // TODO: Add Set-cookie http header
-      res.status(200).json({accessToken: this.genToken(userId, userRole, userItems), refreshToken: tokenItem.refreshToken});
+      res.status(200).json({
+        accessToken: this.genToken({userId, userRole, userName, userItems}),
+        refreshToken: tokenItem.refreshToken,
+      });
     } catch (err) {
       res.status(401).json({message: 'Invalid credentials', errors: err});
     }

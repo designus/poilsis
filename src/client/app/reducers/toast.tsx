@@ -12,12 +12,14 @@ export interface IToastState {
   toastType?: ToastType;
   message?: string;
   show?: boolean;
+  error?: string;
 }
 
 const initialState = {
   show: false,
   message: '',
   toastType: Toast.success,
+  error: null,
 };
 
 export const toast = (state: IToastState = initialState, action) => {
@@ -27,12 +29,14 @@ export const toast = (state: IToastState = initialState, action) => {
         ...state,
         toastType: action.toastType,
         message: action.message,
+        error: action.error,
         show: true,
       };
     case HIDE_TOAST:
       return {
         ...state,
         show: false,
+        error: null,
       };
     default:
       return state;

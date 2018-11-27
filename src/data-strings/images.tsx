@@ -1,5 +1,4 @@
-export const IMAGES_UPLOAD_ERROR = 'Images failed to upload';
-export const IMAGES_UPLOAD_SUCCESS = 'Images were uploaded successfully';
-export const IMAGES_UPDATE_SUCCESS = 'Images were updated successfully';
-export const IMAGES_UPDATE_ERROR = 'Images failed to update';
-export const ERROR_HEADER = 'Some selected images can\'t be uploaded because of size, type or overall image count restrictions:';
+export const IMAGES_UPLOAD_SUCCESS = 'admin.file_upload.upload_success';
+export const IMAGES_UPLOAD_ERROR = 'admin.file_upload.upload_error';
+export const IMAGES_UPDATE_SUCCESS = 'admin.file_upload.update_success';
+export const IMAGES_UPDATE_ERROR = 'admin.file_upload.update_error';

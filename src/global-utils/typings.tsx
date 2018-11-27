@@ -12,6 +12,8 @@ export enum ImageSize {
   Large = 'L',
 }
 
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
 export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
 
 export interface IResponseError {
@@ -65,6 +67,7 @@ export enum UserRoles {
 
 export interface IAccessTokenClaims {
   expires: number;
+  userName: string;
   userId: string;
   userRole: string;
   userItems: string[];

@@ -46,11 +46,12 @@ class ToastComponent extends React.Component<IToastProps, any> {
   }
 
   renderToastMessage = () => {
-    const { classes, toast: { toastType, message } } = this.props;
+    const { classes, toast: { toastType, message, error } } = this.props;
     return (
       <div className={classes.message}>
         {this.icon[toastType]()}
         <FormattedMessage id={message} />
+        {error ? ': ' + error : ''}
       </div>
     );
   }

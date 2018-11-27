@@ -3,6 +3,14 @@ import axios from 'axios';
 import { ICityFields, TCityFields } from 'global-utils';
 import { ICitiesItems, IAppState } from 'reducers';
 import { startLoading, endLoading, receiveItems } from 'actions';
+import {
+  CITY_CREATE_SUCCESS,
+  CITY_CREATE_ERROR,
+  CITY_UPDATE_SUCCESS,
+  CITY_UPDATE_ERROR,
+  CITY_DELETE_SUCCESS,
+  CITY_DELETE_ERROR,
+} from 'data-strings';
 import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { receiveAdminCity } from './admin';
@@ -93,10 +101,10 @@ export const createCity = (adminCity: TCityFields) => dispatch => {
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));
-      dispatch(stopLoading(false, 'admin.city.create_success', CONTENT_LOADER_ID));
+      dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(clientCity);
     })
-    .catch(handleApiErrors('admin.city.create_error', CONTENT_LOADER_ID, dispatch));
+    .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const updateCity = (adminCity: TCityFields) => dispatch => {
@@ -107,10 +115,10 @@ export const updateCity = (adminCity: TCityFields) => dispatch => {
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));
       dispatch(receiveAdminCity(clientCity.id, adminCity));
-      dispatch(stopLoading(false, 'admin.city.update_success', CONTENT_LOADER_ID));
+      dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(clientCity);
     })
-    .catch(handleApiErrors('admin.city.update_error', CONTENT_LOADER_ID, dispatch));
+    .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
@@ -120,8 +128,8 @@ export const deleteCity = (cityId: string) => dispatch => {
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeCity(cityId));
-      dispatch(stopLoading(false, 'admin.city.delete_success', DIALOG_LOADER_ID));
+      dispatch(stopLoading(false, CITY_DELETE_SUCCESS, DIALOG_LOADER_ID));
       return Promise.resolve();
     })
-    .catch(handleApiErrors('admin.city.delete_error', DIALOG_LOADER_ID, dispatch));
+    .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };

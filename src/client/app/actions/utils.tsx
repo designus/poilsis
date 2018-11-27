@@ -17,6 +17,7 @@ export const handleApiErrors = (message, loaderId, dispatch) => err => {
 };
 
 export const handleApiResponse = (response: IResponse) => {
+  console.log('Handle api response', response);
   if (response.data.errors) {
     throw response.data.errors;
   }
