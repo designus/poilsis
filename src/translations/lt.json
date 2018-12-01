@@ -59,5 +59,8 @@
   "admin.authenticate.login_error": "Nepavyko prisijungti",
   "admin.authenticate.logout_success": "Jūs sėkmingai atsijungėte",
   "admin.authenticate.logout_error": "Nepavyko atsijungti",
-  "admin.authenticate.reauthenticate_success": "Jūs sėkmingai pratęsėte savo prisijungimo galiojimo laiką"
+  "admin.authenticate.reauthenticate_success": "Jūs sėkmingai pratęsėte savo prisijungimo galiojimo laiką",
+  "admin.authenticate.invalid_credentials": "Neteisingi prisijungimo duomenys",
+  "admin.authenticate.user_not_found": "Vartotojas nerastas",
+  "admin.authenticate.not_authorized": "Jūs neturite prieigos teisių"
 }

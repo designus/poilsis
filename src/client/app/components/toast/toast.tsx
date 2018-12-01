@@ -8,13 +8,13 @@ import ErrorIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
 import { WithStyles } from '@material-ui/core';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IToastState, IAppState, Toast as ToastEnum } from 'reducers';
 import { hideToast } from 'actions';
 import { styles } from './styles';
 
-interface IToastProps extends IToastState, WithStyles<typeof styles>  {
+interface IToastProps extends IToastState, WithStyles<typeof styles>, InjectedIntlProps  {
   toast?: IToastState;
   hideToast?: () => void;
 }
@@ -46,12 +46,12 @@ class ToastComponent extends React.Component<IToastProps, any> {
   }
 
   renderToastMessage = () => {
-    const { classes, toast: { toastType, message, error } } = this.props;
+    const { classes, intl: { formatMessage }, toast: { toastType, message, error } } = this.props;
     return (
       <div className={classes.message}>
         {this.icon[toastType]()}
-        <FormattedMessage id={message} />
-        {error ? ': ' + error : ''}
+        {message && formatMessage({ id: message })}
+        {error && `: ${formatMessage({ id: error })}`}
       </div>
     );
   }
@@ -89,5 +89,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const Toast = withStyles(styles)(
-  connect<any, any, IToastProps>(mapStateToProps, mapDispatchToProps)(ToastComponent),
+  injectIntl(connect<any, any, IToastProps>(mapStateToProps, mapDispatchToProps)(ToastComponent)),
 );

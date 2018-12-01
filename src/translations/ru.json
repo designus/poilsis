@@ -59,7 +59,8 @@
   "admin.authenticate.login_error": "[RU] Login failed",
   "admin.authenticate.logout_success": "[RU] Logout success",
   "admin.authenticate.logout_error": "[RU] Logout failed",
-  "admin.authenticate.reauthenticate_success": "[RU] You have reauthenticated successfully."
-  
-
+  "admin.authenticate.reauthenticate_success": "[RU] You have reauthenticated successfully.",
+  "admin.authenticate.invalid_credentials": "[RU] Invalid credentials",
+  "admin.authenticate.user_not_found": "[RU] User not found",
+  "admin.authenticate.not_authorized": "[RU] You are not authorized"
 }

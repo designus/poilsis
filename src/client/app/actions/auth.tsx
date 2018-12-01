@@ -26,11 +26,10 @@ export const showKeepMeLoggedModal = () => ({type: SHOW_KEEP_ME_LOGGED_MODAL});
 export const reauthenticateSuccess = (accessToken) => ({type: REAUTHENTICATE_SUCCESS, accessToken});
 export const setAccessToken = (accessToken) => ({type: SET_ACCESS_TOKEN, accessToken});
 
-export const handleError = (dispatch, error, isLogin: boolean) => {
-  const response = error.response;
+export const handleAuthError = (dispatch, isLogin: boolean) => (error) => {
   const genericMessage = isLogin ? USER_LOGIN_ERROR : USER_LOGOUT_ERROR;
-  const errorMessage = response.data.message;
-  console.error(response);
+  const errorMessage = error.response.data.message;
+  console.error(error);
   dispatch(endLoading(DIALOG_LOADER_ID));
   dispatch(showToast(Toast.error, genericMessage, errorMessage));
   dispatch(logout());
@@ -53,7 +52,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
       localStorage.setItem('refreshToken', refreshToken);
       return Promise.resolve();
     })
-    .catch(error => handleError(dispatch, error, true));
+    .catch(handleAuthError(dispatch, true));
 };
 
 export const reauthenticateUser = () => (dispatch, getState) => {
@@ -73,7 +72,7 @@ export const reauthenticateUser = () => (dispatch, getState) => {
       dispatch(reauthenticateSuccess(accessToken));
       Cookies.set('jwt', accessToken, { expires: expiryDate });
     })
-    .catch(error => handleError(dispatch, error, true));
+    .catch(handleAuthError(dispatch, true));
 };
 
 export const logout = () => (dispatch, getState) => {
@@ -89,5 +88,5 @@ export const logout = () => (dispatch, getState) => {
       dispatch(showToast(Toast.success, USER_LOGOUT_SUCCESS));
       dispatch(receiveUserDetails(null));
     })
-    .catch(error => handleError(dispatch, error, false));
+    .catch(handleAuthError(dispatch, false));
 };

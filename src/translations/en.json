@@ -59,6 +59,8 @@
   "admin.authenticate.login_error": "Login failed",
   "admin.authenticate.logout_success": "Logout success",
   "admin.authenticate.logout_error": "Logout failed",
-  "admin.authenticate.reauthenticate_success": "You have reauthenticated successfully."
-  
+  "admin.authenticate.reauthenticate_success": "You have reauthenticated successfully.",
+  "admin.authenticate.invalid_credentials": "Invalid credentials",
+  "admin.authenticate.user_not_found": "User not found",
+  "admin.authenticate.not_authorized": "You are not authorized"
 }

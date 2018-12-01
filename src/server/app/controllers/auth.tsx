@@ -5,6 +5,7 @@ import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
 import { UserRoles, IItemFields, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
+import { USER_NOT_FOUND, INVALID_CREDENTIALS, AUTHORIZATION_FAILED } from 'data-strings';
 
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
@@ -32,7 +33,7 @@ class Auth {
       req.body.userRole = userRole;
       next();
     } else {
-      res.status(401).send('You are not authorized');
+      res.status(401).send(AUTHORIZATION_FAILED);
     }
   }
 
@@ -51,13 +52,9 @@ class Auth {
 
   public reauthenticate = async (req, res) => {
     try {
-      req.checkBody('refreshToken').notEmpty();
-      req.checkBody('userId').notEmpty();
 
-      const errors = req.validationErrors();
-
-      if (errors) {
-        throw errors;
+      if (!req.body.refreshToken || !req.body.userId) {
+        throw new Error('Missing user id or refresh token');
       }
 
       const { userId, userRole, userName } = req.body;
@@ -75,41 +72,37 @@ class Auth {
 
       res.status(200).json({ accessToken: this.genToken({ userId, userRole, userItems, userName}) });
     } catch (err) {
-      res.status(401).json({ message: 'Invalid credentials', errors: err });
+      console.error('Reauthenticate error', err.message);
+      res.status(401).json({ message: INVALID_CREDENTIALS });
     }
   }
 
   public login = async (req, res) => {
     try {
-      req.checkBody('username', 'Invalid username').notEmpty();
-      req.checkBody('password', 'Invalid password').notEmpty();
 
-      const errors = req.validationErrors();
-      if (errors) {
-        throw errors;
+      if (!req.body.username || !req.body.password) {
+        throw new Error(INVALID_CREDENTIALS);
       }
 
       const user = await User.findOne({ username: req.body.username }).exec();
 
       if (user === null) {
-        throw new Error('User not found');
+        throw new Error(USER_NOT_FOUND);
       }
 
-      const userId = user.id;
-      const userRole = user.role;
-      const userName = user.name;
+      const { id: userId, role: userRole, name: userName } = user;
       const success = await user.comparePassword(req.body.password);
 
       if (success === false) {
-        throw new Error('');
+        throw new Error(INVALID_CREDENTIALS);
       }
 
       const tokenItem = await TokensModel.findOneAndUpdate({userId},
         {$set: {userId, refreshToken: randToken.uid(32)}}, {upsert: true, new: true},
       );
 
-      if (!tokenItem) {
-        throw new Error('Failed to create refresh Token');
+      if (tokenItem) {
+        throw new Error('');
       }
 
       const userItems = await this.getUserItems(userRole, userId);
@@ -120,7 +113,7 @@ class Auth {
         refreshToken: tokenItem.refreshToken,
       });
     } catch (err) {
-      res.status(401).json({message: 'Invalid credentials', errors: err});
+      res.status(401).json({ message: err.message });
     }
   }
 
@@ -134,7 +127,8 @@ class Auth {
 
       res.status(200).send({message: ''});
     } catch (err) {
-      res.status(401).send({message: err});
+      console.error('Logout error', err.message);
+      res.status(401).send({message: ''});
     }
   }
 
