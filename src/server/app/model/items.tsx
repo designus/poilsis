@@ -1,11 +1,10 @@
 'use strict';
 
-import { IMAGES_KEY } from 'data-strings';
+import { IMAGES_KEY, REQUIRED } from 'data-strings';
 import {
   IImage,
   maxFileCount,
   MAX_FILE_COUNT,
-  REQUIRED_MESSAGE,
   IItemFields,
   LANGUAGES,
   DEFAULT_LANGUAGE,
@@ -52,16 +51,16 @@ const ItemsSchemaMap: IItemsSchema = {
   name: {
     type: String,
     minLength: 6,
-    required: [true, REQUIRED_MESSAGE],
+    required: [true, REQUIRED],
     intl: true,
   },
   cityId: {
     type: String,
-    required: [true, REQUIRED_MESSAGE],
+    required: [true, REQUIRED],
   },
   address: {
     type: String,
-    required: [true, REQUIRED_MESSAGE],
+    required: [true, REQUIRED],
   },
   types: {
     type: Array,

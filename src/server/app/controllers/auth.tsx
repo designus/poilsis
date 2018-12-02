@@ -101,7 +101,7 @@ class Auth {
         {$set: {userId, refreshToken: randToken.uid(32)}}, {upsert: true, new: true},
       );
 
-      if (tokenItem) {
+      if (!tokenItem) {
         throw new Error('');
       }
 

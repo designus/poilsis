@@ -53,6 +53,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={SelectBox}
         validate={[isRequired]}
         label={formatMessage({ id: 'admin.common_fields.city'})}
+        // TODO: pass cities array directly
         data={props.citiesMap}
         dataKey="name"
       />
