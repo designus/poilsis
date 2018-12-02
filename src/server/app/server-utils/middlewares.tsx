@@ -1,12 +1,10 @@
 import { readdir } from 'fs';
 import {
-  MAX_FILE_COUNT,
-  MAX_FILE_SIZE_B,
-  ALLOWED_MIME_TYPES,
   ImageSize,
   IImage,
   getLocalizedResponse,
   LANGUAGES,
+  itemValidation,
 } from 'global-utils';
 
 import { IMulterFile, FileUploadErrors } from './types';
@@ -24,6 +22,7 @@ import {
 
 const multer = require('multer');
 const Jimp = require('jimp');
+const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
 
 export const createUploadPath = (req, res, next) => {
   const itemId = req.params.itemId;
@@ -72,9 +71,9 @@ export const fileFilter = (req, file, cb) => {
   const itemId = req.params.itemId;
   readdir(getUploadPath(itemId), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
-    if (sourceFiles.length >= MAX_FILE_COUNT) {
+    if (sourceFiles.length >= maxPhotos) {
       cb({code: FileUploadErrors.limitFileCount}, false);
-    } else if (ALLOWED_MIME_TYPES.indexOf(file.mimetype) === -1) {
+    } else if (mimeTypes.indexOf(file.mimetype) === -1) {
       cb({code: FileUploadErrors.wrongFileType}, false);
     } else {
       cb(null, true);
@@ -95,8 +94,8 @@ export const uploadImages = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: MAX_FILE_SIZE_B,
-    files: MAX_FILE_COUNT,
+    fileSize: maxPhotoSizeBytes,
+    files: maxPhotos,
   },
 });
 

@@ -5,9 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { ImagePreview } from 'components';
-import { IImage, MAX_FILE_COUNT } from 'global-utils';
+import { IImage, itemValidation } from 'global-utils';
 import { IUploadProgress } from 'reducers';
 import { styles } from './styles';
+
+const { images: { maxPhotos } } = itemValidation;
 
 export interface IUploadedImagesParams extends
   WrappedFieldProps,
@@ -64,7 +66,7 @@ class UploadedImagesComponent extends React.Component<IUploadedImagesParams, any
   getImagePreviewLabel = () => {
     return this.props.intl.formatMessage({id: 'admin.file_upload.image_preview_label'}, {
       uploadedCount: this.props.input.value.length,
-      totalCount: MAX_FILE_COUNT,
+      totalCount: maxPhotos,
     });
   }
 

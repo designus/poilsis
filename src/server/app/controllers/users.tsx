@@ -7,6 +7,7 @@ export const getAllUsers = (req: Request, res: Response, next: NextFunction) => 
   UsersModel.find({}, 'id name role', sendResponse(res, next));
 };
 
+// TODO: Remove if unused
 export const getUserProfile = async (req: Request, res: Response) => {
   try {
     const user = await UsersModel.findOne({id: req.params.userId }).exec();

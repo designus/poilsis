@@ -53,6 +53,7 @@ class Auth {
   public reauthenticate = async (req, res) => {
     try {
 
+      // TODO: Remove refresh token after session expires
       if (!req.body.refreshToken || !req.body.userId) {
         throw new Error('Missing user id or refresh token');
       }

@@ -7,8 +7,15 @@ export interface IToken extends mongoose.Document {
 }
 
 const tokenSchema = new mongoose.Schema({
-  userId: {type: String, unique: true, required: true},
-  refreshToken: {type: String, required: true},
+  userId: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  refreshToken: {
+    type: String,
+    required: true,
+  },
 });
 
 export const TokensModel = mongoose.model<IToken>('Tokens', tokenSchema);

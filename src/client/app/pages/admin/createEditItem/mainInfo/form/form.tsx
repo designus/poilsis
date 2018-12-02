@@ -2,13 +2,12 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'components';
-import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
+import { isAdmin, itemValidation, isRequired, minTextLength, minCheckedCount, maxCheckedCount } from 'global-utils';
 
-const minTextLength3 = minTextLength(3);
-const maxTextLength15 = maxTextLength(15);
-const minCheckedLength1 = minCheckedLength(1);
-const maxCheckedLength3 = maxCheckedLength(3);
+const minNameLength = minTextLength(itemValidation.name.minTextLength);
+const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
+const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
 export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
 
@@ -23,13 +22,14 @@ interface ICustomProps {
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage } = props;
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
         name="name"
         type="text"
         component={TextInput}
-        validate={[isRequired, minTextLength3, maxTextLength15]}
+        validate={[isRequired, minNameLength]}
         label={formatMessage({ id: 'admin.common_fields.name'})}
         intl
         selectedLanguage={selectedLanguage}
@@ -45,6 +45,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
       <Field
         name="address"
         type="text"
+        validate={[isRequired]}
         component={TextInput}
         label={formatMessage({ id: 'admin.common_fields.address'})}
       />
@@ -70,7 +71,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
       <Field
         name="types"
         component={CheckboxGroup}
-        validate={[minCheckedLength1, maxCheckedLength3]}
+        validate={[minTypesCount, maxTypesCount]}
         label={formatMessage({ id: 'admin.common_fields.types'})}
         data={props.typesMap}
         dataKey="name"

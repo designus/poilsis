@@ -1,15 +1,20 @@
 'use strict';
 
-import { IMAGES_KEY, REQUIRED } from 'data-strings';
+import { MIN_TEXT_LENGTH, RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 import {
   IImage,
-  maxFileCount,
-  MAX_FILE_COUNT,
   IItemFields,
   LANGUAGES,
   DEFAULT_LANGUAGE,
+  itemValidation,
 } from 'global-utils';
-import { formatAlias, TGenericSchemaMap } from '../server-utils';
+
+import {
+  formatAlias,
+  TGenericSchemaMap,
+  getValidationMessage,
+  requiredMessage,
+} from '../server-utils';
 
 interface IItemsSchema extends TGenericSchemaMap<IItemFields> {}
 
@@ -18,7 +23,15 @@ const Schema = mongoose.Schema;
 const shortId = require('shortid');
 const mongooseIntl = require('mongoose-intl');
 
-const arrayLimit = (val) => val.length <= MAX_FILE_COUNT;
+const maxLength = maxLength => value => value.length <= maxLength;
+const minLength = minLength => value => value.length >= minLength;
+const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(max)(value);
+
+const {
+  name: { minTextLength: nameLength },
+  types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
+  images: { maxPhotos },
+} = itemValidation;
 
 const ImageSchemaMap: TGenericSchemaMap<IImage> = {
   id: {
@@ -50,21 +63,28 @@ const ItemsSchemaMap: IItemsSchema = {
   },
   name: {
     type: String,
-    minLength: 6,
-    required: [true, REQUIRED],
+    validate: [
+      minLength(nameLength),
+      getValidationMessage(MIN_TEXT_LENGTH, nameLength),
+    ],
+    required: [true, requiredMessage],
     intl: true,
   },
   cityId: {
     type: String,
-    required: [true, REQUIRED],
+    required: [true, requiredMessage],
   },
   address: {
     type: String,
-    required: [true, REQUIRED],
+    required: [true, requiredMessage],
   },
   types: {
     type: Array,
-    required: [true, 'At least one type must be selected'],
+    required: [true, requiredMessage],
+    validate: [
+      minMaxLength(minTypesCount, maxTypesCount),
+      getValidationMessage(RANGE, minTypesCount, maxTypesCount),
+    ],
   },
   alias: {
     type: String,
@@ -75,7 +95,7 @@ const ItemsSchemaMap: IItemsSchema = {
   },
   userId: {
     type: String,
-    required: true,
+    required: [true, requiredMessage],
   },
   description: {
     type: String,
@@ -86,7 +106,10 @@ const ItemsSchemaMap: IItemsSchema = {
   updatedAt: Date,
   images: {
     type: [ImageSchemaMap],
-    validate: [arrayLimit, maxFileCount(MAX_FILE_COUNT)(IMAGES_KEY)],
+    validate: [
+      maxLength(maxPhotos),
+      getValidationMessage(MAX_PHOTO_COUNT, maxPhotos),
+    ],
   },
 };
 
