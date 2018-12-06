@@ -3,8 +3,11 @@ import { MongooseDocument } from 'mongoose';
 import { UserRoles, IAccessTokenClaims } from './typings';
 import { LANGUAGES } from './constants';
 
-export const mapMimeTypesToTypes = (mimeTypes: string[]) => mimeTypes.map(mimeType => mimeType.split('/')[1]).join(', ');
+export const mapMimeTypesToTypes = (mimeTypes: string[]) =>
+  mimeTypes.map(mimeType => mimeType.split('/')[1]).join(', ');
+
 export const isAdmin = (userRole: string) => userRole === UserRoles.admin;
+
 export const voidFn = f => f;
 
 export const getAccessTokenClaims = (token: string): IAccessTokenClaims => JWT(token);
@@ -30,4 +33,4 @@ export const getLocalizedResponse = (data: any, language: string) => {
     : localizeDocument(data.toObject(), language);
 };
 
-export const getTranslationMessages = (locale: string) => require(`src/translations/${locale}.json`);
+export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);
