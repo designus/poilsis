@@ -7,7 +7,6 @@ export * from './extendWithLoader';
 export * from './formLanguage';
 export * from './formFields';
 export * from './fileUpload';
-export * from './genericTable';
 export * from './itemTypesList';
 export * from './imagePreview';
 export * from './itemsList';
