@@ -53,7 +53,7 @@
   "admin.save_modal.title": "Ar norite išeiti?",
   "admin.save_modal.description": "Jūsų atlikote pakeitimų. Jei išeisite dabar pakeitimai nebus išsaugoti. Ar norite išeiti?",
   "admin.city.create_title": "Pridėti miestą",
-  "admin.city.edit_title:": "Redaguoti miestą",
+  "admin.city.edit_title": "Redaguoti miestą",
   "admin.city.create_success": "Sveikiname sukūrus naują miestą!",
   "admin.city.create_error": "Deja, naujo miesto sukurti nepavyko.",
   "admin.city.update_success": "Sveikiname, jūs sėkmingai atnaujinote esamo miesto informaciją!",

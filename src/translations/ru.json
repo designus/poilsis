@@ -53,7 +53,7 @@
   "admin.save_modal.title": "[RU] Proceed without saving?",
   "admin.save_modal.description": "[RU] You made some changes to the form. Do you want to proceed without saving?",
   "admin.city.create_title": "[RU] Create city",
-  "admin.city.edit_title:": "[RU] Edit city",
+  "admin.city.edit_title": "[RU] Edit city",
   "admin.city.create_success": "[RU] New city was created successfully.",
   "admin.city.create_error": "[RU] Failed to create a new city.",
   "admin.city.update_success": "[RU] City was updated successfully.",

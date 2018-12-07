@@ -22,7 +22,7 @@ export const styles = (theme: Theme) => createStyles({
       color: '#fff',
     },
   },
-  languagePicker: {
+  wrapper: {
     padding: '10px 0',
   },
 });

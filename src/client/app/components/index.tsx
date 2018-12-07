@@ -12,6 +12,7 @@ export * from './itemTypesList';
 export * from './imagePreview';
 export * from './itemsList';
 export * from './itemActions';
+export * from './languageSelector';
 export * from './loader';
 export * from './mainMenu';
 export * from './markedText';
