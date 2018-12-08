@@ -1,1 +1,1 @@
-export * from './userMenu';
+export { default as UserMenu } from './userMenu';

@@ -3,6 +3,7 @@ export * from './adminPageActions';
 export * from './button';
 export * from './connectedIntlProvider';
 export * from './drawer';
+export * from './dropdown';
 export * from './extendWithLoader';
 export * from './formLanguage';
 export * from './formFields';

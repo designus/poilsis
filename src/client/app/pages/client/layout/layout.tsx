@@ -70,11 +70,10 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (credentials) => dispatch(login(credentials)),
-    logout: () => dispatch(logout()),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  login: (credentials) => dispatch(login(credentials)),
+  logout: () => dispatch(logout()),
+  getInitialData: () => dispatch(getInitialData()),
+});
 
 export const ClientLayoutPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(ClientLayoutPageComponent);

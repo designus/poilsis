@@ -2,27 +2,11 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
-  languageOption: {
-    display: 'inline-block',
-    marginRight: '5px',
-    padding: '5px',
-    width: '30px',
-    textAlign: 'center',
-    border: '1px solid #ccc',
-    cursor: 'pointer',
-  },
-  typography: {
-    textTransform: 'capitalize',
-  },
-  active: {
-    backgroundColor: '#3f51b5',
-    color: '#fff',
-    borderColor: '#3f51b5',
-    '& > span': {
+  wrapper: {
+    padding: '0 0 0 15px',
+    borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
+    '& > div': {
       color: '#fff',
     },
-  },
-  wrapper: {
-    padding: '10px 0',
   },
 });

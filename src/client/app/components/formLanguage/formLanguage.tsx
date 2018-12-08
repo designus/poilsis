@@ -1,9 +1,14 @@
 import * as React from 'react';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import { WithStyles } from '@material-ui/core';
 
-import { LanguageSelector } from 'components';
 import { getSelectedLanguage } from 'client-utils';
+import { LANGUAGES } from 'global-utils';
 
-interface IInjectedProps {
+import { styles  } from './styles';
+
+interface IInjectedProps extends Partial<WithStyles<typeof styles>> {
   selectedLanguage?: string;
 }
 
@@ -22,14 +27,30 @@ export function extendWithLanguage<TOriginalProps extends {}>(
         });
       }
 
+      renderLanguageOption = (language: string) => {
+        const { classes } = this.props;
+        return (
+          <div
+            className={`
+              ${classes.languageOption}
+              ${this.state.selectedLanguage === language ? classes.active : ''}
+            `}
+            onClick={this.onSelectLanguage(language)}
+            key={language}
+          >
+            <Typography variant="caption" classes={{root: classes.typography}}>
+              {language}
+            </Typography>
+          </div>
+        );
+      }
+
       render() {
         return (
           <div>
-            <LanguageSelector
-              type="list"
-              selectedLanguage={this.state.selectedLanguage}
-              onSelectLanguage={this.onSelectLanguage}
-            />
+            <div className={this.props.classes.wrapper}>
+              {LANGUAGES.map(this.renderLanguageOption)}
+            </div>
             <WrappedComponent selectedLanguage={this.state.selectedLanguage} {...this.props} />
           </div>
         );
@@ -37,5 +58,5 @@ export function extendWithLanguage<TOriginalProps extends {}>(
     }
 
     // @ts-ignore
-    return FormLanguageComponent;
+    return withStyles(styles)(FormLanguageComponent);
 }

@@ -28,6 +28,7 @@ import {
   NotFound,
   NotAuthorized,
   ProtectedRoute,
+  LanguageSelector,
 } from 'components';
 
 import {
@@ -136,6 +137,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
                 <FormattedMessage id="admin.menu.dashboard" />
               </Typography>
               <UserMenu />
+              <LanguageSelector />
             </Toolbar>
           </AppBar>
           <main className={classes.main}>

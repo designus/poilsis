@@ -99,3 +99,5 @@ export const removeItemById = (id: string, dataMap: Record<string, any>) => {
   const { [id]: removedItem, ...remainingItems } = dataMap;
   return remainingItems;
 };
+
+export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);

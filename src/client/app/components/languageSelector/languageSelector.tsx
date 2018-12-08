@@ -1,44 +1,49 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 
+import { IAppState } from 'reducers';
+import { Dropdown } from 'components';
 import { LANGUAGES } from 'global-utils';
+import { IDropdownOption, capitalize } from 'client-utils';
+import { switchLanguage } from 'actions';
 
 import { styles  } from './styles';
 
+const mapLanguagesToDropdown = (languages: string[]): IDropdownOption[] =>
+  languages.map(locale => ({ label: capitalize(locale), value: locale }));
+
 interface ILanguageSelectorProps extends Partial<WithStyles<typeof styles>> {
-  type: 'dropdown' | 'list';
   onSelectLanguage: (language: string) => () => void;
   selectedLanguage: string;
 }
 
 export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps>  {
-  renderLanguageOption = (language: string) => {
-    const { classes, selectedLanguage, onSelectLanguage } = this.props;
-    return (
-      <div
-        className={`
-          ${classes.languageOption}
-          ${selectedLanguage === language ? classes.active : ''}
-        `}
-        onClick={onSelectLanguage(language)}
-        key={language}
-      >
-        <Typography variant="caption" classes={{root: classes.typography}}>
-          {language}
-        </Typography>
-      </div>
-    );
-  }
+
+  options = mapLanguagesToDropdown(LANGUAGES);
 
   render() {
     return (
       <div className={this.props.classes.wrapper}>
-        {LANGUAGES.map(this.renderLanguageOption)}
+        <Dropdown
+          options={this.options}
+          selectedValue={this.props.selectedLanguage}
+          onChange={this.props.onSelectLanguage}
+        />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(LanguageSelector);
+const mapStateToProps = (state: IAppState) => ({
+  selectedLanguage: state.locale,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSelectLanguage: (language: string) => dispatch(switchLanguage(language)),
+});
+
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(LanguageSelector),
+);
