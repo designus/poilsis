@@ -10,6 +10,7 @@ import {
   TYPE_UPDATE_ERROR,
   TYPE_DELETE_ERROR,
 } from 'data-strings';
+import { getLocale } from 'selectors';
 
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { startLoading } from './loader';
@@ -34,10 +35,10 @@ export const removeType = (typeId) => ({
   typeId,
 });
 
-export const createType = (adminType: TTypeFields) => dispatch => {
+export const createType = (adminType: TTypeFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post('http://localhost:3000/api/types', adminType, setAcceptLanguageHeader())
+  return axios.post('http://localhost:3000/api/types', adminType, setAcceptLanguageHeader(getLocale(getState())))
     .then(handleApiResponse)
     .then((clientType: ITypeFields) => {
       dispatch(receiveClientType(clientType));

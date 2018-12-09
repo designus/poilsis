@@ -16,7 +16,7 @@ import { WithStyles } from '@material-ui/core';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
+import { removeInjectedStyles, adminRoutes, clientRoutes, GLOBAL_LOADER_ID } from 'client-utils';
 import { IAppState } from 'reducers';
 import { getInitialData } from 'actions';
 import {
@@ -29,6 +29,7 @@ import {
   NotAuthorized,
   ProtectedRoute,
   LanguageSelector,
+  Loader,
 } from 'components';
 
 import {
@@ -40,10 +41,13 @@ import {
   AdminCitiesPage,
 } from 'pages';
 
+import { hasInitialDataLoaded } from 'selectors';
+
 import { styles } from './styles';
 interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
-  isInitialDataLoaded: boolean;
+  hasInitialDataLoaded: boolean;
   getInitialData: () => void;
+  isLoading: () => boolean;
 }
 
 class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, any> {
@@ -61,10 +65,14 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
     if (this.props.location !== prevProps.location) {
       this.handleDrawerClose();
     }
+
+    if (!this.props.hasInitialDataLoaded && !this.props.isLoading) {
+      this.props.getInitialData();
+    }
   }
 
   componentDidMount() {
-    if (!this.props.isInitialDataLoaded) {
+    if (!this.props.hasInitialDataLoaded) {
       removeInjectedStyles();
       this.props.getInitialData();
     }
@@ -112,7 +120,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
   }
 
   render() {
-    const classes = this.props.classes;
+    const { classes } = this.props;
     return (
       <div className={classes.wrapper}>
         <Drawer
@@ -140,65 +148,67 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
               <LanguageSelector />
             </Toolbar>
           </AppBar>
-          <main className={classes.main}>
-            <Switch>
-              <ProtectedRoute
-                exact
-                path={adminRoutes.items.path}
-                component={AdminItemsPage}
-              />
-              <ProtectedRoute
-                exact
-                path={adminRoutes.types.path}
-                component={AdminTypesPage}
-                allowedRoles={adminRoutes.types.allowedRoles}
-              />
-              <ProtectedRoute
-                exact
-                path={adminRoutes.cities.path}
-                component={AdminCitiesPage}
-                allowedRoles={adminRoutes.cities.allowedRoles}
-              />
-              <ProtectedRoute
-                path={adminRoutes.createItem.path}
-                component={CreateEditItemPage}
-              />
-              <ProtectedRoute
-                path={adminRoutes.editItem.path}
-                component={CreateEditItemPage}
-              />
-              <ProtectedRoute
-                path={adminRoutes.createType.path}
-                component={CreateEditTypePage}
-              />
-              <ProtectedRoute
-                path={adminRoutes.editType.path}
-                component={CreateEditTypePage}
-              />
-              <ProtectedRoute
-                path={adminRoutes.createCity.path}
-                component={CreateEditCityPage}
-              />
-              <ProtectedRoute
-                path={adminRoutes.editCity.path}
-                component={CreateEditCityPage}
-              />
-              <ProtectedRoute
-                path={'/admin/not-authorized'}
-                component={NotAuthorized}
-              />
-              <ProtectedRoute component={NotFound}/>
-            </Switch>
-          </main>
+            <main className={classes.main}>
+              <Switch>
+                <ProtectedRoute
+                  exact
+                  path={adminRoutes.items.path}
+                  component={AdminItemsPage}
+                />
+                <ProtectedRoute
+                  exact
+                  path={adminRoutes.types.path}
+                  component={AdminTypesPage}
+                  allowedRoles={adminRoutes.types.allowedRoles}
+                />
+                <ProtectedRoute
+                  exact
+                  path={adminRoutes.cities.path}
+                  component={AdminCitiesPage}
+                  allowedRoles={adminRoutes.cities.allowedRoles}
+                />
+                <ProtectedRoute
+                  path={adminRoutes.createItem.path}
+                  component={CreateEditItemPage}
+                />
+                <ProtectedRoute
+                  path={adminRoutes.editItem.path}
+                  component={CreateEditItemPage}
+                />
+                <ProtectedRoute
+                  path={adminRoutes.createType.path}
+                  component={CreateEditTypePage}
+                />
+                <ProtectedRoute
+                  path={adminRoutes.editType.path}
+                  component={CreateEditTypePage}
+                />
+                <ProtectedRoute
+                  path={adminRoutes.createCity.path}
+                  component={CreateEditCityPage}
+                />
+                <ProtectedRoute
+                  path={adminRoutes.editCity.path}
+                  component={CreateEditCityPage}
+                />
+                <ProtectedRoute
+                  path={'/admin/not-authorized'}
+                  component={NotAuthorized}
+                />
+                <ProtectedRoute component={NotFound}/>
+              </Switch>
+            </main>
         </div>
         <Toast />
+        {this.props.isLoading && <Loader isLoading showLoadingOverlay />}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  isInitialDataLoaded: state.initialData.isLoaded,
+  hasInitialDataLoaded: hasInitialDataLoaded(state),
+  isLoading: state.loader[GLOBAL_LOADER_ID],
 });
 
 const mapDispatchToProps = dispatch => ({

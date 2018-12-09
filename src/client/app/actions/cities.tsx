@@ -11,6 +11,7 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR,
 } from 'data-strings';
+import { getLocale } from 'selectors';
 import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { receiveAdminCity } from './admin';
@@ -94,10 +95,10 @@ export const getCityItems = (cityId: string) => {
   };
 };
 
-export const createCity = (adminCity: TCityFields) => dispatch => {
+export const createCity = (adminCity: TCityFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post('http://localhost:3000/api/cities', adminCity, setAcceptLanguageHeader())
+  return axios.post('http://localhost:3000/api/cities', adminCity, setAcceptLanguageHeader(getLocale(getState())))
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));
@@ -107,10 +108,14 @@ export const createCity = (adminCity: TCityFields) => dispatch => {
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (adminCity: TCityFields) => dispatch => {
+export const updateCity = (adminCity: TCityFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`http://localhost:3000/api/cities/city/${adminCity.id}`, adminCity, setAcceptLanguageHeader())
+  return axios.put(
+    `http://localhost:3000/api/cities/city/${adminCity.id}`,
+     adminCity,
+     setAcceptLanguageHeader(getLocale(getState)),
+  )
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));

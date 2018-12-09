@@ -1,6 +1,14 @@
 
 import { TCityFields, TTypeFields, TItemFields } from 'global-utils';
-import { RECEIVE_ADMIN_CITY, RECEIVE_ADMIN_TYPE, RECEIVE_ADMIN_ITEM, REMOVE_CITY, REMOVE_TYPE, REMOVE_ITEM } from 'actions';
+import {
+  RECEIVE_ADMIN_CITY,
+  RECEIVE_ADMIN_TYPE,
+  RECEIVE_ADMIN_ITEM,
+  REMOVE_CITY,
+  REMOVE_TYPE,
+  REMOVE_ITEM,
+  CLEAR_STATE,
+} from 'actions';
 import { removeItemById } from 'client-utils';
 
 export interface IAdminState {
@@ -9,14 +17,16 @@ export interface IAdminState {
   items: Record<string, TItemFields>;
 }
 
-const initialState = {
+const getInitialState = () => ({
   cities: {},
   types: {},
   items: {},
-};
+});
 
-export const admin = (state: IAdminState = initialState, action): IAdminState => {
+export const admin = (state: IAdminState = getInitialState(), action): IAdminState => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return getInitialState();
     case RECEIVE_ADMIN_CITY:
       return {
         ...state,

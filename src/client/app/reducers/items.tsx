@@ -7,6 +7,7 @@ import {
   REMOVE_ITEM,
   RECEIVE_IMAGES,
   TOGGLE_ITEM_VISIBILITY,
+  CLEAR_STATE,
 } from 'actions';
 
 export interface IItem extends IItemFields {
@@ -20,14 +21,16 @@ export interface IItemsState extends IGenericState<IItem> {
   isAllLoaded?: boolean;
 }
 
-const initialItemsState = {
+const getInitialState = () => ({
   dataMap: {},
   aliases: [],
   isAllLoaded: false,
-};
+});
 
-export const items = (state: IItemsState = initialItemsState, action): IItemsState => {
+export const items = (state: IItemsState = getInitialState(), action): IItemsState => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return getInitialState();
     case SELECT_ITEM:
       return {...state, selectedId: action.itemId};
     case RECEIVE_ITEMS:

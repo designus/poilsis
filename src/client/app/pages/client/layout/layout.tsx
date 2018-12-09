@@ -6,6 +6,7 @@ import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
 import { getInitialData, login, logout } from 'actions';
 import { LoginPage, CityPage } from 'pages';
 import { IAppState } from 'reducers';
+import { hasInitialDataLoaded } from 'selectors';
 
 class ClientLayoutPageComponent extends React.Component<any, any> {
 
@@ -14,9 +15,9 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    if (!this.props.isInitialDataLoaded) {
+    if (!this.props.hasInitialDataLoaded) {
       removeInjectedStyles();
-      this.props.dispatch(getInitialData());
+      this.props.getInitialData();
     }
   }
 
@@ -64,7 +65,7 @@ const mapStateToProps = (state: IAppState) => {
   return {
     citiesMap: state.cities.dataMap,
     typesMap: state.types.dataMap,
-    isInitialDataLoaded: state.initialData.isLoaded,
+    hasInitialDataLoaded: hasInitialDataLoaded(state),
     isAuthenticated: state.auth.isLoggedIn,
     user: state.currentUser.details && state.currentUser.details.name,
   };

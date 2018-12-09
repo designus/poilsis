@@ -1,11 +1,17 @@
-import { RECEIVE_INITIAL_DATA } from '../actions';
+import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions';
 
 export interface IInitialDataState {
   isLoaded: boolean;
 }
 
-export const initialData = (state: IInitialDataState = {isLoaded: false}, action) => {
+const getInitialState = () => ({
+  isLoaded: false,
+});
+
+export const initialData = (state: IInitialDataState = getInitialState(), action) => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return getInitialState();
     case RECEIVE_INITIAL_DATA:
       return {...state, isLoaded: true };
     default:

@@ -91,9 +91,11 @@ export const getFormDataFromFiles = (files: File[]) => {
 
 export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
 
-export const getAcceptLanguageHeader = () => ({ 'Accept-Language': getSelectedLanguage() });
-
-export const setAcceptLanguageHeader = () => ({ headers: getAcceptLanguageHeader() });
+export const setAcceptLanguageHeader = (locale = DEFAULT_LANGUAGE) => ({
+  headers: {
+    'Accept-Language': locale,
+  },
+});
 
 export const removeItemById = (id: string, dataMap: Record<string, any>) => {
   const { [id]: removedItem, ...remainingItems } = dataMap;

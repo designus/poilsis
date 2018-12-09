@@ -8,6 +8,7 @@ import {
   ADD_CITY_ITEM,
   RECEIVE_CLIENT_CITY,
   REMOVE_CITY,
+  CLEAR_STATE,
 } from 'actions';
 
 export interface ICityItems {
@@ -45,13 +46,15 @@ export const mergeCityItems = (citiesMap: ICitiesMap, cityItems: ICitiesItems) =
 export const removeCityItem = changeCityItem(true);
 export const addCityItem = changeCityItem(false);
 
-const initialState = {
+const getInitialState = () => ({
   dataMap: {},
   aliases: [],
-};
+});
 
-export const cities = (state: ICityState = initialState, action): ICityState => {
+export const cities = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return getInitialState();
     case SELECT_CITY:
       return {...state, selectedId: action.cityId};
     case RECEIVE_CLIENT_CITY:

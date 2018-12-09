@@ -3,6 +3,7 @@ import { getNormalizedData, getCityItems, CONTENT_LOADER_ID, setAcceptLanguageHe
 import { startLoading, endLoading, receiveItems, receiveCityItems } from 'actions';
 import { IAppState, ICurrentUser } from 'reducers';
 import { isAdmin } from 'global-utils';
+import { getLocale } from 'selectors';
 
 export const RECEIVE_USER_ITEMS = 'RECEIVE_USER_ITEMS';
 export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
@@ -37,7 +38,7 @@ export const getUserItems = () => (dispatch, getState) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(endpoint, setAcceptLanguageHeader())
+  return axios.get(endpoint, setAcceptLanguageHeader(getLocale(state)))
     .then(response => response.data)
     .then(data => {
       const { dataMap: itemsMap, aliases } = getNormalizedData(data);

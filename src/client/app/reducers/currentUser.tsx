@@ -1,4 +1,4 @@
-import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_ITEM, LOGOUT_SUCCESS } from '../actions';
+import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_ITEM, LOGOUT_SUCCESS, CLEAR_STATE } from 'actions';
 
 export interface ICurrentUser {
   name?: string;
@@ -20,6 +20,11 @@ const getInitialState = () => ({
 
 export const currentUser = (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return {
+        ...state,
+        isAllLoaded: false,
+      };
     case RECEIVE_USER_DETAILS: {
       return {
         ...state,
