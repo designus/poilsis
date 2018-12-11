@@ -200,7 +200,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
             </main>
         </div>
         <Toast />
-        {this.props.isLoading && <Loader isLoading showLoadingOverlay />}
+        {this.props.isLoading && <Loader isLoading />}
       </div>
     );
   }

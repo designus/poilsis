@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getNormalizedData, setAcceptLanguageHeader, GLOBAL_LOADER_ID } from 'client-utils';
 import { IAppState } from 'reducers';
-import { receiveUserDetails, startLoading, endLoading } from 'actions';
+import { receiveUserDetails, startLoading } from 'actions';
 import { getAccessTokenClaims } from 'global-utils';
 import { getLocale } from 'selectors';
 
@@ -19,6 +19,7 @@ export const receiveInitialData = (data) => ({
 
 export const getInitialData = () => {
   return (dispatch, getState) => {
+    // Loader will stopped by components that load additional data
     dispatch(startLoading(GLOBAL_LOADER_ID));
     const state: IAppState = getState();
     const locale = getLocale(state);
@@ -41,8 +42,6 @@ export const getInitialData = () => {
           const { userId: id, userName: name, userRole: role } = accessTokenClaims;
           dispatch(receiveUserDetails({ id, name, role }));
         }
-
-        dispatch(endLoading(GLOBAL_LOADER_ID));
       }))
       .catch(console.error);
   };

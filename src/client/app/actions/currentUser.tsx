@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getNormalizedData, getCityItems, CONTENT_LOADER_ID, setAcceptLanguageHeader } from 'client-utils';
+import { getNormalizedData, getCityItems, CONTENT_LOADER_ID, GLOBAL_LOADER_ID, setAcceptLanguageHeader } from 'client-utils';
 import { startLoading, endLoading, receiveItems, receiveCityItems } from 'actions';
 import { IAppState, ICurrentUser } from 'reducers';
 import { isAdmin } from 'global-utils';

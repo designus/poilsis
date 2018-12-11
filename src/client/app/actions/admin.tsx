@@ -32,8 +32,8 @@ export const getAdminCity = (cityId: string) => dispatch => {
   return axios.get(`http://localhost:3000/api/cities/city/${cityId}`)
     .then(handleApiResponse)
     .then((adminCity: TCityFields) => {
-      dispatch(endLoading(CONTENT_LOADER_ID));
       dispatch(receiveAdminCity(adminCity.id, adminCity));
+      dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(handleApiErrors('Unable to load city', CONTENT_LOADER_ID, dispatch));
 };
@@ -43,8 +43,8 @@ export const getAdminType = (typeId: string) => dispatch => {
   return axios.get(`http://localhost:3000/api/types/type/${typeId}`)
     .then(handleApiResponse)
     .then((adminType: TTypeFields) => {
-      dispatch(endLoading(CONTENT_LOADER_ID));
       dispatch(receiveAdminType(adminType.id, adminType));
+      dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(handleApiErrors('Unable to load type', CONTENT_LOADER_ID, dispatch));
 };
@@ -54,8 +54,8 @@ export const getAdminItem = (itemId: string) => dispatch => {
   return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
     .then(handleApiResponse)
     .then((adminItem: TItemFields) => {
-      dispatch(endLoading(CONTENT_LOADER_ID));
       dispatch(receiveAdminItem(adminItem.id, adminItem));
+      dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(handleApiErrors('Unable to load Item', CONTENT_LOADER_ID, dispatch));
 };

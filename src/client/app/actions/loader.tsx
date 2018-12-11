@@ -7,7 +7,6 @@ export const startLoading = (id: string) => ({
   id,
 });
 
-export const endLoading = (id: string) => ({
+export const endLoading = (id?: string) => ({
   type: END_LOADING,
-  id,
 });

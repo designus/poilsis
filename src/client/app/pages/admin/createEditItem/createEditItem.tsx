@@ -12,6 +12,7 @@ import { TItemFields } from 'global-utils';
 import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
 import { MainInfoPage, PhotosPage } from 'pages';
+import { shouldLoadItem } from 'selectors';
 
 interface IMatchParams {
   itemId: string;
@@ -19,6 +20,7 @@ interface IMatchParams {
 }
 export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
   loadedItem: TItemFields;
+  shouldLoadItem: boolean;
   getItem: (itemId: string) => Promise<void>;
 }
 
@@ -28,8 +30,8 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
     super(props);
   }
 
-  static fetchData(store, params) {
-    if (params.id) {
+  static fetchData(store, params: IMatchParams) {
+    if (params.itemId) {
       return store.dispatch(getAdminItem(params.itemId));
     } else {
       return Promise.resolve(null);
@@ -56,23 +58,23 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
   }
 
   componentDidMount() {
-    if (!this.isCreatePage() && !this.props.loadedItem) {
+    if (!this.isCreatePage() && this.props.shouldLoadItem) {
       this.props.getItem(this.props.match.params.itemId);
     }
   }
 
   componentDidUpdate(props: ICreateEditItemPageProps) {
     // When we navigate from create page to update we need to load updated city
-    if (!isEqual(props.match.params, this.props.match.params)) {
+    if (!isEqual(props.match.params, this.props.match.params) || this.props.shouldLoadItem) {
       this.props.getItem(this.props.match.params.itemId);
     }
   }
 
   render() {
-    const loadedItem = this.props.loadedItem;
+    const { loadedItem, match } = this.props;
     const isCreatePage = this.isCreatePage();
     const childProps = {...this.props, loadedItem, isCreatePage };
-    const { userId, itemId } = this.props.match.params;
+    const { userId, itemId } = match.params;
 
     return (loadedItem || isCreatePage) && (
       <div>
@@ -103,6 +105,7 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
 
 const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
   loadedItem: state.admin.items[props.match.params.itemId],
+  shouldLoadItem: shouldLoadItem(state, props.match.params.itemId),
 });
 
 const mapDispatchToProps = (dispatch) => ({

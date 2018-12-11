@@ -7,6 +7,7 @@ import { IAppState, ILoadingState } from 'reducers';
 import { Loader } from 'components';
 
 import { styles } from './styles';
+import { GLOBAL_LOADER_ID } from 'client-utils';
 
 interface IExtendWithLoaderProps extends Partial<WithStyles<typeof styles>> {
   loaderId: string;
@@ -25,7 +26,8 @@ export function extendWithLoader<TOriginalProps extends {}>(
       render() {
 
         const { loaderId, loadingState, showLoadingOverlay, classes } = this.props;
-        const isLoading = loadingState[loaderId];
+        const isLoading = loadingState[loaderId] && !loadingState[GLOBAL_LOADER_ID];
+
         return (
           <div className={classes.wrapper}>
             <Loader isLoading={isLoading} showLoadingOverlay={showLoadingOverlay} />
