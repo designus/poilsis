@@ -16,7 +16,7 @@ import { WithStyles } from '@material-ui/core';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { removeInjectedStyles, adminRoutes, clientRoutes, GLOBAL_LOADER_ID } from 'client-utils';
+import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
 import { IAppState } from 'reducers';
 import { getInitialData } from 'actions';
 import {
@@ -41,12 +41,14 @@ import {
   AdminCitiesPage,
 } from 'pages';
 
-import { hasInitialDataLoaded } from 'selectors';
+import { hasInitialDataLoaded, shouldLoadInitialData, isInitialDataLoading } from 'selectors';
 
 import { styles } from './styles';
 interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
   hasInitialDataLoaded: boolean;
-  getInitialData: () => void;
+  shouldLoadInitialData: boolean;
+  isInitialDataLoading: boolean;
+  getInitialData: (pathName?: string) => void;
   isLoading: () => boolean;
 }
 
@@ -66,15 +68,15 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
       this.handleDrawerClose();
     }
 
-    if (!this.props.hasInitialDataLoaded && !this.props.isLoading) {
-      this.props.getInitialData();
+    if (this.props.shouldLoadInitialData) {
+      this.props.getInitialData(this.props.location.pathname);
     }
   }
 
   componentDidMount() {
-    if (!this.props.hasInitialDataLoaded) {
+    if (this.props.shouldLoadInitialData) {
       removeInjectedStyles();
-      this.props.getInitialData();
+      this.props.getInitialData(this.props.location.pathname);
     }
   }
 
@@ -200,7 +202,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
             </main>
         </div>
         <Toast />
-        {this.props.isLoading && <Loader isLoading />}
+        {this.props.isInitialDataLoading && <Loader isLoading />}
       </div>
     );
   }
@@ -208,15 +210,16 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
 
 const mapStateToProps = (state: IAppState) => ({
   hasInitialDataLoaded: hasInitialDataLoaded(state),
-  isLoading: state.loader[GLOBAL_LOADER_ID],
+  shouldLoadInitialData: shouldLoadInitialData(state),
+  isInitialDataLoading: isInitialDataLoading(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInitialData: () => dispatch(getInitialData()),
+  getInitialData: (pathName?: string) => dispatch(getInitialData(pathName)),
 });
 
-const connectedComponent = connect<any, any, IAdminLayoutProps>(mapStateToProps, mapDispatchToProps)(
-  injectIntl(AdminLayoutPageComponent),
+export const AdminLayoutPage = withStyles(styles)(
+  connect<any, any, IAdminLayoutProps>(mapStateToProps, mapDispatchToProps)(
+    injectIntl(AdminLayoutPageComponent),
+  ),
 );
-
-export const AdminLayoutPage = withStyles(styles)(connectedComponent);

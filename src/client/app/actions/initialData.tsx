@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getNormalizedData, setAcceptLanguageHeader, GLOBAL_LOADER_ID } from 'client-utils';
 import { IAppState } from 'reducers';
-import { receiveUserDetails, startLoading } from 'actions';
+import { receiveUserDetails, startLoading, endLoading } from 'actions';
 import { getAccessTokenClaims } from 'global-utils';
 import { getLocale } from 'selectors';
 
@@ -17,9 +17,13 @@ export const receiveInitialData = (data) => ({
   data,
 });
 
-export const getInitialData = () => {
+const shouldStopLoader = (pathName: string) => pathName ?
+  ['cities', 'types', 'users'].some(str => pathName.includes(str)) :
+  true;
+
+export const getInitialData = (pathName?: string) => {
   return (dispatch, getState) => {
-    // Loader will stopped by components that load additional data
+    // Loader will only be stopped if no additional data has to be loaded in child components
     dispatch(startLoading(GLOBAL_LOADER_ID));
     const state: IAppState = getState();
     const locale = getLocale(state);
@@ -42,6 +46,11 @@ export const getInitialData = () => {
           const { userId: id, userName: name, userRole: role } = accessTokenClaims;
           dispatch(receiveUserDetails({ id, name, role }));
         }
+
+        if (shouldStopLoader(pathName)) {
+          dispatch(endLoading());
+        }
+
       }))
       .catch(console.error);
   };
