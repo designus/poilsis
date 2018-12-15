@@ -7,9 +7,5 @@ export const shouldLoadItems = (state: IAppState) => {
 };
 
 export const shouldLoadItem = (state: IAppState, itemId: string) => {
-  console.log('Is loading', state.loader[CONTENT_LOADER_ID]);
-  console.log('Item', state.admin.items[itemId]);
-  console.log('Has initial data', hasInitialDataLoaded(state));
-  console.log('------------------------------------------------');
   return !state.loader[CONTENT_LOADER_ID] && !state.admin.items[itemId] && hasInitialDataLoaded(state);
 };

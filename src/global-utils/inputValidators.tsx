@@ -37,6 +37,9 @@ export const maxTextLength = max => (fieldValue, formState, formProps: IFormProp
 
 export const minTextLength = min => (fieldValue, formState, formProps: IFormProps) => {
   if (fieldValue && fieldValue.length < min) {
+    if (hasLocalizedFields(fieldValue) && !fieldValue[DEFAULT_LANGUAGE]) {
+      return undefined;
+    }
     return formProps.formatMessage({ id: errors.MIN_TEXT_LENGTH }, { count: min });
   }
 

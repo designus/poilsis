@@ -5,7 +5,7 @@ export * from './connectedIntlProvider';
 export * from './drawer';
 export * from './dropdown';
 export * from './extendWithLoader';
-export * from './formLanguage';
+export * from './extendWithLanguage';
 export * from './formFields';
 export * from './fileUpload';
 export * from './itemTypesList';

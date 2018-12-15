@@ -1,6 +1,6 @@
 'use strict';
 
-import { MIN_TEXT_LENGTH, RANGE, MAX_PHOTO_COUNT } from 'data-strings';
+import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 import {
   IImage,
   IItemFields,
@@ -28,7 +28,6 @@ const minLength = minLength => value => value.length >= minLength;
 const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(max)(value);
 
 const {
-  name: { minTextLength: nameLength },
   types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
   images: { maxPhotos },
 } = itemValidation;
@@ -63,10 +62,6 @@ const ItemsSchemaMap: IItemsSchema = {
   },
   name: {
     type: String,
-    validate: [
-      minLength(nameLength),
-      getValidationMessage(MIN_TEXT_LENGTH, nameLength),
-    ],
     required: [true, requiredMessage],
     intl: true,
   },

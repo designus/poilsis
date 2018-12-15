@@ -17,6 +17,7 @@ interface ICustomProps {
   isDirty: boolean;
   setInitialUploadState: () => void;
   onSubmit: (fields: IPhotosFormFields) => void;
+  formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
 }
 
 type FormProps = ICustomProps & InjectedFormProps<{}, ICustomProps>;

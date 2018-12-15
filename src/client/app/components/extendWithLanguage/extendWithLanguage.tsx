@@ -1,24 +1,27 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 
-import { getSelectedLanguage } from 'client-utils';
+import { IAppState } from 'reducers';
 import { LANGUAGES } from 'global-utils';
 
 import { styles  } from './styles';
 
 interface IInjectedProps extends Partial<WithStyles<typeof styles>> {
   selectedLanguage?: string;
+  locale?: string;
 }
 
 export function extendWithLanguage<TOriginalProps extends {}>(
     WrappedComponent: React.ComponentType<TOriginalProps & IInjectedProps>,
   ): React.ComponentType<TOriginalProps & IInjectedProps> {
 
-    class FormLanguageComponent extends React.Component<TOriginalProps & IInjectedProps> {
+    type ResultProps = TOriginalProps & IInjectedProps;
+    class FormLanguageComponent extends React.Component<ResultProps> {
       state = {
-        selectedLanguage: getSelectedLanguage(),
+        selectedLanguage: this.props.locale,
       };
 
       onSelectLanguage = selectedLanguage => () => {
@@ -57,6 +60,12 @@ export function extendWithLanguage<TOriginalProps extends {}>(
       }
     }
 
+    const mapStateToProps = (state: IAppState) => ({
+      locale: state.locale,
+    });
+
     // @ts-ignore
-    return withStyles(styles)(FormLanguageComponent);
+    return withStyles(styles)(
+      connect<{}, {}, any>(mapStateToProps)(FormLanguageComponent),
+    );
 }

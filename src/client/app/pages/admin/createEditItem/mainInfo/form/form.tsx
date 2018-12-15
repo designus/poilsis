@@ -5,7 +5,7 @@ import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'component
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
 import { isAdmin, itemValidation, isRequired, minTextLength, minCheckedCount, maxCheckedCount } from 'global-utils';
 
-const minNameLength = minTextLength(itemValidation.name.minTextLength);
+// const minNameLength = minTextLength(itemValidation.name.minTextLength);
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
@@ -29,7 +29,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="name"
         type="text"
         component={TextInput}
-        validate={[isRequired, minNameLength]}
+        validate={[isRequired]}
         label={formatMessage({ id: 'admin.common_fields.name'})}
         intl
         selectedLanguage={selectedLanguage}

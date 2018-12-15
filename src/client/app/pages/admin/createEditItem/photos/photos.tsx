@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { change, isDirty, isSubmitting } from 'redux-form';
 import Typography from '@material-ui/core/Typography';
 import { ImageFile } from 'react-dropzone';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { IImage } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils';
@@ -18,7 +18,7 @@ export interface IPhotoFormState {
   files: ImageFile[];
 }
 
-export interface IPhotosFormFields extends IPhotoFormState {
+export interface IPhotosFormFields extends IPhotoFormState, InjectedIntlProps {
   isUpdateAction?: boolean;
 }
 
@@ -50,6 +50,7 @@ class PhotosPageComponent extends React.Component<any, any> {
           <PhotosFormWithLoader
             onSubmit={this.onSubmit}
             loaderId={CONTENT_LOADER_ID}
+            formatMessage={this.props.intl.formatMessage}
             showLoadingOverlay={true}
             initialValues={initialValues}
             isDirty={this.props.isDirty}
@@ -74,4 +75,6 @@ const mapDispatchToProps = (dispatch) => ({
   addImagesToFormState: (images: IImage[]) => dispatch(change('PhotosForm', 'images', images)),
 });
 
-export const PhotosPage = connect(mapStateToProps, mapDispatchToProps)(PhotosPageComponent);
+export const PhotosPage = injectIntl(
+  connect<any, any, IPhotosFormFields>(mapStateToProps, mapDispatchToProps)(PhotosPageComponent),
+);
