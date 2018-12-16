@@ -10,6 +10,8 @@ import { createType, updateType, getAdminType } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
 import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
 import { IAppState } from 'reducers';
+import { shouldLoadType } from 'selectors';
+
 import { TypeForm, TYPE_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(TypeForm));
@@ -25,6 +27,7 @@ interface ICreateEditTypePageProps extends RouteComponentProps<IMatchParams>, In
   createType: (type: TTypeFields) => Promise<any>;
   updateType: (type: TTypeFields) => Promise<any>;
   initializeForm: (type: TTypeFields) => void;
+  shouldLoadType: boolean;
 }
 
 class CreateEditTypePageComponent extends React.Component<ICreateEditTypePageProps, any> {
@@ -34,14 +37,14 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
   }
 
   componentDidMount() {
-    if (!this.props.loadedType && !this.isCreatePage()) {
+    if (!this.isCreatePage() && this.props.shouldLoadType) {
       this.props.getType(this.props.match.params.typeId);
     }
   }
 
   componentDidUpdate(props: ICreateEditTypePageProps) {
     // When we navigate from create page to update we need to load updated city
-    if (props.location.pathname !== this.props.location.pathname) {
+    if (props.location.pathname !== this.props.location.pathname || this.props.shouldLoadType) {
       this.props.getType(this.props.match.params.typeId);
     }
   }
@@ -88,6 +91,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
 const mapStateToProps = (state: IAppState, props: ICreateEditTypePageProps) => ({
   loadedType: state.admin.types[props.match.params.typeId],
   showNavigationPrompt: isDirty(TYPE_FORM_NAME)(state) && !isSubmitting(TYPE_FORM_NAME)(state),
+  shouldLoadType: shouldLoadType(state, props.match.params.typeId),
 });
 
 const mapDispatchToProps = (dispatch) => ({
