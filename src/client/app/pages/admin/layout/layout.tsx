@@ -18,7 +18,7 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
 import { IAppState } from 'reducers';
-import { getInitialData } from 'actions';
+import { getInitialData, IGetInitialDataParams } from 'actions';
 import {
   Toast,
   VerticalMenu,
@@ -48,7 +48,8 @@ interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps
   hasInitialDataLoaded: boolean;
   shouldLoadInitialData: boolean;
   isInitialDataLoading: boolean;
-  getInitialData: (pathName?: string) => void;
+  locale: string;
+  getInitialData: (params?: IGetInitialDataParams) => void;
   isLoading: () => boolean;
 }
 
@@ -69,14 +70,14 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
     }
 
     if (this.props.shouldLoadInitialData) {
-      this.props.getInitialData(this.props.location.pathname);
+      this.props.getInitialData({ pathName: this.props.location.pathname });
     }
   }
 
   componentDidMount() {
     if (this.props.shouldLoadInitialData) {
       removeInjectedStyles();
-      this.props.getInitialData(this.props.location.pathname);
+      this.props.getInitialData({ pathName: this.props.location.pathname });
     }
   }
 
@@ -115,7 +116,7 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
       },
       {
         icon: () => (<ArrowBackIcon />),
-        link: clientRoutes.landing.getLink(),
+        link: clientRoutes.landing.getLink(this.props.locale),
         text: formatMessage({ id: 'admin.menu.go_to_website' }),
       },
     ];
@@ -212,10 +213,11 @@ const mapStateToProps = (state: IAppState) => ({
   hasInitialDataLoaded: hasInitialDataLoaded(state),
   shouldLoadInitialData: shouldLoadInitialData(state),
   isInitialDataLoading: isInitialDataLoading(state),
+  locale: state.locale,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInitialData: (pathName?: string) => dispatch(getInitialData(pathName)),
+  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
 });
 
 export const AdminLayoutPage = withStyles(styles)(

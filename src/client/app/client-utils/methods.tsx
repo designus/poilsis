@@ -4,10 +4,9 @@ import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils';
 import { IGenericState } from './types';
 import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
-export function getSelectedCity(citiesState: ICityState, city: string) {
+export function getSelectedCity(citiesState: ICityState, cityAlias: string) {
   return new Promise((resolve, reject) => {
-    const { aliases } = citiesState;
-    const selectedCity = aliases.find(({ alias, id }) => alias === city);
+    const selectedCity = citiesState.aliases.find(({ alias }) => alias === cityAlias);
     if (selectedCity) {
       resolve(selectedCity);
     } else {

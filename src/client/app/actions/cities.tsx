@@ -55,7 +55,7 @@ export const removeCity = (cityId: string) => ({
   cityId,
 });
 
-export const getCityItems = (cityId: string) => {
+export const getCityItems = (cityId: string, locale: string) => {
   return (dispatch, getState) => {
 
     const state: IAppState = getState();
@@ -63,6 +63,9 @@ export const getCityItems = (cityId: string) => {
     const items = state.items;
     const haveAllItemsLoaded = items.isAllLoaded;
     const haveAllCityItemsLoaded = selectedCity.haveAllItemsLoaded;
+    const language = locale || getLocale(state);
+
+    dispatch(selectCity(cityId));
 
     if (!selectedCity || haveAllItemsLoaded || haveAllCityItemsLoaded) {
       return;
@@ -70,7 +73,10 @@ export const getCityItems = (cityId: string) => {
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.get(`http://localhost:3000/api/items/city/${cityId}`)
+    return axios.get(
+      `http://localhost:3000/api/items/city/${cityId}`,
+      setAcceptLanguageHeader(language),
+    )
       .then(response => response.data)
       .then(data => {
 

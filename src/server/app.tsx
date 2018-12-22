@@ -27,5 +27,6 @@ app.use(mongoSanitize());
 app.use(expressValidator());
 app.use(auth.initialize());
 app.use('/api', apiRouter(), handleItemsErrors);
+app.get('/favicon.ico', (req, res) => res.status(204));
 
 export default app;

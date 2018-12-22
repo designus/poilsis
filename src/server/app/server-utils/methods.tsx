@@ -127,6 +127,8 @@ export const formatAlias = alias => alias
   .toLowerCase();
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
+  if (res.headersSent) return;
+
   if (err) {
     return next(err);
   }
