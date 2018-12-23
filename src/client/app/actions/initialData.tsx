@@ -21,6 +21,7 @@ export const receiveInitialData = (data) => ({
   data,
 });
 
+// Loader will only be stopped if no additional data has to be loaded in child components
 const shouldStopLoader = (pathName: string) => pathName ?
   ['cities', 'types', 'users'].some(str => pathName.includes(str)) :
   true;
@@ -32,9 +33,12 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     const token = state.auth.accessToken;
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
 
-    // Loader will only be stopped if no additional data has to be loaded in child components
     dispatch(startLoading(GLOBAL_LOADER_ID));
-    dispatch(setLocale(locale));
+
+    // When page is reloaded we need to set locale
+    if (!state.locale) {
+      dispatch(setLocale(locale));
+    }
 
     const promises = [
       axios.get('http://localhost:3000/api/cities', setAcceptLanguageHeader(locale)),
