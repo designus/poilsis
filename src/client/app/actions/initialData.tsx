@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { getNormalizedData, setAcceptLanguageHeader, GLOBAL_LOADER_ID } from 'client-utils';
 import { IAppState } from 'reducers';
-import { receiveUserDetails, startLoading, endLoading } from 'actions';
-import { getAccessTokenClaims } from 'global-utils';
-import { getLocale } from 'selectors';
+import { receiveUserDetails, startLoading, endLoading, setLocale } from 'actions';
+import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
 export const CLEAR_STATE = 'CLEAR_STATE';
@@ -28,13 +27,15 @@ const shouldStopLoader = (pathName: string) => pathName ?
 
 export const getInitialData = (params: IGetInitialDataParams = {}) => {
   return (dispatch, getState) => {
-    // Loader will only be stopped if no additional data has to be loaded in child components
-    dispatch(startLoading(GLOBAL_LOADER_ID));
     const state: IAppState = getState();
-    const locale = params.locale || getLocale(state);
+    const locale = params.locale || DEFAULT_LANGUAGE;
     const token = state.auth.accessToken;
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
-    console.log('Getting initial data with locale:', locale);
+
+    // Loader will only be stopped if no additional data has to be loaded in child components
+    dispatch(startLoading(GLOBAL_LOADER_ID));
+    dispatch(setLocale(locale));
+
     const promises = [
       axios.get('http://localhost:3000/api/cities', setAcceptLanguageHeader(locale)),
       axios.get('http://localhost:3000/api/types', setAcceptLanguageHeader(locale)),
@@ -43,7 +44,6 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
 
     return axios.all(promises)
       .then(axios.spread((citiesResponse, typesResponse, usersResponse) => {
-        // console.log('Cities response', citiesResponse.data);
         const cities = getNormalizedData(citiesResponse.data);
         const types = getNormalizedData(typesResponse.data);
         const users = getNormalizedData(usersResponse.data);

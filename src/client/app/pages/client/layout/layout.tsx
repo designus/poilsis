@@ -2,13 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
 
-import { MainMenu, Toast, UserMenu } from 'components';
+import { MainMenu, Toast, UserMenu, LanguageSelector, Loader } from 'components';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
 import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
 import { LoginPage, CityPage } from 'pages';
 import { IAppState, IItemsMap, ICitiesMap, ITypesMap } from 'reducers';
 
-import { hasInitialDataLoaded } from 'selectors';
+import { hasInitialDataLoaded, isInitialDataLoading } from 'selectors';
 
 interface IMatchParams {
   cityName: string;
@@ -17,6 +17,7 @@ interface IMatchParams {
 
 interface ILayoutPageParams extends RouteComponentProps<IMatchParams> {
   hasInitialDataLoaded: boolean;
+  isInitialDataLoading: boolean;
   itemsMap: IItemsMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
@@ -55,6 +56,7 @@ class ClientLayoutPageComponent extends React.Component<ILayoutPageParams, any> 
               <div onClick={this.login({username: 'tomas', password: 'tomas'})}>Log in with user</div>
             </div>
           }
+          <LanguageSelector reloadPageOnChange />
         </div>
         <hr />
         <div className="top-menu">
@@ -71,6 +73,7 @@ class ClientLayoutPageComponent extends React.Component<ILayoutPageParams, any> 
           This is footer
         </div>
         <Toast />
+        {this.props.isInitialDataLoading && <Loader isLoading />}
       </div>
     );
   }
@@ -80,6 +83,7 @@ const mapStateToProps = (state: IAppState) => ({
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
   hasInitialDataLoaded: hasInitialDataLoaded(state),
+  isInitialDataLoading: isInitialDataLoading(state),
   isAuthenticated: state.auth.isLoggedIn,
   user: state.currentUser.details && state.currentUser.details.name,
   locale: state.locale,
