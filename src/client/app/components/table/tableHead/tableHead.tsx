@@ -46,6 +46,7 @@ export class EnhancedTableHead extends React.Component<ITableHead, any> {
             return (
               <TableCell
                 key={index}
+                padding="dense"
                 // sortDirection={orderBy === column.id ? order : false}
               >
                 <TableSortLabel

@@ -1,6 +1,6 @@
-export const CITY_CREATE_SUCCESS = 'New city was created succesfully';
-export const CITY_CREATE_ERROR = 'Failed to create new city';
-export const CITY_UPDATE_SUCCESS = 'City was updated successfully';
-export const CITY_UPDATE_ERROR = 'Failed to update city';
-export const CITY_DELETE_ERROR = 'Failed to delete city';
-export const CITY_DELETE_SUCCESS = 'City was deleted successfully';
+export const CITY_CREATE_SUCCESS = 'admin.city.create_success';
+export const CITY_CREATE_ERROR = 'admin.city.create_error';
+export const CITY_UPDATE_SUCCESS = 'admin.city.update_success';
+export const CITY_UPDATE_ERROR = 'admin.city.update_error';
+export const CITY_DELETE_SUCCESS = 'admin.city.delete_success';
+export const CITY_DELETE_ERROR = 'admin.city.delete_error';

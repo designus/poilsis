@@ -1,13 +1,13 @@
 import * as React from 'react';
-import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { getUserItems, deleteItem, endLoading, toggleItem } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { ITEMS } from 'data-strings';
+import { shouldLoadItems } from 'selectors';
 import { AdminHeader } from 'global-styles';
 import {
   EnhancedTable,
@@ -22,14 +22,14 @@ import {
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface IItemsPageParams {
+interface IItemsPageParams extends InjectedIntlProps {
   itemsMap: IItemsMap;
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  areAllItemsLoaded: boolean;
+  shouldLoadItems: boolean;
   userItems: string[];
-  deleteItem: (itemId) => void;
+  deleteItem: (itemId: string) => Promise<void>;
   getUserItems: () => void;
   endLoading: (loaderId) => void;
   toggleItem: (itemId: string, isEnabled: boolean) => void;
@@ -48,31 +48,42 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
   };
 
   componentDidMount() {
-    this.props.getUserItems();
+    this.loadUserItems();
+  }
+
+  componentDidUpdate() {
+    this.loadUserItems();
+  }
+
+  loadUserItems = () => {
+    if (this.props.shouldLoadItems) {
+      this.props.getUserItems();
+    }
   }
 
   get columns(): ITableColumn[] {
+    const { formatMessage, formatDate } = this.props.intl;
     return [
       {
-        title: 'Id',
+        title: formatMessage({ id: 'admin.common_fields.id' }),
         dataProp: 'id',
         searchable: true,
       },
       {
-        title: 'Name',
+        title: formatMessage({ id: 'admin.common_fields.name' }),
         dataProp: 'name',
         sortType: 'string',
         searchable: true,
       },
       {
-        title: 'City',
+        title: formatMessage({ id: 'admin.common_fields.city' }),
         dataProp: 'cityId',
         sortType: 'string',
         format: (cityId: string) => this.props.citiesMap[cityId].name,
         searchable: true,
       },
       {
-        title: 'Types',
+        title: formatMessage({ id: 'admin.common_fields.types' }),
         dataProp: 'types',
         format: (types: string[]) => {
           return (
@@ -84,13 +95,13 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         },
       },
       {
-        title: 'Created at',
+        title: formatMessage({ id: 'admin.common_fields.created_at' }),
         dataProp: 'createdAt',
         sortType: 'date',
-        format: (date: string) => moment(date).format('YYYY-MM-DD'),
+        format: (date: string) => formatDate(date),
       },
       {
-        title: 'User',
+        title: formatMessage({ id: 'admin.common_fields.user' }),
         dataProp: 'userId',
         sortType: 'string',
         format: (userId: string) => {
@@ -99,7 +110,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         },
       },
       {
-        title: 'Is enabled?',
+        title: formatMessage({ id: 'admin.common_fields.is_enabled' }),
         dataProp: 'isEnabled',
         sortType: 'string',
         formatProps: ['id', 'isEnabled'],
@@ -111,7 +122,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         ),
       },
       {
-        title: 'Actions',
+        title: formatMessage({ id: 'admin.common_fields.actions' }),
         dataProp: 'id',
         formatProps: ['userId', 'id'],
         format: (userId: string, itemId: string) => {
@@ -147,7 +158,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
     return item && item.name;
   }
 
-  handleItemDelete = (itemId) => {
+  handleItemDelete = (itemId: string) => {
     return this.props.deleteItem(itemId);
   }
 
@@ -159,8 +170,8 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
     return (
       <div>
         <AdminHeader>
-          <Typography variant="headline">
-            {ITEMS}
+          <Typography variant="h5">
+            <FormattedMessage id="admin.menu.items" />
           </Typography>
           <AdminPageActions
             search={this.setSearch}
@@ -194,7 +205,7 @@ const mapStateToProps = (state: IAppState) => ({
   userItems: state.currentUser.items,
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
-  areAllItemsLoaded: state.items.isAllLoaded,
+  shouldLoadItems: shouldLoadItems(state),
 });
 
 const mapDispatchToProps = dispatch =>
@@ -208,4 +219,6 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 
-export const AdminItemsPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent);
+export const AdminItemsPage = injectIntl(
+  connect<{}, {}, IItemsPageParams>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent),
+);

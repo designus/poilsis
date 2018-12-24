@@ -2,16 +2,23 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { WithStyles } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
+
 import { ImagePreview } from 'components';
-import { IMAGES_LABEL } from 'data-strings';
-import { IImage, MAX_FILE_COUNT } from 'global-utils';
+import { IImage, itemValidation } from 'global-utils';
 import { IUploadProgress } from 'reducers';
 import { styles } from './styles';
 
-export interface IUploadedImagesParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgress {
-  formName: string;
-  uploadImages: any;
-  onLoadedImages: any;
+const { images: { maxPhotos } } = itemValidation;
+
+export interface IUploadedImagesParams extends
+  WrappedFieldProps,
+  WithStyles<typeof styles>,
+  IUploadProgress,
+  InjectedIntlProps  {
+    formName: string;
+    uploadImages: any;
+    onLoadedImages: any;
 }
 
 class UploadedImagesComponent extends React.Component<IUploadedImagesParams, any> {
@@ -57,7 +64,10 @@ class UploadedImagesComponent extends React.Component<IUploadedImagesParams, any
   }
 
   getImagePreviewLabel = () => {
-    return `${IMAGES_LABEL} (${this.props.input.value.length} of ${MAX_FILE_COUNT})`;
+    return this.props.intl.formatMessage({id: 'admin.file_upload.image_preview_label'}, {
+      uploadedCount: this.props.input.value.length,
+      totalCount: maxPhotos,
+    });
   }
 
   render() {
@@ -77,4 +87,4 @@ class UploadedImagesComponent extends React.Component<IUploadedImagesParams, any
   }
 }
 
-export const UploadedImages = withStyles(styles)(UploadedImagesComponent) as any;
+export const UploadedImages = withStyles(styles)(injectIntl(UploadedImagesComponent)) as any;

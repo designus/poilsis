@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { auth, getAllTypes, addNewType, updateType, deleteType } from '../controllers';
+import { auth, getAllTypes, addNewType, updateType, deleteType, getType } from '../controllers';
 
 const router = Router();
 
@@ -9,6 +9,7 @@ router.route('/')
   .post(auth.authenticate(), auth.authorize(['admin']), addNewType);
 
 router.route('/type/:typeId')
+  .get(getType)
   .put(auth.authenticate(), auth.authorize(['admin']), updateType)
   .delete(auth.authenticate(), auth.authorize(['admin']), deleteType);
 

@@ -2,9 +2,6 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
-  wrapper: {
-    position: 'relative',
-  },
   centeredLoader: {
     display: 'flex',
     alignItems: 'center',
@@ -12,6 +9,8 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     position: 'absolute',
+    zIndex: 100,
+    background: 'rgb(250, 250, 250)',
   },
   round: {
     padding: '7px',
@@ -26,7 +25,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'none',
   },
   overlay: {
-    background: 'rgba(255, 255, 255, .6)',
-    zIndex: 1,
+    background: 'rgba(250, 250, 250, .6)',
+    zIndex: 100,
   },
 });

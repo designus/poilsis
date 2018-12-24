@@ -6,7 +6,9 @@ import {
   getImages,
   sendResponse,
 } from '../server-utils';
-import { IItemFields, MAX_FILE_COUNT } from 'global-utils';
+import { IItemFields, itemValidation } from 'global-utils';
+
+const { images: { maxPhotos } } = itemValidation;
 
 const shortId = require('shortid');
 
@@ -79,7 +81,7 @@ export const updatePhotos = (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const uploadPhotos = (req, res: Response, next: NextFunction) => {
-  const uploadPhotos = uploadImages.array(`files[]`, MAX_FILE_COUNT);
+  const uploadPhotos = uploadImages.array('files[]', maxPhotos);
 
   uploadPhotos(req, res, (err) => {
     if (err) { return next(err); }

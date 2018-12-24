@@ -1,35 +1,56 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAppState, ICityState } from 'reducers';
-import { getCityItems, selectCity } from 'actions';
-import { getSelectedCity, CONTENT_LOADER_ID } from 'client-utils';
+import { RouteComponentProps } from 'react-router-dom';
+
+import { IAppState, ICityState, IItemsState, ITypesState, ICity } from 'reducers';
+import { getCityItems } from 'actions';
+import { CONTENT_LOADER_ID } from 'client-utils';
 import { ItemsList, NotFound, extendWithLoader } from 'components';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
-export const fetchCitiesData = (citiesState: ICityState, cityAlias: string, dispatch) => {
-  return getSelectedCity(citiesState, cityAlias)
-    // We return promise, so it can be consumed syncroniously on server side
-    .then(({id: cityId}) => Promise.all([dispatch(selectCity(cityId)), dispatch(getCityItems(cityId))]))
-    .catch(console.error);
+interface IMatchParams {
+  cityName: string;
+  locale: string;
+}
+
+interface ICityPageParams extends RouteComponentProps<IMatchParams> {
+  items: IItemsState;
+  cities: ICityState;
+  types: ITypesState;
+  selectedCity: ICity;
+  dispatch: () => void;
+}
+
+export const fetchCitiesData = (cityState: ICityState, routeParams: IMatchParams, dispatch) => {
+  return new Promise((resolve, reject) => {
+    const selectedCity = cityState.aliases.find(({ alias }) => alias === routeParams.cityName);
+    if (selectedCity) {
+      resolve(selectedCity);
+    } else {
+      reject('City is not available');
+    }
+  })
+  .then(({ id: cityId }) => dispatch(getCityItems(cityId, routeParams.locale)))
+  .catch(console.error);
 };
 
-class CityPageComponent extends React.Component<any, any> {
+class CityPageComponent extends React.Component<ICityPageParams, any> {
 
-  static fetchData(store, params) {
+  static fetchData(store, params: IMatchParams) {
     const appState: IAppState = store.getState();
-    const citiesState = appState.cities;
-    return fetchCitiesData(citiesState, params.cityName, store.dispatch);
+    const cityState = appState.cities;
+    return fetchCitiesData(cityState, params, store.dispatch);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      fetchCitiesData(this.props.cities, this.props.match.params.cityName, this.props.dispatch);
+      fetchCitiesData(this.props.cities, this.props.match.params, this.props.dispatch);
     }
   }
 
   componentDidMount() {
-    fetchCitiesData(this.props.cities, this.props.match.params.cityName, this.props.dispatch);
+    fetchCitiesData(this.props.cities, this.props.match.params, this.props.dispatch);
   }
 
   render() {
@@ -54,14 +75,11 @@ class CityPageComponent extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  const {cities, items, types} = state;
-  return {
-    selectedCity: cities.dataMap[cities.selectedId],
-    cities,
-    items,
-    types,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  selectedCity: state.cities.dataMap[state.cities.selectedId],
+  cities: state.cities,
+  items: state.items,
+  types: state.types,
+});
 
 export const CityPage = connect<any, any, {}>(mapStateToProps)(CityPageComponent);

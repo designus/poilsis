@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as FormData from 'form-data';
+import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils';
 import { IGenericState } from './types';
 import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
 
-export function getSelectedCity(citiesState: ICityState, city: string) {
+export function getSelectedCity(citiesState: ICityState, cityAlias: string) {
   return new Promise((resolve, reject) => {
-    const { aliases } = citiesState;
-    const selectedCity = aliases.find(({ alias, id }) => alias === city);
+    const selectedCity = citiesState.aliases.find(({ alias }) => alias === cityAlias);
     if (selectedCity) {
       resolve(selectedCity);
     } else {
@@ -39,9 +39,14 @@ export function getNormalizedData(data: any[]) {
   }, {dataMap: {}, aliases: []});
 }
 
-export function getBackendErrors(errors) {
+export function getBackendErrors(errors: Record<string, any>) {
   return Object.keys(errors).reduce((acc, key) => {
-    acc[key] = errors[key].message;
+    // We only want to display validation errors to the user
+    if (errors[key].name === 'ValidatorError') {
+      const [field, language] = key.split('.');
+      const errorField = LANGUAGES.includes(language) ? field : key;
+      acc[errorField] = errors[key].message;
+    }
     return acc;
   }, {});
 }
@@ -82,3 +87,18 @@ export const getFormDataFromFiles = (files: File[]) => {
   files.forEach(file => formData.append('files[]', file));
   return formData;
 };
+
+export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
+
+export const setAcceptLanguageHeader = (locale = DEFAULT_LANGUAGE) => ({
+  headers: {
+    'Accept-Language': locale,
+  },
+});
+
+export const removeItemById = (id: string, dataMap: Record<string, any>) => {
+  const { [id]: removedItem, ...remainingItems } = dataMap;
+  return remainingItems;
+};
+
+export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);

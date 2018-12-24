@@ -2,28 +2,28 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, initialize, isSubmitting } from 'redux-form';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { IAppState, IItem, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
-import { updateMainInfo, postItem } from 'actions';
+import { IAppState, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
+import { updateMainInfo, createItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { IItemFields } from 'global-utils';
-import { extendWithLoader, NavigationPrompt } from 'components';
+import { TItemFields, IItemFields } from 'global-utils';
+import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
 import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
 
-const FormWithLoader = extendWithLoader(MainInfoForm);
+const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
 
-interface IMainInfoProps extends ICreateEditItemPageProps {
+interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   userRole: string;
   showNavigationPrompt: boolean;
   isCreatePage: boolean;
-  loadedItem: IItem;
-  createItem: (item: IItemFields) => Promise<any>;
-  updateItem: (item: IItemFields) => Promise<any>;
-  initializeForm: (item: IItemFields) => void;
+  createItem: (item: TItemFields) => Promise<any>;
+  updateItem: (item: TItemFields) => Promise<any>;
+  initializeForm: (item: TItemFields) => void;
 }
 
 class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
@@ -36,13 +36,13 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onSubmit = (item: IItemFields) => {
+  onSubmit = (item: TItemFields) => {
     const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
     const submitFn = isCreatePage ? createItem : updateItem;
     return submitFn(item)
-      .then(item => {
+      .then((newItem: IItemFields) => {
         if (isCreatePage) {
-          history.push(adminRoutes.editItemMain.getLink(item.userId, item.itemId));
+          history.push(adminRoutes.editItemMain.getLink(newItem.userId, newItem.id));
         } else {
           initializeForm(item);
         }
@@ -53,18 +53,21 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
   render() {
     return (this.props.loadedItem || this.props.isCreatePage) && (
       <div>
-        <Typography variant="headline">Main info</Typography>
+        <Typography variant="h5">
+          <FormattedMessage id="admin.menu.main_info" />
+        </Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           citiesMap={this.props.citiesMap}
+          formatMessage={this.props.intl.formatMessage}
           typesMap={this.props.typesMap}
           userRole={this.props.userRole}
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
         />
-        {/* <NavigationPrompt when={this.props.showNavigationPrompt} /> */}
+        <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>
     );
   }
@@ -79,9 +82,11 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateItem: (item) => dispatch(updateMainInfo(item)),
-  createItem: (item) => dispatch(postItem(item)),
-  initializeForm: (data) => dispatch(initialize(MAIN_INFO_FORM_NAME, data)),
+  updateItem: (item: TItemFields) => dispatch(updateMainInfo(item)),
+  createItem: (item: TItemFields) => dispatch(createItem(item)),
+  initializeForm: (data: TItemFields) => dispatch(initialize(MAIN_INFO_FORM_NAME, data)),
 });
 
-export const MainInfoPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent);
+export const MainInfoPage = injectIntl(
+  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent),
+);

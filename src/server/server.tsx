@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
+import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import StaticRouter from 'react-router-dom/StaticRouter';
@@ -8,16 +9,34 @@ import { matchRoutes } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import { DEFAULT_LANGUAGE, getTranslationMessages } from 'global-utils';
+import { IAuthState } from 'reducers';
 
 import app, { staticFilesPort } from './app';
 import { config } from '../../config';
 import { App, rootReducer, routes } from '../client/app/index';
 import { auth, getMaterialUiCSSParams, preloadData } from './app/index';
 
+interface IInitialAuthState {
+  auth: IAuthState;
+}
+
+const getInitialState = (req, user): IInitialAuthState => {
+  if (user) {
+    return {
+      auth: {
+        accessToken: req.cookies.jwt,
+        isLoggedIn: true,
+        showKeepMeLoggedModal: false,
+      },
+    };
+  }
+};
+
 app.get('*', (req, res, next) => {
   return auth.authenticate((err, user, info) => {
     const location = req.url;
-    const initialState = user ? {auth: {accessToken: req.cookies.jwt}} : undefined;
+    const initialState = getInitialState(req, user);
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
     const branch = matchRoutes(routes, location);
     const promises = branch
@@ -46,9 +65,11 @@ function sendResponse(res, store, location) {
       <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
           <Provider store={store} key="provider">
-            <StaticRouter location={location} context={context}>
-              <App />
-            </StaticRouter>
+            <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
+              <StaticRouter location={location} context={context}>
+                <App />
+              </StaticRouter>
+            </IntlProvider>
           </Provider>
         </MuiThemeProvider>
       </JssProvider>

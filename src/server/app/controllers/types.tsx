@@ -10,6 +10,10 @@ export const getAllTypes = (req: Request, res: Response, next: NextFunction) => 
   TypesModel.find(sendResponse(res, next));
 };
 
+export const getType = (req: Request, res: Response, next: NextFunction) => {
+  TypesModel.findOne({ id: req.params.typeId }, sendResponse(res, next));
+};
+
 export const addNewType = (req: Request, res: Response, next: NextFunction) => {
   const type: ITypeFields = req.body;
   const alias = type.alias || type.name;

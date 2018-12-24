@@ -1,9 +1,6 @@
-export const ITEM_UPDATE_SUCCESS = 'Item updated successfully';
-export const ITEM_UPDATE_ERROR = 'Item failed to update';
-export const ITEM_CREATE_SUCCESS = 'Item created successfully';
-export const ITEM_CREATE_ERROR = 'Item failed to create';
-export const DELETE_ITEM_ERROR = 'Item failed to delete';
-export const DELETE_ITEM_SUCCESS = 'Item was deleted successfully';
-export const IMAGES_KEY = 'images';
-export const PHOTO_GALLERY = 'Photo gallery';
-export const MAIN_INFO = 'Main info';
+export const ITEM_CREATE_SUCCESS = 'admin.item.create_success';
+export const ITEM_CREATE_ERROR = 'admin.item.create_error';
+export const ITEM_UPDATE_SUCCESS = 'admin.item.update_success';
+export const ITEM_UPDATE_ERROR = 'admin.item.update_error';
+export const ITEM_DELETE_SUCCESS = 'admin.item.delete_success';
+export const ITEM_DELETE_ERROR = 'admin.item.delete_error';

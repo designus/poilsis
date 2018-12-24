@@ -4,7 +4,8 @@ import * as day from 'dayjs';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles, IItemFields, SESSION_DURATION_MINUTES, IAccessTokenClaims } from 'global-utils';
+import { UserRoles, IItemFields, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
+import { USER_NOT_FOUND, INVALID_CREDENTIALS, AUTHORIZATION_FAILED } from 'data-strings';
 
 import { UsersModel as User } from '../model/users';
 import { TokensModel } from '../model/tokens';
@@ -12,6 +13,7 @@ import { ItemsModel } from '../model/items';
 
 const randToken = require('rand-token');
 
+type TokenParams = Omit<IAccessTokenClaims, 'expires'>;
 class Auth {
 
   public initialize = () => {
@@ -31,13 +33,13 @@ class Auth {
       req.body.userRole = userRole;
       next();
     } else {
-      res.status(401).send('You are not authorized');
+      res.status(401).send(AUTHORIZATION_FAILED);
     }
   }
 
-  private genToken = (userId: string, userRole: string, userItems: string[]) => {
+  private genToken = (params: TokenParams) => {
     const expires = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
-    const claims: IAccessTokenClaims = { expires, userId, userRole, userItems };
+    const claims: IAccessTokenClaims = { ...params, expires };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 
     return token;
@@ -50,16 +52,13 @@ class Auth {
 
   public reauthenticate = async (req, res) => {
     try {
-      req.checkBody('refreshToken').notEmpty();
-      req.checkBody('userId').notEmpty();
 
-      const errors = req.validationErrors();
-
-      if (errors) {
-        throw errors;
+      // TODO: Remove refresh token after session expires
+      if (!req.body.refreshToken || !req.body.userId) {
+        throw new Error('Missing user id or refresh token');
       }
 
-      const { userId, userRole } = req.body;
+      const { userId, userRole, userName } = req.body;
       const token = await TokensModel.findOne({userId}).exec();
 
       if (token === null) {
@@ -72,34 +71,31 @@ class Auth {
 
       const userItems = await this.getUserItems(userRole, userId);
 
-      res.status(200).json({ accessToken: this.genToken(userId, userRole, userItems) });
+      res.status(200).json({ accessToken: this.genToken({ userId, userRole, userItems, userName}) });
     } catch (err) {
-      res.status(401).json({ message: 'Invalid credentials', errors: err });
+      console.error('Reauthenticate error', err.message);
+      res.status(401).json({ message: INVALID_CREDENTIALS });
     }
   }
 
   public login = async (req, res) => {
     try {
-      req.checkBody('username', 'Invalid username').notEmpty();
-      req.checkBody('password', 'Invalid password').notEmpty();
 
-      const errors = req.validationErrors();
-      if (errors) {
-        throw errors;
+      if (!req.body.username || !req.body.password) {
+        throw new Error(INVALID_CREDENTIALS);
       }
 
       const user = await User.findOne({ username: req.body.username }).exec();
 
       if (user === null) {
-        throw new Error('User not found');
+        throw new Error(USER_NOT_FOUND);
       }
 
-      const userId = user.id;
-      const userRole = user.role;
+      const { id: userId, role: userRole, name: userName } = user;
       const success = await user.comparePassword(req.body.password);
 
       if (success === false) {
-        throw new Error('');
+        throw new Error(INVALID_CREDENTIALS);
       }
 
       const tokenItem = await TokensModel.findOneAndUpdate({userId},
@@ -107,15 +103,18 @@ class Auth {
       );
 
       if (!tokenItem) {
-        throw new Error('Failed to create refresh Token');
+        throw new Error('');
       }
 
       const userItems = await this.getUserItems(userRole, userId);
 
       // TODO: Add Set-cookie http header
-      res.status(200).json({accessToken: this.genToken(userId, userRole, userItems), refreshToken: tokenItem.refreshToken});
+      res.status(200).json({
+        accessToken: this.genToken({userId, userRole, userName, userItems}),
+        refreshToken: tokenItem.refreshToken,
+      });
     } catch (err) {
-      res.status(401).json({message: 'Invalid credentials', errors: err});
+      res.status(401).json({ message: err.message });
     }
   }
 
@@ -129,7 +128,8 @@ class Auth {
 
       res.status(200).send({message: ''});
     } catch (err) {
-      res.status(401).send({message: err});
+      console.error('Logout error', err.message);
+      res.status(401).send({message: ''});
     }
   }
 

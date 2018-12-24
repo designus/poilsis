@@ -1,4 +1,4 @@
-import { SHOW_TOAST, HIDE_TOAST } from '../actions';
+import { SHOW_TOAST, HIDE_TOAST, CLEAR_STATE } from 'actions';
 
 export enum Toast {
   warning = 'warning',
@@ -12,21 +12,33 @@ export interface IToastState {
   toastType?: ToastType;
   message?: string;
   show?: boolean;
+  error?: string;
 }
 
-export const toast = (state: IToastState = {show: false}, action) => {
+const getInitialState = () => ({
+  show: false,
+  message: '',
+  toastType: Toast.success,
+  error: null,
+});
+
+export const toast = (state: IToastState = getInitialState(), action) => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return getInitialState();
     case SHOW_TOAST:
       return {
         ...state,
         toastType: action.toastType,
         message: action.message,
+        error: action.error,
         show: true,
       };
     case HIDE_TOAST:
       return {
         ...state,
         show: false,
+        error: null,
       };
     default:
       return state;

@@ -3,10 +3,14 @@ import Dropzone, { ImageFile } from 'react-dropzone';
 import ClearIcon from '@material-ui/icons/Clear';
 import FileUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
+import { FormattedMessage } from 'react-intl';
 
 import { Button } from 'components';
-import { ALLOWED_MIME_TYPES, MAX_FILE_COUNT, MAX_FILE_SIZE_MB, mapMimeTypesToTypes } from 'global-utils';
+import { mapMimeTypesToTypes, itemValidation } from 'global-utils';
 import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
+
+const { images: { maxPhotos, maxPhotoSizeMegabytes, mimeTypes } } = itemValidation;
+
 export interface IFileUploadProps {
   onDrop: (acceptedImages: ImageFile[], rejectedImages?: ImageFile[]) => void;
   showUploadButtons: boolean;
@@ -28,7 +32,7 @@ export const FileUpload = ({
     <ImageUpload>
       <Dropzone
         onDrop={onDrop}
-        accept={ALLOWED_MIME_TYPES.join(',')}
+        accept={mimeTypes.join(',')}
         className="dropzone"
         activeClassName="active-dropzone"
         name="images"
@@ -36,16 +40,19 @@ export const FileUpload = ({
         {children}
         <UploadPlaceholder>
           <Typography variant="body1">
-            Drag and drop or click to select a 550x550px file to upload.
+            <FormattedMessage id="admin.file_upload.placeholder"  />
           </Typography>
         </UploadPlaceholder>
       </Dropzone>
       <Typography variant="caption" gutterBottom>
-        {`
-          Please select no more than ${MAX_FILE_COUNT} photos.
-          Each photo should not be bigger than ${MAX_FILE_SIZE_MB} mb
-          and have one of the type: ${mapMimeTypesToTypes(ALLOWED_MIME_TYPES)}
-        `}
+        <FormattedMessage
+          id="admin.file_upload.caption"
+          values={{
+            count: maxPhotos,
+            size: maxPhotoSizeMegabytes,
+            types: mapMimeTypesToTypes(mimeTypes),
+          }}
+        />
       </Typography>
       {showUploadButtons ?
         <UploadButtons>
@@ -55,7 +62,7 @@ export const FileUpload = ({
             onClick={clearImages}
           >
             <ClearIcon />
-            Clear images
+            <FormattedMessage id="admin.file_upload.clear_label" />
           </Button>
           <Button
             type="button"
@@ -63,7 +70,7 @@ export const FileUpload = ({
             onClick={uploadImages}
           >
             <FileUploadIcon />
-            Upload
+            <FormattedMessage id="admin.file_upload.upload_label" />
           </Button>
         </UploadButtons> :
         null

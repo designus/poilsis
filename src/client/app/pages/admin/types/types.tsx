@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+
 import { IAppState, ITypesMap } from 'reducers';
 import { AdminHeader } from 'global-styles';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
@@ -16,7 +18,7 @@ import {
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface ITypesPageParams {
+interface ITypesPageParams extends InjectedIntlProps {
   typesMap: ITypesMap;
   deleteType: (typeId) => Promise<any>;
 }
@@ -34,21 +36,22 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
   }
 
   get columns(): ITableColumn[] {
+    const { formatMessage } = this.props.intl;
     return [
       {
-        title: 'Id',
+        title: formatMessage({id: 'admin.common_fields.id'}),
         dataProp: 'id',
       },
       {
-        title: 'Name',
+        title: formatMessage({id: 'admin.common_fields.name'}),
         dataProp: 'name',
       },
       {
-        title: 'Description',
+        title: formatMessage({id: 'admin.common_fields.description'}),
         dataProp: 'description',
       },
       {
-        title: 'Actions',
+        title: formatMessage({id: 'admin.common_fields.actions'}),
         dataProp: 'id',
         format: (typeId: string) => {
           return (
@@ -78,8 +81,8 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
     return (
       <div>
         <AdminHeader>
-          <Typography variant="headline">
-            Types
+          <Typography variant="h5">
+            <FormattedMessage id="admin.menu.types" />
           </Typography>
           <AdminPageActions createLink={adminRoutes.createType.getLink()} />
         </AdminHeader>
@@ -111,4 +114,6 @@ const mapDispatchToProps = (dispatch) => ({
   deleteType: (typeId) => dispatch(deleteType(typeId)),
 });
 
-export const AdminTypesPage = connect<{}, {}, any>(mapStateToProps, mapDispatchToProps)(AdminTypesPageComponent);
+export const AdminTypesPage = injectIntl(
+  connect<{}, {}, ITypesPageParams>(mapStateToProps, mapDispatchToProps)(AdminTypesPageComponent),
+);

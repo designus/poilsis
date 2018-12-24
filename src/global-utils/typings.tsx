@@ -12,6 +12,10 @@ export enum ImageSize {
   Large = 'L',
 }
 
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
+
 export interface IResponseError {
   errors: {
     [key: string]: {
@@ -20,35 +24,41 @@ export interface IResponseError {
   };
 }
 
-export interface IItemFields {
-  id?: string;
+export interface IItemFields<T = string> {
+  id: string;
   createdAt?: string;
   updatedAt?: string;
   address: string;
   cityId: string;
-  description: string;
-  name: string;
   types: string[];
   images: IImage[];
   userId: string;
-  alias: string;
   isEnabled: boolean;
+  name: T;
+  alias: T;
+  description: T;
 }
 
-export interface ITypeFields {
-  id?: string;
-  name: string;
-  description: string;
-  alias: string;
+export type TItemFields = IItemFields<TranslatableField>;
+
+export interface ITypeFields<T = string> {
+  id: string;
+  name: T;
+  description: T;
+  alias: T;
 }
 
-export interface ICityFields {
-  id?: string;
-  name: string;
-  description: string;
+export type TTypeFields = ITypeFields<TranslatableField>;
+
+export interface ICityFields<T = string> {
+  id: string;
   types: string[];
-  alias: string;
+  name: T;
+  description: T;
+  alias: T;
 }
+
+export type TCityFields = ICityFields<TranslatableField>;
 
 export enum UserRoles {
   admin = 'admin',
@@ -57,6 +67,7 @@ export enum UserRoles {
 
 export interface IAccessTokenClaims {
   expires: number;
+  userName: string;
   userId: string;
   userRole: string;
   userItems: string[];

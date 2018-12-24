@@ -18,10 +18,14 @@ import { types, ITypesState } from './types';
 import { uploadProgress, IUploadProgress } from './uploadProgress';
 import { currentUser, ICurrentUserState } from './currentUser';
 import { users, IUsersState } from './users';
+import { admin, IAdminState } from './admin';
+import { locale } from './locale';
+
 export interface IAppState {
   cities: ICityState;
   auth: IAuthState;
-  global: any;
+  locale: string;
+  admin: IAdminState;
   currentUser: ICurrentUserState;
   users: IUsersState;
   items: IItemsState;
@@ -36,12 +40,14 @@ export const rootReducer = combineReducers({
   cities,
   types,
   auth,
+  admin,
   items,
   initialData,
   loader,
   toast,
   uploadProgress,
   currentUser,
+  locale,
   users,
   form: formReducer,
 });

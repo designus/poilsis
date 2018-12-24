@@ -1,19 +1,24 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { change } from 'redux-form';
+import { change, isDirty, isSubmitting } from 'redux-form';
 import Typography from '@material-ui/core/Typography';
 import { ImageFile } from 'react-dropzone';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { IImage, voidFn } from 'global-utils';
+import { IImage } from 'global-utils';
+import { CONTENT_LOADER_ID } from 'client-utils';
 import { updatePhotos, uploadPhotos, setInitialUploadState } from 'actions';
-import { PhotosForm } from './form';
+import { extendWithLoader } from 'components';
+import { PhotosForm, PHOTOS_FORM_NAME } from './form';
+
+const PhotosFormWithLoader = extendWithLoader(PhotosForm);
 
 export interface IPhotoFormState {
   images: IImage[];
   files: ImageFile[];
 }
 
-export interface IPhotosFormFields extends IPhotoFormState {
+export interface IPhotosFormFields extends IPhotoFormState, InjectedIntlProps {
   isUpdateAction?: boolean;
 }
 
@@ -39,10 +44,16 @@ class PhotosPageComponent extends React.Component<any, any> {
 
       return (
         <div>
-          <Typography variant="headline">Photo gallery</Typography>
-          <PhotosForm
+          <Typography variant="h5">
+            <FormattedMessage id="admin.menu.photo_gallery" />
+          </Typography>
+          <PhotosFormWithLoader
             onSubmit={this.onSubmit}
+            loaderId={CONTENT_LOADER_ID}
+            formatMessage={this.props.intl.formatMessage}
+            showLoadingOverlay={true}
             initialValues={initialValues}
+            isDirty={this.props.isDirty}
             setInitialUploadState={this.props.setInitialUploadState}
           />
         </div>
@@ -53,6 +64,10 @@ class PhotosPageComponent extends React.Component<any, any> {
   }
 }
 
+const mapStateToProps = state => ({
+  isDirty: isDirty(PHOTOS_FORM_NAME)(state) && !isSubmitting(PHOTOS_FORM_NAME)(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   uploadImages: (itemId: string, files: ImageFile[]) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
@@ -60,4 +75,6 @@ const mapDispatchToProps = (dispatch) => ({
   addImagesToFormState: (images: IImage[]) => dispatch(change('PhotosForm', 'images', images)),
 });
 
-export const PhotosPage = connect(voidFn, mapDispatchToProps)(PhotosPageComponent);
+export const PhotosPage = injectIntl(
+  connect<any, any, IPhotosFormFields>(mapStateToProps, mapDispatchToProps)(PhotosPageComponent),
+);

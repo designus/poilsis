@@ -23,7 +23,7 @@ export const getSubmenu = (cityAlias, types, typesMap) => {
 };
 
 export const MainMenu = (props) => {
-  const {citiesMap, typesMap, selectedCityId, showSubmenu} = props;
+  const {citiesMap, typesMap, selectedCityId, showSubmenu, locale } = props;
 
   return (
     <div className="menu">
@@ -36,11 +36,11 @@ export const MainMenu = (props) => {
             <li key={cityId}>
               <NavLink
                 activeStyle={{ color: 'red' }}
-                to={`${clientRoutes.items.getLink(city.alias)}`}
+                to={`${clientRoutes.items.getLink(locale, city.alias)}`}
               >
                 {city.name}
               </NavLink>
-              {isSubmenuVisible ? getSubmenu(city.alias, types, typesMap) : ''}
+              {/* {isSubmenuVisible ? getSubmenu(city.alias, types, typesMap) : ''} */}
             </li>
           );
         }) : ''}

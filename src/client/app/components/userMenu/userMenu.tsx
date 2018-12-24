@@ -23,7 +23,7 @@ interface IMenuComponentProps extends WithStyles<typeof styles> {
   showKeepMeLoggedModal?: () => void;
 }
 
-class MenuComponent extends React.Component<IMenuComponentProps, any> {
+export class UserMenu extends React.Component<IMenuComponentProps, any> {
 
   state = {
     dropdownAnchorEl: null,
@@ -109,6 +109,6 @@ const mapDispatchToProps = dispatch => ({
   showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal()),
 });
 
-const connectedComponent = connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(MenuComponent);
+const connectedComponent = connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu);
 
-export const UserMenu = withStyles(styles)(connectedComponent);
+export default withStyles(styles)(connectedComponent);

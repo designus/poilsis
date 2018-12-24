@@ -4,11 +4,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContentBox from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
-import { extendWithLoader } from '../loader';
+import { FormattedMessage } from 'react-intl';
+
+import { extendWithLoader } from 'components';
 
 export const DialogContentWrapper = (props) => (
   <DialogContentBox classes={{root: props.contentClass}}>
@@ -20,9 +21,9 @@ export const DialogContentWrapper = (props) => (
 
 export const DialogContent = extendWithLoader(DialogContentWrapper);
 
-export const DialogHeader = ({title, className, closeModal}) => (
+export const DialogHeader = ({className, closeModal, children}) => (
   <DialogTitle>
-    <span>{title}</span>
+    {children}
     <IconButton
       className={className}
       aria-label="Close modal"
@@ -33,16 +34,22 @@ export const DialogHeader = ({title, className, closeModal}) => (
   </DialogTitle>
 );
 
-export const DialogFooter = ({classes, onClose, onSubmit, closeLabel = 'Cancel', submitLabel = 'Proceed'}) => (
+export const DialogFooter = ({
+  classes,
+  onClose,
+  onSubmit,
+  closeLabelId = 'common.cancel',
+  submitLabelId = 'common.proceed',
+}) => (
   <DialogActions classes={{
     root: classes.actionWrapper,
     action: classes.buttonWrapper,
   }}>
     <Button variant="contained" onClick={onClose} className={classes.cancel}>
-      {closeLabel}
+      <FormattedMessage id={closeLabelId} />
     </Button>
     <Button color="primary" variant="contained" onClick={onSubmit} className={classes.submit}>
-      {submitLabel}
+      <FormattedMessage id={submitLabelId} />
     </Button>
   </DialogActions>
 );

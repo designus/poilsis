@@ -10,16 +10,17 @@ import {
   IImage,
   IResponseError,
   mapMimeTypesToTypes,
-  maxFileSize,
-  maxFileCount,
-  wrongFileType,
-  MAX_FILE_SIZE_MB,
-  MAX_FILE_COUNT,
-  ALLOWED_MIME_TYPES,
+  itemValidation,
 } from 'global-utils';
-import { IMAGES_KEY } from 'data-strings';
+
+import {
+  MAX_PHOTO_COUNT,
+  MAX_PHOTO_SIZE,
+  WRONG_FILE_TYPE,
+} from 'data-strings';
 
 import { IMulterFile, FileUploadErrors } from './types';
+import { getValidationMessage } from './validationMessages';
 
 export const checkIfDirectoryExists = promisify(exists);
 export const createDirectory = promisify(mkdir);
@@ -58,24 +59,25 @@ export const getImages = (files: IMulterFile[]): IImage[] => {
 
 export const handleFileUploadErrors = (err, response) => {
   if (err && !response.headersSent) {
+    const { images: { maxPhotos, maxPhotoSizeMegabytes, mimeTypes } } = itemValidation;
     let errorMsg;
 
     switch (err.code) {
       case FileUploadErrors.limitFileSize:
-        errorMsg = maxFileSize(MAX_FILE_SIZE_MB)(IMAGES_KEY);
+        errorMsg = getValidationMessage(MAX_PHOTO_SIZE, maxPhotoSizeMegabytes);
         break;
       case FileUploadErrors.limitFileCount:
-        errorMsg = maxFileCount(MAX_FILE_COUNT)(IMAGES_KEY);
+        errorMsg = getValidationMessage(MAX_PHOTO_COUNT, maxPhotos);
         break;
       case FileUploadErrors.wrongFileType:
-        errorMsg = wrongFileType(mapMimeTypesToTypes(ALLOWED_MIME_TYPES))(IMAGES_KEY);
+        errorMsg = getValidationMessage(WRONG_FILE_TYPE, mapMimeTypesToTypes(mimeTypes));
         break;
       default:
         errorMsg = '';
         break;
     }
 
-    const error: IResponseError = errorMsg ? {errors: {[IMAGES_KEY]: {message: errorMsg}}} : err;
+    const error: IResponseError = errorMsg ? {errors: {images: {message: errorMsg}}} : err;
 
     response.send(error);
 
@@ -125,6 +127,8 @@ export const formatAlias = alias => alias
   .toLowerCase();
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
+  if (res.headersSent) return;
+
   if (err) {
     return next(err);
   }

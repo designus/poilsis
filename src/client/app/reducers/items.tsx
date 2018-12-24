@@ -1,6 +1,14 @@
-import { SELECT_ITEM, RECEIVE_ITEMS, RECEIVE_ITEM, REMOVE_ITEM, RECEIVE_IMAGES, TOGGLE_ITEM_VISIBILITY } from 'actions';
-import { IGenericState, IGenericDataMap } from 'client-utils';
+import { IGenericState, IGenericDataMap, removeItemById } from 'client-utils';
 import { IItemFields } from 'global-utils';
+import {
+  SELECT_ITEM,
+  RECEIVE_ITEMS,
+  RECEIVE_CLIENT_ITEM,
+  REMOVE_ITEM,
+  RECEIVE_IMAGES,
+  TOGGLE_ITEM_VISIBILITY,
+  CLEAR_STATE,
+} from 'actions';
 
 export interface IItem extends IItemFields {
   isFullyLoaded?: boolean;
@@ -13,14 +21,16 @@ export interface IItemsState extends IGenericState<IItem> {
   isAllLoaded?: boolean;
 }
 
-const initialItemsState = {
+const getInitialState = () => ({
   dataMap: {},
   aliases: [],
   isAllLoaded: false,
-};
+});
 
-export const items = (state: IItemsState = initialItemsState, action): IItemsState => {
+export const items = (state: IItemsState = getInitialState(), action): IItemsState => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return getInitialState();
     case SELECT_ITEM:
       return {...state, selectedId: action.itemId};
     case RECEIVE_ITEMS:
@@ -30,7 +40,7 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
         aliases: [...state.aliases, ...action.aliases],
         isAllLoaded: action.isAllLoaded,
       };
-    case RECEIVE_ITEM:
+    case RECEIVE_CLIENT_ITEM:
       return {
         ...state,
         dataMap: {
@@ -54,10 +64,9 @@ export const items = (state: IItemsState = initialItemsState, action): IItemsSta
         },
       };
     case REMOVE_ITEM:
-      const {[action.item.id]: removedItem, ...dataMap} = state.dataMap;
       return {
         ...state,
-        dataMap,
+        dataMap: removeItemById(action.item.id, state.dataMap),
       };
     case RECEIVE_IMAGES:
       return {

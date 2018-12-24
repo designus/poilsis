@@ -1,22 +1,40 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, Link } from 'react-router-dom';
-import { MainMenu, Toast, UserMenu } from 'components';
+import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
+
+import { MainMenu, Toast, UserMenu, LanguageSelector, Loader } from 'components';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
-import { getInitialData, login, logout } from 'actions';
+import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
 import { LoginPage, CityPage } from 'pages';
-import { IAppState } from 'reducers';
+import { IAppState, IItemsMap, ICitiesMap, ITypesMap } from 'reducers';
 
-class ClientLayoutPageComponent extends React.Component<any, any> {
+import { hasInitialDataLoaded, isInitialDataLoading } from 'selectors';
 
-  static fetchData(store) {
-    return store.dispatch(getInitialData());
+interface IMatchParams {
+  cityName: string;
+  locale: string;
+}
+
+interface ILayoutPageParams extends RouteComponentProps<IMatchParams> {
+  hasInitialDataLoaded: boolean;
+  isInitialDataLoading: boolean;
+  itemsMap: IItemsMap;
+  citiesMap: ICitiesMap;
+  typesMap: ITypesMap;
+  isAuthenticated: boolean;
+  getInitialData: (params?: IGetInitialDataParams) => void;
+  login: (credentials: any) => void;
+}
+class ClientLayoutPageComponent extends React.Component<ILayoutPageParams, any> {
+
+  static fetchData(store, params: IMatchParams) {
+    return store.dispatch(getInitialData({ locale: params.locale }));
   }
 
   componentDidMount() {
-    if (!this.props.isInitialDataLoaded) {
+    if (!this.props.hasInitialDataLoaded) {
       removeInjectedStyles();
-      this.props.dispatch(getInitialData());
+      this.props.getInitialData({ locale: this.props.match.params.locale });
     }
   }
 
@@ -38,10 +56,10 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
               <div onClick={this.login({username: 'tomas', password: 'tomas'})}>Log in with user</div>
             </div>
           }
+          <LanguageSelector reloadPageOnChange />
         </div>
         <hr />
         <div className="top-menu">
-          <Link to="/pasiskelbti">Pasiskelbkite</Link>&nbsp;
           <Link to={adminRoutes.items.getLink()}>Admin</Link>
         </div>
         <div className="content">
@@ -55,26 +73,26 @@ class ClientLayoutPageComponent extends React.Component<any, any> {
           This is footer
         </div>
         <Toast />
+        {this.props.isInitialDataLoading && <Loader isLoading />}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    citiesMap: state.cities.dataMap,
-    typesMap: state.types.dataMap,
-    isInitialDataLoaded: state.initialData.isLoaded,
-    isAuthenticated: state.auth.isLoggedIn,
-    user: state.currentUser.details && state.currentUser.details.name,
-  };
-};
+const mapStateToProps = (state: IAppState) => ({
+  citiesMap: state.cities.dataMap,
+  typesMap: state.types.dataMap,
+  hasInitialDataLoaded: hasInitialDataLoaded(state),
+  isInitialDataLoading: isInitialDataLoading(state),
+  isAuthenticated: state.auth.isLoggedIn,
+  user: state.currentUser.details && state.currentUser.details.name,
+  locale: state.locale,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (credentials) => dispatch(login(credentials)),
-    logout: () => dispatch(logout()),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  login: (credentials) => dispatch(login(credentials)),
+  logout: () => dispatch(logout()),
+  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
+});
 
 export const ClientLayoutPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(ClientLayoutPageComponent);

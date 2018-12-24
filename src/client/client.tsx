@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { injectGlobal } from 'styled-components';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import { App } from './app/pages';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ConnectedIntlProvider } from 'components';
 
 const rootElement = document.getElementById('app');
 export const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   overrides: {
     MuiButton: {
       root: {
@@ -41,18 +44,12 @@ export const theme = createMuiTheme({
 render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store} key="provider">
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ConnectedIntlProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ConnectedIntlProvider>
     </Provider>
   </MuiThemeProvider>,
   rootElement,
 );
-
-// tslint:disable-next-line
-injectGlobal`
-  body {
-    padding: 0;
-    margin: 0;
-  }
-`;

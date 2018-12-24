@@ -1,5 +1,5 @@
-import { SELECT_TYPE, RECEIVE_TYPE, REMOVE_TYPE, RECEIVE_INITIAL_DATA } from '../actions';
-import { IGenericState, IGenericDataMap } from '../client-utils';
+import { SELECT_TYPE, RECEIVE_CLIENT_TYPE, REMOVE_TYPE, RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions';
+import { IGenericState, IGenericDataMap } from 'client-utils';
 import { ITypeFields } from 'global-utils';
 
 export interface IType extends ITypeFields {}
@@ -9,16 +9,18 @@ export interface ITypesState extends IGenericState<IType> {
   selectedId?: string;
 }
 
-const initialState = {
+const getInitialState = () => ({
   dataMap: {},
   aliases: [],
-};
+});
 
-export const types = (state: ITypesState = initialState, action): ITypesState => {
+export const types = (state: ITypesState = getInitialState(), action): ITypesState => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return getInitialState();
     case RECEIVE_INITIAL_DATA:
       return {...state, ...action.data.types};
-    case RECEIVE_TYPE:
+    case RECEIVE_CLIENT_TYPE:
       return {
         ...state,
         aliases: [...state.aliases, { id: action.newType.id, alias: action.newType.alias }],

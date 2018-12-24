@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'components';
-import { isRequired, minTextLength, maxTextLength, minCheckedLength, maxCheckedLength, isAdmin } from 'global-utils';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
+import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
 
-const minTextLength3 = minTextLength(3);
-const maxTextLength15 = maxTextLength(15);
-const minCheckedLength1 = minCheckedLength(1);
-const maxCheckedLength3 = maxCheckedLength(3);
+const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
+const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
 export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
 
@@ -16,30 +15,43 @@ interface ICustomProps {
   typesMap: ITypesMap;
   usersMap: IUsersMap;
   userRole: string;
+  formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
+  selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
-  const { handleSubmit, submitting, pristine } = props;
+  const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage } = props;
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
         name="name"
         type="text"
         component={TextInput}
-        validate={[isRequired, minTextLength3, maxTextLength15]}
-        label="Name"
+        validate={[isRequired]}
+        label={formatMessage({ id: 'admin.common_fields.name'})}
+        intl
+        selectedLanguage={selectedLanguage}
+      />
+      <Field
+        name="alias"
+        type="text"
+        component={TextInput}
+        label={formatMessage({ id: 'admin.common_fields.alias'})}
       />
       <Field
         name="address"
         type="text"
+        validate={[isRequired]}
         component={TextInput}
-        label="Address"
+        label={formatMessage({ id: 'admin.common_fields.address'})}
       />
       <Field
         name="cityId"
         component={SelectBox}
         validate={[isRequired]}
-        label="City"
+        label={formatMessage({ id: 'admin.common_fields.city'})}
+        // TODO: pass cities array directly
         data={props.citiesMap}
         dataKey="name"
       />
@@ -48,7 +60,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
           name="userId"
           component={SelectBox}
           validate={[isRequired]}
-          label="User"
+          label={formatMessage({ id: 'admin.common_fields.user'})}
           data={props.usersMap}
           dataKey="name"
         />
@@ -56,8 +68,8 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
       <Field
         name="types"
         component={CheckboxGroup}
-        validate={[minCheckedLength1, maxCheckedLength3]}
-        label="Types"
+        validate={[minTypesCount, maxTypesCount]}
+        label={formatMessage({ id: 'admin.common_fields.types'})}
         data={props.typesMap}
         dataKey="name"
       />
@@ -65,12 +77,12 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         <Field
           name="isEnabled"
           component={Switcher}
-          label="Is Enabled"
+          label={formatMessage({ id: 'admin.common_fields.is_enabled'})}
         />
       }
       <div>
         <Button type="submit" disabled={submitting || pristine}>
-          Submit
+          <FormattedMessage id="common.submit" />
         </Button>
       </div>
     </form>

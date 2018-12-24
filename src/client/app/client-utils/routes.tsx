@@ -43,18 +43,18 @@ export type RoutesConfig = {
 
 export const clientRoutes: RoutesConfig = {
   landing: {
-    path: '/',
-    getLink: () => '/',
+    path: '/:locale?',
+    getLink: (locale: string) => `/${locale}`,
     getComponent: () => ClientLayoutPage,
   },
   items: {
-    path: '/:cityName',
-    getLink: (cityName) => `/${cityName}`,
+    path: '/:locale/:cityName',
+    getLink: (locale: string, cityName: string) => `/${locale}/${cityName}`,
     getComponent: () => CityPage,
   },
   item: {
-    path: '/:cityName/:item',
-    getLink: (cityName, itemName) => `/${cityName}/${itemName}`,
+    path: '/:locale/:cityName/:item',
+    getLink: (locale: string, cityName: string, itemName: string) => `/${locale}/${cityName}/${itemName}`,
     getComponent: () => ItemPage,
   },
 };

@@ -2,6 +2,7 @@
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 const shortId = require('shortid');
+import { requiredMessage } from '../server-utils';
 
 export interface IUser extends mongoose.Document {
   name: string;
@@ -14,15 +15,20 @@ export interface IUser extends mongoose.Document {
 const usersSchema = new mongoose.Schema({
   name: String,
   role: String,
-  id: {type: String, unique: true, default: shortId.generate, required: true},
+  id: {
+    type: String,
+    unique: true,
+    default: shortId.generate,
+    required: [true, requiredMessage],
+  },
   username: {
     type: String,
-    required: [true, 'Username is required'],
+    required: [true, requiredMessage],
     unique: true,
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
+    required: [true, requiredMessage],
   },
 }, {
   timestamps: {

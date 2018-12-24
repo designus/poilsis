@@ -9,6 +9,9 @@ export const styles = (theme: Theme) => createStyles({
   formControl: {
     width: INPUT_WIDTH,
   },
+  hidden: {
+    display: 'none',
+  },
   error: {
     '&:after': {
       backgroundColor: ERROR_COLOR,
