@@ -32,8 +32,6 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         type="text"
         component={TextInput}
         label={formatMessage({ id: 'admin.common_fields.alias' })}
-        intl
-        selectedLanguage={selectedLanguage}
       />
       <Field
         name="types"

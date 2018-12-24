@@ -32,7 +32,6 @@ const TypesSchemaMap: ITypeSchema = {
     trim: true,
     required: [true, requiredMessage],
     set: formatAlias,
-    intl: true,
   },
 };
 

@@ -3,9 +3,8 @@ import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'components';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
-import { isAdmin, itemValidation, isRequired, minTextLength, minCheckedCount, maxCheckedCount } from 'global-utils';
+import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
 
-// const minNameLength = minTextLength(itemValidation.name.minTextLength);
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
@@ -39,8 +38,6 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         type="text"
         component={TextInput}
         label={formatMessage({ id: 'admin.common_fields.alias'})}
-        intl
-        selectedLanguage={selectedLanguage}
       />
       <Field
         name="address"

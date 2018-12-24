@@ -29,7 +29,6 @@ const schemaMap: ICitySchema = {
     trim: true,
     required: [true, requiredMessage],
     set: formatAlias,
-    intl: true,
   },
 };
 
