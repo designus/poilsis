@@ -8,19 +8,16 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
+import { IDropdownOption } from 'client-utils';
 import { styles } from './styles';
-import { IGenericDataMap } from 'client-utils';
 
 export interface ISelectboxProps extends WrappedFieldProps, WithStyles<typeof styles> {
-  data: IGenericDataMap<object>;
-  dataKey: string;
+  options: IDropdownOption[];
 }
 
 const SelectBoxComponent = (props: ISelectboxProps) => {
-  const { data, classes, meta, input, label, dataKey } = props;
-  const isDataArray = data.constructor === Array;
+  const { classes, meta, input, label, options } = props;
   const showError = Boolean(meta.touched && meta.invalid && meta.error);
-  const options: any = isDataArray ? data : Object.keys(data);
 
   return (
     <div className={classes.wrapper}>
@@ -34,14 +31,13 @@ const SelectBoxComponent = (props: ISelectboxProps) => {
             input={<Input classes={{ root: classes.root }} id="select" />}
           >
             {
-              options.map((option, i) => {
-                const primaryText = isDataArray ? option : data[option][dataKey];
+              options.map((option: IDropdownOption) => {
                 return (
                   <MenuItem
-                    value={option}
-                    key={i}
+                    value={option.value}
+                    key={option.value}
                   >
-                    {primaryText}
+                    {option.label}
                   </MenuItem>
                 );
               })

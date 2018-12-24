@@ -3,6 +3,7 @@ import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
 import { TextInput, CheckboxGroup, Button } from 'components';
+import { getDropdownOptions, IDropdownOption } from 'client-utils';
 import { isRequired } from 'global-utils';
 import { ITypesMap } from 'reducers';
 
@@ -10,6 +11,7 @@ export const CITY_FORM_NAME = 'CityForm';
 
 interface ICustomProps {
   typesMap: ITypesMap;
+  options: IDropdownOption[];
   selectedLanguage?: string;
   formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
 }
@@ -37,8 +39,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         name="types"
         component={CheckboxGroup}
         label={formatMessage({ id: 'admin.common_fields.types' })}
-        data={props.typesMap}
-        dataKey="name"
+        options={getDropdownOptions(props.typesMap, 'name')}
       />
       <Field
         name="description"

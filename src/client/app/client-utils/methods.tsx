@@ -1,19 +1,9 @@
 import * as React from 'react';
 import * as FormData from 'form-data';
+import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils';
-import { IGenericState } from './types';
-import { IItem, IItemsMap, ICityState, ICityItems } from '../reducers';
-
-export function getSelectedCity(citiesState: ICityState, cityAlias: string) {
-  return new Promise((resolve, reject) => {
-    const selectedCity = citiesState.aliases.find(({ alias }) => alias === cityAlias);
-    if (selectedCity) {
-      resolve(selectedCity);
-    } else {
-      reject('City is not available');
-    }
-  });
-}
+import { IItem, IItemsMap, ICityItems } from 'reducers';
+import { IGenericState, IGenericDataMap, IDropdownOption } from './types';
 
 export const getCityItems = (dataMap: IItemsMap, haveAllItemsLoaded: boolean) => {
   return Object.keys(dataMap).reduce((acc: ICityItems, itemId: string) => {
@@ -102,3 +92,8 @@ export const removeItemById = (id: string, dataMap: Record<string, any>) => {
 };
 
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
+
+export const getDropdownOptions = memoize(
+  (dataMap: IGenericDataMap<object>, labelKey: string): IDropdownOption[] =>
+    Object.values(dataMap).map((item: any) => ({ label: item[labelKey], value: item.id })),
+);

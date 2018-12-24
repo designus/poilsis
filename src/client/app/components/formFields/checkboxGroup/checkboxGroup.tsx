@@ -8,12 +8,11 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import { IGenericDataMap } from 'client-utils';
+import { IDropdownOption } from 'client-utils';
 import { styles } from './styles';
 
 export interface ICheckboxGroupParams extends WrappedFieldProps, WithStyles<typeof styles> {
-  data: IGenericDataMap<object>;
-  dataKey: string;
+  options: IDropdownOption[];
 }
 
 class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
@@ -28,37 +27,34 @@ class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
     return this.props.input.onChange(newValue);
   }
 
-  renderCheckbox = (value: string[]) => {
+  renderCheckbox = (option: IDropdownOption) => {
     const { input, classes } = this.props;
     return (
       <Checkbox
         className={classes.checkbox}
-        checked={input.value.indexOf(value) !== -1}
-        onChange={this.onChange(value)}
+        checked={input.value.indexOf(option.value) !== -1}
+        onChange={this.onChange(option.value)}
       />
     );
   }
 
-  renderOption = (isDataArray: boolean) => (option) => {
-    const { data, classes, dataKey } = this.props;
-    const checkboxLabel = isDataArray ? option : data[option][dataKey];
+  renderOption = (option: IDropdownOption) => {
     return (
       <FormControlLabel
-        key={option}
+        key={option.value}
         classes={{
-          root: classes.formControlLabel,
+          root: this.props.classes.formControlLabel,
         }}
         control={this.renderCheckbox(option)}
-        label={checkboxLabel}
+        label={option.label}
       />
     );
   }
 
   render() {
-    const { data, classes, label, meta } = this.props;
+    const { classes, label, meta, options } = this.props;
     const showError = Boolean(meta.touched && meta.invalid && meta.error);
-    const isDataArray = data.constructor === Array;
-    const options: any = isDataArray ? data : Object.keys(data);
+
     return (
       <div className={classes.wrapper}>
         <Tooltip open={showError} title={meta.error || ''} placement="right-end">
@@ -66,7 +62,7 @@ class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
             <FormLabel classes={{root: classes.label}} error={showError}>{label}</FormLabel>
             <FormGroup row>
               {
-                options.map(this.renderOption(isDataArray))
+                options.map(this.renderOption)
               }
             </FormGroup>
           </FormControl>

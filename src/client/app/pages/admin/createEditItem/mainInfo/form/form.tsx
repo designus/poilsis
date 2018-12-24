@@ -3,6 +3,7 @@ import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'components';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
+import { getDropdownOptions } from 'client-utils';
 import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
 
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
@@ -51,9 +52,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={SelectBox}
         validate={[isRequired]}
         label={formatMessage({ id: 'admin.common_fields.city'})}
-        // TODO: pass cities array directly
-        data={props.citiesMap}
-        dataKey="name"
+        options={getDropdownOptions(props.citiesMap, 'name')}
       />
       {isAdmin(props.userRole) &&
         <Field
@@ -62,7 +61,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
           validate={[isRequired]}
           label={formatMessage({ id: 'admin.common_fields.user'})}
           data={props.usersMap}
-          dataKey="name"
+          options={getDropdownOptions(props.usersMap, 'name')}
         />
       }
       <Field
@@ -70,8 +69,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={CheckboxGroup}
         validate={[minTypesCount, maxTypesCount]}
         label={formatMessage({ id: 'admin.common_fields.types'})}
-        data={props.typesMap}
-        dataKey="name"
+        options={getDropdownOptions(props.typesMap, 'name')}
       />
       {isAdmin(props.userRole) &&
         <Field
