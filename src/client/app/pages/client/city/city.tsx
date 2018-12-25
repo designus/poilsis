@@ -2,10 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, ICityState, IItemsState, ITypesState, ICity } from 'reducers';
-import { getCityItems } from 'actions';
+import { IAppState, ICityState, IItemsState, ITypesState, ICity, IItem } from 'reducers';
+import { loadCityItems } from 'actions';
 import { CONTENT_LOADER_ID } from 'client-utils';
 import { ItemsList, NotFound, extendWithLoader } from 'components';
+import { getCityItems, getSelectedCity } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
@@ -19,6 +20,7 @@ interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   cities: ICityState;
   types: ITypesState;
   selectedCity: ICity;
+  cityItems: IItem[];
   dispatch: () => void;
 }
 
@@ -31,7 +33,7 @@ export const fetchCitiesData = (cityState: ICityState, routeParams: IMatchParams
       reject('City is not available');
     }
   })
-  .then(({ id: cityId }) => dispatch(getCityItems(cityId, routeParams.locale)))
+  .then(({ id: cityId }) => dispatch(loadCityItems(cityId, routeParams.locale)))
   .catch(console.error);
 };
 
@@ -54,31 +56,26 @@ class CityPageComponent extends React.Component<ICityPageParams, any> {
   }
 
   render() {
-    const { selectedCity, items, types } = this.props;
+    const { selectedCity, types, cityItems } = this.props;
 
-    if (selectedCity) {
-      return (
-        <div>
-          <h1>{selectedCity.name}</h1>
-          <p>{selectedCity.description}</p>
-          <ItemsListWithLoader
-            loaderId={CONTENT_LOADER_ID}
-            items={selectedCity.items}
-            itemsMap={items.dataMap}
-            typesMap={types.dataMap}
-          />
-        </div>
-      );
-    } else {
-      return <NotFound/>;
-    }
+    return selectedCity ? (
+      <div>
+        <h1>{selectedCity.name}</h1>
+        <p>{selectedCity.description}</p>
+        <ItemsListWithLoader
+          loaderId={CONTENT_LOADER_ID}
+          items={cityItems}
+          typesMap={types.dataMap}
+        />
+      </div>
+    ) : <NotFound/>;
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  selectedCity: state.cities.dataMap[state.cities.selectedId],
+  selectedCity: getSelectedCity(state),
+  cityItems: getCityItems(state),
   cities: state.cities,
-  items: state.items,
   types: state.types,
 });
 

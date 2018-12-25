@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils';
-import { IItem, IItemsMap, ICityItems } from 'reducers';
 import { IGenericState, IGenericDataMap, IDropdownOption } from './types';
 
 export const getCityItems = (dataMap: IItemsMap, haveAllItemsLoaded: boolean) => {

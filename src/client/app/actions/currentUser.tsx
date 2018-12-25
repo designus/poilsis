@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getNormalizedData, getCityItems, CONTENT_LOADER_ID, GLOBAL_LOADER_ID, setAcceptLanguageHeader } from 'client-utils';
-import { startLoading, endLoading, receiveItems, receiveCityItems } from 'actions';
+import { getNormalizedData, CONTENT_LOADER_ID, setAcceptLanguageHeader } from 'client-utils';
+import { startLoading, endLoading, receiveItems } from 'actions';
 import { IAppState, ICurrentUser } from 'reducers';
 import { isAdmin } from 'global-utils';
 import { getLocale } from 'selectors';
@@ -41,13 +41,11 @@ export const getUserItems = () => (dispatch, getState) => {
   return axios.get(endpoint, setAcceptLanguageHeader(getLocale(state)))
     .then(response => response.data)
     .then(data => {
-      const { dataMap: itemsMap, aliases } = getNormalizedData(data);
-      const areAllItemsLoaded = isAdministrator;
-      const cityItems = getCityItems(itemsMap, areAllItemsLoaded);
-      const userItems = Object.keys(itemsMap);
+      const { dataMap, aliases } = getNormalizedData(data);
+      const isAllLoaded = isAdministrator;
+      const userItems = Object.keys(dataMap);
 
-      dispatch(receiveItems(itemsMap, aliases, areAllItemsLoaded));
-      dispatch(receiveCityItems(cityItems));
+      dispatch(receiveItems({ dataMap, aliases, isAllLoaded }));
       dispatch(receiveUserItems(userItems));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })

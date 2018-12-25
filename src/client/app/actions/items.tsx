@@ -41,16 +41,22 @@ export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
 export const TOGGLE_ITEM_VISIBILITY = 'TOGGLE_ITEM_VISIBILITY';
 export const RECEIVE_CLIENT_ITEM = 'RECEIVE_CLIENT_ITEM';
 
+interface IReceiveItemsProps {
+  dataMap: IItemsMap;
+  aliases: IAlias[];
+  isAllLoaded?: boolean;
+  cityId?: string;
+  userId?: string;
+}
+
 export const selectItem = (itemId: string) => ({
   type: SELECT_ITEM,
   itemId,
 });
 
-export const receiveItems = (dataMap: IItemsMap, aliases: IAlias[], isAllLoaded: boolean) => ({
+export const receiveItems = (props: IReceiveItemsProps) => ({
   type: RECEIVE_ITEMS,
-  dataMap,
-  aliases,
-  isAllLoaded,
+  ...props,
 });
 
 export const receiveClientItem = (item: IItem) => ({

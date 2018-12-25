@@ -1,50 +1,23 @@
 import { ICityFields } from 'global-utils';
-import { IGenericState, removeDuplicates, removeItemById, IGenericDataMap } from 'client-utils';
+import { IGenericState, removeItemById, IGenericDataMap } from 'client-utils';
 import {
   SELECT_CITY,
   RECEIVE_INITIAL_DATA,
-  RECEIVE_CITY_ITEMS,
-  REMOVE_CITY_ITEM,
-  ADD_CITY_ITEM,
   RECEIVE_CLIENT_CITY,
   REMOVE_CITY,
   CLEAR_STATE,
+  RECEIVE_ITEMS,
 } from 'actions';
 
-export interface ICityItems {
-  items: string[];
-  haveAllItemsLoaded: boolean;
+export interface ICity extends ICityFields {
+  isItemsLoaded: boolean;
 }
-
-export interface ICitiesItems {
-  [key: string]: ICityItems;
-}
-
-export interface ICity extends ICityFields, ICityItems {}
 
 export type ICitiesMap = IGenericDataMap<ICity>;
 
 export interface ICityState extends IGenericState<ICity> {
   selectedId?: string;
 }
-
-export const changeCityItem = (removeItem: boolean) => (cityItems: string[], itemId): string[] => {
-  if (removeItem) {
-    return [...cityItems.filter(id => id !== itemId)];
-  } else {
-    return [...cityItems, itemId].filter(removeDuplicates);
-  }
-};
-
-export const mergeCityItems = (citiesMap: ICitiesMap, cityItems: ICitiesItems) => {
-  return Object.keys(citiesMap).reduce((acc: ICitiesMap, cityId: string) => {
-    acc[cityId] = {...citiesMap[cityId], ...cityItems[cityId]};
-    return acc;
-  }, {});
-};
-
-export const removeCityItem = changeCityItem(true);
-export const addCityItem = changeCityItem(false);
 
 const getInitialState = () => ({
   dataMap: {},
@@ -56,7 +29,23 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
     case CLEAR_STATE:
       return getInitialState();
     case SELECT_CITY:
-      return {...state, selectedId: action.cityId};
+      return {
+        ...state,
+        selectedId: action.cityId,
+      };
+    case RECEIVE_ITEMS:
+      return action.cityId ?
+        {
+          ...state,
+          dataMap: {
+            ...state.dataMap,
+            [action.cityId]: {
+              ...state.dataMap[action.cityId],
+              isItemsLoaded: true,
+            },
+          },
+        }
+      : state;
     case RECEIVE_CLIENT_CITY:
       return {
         ...state,
@@ -76,31 +65,9 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
         aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)],
       };
     case RECEIVE_INITIAL_DATA:
-      return {...state, ...action.data.cities};
-    case RECEIVE_CITY_ITEMS:
       return {
         ...state,
-        dataMap: mergeCityItems(state.dataMap, action.items),
-      };
-    case REMOVE_CITY_ITEM:
-      return {
-        ...state,
-        dataMap: {
-          [action.cityId]: {
-            ...state.dataMap[action.cityId],
-            items: removeCityItem(state.dataMap[action.cityId].items, action.itemId),
-          },
-        },
-      };
-    case ADD_CITY_ITEM:
-      return {
-        ...state,
-        dataMap: {
-          [action.cityId]: {
-            ...state.dataMap[action.cityId],
-            items: addCityItem(state.dataMap[action.cityId].items, action.itemId),
-          },
-        },
+        ...action.data.cities,
       };
     default:
       return state;

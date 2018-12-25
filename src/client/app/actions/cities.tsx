@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { ICityFields, TCityFields } from 'global-utils';
-import { ICitiesItems, IAppState } from 'reducers';
+import { IAppState } from 'reducers';
 import { startLoading, endLoading, receiveItems } from 'actions';
 import {
   CITY_CREATE_SUCCESS,
@@ -17,32 +17,12 @@ import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { receiveAdminCity } from './admin';
 
 export const SELECT_CITY = 'SELECT_CITY';
-export const RECEIVE_CITY_ITEMS = 'RECEIVE_CITY_ITEMS';
-export const ADD_CITY_ITEM = 'ADD_CITY_ITEM';
-export const REMOVE_CITY_ITEM = 'REMOVE_CITY_ITEM';
 export const RECEIVE_CLIENT_CITY = 'RECEIVE_CLIENT_CITY';
 export const REMOVE_CITY = 'REMOVE_CITY';
 
 export const selectCity = (cityId: string) => ({
   type: SELECT_CITY,
   cityId,
-});
-
-export const receiveCityItems = (items: ICitiesItems) => ({
-  type: RECEIVE_CITY_ITEMS,
-  items,
-});
-
-export const removeCityItem = (cityId: string, itemId: string) => ({
-  type: REMOVE_CITY_ITEM,
-  cityId,
-  itemId,
-});
-
-export const addCityItem = (cityId: string, itemId: string) => ({
-  type: ADD_CITY_ITEM,
-  cityId,
-  itemId,
 });
 
 export const receiveClientCity = (newCity: ICityFields) => ({
@@ -55,19 +35,18 @@ export const removeCity = (cityId: string) => ({
   cityId,
 });
 
-export const getCityItems = (cityId: string, locale: string) => {
+export const loadCityItems = (cityId: string, locale: string) => {
   return (dispatch, getState) => {
 
     const state: IAppState = getState();
     const selectedCity = state.cities.dataMap[cityId];
     const items = state.items;
     const haveAllItemsLoaded = items.isAllLoaded;
-    const haveAllCityItemsLoaded = selectedCity.haveAllItemsLoaded;
     const language = locale || getLocale(state);
 
     dispatch(selectCity(cityId));
 
-    if (!selectedCity || haveAllItemsLoaded || haveAllCityItemsLoaded) {
+    if (!selectedCity || haveAllItemsLoaded || selectedCity.isItemsLoaded) {
       return;
     }
 
@@ -80,17 +59,9 @@ export const getCityItems = (cityId: string, locale: string) => {
       .then(response => response.data)
       .then(data => {
 
-        const { dataMap: itemsMap, aliases } = getNormalizedData(data);
-        const areAllItemsLoaded = false;
-        const cityItems = {
-          [cityId]: {
-            items: Object.keys(itemsMap),
-            haveAllItemsLoaded: true,
-          },
-        };
+        const { dataMap, aliases } = getNormalizedData(data);
 
-        dispatch(receiveItems(itemsMap, aliases, areAllItemsLoaded));
-        dispatch(receiveCityItems(cityItems));
+        dispatch(receiveItems({ dataMap, aliases, cityId }));
         dispatch(endLoading(CONTENT_LOADER_ID));
 
       })
