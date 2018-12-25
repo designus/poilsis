@@ -10,7 +10,7 @@ import {
 } from 'actions';
 
 export interface ICity extends ICityFields {
-  isItemsLoaded: boolean;
+  haveCityItemsLoaded: boolean;
 }
 
 export type ICitiesMap = IGenericDataMap<ICity>;
@@ -41,7 +41,7 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
             ...state.dataMap,
             [action.cityId]: {
               ...state.dataMap[action.cityId],
-              isItemsLoaded: true,
+              haveCityItemsLoaded: true,
             },
           },
         }

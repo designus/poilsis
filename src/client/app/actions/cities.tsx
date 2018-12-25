@@ -41,12 +41,11 @@ export const loadCityItems = (cityId: string, locale: string) => {
     const state: IAppState = getState();
     const selectedCity = state.cities.dataMap[cityId];
     const items = state.items;
-    const haveAllItemsLoaded = items.isAllLoaded;
     const language = locale || getLocale(state);
 
     dispatch(selectCity(cityId));
 
-    if (!selectedCity || haveAllItemsLoaded || selectedCity.isItemsLoaded) {
+    if (!selectedCity || items.isAllLoaded || selectedCity.haveCityItemsLoaded) {
       return;
     }
 

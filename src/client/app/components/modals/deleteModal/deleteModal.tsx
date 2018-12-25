@@ -18,19 +18,12 @@ export interface IDeleteModalProps extends Partial<WithStyles<typeof modalStyles
 
 class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
 
-  state = {
-    error: null,
-  };
-
   deleteItem = () => {
-    this.props.onDelete(this.props.itemId)
-      .then(() => this.props.onClose())
-      .catch(error => this.setState({ error }));
+    this.props.onDelete(this.props.itemId).then(() => this.props.onClose());
   }
 
   render() {
     const { classes, itemName, onClose, isModalOpen } = this.props;
-    const { error } = this.state;
     return (
       <div>
         <Dialog
@@ -47,7 +40,6 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
             <FormattedMessage id="admin.delete_modal.title" values={{ item: itemName }}/>
           </DialogHeader>
           <DialogContent
-            error={error}
             showLoadingOverlay={true}
             loaderId={DIALOG_LOADER_ID}
             contentClass={classes.dialogContent}

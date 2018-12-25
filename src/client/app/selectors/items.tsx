@@ -6,7 +6,7 @@ export const shouldLoadItems = (state: IAppState) => {
 };
 
 export const shouldLoadItem = (state: IAppState, itemId: string) => {
-  return !state.loader.content && !state.admin.items[itemId] && hasInitialDataLoaded(state);
+  return itemId && !state.loader.content && !state.admin.items[itemId] && hasInitialDataLoaded(state);
 };
 
 export const getItems = (state: IAppState): IItemsMap => state.items.dataMap;

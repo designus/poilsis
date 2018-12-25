@@ -41,11 +41,10 @@ class CityPageComponent extends React.Component<ICityPageParams, any> {
 
   static fetchData(store, params: IMatchParams) {
     const appState: IAppState = store.getState();
-    const cityState = appState.cities;
-    return fetchCitiesData(cityState, params, store.dispatch);
+    return fetchCitiesData(appState.cities, params, store.dispatch);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: ICityPageParams) {
     if (this.props.location !== prevProps.location) {
       fetchCitiesData(this.props.cities, this.props.match.params, this.props.dispatch);
     }

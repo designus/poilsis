@@ -4,22 +4,6 @@ import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils';
 import { IGenericState, IGenericDataMap, IDropdownOption } from './types';
 
-export const getCityItems = (dataMap: IItemsMap, haveAllItemsLoaded: boolean) => {
-  return Object.keys(dataMap).reduce((acc: ICityItems, itemId: string) => {
-    const item: IItem = dataMap[itemId];
-    const state = acc[item.cityId];
-    if (state) {
-      state.items.push(itemId);
-    } else {
-      acc[item.cityId] = {
-        items: [itemId],
-        haveAllItemsLoaded,
-      };
-    }
-    return acc;
-  }, {});
-};
-
 export function getNormalizedData(data: any[]) {
   return data.reduce((acc: IGenericState<object>, item: any) => {
     acc.dataMap[item.id] = item;

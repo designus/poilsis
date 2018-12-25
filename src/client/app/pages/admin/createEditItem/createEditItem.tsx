@@ -64,9 +64,10 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
   }
 
   componentDidUpdate(props: ICreateEditItemPageProps) {
+    const { match, getItem, shouldLoadItem } = this.props;
     // When we navigate from create page to update we need to load updated city
-    if (!isEqual(props.match.params, this.props.match.params) || this.props.shouldLoadItem) {
-      this.props.getItem(this.props.match.params.itemId);
+    if (!isEqual(props.match.params, match.params) || shouldLoadItem) {
+      getItem(match.params.itemId);
     }
   }
 
