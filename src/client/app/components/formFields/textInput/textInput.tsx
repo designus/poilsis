@@ -54,7 +54,7 @@ class InputComponent extends React.Component<ITextInputProps, any> {
     this.onChange(newState);
   }
 
-  updateStoreValue = (value) => {
+  updateStoreValue = (value: string) => {
     this.props.input.onChange(value);
   }
 

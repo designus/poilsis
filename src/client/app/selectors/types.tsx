@@ -3,7 +3,7 @@ import { IAppState, ITypesMap } from 'reducers';
 import { hasInitialDataLoaded } from 'selectors';
 
 export const shouldLoadType = (state: IAppState, typeId: string) => {
-  return !state.loader.content && !state.admin.types[typeId] && hasInitialDataLoaded(state);
+  return typeId && !state.loader.content && !state.admin.types[typeId] && hasInitialDataLoaded(state);
 };
 
 export const getTypesMap = (state: IAppState): ITypesMap => state.types.dataMap;

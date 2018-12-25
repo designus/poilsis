@@ -3,7 +3,7 @@ import { IAppState, ICity, ICitiesMap, IItemsMap, IItem } from 'reducers';
 import { hasInitialDataLoaded, getItemsMap } from 'selectors';
 
 export const shouldLoadCity = (state: IAppState, cityId: string) => {
-  return !state.loader.content && !state.admin.cities[cityId] && hasInitialDataLoaded(state);
+  return cityId && !state.loader.content && !state.admin.cities[cityId] && hasInitialDataLoaded(state);
 };
 
 export const getSelectedCity = (state: IAppState) => state.cities.dataMap[state.cities.selectedId];
