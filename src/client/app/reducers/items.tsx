@@ -18,13 +18,13 @@ export type IItemsMap = IGenericDataMap<IItem>;
 
 export interface IItemsState extends IGenericState<IItem> {
   selectedId?: string;
-  isAllLoaded?: boolean;
+  hasAllItems?: boolean;
 }
 
-const getInitialState = () => ({
+const getInitialState = (): IItemsState => ({
   dataMap: {},
   aliases: [],
-  isAllLoaded: false,
+  hasAllItems: false,
 });
 
 export const items = (state: IItemsState = getInitialState(), action): IItemsState => {
@@ -38,7 +38,7 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
         ...state,
         dataMap: {...state.dataMap, ...action.dataMap},
         aliases: [...state.aliases, ...action.aliases],
-        isAllLoaded: action.isAllLoaded,
+        hasAllItems: action.hasAllItems,
       };
     case RECEIVE_CLIENT_ITEM:
       return {

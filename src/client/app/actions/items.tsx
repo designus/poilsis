@@ -44,7 +44,7 @@ export const RECEIVE_CLIENT_ITEM = 'RECEIVE_CLIENT_ITEM';
 interface IReceiveItemsProps {
   dataMap: IItemsMap;
   aliases: IAlias[];
-  isAllLoaded?: boolean;
+  hasAllItems?: boolean;
   cityId?: string;
   userId?: string;
 }

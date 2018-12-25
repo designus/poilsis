@@ -1,4 +1,4 @@
-import { RECEIVE_USER_ITEMS, RECEIVE_USER_DETAILS, REMOVE_ITEM, LOGOUT_SUCCESS, CLEAR_STATE } from 'actions';
+import { RECEIVE_USER_DETAILS, RECEIVE_ITEMS, LOGOUT_SUCCESS, CLEAR_STATE } from 'actions';
 
 export interface ICurrentUser {
   name?: string;
@@ -8,44 +8,31 @@ export interface ICurrentUser {
 
 export interface ICurrentUserState {
   details: ICurrentUser;
-  items: string[];
-  isAllLoaded?: boolean;
+  hasItems?: boolean;
 }
 
 const getInitialState = () => ({
   details: {},
-  items: [],
-  isAllLoaded: false,
+  hasItems: false,
 });
 
 export const currentUser = (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
   switch (action.type) {
-    case CLEAR_STATE:
-      return {
-        ...state,
-        isAllLoaded: false,
-      };
+    case RECEIVE_ITEMS:
+      return action.userId ? { ...state, hasItems: true } : state;
     case RECEIVE_USER_DETAILS: {
       return {
         ...state,
         details: action.userDetails,
       };
     }
+    case CLEAR_STATE:
+      return {
+        ...state,
+        hasItems: false,
+      };
     case LOGOUT_SUCCESS: {
       return getInitialState();
-    }
-    case RECEIVE_USER_ITEMS: {
-      return {
-        ...state,
-        items: action.userItems,
-        isAllLoaded: true,
-      };
-    }
-    case REMOVE_ITEM: {
-      return {
-        ...state,
-        items: state.items.filter(itemId => itemId !== action.item.id),
-      };
     }
     default:
       return state;

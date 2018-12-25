@@ -10,7 +10,7 @@ import {
 } from 'actions';
 
 export interface ICity extends ICityFields {
-  haveCityItemsLoaded: boolean;
+  hasItems: boolean;
 }
 
 export type ICitiesMap = IGenericDataMap<ICity>;
@@ -41,7 +41,7 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
             ...state.dataMap,
             [action.cityId]: {
               ...state.dataMap[action.cityId],
-              haveCityItemsLoaded: true,
+              hasItems: true,
             },
           },
         }
@@ -49,7 +49,10 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
     case RECEIVE_CLIENT_CITY:
       return {
         ...state,
-        aliases: [...state.aliases, { id: action.newCity.id, alias: action.newCity.alias }],
+        aliases: [
+          ...state.aliases,
+          { id: action.newCity.id, alias: action.newCity.alias },
+        ],
         dataMap: {
           ...state.dataMap,
           [action.newCity.id]: {

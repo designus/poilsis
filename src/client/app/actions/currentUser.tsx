@@ -5,34 +5,23 @@ import { IAppState, ICurrentUser } from 'reducers';
 import { isAdmin } from 'global-utils';
 import { getLocale } from 'selectors';
 
-export const RECEIVE_USER_ITEMS = 'RECEIVE_USER_ITEMS';
 export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
 
-export const receiveUserItems = (userItems: string[]) => {
-  return {
-    type: RECEIVE_USER_ITEMS,
-    userItems,
-  };
-};
+export const receiveUserDetails = (userDetails: ICurrentUser) => ({
+  type: RECEIVE_USER_DETAILS,
+  userDetails,
+});
 
-export const receiveUserDetails = (userDetails: ICurrentUser) => {
-  return {
-    type: RECEIVE_USER_DETAILS,
-    userDetails,
-  };
-};
-
-export const getUserItems = () => (dispatch, getState) => {
+export const loadUserItems = () => (dispatch, getState) => {
   const state: IAppState = getState();
   const { currentUser } = state;
   const user = currentUser.details;
-  const isAllItemsLoaded = currentUser.isAllLoaded;
   const isAdministrator = isAdmin(user.role);
   const endpoint = isAdministrator ?
     'http://localhost:3000/api/items' :
     `http://localhost:3000/api/items/user/${user.id}`;
 
-  if (isAllItemsLoaded) {
+  if (currentUser.hasItems) {
     return;
   }
 
@@ -42,11 +31,9 @@ export const getUserItems = () => (dispatch, getState) => {
     .then(response => response.data)
     .then(data => {
       const { dataMap, aliases } = getNormalizedData(data);
-      const isAllLoaded = isAdministrator;
-      const userItems = Object.keys(dataMap);
+      const hasAllItems = isAdministrator;
 
-      dispatch(receiveItems({ dataMap, aliases, isAllLoaded }));
-      dispatch(receiveUserItems(userItems));
+      dispatch(receiveItems({ dataMap, aliases, hasAllItems, userId: user.id }));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {

@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux';
 import Typography from '@material-ui/core/Typography';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
-import { getUserItems, deleteItem, endLoading, toggleItem } from 'actions';
+import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap, IItem } from 'reducers';
+import { loadUserItems, deleteItem, endLoading, toggleItem } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { shouldLoadItems } from 'selectors';
+import { shouldLoadItems, getUserItems } from 'selectors';
 import { AdminHeader } from 'global-styles';
 import {
   EnhancedTable,
@@ -28,9 +28,9 @@ interface IItemsPageParams extends InjectedIntlProps {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   shouldLoadItems: boolean;
-  userItems: string[];
+  userItems: IItem[];
   deleteItem: (itemId: string) => Promise<void>;
-  getUserItems: () => void;
+  loadUserItems: () => void;
   endLoading: (loaderId) => void;
   toggleItem: (itemId: string, isEnabled: boolean) => void;
 }
@@ -38,7 +38,7 @@ interface IItemsPageParams extends InjectedIntlProps {
 class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
 
   static fetchData(store) {
-    return store.dispatch(getUserItems());
+    return store.dispatch(loadUserItems());
   }
 
   state = {
@@ -57,7 +57,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
 
   loadUserItems = () => {
     if (this.props.shouldLoadItems) {
-      this.props.getUserItems();
+      this.props.loadUserItems();
     }
   }
 
@@ -202,7 +202,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
 const mapStateToProps = (state: IAppState) => ({
   itemsMap: state.items.dataMap,
   usersMap: state.users.dataMap,
-  userItems: state.currentUser.items,
+  userItems: getUserItems(state),
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
   shouldLoadItems: shouldLoadItems(state),
@@ -212,7 +212,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       deleteItem,
-      getUserItems,
+      loadUserItems,
       endLoading,
       toggleItem,
     },

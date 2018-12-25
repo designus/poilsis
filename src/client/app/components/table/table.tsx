@@ -30,7 +30,7 @@ export interface ITableProps {
   order?: OrderType;
   orderBy?: string;
   dataMap?: IGenericDataMap<object>;
-  items?: string[];
+  items?: any[];
   columns?: ITableColumn[];
   search?: string;
   limit?: number;
@@ -101,8 +101,8 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
 
   getFilteredData(newFilters: ITableFilters) {
 
-    const {filters} = this.state;
-    const initialData = Object.keys(this.props.dataMap);
+    const { filters } = this.state;
+    // const initialData = Object.keys(this.props.dataMap);
     const allFilters = newFilters ? {...filters, ...newFilters} : filters;
 
     return Object.keys(allFilters).reduce((filteredData, filter) => {
@@ -110,12 +110,11 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
         return this.searchData(filteredData, allFilters[filter]);
       }
       return filteredData;
-    }, initialData);
+    }, this.props.items);
   }
 
-  searchData(data: string[], search: string) {
-    return data.filter(id => {
-      const item = this.props.dataMap[id];
+  searchData(items: any[], search: string) {
+    return items.filter(item => {
       return this.state.searchableColumns.some((column: ISearchableColumn) => {
         const itemVal = item[column.dataProp];
         const formattedItem = column.format ? column.format(itemVal) : itemVal;
@@ -134,8 +133,8 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
 
     const data = this.state.data.sort((a, b) => {
       let comparison = 0;
-      const x = this.props.dataMap[a][orderBy].toLowerCase();
-      const y = this.props.dataMap[b][orderBy].toLowerCase();
+      const x = a[orderBy].toLowerCase();
+      const y = b[orderBy].toLowerCase();
 
       if (x > y) {
         comparison = 1;
@@ -199,7 +198,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
   }
 
   render() {
-    const { columns, dataMap } = this.props;
+    const { columns } = this.props;
     const {
       data,
       order,
@@ -223,21 +222,20 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
             columns={columns}
           />
           <TableBody>
-            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(id => {
-              const row = dataMap[id];
-              const isSelected = this.isSelected(id);
-              return row && (
+            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item: any) => {
+              const isSelected = this.isSelected(item.id);
+              return item && (
                 <TableRow
                   hover
                   role="checkbox"
                   tabIndex={-1}
-                  key={id}
+                  key={item.id}
                   selected={isSelected}
                 >
                   <TableCell
                     padding="checkbox"
                     aria-checked={isSelected}
-                    onClick={this.onSelectRow(id)}
+                    onClick={this.onSelectRow(item.id)}
                   >
                     <Checkbox checked={isSelected} />
                   </TableCell>
@@ -245,7 +243,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
                     columns.map((column, index) => {
                       return (
                         <TableCell padding="dense" key={index}>
-                          {this.getColumnValue(row, column)}
+                          {this.getColumnValue(item, column)}
                         </TableCell>
                       );
                     })

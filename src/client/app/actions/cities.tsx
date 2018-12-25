@@ -11,7 +11,7 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR,
 } from 'data-strings';
-import { getLocale } from 'selectors';
+import { getLocale, getSelectedCity } from 'selectors';
 import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { receiveAdminCity } from './admin';
@@ -39,13 +39,13 @@ export const loadCityItems = (cityId: string, locale: string) => {
   return (dispatch, getState) => {
 
     const state: IAppState = getState();
-    const selectedCity = state.cities.dataMap[cityId];
+    const selectedCity = getSelectedCity(state);
     const items = state.items;
     const language = locale || getLocale(state);
 
     dispatch(selectCity(cityId));
 
-    if (!selectedCity || items.isAllLoaded || selectedCity.haveCityItemsLoaded) {
+    if (!selectedCity || items.hasAllItems || selectedCity.hasItems) {
       return;
     }
 
