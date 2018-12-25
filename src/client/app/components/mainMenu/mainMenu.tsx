@@ -23,17 +23,16 @@ export const getSubmenu = (cityAlias, types, typesMap) => {
 };
 
 export const MainMenu = (props) => {
-  const {citiesMap, typesMap, selectedCityId, showSubmenu, locale } = props;
+  const {cities, typesMap, selectedCityId, showSubmenu, locale } = props;
 
   return (
     <div className="menu">
       <ul>
-        {citiesMap ? Object.keys(citiesMap).map((cityId) => {
-          const city = citiesMap[cityId];
+        {cities ? cities.map((city) => {
           const types = city.types;
-          const isSubmenuVisible = showSubmenu && typesMap && types.length > 0 && selectedCityId === cityId;
+          const isSubmenuVisible = showSubmenu && typesMap && types.length > 0 && selectedCityId === city.id;
           return (
-            <li key={cityId}>
+            <li key={city.id}>
               <NavLink
                 activeStyle={{ color: 'red' }}
                 to={`${clientRoutes.items.getLink(locale, city.alias)}`}

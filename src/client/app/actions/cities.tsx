@@ -43,9 +43,7 @@ export const loadCityItems = (cityId: string, locale: string) => {
     const items = state.items;
     const language = locale || getLocale(state);
 
-    dispatch(selectCity(cityId));
-
-    if (!selectedCity || items.hasAllItems || selectedCity.hasItems) {
+    if (items.hasAllItems || selectedCity.hasItems) {
       return;
     }
 

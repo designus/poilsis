@@ -6,7 +6,6 @@ import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import Checkbox from '@material-ui/core/Checkbox';
-import { IGenericDataMap } from '../../client-utils';
 import styled from 'styled-components';
 import { EnhancedTableHead } from './tableHead';
 
@@ -29,7 +28,6 @@ export interface ITableColumn {
 export interface ITableProps {
   order?: OrderType;
   orderBy?: string;
-  dataMap?: IGenericDataMap<object>;
   items?: any[];
   columns?: ITableColumn[];
   search?: string;
@@ -102,7 +100,6 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
   getFilteredData(newFilters: ITableFilters) {
 
     const { filters } = this.state;
-    // const initialData = Object.keys(this.props.dataMap);
     const allFilters = newFilters ? {...filters, ...newFilters} : filters;
 
     return Object.keys(allFilters).reduce((filteredData, filter) => {

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { IAppState, ICity, IItemsMap, IItem } from 'reducers';
+import { IAppState, ICity, ICitiesMap, IItemsMap, IItem } from 'reducers';
 import { hasInitialDataLoaded, getItemsMap } from 'selectors';
 
 export const shouldLoadCity = (state: IAppState, cityId: string) => {
@@ -8,8 +8,15 @@ export const shouldLoadCity = (state: IAppState, cityId: string) => {
 
 export const getSelectedCity = (state: IAppState) => state.cities.dataMap[state.cities.selectedId];
 
+export const getCitiesMap = (state: IAppState) => state.cities.dataMap;
+
 export const getCityItems = createSelector(
   [getSelectedCity, getItemsMap],
   (selectedCity: ICity, itemsMap: IItemsMap): IItem[] =>
     Object.values(itemsMap).filter((item: IItem) => item.cityId === selectedCity.id),
+);
+
+export const getCities = createSelector(
+  [getCitiesMap],
+  (citiesMap: ICitiesMap) => Object.values(citiesMap),
 );

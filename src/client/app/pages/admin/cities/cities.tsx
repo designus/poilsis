@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { IAppState, ICitiesMap, ITypesMap } from 'reducers';
+import { IAppState, ICitiesMap, ICity, ITypesMap } from 'reducers';
 import { AdminHeader } from 'global-styles';
+import { getCities, getCitiesMap } from 'selectors';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { deleteCity } from 'actions';
 import {
@@ -23,6 +24,7 @@ interface ICitiesPageParams extends InjectedIntlProps {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   deleteCity: (typeId: string) => Promise<void>;
+  cities: ICity[];
 }
 
 class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
@@ -32,7 +34,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     deleteId: '',
   };
 
-  get deleteTypeName() {
+  get deleteCityName() {
     const city = this.props.citiesMap[this.state.deleteId];
     return city && city.name;
   }
@@ -75,7 +77,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     ];
   }
 
-  openDeleteModal = (cityId) => () => {
+  openDeleteModal = (cityId: string) => () => {
     this.setState({ isDeleteModalOpen: true, deleteId: cityId });
   }
 
@@ -83,7 +85,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     this.setState({ isDeleteModalOpen: false });
   }
 
-  handleCityDelete = (cityId) => {
+  handleCityDelete = (cityId: string) => {
     return this.props.deleteCity(cityId);
   }
 
@@ -99,8 +101,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
         <Table
           showLoadingOverlay={true}
           loaderId={CONTENT_LOADER_ID}
-          dataMap={this.props.citiesMap}
-          items={Object.keys(this.props.citiesMap)}
+          items={this.props.cities}
           columns={this.columns}
           limit={10}
         />
@@ -109,7 +110,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
           isModalOpen={this.state.isDeleteModalOpen}
           onClose={this.handleModalClose}
           onDelete={this.handleCityDelete}
-          itemName={this.deleteTypeName}
+          itemName={this.deleteCityName}
         />
       </div>
     );
@@ -118,11 +119,12 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
 
 const mapStateToProps = (state: IAppState) => ({
   typesMap: state.types.dataMap,
-  citiesMap: state.cities.dataMap,
+  citiesMap: getCitiesMap(state),
+  cities: getCities(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteCity: (cityId) => dispatch(deleteCity(cityId)),
+  deleteCity: (cityId: string) => dispatch(deleteCity(cityId)),
 });
 
 export const AdminCitiesPage = injectIntl(

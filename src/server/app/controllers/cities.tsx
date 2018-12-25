@@ -4,7 +4,6 @@ import { CitiesModel } from '../model';
 import { sendResponse } from '../server-utils';
 
 export const getAllCities = (req: Request, res: Response, next: NextFunction) => {
-  console.log('Getting all cities');
   CitiesModel.find(sendResponse(res, next));
 };
 

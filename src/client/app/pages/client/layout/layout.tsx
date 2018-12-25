@@ -8,7 +8,7 @@ import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
 import { LoginPage, CityPage } from 'pages';
 import { IAppState, IItemsMap, ICitiesMap, ITypesMap } from 'reducers';
 
-import { hasInitialDataLoaded, isInitialDataLoading } from 'selectors';
+import { hasInitialDataLoaded, isInitialDataLoading, getCities } from 'selectors';
 
 interface IMatchParams {
   cityName: string;
@@ -86,6 +86,7 @@ const mapStateToProps = (state: IAppState) => ({
   isInitialDataLoading: isInitialDataLoading(state),
   isAuthenticated: state.auth.isLoggedIn,
   user: state.currentUser.details && state.currentUser.details.name,
+  cities: getCities(state),
   locale: state.locale,
 });
 
