@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { IAppState, ITypesMap } from 'reducers';
+import { IAppState, ITypesMap, IType } from 'reducers';
 import { AdminHeader } from 'global-styles';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { deleteType } from 'actions';
+import { getTypes, getTypesMap } from 'selectors';
 import {
   EnhancedTable,
   ITableColumn,
@@ -20,7 +21,8 @@ const Table = extendWithLoader(EnhancedTable);
 
 interface ITypesPageParams extends InjectedIntlProps {
   typesMap: ITypesMap;
-  deleteType: (typeId) => Promise<any>;
+  types: IType[];
+  deleteType: (typeId: string) => Promise<any>;
 }
 
 class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
@@ -89,8 +91,7 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
         <Table
           showLoadingOverlay={true}
           loaderId={CONTENT_LOADER_ID}
-          dataMap={this.props.typesMap}
-          items={Object.keys(this.props.typesMap)}
+          items={this.props.types}
           columns={this.columns}
           limit={10}
         />
@@ -107,11 +108,12 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  typesMap: state.types.dataMap,
+  typesMap: getTypesMap(state),
+  types: getTypes(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteType: (typeId) => dispatch(deleteType(typeId)),
+  deleteType: (typeId: string) => dispatch(deleteType(typeId)),
 });
 
 export const AdminTypesPage = injectIntl(
