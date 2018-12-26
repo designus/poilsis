@@ -17,7 +17,36 @@ export const getAllItems = (req: Request, res: Response, next: NextFunction) => 
 };
 
 export const getCityItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.find({ cityId: req.params.cityId }, sendResponse(res, next));
+  ItemsModel
+    .aggregate([
+      { $match: { cityId: req.params.cityId } },
+      {
+        $project: {
+          _id: 0,
+          id: 1,
+          name: 1,
+          alias: 1,
+          types: 1,
+          address: 1,
+          userId: 1,
+          cityId: 1,
+          isEnabled: 1,
+          mainImage: {
+            $let: {
+              vars: {
+                firstImage: {
+                  $arrayElemAt: ['$images', 0],
+                },
+              },
+              in: {
+                $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName'],
+              },
+            },
+          },
+        },
+      },
+    ])
+    .exec(sendResponse(res, next));
 };
 
 export const getUserItems = (req: Request, res: Response, next: NextFunction) => {

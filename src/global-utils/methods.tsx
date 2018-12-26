@@ -1,5 +1,4 @@
 import * as JWT from 'jwt-decode';
-import { MongooseDocument } from 'mongoose';
 import { UserRoles, IAccessTokenClaims } from './typings';
 import { LANGUAGES } from './constants';
 
@@ -12,7 +11,7 @@ export const voidFn = f => f;
 
 export const getAccessTokenClaims = (token: string): IAccessTokenClaims => JWT(token);
 
-export const hasLocalizedFields = (field) => Object.keys(field).some(field => LANGUAGES.indexOf(field) !== -1);
+export const hasLocalizedFields = (field) => field && Object.keys(field).some(field => LANGUAGES.indexOf(field) !== -1);
 
 export const localizeDocument = (item: object, language: string) => {
   return Object.keys(item).reduce((acc: any, key: string) => {
@@ -27,10 +26,14 @@ export const localizeDocument = (item: object, language: string) => {
   }, {});
 };
 
+export const isFunction = fn => typeof fn === 'function';
+
 export const getLocalizedResponse = (data: any, language: string) => {
-  return data.constructor === Array
-    ? data.map(document => localizeDocument(document.toObject(), language))
-    : localizeDocument(data.toObject(), language);
+  const getObject = data => isFunction(data.toObject) ? data.toObject() : data;
+
+  return data.constructor === Array ?
+    data.map(document => localizeDocument(getObject(document), language)) :
+    localizeDocument(getObject(data), language);
 };
 
 export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);

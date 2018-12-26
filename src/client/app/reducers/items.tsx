@@ -12,6 +12,7 @@ import {
 
 export interface IItem extends IItemFields {
   isFullyLoaded?: boolean;
+  mainImage?: string;
 }
 
 export type IItemsMap = IGenericDataMap<IItem>;

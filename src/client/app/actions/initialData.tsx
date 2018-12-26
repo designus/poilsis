@@ -3,6 +3,7 @@ import { getNormalizedData, setAcceptLanguageHeader, GLOBAL_LOADER_ID } from 'cl
 import { IAppState } from 'reducers';
 import { receiveUserDetails, startLoading, endLoading, setLocale } from 'actions';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
+import { getLocale } from 'selectors';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
 export const CLEAR_STATE = 'CLEAR_STATE';
@@ -29,7 +30,7 @@ const shouldStopLoader = (pathName: string) => pathName ?
 export const getInitialData = (params: IGetInitialDataParams = {}) => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
-    const locale = params.locale || DEFAULT_LANGUAGE;
+    const locale = params.locale || getLocale(state) || DEFAULT_LANGUAGE;
     const token = state.auth.accessToken;
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
 
