@@ -35,7 +35,7 @@ import { IImage, IItemFields, TItemFields } from 'global-utils';
 import { getLocale } from 'selectors';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
-export const CLEAR_ITEM_SELECTION = 'CLEAR_ITEM_SELECTION';
+export const CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
@@ -55,8 +55,8 @@ export const selectItem = (itemId: string) => ({
   itemId,
 });
 
-export const clearItemSelection = () => ({
-  type: CLEAR_ITEM_SELECTION,
+export const clearSelectedItem = () => ({
+  type: CLEAR_SELECTED_ITEM,
 });
 
 export const receiveItems = (props: IReceiveItemsProps) => ({

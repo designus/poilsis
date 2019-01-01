@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { ITypesMap, IItem, IAppState, ICity } from 'reducers';
 import { clientRoutes } from 'client-utils';
-import { getLocale, getSelectedCity, getTypesMap, getCityItems } from 'selectors';
+import { getLocale, getTypesMap } from 'selectors';
 
 import { ItemTypesList } from '../itemTypesList';
 
@@ -51,9 +51,7 @@ export class ItemsList extends React.Component<IItemsListProps> {
 
 const mapStateToProps = (state: IAppState) => ({
   locale: getLocale(state),
-  selectedCity: getSelectedCity(state),
   typesMap: getTypesMap(state),
-  items: getCityItems(state),
 });
 
 export default connect(mapStateToProps)(ItemsList);

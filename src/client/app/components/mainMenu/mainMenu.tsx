@@ -35,7 +35,12 @@ export const MainMenu = (props) => {
             <li key={city.id}>
               <NavLink
                 activeStyle={{ color: 'red' }}
-                to={`${clientRoutes.items.getLink(locale, city.alias)}`}
+                to={{
+                  pathname: clientRoutes.items.getLink(locale, city.alias),
+                  state: {
+                    cityId: city.id,
+                  },
+                }}
               >
                 {city.name}
               </NavLink>

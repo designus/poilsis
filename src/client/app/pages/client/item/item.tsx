@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { IAppState, IItemsState, IItem } from 'reducers';
-import { loadItem, selectItem, clearItemSelection } from 'actions';
+import { loadItem, selectItem, clearSelectedItem } from 'actions';
 import { NotFound } from 'components';
 import { getSelectedItem, shouldLoadViewItem } from 'selectors';
 
 interface IMatchParams {
-  itemAlias: string;
-  cityName: string;
   locale: string;
+  cityAlias: string;
+  itemAlias: string;
 }
 
 interface IItemPageParams extends RouteComponentProps<IMatchParams> {
@@ -18,7 +18,7 @@ interface IItemPageParams extends RouteComponentProps<IMatchParams> {
   selectedItem?: IItem;
   loadItem?: (alias: string, locale: string) => void;
   selectItem?: (itemId: string) => void;
-  clearItemSelection?: () => void;
+  clearSelectedItem?: () => void;
   shouldLoadItem?: (state: IAppState) => boolean;
 }
 
@@ -41,7 +41,7 @@ class ItemPageComponent extends React.Component<IItemPageParams, any> {
   }
 
   componentWillUnmount() {
-    this.props.clearItemSelection();
+    this.props.clearSelectedItem();
   }
 
   loadItem = () => {
@@ -69,7 +69,7 @@ const mapStateToProps = (state: IAppState, props: IItemPageParams) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadItem: (alias: string, locale: string) => dispatch(loadItem(alias, locale)),
   selectItem: (itemId: string) => dispatch(selectItem(itemId)),
-  clearItemSelection: () => dispatch(clearItemSelection()),
+  clearSelectedItem: () => dispatch(clearSelectedItem()),
 });
 
 export const ItemPage = connect<any, any, IItemPageParams>(mapStateToProps, mapDispatchToProps)(ItemPageComponent);

@@ -2,57 +2,52 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, ICityState, IItemsState, ICity } from 'reducers';
-import { loadCityItems, selectCity } from 'actions';
+import { IAppState, IItem, ICity } from 'reducers';
+import { loadCityItems, clearSelectedCity } from 'actions';
 import { CONTENT_LOADER_ID } from 'client-utils';
 import { ItemsList, NotFound, extendWithLoader } from 'components';
-import { getSelectedCity } from 'selectors';
+import { getSelectedCity, shouldLoadCityItems, getCityItems } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
 interface IMatchParams {
-  cityName: string;
+  cityAlias: string;
   locale: string;
 }
 
 interface ICityPageParams extends RouteComponentProps<IMatchParams> {
-  items: IItemsState;
-  cities: ICityState;
+  cityItems: IItem[];
   selectedCity: ICity;
-  dispatch: () => void;
+  shouldLoadCityItems: boolean;
+  loadCityItems: (cityAlias: string, locale: string) => void;
+  clearSelectedCity: () => void;
 }
-
-export const fetchCitiesData = (cityState: ICityState, routeParams: IMatchParams, dispatch) => {
-  return new Promise((resolve, reject) => {
-    const selectedCity = cityState.aliases.find(({ alias }) => alias === routeParams.cityName);
-    if (selectedCity) {
-      resolve(selectedCity);
-    } else {
-      reject('City is not available');
-    }
-  })
-  .then(({ id: cityId }) => Promise.all([
-    dispatch(selectCity(cityId)),
-    dispatch(loadCityItems(cityId, routeParams.locale)),
-  ]))
-  .catch(console.error);
-};
 
 class CityPageComponent extends React.Component<ICityPageParams, any> {
 
   static fetchData(store, params: IMatchParams) {
-    const appState: IAppState = store.getState();
-    return fetchCitiesData(appState.cities, params, store.dispatch);
+    return store.dispatch(loadCityItems(params.cityAlias, params.locale));
   }
 
   componentDidUpdate(prevProps: ICityPageParams) {
-    if (this.props.location !== prevProps.location) {
-      fetchCitiesData(this.props.cities, this.props.match.params, this.props.dispatch);
+    if (this.props.location !== prevProps.location && this.props.shouldLoadCityItems) {
+      this.loadCityItems();
     }
   }
 
   componentDidMount() {
-    fetchCitiesData(this.props.cities, this.props.match.params, this.props.dispatch);
+    if (this.props.shouldLoadCityItems) {
+      this.loadCityItems();
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.clearSelectedCity();
+  }
+
+  loadCityItems = () => {
+    const { cityAlias, locale } = this.props.match.params;
+    this.props.loadCityItems(cityAlias, locale);
   }
 
   render() {
@@ -61,15 +56,25 @@ class CityPageComponent extends React.Component<ICityPageParams, any> {
       <div>
         <h1>{selectedCity.name}</h1>
         <p>{selectedCity.description}</p>
-        <ItemsListWithLoader loaderId={CONTENT_LOADER_ID} />
+        <ItemsListWithLoader
+          loaderId={CONTENT_LOADER_ID}
+          items={this.props.cityItems}
+          selectedCity={this.props.selectedCity}
+        />
       </div>
     ) : <NotFound/>;
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
-  selectedCity: getSelectedCity(state),
-  cities: state.cities,
+const mapStateToProps = (state: IAppState, props: ICityPageParams) => ({
+  selectedCity: getSelectedCity(state, props.location.state),
+  cityItems: getCityItems(state, props.location.state),
+  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state),
 });
 
-export const CityPage = connect<any, any, {}>(mapStateToProps)(CityPageComponent);
+const mapDispatchToProps = (dispatch) => ({
+  loadCityItems: (cityAlias: string, locale: string) => dispatch(loadCityItems(cityAlias, locale)),
+  clearSelectedCity: () => dispatch(clearSelectedCity()),
+});
+
+export const CityPage = connect<any, any, ICityPageParams>(mapStateToProps, mapDispatchToProps)(CityPageComponent);

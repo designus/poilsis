@@ -10,7 +10,7 @@ import { createCity, updateCity, getAdminCity } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
 import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
 import { IAppState, ITypesMap } from 'reducers';
-import { shouldLoadCity } from 'selectors';
+import { shouldLoadEditCity } from 'selectors';
 import { CityForm, CITY_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(CityForm));
@@ -27,7 +27,7 @@ interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams>, In
   updateCity: (city: TCityFields) => Promise<any>;
   getCity: (cityId: string) => Promise<any>;
   initializeForm: (city: TCityFields) => void;
-  shouldLoadCity: boolean;
+  shouldLoadEditCity: boolean;
 }
 
 class CreateEditCityPageComponent extends React.Component<ICreateEditCityPageProps, any> {
@@ -37,14 +37,14 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
   }
 
   componentDidMount() {
-    if (!this.isCreatePage() && this.props.shouldLoadCity) {
+    if (!this.isCreatePage() && this.props.shouldLoadEditCity) {
       this.props.getCity(this.props.match.params.cityId);
     }
   }
 
   componentDidUpdate(props: ICreateEditCityPageProps) {
     // When we navigate from create page to update we need to load updated city
-    if (props.location.pathname !== this.props.location.pathname || this.props.shouldLoadCity) {
+    if (props.location.pathname !== this.props.location.pathname || this.props.shouldLoadEditCity) {
       this.props.getCity(this.props.match.params.cityId);
     }
   }
@@ -96,7 +96,7 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
   typesMap: state.types.dataMap,
   loadedCity: state.admin.cities[props.match.params.cityId],
   showNavigationPrompt: isDirty(CITY_FORM_NAME)(state) && !isSubmitting(CITY_FORM_NAME)(state),
-  shouldLoadCity: shouldLoadCity(state, props.match.params.cityId),
+  shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId),
 });
 
 const mapDispatchToProps = (dispatch) => ({

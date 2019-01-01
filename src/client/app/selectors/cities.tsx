@@ -1,14 +1,22 @@
 import { createSelector } from 'reselect';
-import { IAppState, ICity, ICitiesMap, IItemsMap, IItem } from 'reducers';
+import { IAppState, ICity, IItemsMap, IItem } from 'reducers';
 import { hasInitialDataLoaded, getItemsMap } from 'selectors';
 
-export const shouldLoadCity = (state: IAppState, cityId: string) => {
+export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
   return cityId && !state.loader.content && !state.admin.cities[cityId] && hasInitialDataLoaded(state);
 };
 
 export const getCitiesMap = (state: IAppState) => state.cities.dataMap;
 
-export const getSelectedCity = (state: IAppState) => getCitiesMap(state)[state.cities.selectedId];
+export const getSelectedCity = (state: IAppState, routeState) => {
+  const selectedId = routeState ? routeState.cityId : state.cities.selectedId;
+  return getCitiesMap(state)[selectedId];
+};
+
+export const shouldLoadCityItems = (state: IAppState, routeState) => {
+  const selectedCity = getSelectedCity(state, routeState);
+  return !selectedCity.hasItems && !state.items.hasAllItems && hasInitialDataLoaded(state);
+};
 
 export const getCityItems = createSelector(
   [getSelectedCity, getItemsMap],
@@ -19,7 +27,4 @@ export const getCityItems = createSelector(
   },
 );
 
-export const getCities = createSelector(
-  [getCitiesMap],
-  (citiesMap: ICitiesMap) => Object.values(citiesMap),
-);
+export const getCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));

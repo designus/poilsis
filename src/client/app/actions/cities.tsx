@@ -11,18 +11,23 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR,
 } from 'data-strings';
-import { getLocale, getSelectedCity } from 'selectors';
+import { getLocale, getCities, getSelectedCity } from 'selectors';
 import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { receiveAdminCity } from './admin';
 
 export const SELECT_CITY = 'SELECT_CITY';
+export const CLEAR_SELECTED_CITY = 'CLEAR_SELECTED_CITY';
 export const RECEIVE_CLIENT_CITY = 'RECEIVE_CLIENT_CITY';
 export const REMOVE_CITY = 'REMOVE_CITY';
 
 export const selectCity = (cityId: string) => ({
   type: SELECT_CITY,
   cityId,
+});
+
+export const clearSelectedCity = () => ({
+  type: CLEAR_SELECTED_CITY,
 });
 
 export const receiveClientCity = (newCity: ICityFields) => ({
@@ -35,17 +40,13 @@ export const removeCity = (cityId: string) => ({
   cityId,
 });
 
-export const loadCityItems = (cityId: string, locale: string) => {
+export const loadCityItems = (cityAlias: string, locale: string) => {
   return (dispatch, getState) => {
 
     const state: IAppState = getState();
-    const selectedCity = getSelectedCity(state);
+    const cityId = getCities(state).find(city => city.alias === cityAlias).id;
     const items = state.items;
     const language = locale || getLocale(state);
-
-    if (items.hasAllItems || selectedCity.hasItems) {
-      return;
-    }
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
@@ -59,6 +60,7 @@ export const loadCityItems = (cityId: string, locale: string) => {
         const filteredData = data.filter(item => !items.dataMap[item.id]);
         const { dataMap, aliases } = getNormalizedData(filteredData);
 
+        dispatch(selectCity(cityId));
         dispatch(receiveItems({ dataMap, aliases, cityId }));
         dispatch(endLoading(CONTENT_LOADER_ID));
 

@@ -48,13 +48,13 @@ export const clientRoutes: RoutesConfig = {
     getComponent: () => ClientLayoutPage,
   },
   items: {
-    path: '/:locale/:cityName',
-    getLink: (locale: string, cityName: string) => `/${locale}/${cityName}`,
+    path: '/:locale/:cityAlias',
+    getLink: (locale: string, cityAlias: string) => `/${locale}/${cityAlias}`,
     getComponent: () => CityPage,
   },
   item: {
-    path: '/:locale/:cityName/:itemAlias',
-    getLink: (locale: string, cityName: string, itemName: string) => `/${locale}/${cityName}/${itemName}`,
+    path: '/:locale/:cityAlias/:itemAlias',
+    getLink: (locale: string, cityAlias: string, itemAlias: string) => `/${locale}/${cityAlias}/${itemAlias}`,
     getComponent: () => ItemPage,
   },
 };

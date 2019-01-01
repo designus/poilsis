@@ -2,7 +2,7 @@ import { IAppState, IItemsMap, IItem } from 'reducers';
 
 import { hasInitialDataLoaded } from './initialData';
 
-export const shouldLoadItems = (state: IAppState) => {
+export const shouldLoadUserItems = (state: IAppState) => {
   return !state.currentUser.hasItems && !state.loader.content && hasInitialDataLoaded(state);
 };
 

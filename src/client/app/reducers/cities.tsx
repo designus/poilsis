@@ -4,6 +4,7 @@ import {
   SELECT_CITY,
   RECEIVE_INITIAL_DATA,
   RECEIVE_CLIENT_CITY,
+  CLEAR_SELECTED_CITY,
   REMOVE_CITY,
   CLEAR_STATE,
   RECEIVE_ITEMS,
@@ -32,6 +33,11 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
       return {
         ...state,
         selectedId: action.cityId,
+      };
+    case CLEAR_SELECTED_CITY:
+      return {
+        ...state,
+        selectedId: null,
       };
     case RECEIVE_ITEMS:
       return action.cityId ?

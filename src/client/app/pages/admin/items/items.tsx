@@ -7,7 +7,7 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap, IItem } from 'reducers';
 import { loadUserItems, deleteItem, endLoading, toggleItem } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { shouldLoadItems, getUserItems } from 'selectors';
+import { shouldLoadUserItems, getUserItems } from 'selectors';
 import { AdminHeader } from 'global-styles';
 import {
   EnhancedTable,
@@ -27,7 +27,7 @@ interface IItemsPageParams extends InjectedIntlProps {
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  shouldLoadItems: boolean;
+  shouldLoadUserItems: boolean;
   userItems: IItem[];
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
@@ -56,7 +56,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
   }
 
   loadUserItems = () => {
-    if (this.props.shouldLoadItems) {
+    if (this.props.shouldLoadUserItems) {
       this.props.loadUserItems();
     }
   }
@@ -205,7 +205,7 @@ const mapStateToProps = (state: IAppState) => ({
   userItems: getUserItems(state),
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
-  shouldLoadItems: shouldLoadItems(state),
+  shouldLoadUserItems: shouldLoadUserItems(state),
 });
 
 const mapDispatchToProps = dispatch =>

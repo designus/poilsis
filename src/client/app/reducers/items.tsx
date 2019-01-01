@@ -8,7 +8,7 @@ import {
   RECEIVE_IMAGES,
   TOGGLE_ITEM_VISIBILITY,
   CLEAR_STATE,
-  CLEAR_ITEM_SELECTION,
+  CLEAR_SELECTED_ITEM,
 } from 'actions';
 
 export interface IItem extends IItemFields {
@@ -42,7 +42,7 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
         aliases: [...state.aliases, ...action.aliases],
         hasAllItems: action.hasAllItems,
       };
-    case CLEAR_ITEM_SELECTION:
+    case CLEAR_SELECTED_ITEM:
       return {
         ...state,
         selectedId: null,
