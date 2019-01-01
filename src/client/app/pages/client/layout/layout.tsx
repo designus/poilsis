@@ -5,7 +5,7 @@ import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
 import { MainMenu, Toast, UserMenu, LanguageSelector, Loader } from 'components';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
 import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
-import { LoginPage, CityPage } from 'pages';
+import { LoginPage, CityPage, ItemPage } from 'pages';
 import { IAppState, IItemsMap, ICitiesMap, ITypesMap } from 'reducers';
 
 import { hasInitialDataLoaded, isInitialDataLoading, getCities } from 'selectors';
@@ -25,6 +25,7 @@ interface ILayoutPageParams extends RouteComponentProps<IMatchParams> {
   getInitialData: (params?: IGetInitialDataParams) => void;
   login: (credentials: any) => void;
 }
+
 class ClientLayoutPageComponent extends React.Component<ILayoutPageParams, any> {
 
   static fetchData(store, params: IMatchParams) {
@@ -66,7 +67,8 @@ class ClientLayoutPageComponent extends React.Component<ILayoutPageParams, any> 
           <MainMenu {...this.props} showSubmenu={false} />
           <Switch>
             <Route path={'/login'} component={LoginPage} />
-            <Route path={clientRoutes.items.path} component={CityPage} />
+            <Route exact path={clientRoutes.items.path} component={CityPage} />
+            <Route exact path={clientRoutes.item.path} component={ItemPage} />
           </Switch>
         </div>
         <div className="footer">

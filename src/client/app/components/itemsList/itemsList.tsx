@@ -1,22 +1,39 @@
 'use strict';
 import * as React from 'react';
-import { ItemTypesList } from '../itemTypesList';
-import { ITypesMap, IItem } from 'reducers';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export interface IItemsListProps {
+import { ITypesMap, IItem, IAppState, ICity } from 'reducers';
+import { clientRoutes } from 'client-utils';
+import { getLocale, getSelectedCity, getTypesMap, getCityItems } from 'selectors';
+
+import { ItemTypesList } from '../itemTypesList';
+
+interface IItemsListProps {
+  locale: string;
   items: IItem[];
   typesMap: ITypesMap;
+  selectedCity: ICity;
 }
 
-export class ItemsList extends React.Component<IItemsListProps, {}> {
+export class ItemsList extends React.Component<IItemsListProps> {
 
   renderItem = (item: IItem) => {
     return item.isEnabled && (
-      <div className="item" key={item.id}>
+      <NavLink
+        key={item.id}
+        activeStyle={{ color: 'red' }}
+        to={{
+          pathname: clientRoutes.item.getLink(this.props.locale, this.props.selectedCity.alias, item.alias),
+          state: {
+            itemId: item.id,
+          },
+        }}
+      >
         {item.name}<br />
         <ItemTypesList typeIds={item.types} typesMap={this.props.typesMap} />
         <hr />
-      </div>
+      </NavLink>
     );
   }
 
@@ -31,3 +48,12 @@ export class ItemsList extends React.Component<IItemsListProps, {}> {
     );
   }
 }
+
+const mapStateToProps = (state: IAppState) => ({
+  locale: getLocale(state),
+  selectedCity: getSelectedCity(state),
+  typesMap: getTypesMap(state),
+  items: getCityItems(state),
+});
+
+export default connect(mapStateToProps)(ItemsList);

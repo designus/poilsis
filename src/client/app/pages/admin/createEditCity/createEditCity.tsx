@@ -7,7 +7,7 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { TCityFields, ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
-import { getBackendErrors, getDropdownOptions, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
+import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
 import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
 import { IAppState, ITypesMap } from 'reducers';
 import { shouldLoadCity } from 'selectors';

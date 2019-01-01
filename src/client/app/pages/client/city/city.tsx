@@ -2,11 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, ICityState, IItemsState, ITypesState, ICity, IItem } from 'reducers';
+import { IAppState, ICityState, IItemsState, ICity } from 'reducers';
 import { loadCityItems, selectCity } from 'actions';
 import { CONTENT_LOADER_ID } from 'client-utils';
 import { ItemsList, NotFound, extendWithLoader } from 'components';
-import { getCityItems, getSelectedCity } from 'selectors';
+import { getSelectedCity } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
@@ -18,9 +18,7 @@ interface IMatchParams {
 interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   items: IItemsState;
   cities: ICityState;
-  types: ITypesState;
   selectedCity: ICity;
-  cityItems: IItem[];
   dispatch: () => void;
 }
 
@@ -33,7 +31,10 @@ export const fetchCitiesData = (cityState: ICityState, routeParams: IMatchParams
       reject('City is not available');
     }
   })
-  .then(({ id: cityId }) => Promise.all([dispatch(selectCity(cityId)), dispatch(loadCityItems(cityId, routeParams.locale))]))
+  .then(({ id: cityId }) => Promise.all([
+    dispatch(selectCity(cityId)),
+    dispatch(loadCityItems(cityId, routeParams.locale)),
+  ]))
   .catch(console.error);
 };
 
@@ -55,16 +56,12 @@ class CityPageComponent extends React.Component<ICityPageParams, any> {
   }
 
   render() {
-    const { selectedCity, types, cityItems } = this.props;
+    const { selectedCity } = this.props;
     return selectedCity ? (
       <div>
         <h1>{selectedCity.name}</h1>
         <p>{selectedCity.description}</p>
-        <ItemsListWithLoader
-          loaderId={CONTENT_LOADER_ID}
-          items={cityItems}
-          typesMap={types.dataMap}
-        />
+        <ItemsListWithLoader loaderId={CONTENT_LOADER_ID} />
       </div>
     ) : <NotFound/>;
   }
@@ -72,9 +69,7 @@ class CityPageComponent extends React.Component<ICityPageParams, any> {
 
 const mapStateToProps = (state: IAppState) => ({
   selectedCity: getSelectedCity(state),
-  cityItems: getCityItems(state),
   cities: state.cities,
-  types: state.types,
 });
 
 export const CityPage = connect<any, any, {}>(mapStateToProps)(CityPageComponent);

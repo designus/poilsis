@@ -12,7 +12,7 @@ import { TItemFields } from 'global-utils';
 import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
 import { MainInfoPage, PhotosPage } from 'pages';
-import { shouldLoadItem } from 'selectors';
+import { shouldLoadEditItem } from 'selectors';
 
 interface IMatchParams {
   itemId: string;
@@ -20,8 +20,8 @@ interface IMatchParams {
 }
 export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
   loadedItem: TItemFields;
-  shouldLoadItem: boolean;
-  getItem: (itemId: string) => Promise<void>;
+  shouldLoadEditItem: boolean;
+  loadAdminItem: (itemId: string) => Promise<void>;
 }
 
 class CreateEditItemPageComponent extends React.Component<ICreateEditItemPageProps, any> {
@@ -58,16 +58,16 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
   }
 
   componentDidMount() {
-    if (!this.isCreatePage() && this.props.shouldLoadItem) {
-      this.props.getItem(this.props.match.params.itemId);
+    if (!this.isCreatePage() && this.props.shouldLoadEditItem) {
+      this.props.loadAdminItem(this.props.match.params.itemId);
     }
   }
 
   componentDidUpdate(props: ICreateEditItemPageProps) {
-    const { match, getItem, shouldLoadItem } = this.props;
+    const { match, loadAdminItem, shouldLoadEditItem } = this.props;
     // When we navigate from create page to update we need to load updated city
-    if (!isEqual(props.match.params, match.params) || shouldLoadItem) {
-      getItem(match.params.itemId);
+    if (!isEqual(props.match.params, match.params) || shouldLoadEditItem) {
+      loadAdminItem(match.params.itemId);
     }
   }
 
@@ -106,11 +106,11 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
 
 const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
   loadedItem: state.admin.items[props.match.params.itemId],
-  shouldLoadItem: shouldLoadItem(state, props.match.params.itemId),
+  shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getItem: (itemId: string) => dispatch(getAdminItem(itemId)),
+  loadAdminItem: (itemId: string) => dispatch(getAdminItem(itemId)),
 });
 
 export const CreateEditItemPage = injectIntl(

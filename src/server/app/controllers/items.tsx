@@ -69,8 +69,12 @@ export const addNewItem = (req: Request, res: Response, next: NextFunction) => {
   new ItemsModel(newItem).save(sendResponse(res, next));
 };
 
-export const getItem = (req: Request, res: Response, next: NextFunction) => {
+export const getEditItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOne({ id: req.params.itemId }, sendResponse(res, next));
+};
+
+export const getViewItem = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.findOne({ alias: req.params.alias }, sendResponse(res, next));
 };
 
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {

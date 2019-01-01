@@ -51,7 +51,7 @@ export const getAdminType = (typeId: string) => dispatch => {
 
 export const getAdminItem = (itemId: string) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
+  return axios.get(`http://localhost:3000/api/items/edit-item/${itemId}`)
     .then(handleApiResponse)
     .then((adminItem: TItemFields) => {
       dispatch(receiveAdminItem(adminItem.id, adminItem));

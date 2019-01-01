@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import StaticRouter from 'react-router-dom/StaticRouter';
-import { matchRoutes } from 'react-router-config';
+import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
@@ -40,7 +40,8 @@ app.get('*', (req, res, next) => {
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
     const branch = matchRoutes(routes, location);
     const promises = branch
-      .map(({route, match}) => ({fetchData: (route.component as any).fetchData, params: match.params}))
+      // .map(({route, match}) => ({fetchData: (route.component as any).fetchData, params: match.params}))
+      .map((item: MatchedRoute<{}>) => ({fetchData: (item.route.component as any).fetchData, params: item.match.params}))
       .filter(({fetchData}) => Boolean(fetchData))
       .map(({fetchData, params}) => fetchData.bind(null, store, params));
 

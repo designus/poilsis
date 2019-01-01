@@ -2,7 +2,8 @@ import { Router } from 'express';
 
 import {
   auth,
-  getItem,
+  getEditItem,
+  getViewItem,
   getAllItems,
   getCityItems,
   getUserItems,
@@ -25,9 +26,12 @@ router.route('/')
   .get(getAllItems)
   .post(auth.authenticate(), auth.authorize(['admin', 'user']), addNewItem);
 
-router.route('/item/:itemId')
-  .get(getItem)
+router.route('/edit-item/:itemId')
+  .get(getEditItem)
   .delete(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesDir, deleteItem);
+
+router.route('/view-item/:alias')
+  .get(getViewItem);
 
 router.route('/item/mainInfo/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateMainInfo);

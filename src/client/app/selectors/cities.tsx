@@ -6,14 +6,17 @@ export const shouldLoadCity = (state: IAppState, cityId: string) => {
   return cityId && !state.loader.content && !state.admin.cities[cityId] && hasInitialDataLoaded(state);
 };
 
-export const getSelectedCity = (state: IAppState) => state.cities.dataMap[state.cities.selectedId];
-
 export const getCitiesMap = (state: IAppState) => state.cities.dataMap;
+
+export const getSelectedCity = (state: IAppState) => getCitiesMap(state)[state.cities.selectedId];
 
 export const getCityItems = createSelector(
   [getSelectedCity, getItemsMap],
-  (selectedCity: ICity, itemsMap: IItemsMap): IItem[] =>
-    Object.values(itemsMap).filter((item: IItem) => item.cityId === selectedCity.id),
+  (selectedCity: ICity, itemsMap: IItemsMap): IItem[] => {
+    return selectedCity ?
+      Object.values(itemsMap).filter((item: IItem) => item.cityId === selectedCity.id) :
+      [];
+  },
 );
 
 export const getCities = createSelector(

@@ -35,11 +35,12 @@ import { IImage, IItemFields, TItemFields } from 'global-utils';
 import { getLocale } from 'selectors';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
+export const CLEAR_ITEM_SELECTION = 'CLEAR_ITEM_SELECTION';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
 export const TOGGLE_ITEM_VISIBILITY = 'TOGGLE_ITEM_VISIBILITY';
-export const RECEIVE_CLIENT_ITEM = 'RECEIVE_CLIENT_ITEM';
+export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 
 interface IReceiveItemsProps {
   dataMap: IItemsMap;
@@ -54,13 +55,18 @@ export const selectItem = (itemId: string) => ({
   itemId,
 });
 
+export const clearItemSelection = () => ({
+  type: CLEAR_ITEM_SELECTION,
+});
+
 export const receiveItems = (props: IReceiveItemsProps) => ({
   type: RECEIVE_ITEMS,
   ...props,
 });
 
-export const receiveClientItem = (item: IItem) => ({
-  type: RECEIVE_CLIENT_ITEM,
+export const receiveItem = (item: IItem) => ({
+  type: RECEIVE_ITEM,
+  itemId: item.id,
   item,
 });
 
@@ -75,18 +81,22 @@ export const receiveImages = (id: string, images: IImage[]) => ({
   images,
 });
 
-export const toggleItemVisibility = (itemId, isEnabled) => ({
+export const toggleItemVisibility = (itemId: string, isEnabled: boolean) => ({
   type: TOGGLE_ITEM_VISIBILITY,
   itemId,
   isEnabled,
 });
 
-export const getItem = (itemId: string) => dispatch => {
+export const loadItem = (alias: string, locale: string) => (dispatch, getState) => {
+  const state: IAppState = getState();
+  const language = locale || getLocale(state);
+
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
+
+  return axios.get(`http://localhost:3000/api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
     .then(handleApiResponse)
-    .then(item => {
-      dispatch(receiveClientItem(item));
+    .then((item: IItem) => {
+      dispatch(receiveItem(item));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {
@@ -149,7 +159,7 @@ export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) =
   )
     .then(handleApiResponse)
     .then((clientItem: IItemFields) => {
-      dispatch(receiveClientItem(clientItem));
+      dispatch(receiveItem(clientItem));
       dispatch(receiveAdminItem(adminItem.id, adminItem));
       dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(clientItem);
@@ -168,7 +178,7 @@ export const createItem = (adminItem: TItemFields) => (dispatch, getState) => {
   )
     .then(handleApiResponse)
     .then((clientItem: IItemFields) => {
-      dispatch(receiveClientItem(clientItem));
+      dispatch(receiveItem(clientItem));
       dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(clientItem);
     })

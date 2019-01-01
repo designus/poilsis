@@ -3,11 +3,12 @@ import { IItemFields } from 'global-utils';
 import {
   SELECT_ITEM,
   RECEIVE_ITEMS,
-  RECEIVE_CLIENT_ITEM,
+  RECEIVE_ITEM,
   REMOVE_ITEM,
   RECEIVE_IMAGES,
   TOGGLE_ITEM_VISIBILITY,
   CLEAR_STATE,
+  CLEAR_ITEM_SELECTION,
 } from 'actions';
 
 export interface IItem extends IItemFields {
@@ -41,13 +42,19 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
         aliases: [...state.aliases, ...action.aliases],
         hasAllItems: action.hasAllItems,
       };
-    case RECEIVE_CLIENT_ITEM:
+    case CLEAR_ITEM_SELECTION:
       return {
         ...state,
+        selectedId: null,
+      };
+    case RECEIVE_ITEM:
+      return {
+        ...state,
+        selectedId: action.itemId,
         dataMap: {
           ...state.dataMap,
-          [action.item.id]: {
-            ...(state.dataMap[action.item.id] || {}),
+          [action.itemId]: {
+            ...(state.dataMap[action.itemId] || {}),
             ...action.item,
             isFullyLoaded: true,
           },

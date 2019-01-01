@@ -53,7 +53,7 @@ export const clientRoutes: RoutesConfig = {
     getComponent: () => CityPage,
   },
   item: {
-    path: '/:locale/:cityName/:item',
+    path: '/:locale/:cityName/:itemAlias',
     getLink: (locale: string, cityName: string, itemName: string) => `/${locale}/${cityName}/${itemName}`,
     getComponent: () => ItemPage,
   },

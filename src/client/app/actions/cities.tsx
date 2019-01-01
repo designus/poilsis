@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ICityFields, TCityFields } from 'global-utils';
+import { ICityFields, TCityFields, IItemFields } from 'global-utils';
 import { IAppState } from 'reducers';
 import { startLoading, endLoading, receiveItems } from 'actions';
 import {
@@ -54,9 +54,10 @@ export const loadCityItems = (cityId: string, locale: string) => {
       setAcceptLanguageHeader(language),
     )
       .then(response => response.data)
-      .then(data => {
+      .then((data: IItemFields[]) => {
 
-        const { dataMap, aliases } = getNormalizedData(data);
+        const filteredData = data.filter(item => !items.dataMap[item.id]);
+        const { dataMap, aliases } = getNormalizedData(filteredData);
 
         dispatch(receiveItems({ dataMap, aliases, cityId }));
         dispatch(endLoading(CONTENT_LOADER_ID));
