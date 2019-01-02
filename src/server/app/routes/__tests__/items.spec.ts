@@ -40,7 +40,7 @@ describe('Integration tests: Items', () => {
 
     it('should get a single item', () => {
       return request(app)
-        .get(`/api/items/item/${adminItem.id}`)
+        .get(`/api/items/view-item/${adminItem.alias}`)
         .expect(200)
         .then(response => {
           expect(response.body.name).toBe('Almuka');

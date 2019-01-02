@@ -26,7 +26,7 @@ router.route('/')
   .get(getAllItems)
   .post(auth.authenticate(), auth.authorize(['admin', 'user']), addNewItem);
 
-router.route('/edit-item/:itemId')
+router.route('/item/:itemId')
   .get(getEditItem)
   .delete(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesDir, deleteItem);
 

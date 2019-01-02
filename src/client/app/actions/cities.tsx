@@ -11,7 +11,7 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR,
 } from 'data-strings';
-import { getLocale, getCities, getSelectedCity } from 'selectors';
+import { getLocale, getCities } from 'selectors';
 import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { receiveAdminCity } from './admin';
