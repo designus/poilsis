@@ -22,6 +22,7 @@
   "admin.menu.cities": "Cities",
   "admin.menu.go_to_website": "Go back to website",
   "admin.menu.main_info": "Main info",
+  "admin.menu.description": "Description",
   "admin.menu.photo_gallery": "Photo gallery",
   "admin.common_fields.id": "Id",
   "admin.common_fields.name": "Name",

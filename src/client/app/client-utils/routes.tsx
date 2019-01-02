@@ -29,6 +29,7 @@ export type RouteKeys =
   | 'createItemMain'
   | 'editItem'
   | 'editItemMain'
+  | 'editItemDescription'
   | 'editItemPhotos'
   | 'types'
   | 'createType'
@@ -90,8 +91,13 @@ export const adminRoutes: RoutesConfig = {
     getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}`,
     getComponent: () => MainInfoPage,
   },
+  editItemDescription: {
+    path: '/admin/item/edit/:userId/:itemId/description',
+    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/description`,
+    getComponent: () => MainInfoPage,
+  },
   editItemPhotos: {
-    path: '/admin/item/edit/userId/:itemId/photos',
+    path: '/admin/item/edit/:userId/:itemId/photos',
     getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/photos`,
     getComponent: () => PhotosPage,
   },

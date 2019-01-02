@@ -22,6 +22,7 @@
   "admin.menu.cities": "[RU] Cities",
   "admin.menu.go_to_website": "[RU] Go back to website",
   "admin.menu.main_info": "[RU] Main info",
+  "admin.menu.description": "[RU] Description",
   "admin.menu.photo_gallery": "[RU] Photo gallery",
   "admin.common_fields.id": "[RU] Id",
   "admin.common_fields.name": "[RU] Name",

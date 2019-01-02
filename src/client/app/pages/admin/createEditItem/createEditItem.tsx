@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
+import DescriptionIcon from '@material-ui/icons/Description';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
@@ -47,6 +48,12 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
         icon: () => (<HomeIcon />),
         link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
         text: formatMessage({ id: 'admin.menu.main_info' }),
+      },
+      {
+        icon: () => (<DescriptionIcon />),
+        link: adminRoutes.editItemDescription.getLink(userId, itemId),
+        text: formatMessage({ id: 'admin.menu.description' }),
+        isDisabled: this.isCreatePage(),
       },
       {
         icon: () => (<PhotoIcon />),
