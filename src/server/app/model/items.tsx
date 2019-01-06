@@ -91,10 +91,6 @@ const ItemsSchemaMap: IItemsSchema = {
     type: String,
     required: [true, requiredMessage],
   },
-  description: {
-    type: String,
-    intl: true,
-  },
   isEnabled: Boolean,
   createdAt: Date,
   updatedAt: Date,
@@ -104,6 +100,22 @@ const ItemsSchemaMap: IItemsSchema = {
       maxLength(maxPhotos),
       getValidationMessage(MAX_PHOTO_COUNT, maxPhotos),
     ],
+  },
+  description: {
+    type: String,
+    intl: true,
+  },
+  metaTitle: {
+    type: String,
+    intl: true,
+  },
+  metaDescription: {
+    type: String,
+    intl: true,
+  },
+  metaKeywords: {
+    type: String,
+    intl: true,
   },
 };
 
