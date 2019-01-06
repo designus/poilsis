@@ -181,7 +181,6 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
         <Table
           showLoadingOverlay={true}
           loaderId={CONTENT_LOADER_ID}
-          dataMap={this.props.itemsMap}
           items={this.props.userItems}
           search={this.state.search}
           columns={this.columns}

@@ -12,7 +12,7 @@ import { getAdminItem } from 'actions';
 import { TItemFields } from 'global-utils';
 import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
-import { MainInfoPage, PhotosPage } from 'pages';
+import { MainInfoPage, PhotosPage, DescriptionPage } from 'pages';
 import { shouldLoadEditItem } from 'selectors';
 
 interface IMatchParams {
@@ -81,11 +81,11 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
   render() {
     const { loadedItem, match } = this.props;
     const isCreatePage = this.isCreatePage();
-    const childProps = {...this.props, loadedItem, isCreatePage };
+    const childProps = { loadedItem, isCreatePage };
     const { userId, itemId } = match.params;
 
     return (loadedItem || isCreatePage) && (
-      <div>
+      <React.Fragment>
         <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
         <Switch>
           <ProtectedRoute
@@ -95,18 +95,23 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
             {...childProps}
           />
           <ProtectedRoute
-            path={adminRoutes.editItemPhotos.path}
-            component={PhotosPage}
-            {...childProps}
-          />
-          <ProtectedRoute
             path={adminRoutes.editItemMain.path}
             component={MainInfoPage}
             {...childProps}
           />
+          <ProtectedRoute
+            path={adminRoutes.editItemDescription.path}
+            component={DescriptionPage}
+            {...childProps}
+          />
+          <ProtectedRoute
+            path={adminRoutes.editItemPhotos.path}
+            component={PhotosPage}
+            {...childProps}
+          />
           <PropsRoute component={NotFound}/>
         </Switch>
-      </div>
+      </React.Fragment>
     ) || <Loader isLoading />;
   }
 }

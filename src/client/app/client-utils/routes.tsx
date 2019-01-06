@@ -7,6 +7,7 @@ import {
   AdminTypesPage,
   AdminCitiesPage,
   MainInfoPage,
+  DescriptionPage,
   PhotosPage,
   ClientLayoutPage,
   CityPage,
@@ -16,7 +17,7 @@ import { UserRoles } from 'global-utils';
 
 export interface IRoute {
   path: string;
-  getLink: (arg1?, arg2?, arg3?) => string;
+  getLink?: (arg1?, arg2?, arg3?) => string;
   getComponent?: () => any;
   allowedRoles?: string[];
 }
@@ -87,14 +88,14 @@ export const adminRoutes: RoutesConfig = {
     getComponent: () => CreateEditItemPage,
   },
   editItemMain: {
-    path: '/admin/item/edit/:userId/:itemId',
-    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}`,
+    path: '/admin/item/edit/:userId/:itemId/main',
+    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/main`,
     getComponent: () => MainInfoPage,
   },
   editItemDescription: {
     path: '/admin/item/edit/:userId/:itemId/description',
     getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/description`,
-    getComponent: () => MainInfoPage,
+    getComponent: () => DescriptionPage,
   },
   editItemPhotos: {
     path: '/admin/item/edit/:userId/:itemId/photos',

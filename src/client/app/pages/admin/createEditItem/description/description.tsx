@@ -14,7 +14,7 @@ import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
 
-interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
+interface IDescriptionProps extends ICreateEditItemPageProps, InjectedIntlProps {
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
@@ -26,7 +26,7 @@ interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
   initializeForm: (item: TItemFields) => void;
 }
 
-class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
+class DescriptionPageComponent extends React.Component<IDescriptionProps, any> {
 
   constructor(props) {
     super(props);
@@ -54,9 +54,9 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
     return (this.props.loadedItem || this.props.isCreatePage) ? (
       <div>
         <Typography variant="h5">
-          <FormattedMessage id="admin.menu.main_info" />
+          <FormattedMessage id="admin.menu.description" />
         </Typography>
-        <FormWithLoader
+        {/* <FormWithLoader
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
@@ -66,7 +66,7 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
           userRole={this.props.userRole}
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
-        />
+        /> */}
         <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>
     ) : null;
@@ -87,6 +87,6 @@ const mapDispatchToProps = (dispatch) => ({
   initializeForm: (data: TItemFields) => dispatch(initialize(MAIN_INFO_FORM_NAME, data)),
 });
 
-export const MainInfoPage = injectIntl(
-  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent),
+export const DescriptionPage = injectIntl(
+  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPageComponent),
 );
