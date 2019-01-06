@@ -31,7 +31,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR,
 } from 'data-strings';
-import { IImage, IItemFields, TItemFields } from 'global-utils';
+import { IImage, IItemFields, TItemFields, TItemDescFields } from 'global-utils';
 import { getLocale } from 'selectors';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
@@ -165,6 +165,10 @@ export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) =
       return Promise.resolve(clientItem);
     })
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
+};
+
+export const updateItemDescription = (adminItem: TItemDescFields) => (dispatch, getState) => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
 };
 
 export const createItem = (adminItem: TItemFields) => (dispatch, getState) => {
