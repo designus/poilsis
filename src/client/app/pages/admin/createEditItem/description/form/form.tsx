@@ -1,21 +1,11 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { CheckboxGroup, SelectBox, TextInput, Button, Switcher } from 'components';
-import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
-import { getDropdownOptions } from 'client-utils';
-import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
+import { TextInput, Button } from 'components';
 
-const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
-const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
-
-export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
+export const ITEM_DESCRIPTION_FORM_NAME = 'ItemDescriptionForm';
 
 interface ICustomProps {
-  citiesMap: ICitiesMap;
-  typesMap: ITypesMap;
-  usersMap: IUsersMap;
-  userRole: string;
   formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
   selectedLanguage?: string;
 }
@@ -26,58 +16,37 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
-        name="name"
+        name="description"
         type="text"
         component={TextInput}
-        validate={[isRequired]}
-        label={formatMessage({ id: 'admin.common_fields.name'})}
+        label={formatMessage({ id: 'admin.common_fields.description'})}
         intl
         selectedLanguage={selectedLanguage}
       />
       <Field
-        name="alias"
+        name="metaTitle"
         type="text"
         component={TextInput}
-        label={formatMessage({ id: 'admin.common_fields.alias'})}
+        label={formatMessage({ id: 'admin.common_fields.meta_title'})}
+        intl
+        selectedLanguage={selectedLanguage}
       />
       <Field
-        name="address"
+        name="metaDescription"
         type="text"
-        validate={[isRequired]}
         component={TextInput}
-        label={formatMessage({ id: 'admin.common_fields.address'})}
+        label={formatMessage({ id: 'admin.common_fields.meta_description'})}
+        intl
+        selectedLanguage={selectedLanguage}
       />
       <Field
-        name="cityId"
-        component={SelectBox}
-        validate={[isRequired]}
-        label={formatMessage({ id: 'admin.common_fields.city'})}
-        options={getDropdownOptions(props.citiesMap, 'name')}
+        name="metaKeywords"
+        type="text"
+        component={TextInput}
+        label={formatMessage({ id: 'admin.common_fields.meta_keywords'})}
+        intl
+        selectedLanguage={selectedLanguage}
       />
-      {isAdmin(props.userRole) &&
-        <Field
-          name="userId"
-          component={SelectBox}
-          validate={[isRequired]}
-          label={formatMessage({ id: 'admin.common_fields.user'})}
-          data={props.usersMap}
-          options={getDropdownOptions(props.usersMap, 'name')}
-        />
-      }
-      <Field
-        name="types"
-        component={CheckboxGroup}
-        validate={[minTypesCount, maxTypesCount]}
-        label={formatMessage({ id: 'admin.common_fields.types'})}
-        options={getDropdownOptions(props.typesMap, 'name')}
-      />
-      {isAdmin(props.userRole) &&
-        <Field
-          name="isEnabled"
-          component={Switcher}
-          label={formatMessage({ id: 'admin.common_fields.is_enabled'})}
-        />
-      }
       <div>
         <Button type="submit" disabled={submitting || pristine}>
           <FormattedMessage id="common.submit" />
@@ -87,4 +56,4 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   );
 };
 
-export const MainInfoForm = reduxForm<{}, ICustomProps>({ form: MAIN_INFO_FORM_NAME })(Form);
+export const MainInfoForm = reduxForm<{}, ICustomProps>({ form: ITEM_DESCRIPTION_FORM_NAME  })(Form);
