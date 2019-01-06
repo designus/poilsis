@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { TCityFields, TTypeFields, TItemFields } from 'global-utils';
+import { TCityFields, TTypeFields, TItemFields, TItemDescFields } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils';
 import { startLoading, endLoading } from 'actions';
 import { handleApiErrors, handleApiResponse } from './utils';
@@ -8,6 +8,7 @@ import { handleApiErrors, handleApiResponse } from './utils';
 export const RECEIVE_ADMIN_CITY = 'RECEIVE_ADMIN_CITY';
 export const RECEIVE_ADMIN_TYPE = 'RECEIVE_ADMIN_TYPE';
 export const RECEIVE_ADMIN_ITEM = 'RECEIVE_ADMIN_ITEM';
+export const RECEIVE_ADMIN_ITEM_DESCRIPTION = 'RECEIVE_ADMIN_ITEM_DESCRIPTION';
 
 export const receiveAdminCity = (cityId: string, adminCity: TCityFields) => ({
   type: RECEIVE_ADMIN_CITY,
@@ -25,6 +26,12 @@ export const receiveAdminItem = (itemId: string, adminItem: TItemFields) => ({
   type: RECEIVE_ADMIN_ITEM,
   itemId,
   adminItem,
+});
+
+export const receiveAdminItemDesc = (itemId: string, descFields: TItemDescFields) => ({
+  type: RECEIVE_ADMIN_ITEM_DESCRIPTION,
+  itemId,
+  descFields,
 });
 
 export const getAdminCity = (cityId: string) => dispatch => {

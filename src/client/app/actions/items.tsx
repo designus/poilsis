@@ -8,6 +8,7 @@ import {
   uploadError,
   uploadSuccess,
   receiveAdminItem,
+  receiveAdminItemDesc,
 } from 'actions';
 import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
 import {
@@ -31,7 +32,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR,
 } from 'data-strings';
-import { IImage, IItemFields, TItemFields, TItemDescFields } from 'global-utils';
+import { IImage, IItemFields, TItemFields, TItemDescFields, IItemDescFields } from 'global-utils';
 import { getLocale } from 'selectors';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
@@ -41,6 +42,7 @@ export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
 export const TOGGLE_ITEM_VISIBILITY = 'TOGGLE_ITEM_VISIBILITY';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
+export const RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION';
 
 interface IReceiveItemsProps {
   dataMap: IItemsMap;
@@ -68,6 +70,12 @@ export const receiveItem = (item: IItem) => ({
   type: RECEIVE_ITEM,
   itemId: item.id,
   item,
+});
+
+export const receiveItemDesc = (itemId: string, descFields: IItemDescFields) => ({
+  type: RECEIVE_ITEM_DESCRIPTION,
+  itemId,
+  descFields,
 });
 
 export const removeItem = (item: IItem) => ({
@@ -167,8 +175,23 @@ export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) =
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateItemDescription = (adminItem: TItemDescFields) => (dispatch, getState) => {
+export const updateItemDescription = (itemId: string, adminItemDescFields: TItemDescFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
+
+  return axios.put(
+    `http://localhost:3000/api/items/item/description/${itemId}`,
+    adminItemDescFields,
+    setAcceptLanguageHeader(getLocale(getState())),
+  )
+  .then(handleApiResponse)
+  .then((clientItemDescFields: IItemDescFields) => {
+    // TODO: Use single action for updating store
+    dispatch(receiveItemDesc(itemId, clientItemDescFields));
+    dispatch(receiveAdminItemDesc(itemId, adminItemDescFields));
+    dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
+  })
+  .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
+
 };
 
 export const createItem = (adminItem: TItemFields) => (dispatch, getState) => {
