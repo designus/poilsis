@@ -5,7 +5,7 @@ import { SubmissionError, isDirty, initialize, isSubmitting } from 'redux-form';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { IAppState } from 'reducers';
-import { updateMainInfo, createItem } from 'actions';
+import { updateItemDescription } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID } from 'client-utils';
 import { TItemFields, TItemDescFields } from 'global-utils';
 import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';

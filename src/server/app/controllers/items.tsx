@@ -5,8 +5,9 @@ import {
   resizeImages,
   getImages,
   sendResponse,
+  formatAlias,
 } from '../server-utils';
-import { IItemFields, itemValidation } from 'global-utils';
+import { IItemFields, itemValidation, TItemDescFields } from 'global-utils';
 
 const { images: { maxPhotos } } = itemValidation;
 
@@ -84,11 +85,33 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 export const updateMainInfo = (req: Request, res: Response, next: NextFunction) => {
   const item: IItemFields = req.body;
   const updatedAt = new Date();
-  const alias = item.alias || item.name;
+  const alias = formatAlias(item.alias || item.name);
   const updatedItem = { ...item, alias, updatedAt };
 
   ItemsModel.findOneAndUpdate(
     { id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true },
+    sendResponse(res, next),
+  );
+};
+
+export const updateItemDescription = (req: Request, res: Response, next: NextFunction) => {
+  const { description, metaTitle, metaKeywords, metaDescription }: TItemDescFields = req.body;
+  ItemsModel.findOneAndUpdate(
+    {
+      id: req.params.itemId,
+    },
+    {
+      $set: {
+        description,
+        metaTitle,
+        metaKeywords,
+        metaDescription,
+      },
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
     sendResponse(res, next),
   );
 };

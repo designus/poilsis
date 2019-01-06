@@ -153,7 +153,7 @@ export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) =
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.put(
-    `http://localhost:3000/api/items/item/mainInfo/${adminItem.id}`,
+    `http://localhost:3000/api/items/item/main-info/${adminItem.id}`,
     adminItem,
     setAcceptLanguageHeader(getLocale(getState())),
   )
