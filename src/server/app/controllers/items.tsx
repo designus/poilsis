@@ -1,5 +1,6 @@
 import { ItemsModel } from '../model';
 import { Request, Response, NextFunction } from 'express';
+import { IItemFields, itemValidation, getItemDescriptionFields, TItemFields } from 'global-utils';
 import {
   uploadImages,
   resizeImages,
@@ -7,7 +8,6 @@ import {
   sendResponse,
   formatAlias,
 } from '../server-utils';
-import { IItemFields, itemValidation, TItemDescFields } from 'global-utils';
 
 const { images: { maxPhotos } } = itemValidation;
 
@@ -95,24 +95,17 @@ export const updateMainInfo = (req: Request, res: Response, next: NextFunction) 
 };
 
 export const updateItemDescription = (req: Request, res: Response, next: NextFunction) => {
-  const { description, metaTitle, metaKeywords, metaDescription }: TItemDescFields = req.body;
+  const fields = getItemDescriptionFields(req.body);
   ItemsModel.findOneAndUpdate(
-    {
-      id: req.params.itemId,
+    { id: req.params.itemId },
+    { $set: fields },
+    { new: true, runValidators: true },
+    (err, result: TItemFields) => {
+      if (err) {
+        return next(err);
+      }
+      res.status(200).json(getItemDescriptionFields(result));
     },
-    {
-      $set: {
-        description,
-        metaTitle,
-        metaKeywords,
-        metaDescription,
-      },
-    },
-    {
-      new: true,
-      runValidators: true,
-    },
-    sendResponse(res, next),
   );
 };
 

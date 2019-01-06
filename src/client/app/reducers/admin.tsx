@@ -58,7 +58,7 @@ export const admin = (state: IAdminState = getInitialState(), action): IAdminSta
         items: {
           ...state.items,
           [action.itemId]: {
-            ...state[action.itemId],
+            ...state.items[action.itemId],
             ...action.descFields,
           },
         },

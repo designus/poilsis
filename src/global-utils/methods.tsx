@@ -1,5 +1,5 @@
 import * as JWT from 'jwt-decode';
-import { UserRoles, IAccessTokenClaims } from './typings';
+import { UserRoles, IAccessTokenClaims, TItemFields, TItemDescFields } from './typings';
 import { LANGUAGES } from './constants';
 
 export const mapMimeTypesToTypes = (mimeTypes: string[]) =>
@@ -37,3 +37,13 @@ export const getLocalizedResponse = (data: any, language: string) => {
 };
 
 export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);
+
+export const getItemDescriptionFields = (item: TItemFields): TItemDescFields => {
+  const { description, metaTitle, metaDescription, metaKeywords  } = item;
+  return {
+    description,
+    metaTitle,
+    metaDescription,
+    metaKeywords,
+  };
+};

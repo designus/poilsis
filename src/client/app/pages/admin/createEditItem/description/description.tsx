@@ -7,7 +7,7 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { IAppState } from 'reducers';
 import { updateItemDescription } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID } from 'client-utils';
-import { TItemFields, TItemDescFields } from 'global-utils';
+import { TItemFields, TItemDescFields, getItemDescriptionFields } from 'global-utils';
 import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
 import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, ITEM_DESCRIPTION_FORM_NAME } from './form';
@@ -32,17 +32,9 @@ class DescriptionPageComponent extends React.Component<IDescriptionProps, any> {
   }
 
   onSubmit = (description: TItemDescFields) => {
-    return this.props.updateItemDescription(this.props.loadedItem.id, description).catch(this.handleErrors);
-  }
-
-  getInitialValues = (): TItemDescFields => {
-    const { description, metaTitle, metaDescription, metaKeywords  } = this.props.loadedItem;
-    return {
-      description,
-      metaTitle,
-      metaDescription,
-      metaKeywords,
-    };
+    return this.props.updateItemDescription(this.props.loadedItem.id, description)
+      .then(() => this.props.initializeForm(description))
+      .catch(this.handleErrors);
   }
 
   render() {
@@ -56,7 +48,7 @@ class DescriptionPageComponent extends React.Component<IDescriptionProps, any> {
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           formatMessage={this.props.intl.formatMessage}
-          initialValues={this.getInitialValues()}
+          initialValues={getItemDescriptionFields(this.props.loadedItem)}
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>
