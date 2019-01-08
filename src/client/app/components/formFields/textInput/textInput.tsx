@@ -14,6 +14,7 @@ import { styles } from './styles';
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
   intl: boolean;
   selectedLanguage: string;
+  multiline: boolean;
 }
 
 // TODO: Memoize this fn
@@ -70,22 +71,28 @@ class InputComponent extends React.Component<ITextInputProps, any> {
   }
 
   renderInput = (value: string, language?: string) => {
-    const { classes, label, meta, selectedLanguage } = this.props;
+    const { classes, label, meta, selectedLanguage, multiline } = this.props;
     return (
       <div
         className={`${classes.wrapper} ${language !== selectedLanguage ? classes.hidden : ''}`}
         key={language}
       >
         <Tooltip open={this.showError(language)} title={meta.error || ''} placement="right-end">
-          <FormControl className={classes.formControl} error={this.showError(language)}>
+          <FormControl
+            className={`${classes.formControl} ${multiline ? classes.multiline : ''}`}
+            error={this.showError(language)}
+          >
             <InputLabel htmlFor={label}>
               {label}
             </InputLabel>
             <Input
               id={this.props.label}
               value={value}
+              multiline={multiline}
+              rows={4}
               onChange={this.handleChange(language)}
               margin="dense"
+              className={`${multiline ? classes.multilineInput : ''}`}
               classes={{
                 error: this.props.classes.error,
               }}

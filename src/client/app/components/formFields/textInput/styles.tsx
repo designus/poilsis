@@ -9,6 +9,12 @@ export const styles = (theme: Theme) => createStyles({
   formControl: {
     width: INPUT_WIDTH,
   },
+  multiline: {
+    width: INPUT_WIDTH + 200,
+  },
+  multilineInput: {
+    background: '#efefef',
+  },
   hidden: {
     display: 'none',
   },

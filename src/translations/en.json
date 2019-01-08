@@ -70,6 +70,7 @@
   "admin.item.update_error": "Item was not updated",
   "admin.item.delete_success": "Item was deleted successfully",
   "admin.item.delete_error": "Item was not deleted",
+  "admin.item.seo_info": "To get your ad indexed by search engines better please fill the following fields",
   "admin.authenticate.login_success": "You have logged in in successfully.",
   "admin.authenticate.login_error": "Login failed",
   "admin.authenticate.logout_success": "Logout success",
