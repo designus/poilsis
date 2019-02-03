@@ -1,7 +1,7 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme) => createStyles({
+export const languageStyles = (theme: Theme) => createStyles({
   languageOption: {
     display: 'inline-block',
     marginRight: '5px',

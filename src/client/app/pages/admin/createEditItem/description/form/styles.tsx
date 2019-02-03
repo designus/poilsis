@@ -5,4 +5,9 @@ export const styles = (theme: Theme) => createStyles({
   root: {
     padding: '15px 0',
   },
+  metaContent: {
+    padding: '20px 15px',
+    background: '#fff',
+    border: '1px solid #dddfe2',
+  },
 });
