@@ -6,13 +6,15 @@
   "scripts": {
     "clean": "rimraf build",
     "start": "cross-env NODE_ENV=production node ./build/server/app.js",
-    "start-client": "npm run clean && npm run build-server && cross-env NODE_ENV=development node ./build/server/app.js",
-    "build-client": "cd ./src/client && cross-env NODE_ENV=production webpack --env prod",
-    "build-server": "cd ./src/server && cross-env NODE_ENV=production webpack",
-    "dev-client": "cd ./src/client && webpack-dev-server -w --env dev",
-    "dev-server": "\"ts-node-dev\" -r tsconfig-paths/register --project src/server/tsconfig.json --respawn --transpileOnly src/server/server.tsx",
-    "dev": "cross-env NODE_ENV=development npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run dev-server\" \"npm run dev-client\"",
-    "build": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run build-server\" \"npm run build-client\"",
+    "start-dev-client": "npm run watch-dev-client",
+    "start-dev-server": "npm run clean && npm run build-dev-server && cross-env NODE_ENV=development node ./build/server/app.js",
+    "build-dev-server": "cd ./src/server && cross-env NODE_ENV=development webpack",
+    "watch-dev-client": "cd ./src/client && webpack-dev-server -w --env dev",
+    "watch-dev-server": "\"ts-node-dev\" -r tsconfig-paths/register --project src/server/tsconfig.json --respawn --transpileOnly src/server/server.tsx",
+    "dev": "cross-env NODE_ENV=development npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run watch-dev-server\" \"npm run watch-dev-client\"",
+    "build-prod-server": "cd ./src/server && cross-env NODE_ENV=production webpack",
+    "build-prod-client": "cd ./src/client && cross-env NODE_ENV=production webpack --env prod",
+    "build": "npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run build-prod-server\" \"npm run build-prod-client\"",
     "lint": "tslint \"src/**/**.ts*\"",
     "test-node": "jest --env=node --forceExit --runInBand"
   },
@@ -112,7 +114,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "@material-ui/core": "^3.8.2",
+    "@material-ui/core": "^3.9.0",
     "@material-ui/icons": "^3.0.2",
     "axios": "^0.15.3",
     "bcryptjs": "^2.4.3",

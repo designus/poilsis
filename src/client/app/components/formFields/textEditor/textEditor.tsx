@@ -10,7 +10,6 @@ import {
   DraftEditorCommand,
   DraftBlockType,
 } from 'draft-js';
-import Tooltip from '@material-ui/core/Tooltip';
 import FormatBold from '@material-ui/icons/FormatBold';
 import FormatItalic from '@material-ui/icons/FormatItalic';
 import FormatUnderlined from '@material-ui/icons/FormatUnderlined';

@@ -36,7 +36,7 @@ export const getLocalizedResponse = (data: any, language: string) => {
     localizeDocument(getObject(data), language);
 };
 
-export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);
+export const getTranslationMessages = (locale: string) => require(`src/translations/${locale}.json`);
 
 export const getItemDescriptionFields = (item: TItemFields): TItemDescFields => {
   const { description, metaTitle, metaDescription, metaKeywords  } = item;
