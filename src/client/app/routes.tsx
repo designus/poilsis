@@ -38,6 +38,11 @@ export const routes = [
                 exact: false,
               },
               {
+                path: adminRoutes.editItemDescription.path,
+                component: adminRoutes.editItemDescription.getComponent(),
+                exact: false,
+              },
+              {
                 path: adminRoutes.editItemPhotos.path,
                 component: adminRoutes.editItemPhotos.getComponent(),
                 exact: false,

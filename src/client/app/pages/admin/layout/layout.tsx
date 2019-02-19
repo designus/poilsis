@@ -171,11 +171,11 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
                   allowedRoles={adminRoutes.cities.allowedRoles}
                 />
                 <ProtectedRoute
-                  path={adminRoutes.createItem.path}
+                  path={adminRoutes.editItem.path}
                   component={CreateEditItemPage}
                 />
                 <ProtectedRoute
-                  path={adminRoutes.editItem.path}
+                  path={adminRoutes.createItem.path}
                   component={CreateEditItemPage}
                 />
                 <ProtectedRoute

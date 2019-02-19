@@ -58,7 +58,7 @@ class ToastComponent extends React.Component<IToastProps, any> {
 
   render() {
     const { classes, toast: { show, toastType } } = this.props;
-    return (
+    return show && (
       <Snackbar
         className={classes[toastType]}
         anchorOrigin={{
@@ -76,7 +76,7 @@ class ToastComponent extends React.Component<IToastProps, any> {
           />
         }
       />
-    );
+    ) || null;
   }
 }
 

@@ -18,6 +18,7 @@ interface IProtectedRouteProps {
   allowedRoles?: string[];
   path?: string;
   exact?: boolean;
+  strict?: boolean;
   match?: match<IMatchParams>;
 }
 

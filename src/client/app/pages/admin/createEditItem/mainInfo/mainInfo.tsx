@@ -51,7 +51,7 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
   }
 
   render() {
-    return (this.props.loadedItem || this.props.isCreatePage) && (
+    return (this.props.loadedItem || this.props.isCreatePage) ? (
       <div>
         <Typography variant="h5">
           <FormattedMessage id="admin.menu.main_info" />
@@ -69,7 +69,7 @@ class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>
-    );
+    ) : null;
   }
 }
 

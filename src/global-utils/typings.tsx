@@ -24,7 +24,14 @@ export interface IResponseError {
   };
 }
 
-export interface IItemFields<T = string> {
+export interface IItemDescFields<T = string> {
+  description: T;
+  metaTitle: T;
+  metaKeywords: T;
+  metaDescription: T;
+}
+
+export interface IItemFields<T = string> extends IItemDescFields<T> {
   id: string;
   createdAt?: string;
   updatedAt?: string;
@@ -36,10 +43,11 @@ export interface IItemFields<T = string> {
   isEnabled: boolean;
   name: T;
   alias: T;
-  description: T;
 }
 
 export type TItemFields = IItemFields<TranslatableField>;
+
+export type TItemDescFields = IItemDescFields<TranslatableField>;
 
 export interface ITypeFields<T = string> {
   id: string;

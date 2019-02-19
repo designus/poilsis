@@ -9,6 +9,7 @@ import {
   TOGGLE_ITEM_VISIBILITY,
   CLEAR_STATE,
   CLEAR_SELECTED_ITEM,
+  RECEIVE_ITEM_DESCRIPTION,
 } from 'actions';
 
 export interface IItem extends IItemFields {
@@ -57,6 +58,17 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
             ...(state.dataMap[action.itemId] || {}),
             ...action.item,
             isFullyLoaded: true,
+          },
+        },
+      };
+    case RECEIVE_ITEM_DESCRIPTION:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
+            ...action.descFields,
           },
         },
       };

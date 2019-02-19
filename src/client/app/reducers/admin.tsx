@@ -8,6 +8,7 @@ import {
   REMOVE_TYPE,
   REMOVE_ITEM,
   CLEAR_STATE,
+  RECEIVE_ADMIN_ITEM_DESCRIPTION,
 } from 'actions';
 import { removeItemById } from 'client-utils';
 
@@ -49,6 +50,17 @@ export const admin = (state: IAdminState = getInitialState(), action): IAdminSta
         items: {
           ...state.items,
           [action.itemId]: action.adminItem,
+        },
+      };
+    case RECEIVE_ADMIN_ITEM_DESCRIPTION:
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.itemId]: {
+            ...state.items[action.itemId],
+            ...action.descFields,
+          },
         },
       };
     case REMOVE_CITY:

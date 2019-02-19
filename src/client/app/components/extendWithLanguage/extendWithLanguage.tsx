@@ -7,9 +7,9 @@ import { WithStyles } from '@material-ui/core';
 import { IAppState } from 'reducers';
 import { LANGUAGES } from 'global-utils';
 
-import { styles  } from './styles';
+import { languageStyles } from './styles';
 
-interface IInjectedProps extends Partial<WithStyles<typeof styles>> {
+interface IInjectedProps extends Partial<WithStyles<typeof languageStyles>> {
   selectedLanguage?: string;
   locale?: string;
 }
@@ -65,7 +65,7 @@ export function extendWithLanguage<TOriginalProps extends {}>(
     });
 
     // @ts-ignore
-    return withStyles(styles)(
+    return withStyles(languageStyles)(
       connect<{}, {}, any>(mapStateToProps)(FormLanguageComponent),
     );
 }

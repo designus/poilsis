@@ -1,1 +1,1 @@
-export * from './adminPageActions';
+export { default as AdminPageActions } from './adminPageActions';

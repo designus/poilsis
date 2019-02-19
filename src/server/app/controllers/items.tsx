@@ -1,12 +1,13 @@
 import { ItemsModel } from '../model';
 import { Request, Response, NextFunction } from 'express';
+import { IItemFields, itemValidation, getItemDescriptionFields, TItemFields } from 'global-utils';
 import {
   uploadImages,
   resizeImages,
   getImages,
   sendResponse,
+  formatAlias,
 } from '../server-utils';
-import { IItemFields, itemValidation } from 'global-utils';
 
 const { images: { maxPhotos } } = itemValidation;
 
@@ -84,12 +85,27 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 export const updateMainInfo = (req: Request, res: Response, next: NextFunction) => {
   const item: IItemFields = req.body;
   const updatedAt = new Date();
-  const alias = item.alias || item.name;
+  const alias = formatAlias(item.alias || item.name);
   const updatedItem = { ...item, alias, updatedAt };
 
   ItemsModel.findOneAndUpdate(
     { id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true },
     sendResponse(res, next),
+  );
+};
+
+export const updateItemDescription = (req: Request, res: Response, next: NextFunction) => {
+  const fields = getItemDescriptionFields(req.body);
+  ItemsModel.findOneAndUpdate(
+    { id: req.params.itemId },
+    { $set: fields },
+    { new: true, runValidators: true },
+    (err, result: TItemFields) => {
+      if (err) {
+        return next(err);
+      }
+      res.status(200).json(getItemDescriptionFields(result));
+    },
   );
 };
 

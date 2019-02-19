@@ -10,6 +10,7 @@ import {
   toggleItem,
   addNewItem,
   deleteItem,
+  updateItemDescription,
   updateMainInfo,
   updatePhotos,
   uploadPhotos,
@@ -33,8 +34,11 @@ router.route('/item/:itemId')
 router.route('/view-item/:alias')
   .get(getViewItem);
 
-router.route('/item/mainInfo/:itemId')
+router.route('/item/main-info/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateMainInfo);
+
+router.route('/item/description/:itemId')
+  .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateItemDescription);
 
 router.route('/item/update-photos/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesFromFs, updatePhotos);

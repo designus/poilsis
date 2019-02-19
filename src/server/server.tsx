@@ -56,27 +56,31 @@ app.get('*', (req, res, next) => {
 });
 
 function sendResponse(res, store, location) {
-  const sheet: any = new ServerStyleSheet();
-  const context = {};
-  const styleTags = sheet.getStyleTags();
   const finalState = store.getState();
-  const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
-  const responseHtml = renderToString(
-    <StyleSheetManager sheet={sheet.instance}>
-      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-          <Provider store={store} key="provider">
-            <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
-              <StaticRouter location={location} context={context}>
-                <App />
-              </StaticRouter>
-            </IntlProvider>
-          </Provider>
-        </MuiThemeProvider>
-      </JssProvider>
-    </StyleSheetManager>,
-  );
-  res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
+  if (!location.includes('admin')) {
+    const sheet: any = new ServerStyleSheet();
+    const context = {};
+    const styleTags = sheet.getStyleTags();
+    const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
+    const responseHtml = renderToString(
+      <StyleSheetManager sheet={sheet.instance}>
+        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+          <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+            <Provider store={store} key="provider">
+              <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
+                <StaticRouter location={location} context={context}>
+                  <App />
+                </StaticRouter>
+              </IntlProvider>
+            </Provider>
+          </MuiThemeProvider>
+        </JssProvider>
+      </StyleSheetManager>,
+    );
+    res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
+  } else {
+    res.status(200).send(renderFullPage('', '', '', finalState));
+  }
 }
 
 function renderFullPage(html, css1, css2, preloadedState) {
@@ -87,7 +91,7 @@ function renderFullPage(html, css1, css2, preloadedState) {
         <title>Redux Universal Example</title>
       </head>
       <body>
-        <div id="app"><div>${html}</div></div>
+        <div id="app">${html}</div>
         <style id="jss-server-side">${css1}</style>
         <style id="styled-css">${css2}</style>
         <script>

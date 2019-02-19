@@ -62,7 +62,7 @@ describe('Integration tests: Items', () => {
 
     it('should not be able to update main info', () => {
       return request(app)
-        .put(`/api/items/item/mainInfo/${adminItem.id}`)
+        .put(`/api/items/item/main-info/${adminItem.id}`)
         .send({ ...adminItem, name: 'Almuka updated' })
         .expect(401);
     });
@@ -126,7 +126,7 @@ describe('Integration tests: Items', () => {
 
     it('should be able to update main info of existing item', () => {
       return request(app)
-        .put(`/api/items/item/mainInfo/${adminItem.id}`)
+        .put(`/api/items/item/main-info/${adminItem.id}`)
         .send({ ...adminItem, name: 'Almuka 2'})
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
@@ -216,7 +216,7 @@ describe('Integration tests: Items', () => {
 
     it('should be able to update main info of own item', () => {
       return request(app)
-        .put(`/api/items/item/mainInfo/${userItem.id}`)
+        .put(`/api/items/item/main-info/${userItem.id}`)
         .send({ ...userItem, name: 'Almuka 2'})
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
@@ -227,7 +227,7 @@ describe('Integration tests: Items', () => {
 
     it('should not be able to update main info of other user item', () => {
       return request(app)
-        .put(`/api/items/item/mainInfo/${adminItem.id}`)
+        .put(`/api/items/item/main-info/${adminItem.id}`)
         .send({ ...adminItem, name: 'Almuka 2'})
         .set('Cookie', `jwt=${accessToken}`)
         .expect(401);
