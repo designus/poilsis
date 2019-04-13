@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ICityFields } from 'global-utils';
 import { CitiesModel } from '../model';
-import { sendResponse } from '../server-utils';
+import { sendResponse, getAlias } from '../server-utils';
 
 export const getAllCities = (req: Request, res: Response, next: NextFunction) => {
   CitiesModel.find(sendResponse(res, next));
@@ -13,7 +13,8 @@ export const getCity = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
   const city: ICityFields = req.body;
-  const alias = city.alias || city.name;
+  const locale = req.headers['accept-language'] as string;
+  const alias = getAlias(city, locale);
   const newCity = { ...city, alias };
 
   new CitiesModel(newCity).save(sendResponse(res, next));

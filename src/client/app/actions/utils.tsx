@@ -20,5 +20,11 @@ export const handleApiResponse = (response: IResponse) => {
   if (response.data.errors) {
     throw response.data.errors;
   }
+
+
+  if (response.data.errmsg) {
+    throw response.data.errmsg;
+  }
+
   return response.data;
 };

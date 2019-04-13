@@ -7,6 +7,7 @@ import {
   getImages,
   sendResponse,
   formatAlias,
+  getAlias
 } from '../server-utils';
 
 const { images: { maxPhotos } } = itemValidation;
@@ -63,8 +64,9 @@ export const toggleItem = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewItem = (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
+  const locale = req.headers['accept-language'] as string;
   const item: IItemFields = req.body;
-  const alias = item.alias || item.name;
+  const alias = getAlias(item, locale);
   const newItem = { id, alias, ...item };
 
   new ItemsModel(newItem).save(sendResponse(res, next));
