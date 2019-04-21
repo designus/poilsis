@@ -13,6 +13,7 @@ module.exports = {
     "actions": "<rootDir>/src/client/app/actions/",
     "reducers": "<rootDir>/src/client/app/reducers/",
     "client-utils": "<rootDir>/src/client/app/client-utils/",
-    "components": "<rootDir>/src/client/app/components/"
+    "components": "<rootDir>/src/client/app/components/",
+    "pages": "<rootDir>/src/client/app/pages/"
   }
 };

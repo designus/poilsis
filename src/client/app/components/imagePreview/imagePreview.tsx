@@ -1,8 +1,7 @@
 import * as React from 'react';
 import DeleteIcon from '@material-ui/icons/Clear';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import InputLabel from '@material-ui/core/InputLabel';
-import { ImageFile } from 'react-dropzone';
 
 import { IUploadProgress } from 'reducers';
 import { SuccessIcon, ErrorIcon } from 'client-utils';
@@ -52,13 +51,13 @@ export class ImagePreview extends React.Component<IImagePreview> {
 
   renderImage = (image: IImage, index: number) => {
     const { isTemporary, onDeleteImage } = this.props;
-    const src = isTemporary ? (image as ImageFile).preview : `http://localhost:3000/${image.path}/${image.thumbName}`;
+    const src = isTemporary ? image.preview : `http://localhost:3000/${image.path}/${image.thumbName}`;
     return (
       <ImageSource>
         <img src={src} onLoad={this.props.onLoadImage} draggable={!isTemporary} />
-        <Button variant="fab" color="secondary" aria-label="remove" onClick={onDeleteImage(index)}>
+        <Fab color="secondary" aria-label="remove" onClick={onDeleteImage(index)}>
           <DeleteIcon />
-        </Button>
+        </Fab>
       </ImageSource>
     );
   }

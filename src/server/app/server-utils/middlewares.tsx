@@ -1,4 +1,5 @@
 import { readdir } from 'fs';
+import { Request, Response } from 'express';
 import {
   ImageSize,
   IImage,
@@ -14,11 +15,14 @@ import {
   getUploadPath,
   handleFileUploadErrors,
   getSourceFiles,
-  removeFiles,
+  removeFiles
+} from './methods';
+
+import {
   removeDirectory,
   createDirectory,
   checkIfDirectoryExists,
-} from './methods';
+} from './fileSystem';
 
 const multer = require('multer');
 const Jimp = require('jimp');
@@ -27,8 +31,10 @@ const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
 export const createUploadPath = (req, res, next) => {
   const itemId = req.params.itemId;
   const uploadPath = getUploadPath(itemId);
+  console.log('Upload path', uploadPath);
   checkIfDirectoryExists(uploadPath)
     .then(exists => {
+      console.log('Exists?', exists);
       if (exists) {
         next();
       } else {
@@ -137,7 +143,7 @@ export const handleItemsErrors = (err, req, res, next) => {
 };
 
 export const localizeResponse = (body, req: Request, res: Response) => {
-  const language = req.headers['accept-language'];
+  const language = req.headers['accept-language'] as 'string';
   if (!body.errors && LANGUAGES.indexOf(language) !== -1) {
     return getLocalizedResponse(body, language);
   }

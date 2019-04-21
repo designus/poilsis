@@ -78,9 +78,10 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
 
   componentWillReceiveProps(nextProps: ITableProps) {
     const data = nextProps.items;
-    if (data.length !== this.state.data.length) {
+    if (data !== this.state.data) {
       this.setState({data});
     }
+
     if (nextProps.search !== this.state.filters.search) {
       this.handleSearch(nextProps.search);
     }

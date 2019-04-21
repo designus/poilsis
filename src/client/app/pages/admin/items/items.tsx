@@ -168,7 +168,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <AdminHeader>
           <Typography variant="h5">
             <FormattedMessage id="admin.menu.items" />
@@ -193,7 +193,7 @@ class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
           onDelete={this.handleItemDelete}
           itemName={this.deleteItemName}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }

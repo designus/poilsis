@@ -21,7 +21,6 @@ export const handleApiResponse = (response: IResponse) => {
     throw response.data.errors;
   }
 
-
   if (response.data.errmsg) {
     throw response.data.errmsg;
   }

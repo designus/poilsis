@@ -135,6 +135,8 @@ export const uploadPhotos = (req, res: Response, next: NextFunction) => {
   const uploadPhotos = uploadImages.array('files[]', maxPhotos);
 
   uploadPhotos(req, res, (err) => {
+    console.log('UPloading photos', req.files);
+    console.log('Err', err);
     if (err) { return next(err); }
 
     resizeImages(req, res)

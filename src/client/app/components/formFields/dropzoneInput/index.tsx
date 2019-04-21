@@ -1,1 +1,1 @@
-export * from './dropzoneInput';
+export { default as DropzoneInput } from './dropzoneInput';

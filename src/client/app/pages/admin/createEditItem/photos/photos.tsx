@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { change, isDirty, isSubmitting } from 'redux-form';
 import Typography from '@material-ui/core/Typography';
-import { ImageFile } from 'react-dropzone';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { IImage } from 'global-utils';
@@ -15,7 +14,7 @@ const PhotosFormWithLoader = extendWithLoader(PhotosForm);
 
 export interface IPhotoFormState {
   images: IImage[];
-  files: ImageFile[];
+  files: File[];
 }
 
 export interface IPhotosFormFields extends IPhotoFormState, InjectedIntlProps {
@@ -69,7 +68,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  uploadImages: (itemId: string, files: ImageFile[]) => dispatch(uploadPhotos(itemId, files)),
+  uploadImages: (itemId: string, files: File[]) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
   setInitialUploadState: () => dispatch(setInitialUploadState()),
   addImagesToFormState: (images: IImage[]) => dispatch(change('PhotosForm', 'images', images)),

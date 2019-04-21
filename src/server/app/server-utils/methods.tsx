@@ -1,9 +1,7 @@
 import { SheetsRegistry } from 'react-jss';
 import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 import { Response, NextFunction } from 'express';
-import { exists, mkdir, readFile, writeFile, unlink, readdir, lstat } from 'fs';
-import { promisify } from 'util';
-import * as rimraf from 'rimraf';
+import { unlink } from 'fs';
 
 import {
   ImageSize,
@@ -13,22 +11,10 @@ import {
   itemValidation,
 } from 'global-utils';
 
-import {
-  MAX_PHOTO_COUNT,
-  MAX_PHOTO_SIZE,
-  WRONG_FILE_TYPE,
-} from 'data-strings';
+import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
 
 import { IMulterFile, FileUploadErrors } from './types';
 import { getValidationMessage } from './validationMessages';
-
-export const checkIfDirectoryExists = promisify(exists);
-export const createDirectory = promisify(mkdir);
-export const removeDirectory = promisify(rimraf);
-export const readFileFromDisk = promisify(readFile);
-export const writeFileToDisk = promisify(writeFile);
-export const getDirectoryStatus = promisify(lstat);
-export const readDirectoryContent = promisify(readdir);
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {

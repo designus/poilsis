@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import { login, logout, testDB, testData, adminUser, regularUser } from '../../test-utils';
-import { DEFAULT_LANGUAGE } from '../../../../global-utils';
+import { DEFAULT_LANGUAGE } from '../../../../global-utils/constants';
 import app from '../../../app';
 
 const newCityId = '123456';

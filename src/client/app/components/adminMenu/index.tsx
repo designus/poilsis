@@ -1,3 +1,3 @@
-export * from './adminMenu';
+export { default as AdminMenu } from './adminMenu';
 export * from './horizontalMenu';
 export * from './verticalMenu';

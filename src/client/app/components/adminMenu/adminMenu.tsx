@@ -22,7 +22,7 @@ export interface IAdminMenuProps extends RouteComponentProps<any>, WithStyles<ty
   userRole?: string;
 }
 
-class AdminMenuComponent extends React.PureComponent<IAdminMenuProps, any> {
+export class AdminMenu extends React.PureComponent<IAdminMenuProps, any> {
 
   renderItemContent = (item: IAdminMenuItem) => {
     const { icon, text } = this.props.classes;
@@ -90,6 +90,4 @@ const mapStateToProps = (state: IAppState) => ({
   userRole: state.currentUser.details.role,
 });
 
-const connectedComponent = connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenuComponent);
-
-export const AdminMenu = withRouter(connectedComponent);
+export default withRouter(connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenu));

@@ -1,9 +1,10 @@
 
 import * as request from 'supertest';
 
-import { checkIfDirectoryExists, getUploadPath, readDirectoryContent } from '../../server-utils';
+import { checkIfDirectoryExists, readDirectoryContent, getUploadPath } from '../../server-utils';
 import { login, logout, testDB, testData, adminUser, regularUser } from '../../test-utils';
 import app from '../../../app';
+
 const adminItem  = testData.collections.items[0];
 const userItem = testData.collections.items[1];
 const newItem = {

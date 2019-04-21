@@ -1,4 +1,3 @@
-import { ImageFile } from 'react-dropzone';
 import { FormattedMessage, MessageValue } from 'react-intl';
 import { IPhotoFormState } from 'pages';
 import {
@@ -78,7 +77,7 @@ export const isEmail = (fieldValue, formState, formProps: IFormProps) => {
   return undefined;
 };
 
-export const maxUploadedPhotos = (fieldValue: ImageFile[], formState: IPhotoFormState, formProps: IFormProps) => {
+export const maxUploadedPhotos = (fieldValue: File[], formState: IPhotoFormState, formProps: IFormProps) => {
   if (fieldValue && (formState.images.length + formState.files.length) > maxPhotos) {
     return formProps.formatMessage({ id: errors.MAX_PHOTO_COUNT }, { count: maxPhotos });
   }
@@ -86,8 +85,9 @@ export const maxUploadedPhotos = (fieldValue: ImageFile[], formState: IPhotoForm
   return undefined;
 };
 
-export const maxUploadedPhotoSize = (fieldValue: ImageFile[], formState: IPhotoFormState, formProps: IFormProps) => {
-  if (fieldValue.some((file: ImageFile) => file.size > maxPhotoSizeBytes)) {
+export const maxUploadedPhotoSize = (fieldValue: File[], formState: IPhotoFormState, formProps: IFormProps) => {
+  const doesAnyFileExceedsMaxPhotoSize = fieldValue.some((file: File) => file.size > maxPhotoSizeBytes);
+  if (doesAnyFileExceedsMaxPhotoSize) {
     return formProps.formatMessage({ id: errors.MAX_PHOTO_SIZE }, { count: maxPhotoSizeBytes });
   }
 

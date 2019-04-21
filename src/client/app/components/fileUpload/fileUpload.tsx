@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Dropzone, { ImageFile } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import ClearIcon from '@material-ui/icons/Clear';
 import FileUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
@@ -12,7 +12,7 @@ import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 const { images: { maxPhotos, maxPhotoSizeMegabytes, mimeTypes } } = itemValidation;
 
 export interface IFileUploadProps {
-  onDrop: (acceptedImages: ImageFile[], rejectedImages?: ImageFile[]) => void;
+  onDrop: (acceptedImages: File[], rejectedImages?: File[]) => void;
   showUploadButtons: boolean;
   hasValidationError: boolean;
   clearImages: () => void;
@@ -28,22 +28,24 @@ export const FileUpload = ({
   uploadImages,
   children,
 }: IFileUploadProps) => {
+
+  const { getRootProps, getInputProps } = useDropzone({
+    multiple: true,
+    accept: mimeTypes.join(','),
+    onDrop,
+  });
+
   return (
     <ImageUpload>
-      <Dropzone
-        onDrop={onDrop}
-        accept={mimeTypes.join(',')}
-        className="dropzone"
-        activeClassName="active-dropzone"
-        name="images"
-        multiple={true}>
+      <div {...getRootProps({className: 'dropzone'})}>
+        <input {...getInputProps()} />
         {children}
         <UploadPlaceholder>
           <Typography variant="body1">
             <FormattedMessage id="admin.file_upload.placeholder"  />
           </Typography>
         </UploadPlaceholder>
-      </Dropzone>
+      </div>
       <Typography variant="caption" gutterBottom>
         <FormattedMessage
           id="admin.file_upload.caption"

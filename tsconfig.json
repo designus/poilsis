@@ -12,6 +12,7 @@
       "global-styles": ["./src/client/app/global-styles"],
       "global-utils": ["./src/global-utils"]
     },
+    "lib": [ "es2015" ],
     "inlineSourceMap": false,
     "inlineSources": false,
     "experimentalDecorators": true,
