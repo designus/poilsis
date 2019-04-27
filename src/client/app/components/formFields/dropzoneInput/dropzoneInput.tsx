@@ -15,25 +15,38 @@ export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typ
   clearDroppedImages: () => void;
 }
 
-function DropzoneInput(props: IUploadedPhotosParams) {
+interface IFile extends File {
+  preview: string;
+}
 
+function DropzoneInput(props: IUploadedPhotosParams) {
+  const { useState, useEffect } = React;
   const { meta, input, clearDroppedImages, uploadImages, hasError, progress, isUploaded, isUploading } = props;
+  const [files, setFiles] = useState(input.value);
   const hasValidationError = Boolean(meta.invalid && meta.error);
 
   const onDeleteImage = (index: number) => (e: any) => {
     e.stopPropagation();
     const files = [...input.value];
     files.splice(index, 1);
-    input.onChange(files);
+    setFiles(files);
   };
 
   const onDrop = (acceptedFiles: File[]) => {
     const files = input.value;
     const newFiles = [...files, ...acceptedFiles];
-    input.onChange(extendFilesWithPreview(newFiles));
+
+    const newFilesWithPreview = newFiles.map((file: File) => Object.assign(file, { preview: URL.createObjectURL(file) }));
+    setFiles(newFilesWithPreview);
   };
 
-  const extendFilesWithPreview = (files: File[]) => files.map((file: File) => ({...file, preview: URL.createObjectURL(file)}));
+  useEffect(() => {
+    input.onChange(files);
+  }, [files]);
+
+  useEffect(() => () => {
+    files.forEach((file: IFile) => URL.revokeObjectURL(file.preview));
+  }, []);
 
   return (
     <Tooltip open={hasValidationError} title={meta.error || ''} placement="top-end">
@@ -45,7 +58,7 @@ function DropzoneInput(props: IUploadedPhotosParams) {
         uploadImages={uploadImages}
       >
         <ImagePreview
-          images={input.value}
+          images={files}
           onDeleteImage={onDeleteImage}
           hasError={hasError}
           progress={progress}

@@ -7,7 +7,7 @@ import {
   getImages,
   sendResponse,
   formatAlias,
-  getAlias
+  getAlias,
 } from '../server-utils';
 
 const { images: { maxPhotos } } = itemValidation;
@@ -133,10 +133,7 @@ export const updatePhotos = (req: Request, res: Response, next: NextFunction) =>
 
 export const uploadPhotos = (req, res: Response, next: NextFunction) => {
   const uploadPhotos = uploadImages.array('files[]', maxPhotos);
-
   uploadPhotos(req, res, (err) => {
-    console.log('UPloading photos', req.files);
-    console.log('Err', err);
     if (err) { return next(err); }
 
     resizeImages(req, res)
@@ -163,7 +160,7 @@ export const uploadPhotos = (req, res: Response, next: NextFunction) => {
       })
       .catch(err => {
         // TODO: Remove uploaded files
-        console.log(err);
+        console.log('Upload photos err: ', err);
       });
   });
 };

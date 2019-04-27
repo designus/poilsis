@@ -36,6 +36,7 @@
     "only-arrow-functions": [false],
     "no-submodule-imports": false,
     "no-implicit-dependencies": false,
+    "prefer-object-spread": false,
     "no-console": [
       false
     ],

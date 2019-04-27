@@ -15,7 +15,7 @@ import {
   getUploadPath,
   handleFileUploadErrors,
   getSourceFiles,
-  removeFiles
+  removeFiles,
 } from './methods';
 
 import {
@@ -31,10 +31,8 @@ const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
 export const createUploadPath = (req, res, next) => {
   const itemId = req.params.itemId;
   const uploadPath = getUploadPath(itemId);
-  console.log('Upload path', uploadPath);
   checkIfDirectoryExists(uploadPath)
     .then(exists => {
-      console.log('Exists?', exists);
       if (exists) {
         next();
       } else {
