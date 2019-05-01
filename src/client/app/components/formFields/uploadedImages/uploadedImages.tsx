@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { WrappedFieldProps } from 'redux-form';
 import { WithStyles } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { isEqual } from 'lodash';
 
-import { ImagePreview } from 'components';
+import { ImagePreview, Button } from 'components';
 import { IImage, itemValidation } from 'global-utils';
 import { IUploadProgress } from 'reducers';
 import { styles } from './styles';
@@ -12,79 +12,82 @@ import { styles } from './styles';
 const { images: { maxPhotos } } = itemValidation;
 
 export interface IUploadedImagesParams extends
-  WrappedFieldProps,
   WithStyles<typeof styles>,
   IUploadProgress,
   InjectedIntlProps  {
-    formName: string;
-    uploadImages: any;
-    onLoadedImages: any;
+    images: IImage[];
+    onSortImages: (images: IImage[]) => void;
+    onLoadedImages: () => void;
+    onSaveImages: (images: IImage[]) => void;
 }
 
-class UploadedImagesComponent extends React.Component<IUploadedImagesParams, any> {
-  loadedImages = 0;
+let loadedImages = 0;
 
-  constructor(props: IUploadedImagesParams) {
-    super(props);
-    this.state = {
-      images: [],
-    };
-  }
+function UploadedImages(props: IUploadedImagesParams) {
+  const { useState, useEffect } = React;
+  const { images: initialImages, onSaveImages, onLoadedImages, intl: { formatMessage } } = props;
+  const [images, setImages] = useState([...initialImages]);
 
-  static getDerivedStateFromProps(nextProps) {
-    if (nextProps.input.value) {
-      return {
-        images: nextProps.input.value,
-      };
-    }
+  useEffect(() => {
+    setImages([...initialImages]);
+  }, [initialImages]);
 
-    return null;
-  }
-
-  onDeleteImage = (index: number) => (e: any) => {
+  const handleImageDelete = (index: number) => (e: React.FormEvent<HTMLInputElement>) => {
     e.stopPropagation();
-    const images = [...this.props.input.value];
     images.splice(index, 1);
-    this.setState({ images });
-    this.loadedImages--;
-    this.props.input.onChange(images);
-  }
+    setImages([...images]);
+    loadedImages--;
+  };
 
-  onSortImages = (images: IImage[]) => {
-    this.setState({ images });
-    this.props.input.onChange(images);
-  }
+  const handleImagesSave = () => {
+    onSaveImages(images);
+  };
 
-  onLoadImage = () => {
-    this.loadedImages++;
-    const { onLoadedImages } = this.props;
-    if (this.loadedImages === this.state.images.length && onLoadedImages) {
+  const handleImagesSort = (images: IImage[]) => {
+    setImages([...images]);
+  };
+
+  const handleImageLoad = () => {
+    loadedImages++;
+    if (loadedImages === images.length && onLoadedImages) {
       onLoadedImages();
     }
-  }
+  };
 
-  getImagePreviewLabel = () => {
-    return this.props.intl.formatMessage({id: 'admin.file_upload.image_preview_label'}, {
-      uploadedCount: this.props.input.value.length,
+  const getImagePreviewLabel = () =>
+    formatMessage({id: 'admin.file_upload.image_preview_label'}, {
+      uploadedCount: images.length,
       totalCount: maxPhotos,
     });
-  }
 
-  render() {
-    return (
+  const isSubmitDisabled = () => {
+    const imagesIds = images.map((image: IImage) => image.id);
+    const initialImagesIds = initialImages.map((image: IImage) => image.id);
+    return isEqual(imagesIds, initialImagesIds);
+  };
+
+  return (
+    <React.Fragment>
       <ImagePreview
-        label={this.getImagePreviewLabel()}
-        images={this.state.images}
-        onLoadImage={this.onLoadImage}
-        onDeleteImage={this.onDeleteImage}
-        onSortImages={this.onSortImages}
+        label={getImagePreviewLabel()}
+        images={images}
+        onLoadImage={handleImageLoad}
+        onDeleteImage={handleImageDelete}
+        onSortImages={handleImagesSort}
         hasError={false}
         isUploaded={true}
         isUploading={false}
         isTemporary={false}
       />
-    );
-  }
+      <Button
+        onClick={handleImagesSave}
+        disabled={isSubmitDisabled()}
+      >
+        <FormattedMessage id="common.save" />
+      </Button>
+    </React.Fragment>
+  );
+
 }
 
-export const UploadedImages = withStyles(styles)(injectIntl(UploadedImagesComponent)) as any;
+export default injectIntl(withStyles(styles)(UploadedImages));

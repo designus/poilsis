@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { DropzoneInput, UploadedImages, Button } from 'components';
-import { maxUploadedPhotos, maxUploadedPhotoSize } from 'global-utils';
-import { IPhotosFormFields } from '../photos';
+import { DropzoneInput, UploadedImages } from 'components';
+import { maxUploadedPhotos, maxUploadedPhotoSize, IImage } from 'global-utils';
 
 export const PHOTOS_FORM_NAME = 'PhotosForm';
 
@@ -14,9 +13,10 @@ const validators = [
 ];
 
 interface ICustomProps {
-  isDirty: boolean;
-  setInitialUploadState: () => void;
-  onSubmit: (fields: IPhotosFormFields) => void;
+  images: IImage[];
+  onResetUploadState: () => void;
+  onSaveImages: (images: IImage[]) => void;
+  onSortImages: (images: IImage[]) => void;
   formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
 }
 
@@ -28,13 +28,9 @@ class FormComponent extends React.Component<FormProps> {
     this.props.change('files', []);
   }
 
-  onLoadedImages = () => {
-    this.props.setInitialUploadState();
+  handleLoadedImages = () => {
+    this.props.onResetUploadState();
     this.clearDroppedImages();
-  }
-
-  submitImages = (fields: IPhotosFormFields) => {
-    this.props.onSubmit({ ...fields, isUpdateAction: true });
   }
 
   render() {
@@ -47,20 +43,18 @@ class FormComponent extends React.Component<FormProps> {
           clearDroppedImages={this.clearDroppedImages}
           formName="PhotosForm"
         />
-        <Field
-          name="images"
-          component={UploadedImages}
-          onLoadedImages={this.onLoadedImages}
+        <UploadedImages
+          images={this.props.images}
+          onSaveImages={this.props.onSaveImages}
+          onSortImages={this.props.onSortImages}
+          onLoadedImages={this.handleLoadedImages}
         />
-        <Button
-          onClick={this.props.handleSubmit(this.submitImages)}
-          disabled={!this.props.isDirty}
-        >
-          <FormattedMessage id="common.save" />
-        </Button>
       </form>
     );
   }
 }
 
-export const PhotosForm = reduxForm<{}, ICustomProps>({ form: PHOTOS_FORM_NAME })(FormComponent);
+export default reduxForm<{}, ICustomProps>({
+  form: PHOTOS_FORM_NAME,
+  enableReinitialize: true,
+})(FormComponent);

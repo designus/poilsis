@@ -4,6 +4,7 @@ import {
   DEFAULT_LANGUAGE,
   hasLocalizedFields,
   itemValidation,
+  IImage,
 } from 'global-utils';
 
 import * as errors from '../data-strings/validation';
@@ -12,6 +13,7 @@ const { images: { maxPhotos, maxPhotoSizeBytes } } = itemValidation;
 
 export interface IFormProps {
   formatMessage?: (messages: FormattedMessage.MessageDescriptor, values?: {[key: string]: MessageValue}) => string;
+  images?: IImage[];
 }
 
 export const isRequired = (fieldValue, formState, formProps: IFormProps) => {
@@ -78,7 +80,7 @@ export const isEmail = (fieldValue, formState, formProps: IFormProps) => {
 };
 
 export const maxUploadedPhotos = (fieldValue: File[], formState: IPhotoFormState, formProps: IFormProps) => {
-  if (fieldValue && (formState.images.length + formState.files.length) > maxPhotos) {
+  if (fieldValue && (formProps.images.length + formState.files.length) > maxPhotos) {
     return formProps.formatMessage({ id: errors.MAX_PHOTO_COUNT }, { count: maxPhotos });
   }
 
@@ -86,10 +88,11 @@ export const maxUploadedPhotos = (fieldValue: File[], formState: IPhotoFormState
 };
 
 export const maxUploadedPhotoSize = (fieldValue: File[], formState: IPhotoFormState, formProps: IFormProps) => {
+
+  if (!fieldValue) return;
+
   const doesAnyFileExceedsMaxPhotoSize = fieldValue.some((file: File) => file.size > maxPhotoSizeBytes);
   if (doesAnyFileExceedsMaxPhotoSize) {
     return formProps.formatMessage({ id: errors.MAX_PHOTO_SIZE }, { count: maxPhotoSizeBytes });
   }
-
-  return undefined;
 };

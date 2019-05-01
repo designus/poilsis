@@ -1,1 +1,1 @@
-export * from './form';
+export { default as PhotosForm } from './form';

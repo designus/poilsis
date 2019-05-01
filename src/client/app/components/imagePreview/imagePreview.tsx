@@ -87,9 +87,11 @@ export class ImagePreview extends React.Component<IImagePreview> {
     return (
       <ImagePreviewWrapper isTemporary={isTemporary}>
         <InputLabel>{label}</InputLabel>
-        <Images>
-          {images.map(this.renderImageWrapper)}
-        </Images>
+        {images ? (
+          <Images>
+            {images.map(this.renderImageWrapper)}
+          </Images>
+        ) : null}
       </ImagePreviewWrapper>
     );
   }

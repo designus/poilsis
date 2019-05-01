@@ -33,9 +33,8 @@ function DropzoneInput(props: IUploadedPhotosParams) {
   };
 
   const onDrop = (acceptedFiles: File[]) => {
-    const files = input.value;
+    const files = input.value || [];
     const newFiles = [...files, ...acceptedFiles];
-
     const newFilesWithPreview = newFiles.map((file: File) => Object.assign(file, { preview: URL.createObjectURL(file) }));
     setFiles(newFilesWithPreview);
   };
@@ -43,6 +42,10 @@ function DropzoneInput(props: IUploadedPhotosParams) {
   useEffect(() => {
     input.onChange(files);
   }, [files]);
+
+  useEffect(() => {
+    setFiles(input.value);
+  }, [input.value]);
 
   useEffect(() => () => {
     files.forEach((file: IFile) => URL.revokeObjectURL(file.preview));
