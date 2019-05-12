@@ -47,7 +47,6 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
       dispatch(receiveUserDetails({ id, name, role }));
       dispatch(endLoading(DIALOG_LOADER_ID));
       dispatch(showToast(Toast.success, USER_LOGIN_SUCCESS));
-      // dispatch(setLogoutTimer(expires));
       Cookies.set('jwt', accessToken, {expires: expiryDate});
       localStorage.setItem('refreshToken', refreshToken);
       return Promise.resolve();
@@ -55,7 +54,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
     .catch(handleAuthError(dispatch, true));
 };
 
-export const reauthenticateUser = () => (dispatch, getState) => {
+export const reauthenticateUser = (displayToast = false) => (dispatch, getState) => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
@@ -68,9 +67,11 @@ export const reauthenticateUser = () => (dispatch, getState) => {
       const { expires } = getAccessTokenClaims(accessToken);
       const expiryDate = day(expires * 1000).toDate();
       dispatch(endLoading(DIALOG_LOADER_ID));
-      dispatch(showToast(Toast.success, USER_REAUTHENTICATE_SUCCESS));
       dispatch(reauthenticateSuccess(accessToken));
       Cookies.set('jwt', accessToken, { expires: expiryDate });
+      if (displayToast) {
+        dispatch(showToast(Toast.success, USER_REAUTHENTICATE_SUCCESS));
+      }
     })
     .catch(handleAuthError(dispatch, true));
 };

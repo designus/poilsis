@@ -9,13 +9,13 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { IAppState } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils';
 import { logout, reauthenticateUser } from 'actions';
-import { getAccessTokenClaims } from 'global-utils';
+import { getSessionExpiryTime } from 'selectors';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 
 export interface IKeepMeLoggedModalProps extends WithStyles<typeof modalStyles> {
   isModalOpen?: boolean;
-  accessToken?: string;
+  sessionExpiryTime?: number;
   onCloseModal?: () => void;
   reauthenticateUser?: () => void;
 }
@@ -33,8 +33,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
   }
 
   render() {
-    const { classes, isModalOpen, reauthenticateUser, accessToken } = this.props;
-    const expires = accessToken ? getAccessTokenClaims(accessToken).expires : null;
+    const { classes, isModalOpen, reauthenticateUser, sessionExpiryTime } = this.props;
 
     return (
       <div>
@@ -58,9 +57,9 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
             loaderId={DIALOG_LOADER_ID}
             contentClass={classes.dialogContent}
           >
-            {expires &&
+            {sessionExpiryTime &&
               <Countdown
-                date={expires * 1000}
+                date={sessionExpiryTime * 1000}
                 intervalDelay={0}
                 precision={3}
                 renderer={this.renderCountdown}
@@ -81,13 +80,13 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  accessToken: state.auth.accessToken,
+  sessionExpiryTime: getSessionExpiryTime(state),
   isModalOpen: state.auth.showKeepMeLoggedModal,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCloseModal: () => dispatch(logout()),
-  reauthenticateUser: () => dispatch(reauthenticateUser()),
+  reauthenticateUser: () => dispatch(reauthenticateUser(true)),
 });
 
 const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);

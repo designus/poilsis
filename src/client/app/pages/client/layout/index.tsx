@@ -1,1 +1,1 @@
-export * from './layout';
+export { default as ClientLayoutPage } from './layout';

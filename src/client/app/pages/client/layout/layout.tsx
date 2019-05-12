@@ -8,7 +8,7 @@ import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
 import { LoginPage, CityPage, ItemPage } from 'pages';
 import { IAppState, IItemsMap, ICitiesMap, ITypesMap } from 'reducers';
 
-import { hasInitialDataLoaded, isInitialDataLoading, getCities } from 'selectors';
+import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn } from 'selectors';
 
 interface IMatchParams {
   cityName: string;
@@ -26,7 +26,7 @@ interface ILayoutPageParams extends RouteComponentProps<IMatchParams> {
   login: (credentials: any) => void;
 }
 
-class ClientLayoutPageComponent extends React.Component<ILayoutPageParams, any> {
+class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
 
   static fetchData(store, params: IMatchParams) {
     return store.dispatch(getInitialData({ locale: params.locale }));
@@ -86,7 +86,7 @@ const mapStateToProps = (state: IAppState) => ({
   typesMap: state.types.dataMap,
   hasInitialDataLoaded: hasInitialDataLoaded(state),
   isInitialDataLoading: isInitialDataLoading(state),
-  isAuthenticated: state.auth.isLoggedIn,
+  isAuthenticated: isLoggedIn(state),
   user: state.currentUser.details && state.currentUser.details.name,
   cities: getCities(state),
   locale: state.locale,
@@ -98,4 +98,4 @@ const mapDispatchToProps = (dispatch) => ({
   getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
 });
 
-export const ClientLayoutPage = connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(ClientLayoutPageComponent);
+export default connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(ClientLayoutPage);

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect, match } from 'react-router-dom';
 import { renderMergedProps } from 'client-utils';
 import { IAppState } from 'reducers';
+import { isLoggedIn } from 'selectors';
 import { NotAuthorized } from 'components';
 import { UserRoles } from 'global-utils';
 
@@ -77,7 +78,7 @@ const mapStateToProps = (state: IAppState) => {
   return {
     userRole: currentUser ? currentUser.role : null,
     userId: currentUser ? currentUser.id : null,
-    isAuthenticated: state.auth.isLoggedIn,
+    isAuthenticated: isLoggedIn(state),
   };
 };
 

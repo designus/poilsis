@@ -1,13 +1,26 @@
+import axios from 'axios';
 import * as React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
-import { App } from './app/pages';
+import { App } from 'pages';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { ConnectedIntlProvider } from 'components';
+import { reauthenticateUser } from 'actions';
+import { isLoggedIn } from 'selectors';
 
-const rootElement = document.getElementById('app');
+axios.interceptors.response.use((response) => {
+    if (isLoggedIn(store.getState()) && !response.config.url.includes('reauthenticate')) {
+      store.dispatch(reauthenticateUser());
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
 export const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
@@ -51,5 +64,5 @@ render(
       </ConnectedIntlProvider>
     </Provider>
   </MuiThemeProvider>,
-  rootElement,
+  document.getElementById('app'),
 );

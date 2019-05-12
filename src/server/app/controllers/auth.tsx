@@ -70,7 +70,6 @@ class Auth {
       }
 
       const userItems = await this.getUserItems(userRole, userId);
-
       res.status(200).json({ accessToken: this.genToken({ userId, userRole, userItems, userName}) });
     } catch (err) {
       console.error('Reauthenticate error', err.message);

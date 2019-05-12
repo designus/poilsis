@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import StaticRouter from 'react-router-dom/StaticRouter';
+// import StaticRouter from 'react-router-dom/StaticRouter';
+import { StaticRouter } from 'react-router-dom';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -50,7 +51,9 @@ app.get('*', (req, res, next) => {
       const loadInitialDataOnly = !user;
       return err ? next(err) : preloadData(promises, loadInitialDataOnly).then(() => sendResponse(res, store, location));
     } else {
-      return preloadData(promises).then(() => sendResponse(res, store, location));
+      return preloadData(promises).then(() => {
+        sendResponse(res, store, location);
+      });
     }
   })(req, res, next);
 });

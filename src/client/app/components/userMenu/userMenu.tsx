@@ -12,12 +12,13 @@ import { throttle } from 'lodash';
 
 import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
 import { logout, showKeepMeLoggedModal } from 'actions';
+import { getSessionExpiryTime } from 'selectors';
 import { IAppState, ICurrentUser } from 'reducers';
 import { styles } from './styles';
 
 interface IMenuComponentProps extends WithStyles<typeof styles> {
   currentUser?: ICurrentUser;
-  expires?: number;
+  sessionExpiryTime?: number;
   isKeepMeLoggedModalVisible?: boolean;
   logout?: () => void;
   showKeepMeLoggedModal?: () => void;
@@ -64,7 +65,7 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
     return this.props.currentUser && (
       <div className={this.props.classes.wrapper}>
         <Countdown
-          date={this.props.expires * 1000}
+          date={this.props.sessionExpiryTime * 1000}
           intervalDelay={0}
           precision={3}
           renderer={this.renderCountdown}
@@ -101,7 +102,7 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
 const mapStateToProps = (state: IAppState) => ({
   isKeepMeLoggedModalVisible: state.auth.showKeepMeLoggedModal,
   currentUser: state.currentUser.details,
-  expires: getAccessTokenClaims(state.auth.accessToken).expires,
+  sessionExpiryTime: getSessionExpiryTime(state),
 });
 
 const mapDispatchToProps = dispatch => ({
