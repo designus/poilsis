@@ -11,7 +11,8 @@ import { reauthenticateUser } from 'actions';
 import { isLoggedIn } from 'selectors';
 
 axios.interceptors.response.use((response) => {
-    if (isLoggedIn(store.getState()) && !response.config.url.includes('reauthenticate')) {
+    const url = response.config.url;
+    if (isLoggedIn(store.getState()) && !url.includes('reauthenticate') && !url.includes('logout')) {
       store.dispatch(reauthenticateUser());
     }
     return response;

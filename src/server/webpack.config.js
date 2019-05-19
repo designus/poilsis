@@ -14,7 +14,7 @@ fs.readdirSync(projectRoot + '/node_modules')
 
 module.exports = {
   entry: './server.tsx',
-  mode: 'development',
+  mode: 'production',
   output: {
     path: path.join(projectRoot, 'build', 'server'),    
     filename: 'app.js',

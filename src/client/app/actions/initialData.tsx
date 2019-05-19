@@ -4,6 +4,7 @@ import { IAppState } from 'reducers';
 import { receiveUserDetails, startLoading, endLoading, setLocale } from 'actions';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
 import { getLocale } from 'selectors';
+import { config } from '../../../../config';
 
 export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
 export const CLEAR_STATE = 'CLEAR_STATE';
@@ -42,9 +43,9 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     }
 
     const promises = [
-      axios.get('http://localhost:3000/api/cities', setAcceptLanguageHeader(locale)),
-      axios.get('http://localhost:3000/api/types', setAcceptLanguageHeader(locale)),
-      axios.get('http://localhost:3000/api/users', setAcceptLanguageHeader(locale)),
+      axios.get(`${config.host}/api/cities`, setAcceptLanguageHeader(locale)),
+      axios.get(`${config.host}/api/types`, setAcceptLanguageHeader(locale)),
+      axios.get(`${config.host}/api/users`, setAcceptLanguageHeader(locale)),
     ];
 
     return axios.all(promises)

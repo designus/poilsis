@@ -14,6 +14,7 @@ import {
 import { getLocale, getCities } from 'selectors';
 import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
+import { config } from '../../../../config';
 import { receiveAdminCity } from './admin';
 
 export const SELECT_CITY = 'SELECT_CITY';
@@ -51,7 +52,7 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
     dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.get(
-      `http://localhost:3000/api/items/city/${cityId}`,
+      `${config.host}/api/items/city/${cityId}`,
       setAcceptLanguageHeader(language),
     )
       .then(response => response.data)
@@ -75,7 +76,7 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
 export const createCity = (adminCity: TCityFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post('http://localhost:3000/api/cities', adminCity, setAcceptLanguageHeader(getLocale(getState())))
+  return axios.post(`${config.host}/api/cities`, adminCity, setAcceptLanguageHeader(getLocale(getState())))
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {
       dispatch(receiveClientCity(clientCity));
@@ -89,7 +90,7 @@ export const updateCity = (adminCity: TCityFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.put(
-    `http://localhost:3000/api/cities/city/${adminCity.id}`,
+    `${config.host}/api/cities/city/${adminCity.id}`,
      adminCity,
      setAcceptLanguageHeader(getLocale(getState)),
   )
@@ -106,7 +107,7 @@ export const updateCity = (adminCity: TCityFields) => (dispatch, getState) => {
 
 export const deleteCity = (cityId: string) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-  return axios.delete(`http://localhost:3000/api/cities/city/${cityId}`)
+  return axios.delete(`${config.host}/api/cities/city/${cityId}`)
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeCity(cityId));

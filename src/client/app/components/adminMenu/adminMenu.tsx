@@ -65,9 +65,7 @@ export class AdminMenu extends React.PureComponent<IAdminMenuProps, any> {
     );
   }
 
-  isItemVisible = (item: IAdminMenuItem) => {
-    return !item.allowedRoles || item.allowedRoles.indexOf(this.props.userRole) !== -1;
-  }
+  isItemVisible = (item: IAdminMenuItem) => !item.allowedRoles || item.allowedRoles.indexOf(this.props.userRole) !== -1;
 
   renderItem = (item: IAdminMenuItem, index) => {
     return this.isItemVisible(item) ?
@@ -90,4 +88,6 @@ const mapStateToProps = (state: IAppState) => ({
   userRole: state.currentUser.details.role,
 });
 
-export default withRouter(connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenu));
+export default withRouter(
+  connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenu),
+);

@@ -15,6 +15,7 @@ import { getLocale } from 'selectors';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { startLoading } from './loader';
 import { receiveAdminType } from './admin';
+import { config } from '../../../../config';
 
 export const SELECT_TYPE = 'SELECT_TYPE';
 export const RECEIVE_CLIENT_TYPE = 'RECEIVE_CLIENT_TYPE';
@@ -38,7 +39,7 @@ export const removeType = (typeId) => ({
 export const createType = (adminType: TTypeFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post('http://localhost:3000/api/types', adminType, setAcceptLanguageHeader(getLocale(getState())))
+  return axios.post(`${config.host}/api/types`, adminType, setAcceptLanguageHeader(getLocale(getState())))
     .then(handleApiResponse)
     .then((clientType: ITypeFields) => {
       dispatch(receiveClientType(clientType));
@@ -51,7 +52,7 @@ export const createType = (adminType: TTypeFields) => (dispatch, getState) => {
 export const updateType = (adminType: TTypeFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`http://localhost:3000/api/types/type/${adminType.id}`, adminType, setAcceptLanguageHeader())
+  return axios.put(`${config.host}/api/types/type/${adminType.id}`, adminType, setAcceptLanguageHeader())
     .then(handleApiResponse)
     .then((clientType: ITypeFields) => {
       dispatch(receiveClientType(clientType));
@@ -65,7 +66,7 @@ export const updateType = (adminType: TTypeFields) => dispatch => {
 
 export const deleteType = (typeId: string) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-  return axios.delete(`http://localhost:3000/api/types/type/${typeId}`)
+  return axios.delete(`${config.host}/api/types/type/${typeId}`)
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeType(typeId));

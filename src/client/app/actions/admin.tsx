@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { config } from '../../../../config';
 import { TCityFields, TTypeFields, TItemFields, TItemDescFields } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils';
 import { startLoading, endLoading } from 'actions';
@@ -36,7 +37,7 @@ export const receiveAdminItemDesc = (itemId: string, descFields: TItemDescFields
 
 export const getAdminCity = (cityId: string) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`http://localhost:3000/api/cities/city/${cityId}`)
+  return axios.get(`${config.host}/api/cities/city/${cityId}`)
     .then(handleApiResponse)
     .then((adminCity: TCityFields) => {
       dispatch(receiveAdminCity(adminCity.id, adminCity));
@@ -47,7 +48,7 @@ export const getAdminCity = (cityId: string) => dispatch => {
 
 export const getAdminType = (typeId: string) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`http://localhost:3000/api/types/type/${typeId}`)
+  return axios.get(`${config.host}/api/types/type/${typeId}`)
     .then(handleApiResponse)
     .then((adminType: TTypeFields) => {
       dispatch(receiveAdminType(adminType.id, adminType));
@@ -58,7 +59,7 @@ export const getAdminType = (typeId: string) => dispatch => {
 
 export const getAdminItem = (itemId: string) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`http://localhost:3000/api/items/item/${itemId}`)
+  return axios.get(`${config.host}/api/items/item/${itemId}`)
     .then(handleApiResponse)
     .then((adminItem: TItemFields) => {
       dispatch(receiveAdminItem(adminItem.id, adminItem));

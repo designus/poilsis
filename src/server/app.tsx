@@ -4,8 +4,10 @@ import { config } from '../../config';
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -16,6 +18,9 @@ export const staticFilesPort = app.get('env') === 'production' ? config.port : 8
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.db);
+app.use(helmet());
+app.use(cors());
+// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 app.use(mung.json(localizeResponse));
 app.use('/public', express.static('build/client'));
 app.use('/images', express.static('static/images'));

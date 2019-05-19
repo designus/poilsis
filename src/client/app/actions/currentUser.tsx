@@ -4,6 +4,7 @@ import { startLoading, endLoading, receiveItems } from 'actions';
 import { IAppState, ICurrentUser } from 'reducers';
 import { isAdmin } from 'global-utils';
 import { getLocale } from 'selectors';
+import { config } from '../../../../config';
 
 export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
 
@@ -18,8 +19,8 @@ export const loadUserItems = () => (dispatch, getState) => {
   const user = currentUser.details;
   const isAdministrator = isAdmin(user.role);
   const endpoint = isAdministrator ?
-    'http://localhost:3000/api/items' :
-    `http://localhost:3000/api/items/user/${user.id}`;
+    `${config.host}/api/items` :
+    `${config.host}/api/items/user/${user.id}`;
 
   if (currentUser.hasItems) {
     return;

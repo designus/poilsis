@@ -34,6 +34,7 @@ import {
 } from 'data-strings';
 import { IImage, IItemFields, TItemFields, TItemDescFields, IItemDescFields } from 'global-utils';
 import { getLocale } from 'selectors';
+import { config } from '../../../../config';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
 export const CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM';
@@ -101,7 +102,7 @@ export const loadItem = (alias: string, locale: string) => (dispatch, getState) 
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(`http://localhost:3000/api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
+  return axios.get(`${config.host}api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(receiveItem(item));
@@ -115,7 +116,7 @@ export const loadItem = (alias: string, locale: string) => (dispatch, getState) 
 
 export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
   return axios
-    .put(`http://localhost:3000/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
+    .put(`${config.host}/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
       onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent))),
     })
     .then(handleApiResponse)
@@ -139,7 +140,7 @@ export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
 export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`http://localhost:3000/api/items/item/update-photos/${itemId}`, {images})
+  return axios.put(`${config.host}/api/items/item/update-photos/${itemId}`, {images})
     .then(handleApiResponse)
     .then((images: IImage[]) => {
       dispatch(receiveImages(itemId, images));
@@ -161,7 +162,7 @@ export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) =
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.put(
-    `http://localhost:3000/api/items/item/main-info/${adminItem.id}`,
+    `${config.host}/api/items/item/main-info/${adminItem.id}`,
     adminItem,
     setAcceptLanguageHeader(getLocale(getState())),
   )
@@ -179,7 +180,7 @@ export const updateItemDescription = (itemId: string, adminItemDescFields: TItem
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.put(
-    `http://localhost:3000/api/items/item/description/${itemId}`,
+    `${config.host}/api/items/item/description/${itemId}`,
     adminItemDescFields,
     setAcceptLanguageHeader(getLocale(getState())),
   )
@@ -199,7 +200,7 @@ export const createItem = (adminItem: TItemFields) => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.post(
-    'http://localhost:3000/api/items',
+    `${config.host}/api/items`,
     adminItem,
     setAcceptLanguageHeader(getLocale(getState())),
   )
@@ -216,7 +217,7 @@ export const deleteItem = (itemId: string) => (dispatch) => {
 
   dispatch(startLoading(DIALOG_LOADER_ID));
 
-  return axios.delete(`http://localhost:3000/api/items/item/${itemId}`)
+  return axios.delete(`${config.host}/api/items/item/${itemId}`)
     .then(handleApiResponse)
     .then(item => {
       dispatch(removeItem(item));
@@ -228,7 +229,7 @@ export const deleteItem = (itemId: string) => (dispatch) => {
 export const toggleItem = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
   const appState: IAppState = getState();
   const userId = appState.items.dataMap[itemId].userId;
-  return axios.patch(`http://localhost:3000/api/items/item/toggle/${itemId}`, { userId, isEnabled })
+  return axios.patch(`${config.host}/api/items/item/toggle/${itemId}`, { userId, isEnabled })
     .then(handleApiResponse)
     .then(() => {
       dispatch(toggleItemVisibility(itemId, isEnabled));

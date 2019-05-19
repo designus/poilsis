@@ -1,7 +1,8 @@
 
-import { DRAWER_WIDTH } from '../../global-styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
+import { DRAWER_WIDTH } from '../../global-styles';
+import { config } from '../../../../../config';
 
 export const styles = (theme: Theme) => createStyles({
   drawer: {
@@ -10,7 +11,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   bgImage: {
-    background: 'url(http://localhost:3000/images/sidebar-1.jpg) no-repeat top left',
+    background: `url(${config.host}/images/sidebar-1.jpg) no-repeat top left`,
     backgroundSize: 'cover',
     height: '100%',
     top: '0',

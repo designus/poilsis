@@ -8,6 +8,7 @@ import { SuccessIcon, ErrorIcon } from 'client-utils';
 import { IImage } from 'global-utils';
 import { SortableImage } from './sortableImage';
 import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox, Image, Images, ImagePreviewWrapper } from './style';
+import { config } from '../../../../../config';
 
 export interface IImagePreview extends IUploadProgress {
   isTemporary: boolean;
@@ -51,7 +52,7 @@ export class ImagePreview extends React.Component<IImagePreview> {
 
   renderImage = (image: IImage, index: number) => {
     const { isTemporary, onDeleteImage } = this.props;
-    const src = isTemporary ? image.preview : `http://localhost:3000/${image.path}/${image.thumbName}`;
+    const src = isTemporary ? image.preview : `${config.host}/${image.path}/${image.thumbName}`;
     return (
       <ImageSource>
         <img src={src} onLoad={this.props.onLoadImage} draggable={!isTemporary} />
