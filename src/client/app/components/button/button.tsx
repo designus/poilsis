@@ -22,10 +22,10 @@ export const defaultStyles = (theme: Theme) => createStyles({
 });
 
 export interface IButtonProps {
-  onClick?: () => void;
+  onClick?: (e) => void;
   children?: any;
   type?: 'submit' | 'button';
-  color?: PropTypes.Color;
+  color?: any;
   classes?: any;
   style?: object;
   disabled?: boolean;

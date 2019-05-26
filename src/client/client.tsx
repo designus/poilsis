@@ -1,26 +1,27 @@
+import 'babel-polyfill';
+
 import axios from 'axios';
 import * as React from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import { Provider } from 'react-redux';
-import { store } from './app/store';
+// import { store } from './app/store';
+import { createStore } from './app/store';
 import { App } from 'pages';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { ConnectedIntlProvider } from 'components';
+import { IAppState } from 'reducers';
 import { reauthenticateUser } from 'actions';
 import { isLoggedIn } from 'selectors';
 
-axios.interceptors.response.use((response) => {
-    const url = response.config.url;
-    if (isLoggedIn(store.getState()) && !url.includes('reauthenticate') && !url.includes('logout')) {
-      store.dispatch(reauthenticateUser());
-    }
-    return response;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+declare global {
+  interface Window {
+      main: () => void;
+      __PRELOADED_STATE__: IAppState;
+  }
+}
 
 export const theme = createMuiTheme({
   typography: {
@@ -55,15 +56,46 @@ export const theme = createMuiTheme({
   },
 });
 
-render(
-  <MuiThemeProvider theme={theme}>
-    <Provider store={store} key="provider">
-      <ConnectedIntlProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ConnectedIntlProvider>
-    </Provider>
-  </MuiThemeProvider>,
-  document.getElementById('app'),
-);
+// render(
+//   <MuiThemeProvider theme={theme}>
+//     <Provider store={store} key="provider">
+//       <ConnectedIntlProvider>
+//         <BrowserRouter>
+//           <App />
+//         </BrowserRouter>
+//       </ConnectedIntlProvider>
+//     </Provider>
+//   </MuiThemeProvider>,
+//   document.getElementById('app'),
+// );
+
+window.main = () => {
+  const preloadedState = window.__PRELOADED_STATE__;
+  delete window.__PRELOADED_STATE__;
+
+  const store = createStore(preloadedState);
+
+  axios.interceptors.response.use((response) => {
+    const url = response.config.url;
+    if (isLoggedIn(store.getState()) && !url.includes('reauthenticate') && !url.includes('logout')) {
+      store.dispatch(reauthenticateUser());
+    }
+    return response;
+  },
+  Promise.reject);
+
+  Loadable.preloadReady().then(() => {
+      ReactDOM.hydrate(
+        <MuiThemeProvider theme={theme}>
+          <Provider store={store} key="provider">
+            <ConnectedIntlProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </ConnectedIntlProvider>
+          </Provider>
+        </MuiThemeProvider>,
+        document.getElementById('app'),
+      );
+  });
+};

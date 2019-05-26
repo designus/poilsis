@@ -44,7 +44,7 @@ const DrawerContent = ({ classes, onClose, children }) => {
   );
 };
 
-const DrawerComponent = (props: IDrawerProps, context) => {
+const Drawer = (props: IDrawerProps) => {
   const { classes, mobileDrawerOpen, onClose, children } = props;
 
   return (
@@ -93,4 +93,4 @@ const DrawerComponent = (props: IDrawerProps, context) => {
   );
 };
 
-export const Drawer = withStyles(styles)(DrawerComponent);
+export default withStyles(styles)(Drawer);

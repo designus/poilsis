@@ -27,12 +27,12 @@ export class AdminMenu extends React.PureComponent<IAdminMenuProps, any> {
   renderItemContent = (item: IAdminMenuItem) => {
     const { icon, text } = this.props.classes;
     return (
-      <>
+      <React.Fragment>
         <ListItemIcon className={icon}>
           {item.icon()}
         </ListItemIcon>
         <ListItemText className={text} inset primary={item.text} />
-      </>
+      </React.Fragment>
     );
   }
 

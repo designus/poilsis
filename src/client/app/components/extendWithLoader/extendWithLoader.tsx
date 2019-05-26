@@ -10,7 +10,7 @@ import { styles } from './styles';
 import { GLOBAL_LOADER_ID, CONTENT_LOADER_ID } from 'client-utils';
 
 interface IExtendWithLoaderProps extends Partial<WithStyles<typeof styles>> {
-  loaderId?: string;
+  loaderId?: 'content' | 'dialog' | 'global';
   showLoadingOverlay?: boolean;
   loadingState?: ILoadingState;
   isLoading?: boolean;
@@ -25,7 +25,7 @@ export function extendWithLoader<TOriginalProps extends {}>(
 
       render() {
         const { loadingState, showLoadingOverlay, classes } = this.props;
-        const loaderId = this.props.loaderId || CONTENT_LOADER_ID;
+        const loaderId = this.props.loaderId || 'content';
         const isLoading = loadingState[loaderId] && !loadingState[GLOBAL_LOADER_ID];
 
         return (

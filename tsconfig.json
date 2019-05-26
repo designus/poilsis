@@ -12,25 +12,43 @@
       "global-styles": ["./src/client/app/global-styles"],
       "global-utils": ["./src/global-utils"]
     },
-    "lib": [ "es2015" ],
-    "inlineSourceMap": false,
-    "inlineSources": false,
-    "experimentalDecorators": true,
-    "noUnusedParameters": false,
-    "noUnusedLocals": true,
-    "jsx": "react",
-    "sourceMap": true
+    "lib": ["dom", "es7", "es2017"],
+    // "inlineSourceMap": false,
+    // "inlineSources": false,
+    // "experimentalDecorators": true,
+    // "noUnusedParameters": false,
+    // "noUnusedLocals": true,
+    // "jsx": "react",
+    // "sourceMap": true
+     // Preserve es2015 import
+     "target": "es2015",
+
+     // Preserve dynamic import
+     "module": "esnext",
+
+     // Preserve React jsx syntax
+     "jsx": "preserve",
+
+     // Allow import X from "x"
+     "allowSyntheticDefaultImports": true,
+
+     // Find dependencies in node_modules
+     "moduleResolution": "node",
+
+     // Full power of TypeScript with strict options enabled
+    //  "alwaysStrict": true,
+    //  "noImplicitAny": true,
+    //  "noImplicitReturns": true,
+    //  "noImplicitThis": true,
+    //  "strictFunctionTypes": true,
+    //  "strictPropertyInitialization": true,
+    //  "strictNullChecks": true
   },
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ],
   "include": [
     "src/**/*"
   ],
-  "awesomeTypescriptLoaderOptions": {
-    "useCache": true,
-    "useBabel": true,
-    "babelCore": "./node_modules/babel-core/index.js"
-  }
+  "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+  ]
 }

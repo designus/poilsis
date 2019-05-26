@@ -5,7 +5,10 @@ import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 // import StaticRouter from 'react-router-dom/StaticRouter';
-import { StaticRouter } from 'react-router-dom';
+import Loadable from 'react-loadable';
+import { matchPath, StaticRouter } from 'react-router';
+import { getBundles } from 'react-loadable/webpack';
+// import { StaticRouter } from 'react-router-dom';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -17,6 +20,8 @@ import app, { staticFilesPort } from './app';
 import { config } from '../../config';
 import { App, rootReducer, routes } from '../client/app/index';
 import { auth, getMaterialUiCSSParams, preloadData } from './app/index';
+
+const stats = require('./stats/reactLoadable.json');
 
 interface IInitialAuthState {
   auth: IAuthState;
@@ -41,7 +46,6 @@ app.get('*', (req, res, next) => {
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
     const branch = matchRoutes(routes, location);
     const promises = branch
-      // .map(({route, match}) => ({fetchData: (route.component as any).fetchData, params: match.params}))
       .map((item: MatchedRoute<{}>) => ({fetchData: (item.route.component as any).fetchData, params: item.match.params}))
       .filter(({fetchData}) => Boolean(fetchData))
       .map(({fetchData, params}) => fetchData.bind(null, store, params));
@@ -59,13 +63,14 @@ app.get('*', (req, res, next) => {
 });
 
 function sendResponse(res, store, location) {
-  const finalState = store.getState();
-  if (!location.includes('admin')) {
-    const sheet: any = new ServerStyleSheet();
-    const context = {};
-    const styleTags = sheet.getStyleTags();
-    const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
-    const responseHtml = renderToString(
+  const modules: string[] = [];
+  const preloadedState = store.getState();
+  const sheet: any = new ServerStyleSheet();
+  const context = {};
+  const styleTags = sheet.getStyleTags();
+  const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
+  const html = renderToString(
+    <Loadable.Capture report={moduleName => modules.push(moduleName)}>
       <StyleSheetManager sheet={sheet.instance}>
         <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
           <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
@@ -78,38 +83,55 @@ function sendResponse(res, store, location) {
             </Provider>
           </MuiThemeProvider>
         </JssProvider>
-      </StyleSheetManager>,
-    );
-    res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
-  } else {
-    res.status(200).send(renderFullPage('', '', '', finalState));
-  }
-}
+      </StyleSheetManager>
+    </Loadable.Capture>,
+  );
 
-function renderFullPage(html, css1, css2, preloadedState) {
-  return `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Redux Universal Example</title>
-      </head>
-      <body>
-        <div id="app">${html}</div>
-        <style id="jss-server-side">${css1}</style>
-        <style id="styled-css">${css2}</style>
-        <script>
-          window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
-        </script>
-        <script src="http://localhost:${staticFilesPort}/public/app.js"></script>
-      </body>
-    </html>
-    `;
-}
+  const bundles = getBundles(stats, modules);
+  const scripts = bundles
+    .filter(bundle => bundle.file.endsWith('.js'))
+    .map(script => `<script src="/public/${script.file}"></script>`)
+    .join('\n');
 
-app.listen(config.port, (error) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.info(`==> 🌎  Listening on port ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
-  }
+  // res.status(200).send(renderFullPage(html, materialCSS, styleTags, finalState));
+
+  res.render('index', {
+    locals: {
+      html,
+      scripts,
+      preloadedState,
+    },
 });
+}
+
+// function renderFullPage(html, css1, css2, preloadedState) {
+//   return `
+//     <!DOCTYPE html>
+//     <html>
+//       <head>
+//         <title>Redux Universal Example</title>
+//       </head>
+//       <body>
+//         <div id="app">${html}</div>
+//         <style id="jss-server-side">${css1}</style>
+//         <style id="styled-css">${css2}</style>
+//         <script>
+//           window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
+//         </script>
+//         <script src="http://localhost:${staticFilesPort}/public/app.js"></script>
+//       </body>
+//     </html>
+//     `;
+// }
+
+Loadable.preloadAll()
+  .then(() => {
+    app.listen(config.port, (error) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.info(`==> 🌎  Listening on port ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
+      }
+    });
+  })
+  .catch(err => console.log(err));

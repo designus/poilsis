@@ -23,7 +23,7 @@ interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   clearSelectedCity: () => void;
 }
 
-class CityPageComponent extends React.Component<ICityPageParams, any> {
+class CityPage extends React.Component<ICityPageParams, any> {
 
   static fetchData(store, params: IMatchParams) {
     return store.dispatch(loadCityItems(params.cityAlias, params.locale));
@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearSelectedCity: () => dispatch(clearSelectedCity()),
 });
 
-export const CityPage = connect<any, any, ICityPageParams>(mapStateToProps, mapDispatchToProps)(CityPageComponent);
+export default connect<any, any, ICityPageParams>(mapStateToProps, mapDispatchToProps)(CityPage);

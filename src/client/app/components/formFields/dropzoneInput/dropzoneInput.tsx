@@ -6,7 +6,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
 import { FileUpload, ImagePreview } from 'components';
 import { IAppState, IUploadProgress } from 'reducers';
-import { setInitialUploadState } from 'actions';
 import { styles } from './styles';
 
 export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgress {
@@ -82,7 +81,6 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch, props: IUploadedPhotosParams) => ({
-  setInitialUploadState: () => dispatch(setInitialUploadState()),
   uploadImages: () => dispatch(submit(props.formName)),
 });
 
