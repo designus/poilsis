@@ -17,7 +17,7 @@ export interface IAdminMenuItem {
   allowedRoles?: string[];
 }
 
-export interface IAdminMenuProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
+export interface IAdminMenuProps extends Partial<RouteComponentProps<any>>, Partial<WithStyles<typeof styles>> {
   items: IAdminMenuItem[];
   userRole?: string;
 }
@@ -89,5 +89,6 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 export default withRouter(
-  connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenu),
+  // @ts-ignore
+  connect(mapStateToProps)(AdminMenu),
 );

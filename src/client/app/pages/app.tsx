@@ -12,7 +12,7 @@ import { AdminLayoutPage } from './admin';
 import { adminRoutes, clientRoutes } from '../client-utils';
 
 interface IAppProps extends RouteComponentProps<any> {
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
   sessionExpiryTime?: number;
   reauthenticateUser?: () => void;
 }
