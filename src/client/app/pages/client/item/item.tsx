@@ -22,11 +22,9 @@ interface IItemPageParams extends RouteComponentProps<IMatchParams> {
   shouldLoadItem?: (state: IAppState) => boolean;
 }
 
-class ItemPageComponent extends React.Component<IItemPageParams, any> {
+export const loadItemData = (store, params: IMatchParams) => store.dispatch(loadItem(params.itemAlias, params.locale));
 
-  static fetchData(store, params: IMatchParams) {
-    return store.dispatch(loadItem(params.itemAlias, params.locale));
-  }
+class ItemPage extends React.Component<IItemPageParams, any> {
 
   componentDidUpdate(prevProps: IItemPageParams) {
     if (this.props.match.params.itemAlias !== prevProps.match.params.itemAlias && this.props.shouldLoadItem) {
@@ -72,4 +70,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearSelectedItem: () => dispatch(clearSelectedItem()),
 });
 
-export const ItemPage = connect<any, any, IItemPageParams>(mapStateToProps, mapDispatchToProps)(ItemPageComponent);
+export default connect<any, any, IItemPageParams>(mapStateToProps, mapDispatchToProps)(ItemPage);

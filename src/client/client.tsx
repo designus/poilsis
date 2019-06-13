@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 import axios from 'axios';
 import * as React from 'react';
 // import { render } from 'react-dom';

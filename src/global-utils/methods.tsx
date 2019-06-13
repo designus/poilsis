@@ -47,3 +47,5 @@ export const getItemDescriptionFields = (item: TItemFields): TItemDescFields => 
     metaKeywords,
   };
 };
+
+export const removeDuplicates = (item, i, arr) => arr.indexOf(item) === i;

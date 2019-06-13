@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
+import serialize from 'serialize-javascript';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -13,7 +14,7 @@ import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import { DEFAULT_LANGUAGE, getTranslationMessages } from 'global-utils';
+import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates } from 'global-utils';
 import { IAuthState } from 'reducers';
 
 import app, { staticFilesPort } from './app';
@@ -40,31 +41,36 @@ const getInitialState = (req, user): IInitialAuthState => {
 };
 
 app.get('*', (req, res, next) => {
-  return auth.authenticate((err, user, info) => {
+  return auth.authenticate((err, user) => {
     const location = req.url;
     const initialState = getInitialState(req, user);
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
     const branch = matchRoutes(routes, location);
+    // const promises = branch
+    //   .map((item: MatchedRoute<{}>) => ({fetchData: (item.route.component as any).fetchData, params: item.match.params}))
+    //   .filter(({fetchData}) => Boolean(fetchData))
+    //   .map(({fetchData, params}) => fetchData.bind(null, store, params));
     const promises = branch
-      .map((item: MatchedRoute<{}>) => ({fetchData: (item.route.component as any).fetchData, params: item.match.params}))
+      .map((item: MatchedRoute<{}>) => ({fetchData: item.route.fetchData, params: item.match.params}))
       .filter(({fetchData}) => Boolean(fetchData))
       .map(({fetchData, params}) => fetchData.bind(null, store, params));
 
-    if (location.includes('admin')) {
-      // when we are in admin that requires authentication and we are not logged in, we only preload initial data
-      const loadInitialDataOnly = !user;
-      return err ? next(err) : preloadData(promises, loadInitialDataOnly).then(() => sendResponse(res, store, location));
-    } else {
-      return preloadData(promises).then(() => {
-        sendResponse(res, store, location);
-      });
-    }
+    // if (location.includes('admin')) {
+    //   // when we are in admin that requires authentication and we are not logged in, we only preload initial data
+    //   const loadInitialDataOnly = !user;
+    //   return err ? next(err) : preloadData(promises, loadInitialDataOnly).then(() => sendResponse(res, store, location));
+    // } else {
+    //   return preloadData(promises).then(() => {
+    //     sendResponse(res, store, location);
+    //   });
+    // }
+    return preloadData(promises).then(() => sendResponse(res, store, location));
   })(req, res, next);
 });
 
 function sendResponse(res, store, location) {
   const modules: string[] = [];
-  const preloadedState = store.getState();
+  const state = store.getState();
   const sheet: any = new ServerStyleSheet();
   const context = {};
   const styleTags = sheet.getStyleTags();
@@ -88,9 +94,13 @@ function sendResponse(res, store, location) {
   );
 
   const bundles = getBundles(stats, modules);
+  const preloadedState = serialize(state, { isJSON: true });
+
   const scripts = bundles
     .filter(bundle => bundle.file.endsWith('.js'))
-    .map(script => `<script src="/public/${script.file}"></script>`)
+    .map(script => script.file)
+    .filter(removeDuplicates)
+    .map(jsFile => `<script src="/public/${jsFile}"></script>`)
     .join('\n');
 
   // res.status(200).send(renderFullPage(html, materialCSS, styleTags, finalState));

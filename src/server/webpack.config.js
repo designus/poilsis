@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const fs = require('fs');
 const path = require('path');
 const nodeExternals = require("webpack-node-externals");
@@ -33,9 +34,12 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [path.resolve(__dirname), 'node_modules', 'app'],
     plugins: [
-      new TsConfigPathsPlugin()      
+      new TsConfigPathsPlugin(),
     ]
   },
+  plugins: [
+    new webpack.DefinePlugin({ "global.GENTLY": false })
+  ],
   // module: {
   //   rules: [
   //     {
@@ -98,8 +102,8 @@ module.exports = {
           {
             loader: "ts-loader",
             options: {
-                configFile: require.resolve("./tsconfig.json"),
-                context: __dirname
+              configFile: require.resolve("../../tsconfig.json"),
+                // context: __dirname
             }
           }
         ]

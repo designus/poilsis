@@ -6,10 +6,11 @@
   "scripts": {
     "analyze": "source-map-explorer ./build/client/app.js{,.map}",
     "clean": "rimraf build",
-    "start": "cross-env NODE_ENV=production node ./build/server/app.js",
+    "start": "cross-env NODE_ENV=production node ./build/server/main.js",
     "start-dev-client": "npm run watch-dev-client",
     "start-dev-server": "npm run clean && npm run build-dev-server && cross-env NODE_ENV=development node ./build/server/app.js",
-    "build-dev-server": "cd ./src/server && cross-env NODE_ENV=development webpack",
+    "build-dev-server": "cd ./src/server && cross-env NODE_ENV=development webpack --mode=development",
+    "build-dev-client": "cd ./src/client && cross-env NODE_ENV=development webpack --env dev",
     "watch-dev-client": "cd ./src/client && webpack-dev-server -w --env dev --disable-host-check",
     "watch-dev-server": "\"ts-node-dev\" -r tsconfig-paths/register --project src/server/tsconfig.json --respawn --transpileOnly src/server/server.tsx",
     "dev": "cross-env NODE_ENV=development npm run clean && concurrently --prefix \"[{name}]\" --names \"SERVER,CLIENT\" -c \"bgBlue.bold,bgMagenta.bold\" \"npm run watch-dev-server\" \"npm run watch-dev-client\"",

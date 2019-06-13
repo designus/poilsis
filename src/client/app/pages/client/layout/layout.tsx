@@ -26,11 +26,9 @@ interface ILayoutPageParams extends RouteComponentProps<IMatchParams> {
   login: (credentials: any) => void;
 }
 
-class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
+export const loadInitialData = (store, params: IMatchParams) => store.dispatch(getInitialData({ locale: params.locale }));
 
-  static fetchData(store, params: IMatchParams) {
-    return store.dispatch(getInitialData({ locale: params.locale }));
-  }
+class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
 
   componentDidMount() {
     if (!this.props.hasInitialDataLoaded) {

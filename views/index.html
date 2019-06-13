@@ -7,14 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"> -->
     <title>My App</title>
-    ${styles}
 </head>
 <body>
     <div id="app">${html}</div>
-    <script>
-        window.__PRELOADED_STATE__ = ${preloadedState}
-    </script>
-    <script src="/public/main.js"></script>
+    <script>window.__PRELOADED_STATE__ = ${preloadedState}</script>
     ${scripts}
     <script>window.main();</script>
 </body>

@@ -1,4 +1,6 @@
 {
-  "app.js": "app.js",
-  "app.js.map": "app.js.map"
+  "clientCity.js": "clientCity.js",
+  "clientItem.js": "clientItem.js",
+  "clientLayout.js": "clientLayout.js",
+  "main.js": "main.js"
 }

@@ -24,10 +24,6 @@ export function getBackendErrors(errors: Record<string, any>) {
   }, {});
 }
 
-export function removeDuplicates(item, i, arr) {
-  return arr.indexOf(item) === i;
-}
-
 export function removeInjectedStyles() {
   if (document) {
     const jssStyles = document.getElementById('jss-server-side');

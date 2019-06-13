@@ -1,4 +1,4 @@
-const devPort = process.env.PORT || 3001;
+const devPort = process.env.PORT || 3000;
 
 module.exports = {
   env: 'development',

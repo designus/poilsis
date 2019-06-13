@@ -135,7 +135,7 @@ module.exports = {
       }
     }),
     new ReactLoadablePlugin({
-      filename: path.join(__dirname, "..", "..", "..", "server", "stats", "reactLoadable.json")
+      filename: path.join(__dirname, "..", "..", "server", "stats", "reactLoadable.json")
     })
   ]
 };
