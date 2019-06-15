@@ -1,11 +1,9 @@
 import axios from 'axios';
 import * as React from 'react';
-// import { render } from 'react-dom';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import { Provider } from 'react-redux';
-// import { store } from './app/store';
 import { createStore } from './app/store';
 import { App } from 'pages';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';

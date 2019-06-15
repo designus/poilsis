@@ -5,11 +5,9 @@ import serialize from 'serialize-javascript';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-// import StaticRouter from 'react-router-dom/StaticRouter';
 import Loadable from 'react-loadable';
-import { matchPath, StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
-// import { StaticRouter } from 'react-router-dom';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { JssProvider } from 'react-jss';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -103,26 +101,6 @@ function sendResponse(res, store, location) {
     },
 });
 }
-
-// function renderFullPage(html, css1, css2, preloadedState) {
-//   return `
-//     <!DOCTYPE html>
-//     <html>
-//       <head>
-//         <title>Redux Universal Example</title>
-//       </head>
-//       <body>
-//         <div id="app">${html}</div>
-//         <style id="jss-server-side">${css1}</style>
-//         <style id="styled-css">${css2}</style>
-//         <script>
-//           window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
-//         </script>
-//         <script src="http://localhost:${staticFilesPort}/public/app.js"></script>
-//       </body>
-//     </html>
-//     `;
-// }
 
 Loadable.preloadAll()
   .then(() => {

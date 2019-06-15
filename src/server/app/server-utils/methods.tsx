@@ -99,14 +99,6 @@ export const getMaterialUiCSSParams = () => {
   return {sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS};
 };
 
-// export const preloadData = (data: Array<() => Promise<void>>, loadInitialDataOnly = false): Promise<any> => {
-//   const [loadInitialData, ...loadOtherData] = data;
-//   if (loadInitialDataOnly) {
-//     return loadInitialData();
-//   }
-//   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));
-// };
-
 export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   const [loadInitialData, ...loadOtherData] = data;
   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));

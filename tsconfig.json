@@ -13,29 +13,17 @@
       "global-utils": ["./src/global-utils"]
     },
     "lib": ["dom", "es7", "es2017"],
-    // "inlineSourceMap": false,
-    // "inlineSources": false,
-    // "experimentalDecorators": true,
-    // "noUnusedParameters": false,
-    // "noUnusedLocals": true,
-    // "jsx": "react",
-    // "sourceMap": true
-     // Preserve es2015 import
-     "target": "es2015",
-
-     // Preserve dynamic import
-     "module": "esnext",
-
-     // Preserve React jsx syntax
-     "jsx": "preserve",
-
-     // Allow import X from "x"
-     "allowSyntheticDefaultImports": true,
-
-     // Find dependencies in node_modules
+    "target": "es2015",
+    // Preserve dynamic import
+    "module": "esnext",
+    // Preserve React jsx syntax
+    "jsx": "preserve",
+    // Allow import X from "x"
+    "allowSyntheticDefaultImports": true,
+    // Find dependencies in node_modules
      "moduleResolution": "node",
 
-     // Full power of TypeScript with strict options enabled
+    // Full power of TypeScript with strict options enabled
     //  "alwaysStrict": true,
     //  "noImplicitAny": true,
     //  "noImplicitReturns": true,
