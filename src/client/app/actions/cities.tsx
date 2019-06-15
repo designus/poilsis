@@ -45,6 +45,7 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
   return (dispatch, getState) => {
 
     const state: IAppState = getState();
+    console.log('City alias', cityAlias);
     const cityId = getCities(state).find(city => city.alias === cityAlias).id;
     const items = state.items;
     const language = locale || getLocale(state);

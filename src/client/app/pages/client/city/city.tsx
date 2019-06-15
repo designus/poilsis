@@ -23,8 +23,9 @@ interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   clearSelectedCity: () => void;
 }
 
-export const loadCityData = (store, params: IMatchParams) => 
+export const loadCityData = (store, params: IMatchParams) => {
   store.dispatch(loadCityItems(params.cityAlias, params.locale));
+};
 
 class CityPage extends React.Component<ICityPageParams, any> {
 

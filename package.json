@@ -8,7 +8,7 @@
     "clean": "rimraf build",
     "start": "cross-env NODE_ENV=production node ./build/server/main.js",
     "start-dev-client": "npm run watch-dev-client",
-    "start-dev-server": "npm run clean && npm run build-dev-server && cross-env NODE_ENV=development node ./build/server/app.js",
+    "start-dev-server": "npm run clean && npm run build-dev-server && cross-env NODE_ENV=development node ./build/server/main.js",
     "build-dev-server": "cd ./src/server && cross-env NODE_ENV=development webpack --mode=development",
     "build-dev-client": "cd ./src/client && cross-env NODE_ENV=development webpack --env dev",
     "watch-dev-client": "cd ./src/client && webpack-dev-server -w --env dev --disable-host-check",

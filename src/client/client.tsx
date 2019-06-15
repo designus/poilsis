@@ -54,19 +54,6 @@ export const theme = createMuiTheme({
   },
 });
 
-// render(
-//   <MuiThemeProvider theme={theme}>
-//     <Provider store={store} key="provider">
-//       <ConnectedIntlProvider>
-//         <BrowserRouter>
-//           <App />
-//         </BrowserRouter>
-//       </ConnectedIntlProvider>
-//     </Provider>
-//   </MuiThemeProvider>,
-//   document.getElementById('app'),
-// );
-
 window.main = () => {
   const preloadedState = window.__PRELOADED_STATE__;
   delete window.__PRELOADED_STATE__;

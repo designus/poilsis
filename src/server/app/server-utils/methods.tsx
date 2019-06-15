@@ -119,7 +119,7 @@ export const formatAlias = alias => alias
 
 export const getAliasFromName = (name, locale: string) => formatAlias(name[locale] || name);
 
-export const getAlias = (item, locale: string) => item.alias || getAliasFromName(item.name, locale); 
+export const getAlias = (item, locale: string) => item.alias || getAliasFromName(item.name, locale);
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
   if (res.headersSent) return;
