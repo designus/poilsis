@@ -8,8 +8,5 @@ module.exports = merge(baseConfig, {
   output: {
     pathinfo: false,
     publicPath: 'http://localhost:8080/public/'
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  }
 });

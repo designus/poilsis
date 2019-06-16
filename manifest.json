@@ -1,6 +1,10 @@
 {
   "clientCity.js": "clientCity.js",
+  "clientCity.js.map": "clientCity.js.map",
   "clientItem.js": "clientItem.js",
+  "clientItem.js.map": "clientItem.js.map",
   "clientLayout.js": "clientLayout.js",
-  "main.js": "main.js"
+  "clientLayout.js.map": "clientLayout.js.map",
+  "main.js": "main.js",
+  "main.js.map": "main.js.map"
 }
