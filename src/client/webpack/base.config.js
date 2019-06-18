@@ -64,7 +64,7 @@ module.exports = {
                       }
                   ]
               ],
-              plugins: ["syntax-dynamic-import", "react-loadable/babel"]
+              plugins: ["syntax-dynamic-import", "react-loadable/babel", 'lodash']
             }
           },
           // 1. TypeScript type check and emit JavaScript es2015 (TypeScript without types) consumable by Babel
