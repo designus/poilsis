@@ -30,7 +30,7 @@ interface IDescriptionProps extends ICreateEditItemPageProps, InjectedIntlProps 
   initializeForm: (description: TItemDescFields) => void;
 }
 
-class DescriptionPageComponent extends React.Component<IDescriptionProps, any> {
+class DescriptionPage extends React.Component<IDescriptionProps, any> {
 
   constructor(props) {
     super(props);
@@ -88,6 +88,6 @@ const mapDispatchToProps = (dispatch) => ({
   initializeForm: (data: TItemFields) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data)),
 });
 
-export const DescriptionPage = injectIntl(
-  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPageComponent),
+export default injectIntl(
+  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPage),
 );

@@ -108,7 +108,7 @@ Loadable.preloadAll()
       if (error) {
         console.error(error);
       } else {
-        console.info(`==> 🌎  Listening on port ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
+        console.info(`==> 🌎  Listening on ports ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
       }
     });
   })

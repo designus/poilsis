@@ -12,8 +12,10 @@ import { getAdminItem } from 'actions';
 import { TItemFields } from 'global-utils';
 import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
-import { MainInfoPage, PhotosPage, DescriptionPage } from 'pages';
 import { shouldLoadEditItem } from 'selectors';
+import { MainInfoPage } from './mainInfo';
+import { PhotosPage } from './photos';
+import { DescriptionPage } from './description';
 
 interface IMatchParams {
   itemId: string;
@@ -25,7 +27,7 @@ export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchPara
   loadAdminItem: (itemId: string) => Promise<void>;
 }
 
-class CreateEditItemPageComponent extends React.Component<ICreateEditItemPageProps, any> {
+class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> {
 
   constructor(props) {
     super(props);
@@ -125,6 +127,6 @@ const mapDispatchToProps = (dispatch) => ({
   loadAdminItem: (itemId: string) => dispatch(getAdminItem(itemId)),
 });
 
-export const CreateEditItemPage = injectIntl(
-  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent),
+export default injectIntl(
+  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPage),
 );

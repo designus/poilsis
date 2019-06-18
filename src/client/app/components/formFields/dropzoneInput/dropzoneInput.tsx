@@ -4,8 +4,11 @@ import { WithStyles } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
-import { FileUpload, ImagePreview } from 'components';
 import { IAppState, IUploadProgress } from 'reducers';
+
+import { FileUpload } from 'components/fileUpload';
+import { ImagePreview } from 'components/imagePreview';
+
 import { styles } from './styles';
 
 export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgress {

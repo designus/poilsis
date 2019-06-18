@@ -44,6 +44,7 @@ import {
 import { hasInitialDataLoaded, shouldLoadInitialData, isInitialDataLoading } from 'selectors';
 
 import { styles } from './styles';
+
 interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
   hasInitialDataLoaded: boolean;
   shouldLoadInitialData: boolean;
@@ -53,7 +54,7 @@ interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps
   isLoading: () => boolean;
 }
 
-class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, any> {
+class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
 
   static fetchData(store) {
     return store.dispatch(getInitialData());
@@ -220,8 +221,8 @@ const mapDispatchToProps = dispatch => ({
   getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
 });
 
-export const AdminLayoutPage = withStyles(styles)(
+export default withStyles(styles)(
   connect<any, any, IAdminLayoutProps>(mapStateToProps, mapDispatchToProps)(
-    injectIntl(AdminLayoutPageComponent),
+    injectIntl(AdminLayoutPage),
   ),
 );

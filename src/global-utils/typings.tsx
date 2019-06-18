@@ -81,3 +81,7 @@ export interface IAccessTokenClaims {
   userRole: string;
   userItems: string[];
 }
+
+export interface IPhotoFormState {
+  files?: File[];
+}

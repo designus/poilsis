@@ -2,8 +2,10 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { DropzoneInput, UploadedImages } from 'components';
 import { maxUploadedPhotos, maxUploadedPhotoSize, IImage } from 'global-utils';
+
+import { DropzoneInput } from 'components/formFields/dropzoneInput';
+import { UploadedImages } from 'components/formFields/uploadedImages';
 
 export const PHOTOS_FORM_NAME = 'PhotosForm';
 

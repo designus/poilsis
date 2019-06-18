@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { TextInput, Button } from 'components';
+import { Button } from 'components';
 import { isRequired } from 'global-utils';
+import { TextInput } from 'components/formFields/textInput';
 
 export const TYPE_FORM_NAME = 'TypeForm';
 

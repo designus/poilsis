@@ -26,7 +26,7 @@ interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
   initializeForm: (item: TItemFields) => void;
 }
 
-class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
+class MainInfoPage extends React.Component<IMainInfoProps, any> {
 
   constructor(props) {
     super(props);
@@ -87,6 +87,6 @@ const mapDispatchToProps = (dispatch) => ({
   initializeForm: (data: TItemFields) => dispatch(initialize(MAIN_INFO_FORM_NAME, data)),
 });
 
-export const MainInfoPage = injectIntl(
-  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent),
+export default injectIntl(
+  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPage),
 );

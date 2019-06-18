@@ -2,10 +2,13 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { TextInput, CheckboxGroup, Button } from 'components';
+import { Button } from 'components';
 import { getDropdownOptions } from 'client-utils';
 import { isRequired } from 'global-utils';
 import { ITypesMap } from 'reducers';
+
+import { TextInput } from 'components/formFields/textInput';
+import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 
 export const CITY_FORM_NAME = 'CityForm';
 

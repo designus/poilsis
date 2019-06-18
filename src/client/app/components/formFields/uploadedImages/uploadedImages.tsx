@@ -4,9 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
 
-import { ImagePreview, Button } from 'components';
+import { Button } from 'components';
 import { IImage, itemValidation } from 'global-utils';
 import { IUploadProgress } from 'reducers';
+
+import { ImagePreview } from 'components/imagePreview';
 import { styles } from './styles';
 
 const { images: { maxPhotos } } = itemValidation;

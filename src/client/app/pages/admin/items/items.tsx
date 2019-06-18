@@ -35,7 +35,7 @@ interface IItemsPageParams extends InjectedIntlProps {
   toggleItem: (itemId: string, isEnabled: boolean) => void;
 }
 
-class AdminItemsPageComponent extends React.Component<IItemsPageParams, any> {
+class AdminItemsPage extends React.Component<IItemsPageParams, any> {
 
   static fetchData(store) {
     return store.dispatch(loadUserItems());
@@ -218,6 +218,6 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 
-export const AdminItemsPage = injectIntl(
-  connect<{}, {}, IItemsPageParams>(mapStateToProps, mapDispatchToProps)(AdminItemsPageComponent),
+export default injectIntl(
+  connect<{}, {}, IItemsPageParams>(mapStateToProps, mapDispatchToProps)(AdminItemsPage),
 );

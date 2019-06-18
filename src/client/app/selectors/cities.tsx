@@ -15,7 +15,9 @@ export const getSelectedCity = (state: IAppState, routeState) => {
 
 export const shouldLoadCityItems = (state: IAppState, routeState) => {
   const selectedCity = getSelectedCity(state, routeState);
-  return !selectedCity.hasItems && !state.items.hasAllItems && hasInitialDataLoaded(state);
+  if (selectedCity) {
+    return !selectedCity.hasItems && !state.items.hasAllItems && hasInitialDataLoaded(state);
+  }
 };
 
 export const getCityItems = createSelector(

@@ -7,8 +7,8 @@ import { IUploadProgress } from 'reducers';
 import { SuccessIcon, ErrorIcon } from 'client-utils';
 import { IImage } from 'global-utils';
 import { SortableImage } from './sortableImage';
-import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox, Image, Images, ImagePreviewWrapper } from './style';
 import { config } from '../../../../../config';
+import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox, Image, Images, ImagePreviewWrapper } from './style';
 
 export interface IImagePreview extends IUploadProgress {
   isTemporary: boolean;

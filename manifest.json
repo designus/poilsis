@@ -1,10 +1,26 @@
 {
+  "adminItemsPage.js": "adminItemsPage.js",
+  "adminItemsPage.js.map": "adminItemsPage.js.map",
+  "adminLayoutPage.js": "adminLayoutPage.js",
+  "adminLayoutPage.js.map": "adminLayoutPage.js.map",
   "clientCity.js": "clientCity.js",
   "clientCity.js.map": "clientCity.js.map",
   "clientItem.js": "clientItem.js",
   "clientItem.js.map": "clientItem.js.map",
   "clientLayout.js": "clientLayout.js",
   "clientLayout.js.map": "clientLayout.js.map",
+  "createEditItemPage.js": "createEditItemPage.js",
+  "createEditItemPage.js.map": "createEditItemPage.js.map",
+  "descriptionPage.js": "descriptionPage.js",
+  "descriptionPage.js.map": "descriptionPage.js.map",
   "main.js": "main.js",
-  "main.js.map": "main.js.map"
+  "main.js.map": "main.js.map",
+  "mainInfoPage.js": "mainInfoPage.js",
+  "mainInfoPage.js.map": "mainInfoPage.js.map",
+  "photosPage.js": "photosPage.js",
+  "photosPage.js.map": "photosPage.js.map",
+  "vendors~descriptionPage.js": "vendors~descriptionPage.js",
+  "vendors~descriptionPage.js.map": "vendors~descriptionPage.js.map",
+  "vendors~photosPage.js": "vendors~photosPage.js",
+  "vendors~photosPage.js.map": "vendors~photosPage.js.map"
 }

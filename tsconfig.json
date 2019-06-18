@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "components": ["./src/client/app/components"],
+      "components/*": ["./src/client/app/components/*"],
       "client-utils": ["./src/client/app/client-utils"],
       "selectors": ["./src/client/app/selectors"],
       "reducers": ["./src/client/app/reducers"],

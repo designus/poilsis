@@ -43,7 +43,6 @@ export const removeCity = (cityId: string) => ({
 
 export const loadCityItems = (cityAlias: string, locale: string) => {
   return (dispatch, getState) => {
-
     const state: IAppState = getState();
     const cityId = getCities(state).find(city => city.alias === cityAlias).id;
     const items = state.items;
@@ -60,7 +59,7 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
 
         const filteredData = data.filter(item => !items.dataMap[item.id]);
         const { dataMap, aliases } = getNormalizedData(filteredData);
-
+        console.log('Response', data);
         dispatch(selectCity(cityId));
         dispatch(receiveItems({ dataMap, aliases, cityId }));
         dispatch(endLoading(CONTENT_LOADER_ID));

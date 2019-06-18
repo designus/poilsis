@@ -23,7 +23,6 @@ const Schema = mongoose.Schema;
 const shortId = require('shortid');
 const mongooseIntl = require('mongoose-intl');
 
-
 const maxLength = maxLength => value => value.length <= maxLength;
 const minLength = minLength => value => value.length >= minLength;
 const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(max)(value);

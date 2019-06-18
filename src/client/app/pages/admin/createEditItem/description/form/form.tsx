@@ -5,7 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
 
-import { TextInput, TextEditor, Button } from 'components';
+import { Button } from 'components';
+import { TextEditor } from 'components/formFields/textEditor';
+import { TextInput } from 'components/formFields/textInput';
+
 import { styles } from './styles';
 
 export const ITEM_DESCRIPTION_FORM_NAME = 'ItemDescriptionForm';

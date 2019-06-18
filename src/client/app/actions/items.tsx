@@ -102,7 +102,7 @@ export const loadItem = (alias: string, locale: string) => (dispatch, getState) 
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(`${config.host}api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
+  return axios.get(`${config.host}/api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(receiveItem(item));

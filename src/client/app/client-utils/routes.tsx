@@ -6,14 +6,15 @@ import {
   CreateEditCityPage,
   AdminTypesPage,
   AdminCitiesPage,
-  MainInfoPage,
-  DescriptionPage,
-  PhotosPage,
   ClientLayoutPage,
   CityPage,
   ItemPage,
 } from 'pages';
 import { UserRoles } from 'global-utils';
+
+import { MainInfoPage } from '../pages/admin/createEditItem/mainInfo';
+import { DescriptionPage } from '../pages/admin/createEditItem/description';
+import { PhotosPage } from '../pages/admin/createEditItem/photos';
 
 export interface IRoute {
   path: string;
