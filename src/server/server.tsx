@@ -6,19 +6,17 @@ import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import Loadable from 'react-loadable';
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
 import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
-import { JssProvider } from 'react-jss';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates } from 'global-utils';
+import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme } from 'global-utils';
 import { IAuthState } from 'reducers';
 
 import app, { staticFilesPort } from './app';
 import { config } from '../../config';
 import { App, rootReducer, routes } from '../client/app/index';
-import { auth, getMaterialUiCSSParams, preloadData } from './app/index';
+import { auth, preloadData } from './app/index';
 
 const stats = require('./stats/reactLoadable.json');
 
@@ -61,28 +59,26 @@ app.get('*', (req, res, next) => {
 function sendResponse(res, store, location) {
   const modules: string[] = [];
   const state = store.getState();
-  const sheet: any = new ServerStyleSheet();
+  const sheets = new ServerStyleSheets();
   const context = {};
-  const styleTags = sheet.getStyleTags();
-  const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
+
   const html = renderToString(
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-      <StyleSheetManager sheet={sheet.instance}>
-        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-          <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-            <Provider store={store} key="provider">
-              <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
-                <StaticRouter location={location} context={context}>
-                  <App />
-                </StaticRouter>
-              </IntlProvider>
-            </Provider>
-          </MuiThemeProvider>
-        </JssProvider>
-      </StyleSheetManager>
+      {sheets.collect(
+        <ThemeProvider theme={theme}>
+          <Provider store={store} key="provider">
+            <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
+              <StaticRouter location={location} context={context}>
+                <App />
+              </StaticRouter>
+            </IntlProvider>
+          </Provider>
+        </ThemeProvider>,
+      )}
     </Loadable.Capture>,
   );
 
+  const css = sheets.toString();
   const bundles = getBundles(stats, modules);
   const preloadedState = serialize(state, { isJSON: true });
 
@@ -97,6 +93,7 @@ function sendResponse(res, store, location) {
     locals: {
       html,
       scripts,
+      css,
       preloadedState,
     },
 });

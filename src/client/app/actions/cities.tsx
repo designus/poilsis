@@ -59,7 +59,6 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
 
         const filteredData = data.filter(item => !items.dataMap[item.id]);
         const { dataMap, aliases } = getNormalizedData(filteredData);
-        console.log('Response', data);
         dispatch(selectCity(cityId));
         dispatch(receiveItems({ dataMap, aliases, cityId }));
         dispatch(endLoading(CONTENT_LOADER_ID));

@@ -1,5 +1,3 @@
-import { SheetsRegistry } from 'react-jss';
-import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 import { Response, NextFunction } from 'express';
 import { unlink } from 'fs';
 
@@ -88,16 +86,6 @@ export function removeFiles(files, next) {
      });
   }
 }
-
-export const getMaterialUiCSSParams = () => {
-  const sheetsRegistry = new SheetsRegistry();
-  const theme = createMuiTheme();
-  const generateClassName = createGenerateClassName();
-  const sheetsManager = new Map();
-  const materialCSS = sheetsRegistry.toString();
-
-  return {sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS};
-};
 
 export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   const [loadInitialData, ...loadOtherData] = data;

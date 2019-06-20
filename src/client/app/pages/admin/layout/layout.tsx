@@ -55,11 +55,6 @@ interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps
 }
 
 class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
-
-  static fetchData(store) {
-    return store.dispatch(getInitialData());
-  }
-
   state = {
     mobileDrawerOpen: false,
     menuItems: this.menuItems,

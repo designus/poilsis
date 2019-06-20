@@ -91,6 +91,6 @@ module.exports = {
     new ReactLoadablePlugin({
       filename: path.join(__dirname, "..", "..", "server", "stats", "reactLoadable.json")
     }),
-    new BundleAnalyzerPlugin({ generateStatsFile: true })
+    // new BundleAnalyzerPlugin({ generateStatsFile: true })
   ]
 };

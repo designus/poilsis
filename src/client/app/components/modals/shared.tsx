@@ -43,7 +43,7 @@ export const DialogFooter = ({
 }) => (
   <DialogActions classes={{
     root: classes.actionWrapper,
-    action: classes.buttonWrapper,
+    spacing: classes.buttonWrapper,
   }}>
     <Button variant="contained" onClick={onClose} className={classes.cancel}>
       <FormattedMessage id={closeLabelId} />

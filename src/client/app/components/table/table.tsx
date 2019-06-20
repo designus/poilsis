@@ -240,7 +240,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
                   {
                     columns.map((column, index) => {
                       return (
-                        <TableCell padding="dense" key={index}>
+                        <TableCell size="small" key={index}>
                           {this.getColumnValue(item, column)}
                         </TableCell>
                       );

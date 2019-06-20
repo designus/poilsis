@@ -20,6 +20,7 @@ export const routes = [
       {
         path: adminRoutes.landing.path,
         component: adminRoutes.landing.getComponent(),
+        fetchData: loadInitialData,
         exact: false,
         routes: [
           {
