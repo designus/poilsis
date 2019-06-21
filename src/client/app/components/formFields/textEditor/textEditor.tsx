@@ -14,7 +14,7 @@ import FormatBold from '@material-ui/icons/FormatBold';
 import FormatItalic from '@material-ui/icons/FormatItalic';
 import FormatUnderlined from '@material-ui/icons/FormatUnderlined';
 import FormatUnorderedList from '@material-ui/icons/FormatListBulleted';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import { debounce } from 'lodash';
 
 import { LANGUAGES, DEFAULT_LANGUAGE, TranslatableField } from 'global-utils';

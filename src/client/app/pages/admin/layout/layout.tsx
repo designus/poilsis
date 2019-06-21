@@ -12,7 +12,7 @@ import TypesIcon from '@material-ui/icons/Gesture';
 import CitiesIcon from '@material-ui/icons/BeachAccess';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 

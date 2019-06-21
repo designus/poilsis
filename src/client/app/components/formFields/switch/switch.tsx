@@ -3,7 +3,7 @@ import { WrappedFieldProps } from 'redux-form';
 import { withStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 
 import { styles } from './styles';
 

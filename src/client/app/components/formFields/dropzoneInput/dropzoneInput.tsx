@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { WrappedFieldProps, submit } from 'redux-form';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import MaterialDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';

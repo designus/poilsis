@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import Countdown from 'react-countdown-now';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';

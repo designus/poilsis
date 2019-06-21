@@ -7,7 +7,7 @@ import SuccesIcon from '@material-ui/icons/SentimentVerySatisfied';
 import ErrorIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IToastState, IAppState, Toast as ToastEnum } from 'reducers';

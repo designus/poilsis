@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
