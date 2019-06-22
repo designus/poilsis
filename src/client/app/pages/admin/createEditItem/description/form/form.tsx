@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 
-import { Button } from 'components';
+import { Button } from 'components/button';
 import { TextEditor } from 'components/formFields/textEditor';
 import { TextInput } from 'components/formFields/textInput';
 

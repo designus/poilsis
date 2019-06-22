@@ -10,9 +10,14 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { IAppState } from 'reducers';
 import { getAdminItem } from 'actions';
 import { TItemFields } from 'global-utils';
-import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
 import { shouldLoadEditItem } from 'selectors';
+import { NotFound } from 'components/notFound';
+import { PropsRoute } from 'components/propsRoute';
+import { HorizontalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { ProtectedRoute } from 'components/protectedRoute';
+import { Loader } from 'components/loader';
+
 import { MainInfoPage } from './mainInfo';
 import { PhotosPage } from './photos';
 import { DescriptionPage } from './description';

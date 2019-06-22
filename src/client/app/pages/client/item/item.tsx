@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { IAppState, IItemsState, IItem } from 'reducers';
 import { loadItem, selectItem, clearSelectedItem } from 'actions';
-import { NotFound } from 'components';
+import { NotFound } from 'components/notFound';
 import { getSelectedItem, shouldLoadViewItem } from 'selectors';
 
 interface IMatchParams {

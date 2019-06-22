@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button } from 'components';
+import { Button } from 'components/button';
 import { isRequired } from 'global-utils';
 import { TextInput } from 'components/formFields/textInput';
 

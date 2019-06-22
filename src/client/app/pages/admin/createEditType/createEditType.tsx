@@ -8,7 +8,10 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { ITypeFields, TTypeFields } from 'global-utils';
 import { createType, updateType, getAdminType } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
+import { Loader } from 'components/loader';
 import { IAppState } from 'reducers';
 import { shouldLoadType } from 'selectors';
 

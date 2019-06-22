@@ -8,7 +8,9 @@ import { IAppState, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { updateMainInfo, createItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { TItemFields, IItemFields } from 'global-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
 import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
 

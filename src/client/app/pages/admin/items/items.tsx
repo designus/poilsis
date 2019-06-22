@@ -9,16 +9,14 @@ import { loadUserItems, deleteItem, endLoading, toggleItem } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { shouldLoadUserItems, getUserItems } from 'selectors';
 import { AdminHeader } from 'global-styles';
-import {
-  EnhancedTable,
-  ITableColumn,
-  ItemTypesList,
-  extendWithLoader,
-  ItemActions,
-  DeleteModal,
-  AdminPageActions,
-  ToggleAction,
-} from 'components';
+
+import { EnhancedTable, ITableColumn } from 'components/table';
+import { ItemTypesList } from 'components/itemTypesList';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { ItemActions } from 'components/itemActions';
+import { DeleteModal } from 'components/modals';
+import { AdminPageActions } from 'components/adminPageActions';
+import { ToggleAction } from 'components/toggleAction';
 
 const Table = extendWithLoader(EnhancedTable);
 

@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 import { FormattedMessage } from 'react-intl';
 
-import { extendWithLoader } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
 
 export const DialogContentWrapper = (props) => (
   <DialogContentBox classes={{root: props.contentClass}}>

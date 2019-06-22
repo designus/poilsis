@@ -5,7 +5,7 @@ import FileUploadIcon from '@material-ui/icons/CloudUpload';
 import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
 
-import { Button } from 'components';
+import { Button } from 'components/button';
 import { mapMimeTypesToTypes, itemValidation } from 'global-utils';
 import { ImageUpload, UploadPlaceholder, UploadButtons } from './style';
 

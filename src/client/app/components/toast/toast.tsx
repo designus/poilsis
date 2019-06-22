@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -7,7 +7,6 @@ import SuccesIcon from '@material-ui/icons/SentimentVerySatisfied';
 import ErrorIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
-import { WithStyles } from '@material-ui/core/styles';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IToastState, IAppState, Toast as ToastEnum } from 'reducers';

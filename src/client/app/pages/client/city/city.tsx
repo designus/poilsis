@@ -5,7 +5,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IAppState, IItem, ICity } from 'reducers';
 import { loadCityItems, clearSelectedCity } from 'actions';
 import { CONTENT_LOADER_ID } from 'client-utils';
-import { ItemsList, NotFound, extendWithLoader } from 'components';
+import { ItemsList } from 'components/itemsList';
+import { NotFound } from 'components/notFound';
+import { extendWithLoader } from 'components/extendWithLoader';
 import { getSelectedCity, shouldLoadCityItems, getCityItems } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);

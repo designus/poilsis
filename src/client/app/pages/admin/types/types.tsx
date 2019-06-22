@@ -8,14 +8,12 @@ import { AdminHeader } from 'global-styles';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { deleteType } from 'actions';
 import { getTypes, getTypesMap } from 'selectors';
-import {
-  EnhancedTable,
-  ITableColumn,
-  extendWithLoader,
-  ItemActions,
-  DeleteModal,
-  AdminPageActions,
-} from 'components';
+
+import { EnhancedTable, ITableColumn } from 'components/table';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { ItemActions } from 'components/itemActions';
+import { DeleteModal } from 'components/modals';
+import { AdminPageActions } from 'components/adminPageActions';
 
 const Table = extendWithLoader(EnhancedTable);
 

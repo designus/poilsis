@@ -3,7 +3,10 @@ import * as day from 'dayjs';
 import { withRouter, Switch, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reauthenticateUser } from 'actions';
-import { PropsRoute, ProtectedRoute, KeepMeLoggedModal } from 'components';
+import { PropsRoute } from 'components/propsRoute';
+import { ProtectedRoute } from 'components/protectedRoute';
+import { KeepMeLoggedModal } from 'components/modals';
+
 import { IAppState } from 'reducers';
 import { isLoggedIn, getSessionExpiryTime } from 'selectors';
 

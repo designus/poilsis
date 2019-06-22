@@ -8,9 +8,13 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { TCityFields, ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
 import { IAppState, ITypesMap } from 'reducers';
 import { shouldLoadEditCity } from 'selectors';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
+import { Loader } from 'components/loader';
+
 import { CityForm, CITY_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(CityForm));

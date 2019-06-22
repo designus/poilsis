@@ -4,7 +4,7 @@ import { Route, Redirect, match } from 'react-router-dom';
 import { renderMergedProps } from 'client-utils';
 import { IAppState } from 'reducers';
 import { isLoggedIn } from 'selectors';
-import { NotAuthorized } from 'components';
+import { NotAuthorized } from 'components/notAuthorized';
 import { UserRoles } from 'global-utils';
 
 interface IMatchParams {

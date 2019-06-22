@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
-import { WithStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';

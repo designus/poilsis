@@ -8,15 +8,13 @@ import { AdminHeader } from 'global-styles';
 import { getCities, getCitiesMap } from 'selectors';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { deleteCity } from 'actions';
-import {
-  EnhancedTable,
-  ITableColumn,
-  extendWithLoader,
-  ItemActions,
-  ItemTypesList,
-  DeleteModal,
-  AdminPageActions,
-} from 'components';
+
+import { AdminPageActions } from 'components/adminPageActions';
+import { EnhancedTable, ITableColumn } from 'components/table';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { ItemActions } from 'components/itemActions';
+import { ItemTypesList } from 'components/itemTypesList';
+import { DeleteModal } from 'components/modals';
 
 const Table = extendWithLoader(EnhancedTable);
 

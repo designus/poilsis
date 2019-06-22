@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { createStore } from './app/store';
 import { App } from 'pages';
 import { ThemeProvider } from '@material-ui/styles';
-import { ConnectedIntlProvider } from 'components';
+import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
 import { theme } from 'global-utils';
 import { IAppState } from 'reducers';
 import { reauthenticateUser } from 'actions';

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Button } from 'components';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
 import { getDropdownOptions } from 'client-utils';
 import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
 
+import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';

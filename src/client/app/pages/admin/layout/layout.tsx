@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,25 +12,22 @@ import TypesIcon from '@material-ui/icons/Gesture';
 import CitiesIcon from '@material-ui/icons/BeachAccess';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
-import { WithStyles } from '@material-ui/core/styles';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
 import { IAppState } from 'reducers';
 import { getInitialData, IGetInitialDataParams } from 'actions';
-import {
-  Toast,
-  VerticalMenu,
-  IAdminMenuItem,
-  Drawer,
-  UserMenu,
-  NotFound,
-  NotAuthorized,
-  ProtectedRoute,
-  LanguageSelector,
-  Loader,
-} from 'components';
+
+import { Toast } from 'components/toast';
+import { VerticalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { Drawer } from 'components/drawer';
+import { UserMenu } from 'components/userMenu';
+import { NotFound } from 'components/notFound';
+import { NotAuthorized } from 'components/notAuthorized';
+import { ProtectedRoute } from 'components/protectedRoute';
+import { LanguageSelector } from 'components/languageSelector';
+import { Loader } from 'components/loader';
 
 import {
   AdminItemsPage,

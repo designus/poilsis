@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { WithStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
 
-import { Button } from 'components';
+import { Button } from 'components/button';
 import { IImage, itemValidation } from 'global-utils';
 import { IUploadProgress } from 'reducers';
 

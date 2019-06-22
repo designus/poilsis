@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
-import { WithStyles } from '@material-ui/core/styles';
 import { debounce } from 'lodash';
 
 import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields } from 'global-utils';

@@ -2,7 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
 
-import { MainMenu, Toast, UserMenu, LanguageSelector, Loader } from 'components';
+import { MainMenu } from 'components/mainMenu';
+import { Toast } from 'components/toast';
+import { UserMenu } from 'components/userMenu';
+import { LanguageSelector } from 'components/languageSelector';
+import { Loader } from 'components/loader';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
 import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
 import { LoginPage, CityPage, ItemPage } from 'pages';

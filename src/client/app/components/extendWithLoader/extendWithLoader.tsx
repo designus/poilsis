@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { IAppState, ILoadingState } from 'reducers';
-import { Loader } from 'components';
+import { Loader } from 'components/loader';
 
 import { styles } from './styles';
 import { GLOBAL_LOADER_ID, CONTENT_LOADER_ID } from 'client-utils';

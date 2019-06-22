@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import { FormattedMessage } from 'react-intl';
 

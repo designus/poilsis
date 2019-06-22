@@ -6,7 +6,7 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { IImage, IPhotoFormState } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils';
 import { updatePhotos, uploadPhotos, resetUploadState, receiveImages } from 'actions';
-import { extendWithLoader } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
 import { PhotosForm } from './form';
 
 const PhotosFormWithLoader = extendWithLoader(PhotosForm);

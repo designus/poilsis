@@ -9,8 +9,10 @@ import { IAppState } from 'reducers';
 import { updateItemDescription } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID } from 'client-utils';
 import { TItemFields, TItemDescFields, getItemDescriptionFields, TranslatableField, IItemDescFields } from 'global-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
 import { stateToHTML } from 'draft-js-export-html';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
 
 import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, ITEM_DESCRIPTION_FORM_NAME } from './form';
