@@ -79,13 +79,13 @@ const mapStateToProps = (state: IAppState) => ({
   progress: state.uploadProgress.progress,
   isUploaded: state.uploadProgress.isUploaded,
   isUploading: state.uploadProgress.isUploading,
-  hasError: state.uploadProgress.hasError,
+  hasError: state.uploadProgress.hasError
 });
 
 const mapDispatchToProps = (dispatch, props: IUploadedPhotosParams) => ({
-  uploadImages: () => dispatch(submit(props.formName)),
+  uploadImages: () => dispatch(submit(props.formName))
 });
 
 export default withStyles(styles)(
-  connect<any, any, IUploadedPhotosParams>(mapStateToProps, mapDispatchToProps)(DropzoneInput),
+  connect<any, any, IUploadedPhotosParams>(mapStateToProps, mapDispatchToProps)(DropzoneInput)
 ) as any;

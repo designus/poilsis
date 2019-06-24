@@ -61,8 +61,8 @@ export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
 
 export const setAcceptLanguageHeader = (locale = DEFAULT_LANGUAGE) => ({
   headers: {
-    'Accept-Language': locale,
-  },
+    'Accept-Language': locale
+  }
 });
 
 export const removeItemById = (id: string, dataMap: Record<string, any>) => {
@@ -74,5 +74,5 @@ export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + wor
 
 export const getDropdownOptions = memoize(
   (dataMap: IGenericDataMap<object>, labelKey: string): IDropdownOption[] =>
-    Object.values(dataMap).map((item: any) => ({ label: item[labelKey], value: item.id })),
+    Object.values(dataMap).map((item: any) => ({ label: item[labelKey], value: item.id }))
 );

@@ -26,7 +26,7 @@ export const getCityItems = createSelector(
     return selectedCity ?
       Object.values(itemsMap).filter((item: IItem) => item.cityId === selectedCity.id) :
       [];
-  },
+  }
 );
 
 export const getCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));

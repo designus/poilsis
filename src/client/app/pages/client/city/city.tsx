@@ -69,12 +69,12 @@ class CityPage extends React.Component<ICityPageParams, any> {
 const mapStateToProps = (state: IAppState, props: ICityPageParams) => ({
   selectedCity: getSelectedCity(state, props.location.state),
   cityItems: getCityItems(state, props.location.state),
-  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state),
+  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadCityItems: (cityAlias: string, locale: string) => dispatch(loadCityItems(cityAlias, locale)),
-  clearSelectedCity: () => dispatch(clearSelectedCity()),
+  clearSelectedCity: () => dispatch(clearSelectedCity())
 });
 
 export default connect<any, any, ICityPageParams>(mapStateToProps, mapDispatchToProps)(CityPage);

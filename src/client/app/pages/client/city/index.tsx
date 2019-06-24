@@ -3,5 +3,5 @@ import { Loading } from 'components/loading';
 
 export const CityPage = Loadable({
   loader: () => import(/* webpackChunkName: "clientCity" */ './city'),
-  loading: Loading,
+  loading: Loading
 });

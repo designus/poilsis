@@ -54,20 +54,20 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
       {
         icon: () => (<HomeIcon />),
         link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
-        text: formatMessage({ id: 'admin.menu.main_info' }),
+        text: formatMessage({ id: 'admin.menu.main_info' })
       },
       {
         icon: () => (<DescriptionIcon />),
         link: adminRoutes.editItemDescription.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.description' }),
-        isDisabled: this.isCreatePage(),
+        isDisabled: this.isCreatePage()
       },
       {
         icon: () => (<PhotoIcon />),
         link: adminRoutes.editItemPhotos.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.photo_gallery' }),
-        isDisabled: this.isCreatePage(),
-      },
+        isDisabled: this.isCreatePage()
+      }
     ];
   }
 
@@ -125,13 +125,13 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
 const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
   loadedItem: state.admin.items[props.match.params.itemId],
-  shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId),
+  shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadAdminItem: (itemId: string) => dispatch(getAdminItem(itemId)),
+  loadAdminItem: (itemId: string) => dispatch(getAdminItem(itemId))
 });
 
 export default injectIntl(
-  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPage),
+  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPage)
 );

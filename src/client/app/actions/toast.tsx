@@ -6,7 +6,7 @@ export const showToast = (toastType: ToastType, message: string, error?: string)
   type: SHOW_TOAST,
   toastType,
   message,
-  error,
+  error
 });
 
 export const hideToast = () => ({type: HIDE_TOAST});

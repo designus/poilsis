@@ -30,8 +30,8 @@ const getInitialState = (req, user): IInitialAuthState => {
       auth: {
         accessToken: req.cookies.jwt,
         isLoggedIn: true,
-        showKeepMeLoggedModal: false,
-      },
+        showKeepMeLoggedModal: false
+      }
     };
   }
 };
@@ -73,9 +73,9 @@ function sendResponse(res, store, location) {
               </StaticRouter>
             </IntlProvider>
           </Provider>
-        </ThemeProvider>,
+        </ThemeProvider>
       )}
-    </Loadable.Capture>,
+    </Loadable.Capture>
   );
 
   const css = sheets.toString();
@@ -94,8 +94,8 @@ function sendResponse(res, store, location) {
       html,
       scripts,
       css,
-      preloadedState,
-    },
+      preloadedState
+    }
 });
 }
 

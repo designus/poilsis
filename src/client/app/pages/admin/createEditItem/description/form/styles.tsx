@@ -4,11 +4,11 @@ import { languageStyles } from 'components/extendWithLanguage';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    padding: '15px 0',
+    padding: '15px 0'
   },
   metaContent: {
     padding: '20px 15px',
     background: '#fff',
-    border: '1px solid #dddfe2',
-  },
+    border: '1px solid #dddfe2'
+  }
 });

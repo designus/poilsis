@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, ITypesMap, IType } from 'reducers';
-import { AdminHeader } from 'global-styles';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { deleteType } from 'actions';
 import { getTypes, getTypesMap } from 'selectors';
@@ -13,7 +11,7 @@ import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals';
-import { AdminPageActions } from 'components/adminPageActions';
+import { AdminHeader } from 'components/adminHeader';
 
 const Table = extendWithLoader(EnhancedTable);
 
@@ -27,7 +25,7 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
 
   state = {
     isDeleteModalOpen: false,
-    deleteId: '',
+    deleteId: ''
   };
 
   get deleteTypeName() {
@@ -40,15 +38,15 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
     return [
       {
         title: formatMessage({id: 'admin.common_fields.id'}),
-        dataProp: 'id',
+        dataProp: 'id'
       },
       {
         title: formatMessage({id: 'admin.common_fields.name'}),
-        dataProp: 'name',
+        dataProp: 'name'
       },
       {
         title: formatMessage({id: 'admin.common_fields.description'}),
-        dataProp: 'description',
+        dataProp: 'description'
       },
       {
         title: formatMessage({id: 'admin.common_fields.actions'}),
@@ -60,8 +58,8 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
               onDelete={this.openDeleteModal(typeId)}
             />
           );
-        },
-      },
+        }
+      }
     ];
   }
 
@@ -79,13 +77,11 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
 
   render() {
     return (
-      <div>
-        <AdminHeader>
-          <Typography variant="h5">
-            <FormattedMessage id="admin.menu.types" />
-          </Typography>
-          <AdminPageActions createLink={adminRoutes.createType.getLink()} />
-        </AdminHeader>
+      <React.Fragment>
+        <AdminHeader
+          translationId="admin.menu.types"
+          createLink={adminRoutes.createType.getLink()}
+        />
         <Table
           showLoadingOverlay={true}
           loaderId={CONTENT_LOADER_ID}
@@ -100,20 +96,20 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
           onDelete={this.handleTypeDelete}
           itemName={this.deleteTypeName}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
   typesMap: getTypesMap(state),
-  types: getTypes(state),
+  types: getTypes(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteType: (typeId: string) => dispatch(deleteType(typeId)),
+  deleteType: (typeId: string) => dispatch(deleteType(typeId))
 });
 
 export const AdminTypesPage = injectIntl(
-  connect<{}, {}, ITypesPageParams>(mapStateToProps, mapDispatchToProps)(AdminTypesPageComponent),
+  connect<{}, {}, ITypesPageParams>(mapStateToProps, mapDispatchToProps)(AdminTypesPageComponent)
 );

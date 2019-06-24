@@ -6,9 +6,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { IUploadProgress } from 'reducers';
 import { SuccessIcon, ErrorIcon } from 'client-utils';
 import { IImage } from 'global-utils';
-import { SortableImage } from './sortableImage';
+import { ImageWrapper } from './imageWrapper';
 import { config } from '../../../../../config';
-import { ImageSource, UploadProgress, UploadBar, UploadResult, viewbox, Image, Images, ImagePreviewWrapper } from './style';
+
+import { styles, viewbox } from './style';
 
 export interface IImagePreview extends IUploadProgress {
   isTemporary: boolean;
@@ -17,83 +18,79 @@ export interface IImagePreview extends IUploadProgress {
   onLoadImage?: () => void;
   onDeleteImage?: (index: number) => (e: any) => void;
   onSortImages?: (images: IImage[]) => void;
+  showLoader?: boolean;
 }
 
-export class ImagePreview extends React.Component<IImagePreview> {
+export const ImagePreview = (props: IImagePreview) => {
+  const classes = styles(props);
+  const {
+    label,
+    images,
+    hasError,
+    onDeleteImage,
+    onLoadImage,
+    isTemporary,
+    onSortImages
+  } = props;
 
-  renderUploadProgress = () => {
-    const { isUploaded, hasError, isUploading, progress } = this.props;
+  const renderUploadProgress = () => {
     return (
-      <UploadProgress
-        isUploaded={isUploaded}
-        hasError={hasError}
-        isUploading={isUploading}
-      >
-        <UploadBar progress={progress} />
-      </UploadProgress>
+      <div className={classes.uploadProgress}>
+        <div className={classes.uploadBar} />
+      </div>
     );
-  }
+  };
 
-  renderUploadResult = () => {
-    const { isUploaded, hasError, isTemporary } = this.props;
+  const renderUploadResult = () => {
     return (
-      <UploadResult
-        isUploaded={isUploaded}
-        hasError={hasError}
-        showLoader={isTemporary}
-      >
-        {hasError ?
-          <ErrorIcon viewBox={viewbox} /> :
-          <SuccessIcon viewBox={viewbox} />
+      <div className={classes.uploadResult}>
+        {hasError
+          ? <ErrorIcon viewBox={viewbox} />
+          : <SuccessIcon viewBox={viewbox} />
         }
-      </UploadResult>
+      </div>
     );
-  }
+  };
 
-  renderImage = (image: IImage, index: number) => {
-    const { isTemporary, onDeleteImage } = this.props;
+  const renderImage = (image: IImage, index: number) => {
     const src = isTemporary ? image.preview : `${config.host}/${image.path}/${image.thumbName}`;
     return (
-      <ImageSource>
-        <img src={src} onLoad={this.props.onLoadImage} draggable={!isTemporary} />
+      <div className={classes.imageSource}>
+        <img src={src} onLoad={onLoadImage} draggable={!isTemporary} />
         <Fab color="secondary" aria-label="remove" onClick={onDeleteImage(index)}>
           <DeleteIcon />
         </Fab>
-      </ImageSource>
+      </div>
     );
-  }
+  };
 
-  renderImageWrapper = (image: IImage, index, array) => {
-    const { isTemporary, onSortImages } = this.props;
-    const ImgWrapper = isTemporary ? Image : SortableImage;
+  const renderImageWrapper = (image: IImage, index: number, array: IImage[]) => {
     const key = image.id ? image.id : index;
 
     return (
-      <ImgWrapper
+      <ImageWrapper
         isTemporary={isTemporary}
         key={key}
         onSortItems={onSortImages}
         items={array}
         sortId={index}
+        classes={classes}
       >
-        {this.renderImage(image, index)}
-        {this.renderUploadProgress()}
-        {this.renderUploadResult()}
-      </ImgWrapper>
+        {renderImage(image, index)}
+        {renderUploadProgress()}
+        {renderUploadResult()}
+      </ImageWrapper>
     );
-  }
+  };
 
-  render() {
-    const { isTemporary, label, images } = this.props;
-    return (
-      <ImagePreviewWrapper isTemporary={isTemporary}>
-        <InputLabel>{label}</InputLabel>
-        {images ? (
-          <Images>
-            {images.map(this.renderImageWrapper)}
-          </Images>
-        ) : null}
-      </ImagePreviewWrapper>
-    );
-  }
-}
+  return (
+    <div className={classes.imagePreviewWrapper}>
+      <InputLabel>{label}</InputLabel>
+      {images ? (
+        <div className={classes.images}>
+          {images.map(renderImageWrapper)}
+        </div>
+      ) : null}
+    </div>
+  );
+};

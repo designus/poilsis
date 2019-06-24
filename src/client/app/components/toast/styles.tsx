@@ -7,24 +7,24 @@ const red = '#ff3030';
 
 const dimensions = {
   width: '100%',
-  padding: '10px 20px',
+  padding: '10px 20px'
 };
 
 export const styles = (theme: Theme) => createStyles({
   close: {
     width: theme.spacing(4),
-    height: theme.spacing(4),
+    height: theme.spacing(4)
   },
   success: {
     '& > div': {
       ...dimensions,
-      backgroundColor: green,
-    },
+      backgroundColor: green
+    }
   },
   warning: {
     '& > div': {
-      backgroundColor: yellow,
-    },
+      backgroundColor: yellow
+    }
   },
   message: {
     display: 'flex',
@@ -32,12 +32,12 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     '& > svg': {
       paddingRight: '10px',
-      fontSize: '30px',
-    },
+      fontSize: '30px'
+    }
   },
   error: {
     '& > div': {
-      backgroundColor: red,
-    },
-  },
+      backgroundColor: red
+    }
+  }
 });

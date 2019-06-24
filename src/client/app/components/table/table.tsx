@@ -6,12 +6,10 @@ import TableRow from '@material-ui/core/TableRow';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import Checkbox from '@material-ui/core/Checkbox';
-import styled from 'styled-components';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { EnhancedTableHead } from './tableHead';
 
-const TableWrapper = styled.div`
-  margin-top: 20px;
-`;
+import { styles } from './styles';
 
 export type SortType = 'string' | 'number' | 'date';
 export type OrderType = 'asc' | 'desc';
@@ -25,14 +23,13 @@ export interface ITableColumn {
   format?: any;
 }
 
-export interface ITableProps {
+export interface ITableProps extends Partial<WithStyles<typeof styles>> {
   order?: OrderType;
   orderBy?: string;
   items?: any[];
   columns?: ITableColumn[];
   search?: string;
   limit?: number;
-  classes?: any;
 }
 
 export interface ITableFilters {
@@ -55,7 +52,7 @@ export interface ITableState {
   searchableColumns: ISearchableColumn[];
 }
 
-export class EnhancedTable extends React.Component<ITableProps, any> {
+class EnhancedTable extends React.Component<ITableProps, any> {
 
   state: ITableState;
 
@@ -70,9 +67,9 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
       page: 0,
       rowsPerPage: props.limit,
       filters: {
-        search: props.search || '',
+        search: props.search || ''
       },
-      searchableColumns: this.getSearchableColumns(props.columns),
+      searchableColumns: this.getSearchableColumns(props.columns)
     };
   }
 
@@ -168,7 +165,7 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -196,19 +193,19 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
   }
 
   render() {
-    const { columns } = this.props;
+    const { columns, classes } = this.props;
     const {
       data,
       order,
       orderBy,
       selected,
       rowsPerPage,
-      page,
+      page
     } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
-      <TableWrapper>
+      <div className={classes.wrapper}>
         <Table>
           <EnhancedTableHead
             numSelected={selected.length}
@@ -267,7 +264,9 @@ export class EnhancedTable extends React.Component<ITableProps, any> {
             </TableRow>
           </TableFooter>
         </Table>
-      </TableWrapper>
+      </div>
     );
   }
 }
+
+export default withStyles<any, any, ITableProps>(styles)(EnhancedTable);

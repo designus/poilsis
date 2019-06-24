@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { sortable } from 'react-sortable';
-import { Image } from '../style';
 
 const ImageComponent = (props) => {
+  const { classes } = props;
   return (
-    <Image {...props}>
+    <div className={classes.image}>
       {props.children}
-    </Image>
+    </div>
   );
 };
 

@@ -10,12 +10,12 @@ const tokenSchema = new mongoose.Schema({
   userId: {
     type: String,
     unique: true,
-    required: true,
+    required: true
   },
   refreshToken: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 export const TokensModel = mongoose.model<IToken>('Tokens', tokenSchema);

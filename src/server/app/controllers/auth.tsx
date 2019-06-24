@@ -98,7 +98,7 @@ class Auth {
       }
 
       const tokenItem = await TokensModel.findOneAndUpdate({userId},
-        {$set: {userId, refreshToken: randToken.uid(32)}}, {upsert: true, new: true},
+        {$set: {userId, refreshToken: randToken.uid(32)}}, {upsert: true, new: true}
       );
 
       if (!tokenItem) {
@@ -110,7 +110,7 @@ class Auth {
       // TODO: Add Set-cookie http header
       res.status(200).json({
         accessToken: this.genToken({userId, userRole, userName, userItems}),
-        refreshToken: tokenItem.refreshToken,
+        refreshToken: tokenItem.refreshToken
       });
     } catch (err) {
       res.status(401).json({ message: err.message });
@@ -145,7 +145,7 @@ class Auth {
     const params = {
       secretOrKey: process.env.JWT_SECRET,
       jwtFromRequest: this.extractFromCookie,
-      passReqToCallback: true,
+      passReqToCallback: true
     };
 
     return new Strategy(params, (req, payload: any, done) => {

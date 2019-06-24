@@ -7,7 +7,7 @@ import {
   CLEAR_SELECTED_CITY,
   REMOVE_CITY,
   CLEAR_STATE,
-  RECEIVE_ITEMS,
+  RECEIVE_ITEMS
 } from 'actions';
 
 export interface ICity extends ICityFields {
@@ -22,7 +22,7 @@ export interface ICityState extends IGenericState<ICity> {
 
 const getInitialState = () => ({
   dataMap: {},
-  aliases: [],
+  aliases: []
 });
 
 export const cities = (state: ICityState = getInitialState(), action): ICityState => {
@@ -32,12 +32,12 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
     case SELECT_CITY:
       return {
         ...state,
-        selectedId: action.cityId,
+        selectedId: action.cityId
       };
     case CLEAR_SELECTED_CITY:
       return {
         ...state,
-        selectedId: null,
+        selectedId: null
       };
     case RECEIVE_ITEMS:
       return action.cityId ?
@@ -47,9 +47,9 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
             ...state.dataMap,
             [action.cityId]: {
               ...state.dataMap[action.cityId],
-              hasItems: true,
-            },
-          },
+              hasItems: true
+            }
+          }
         }
       : state;
     case RECEIVE_CLIENT_CITY:
@@ -57,26 +57,26 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
         ...state,
         aliases: [
           ...state.aliases,
-          { id: action.newCity.id, alias: action.newCity.alias },
+          { id: action.newCity.id, alias: action.newCity.alias }
         ],
         dataMap: {
           ...state.dataMap,
           [action.newCity.id]: {
             ...(state.dataMap[action.newCity.id] || {}),
-            ...action.newCity,
-          },
-        },
+            ...action.newCity
+          }
+        }
       };
     case REMOVE_CITY:
       return {
         ...state,
         dataMap: removeItemById(action.cityId, state.dataMap),
-        aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)],
+        aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)]
       };
     case RECEIVE_INITIAL_DATA:
       return {
         ...state,
-        ...action.data.cities,
+        ...action.data.cities
       };
     default:
       return state;

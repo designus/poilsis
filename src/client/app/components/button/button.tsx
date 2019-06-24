@@ -10,15 +10,15 @@ export const defaultStyles = (theme: Theme) => createStyles({
     borderRadius: '20px',
     minWidth: '120px',
     margin: '10px 0',
-    padding: '6px 15px',
+    padding: '6px 15px'
   },
   label: {
     '& > svg': {
       width: '20px',
       height: '20px',
-      margin: '0 2px 0 0',
-    },
-  },
+      margin: '0 2px 0 0'
+    }
+  }
 });
 
 export interface IButtonProps {
@@ -37,13 +37,13 @@ export const ButtonComponent = ({
   classes,
   color = 'primary',
   type = 'button',
-  disabled = false,
+  disabled = false
 }: IButtonProps) => {
   return (
     <ActionButton
       classes={{
         root: classes.root,
-        label: classes.label,
+        label: classes.label
       }}
       disabled={disabled}
       onClick={onClick}

@@ -4,22 +4,22 @@ import { createStyles } from '@material-ui/core/styles';
 export const modalStyles = (theme: Theme) => createStyles({
   paper: {
     borderRadius: '0',
-    minWidth: '300px',
+    minWidth: '300px'
   },
   actionWrapper: {
-    margin: '8px 0 0 0',
+    margin: '8px 0 0 0'
   },
   buttonWrapper: {
     width: '50%',
     textAlign: 'center',
-    margin: '0',
+    margin: '0'
   },
   dialogContent: {
-    paddingTop: '6px',
+    paddingTop: '6px'
   },
   close: {
     position: 'absolute',
     top: '0',
-    right: '0',
-  },
+    right: '0'
+  }
 });

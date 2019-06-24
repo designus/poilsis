@@ -35,7 +35,7 @@ import {
   CreateEditTypePage,
   CreateEditCityPage,
   AdminTypesPage,
-  AdminCitiesPage,
+  AdminCitiesPage
 } from 'pages';
 
 import { hasInitialDataLoaded, shouldLoadInitialData, isInitialDataLoading } from 'selectors';
@@ -54,7 +54,7 @@ interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps
 class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
   state = {
     mobileDrawerOpen: false,
-    menuItems: this.menuItems,
+    menuItems: this.menuItems
   };
 
   componentDidUpdate(prevProps: IAdminLayoutProps) {
@@ -88,30 +88,30 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
       {
         icon: () => (<DashboardIcon />),
         link: adminRoutes.landing.getLink(),
-        text: formatMessage({ id: 'admin.menu.dashboard' }),
+        text: formatMessage({ id: 'admin.menu.dashboard' })
       },
       {
         icon: () => (<ListIcon />),
         link: adminRoutes.items.getLink(),
-        text: formatMessage({ id: 'admin.menu.items' }),
+        text: formatMessage({ id: 'admin.menu.items' })
       },
       {
         icon: () => (<TypesIcon />),
         link: adminRoutes.types.getLink(),
         text: formatMessage({ id: 'admin.menu.types' }),
-        allowedRoles: adminRoutes.types.allowedRoles,
+        allowedRoles: adminRoutes.types.allowedRoles
       },
       {
         icon: () => (<CitiesIcon />),
         link: adminRoutes.cities.getLink(),
         text: formatMessage({ id: 'admin.menu.cities' }),
-        allowedRoles: adminRoutes.cities.allowedRoles,
+        allowedRoles: adminRoutes.cities.allowedRoles
       },
       {
         icon: () => (<ArrowBackIcon />),
         link: clientRoutes.landing.getLink(this.props.locale),
-        text: formatMessage({ id: 'admin.menu.go_to_website' }),
-      },
+        text: formatMessage({ id: 'admin.menu.go_to_website' })
+      }
     ];
   }
 
@@ -206,15 +206,15 @@ const mapStateToProps = (state: IAppState) => ({
   hasInitialDataLoaded: hasInitialDataLoaded(state),
   shouldLoadInitialData: shouldLoadInitialData(state),
   isInitialDataLoading: isInitialDataLoading(state),
-  locale: state.locale,
+  locale: state.locale
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
+  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params))
 });
 
 export default withStyles(styles)(
   connect<any, any, IAdminLayoutProps>(mapStateToProps, mapDispatchToProps)(
-    injectIntl(AdminLayoutPage),
-  ),
+    injectIntl(AdminLayoutPage)
+  )
 );

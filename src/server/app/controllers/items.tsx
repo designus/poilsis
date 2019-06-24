@@ -7,7 +7,7 @@ import {
   getImages,
   sendResponse,
   formatAlias,
-  getAlias,
+  getAlias
 } from '../server-utils';
 
 const { images: { maxPhotos } } = itemValidation;
@@ -37,16 +37,16 @@ export const getCityItems = (req: Request, res: Response, next: NextFunction) =>
             $let: {
               vars: {
                 firstImage: {
-                  $arrayElemAt: ['$images', 0],
-                },
+                  $arrayElemAt: ['$images', 0]
+                }
               },
               in: {
-                $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName'],
-              },
-            },
-          },
-        },
-      },
+                $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName']
+              }
+            }
+          }
+        }
+      }
     ])
     .exec(sendResponse(res, next));
 };
@@ -58,7 +58,7 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
 export const toggleItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndUpdate(
     { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
-    sendResponse(res, next),
+    sendResponse(res, next)
   );
 };
 
@@ -92,7 +92,7 @@ export const updateMainInfo = (req: Request, res: Response, next: NextFunction) 
 
   ItemsModel.findOneAndUpdate(
     { id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true },
-    sendResponse(res, next),
+    sendResponse(res, next)
   );
 };
 
@@ -107,7 +107,7 @@ export const updateItemDescription = (req: Request, res: Response, next: NextFun
         return next(err);
       }
       res.status(200).json(getItemDescriptionFields(result));
-    },
+    }
   );
 };
 

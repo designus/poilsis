@@ -80,15 +80,15 @@ const mapStateToProps = (state: IAppState) => ({
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
   userRole: state.currentUser.details.role,
-  showNavigationPrompt: isDirty(MAIN_INFO_FORM_NAME)(state) && !isSubmitting(MAIN_INFO_FORM_NAME)(state),
+  showNavigationPrompt: isDirty(MAIN_INFO_FORM_NAME)(state) && !isSubmitting(MAIN_INFO_FORM_NAME)(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateItem: (item: TItemFields) => dispatch(updateMainInfo(item)),
   createItem: (item: TItemFields) => dispatch(createItem(item)),
-  initializeForm: (data: TItemFields) => dispatch(initialize(MAIN_INFO_FORM_NAME, data)),
+  initializeForm: (data: TItemFields) => dispatch(initialize(MAIN_INFO_FORM_NAME, data))
 });
 
 export default injectIntl(
-  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPage),
+  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPage)
 );

@@ -37,7 +37,7 @@ class ToastComponent extends React.Component<IToastProps, any> {
   icon = {
     [ToastEnum.success]: () => <SuccesIcon />,
     [ToastEnum.error]: () => <ErrorIcon />,
-    [ToastEnum.warning]: () => <WarningIcon />,
+    [ToastEnum.warning]: () => <WarningIcon />
   };
 
   handleRequestClose = () => {
@@ -62,7 +62,7 @@ class ToastComponent extends React.Component<IToastProps, any> {
         className={classes[toastType]}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'center'
         }}
         open={show}
         autoHideDuration={4000}
@@ -80,13 +80,13 @@ class ToastComponent extends React.Component<IToastProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  toast: state.toast,
+  toast: state.toast
 });
 
 const mapDispatchToProps = dispatch => ({
-  hideToast: () => dispatch(hideToast()),
+  hideToast: () => dispatch(hideToast())
 });
 
 export const Toast = withStyles(styles)(
-  injectIntl(connect<any, any, IToastProps>(mapStateToProps, mapDispatchToProps)(ToastComponent)),
+  injectIntl(connect<any, any, IToastProps>(mapStateToProps, mapDispatchToProps)(ToastComponent))
 );

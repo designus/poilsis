@@ -4,7 +4,7 @@ import {
   hasLocalizedFields,
   itemValidation,
   IImage,
-  IPhotoFormState,
+  IPhotoFormState
 } from 'global-utils';
 
 import * as errors from '../data-strings/validation';

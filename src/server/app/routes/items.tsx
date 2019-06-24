@@ -13,12 +13,12 @@ import {
   updateItemDescription,
   updateMainInfo,
   updatePhotos,
-  uploadPhotos,
+  uploadPhotos
 } from '../controllers';
 import {
   createUploadPath,
   removeImagesFromFs,
-  removeImagesDir,
+  removeImagesDir
 } from '../server-utils';
 
 const router = Router();

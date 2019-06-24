@@ -11,17 +11,17 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: '50%',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer',
+    cursor: 'pointer'
   },
   icon: {
     color: '#fff',
     width: '16px',
-    height: '16px',
+    height: '16px'
   },
   green: {
-    background: green[500],
+    background: green[500]
   },
   red: {
-    background: red[500],
-  },
+    background: red[500]
+  }
 });

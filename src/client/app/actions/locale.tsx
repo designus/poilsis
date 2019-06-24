@@ -3,7 +3,7 @@ export const SET_LOCALE = 'SET_LOCALE';
 
 export const setLocale = (locale: string) => ({
   type: SET_LOCALE,
-  locale,
+  locale
 });
 
 export const switchLanguage = (language: string) => dispatch => {

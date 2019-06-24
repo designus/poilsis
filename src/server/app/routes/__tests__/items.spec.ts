@@ -17,7 +17,7 @@ const newItem = {
   images: [],
   userId: adminUser.id,
   cityId: 'eWRhpRV',
-  isEnabled: true,
+  isEnabled: true
 };
 
 describe('Integration tests: Items', () => {

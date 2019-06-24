@@ -6,7 +6,7 @@ export const RESET_UPLOAD_STATE = 'RESET_UPLOAD_STATE';
 export const setUploadProgress = (progress: number) => (dispatch) => {
   dispatch({
     type: SET_UPLOAD_PROGRESS,
-    progress,
+    progress
   });
 };
 

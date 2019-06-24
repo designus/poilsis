@@ -15,24 +15,24 @@ const TypesSchemaMap: ITypeSchema = {
     type: String,
     unique: true,
     default: shortId.generate,
-    required: [true, requiredMessage],
+    required: [true, requiredMessage]
   },
   name: {
     type: String,
     required: [true, requiredMessage],
-    intl: true,
+    intl: true
   },
   description: {
     type: String,
-    intl: true,
+    intl: true
   },
   alias: {
     type: String,
     lowercase: true,
     trim: true,
     required: [true, requiredMessage],
-    set: formatAlias,
-  },
+    set: formatAlias
+  }
 };
 
 const TypesSchema: Schema = new SchemaClass(TypesSchemaMap);

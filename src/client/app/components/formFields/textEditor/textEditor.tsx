@@ -8,7 +8,7 @@ import {
   ContentState,
   convertFromHTML,
   DraftEditorCommand,
-  DraftBlockType,
+  DraftBlockType
 } from 'draft-js';
 import FormatBold from '@material-ui/icons/FormatBold';
 import FormatItalic from '@material-ui/icons/FormatItalic';
@@ -45,7 +45,7 @@ class TextEditorComponent extends React.Component<IEditorInputProps, any> {
   constructor(props: IEditorInputProps) {
     super(props);
     this.state = {
-      editor: getInitialValue(this.props.input.value),
+      editor: getInitialValue(this.props.input.value)
     };
   }
 

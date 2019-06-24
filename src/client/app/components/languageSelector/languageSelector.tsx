@@ -46,15 +46,15 @@ export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  selectedLanguage: state.locale,
+  selectedLanguage: state.locale
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSelectLanguage: (language: string) => dispatch(switchLanguage(language)),
+  onSelectLanguage: (language: string) => dispatch(switchLanguage(language))
 });
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(
-    withRouter(LanguageSelector),
-  ),
+    withRouter(LanguageSelector)
+  )
 );

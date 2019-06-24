@@ -61,13 +61,13 @@ class ItemPage extends React.Component<IItemPageParams, any> {
 
 const mapStateToProps = (state: IAppState, props: IItemPageParams) => ({
   selectedItem: getSelectedItem(state, props.location.state),
-  shouldLoadItem: shouldLoadViewItem(state, props.location.state),
+  shouldLoadItem: shouldLoadViewItem(state, props.location.state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadItem: (alias: string, locale: string) => dispatch(loadItem(alias, locale)),
   selectItem: (itemId: string) => dispatch(selectItem(itemId)),
-  clearSelectedItem: () => dispatch(clearSelectedItem()),
+  clearSelectedItem: () => dispatch(clearSelectedItem())
 });
 
 export default connect<any, any, IItemPageParams>(mapStateToProps, mapDispatchToProps)(ItemPage);

@@ -6,14 +6,14 @@ import {
   IItemFields,
   LANGUAGES,
   DEFAULT_LANGUAGE,
-  itemValidation,
+  itemValidation
 } from 'global-utils';
 
 import {
   formatAlias,
   TGenericSchemaMap,
   getValidationMessage,
-  requiredMessage,
+  requiredMessage
 } from '../server-utils';
 
 interface IItemsSchema extends TGenericSchemaMap<IItemFields> {}
@@ -29,7 +29,7 @@ const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(m
 
 const {
   types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
-  images: { maxPhotos },
+  images: { maxPhotos }
 } = itemValidation;
 
 const ImageSchemaMap: TGenericSchemaMap<IImage> = {
@@ -37,20 +37,20 @@ const ImageSchemaMap: TGenericSchemaMap<IImage> = {
     type: String,
     sparse: true,
     default: shortId.generate,
-    required: true,
+    required: true
   },
   fileName: {
     type: String,
-    required: true,
+    required: true
   },
   path: {
     type: String,
-    required: true,
+    required: true
   },
   thumbName: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 };
 
 const ItemsSchemaMap: IItemsSchema = {
@@ -58,38 +58,38 @@ const ItemsSchemaMap: IItemsSchema = {
     type: String,
     unique: true,
     default: shortId.generate,
-    required: true,
+    required: true
   },
   name: {
     type: String,
     required: [true, requiredMessage],
-    intl: true,
+    intl: true
   },
   cityId: {
     type: String,
-    required: [true, requiredMessage],
+    required: [true, requiredMessage]
   },
   address: {
     type: String,
-    required: [true, requiredMessage],
+    required: [true, requiredMessage]
   },
   types: {
     type: Array,
     required: [true, requiredMessage],
     validate: [
       minMaxLength(minTypesCount, maxTypesCount),
-      getValidationMessage(RANGE, minTypesCount, maxTypesCount),
-    ],
+      getValidationMessage(RANGE, minTypesCount, maxTypesCount)
+    ]
   },
   alias: {
     type: String,
     lowercase: true,
     trim: true,
-    set: formatAlias,
+    set: formatAlias
   },
   userId: {
     type: String,
-    required: [true, requiredMessage],
+    required: [true, requiredMessage]
   },
   isEnabled: Boolean,
   createdAt: Date,
@@ -98,25 +98,25 @@ const ItemsSchemaMap: IItemsSchema = {
     type: [ImageSchemaMap],
     validate: [
       maxLength(maxPhotos),
-      getValidationMessage(MAX_PHOTO_COUNT, maxPhotos),
-    ],
+      getValidationMessage(MAX_PHOTO_COUNT, maxPhotos)
+    ]
   },
   description: {
     type: String,
-    intl: true,
+    intl: true
   },
   metaTitle: {
     type: String,
-    intl: true,
+    intl: true
   },
   metaDescription: {
     type: String,
-    intl: true,
+    intl: true
   },
   metaKeywords: {
     type: String,
-    intl: true,
-  },
+    intl: true
+  }
 };
 
 const ItemsSchema = new Schema(ItemsSchemaMap);

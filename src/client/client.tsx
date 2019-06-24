@@ -46,7 +46,7 @@ window.main = () => {
             </ConnectedIntlProvider>
           </Provider>
         </ThemeProvider>,
-        document.getElementById('app'),
+        document.getElementById('app')
       );
   });
 };

@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: '0 0 0 15px',
     borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
     '& > div': {
-      color: '#fff',
-    },
-  },
+      color: '#fff'
+    }
+  }
 });

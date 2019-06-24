@@ -41,7 +41,7 @@ class InputComponent extends React.Component<ITextInputProps, any> {
   constructor(props: ITextInputProps) {
     super(props);
     this.state = {
-      value: this.initialValue,
+      value: this.initialValue
     };
   }
 
@@ -93,7 +93,7 @@ class InputComponent extends React.Component<ITextInputProps, any> {
               margin="dense"
               className={`${multiline ? classes.multilineInput : ''}`}
               classes={{
-                error: this.props.classes.error,
+                error: this.props.classes.error
               }}
             />
           </FormControl>

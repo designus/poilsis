@@ -6,15 +6,15 @@ export const styles = (theme: Theme) => createStyles({
     cursor: 'pointer',
     color: '#ccc',
     '&.active': {
-      color: 'black',
-    },
+      color: 'black'
+    }
   },
   icon: {
     fontSize: '18px',
-    verticalAlign: 'text-bottom',
+    verticalAlign: 'text-bottom'
   },
   hidden: {
-    display: 'none',
+    display: 'none'
   },
   toolbar: {
     padding: '10px 10px 5px 10px',
@@ -30,19 +30,19 @@ export const styles = (theme: Theme) => createStyles({
       marginRight: '5px',
       '&:hover': {
         fill: '#000',
-        transition: 'all 0.2s linear',
-      },
-    },
+        transition: 'all 0.2s linear'
+      }
+    }
   },
   activeButton: {
-    fill: '#000 !important',
+    fill: '#000 !important'
   },
   editor: {
     padding: '20px 15px',
-    fontFamily: theme.typography.fontFamily,
+    fontFamily: theme.typography.fontFamily
   },
   wrapper: {
     border: '1px solid #dddfe2',
-    background: '#fff',
-  },
+    background: '#fff'
+  }
 });

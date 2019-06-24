@@ -55,9 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
   uploadImages: (itemId: string, files: File[]) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
   resetUploadState: () => dispatch(resetUploadState()),
-  sortImages: (id: string) => (images: IImage[]) => dispatch(receiveImages(id, images)),
+  sortImages: (id: string) => (images: IImage[]) => dispatch(receiveImages(id, images))
 });
 
 export default injectIntl(
-  connect<any, any, IPhotosFormFields>(undefined, mapDispatchToProps)(PhotosPage),
+  connect<any, any, IPhotosFormFields>(undefined, mapDispatchToProps)(PhotosPage)
 );

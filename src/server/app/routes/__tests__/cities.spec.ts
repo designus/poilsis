@@ -9,7 +9,7 @@ const newCity = {
   description : '',
   types : ['abc'],
   alias : 'nida',
-  id: newCityId,
+  id: newCityId
 };
 
 const existingCity = testData.collections.cities[0];

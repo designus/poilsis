@@ -85,10 +85,10 @@ export class AdminMenu extends React.PureComponent<IAdminMenuProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  userRole: state.currentUser.details.role,
+  userRole: state.currentUser.details.role
 });
 
 export default withRouter(
   // @ts-ignore
-  connect(mapStateToProps)(AdminMenu),
+  connect(mapStateToProps)(AdminMenu)
 );

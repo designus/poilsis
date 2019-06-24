@@ -5,7 +5,7 @@ import {
   IImage,
   getLocalizedResponse,
   LANGUAGES,
-  itemValidation,
+  itemValidation
 } from 'global-utils';
 
 import { IMulterFile, FileUploadErrors } from './types';
@@ -15,17 +15,17 @@ import {
   getUploadPath,
   handleFileUploadErrors,
   getSourceFiles,
-  removeFiles,
+  removeFiles
 } from './methods';
 
 import {
   removeDirectory,
   createDirectory,
-  checkIfDirectoryExists,
+  checkIfDirectoryExists
 } from './fileSystem';
 
 const multer = require('multer');
-const Jimp = require('jimp');
+const Jimp = require('jimp').default;
 const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
 
 export const createUploadPath = (req, res, next) => {
@@ -91,7 +91,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname.split('.')[0] + Date.now() + getFileExtension(file.mimetype));
-  },
+  }
 });
 
 export const uploadImages = multer({
@@ -99,8 +99,8 @@ export const uploadImages = multer({
   fileFilter,
   limits: {
     fileSize: maxPhotoSizeBytes,
-    files: maxPhotos,
-  },
+    files: maxPhotos
+  }
 });
 
 export const resizeImages = (req, res) => {
@@ -125,7 +125,11 @@ export const resizeImages = (req, res) => {
             .catch(err => reject(err));
         });
       });
-      return Promise.all(promises).then(() => resolve());
+      return Promise.all(promises).then(() => {
+        setTimeout(() => {
+          resolve();
+        }, 1000);
+      });
     } else {
       return reject();
     }

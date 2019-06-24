@@ -11,7 +11,7 @@ export const PHOTOS_FORM_NAME = 'PhotosForm';
 
 const validators = [
   maxUploadedPhotos,
-  maxUploadedPhotoSize,
+  maxUploadedPhotoSize
 ];
 
 interface ICustomProps {
@@ -31,8 +31,8 @@ class FormComponent extends React.Component<FormProps> {
   }
 
   handleLoadedImages = () => {
-    this.props.onResetUploadState();
-    this.clearDroppedImages();
+    // this.props.onResetUploadState();
+    // this.clearDroppedImages();
   }
 
   render() {
@@ -58,5 +58,5 @@ class FormComponent extends React.Component<FormProps> {
 
 export default reduxForm<{}, ICustomProps>({
   form: PHOTOS_FORM_NAME,
-  enableReinitialize: true,
+  enableReinitialize: true
 })(FormComponent);

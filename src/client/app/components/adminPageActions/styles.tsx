@@ -5,7 +5,7 @@ import indigo from '@material-ui/core/colors/indigo';
 export const styles = (theme: Theme) => createStyles({
   wrapper: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   flexContainer: {
     display: 'flex',
@@ -13,8 +13,8 @@ export const styles = (theme: Theme) => createStyles({
     padding: '5px 10px',
     justifyContent: 'space-between',
     '& > a': {
-      height: '30px',
-    },
+      height: '30px'
+    }
   },
   button: {
     width: '30px',
@@ -24,13 +24,13 @@ export const styles = (theme: Theme) => createStyles({
     margin: '0 5px',
     backgroundColor: indigo[500],
     '&:hover': {
-      backgroundColor: indigo[700],
+      backgroundColor: indigo[700]
     },
     '&:active': {
-      boxShadow: 'none',
-    },
+      boxShadow: 'none'
+    }
   },
   icon: {
-    color: '#fff',
-  },
+    color: '#fff'
+  }
 });

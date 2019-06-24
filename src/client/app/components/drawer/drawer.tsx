@@ -53,14 +53,14 @@ const Drawer = (props: IDrawerProps) => {
           classes={{
             paper: classes.paperMobile,
             docked: classes.docked,
-            paperAnchorDockedLeft: classes.paperAnchorDockedLeft,
+            paperAnchorDockedLeft: classes.paperAnchorDockedLeft
           }}
           anchor="left"
           variant="temporary"
           open={mobileDrawerOpen}
           onClose={onClose}
           ModalProps={{
-            keepMounted: true,
+            keepMounted: true
           }}
         >
           <DrawerContent
@@ -76,7 +76,7 @@ const Drawer = (props: IDrawerProps) => {
           classes={{
             paper: classes.paper,
             docked: classes.docked,
-            paperAnchorDockedLeft: classes.paperAnchorDockedLeft,
+            paperAnchorDockedLeft: classes.paperAnchorDockedLeft
           }}
           variant="permanent"
           open

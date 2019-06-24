@@ -14,25 +14,25 @@ export const RECEIVE_ADMIN_ITEM_DESCRIPTION = 'RECEIVE_ADMIN_ITEM_DESCRIPTION';
 export const receiveAdminCity = (cityId: string, adminCity: TCityFields) => ({
   type: RECEIVE_ADMIN_CITY,
   cityId,
-  adminCity,
+  adminCity
 });
 
 export const receiveAdminType = (typeId: string, adminType: TTypeFields) => ({
   type: RECEIVE_ADMIN_TYPE,
   typeId,
-  adminType,
+  adminType
 });
 
 export const receiveAdminItem = (itemId: string, adminItem: TItemFields) => ({
   type: RECEIVE_ADMIN_ITEM,
   itemId,
-  adminItem,
+  adminItem
 });
 
 export const receiveAdminItemDesc = (itemId: string, descFields: TItemDescFields) => ({
   type: RECEIVE_ADMIN_ITEM_DESCRIPTION,
   itemId,
-  descFields,
+  descFields
 });
 
 export const getAdminCity = (cityId: string) => dispatch => {

@@ -14,18 +14,18 @@ interface IInjectedProps extends Partial<WithStyles<typeof languageStyles>> {
 }
 
 export function extendWithLanguage<TOriginalProps extends {}>(
-    WrappedComponent: React.ComponentType<TOriginalProps & IInjectedProps>,
+    WrappedComponent: React.ComponentType<TOriginalProps & IInjectedProps>
   ): React.ComponentType<TOriginalProps & IInjectedProps> {
 
     type ResultProps = TOriginalProps & IInjectedProps;
     class FormLanguageComponent extends React.Component<ResultProps> {
       state = {
-        selectedLanguage: this.props.locale,
+        selectedLanguage: this.props.locale
       };
 
       onSelectLanguage = selectedLanguage => () => {
         this.setState({
-          selectedLanguage,
+          selectedLanguage
         });
       }
 
@@ -60,11 +60,11 @@ export function extendWithLanguage<TOriginalProps extends {}>(
     }
 
     const mapStateToProps = (state: IAppState) => ({
-      locale: state.locale,
+      locale: state.locale
     });
 
     // @ts-ignore
     return withStyles(languageStyles)(
-      connect<{}, {}, any>(mapStateToProps)(FormLanguageComponent),
+      connect<{}, {}, any>(mapStateToProps)(FormLanguageComponent)
     );
 }

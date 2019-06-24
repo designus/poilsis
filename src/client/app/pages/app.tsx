@@ -47,13 +47,13 @@ class App extends React.Component<IAppProps, any> {
 
 const mapStateToProps = (state: IAppState) => ({
   isLoggedIn: isLoggedIn(state),
-  sessionExpiryTime: getSessionExpiryTime(state),
+  sessionExpiryTime: getSessionExpiryTime(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  reauthenticateUser: () => dispatch(reauthenticateUser()),
+  reauthenticateUser: () => dispatch(reauthenticateUser())
 });
 
 export default withRouter(
-  connect<any, any, IAppProps>(mapStateToProps, mapDispatchToProps)(App),
+  connect<any, any, IAppProps>(mapStateToProps, mapDispatchToProps)(App)
 );

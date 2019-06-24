@@ -20,7 +20,7 @@ class SaveModalComponent extends React.PureComponent<ISaveModalProps, any> {
         open={isModalOpen}
         onClose={onCancel}
         classes={{
-          paper: classes.paper,
+          paper: classes.paper
         }}
       >
         <DialogHeader

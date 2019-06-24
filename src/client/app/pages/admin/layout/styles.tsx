@@ -9,29 +9,29 @@ export const styles = (theme: Theme) => createStyles({
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
       boxSizing: 'border-box',
-      height: '100%',
+      height: '100%'
     },
     '*, *:before, *:after': {
-      boxSizing: 'inherit',
+      boxSizing: 'inherit'
     },
     ':focus': {
-      outline: 'none',
+      outline: 'none'
     },
     body: {
       height: '100%',
-      margin: 0,
+      margin: 0
     },
     'div[id=app]': {
-      height: '100%',
-    },
+      height: '100%'
+    }
   },
   appBarTitle: {
-    flex: 1,
+    flex: 1
   },
   wrapper: {
     display: 'flex',
     justifyContent: 'space-between',
-    height: '100%',
+    height: '100%'
   },
   main: {
     padding: '25px',
@@ -39,19 +39,19 @@ export const styles = (theme: Theme) => createStyles({
     flex: 3,
     overflowX: 'auto',
     '& > .loader': {
-      position: 'relative',
-    },
+      position: 'relative'
+    }
   },
   appBar: {
     zIndex: 2,
     position: 'relative',
-    display: 'block',
+    display: 'block'
   },
   content: {
     minWidth: `calc(100% - ${DRAWER_WIDTH}px)`,
     width: '100%',
     height: '100%',
     display: 'flex',
-    flexDirection: 'column',
-  },
+    flexDirection: 'column'
+  }
 });

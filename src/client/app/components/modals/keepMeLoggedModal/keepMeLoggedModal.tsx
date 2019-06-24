@@ -42,7 +42,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
           disableBackdropClick={true}
           disableEscapeKeyDown={true}
           classes={{
-            paper: classes.paper,
+            paper: classes.paper
           }}
         >
           <DialogHeader
@@ -80,12 +80,12 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
 
 const mapStateToProps = (state: IAppState) => ({
   sessionExpiryTime: getSessionExpiryTime(state),
-  isModalOpen: state.auth.showKeepMeLoggedModal,
+  isModalOpen: state.auth.showKeepMeLoggedModal
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCloseModal: () => dispatch(logout()),
-  reauthenticateUser: () => dispatch(reauthenticateUser(true)),
+  reauthenticateUser: () => dispatch(reauthenticateUser(true))
 });
 
 const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);

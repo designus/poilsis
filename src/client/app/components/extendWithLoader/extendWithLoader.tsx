@@ -16,7 +16,7 @@ interface IExtendWithLoaderProps extends Partial<WithStyles<typeof styles>> {
 }
 
 export function extendWithLoader<TOriginalProps extends {}>(
-    WrappedComponent: React.ComponentType<TOriginalProps>,
+    WrappedComponent: React.ComponentType<TOriginalProps>
   ): React.ComponentType<TOriginalProps & IExtendWithLoaderProps> {
 
     type ResultProps = TOriginalProps & IExtendWithLoaderProps;
@@ -38,7 +38,7 @@ export function extendWithLoader<TOriginalProps extends {}>(
 
     function mapStateToProps(state: IAppState) {
       return {
-        loadingState: state.loader,
+        loadingState: state.loader
       };
     }
 

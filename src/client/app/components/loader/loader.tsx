@@ -11,7 +11,7 @@ export interface ILoaderProps extends WithStyles<typeof styles> {
 
 export class Loader extends React.PureComponent<ILoaderProps> {
   static defaultProps = {
-    showLoadingOverlay: false,
+    showLoadingOverlay: false
   };
 
   render() {

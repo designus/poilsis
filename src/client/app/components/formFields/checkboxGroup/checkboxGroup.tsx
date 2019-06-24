@@ -42,7 +42,7 @@ class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
       <FormControlLabel
         key={option.value}
         classes={{
-          root: this.props.classes.formControlLabel,
+          root: this.props.classes.formControlLabel
         }}
         control={this.renderCheckbox(option)}
         label={option.label}

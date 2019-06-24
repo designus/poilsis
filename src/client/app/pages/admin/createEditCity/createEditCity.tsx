@@ -100,16 +100,16 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
   typesMap: state.types.dataMap,
   loadedCity: state.admin.cities[props.match.params.cityId],
   showNavigationPrompt: isDirty(CITY_FORM_NAME)(state) && !isSubmitting(CITY_FORM_NAME)(state),
-  shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId),
+  shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getCity: (id: string) => dispatch(getAdminCity(id)),
   createCity: (city: TCityFields) => dispatch(createCity(city)),
   updateCity: (city: TCityFields) => dispatch(updateCity(city)),
-  initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city)),
+  initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city))
 });
 
 export const CreateEditCityPage = injectIntl(
-  connect<{}, {}, ICreateEditCityPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent),
+  connect<{}, {}, ICreateEditCityPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent)
 );

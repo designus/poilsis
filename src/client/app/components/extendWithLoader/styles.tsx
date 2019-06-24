@@ -3,6 +3,6 @@ import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
   wrapper: {
-    position: 'relative',
-  },
+    position: 'relative'
+  }
 });

@@ -39,11 +39,11 @@ export const DialogFooter = ({
   onClose,
   onSubmit,
   closeLabelId = 'common.cancel',
-  submitLabelId = 'common.proceed',
+  submitLabelId = 'common.proceed'
 }) => (
   <DialogActions classes={{
     root: classes.actionWrapper,
-    spacing: classes.buttonWrapper,
+    spacing: classes.buttonWrapper
   }}>
     <Button variant="contained" onClick={onClose} className={classes.cancel}>
       <FormattedMessage id={closeLabelId} />

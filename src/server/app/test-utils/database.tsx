@@ -10,7 +10,7 @@ import {
   createDirectory,
   removeDirectory,
   readFileFromDisk,
-  writeFileToDisk,
+  writeFileToDisk
 } from '../server-utils';
 
 import { testData } from './testData';

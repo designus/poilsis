@@ -4,9 +4,9 @@ export const STOP_ALL_LOADERS = 'STOP_ALL_LOADERS';
 
 export const startLoading = (id: string) => ({
   type: START_LOADING,
-  id,
+  id
 });
 
 export const endLoading = (id?: string) => ({
-  type: END_LOADING,
+  type: END_LOADING
 });

@@ -27,7 +27,7 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
 
   state = {
     dropdownAnchorEl: null,
-    dropdownMenuOpen: false,
+    dropdownMenuOpen: false
   };
 
   handleTick = (props) => {
@@ -101,12 +101,12 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
 const mapStateToProps = (state: IAppState) => ({
   isKeepMeLoggedModalVisible: state.auth.showKeepMeLoggedModal,
   currentUser: state.currentUser.details,
-  sessionExpiryTime: getSessionExpiryTime(state),
+  sessionExpiryTime: getSessionExpiryTime(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
-  showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal()),
+  showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal())
 });
 
 const connectedComponent = connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu);

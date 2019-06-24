@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: '3px 10px',
     '&.disabled': {
       pointerEvents: 'none',
-      opacity: .5,
+      opacity: .5
     },
     '& > a': {
       display: 'flex',
@@ -14,22 +14,22 @@ export const styles = (theme: Theme) => createStyles({
       padding: '12px 10px',
       borderRadius: '2px',
       fontWeight: 300,
-      textDecoration: 'none',
+      textDecoration: 'none'
     },
     '& > a:hover, & > a.active': {
-      backgroundColor: '#00acc1',
-    },
+      backgroundColor: '#00acc1'
+    }
   },
   text: {
     paddingLeft: '5px',
     '& > span': {
-      color: '#fff',
-    },
+      color: '#fff'
+    }
   },
   icon: {
     marginRight: '5px',
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: 'rgba(255, 255, 255, 0.8)'
   },
   span: {},
-  link: {},
+  link: {}
 });

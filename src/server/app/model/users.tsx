@@ -19,22 +19,22 @@ const usersSchema = new mongoose.Schema({
     type: String,
     unique: true,
     default: shortId.generate,
-    required: [true, requiredMessage],
+    required: [true, requiredMessage]
   },
   username: {
     type: String,
     required: [true, requiredMessage],
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: [true, requiredMessage],
-  },
+    required: [true, requiredMessage]
+  }
 }, {
   timestamps: {
     createdAt: 'created_at',
-    updatedAt: 'updated_at',
-  },
+    updatedAt: 'updated_at'
+  }
 });
 
 usersSchema.pre('save', (next) => {

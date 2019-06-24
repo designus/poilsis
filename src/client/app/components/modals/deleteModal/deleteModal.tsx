@@ -29,7 +29,7 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
           open={isModalOpen}
           onClose={onClose}
           classes={{
-            paper: classes.paper,
+            paper: classes.paper
           }}
         >
           <DialogHeader

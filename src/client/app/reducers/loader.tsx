@@ -9,7 +9,7 @@ export interface ILoadingState {
 const getInitialData = () => ({
   content: false,
   dialog: false,
-  global: false,
+  global: false
 });
 
 export const loader = (state: ILoadingState = getInitialData(), action) => {
@@ -17,7 +17,7 @@ export const loader = (state: ILoadingState = getInitialData(), action) => {
     case START_LOADING:
       return {
         ...state,
-        [action.id]: true,
+        [action.id]: true
       };
     case END_LOADING:
       return getInitialData();

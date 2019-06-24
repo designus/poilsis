@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Typography from '@material-ui/core/Typography';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap, IItem } from 'reducers';
 import { loadUserItems, deleteItem, endLoading, toggleItem } from 'actions';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { shouldLoadUserItems, getUserItems } from 'selectors';
-import { AdminHeader } from 'global-styles';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { ItemTypesList } from 'components/itemTypesList';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals';
-import { AdminPageActions } from 'components/adminPageActions';
 import { ToggleAction } from 'components/toggleAction';
+import { AdminHeader } from 'components/adminHeader';
 
 const Table = extendWithLoader(EnhancedTable);
 
@@ -42,7 +40,7 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
   state = {
     isDeleteModalOpen: false,
     deleteId: '',
-    search: '',
+    search: ''
   };
 
   componentDidMount() {
@@ -65,20 +63,20 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
       {
         title: formatMessage({ id: 'admin.common_fields.id' }),
         dataProp: 'id',
-        searchable: true,
+        searchable: true
       },
       {
         title: formatMessage({ id: 'admin.common_fields.name' }),
         dataProp: 'name',
         sortType: 'string',
-        searchable: true,
+        searchable: true
       },
       {
         title: formatMessage({ id: 'admin.common_fields.city' }),
         dataProp: 'cityId',
         sortType: 'string',
         format: (cityId: string) => this.props.citiesMap[cityId].name,
-        searchable: true,
+        searchable: true
       },
       {
         title: formatMessage({ id: 'admin.common_fields.types' }),
@@ -90,13 +88,13 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
               typesMap={this.props.typesMap}
             />
           );
-        },
+        }
       },
       {
         title: formatMessage({ id: 'admin.common_fields.created_at' }),
         dataProp: 'createdAt',
         sortType: 'date',
-        format: (date: string) => formatDate(date),
+        format: (date: string) => formatDate(date)
       },
       {
         title: formatMessage({ id: 'admin.common_fields.user' }),
@@ -105,7 +103,7 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
         format: (userId: string) => {
           const user = this.props.usersMap[userId];
           return user && user.name || null;
-        },
+        }
       },
       {
         title: formatMessage({ id: 'admin.common_fields.is_enabled' }),
@@ -117,7 +115,7 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
             isEnabled={isEnabled}
             onToggle={this.toggleItemVisibility(itemId, !isEnabled)}
           />
-        ),
+        )
       },
       {
         title: formatMessage({ id: 'admin.common_fields.actions' }),
@@ -130,8 +128,8 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
               onDelete={this.openDeleteModal(itemId)}
             />
           );
-        },
-      },
+        }
+      }
     ];
   }
 
@@ -139,7 +137,7 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
     this.props.toggleItem(itemId, isEnabled);
   }
 
-  setSearch = (search) => {
+  setSearch = (search: string) => {
     this.setState({search});
   }
 
@@ -167,15 +165,11 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
   render() {
     return (
       <React.Fragment>
-        <AdminHeader>
-          <Typography variant="h5">
-            <FormattedMessage id="admin.menu.items" />
-          </Typography>
-          <AdminPageActions
-            search={this.setSearch}
-            createLink={adminRoutes.createItemMain.getLink()}
-          />
-        </AdminHeader>
+        <AdminHeader
+          translationId="admin.menu.items"
+          search={this.setSearch}
+          createLink={adminRoutes.createItemMain.getLink()}
+        />
         <Table
           showLoadingOverlay={true}
           loaderId={CONTENT_LOADER_ID}
@@ -202,7 +196,7 @@ const mapStateToProps = (state: IAppState) => ({
   userItems: getUserItems(state),
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
-  shouldLoadUserItems: shouldLoadUserItems(state),
+  shouldLoadUserItems: shouldLoadUserItems(state)
 });
 
 const mapDispatchToProps = dispatch =>
@@ -211,11 +205,11 @@ const mapDispatchToProps = dispatch =>
       deleteItem,
       loadUserItems,
       endLoading,
-      toggleItem,
+      toggleItem
     },
-    dispatch,
+    dispatch
   );
 
 export default injectIntl(
-  connect<{}, {}, IItemsPageParams>(mapStateToProps, mapDispatchToProps)(AdminItemsPage),
+  connect<{}, {}, IItemsPageParams>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
 );

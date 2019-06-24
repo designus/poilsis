@@ -5,14 +5,14 @@ export const styles = (theme: Theme) => createStyles({
   icon: {
     fill: 'rgba(255,255,255,.8)',
     width: '34px',
-    height: '34px',
+    height: '34px'
   },
   wrapper: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   sessionTimer: {
-    paddingRight: '10px',
-  },
+    paddingRight: '10px'
+  }
 });

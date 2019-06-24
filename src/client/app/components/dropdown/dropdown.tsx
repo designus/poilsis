@@ -39,7 +39,7 @@ class Dropdown extends React.Component<IDropdownProps> {
         disableUnderline={true}
         classes={{
           root: classes.root,
-          icon: classes.icon,
+          icon: classes.icon
         }}
       >
         {this.props.options.map(this.renderOption)}

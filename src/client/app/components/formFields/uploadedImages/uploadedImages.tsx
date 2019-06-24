@@ -58,7 +58,7 @@ function UploadedImages(props: IUploadedImagesParams) {
   const getImagePreviewLabel = () =>
     formatMessage({id: 'admin.file_upload.image_preview_label'}, {
       uploadedCount: images.length,
-      totalCount: maxPhotos,
+      totalCount: maxPhotos
     });
 
   const isSubmitDisabled = () => {

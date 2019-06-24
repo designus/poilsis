@@ -6,17 +6,17 @@ describe('Global methods', () => {
       _id: 123,
       title: {
         en: 'This is title',
-        lt: 'Tai yra pavadinimas',
+        lt: 'Tai yra pavadinimas'
       },
       message: {
         en: 'This is message',
-        lt: 'Tai yra aprasymas',
-      },
+        lt: 'Tai yra aprasymas'
+      }
     };
 
     const expectation = {
       title: 'This is title',
-      message: 'This is message',
+      message: 'This is message'
     };
 
     expect(localizeDocument(item, 'en')).toEqual(expectation);

@@ -13,7 +13,7 @@ export interface ICurrentUserState {
 
 const getInitialState = () => ({
   details: {},
-  hasItems: false,
+  hasItems: false
 });
 
 export const currentUser = (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
@@ -23,13 +23,13 @@ export const currentUser = (state: ICurrentUserState = getInitialState(), action
     case RECEIVE_USER_DETAILS: {
       return {
         ...state,
-        details: action.userDetails,
+        details: action.userDetails
       };
     }
     case CLEAR_STATE:
       return {
         ...state,
-        hasItems: false,
+        hasItems: false
       };
     case LOGOUT_SUCCESS: {
       return getInitialState();

@@ -91,13 +91,13 @@ const mapStateToProps = (state: IAppState) => ({
   isAuthenticated: isLoggedIn(state),
   user: state.currentUser.details && state.currentUser.details.name,
   cities: getCities(state),
-  locale: state.locale,
+  locale: state.locale
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login: (credentials) => dispatch(login(credentials)),
   logout: () => dispatch(logout()),
-  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
+  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params))
 });
 
 export default connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(ClientLayoutPage);

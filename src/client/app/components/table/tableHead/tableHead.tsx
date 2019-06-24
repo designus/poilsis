@@ -29,7 +29,7 @@ export class EnhancedTableHead extends React.Component<ITableHead, any> {
       orderBy,
       numSelected,
       rowCount,
-      columns,
+      columns
     } = this.props;
 
     return (

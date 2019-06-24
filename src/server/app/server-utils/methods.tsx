@@ -6,7 +6,7 @@ import {
   IImage,
   IResponseError,
   mapMimeTypesToTypes,
-  itemValidation,
+  itemValidation
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -36,7 +36,7 @@ export const getImages = (files: IMulterFile[]): IImage[] => {
     return {
       fileName: filename,
       path: destination,
-      thumbName: `${name}_${ImageSize.Small}.${extension}`,
+      thumbName: `${name}_${ImageSize.Small}.${extension}`
     };
   });
 };

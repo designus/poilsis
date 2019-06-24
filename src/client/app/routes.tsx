@@ -26,7 +26,7 @@ export const routes = [
           {
             path: adminRoutes.items.path,
             component: adminRoutes.items.getComponent(),
-            exact: true,
+            exact: true
           },
           {
             path: adminRoutes.createItem.path,
@@ -36,9 +36,9 @@ export const routes = [
               {
                 path: adminRoutes.createItemMain.path,
                 component: adminRoutes.createItemMain.getComponent(),
-                exact: false,
-              },
-            ],
+                exact: false
+              }
+            ]
           },
           {
             path: adminRoutes.editItem.path,
@@ -48,21 +48,21 @@ export const routes = [
               {
                 path: adminRoutes.editItemMain.path,
                 component: adminRoutes.editItemMain.getComponent(),
-                exact: false,
+                exact: false
               },
               {
                 path: adminRoutes.editItemDescription.path,
                 component: adminRoutes.editItemDescription.getComponent(),
-                exact: false,
+                exact: false
               },
               {
                 path: adminRoutes.editItemPhotos.path,
                 component: adminRoutes.editItemPhotos.getComponent(),
-                exact: false,
-              },
-            ],
-          },
-        ],
+                exact: false
+              }
+            ]
+          }
+        ]
       },
       {
         path: clientRoutes.landing.path,
@@ -74,16 +74,16 @@ export const routes = [
             path: clientRoutes.items.path,
             component: clientRoutes.items.getComponent(),
             fetchData: loadCityData,
-            exact: true,
+            exact: true
           },
           {
             path: clientRoutes.item.path,
             component: clientRoutes.item.getComponent(),
             fetchData: loadItemData,
-            exact: true,
-          },
-        ],
-      },
-    ],
-  },
+            exact: true
+          }
+        ]
+      }
+    ]
+  }
 ];

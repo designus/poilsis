@@ -26,8 +26,8 @@ export class ItemsList extends React.Component<IItemsListProps> {
         to={{
           pathname: clientRoutes.item.getLink(this.props.locale, this.props.selectedCity.alias, item.alias),
           state: {
-            itemId: item.id,
-          },
+            itemId: item.id
+          }
         }}
       >
         {item.name}<br />
@@ -51,7 +51,7 @@ export class ItemsList extends React.Component<IItemsListProps> {
 
 const mapStateToProps = (state: IAppState) => ({
   locale: getLocale(state),
-  typesMap: getTypesMap(state),
+  typesMap: getTypesMap(state)
 });
 
 export default connect(mapStateToProps)(ItemsList);

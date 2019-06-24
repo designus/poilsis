@@ -15,12 +15,12 @@ export interface IGetInitialDataParams {
 }
 
 export const clearState = () => ({
-  type: CLEAR_STATE,
+  type: CLEAR_STATE
 });
 
 export const receiveInitialData = (data) => ({
   type: RECEIVE_INITIAL_DATA,
-  data,
+  data
 });
 
 // Loader will only be stopped if no additional data has to be loaded in child components
@@ -45,7 +45,7 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     const promises = [
       axios.get(`${config.host}/api/cities`, setAcceptLanguageHeader(locale)),
       axios.get(`${config.host}/api/types`, setAcceptLanguageHeader(locale)),
-      axios.get(`${config.host}/api/users`, setAcceptLanguageHeader(locale)),
+      axios.get(`${config.host}/api/users`, setAcceptLanguageHeader(locale))
     ];
 
     return axios.all(promises)

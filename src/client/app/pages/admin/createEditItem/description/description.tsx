@@ -51,7 +51,7 @@ class DescriptionPage extends React.Component<IDescriptionProps, any> {
 
   getUpdatedDescription = (fields: ISubmitDescFields): TItemDescFields => ({
     ...fields,
-    description: this.mapEditorStateToHtml(fields.description),
+    description: this.mapEditorStateToHtml(fields.description)
   })
 
   onSubmit = (descFields: ISubmitDescFields) => {
@@ -81,15 +81,15 @@ class DescriptionPage extends React.Component<IDescriptionProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  showNavigationPrompt: isDirty(ITEM_DESCRIPTION_FORM_NAME)(state) && !isSubmitting(ITEM_DESCRIPTION_FORM_NAME)(state),
+  showNavigationPrompt: isDirty(ITEM_DESCRIPTION_FORM_NAME)(state) && !isSubmitting(ITEM_DESCRIPTION_FORM_NAME)(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateItemDescription: (itemId: string, description: TItemFields) =>
     dispatch(updateItemDescription(itemId, description)),
-  initializeForm: (data: TItemFields) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data)),
+  initializeForm: (data: TItemFields) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data))
 });
 
 export default injectIntl(
-  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPage),
+  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPage)
 );
