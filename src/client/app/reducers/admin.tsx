@@ -9,7 +9,7 @@ import {
   REMOVE_ITEM,
   CLEAR_STATE,
   RECEIVE_ADMIN_ITEM_DESCRIPTION,
-  RECEIVE_IMAGES,
+  RECEIVE_IMAGES
 } from 'actions';
 import { removeItemById } from 'client-utils';
 
@@ -22,7 +22,7 @@ export interface IAdminState {
 const getInitialState = () => ({
   cities: {},
   types: {},
-  items: {},
+  items: {}
 });
 
 export const admin = (state: IAdminState = getInitialState(), action): IAdminState => {
@@ -34,24 +34,24 @@ export const admin = (state: IAdminState = getInitialState(), action): IAdminSta
         ...state,
         cities: {
           ...state.cities,
-          [action.cityId]: action.adminCity,
-        },
+          [action.cityId]: action.adminCity
+        }
       };
     case RECEIVE_ADMIN_TYPE:
       return {
         ...state,
         types: {
           ...state.types,
-          [action.typeId]: action.adminType,
-        },
+          [action.typeId]: action.adminType
+        }
       };
     case RECEIVE_ADMIN_ITEM:
       return {
         ...state,
         items: {
           ...state.items,
-          [action.itemId]: action.adminItem,
-        },
+          [action.itemId]: action.adminItem
+        }
       };
     case RECEIVE_ADMIN_ITEM_DESCRIPTION:
       return {
@@ -60,9 +60,9 @@ export const admin = (state: IAdminState = getInitialState(), action): IAdminSta
           ...state.items,
           [action.itemId]: {
             ...state.items[action.itemId],
-            ...action.descFields,
-          },
-        },
+            ...action.descFields
+          }
+        }
       };
     case RECEIVE_IMAGES:
       return {
@@ -71,24 +71,24 @@ export const admin = (state: IAdminState = getInitialState(), action): IAdminSta
           ...state.items,
           [action.id]: {
             ...state.items[action.id],
-            images: action.images,
-          },
-        },
+            images: action.images
+          }
+        }
     };
     case REMOVE_CITY:
       return {
         ...state,
-        cities: removeItemById(action.cityId, state.cities),
+        cities: removeItemById(action.cityId, state.cities)
       };
     case REMOVE_TYPE:
       return {
         ...state,
-        types: removeItemById(action.typeId, state.types),
+        types: removeItemById(action.typeId, state.types)
       };
     case REMOVE_ITEM:
       return {
         ...state,
-        items: removeItemById(action.itemId, state.items),
+        items: removeItemById(action.itemId, state.items)
       };
     default:
       return state;

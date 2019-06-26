@@ -5,7 +5,7 @@ export interface IInitialDataState {
 }
 
 const getInitialState = () => ({
-  isLoaded: false,
+  isLoaded: false
 });
 
 export const initialData = (state: IInitialDataState = getInitialState(), action) => {

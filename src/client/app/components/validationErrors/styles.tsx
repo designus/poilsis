@@ -6,6 +6,6 @@ export const styles = (theme: Theme) => createStyles({
   wrapper: {
     color: ERROR_COLOR,
     padding: '10px 0',
-    fontStyle: 'italic',
-  },
+    fontStyle: 'italic'
+  }
 });

@@ -8,7 +8,10 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { ITypeFields, TTypeFields } from 'global-utils';
 import { createType, updateType, getAdminType } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
+import { Loader } from 'components/loader';
 import { IAppState } from 'reducers';
 import { shouldLoadType } from 'selectors';
 
@@ -91,16 +94,16 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
 const mapStateToProps = (state: IAppState, props: ICreateEditTypePageProps) => ({
   loadedType: state.admin.types[props.match.params.typeId],
   showNavigationPrompt: isDirty(TYPE_FORM_NAME)(state) && !isSubmitting(TYPE_FORM_NAME)(state),
-  shouldLoadType: shouldLoadType(state, props.match.params.typeId),
+  shouldLoadType: shouldLoadType(state, props.match.params.typeId)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getType: (typeId: string) => dispatch(getAdminType(typeId)),
   createType: (type: TTypeFields) => dispatch(createType(type)),
   updateType: (type: TTypeFields) => dispatch(updateType(type)),
-  initializeForm: (type: TTypeFields) => dispatch(initialize(TYPE_FORM_NAME, type)),
+  initializeForm: (type: TTypeFields) => dispatch(initialize(TYPE_FORM_NAME, type))
 });
 
 export const CreateEditTypePage = injectIntl(
-  connect<{}, {}, ICreateEditTypePageProps>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent),
+  connect<{}, {}, ICreateEditTypePageProps>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent)
 );

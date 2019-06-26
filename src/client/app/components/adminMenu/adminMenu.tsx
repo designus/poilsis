@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { WithStyles } from '@material-ui/core';
+import { WithStyles } from '@material-ui/core/styles';
 import { IAppState } from 'reducers';
 import { styles } from './verticalMenu/styles';
 
@@ -17,7 +17,7 @@ export interface IAdminMenuItem {
   allowedRoles?: string[];
 }
 
-export interface IAdminMenuProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
+export interface IAdminMenuProps extends Partial<RouteComponentProps<any>>, Partial<WithStyles<typeof styles>> {
   items: IAdminMenuItem[];
   userRole?: string;
 }
@@ -27,12 +27,12 @@ export class AdminMenu extends React.PureComponent<IAdminMenuProps, any> {
   renderItemContent = (item: IAdminMenuItem) => {
     const { icon, text } = this.props.classes;
     return (
-      <>
+      <React.Fragment>
         <ListItemIcon className={icon}>
           {item.icon()}
         </ListItemIcon>
         <ListItemText className={text} inset primary={item.text} />
-      </>
+      </React.Fragment>
     );
   }
 
@@ -85,9 +85,10 @@ export class AdminMenu extends React.PureComponent<IAdminMenuProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  userRole: state.currentUser.details.role,
+  userRole: state.currentUser.details.role
 });
 
 export default withRouter(
-  connect<any, any, IAdminMenuProps>(mapStateToProps)(AdminMenu),
+  // @ts-ignore
+  connect(mapStateToProps)(AdminMenu)
 );

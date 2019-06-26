@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,25 +12,22 @@ import TypesIcon from '@material-ui/icons/Gesture';
 import CitiesIcon from '@material-ui/icons/BeachAccess';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
-import { WithStyles } from '@material-ui/core';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
 import { IAppState } from 'reducers';
 import { getInitialData, IGetInitialDataParams } from 'actions';
-import {
-  Toast,
-  VerticalMenu,
-  IAdminMenuItem,
-  Drawer,
-  UserMenu,
-  NotFound,
-  NotAuthorized,
-  ProtectedRoute,
-  LanguageSelector,
-  Loader,
-} from 'components';
+
+import { Toast } from 'components/toast';
+import { VerticalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { Drawer } from 'components/drawer';
+import { UserMenu } from 'components/userMenu';
+import { NotFound } from 'components/notFound';
+import { NotAuthorized } from 'components/notAuthorized';
+import { ProtectedRoute } from 'components/protectedRoute';
+import { LanguageSelector } from 'components/languageSelector';
+import { Loader } from 'components/loader';
 
 import {
   AdminItemsPage,
@@ -38,12 +35,13 @@ import {
   CreateEditTypePage,
   CreateEditCityPage,
   AdminTypesPage,
-  AdminCitiesPage,
+  AdminCitiesPage
 } from 'pages';
 
 import { hasInitialDataLoaded, shouldLoadInitialData, isInitialDataLoading } from 'selectors';
 
 import { styles } from './styles';
+
 interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
   hasInitialDataLoaded: boolean;
   shouldLoadInitialData: boolean;
@@ -53,15 +51,10 @@ interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps
   isLoading: () => boolean;
 }
 
-class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, any> {
-
-  static fetchData(store) {
-    return store.dispatch(getInitialData());
-  }
-
+class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
   state = {
     mobileDrawerOpen: false,
-    menuItems: this.menuItems,
+    menuItems: this.menuItems
   };
 
   componentDidUpdate(prevProps: IAdminLayoutProps) {
@@ -95,30 +88,30 @@ class AdminLayoutPageComponent extends React.PureComponent<IAdminLayoutProps, an
       {
         icon: () => (<DashboardIcon />),
         link: adminRoutes.landing.getLink(),
-        text: formatMessage({ id: 'admin.menu.dashboard' }),
+        text: formatMessage({ id: 'admin.menu.dashboard' })
       },
       {
         icon: () => (<ListIcon />),
         link: adminRoutes.items.getLink(),
-        text: formatMessage({ id: 'admin.menu.items' }),
+        text: formatMessage({ id: 'admin.menu.items' })
       },
       {
         icon: () => (<TypesIcon />),
         link: adminRoutes.types.getLink(),
         text: formatMessage({ id: 'admin.menu.types' }),
-        allowedRoles: adminRoutes.types.allowedRoles,
+        allowedRoles: adminRoutes.types.allowedRoles
       },
       {
         icon: () => (<CitiesIcon />),
         link: adminRoutes.cities.getLink(),
         text: formatMessage({ id: 'admin.menu.cities' }),
-        allowedRoles: adminRoutes.cities.allowedRoles,
+        allowedRoles: adminRoutes.cities.allowedRoles
       },
       {
         icon: () => (<ArrowBackIcon />),
         link: clientRoutes.landing.getLink(this.props.locale),
-        text: formatMessage({ id: 'admin.menu.go_to_website' }),
-      },
+        text: formatMessage({ id: 'admin.menu.go_to_website' })
+      }
     ];
   }
 
@@ -213,15 +206,15 @@ const mapStateToProps = (state: IAppState) => ({
   hasInitialDataLoaded: hasInitialDataLoaded(state),
   shouldLoadInitialData: shouldLoadInitialData(state),
   isInitialDataLoading: isInitialDataLoading(state),
-  locale: state.locale,
+  locale: state.locale
 });
 
 const mapDispatchToProps = dispatch => ({
-  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
+  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params))
 });
 
-export const AdminLayoutPage = withStyles(styles)(
+export default withStyles(styles)(
   connect<any, any, IAdminLayoutProps>(mapStateToProps, mapDispatchToProps)(
-    injectIntl(AdminLayoutPageComponent),
-  ),
+    injectIntl(AdminLayoutPage)
+  )
 );

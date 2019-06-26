@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { IAppState } from 'reducers';
-import { Dropdown } from 'components';
+import { Dropdown } from 'components/dropdown';
 import { LANGUAGES } from 'global-utils';
 import { IDropdownOption, capitalize } from 'client-utils';
 import { switchLanguage } from 'actions';
@@ -47,15 +46,15 @@ export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  selectedLanguage: state.locale,
+  selectedLanguage: state.locale
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSelectLanguage: (language: string) => dispatch(switchLanguage(language)),
+  onSelectLanguage: (language: string) => dispatch(switchLanguage(language))
 });
 
 export default withStyles(styles)(
   connect(mapStateToProps, mapDispatchToProps)(
-    withRouter(LanguageSelector),
-  ),
+    withRouter(LanguageSelector)
+  )
 );

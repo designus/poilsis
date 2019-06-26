@@ -1,7 +1,6 @@
 import * as React from 'react';
 
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import MaterialDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
@@ -44,7 +43,7 @@ const DrawerContent = ({ classes, onClose, children }) => {
   );
 };
 
-const DrawerComponent = (props: IDrawerProps, context) => {
+const Drawer = (props: IDrawerProps) => {
   const { classes, mobileDrawerOpen, onClose, children } = props;
 
   return (
@@ -54,14 +53,14 @@ const DrawerComponent = (props: IDrawerProps, context) => {
           classes={{
             paper: classes.paperMobile,
             docked: classes.docked,
-            paperAnchorDockedLeft: classes.paperAnchorDockedLeft,
+            paperAnchorDockedLeft: classes.paperAnchorDockedLeft
           }}
           anchor="left"
           variant="temporary"
           open={mobileDrawerOpen}
           onClose={onClose}
           ModalProps={{
-            keepMounted: true,
+            keepMounted: true
           }}
         >
           <DrawerContent
@@ -77,7 +76,7 @@ const DrawerComponent = (props: IDrawerProps, context) => {
           classes={{
             paper: classes.paper,
             docked: classes.docked,
-            paperAnchorDockedLeft: classes.paperAnchorDockedLeft,
+            paperAnchorDockedLeft: classes.paperAnchorDockedLeft
           }}
           variant="permanent"
           open
@@ -93,4 +92,4 @@ const DrawerComponent = (props: IDrawerProps, context) => {
   );
 };
 
-export const Drawer = withStyles(styles)(DrawerComponent);
+export default withStyles(styles)(Drawer);

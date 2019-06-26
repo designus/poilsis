@@ -14,22 +14,22 @@ const schemaMap: ICitySchema = {
   name: {
     type: String,
     required: [true, requiredMessage],
-    intl: true,
+    intl: true
   },
   description: {
     type: String,
-    intl: true,
+    intl: true
   },
   types: {
-    type: [String],
+    type: [String]
   },
   alias: {
     type: String,
     lowercase: true,
     trim: true,
     required: [true, requiredMessage],
-    set: formatAlias,
-  },
+    set: formatAlias
+  }
 };
 
 const CitySchema = new Schema(schemaMap);

@@ -2,14 +2,16 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { DropzoneInput, UploadedImages } from 'components';
 import { maxUploadedPhotos, maxUploadedPhotoSize, IImage } from 'global-utils';
+
+import { DropzoneInput } from 'components/formFields/dropzoneInput';
+import { UploadedImages } from 'components/formFields/uploadedImages';
 
 export const PHOTOS_FORM_NAME = 'PhotosForm';
 
 const validators = [
   maxUploadedPhotos,
-  maxUploadedPhotoSize,
+  maxUploadedPhotoSize
 ];
 
 interface ICustomProps {
@@ -29,8 +31,8 @@ class FormComponent extends React.Component<FormProps> {
   }
 
   handleLoadedImages = () => {
-    this.props.onResetUploadState();
-    this.clearDroppedImages();
+    // this.props.onResetUploadState();
+    // this.clearDroppedImages();
   }
 
   render() {
@@ -56,5 +58,5 @@ class FormComponent extends React.Component<FormProps> {
 
 export default reduxForm<{}, ICustomProps>({
   form: PHOTOS_FORM_NAME,
-  enableReinitialize: true,
+  enableReinitialize: true
 })(FormComponent);

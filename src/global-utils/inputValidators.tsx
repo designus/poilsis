@@ -1,10 +1,10 @@
 import { FormattedMessage, MessageValue } from 'react-intl';
-import { IPhotoFormState } from 'pages';
 import {
   DEFAULT_LANGUAGE,
   hasLocalizedFields,
   itemValidation,
   IImage,
+  IPhotoFormState
 } from 'global-utils';
 
 import * as errors from '../data-strings/validation';

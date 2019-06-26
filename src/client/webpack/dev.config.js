@@ -6,9 +6,7 @@ module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
   output: {
-    pathinfo: false
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+    pathinfo: false,
+    publicPath: 'http://localhost:8080/public/'
+  }
 });

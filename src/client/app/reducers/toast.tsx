@@ -3,7 +3,7 @@ import { SHOW_TOAST, HIDE_TOAST, CLEAR_STATE } from 'actions';
 export enum Toast {
   warning = 'warning',
   error = 'error',
-  success = 'success',
+  success = 'success'
 }
 
 export type ToastType = Toast.warning | Toast.error | Toast.success;
@@ -19,7 +19,7 @@ const getInitialState = () => ({
   show: false,
   message: '',
   toastType: Toast.success,
-  error: null,
+  error: null
 });
 
 export const toast = (state: IToastState = getInitialState(), action) => {
@@ -32,13 +32,13 @@ export const toast = (state: IToastState = getInitialState(), action) => {
         toastType: action.toastType,
         message: action.message,
         error: action.error,
-        show: true,
+        show: true
       };
     case HIDE_TOAST:
       return {
         ...state,
         show: false,
-        error: null,
+        error: null
       };
     default:
       return state;

@@ -1,4 +1,3 @@
-import { CONTENT_LOADER_ID, DIALOG_LOADER_ID, GLOBAL_LOADER_ID } from 'client-utils';
 import { START_LOADING, END_LOADING, STOP_ALL_LOADERS } from 'actions';
 
 export interface ILoadingState {
@@ -8,9 +7,9 @@ export interface ILoadingState {
 }
 
 const getInitialData = () => ({
-  [CONTENT_LOADER_ID]: false,
-  [DIALOG_LOADER_ID]: false,
-  [GLOBAL_LOADER_ID]: false,
+  content: false,
+  dialog: false,
+  global: false
 });
 
 export const loader = (state: ILoadingState = getInitialData(), action) => {
@@ -18,7 +17,7 @@ export const loader = (state: ILoadingState = getInitialData(), action) => {
     case START_LOADING:
       return {
         ...state,
-        [action.id]: true,
+        [action.id]: true
       };
     case END_LOADING:
       return getInitialData();

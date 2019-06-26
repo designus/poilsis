@@ -3,6 +3,6 @@ import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
   wrapper: {
-    padding: '10px 0',
-  },
+    padding: '10px 0'
+  }
 });

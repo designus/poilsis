@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import Countdown from 'react-countdown-now';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
@@ -43,7 +42,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
           disableBackdropClick={true}
           disableEscapeKeyDown={true}
           classes={{
-            paper: classes.paper,
+            paper: classes.paper
           }}
         >
           <DialogHeader
@@ -81,12 +80,12 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
 
 const mapStateToProps = (state: IAppState) => ({
   sessionExpiryTime: getSessionExpiryTime(state),
-  isModalOpen: state.auth.showKeepMeLoggedModal,
+  isModalOpen: state.auth.showKeepMeLoggedModal
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCloseModal: () => dispatch(logout()),
-  reauthenticateUser: () => dispatch(reauthenticateUser(true)),
+  reauthenticateUser: () => dispatch(reauthenticateUser(true))
 });
 
 const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);

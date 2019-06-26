@@ -4,23 +4,23 @@ import { ERROR_COLOR, INPUT_WIDTH } from 'global-styles';
 
 export const styles = (theme: Theme) => createStyles({
   wrapper: {
-    padding: '10px 0',
+    padding: '10px 0'
   },
   formControl: {
-    width: INPUT_WIDTH,
+    width: INPUT_WIDTH
   },
   multiline: {
-    width: INPUT_WIDTH + 200,
+    width: INPUT_WIDTH + 200
   },
   multilineInput: {
-    background: '#efefef',
+    background: '#efefef'
   },
   hidden: {
-    display: 'none',
+    display: 'none'
   },
   error: {
     '&:after': {
-      backgroundColor: ERROR_COLOR,
-    },
-  },
+      backgroundColor: ERROR_COLOR
+    }
+  }
 });

@@ -9,8 +9,10 @@ import { IAppState } from 'reducers';
 import { updateItemDescription } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID } from 'client-utils';
 import { TItemFields, TItemDescFields, getItemDescriptionFields, TranslatableField, IItemDescFields } from 'global-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
 import { stateToHTML } from 'draft-js-export-html';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
 
 import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, ITEM_DESCRIPTION_FORM_NAME } from './form';
@@ -30,7 +32,7 @@ interface IDescriptionProps extends ICreateEditItemPageProps, InjectedIntlProps 
   initializeForm: (description: TItemDescFields) => void;
 }
 
-class DescriptionPageComponent extends React.Component<IDescriptionProps, any> {
+class DescriptionPage extends React.Component<IDescriptionProps, any> {
 
   constructor(props) {
     super(props);
@@ -49,7 +51,7 @@ class DescriptionPageComponent extends React.Component<IDescriptionProps, any> {
 
   getUpdatedDescription = (fields: ISubmitDescFields): TItemDescFields => ({
     ...fields,
-    description: this.mapEditorStateToHtml(fields.description),
+    description: this.mapEditorStateToHtml(fields.description)
   })
 
   onSubmit = (descFields: ISubmitDescFields) => {
@@ -79,15 +81,15 @@ class DescriptionPageComponent extends React.Component<IDescriptionProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  showNavigationPrompt: isDirty(ITEM_DESCRIPTION_FORM_NAME)(state) && !isSubmitting(ITEM_DESCRIPTION_FORM_NAME)(state),
+  showNavigationPrompt: isDirty(ITEM_DESCRIPTION_FORM_NAME)(state) && !isSubmitting(ITEM_DESCRIPTION_FORM_NAME)(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateItemDescription: (itemId: string, description: TItemFields) =>
     dispatch(updateItemDescription(itemId, description)),
-  initializeForm: (data: TItemFields) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data)),
+  initializeForm: (data: TItemFields) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data))
 });
 
-export const DescriptionPage = injectIntl(
-  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPageComponent),
+export default injectIntl(
+  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPage)
 );

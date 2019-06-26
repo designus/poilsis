@@ -44,6 +44,8 @@ export const getItemDescriptionFields = (item: TItemFields): TItemDescFields => 
     description,
     metaTitle,
     metaDescription,
-    metaKeywords,
+    metaKeywords
   };
 };
+
+export const removeDuplicates = (item, i, arr) => arr.indexOf(item) === i;

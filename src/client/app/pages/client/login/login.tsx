@@ -33,7 +33,7 @@ class Login extends React.PureComponent<any, any> {
 }
 
 export const mapDispatchToProps = (dispatch) => ({
-  login: () => dispatch(login()),
+  login: () => dispatch(login())
 });
 
 export const LoginPage = connect(voidFn, mapDispatchToProps)(Login);

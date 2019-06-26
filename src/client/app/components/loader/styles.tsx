@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => createStyles({
     height: '100%',
     position: 'absolute',
     zIndex: 100,
-    background: 'rgb(250, 250, 250)',
+    background: 'rgb(250, 250, 250)'
   },
   round: {
     padding: '7px',
@@ -19,13 +19,13 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0px 4px 7px #ccc',
+    boxShadow: '0px 4px 7px #ccc'
   },
   hidden: {
-    display: 'none',
+    display: 'none'
   },
   overlay: {
     background: 'rgba(250, 250, 250, .6)',
-    zIndex: 100,
-  },
+    zIndex: 100
+  }
 });

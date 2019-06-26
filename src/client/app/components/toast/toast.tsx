@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -7,7 +7,6 @@ import SuccesIcon from '@material-ui/icons/SentimentVerySatisfied';
 import ErrorIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
-import { WithStyles } from '@material-ui/core';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IToastState, IAppState, Toast as ToastEnum } from 'reducers';
@@ -38,7 +37,7 @@ class ToastComponent extends React.Component<IToastProps, any> {
   icon = {
     [ToastEnum.success]: () => <SuccesIcon />,
     [ToastEnum.error]: () => <ErrorIcon />,
-    [ToastEnum.warning]: () => <WarningIcon />,
+    [ToastEnum.warning]: () => <WarningIcon />
   };
 
   handleRequestClose = () => {
@@ -63,7 +62,7 @@ class ToastComponent extends React.Component<IToastProps, any> {
         className={classes[toastType]}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'center'
         }}
         open={show}
         autoHideDuration={4000}
@@ -81,13 +80,13 @@ class ToastComponent extends React.Component<IToastProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  toast: state.toast,
+  toast: state.toast
 });
 
 const mapDispatchToProps = dispatch => ({
-  hideToast: () => dispatch(hideToast()),
+  hideToast: () => dispatch(hideToast())
 });
 
 export const Toast = withStyles(styles)(
-  injectIntl(connect<any, any, IToastProps>(mapStateToProps, mapDispatchToProps)(ToastComponent)),
+  injectIntl(connect<any, any, IToastProps>(mapStateToProps, mapDispatchToProps)(ToastComponent))
 );

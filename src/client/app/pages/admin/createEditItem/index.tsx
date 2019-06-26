@@ -1,4 +1,7 @@
-export * from './createEditItem';
-export * from './mainInfo';
-export * from './photos';
-export * from './description';
+import Loadable from 'react-loadable';
+import { Loading } from 'components/loading';
+
+export const CreateEditItemPage = Loadable({
+  loader: () => import(/* webpackChunkName: "createEditItemPage" */ './createEditItem'),
+  loading: Loading
+});

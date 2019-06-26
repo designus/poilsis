@@ -28,7 +28,7 @@ export const updateType = (req: Request, res: Response, next: NextFunction) => {
   const typeId = req.params.typeId;
 
   TypesModel.findOneAndUpdate({ id: typeId },  { $set: type }, { new: true, runValidators: true },
-    sendResponse(res, next),
+    sendResponse(res, next)
   );
 };
 

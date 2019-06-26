@@ -3,21 +3,17 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { IImage } from 'global-utils';
+import { IImage, IPhotoFormState } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils';
 import { updatePhotos, uploadPhotos, resetUploadState, receiveImages } from 'actions';
-import { extendWithLoader } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
 import { PhotosForm } from './form';
 
 const PhotosFormWithLoader = extendWithLoader(PhotosForm);
 
-export interface IPhotoFormState {
-  files?: File[];
-}
+interface IPhotosFormFields extends IPhotoFormState, InjectedIntlProps {}
 
-export interface IPhotosFormFields extends IPhotoFormState, InjectedIntlProps {}
-
-class PhotosPageComponent extends React.Component<any, any> {
+class PhotosPage extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
@@ -59,9 +55,9 @@ const mapDispatchToProps = (dispatch) => ({
   uploadImages: (itemId: string, files: File[]) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
   resetUploadState: () => dispatch(resetUploadState()),
-  sortImages: (id: string) => (images: IImage[]) => dispatch(receiveImages(id, images)),
+  sortImages: (id: string) => (images: IImage[]) => dispatch(receiveImages(id, images))
 });
 
-export const PhotosPage = injectIntl(
-  connect<any, any, IPhotosFormFields>(undefined, mapDispatchToProps)(PhotosPageComponent),
+export default injectIntl(
+  connect<any, any, IPhotosFormFields>(undefined, mapDispatchToProps)(PhotosPage)
 );

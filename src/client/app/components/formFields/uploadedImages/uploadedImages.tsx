@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { WithStyles } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { isEqual } from 'lodash';
 
-import { ImagePreview, Button } from 'components';
+import { Button } from 'components/button';
 import { IImage, itemValidation } from 'global-utils';
 import { IUploadProgress } from 'reducers';
+
+import { ImagePreview } from 'components/imagePreview';
 import { styles } from './styles';
 
 const { images: { maxPhotos } } = itemValidation;
@@ -57,7 +58,7 @@ function UploadedImages(props: IUploadedImagesParams) {
   const getImagePreviewLabel = () =>
     formatMessage({id: 'admin.file_upload.image_preview_label'}, {
       uploadedCount: images.length,
-      totalCount: maxPhotos,
+      totalCount: maxPhotos
     });
 
   const isSubmitDisabled = () => {

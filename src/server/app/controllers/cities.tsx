@@ -25,7 +25,7 @@ export const updateCity = (req: Request, res: Response, next: NextFunction) => {
   const cityId = req.params.cityId;
 
   CitiesModel.findOneAndUpdate({ id: cityId },  { $set: city }, { new: true, runValidators: true },
-    sendResponse(res, next),
+    sendResponse(res, next)
   );
 };
 

@@ -1,23 +1,22 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { IAppState, ILoadingState } from 'reducers';
-import { Loader } from 'components';
+import { Loader } from 'components/loader';
 
 import { styles } from './styles';
 import { GLOBAL_LOADER_ID, CONTENT_LOADER_ID } from 'client-utils';
 
 interface IExtendWithLoaderProps extends Partial<WithStyles<typeof styles>> {
-  loaderId?: string;
+  loaderId?: 'content' | 'dialog' | 'global';
   showLoadingOverlay?: boolean;
   loadingState?: ILoadingState;
   isLoading?: boolean;
 }
 
 export function extendWithLoader<TOriginalProps extends {}>(
-    WrappedComponent: React.ComponentType<TOriginalProps>,
+    WrappedComponent: React.ComponentType<TOriginalProps>
   ): React.ComponentType<TOriginalProps & IExtendWithLoaderProps> {
 
     type ResultProps = TOriginalProps & IExtendWithLoaderProps;
@@ -25,7 +24,7 @@ export function extendWithLoader<TOriginalProps extends {}>(
 
       render() {
         const { loadingState, showLoadingOverlay, classes } = this.props;
-        const loaderId = this.props.loaderId || CONTENT_LOADER_ID;
+        const loaderId = this.props.loaderId || 'content';
         const isLoading = loadingState[loaderId] && !loadingState[GLOBAL_LOADER_ID];
 
         return (
@@ -39,7 +38,7 @@ export function extendWithLoader<TOriginalProps extends {}>(
 
     function mapStateToProps(state: IAppState) {
       return {
-        loadingState: state.loader,
+        loadingState: state.loader
       };
     }
 

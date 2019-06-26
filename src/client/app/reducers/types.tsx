@@ -11,7 +11,7 @@ export interface ITypesState extends IGenericState<IType> {
 
 const getInitialState = () => ({
   dataMap: {},
-  aliases: [],
+  aliases: []
 });
 
 export const types = (state: ITypesState = getInitialState(), action): ITypesState => {
@@ -28,16 +28,16 @@ export const types = (state: ITypesState = getInitialState(), action): ITypesSta
           ...state.dataMap,
           [action.newType.id]: {
             ...(state.dataMap[action.newType.id] || {}),
-            ...action.newType,
-          },
-        },
+            ...action.newType
+          }
+        }
       };
     case REMOVE_TYPE:
       const { [action.typeId]: removedType, ...dataMap } = state.dataMap;
       return {
         ...state,
         dataMap,
-        aliases: [...state.aliases.filter(alias => alias.id !== action.typeId)],
+        aliases: [...state.aliases.filter(alias => alias.id !== action.typeId)]
       };
     case SELECT_TYPE:
       return {...state, selectedId: action.typeId};

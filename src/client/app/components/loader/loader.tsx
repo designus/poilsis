@@ -1,7 +1,6 @@
 import * as React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { styles } from './styles';
 
@@ -12,7 +11,7 @@ export interface ILoaderProps extends WithStyles<typeof styles> {
 
 export class Loader extends React.PureComponent<ILoaderProps> {
   static defaultProps = {
-    showLoadingOverlay: false,
+    showLoadingOverlay: false
   };
 
   render() {

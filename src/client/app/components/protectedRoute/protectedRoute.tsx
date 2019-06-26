@@ -4,7 +4,7 @@ import { Route, Redirect, match } from 'react-router-dom';
 import { renderMergedProps } from 'client-utils';
 import { IAppState } from 'reducers';
 import { isLoggedIn } from 'selectors';
-import { NotAuthorized } from 'components';
+import { NotAuthorized } from 'components/notAuthorized';
 import { UserRoles } from 'global-utils';
 
 interface IMatchParams {
@@ -57,7 +57,7 @@ class Protected extends React.Component<TProtectedRouteProps, any> {
     return (
       <Redirect to={{
         pathname: '/login',
-        state: { from: routeProps.location },
+        state: { from: routeProps.location }
       }} />
     );
   }
@@ -78,7 +78,7 @@ const mapStateToProps = (state: IAppState) => {
   return {
     userRole: currentUser ? currentUser.role : null,
     userId: currentUser ? currentUser.id : null,
-    isAuthenticated: isLoggedIn(state),
+    isAuthenticated: isLoggedIn(state)
   };
 };
 

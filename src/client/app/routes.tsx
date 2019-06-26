@@ -1,5 +1,17 @@
+import { ThunkAction } from 'redux-thunk';
+import { Action } from 'redux';
+import { RouteConfig } from 'react-router-config';
+import { IAppState } from 'reducers';
 import { App } from './pages';
-import { adminRoutes, clientRoutes } from './client-utils';
+import { loadInitialData } from './pages/client/layout/layout';
+import { loadCityData } from './pages/client/city/city';
+import { loadItemData } from './pages/client/item/item';
+
+import { adminRoutes, clientRoutes, RoutesConfig } from './client-utils';
+
+export interface IRoute extends RouteConfig {
+  fetchData?: () => ThunkAction<Promise<void>, IAppState, void, Action>;
+}
 
 export const routes = [
   {
@@ -8,12 +20,13 @@ export const routes = [
       {
         path: adminRoutes.landing.path,
         component: adminRoutes.landing.getComponent(),
+        fetchData: loadInitialData,
         exact: false,
         routes: [
           {
             path: adminRoutes.items.path,
             component: adminRoutes.items.getComponent(),
-            exact: true,
+            exact: true
           },
           {
             path: adminRoutes.createItem.path,
@@ -23,9 +36,9 @@ export const routes = [
               {
                 path: adminRoutes.createItemMain.path,
                 component: adminRoutes.createItemMain.getComponent(),
-                exact: false,
-              },
-            ],
+                exact: false
+              }
+            ]
           },
           {
             path: adminRoutes.editItem.path,
@@ -35,39 +48,42 @@ export const routes = [
               {
                 path: adminRoutes.editItemMain.path,
                 component: adminRoutes.editItemMain.getComponent(),
-                exact: false,
+                exact: false
               },
               {
                 path: adminRoutes.editItemDescription.path,
                 component: adminRoutes.editItemDescription.getComponent(),
-                exact: false,
+                exact: false
               },
               {
                 path: adminRoutes.editItemPhotos.path,
                 component: adminRoutes.editItemPhotos.getComponent(),
-                exact: false,
-              },
-            ],
-          },
-        ],
+                exact: false
+              }
+            ]
+          }
+        ]
       },
       {
         path: clientRoutes.landing.path,
         component: clientRoutes.landing.getComponent(),
+        fetchData: loadInitialData,
         exact: false,
         routes: [
           {
             path: clientRoutes.items.path,
             component: clientRoutes.items.getComponent(),
-            exact: true,
+            fetchData: loadCityData,
+            exact: true
           },
           {
             path: clientRoutes.item.path,
             component: clientRoutes.item.getComponent(),
-            exact: true,
-          },
-        ],
-      },
-    ],
-  },
+            fetchData: loadItemData,
+            exact: true
+          }
+        ]
+      }
+    ]
+  }
 ];

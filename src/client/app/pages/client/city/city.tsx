@@ -5,7 +5,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IAppState, IItem, ICity } from 'reducers';
 import { loadCityItems, clearSelectedCity } from 'actions';
 import { CONTENT_LOADER_ID } from 'client-utils';
-import { ItemsList, NotFound, extendWithLoader } from 'components';
+import { ItemsList } from 'components/itemsList';
+import { NotFound } from 'components/notFound';
+import { extendWithLoader } from 'components/extendWithLoader';
 import { getSelectedCity, shouldLoadCityItems, getCityItems } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
@@ -23,11 +25,9 @@ interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   clearSelectedCity: () => void;
 }
 
-class CityPageComponent extends React.Component<ICityPageParams, any> {
+export const loadCityData = (store, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias, params.locale));
 
-  static fetchData(store, params: IMatchParams) {
-    return store.dispatch(loadCityItems(params.cityAlias, params.locale));
-  }
+class CityPage extends React.Component<ICityPageParams, any> {
 
   componentDidUpdate(prevProps: ICityPageParams) {
     if (this.props.location !== prevProps.location && this.props.shouldLoadCityItems) {
@@ -69,12 +69,12 @@ class CityPageComponent extends React.Component<ICityPageParams, any> {
 const mapStateToProps = (state: IAppState, props: ICityPageParams) => ({
   selectedCity: getSelectedCity(state, props.location.state),
   cityItems: getCityItems(state, props.location.state),
-  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state),
+  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadCityItems: (cityAlias: string, locale: string) => dispatch(loadCityItems(cityAlias, locale)),
-  clearSelectedCity: () => dispatch(clearSelectedCity()),
+  clearSelectedCity: () => dispatch(clearSelectedCity())
 });
 
-export const CityPage = connect<any, any, ICityPageParams>(mapStateToProps, mapDispatchToProps)(CityPageComponent);
+export default connect<any, any, ICityPageParams>(mapStateToProps, mapDispatchToProps)(CityPage);

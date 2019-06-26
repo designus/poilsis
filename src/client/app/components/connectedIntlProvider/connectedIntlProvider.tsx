@@ -29,7 +29,7 @@ class ConnectedIntl extends React.Component<IConnectedIntlProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  locale: state.locale,
+  locale: state.locale
 });
 
 export const ConnectedIntlProvider = connect<any, any, {}>(mapStateToProps)(ConnectedIntl);

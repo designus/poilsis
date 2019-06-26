@@ -8,7 +8,9 @@ import { IAppState, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
 import { updateMainInfo, createItem } from 'actions';
 import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { TItemFields, IItemFields } from 'global-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
 import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
 
@@ -26,7 +28,7 @@ interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
   initializeForm: (item: TItemFields) => void;
 }
 
-class MainInfoPageComponent extends React.Component<IMainInfoProps, any> {
+class MainInfoPage extends React.Component<IMainInfoProps, any> {
 
   constructor(props) {
     super(props);
@@ -78,15 +80,15 @@ const mapStateToProps = (state: IAppState) => ({
   citiesMap: state.cities.dataMap,
   typesMap: state.types.dataMap,
   userRole: state.currentUser.details.role,
-  showNavigationPrompt: isDirty(MAIN_INFO_FORM_NAME)(state) && !isSubmitting(MAIN_INFO_FORM_NAME)(state),
+  showNavigationPrompt: isDirty(MAIN_INFO_FORM_NAME)(state) && !isSubmitting(MAIN_INFO_FORM_NAME)(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateItem: (item: TItemFields) => dispatch(updateMainInfo(item)),
   createItem: (item: TItemFields) => dispatch(createItem(item)),
-  initializeForm: (data: TItemFields) => dispatch(initialize(MAIN_INFO_FORM_NAME, data)),
+  initializeForm: (data: TItemFields) => dispatch(initialize(MAIN_INFO_FORM_NAME, data))
 });
 
-export const MainInfoPage = injectIntl(
-  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPageComponent),
+export default injectIntl(
+  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPage)
 );

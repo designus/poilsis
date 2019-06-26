@@ -5,21 +5,21 @@ const commonStyles = {
   textDecoration: 'none',
   display: 'flex',
   padding: '10px 15px',
-  justifyContent: 'space-between',
+  justifyContent: 'space-between'
 };
 
 export const styles = (theme: Theme) => createStyles({
   button: {
     display: 'inline-block',
     marginRight: '5px',
-    width: 'auto',
+    width: 'auto'
   },
   text: {
-    paddingLeft: '0',
+    paddingLeft: '0'
   },
   span: {
     background: theme.palette.grey['300'],
-    ...commonStyles,
+    ...commonStyles
   },
   link: {
     background: theme.palette.grey['300'],
@@ -28,10 +28,10 @@ export const styles = (theme: Theme) => createStyles({
       backgroundColor: theme.palette.primary.dark,
       color: '#fff',
       '& svg, span': {
-        color: '#fff',
-      },
-    },
+        color: '#fff'
+      }
+    }
   },
   icon: {
-  },
+  }
 });

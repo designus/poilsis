@@ -27,7 +27,7 @@ class NavigationPromptComponent extends React.Component<INavigationPromptProps, 
     if (this.props.when) {
       this.setState({
         openModal: true,
-        nextLocation,
+        nextLocation
       });
     }
     return !this.props.when;

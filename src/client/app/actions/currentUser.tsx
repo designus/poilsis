@@ -10,7 +10,7 @@ export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
 
 export const receiveUserDetails = (userDetails: ICurrentUser) => ({
   type: RECEIVE_USER_DETAILS,
-  userDetails,
+  userDetails
 });
 
 export const loadUserItems = () => (dispatch, getState) => {

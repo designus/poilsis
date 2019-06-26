@@ -9,7 +9,7 @@ import {
   TOGGLE_ITEM_VISIBILITY,
   CLEAR_STATE,
   CLEAR_SELECTED_ITEM,
-  RECEIVE_ITEM_DESCRIPTION,
+  RECEIVE_ITEM_DESCRIPTION
 } from 'actions';
 
 export interface IItem extends IItemFields {
@@ -27,7 +27,7 @@ export interface IItemsState extends IGenericState<IItem> {
 const getInitialState = (): IItemsState => ({
   dataMap: {},
   aliases: [],
-  hasAllItems: false,
+  hasAllItems: false
 });
 
 export const items = (state: IItemsState = getInitialState(), action): IItemsState => {
@@ -41,12 +41,12 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
         ...state,
         dataMap: {...state.dataMap, ...action.dataMap},
         aliases: [...state.aliases, ...action.aliases],
-        hasAllItems: action.hasAllItems,
+        hasAllItems: action.hasAllItems
       };
     case CLEAR_SELECTED_ITEM:
       return {
         ...state,
-        selectedId: null,
+        selectedId: null
       };
     case RECEIVE_ITEM:
       return {
@@ -57,9 +57,9 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           [action.itemId]: {
             ...(state.dataMap[action.itemId] || {}),
             ...action.item,
-            isFullyLoaded: true,
-          },
-        },
+            isFullyLoaded: true
+          }
+        }
       };
     case RECEIVE_ITEM_DESCRIPTION:
       return {
@@ -68,9 +68,9 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           ...state.dataMap,
           [action.itemId]: {
             ...state.dataMap[action.itemId],
-            ...action.descFields,
-          },
-        },
+            ...action.descFields
+          }
+        }
       };
     case TOGGLE_ITEM_VISIBILITY:
       return {
@@ -79,14 +79,14 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           ...state.dataMap,
           [action.itemId]: {
             ...state.dataMap[action.itemId],
-            isEnabled: action.isEnabled,
-          },
-        },
+            isEnabled: action.isEnabled
+          }
+        }
       };
     case REMOVE_ITEM:
       return {
         ...state,
-        dataMap: removeItemById(action.item.id, state.dataMap),
+        dataMap: removeItemById(action.item.id, state.dataMap)
       };
     case RECEIVE_IMAGES:
       return {
@@ -95,9 +95,9 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           ...state.dataMap,
           [action.id]: {
             ...state.dataMap[action.id],
-            images: action.images,
-          },
-        },
+            images: action.images
+          }
+        }
       };
     default:
       return state;

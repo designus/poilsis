@@ -10,7 +10,7 @@ import {
   IInitialDataState,
   IToastState,
   IAuthState,
-  IItemsState,
+  IItemsState
 } from '../reducers';
 
 import { loader, ILoadingState } from './loader';
@@ -49,5 +49,5 @@ export const rootReducer = combineReducers({
   currentUser,
   locale,
   users,
-  form: formReducer,
+  form: formReducer
 });

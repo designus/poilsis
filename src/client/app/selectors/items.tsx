@@ -21,5 +21,7 @@ export const getSelectedItem = (state: IAppState, routeState): Partial<IItem> =>
 
 export const shouldLoadViewItem = (state: IAppState, routeState) => {
   const selectedItem = getSelectedItem(state, routeState);
-  return (!selectedItem || !selectedItem.isFullyLoaded) && hasInitialDataLoaded(state);
+  if (selectedItem) {
+    return (!selectedItem || !selectedItem.isFullyLoaded) && hasInitialDataLoaded(state);
+  }
 };

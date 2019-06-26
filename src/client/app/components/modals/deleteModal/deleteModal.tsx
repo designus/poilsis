@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import { FormattedMessage } from 'react-intl';
 
@@ -30,7 +29,7 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
           open={isModalOpen}
           onClose={onClose}
           classes={{
-            paper: classes.paper,
+            paper: classes.paper
           }}
         >
           <DialogHeader

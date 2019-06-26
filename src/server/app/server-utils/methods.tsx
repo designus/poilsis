@@ -1,5 +1,3 @@
-import { SheetsRegistry } from 'react-jss';
-import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
 import { Response, NextFunction } from 'express';
 import { unlink } from 'fs';
 
@@ -8,7 +6,7 @@ import {
   IImage,
   IResponseError,
   mapMimeTypesToTypes,
-  itemValidation,
+  itemValidation
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -38,7 +36,7 @@ export const getImages = (files: IMulterFile[]): IImage[] => {
     return {
       fileName: filename,
       path: destination,
-      thumbName: `${name}_${ImageSize.Small}.${extension}`,
+      thumbName: `${name}_${ImageSize.Small}.${extension}`
     };
   });
 };
@@ -89,21 +87,8 @@ export function removeFiles(files, next) {
   }
 }
 
-export const getMaterialUiCSSParams = () => {
-  const sheetsRegistry = new SheetsRegistry();
-  const theme = createMuiTheme();
-  const generateClassName = createGenerateClassName();
-  const sheetsManager = new Map();
-  const materialCSS = sheetsRegistry.toString();
-
-  return {sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS};
-};
-
-export const preloadData = (data: Array<() => Promise<void>>, loadInitialDataOnly = false): Promise<any> => {
+export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   const [loadInitialData, ...loadOtherData] = data;
-  if (loadInitialDataOnly) {
-    return loadInitialData();
-  }
   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));
 };
 
@@ -114,7 +99,7 @@ export const formatAlias = alias => alias
 
 export const getAliasFromName = (name, locale: string) => formatAlias(name[locale] || name);
 
-export const getAlias = (item, locale: string) => item.alias || getAliasFromName(item.name, locale); 
+export const getAlias = (item, locale: string) => item.alias || getAliasFromName(item.name, locale);
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
   if (res.headersSent) return;

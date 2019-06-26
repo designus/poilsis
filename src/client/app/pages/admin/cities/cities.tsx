@@ -1,22 +1,18 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, ICitiesMap, ICity, ITypesMap } from 'reducers';
-import { AdminHeader } from 'global-styles';
 import { getCities, getCitiesMap } from 'selectors';
 import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
 import { deleteCity } from 'actions';
-import {
-  EnhancedTable,
-  ITableColumn,
-  extendWithLoader,
-  ItemActions,
-  ItemTypesList,
-  DeleteModal,
-  AdminPageActions,
-} from 'components';
+
+import { EnhancedTable, ITableColumn } from 'components/table';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { ItemActions } from 'components/itemActions';
+import { ItemTypesList } from 'components/itemTypesList';
+import { DeleteModal } from 'components/modals';
+import { AdminHeader } from 'components/adminHeader';
 
 const Table = extendWithLoader(EnhancedTable);
 
@@ -31,7 +27,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
 
   state = {
     isDeleteModalOpen: false,
-    deleteId: '',
+    deleteId: ''
   };
 
   get deleteCityName() {
@@ -44,11 +40,11 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     return [
       {
         title: formatMessage({ id: 'admin.common_fields.id'}),
-        dataProp: 'id',
+        dataProp: 'id'
       },
       {
         title: formatMessage({ id: 'admin.common_fields.name'}),
-        dataProp: 'name',
+        dataProp: 'name'
       },
       {
         title: formatMessage({ id: 'admin.common_fields.types'}),
@@ -60,7 +56,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
               typesMap={this.props.typesMap}
             />
           );
-        },
+        }
       },
       {
         title: formatMessage({ id: 'admin.common_fields.actions'}),
@@ -72,8 +68,8 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
               onDelete={this.openDeleteModal(cityId)}
             />
           );
-        },
-      },
+        }
+      }
     ];
   }
 
@@ -91,13 +87,11 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
 
   render() {
     return (
-      <div>
-        <AdminHeader>
-          <Typography variant="h5">
-            <FormattedMessage id="admin.menu.cities" />
-          </Typography>
-          <AdminPageActions createLink={adminRoutes.createCity.getLink()} />
-        </AdminHeader>
+      <React.Fragment>
+        <AdminHeader
+          createLink={adminRoutes.createCity.getLink()}
+          translationId="admin.menu.cities"
+        />
         <Table
           showLoadingOverlay={true}
           loaderId={CONTENT_LOADER_ID}
@@ -112,7 +106,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
           onDelete={this.handleCityDelete}
           itemName={this.deleteCityName}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -120,13 +114,13 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
 const mapStateToProps = (state: IAppState) => ({
   typesMap: state.types.dataMap,
   citiesMap: getCitiesMap(state),
-  cities: getCities(state),
+  cities: getCities(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteCity: (cityId: string) => dispatch(deleteCity(cityId)),
+  deleteCity: (cityId: string) => dispatch(deleteCity(cityId))
 });
 
 export const AdminCitiesPage = injectIntl(
-  connect<{}, {}, ICitiesPageParams>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent),
+  connect<{}, {}, ICitiesPageParams>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent)
 );

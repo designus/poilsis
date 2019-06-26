@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { WrappedFieldProps, submit } from 'redux-form';
-import { WithStyles } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
-import { FileUpload, ImagePreview } from 'components';
 import { IAppState, IUploadProgress } from 'reducers';
-import { setInitialUploadState } from 'actions';
+
+import { FileUpload } from 'components/fileUpload';
+import { ImagePreview } from 'components/imagePreview';
+
 import { styles } from './styles';
 
 export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgress {
@@ -78,14 +79,13 @@ const mapStateToProps = (state: IAppState) => ({
   progress: state.uploadProgress.progress,
   isUploaded: state.uploadProgress.isUploaded,
   isUploading: state.uploadProgress.isUploading,
-  hasError: state.uploadProgress.hasError,
+  hasError: state.uploadProgress.hasError
 });
 
 const mapDispatchToProps = (dispatch, props: IUploadedPhotosParams) => ({
-  setInitialUploadState: () => dispatch(setInitialUploadState()),
-  uploadImages: () => dispatch(submit(props.formName)),
+  uploadImages: () => dispatch(submit(props.formName))
 });
 
 export default withStyles(styles)(
-  connect<any, any, IUploadedPhotosParams>(mapStateToProps, mapDispatchToProps)(DropzoneInput),
+  connect<any, any, IUploadedPhotosParams>(mapStateToProps, mapDispatchToProps)(DropzoneInput)
 ) as any;

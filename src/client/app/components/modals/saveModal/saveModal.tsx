@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import { FormattedMessage } from 'react-intl';
 
@@ -21,7 +20,7 @@ class SaveModalComponent extends React.PureComponent<ISaveModalProps, any> {
         open={isModalOpen}
         onClose={onCancel}
         classes={{
-          paper: classes.paper,
+          paper: classes.paper
         }}
       >
         <DialogHeader

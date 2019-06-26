@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { IAppState, IItemsState, IItem } from 'reducers';
 import { loadItem, selectItem, clearSelectedItem } from 'actions';
-import { NotFound } from 'components';
+import { NotFound } from 'components/notFound';
 import { getSelectedItem, shouldLoadViewItem } from 'selectors';
 
 interface IMatchParams {
@@ -22,11 +22,9 @@ interface IItemPageParams extends RouteComponentProps<IMatchParams> {
   shouldLoadItem?: (state: IAppState) => boolean;
 }
 
-class ItemPageComponent extends React.Component<IItemPageParams, any> {
+export const loadItemData = (store, params: IMatchParams) => store.dispatch(loadItem(params.itemAlias, params.locale));
 
-  static fetchData(store, params: IMatchParams) {
-    return store.dispatch(loadItem(params.itemAlias, params.locale));
-  }
+class ItemPage extends React.Component<IItemPageParams, any> {
 
   componentDidUpdate(prevProps: IItemPageParams) {
     if (this.props.match.params.itemAlias !== prevProps.match.params.itemAlias && this.props.shouldLoadItem) {
@@ -63,13 +61,13 @@ class ItemPageComponent extends React.Component<IItemPageParams, any> {
 
 const mapStateToProps = (state: IAppState, props: IItemPageParams) => ({
   selectedItem: getSelectedItem(state, props.location.state),
-  shouldLoadItem: shouldLoadViewItem(state, props.location.state),
+  shouldLoadItem: shouldLoadViewItem(state, props.location.state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadItem: (alias: string, locale: string) => dispatch(loadItem(alias, locale)),
   selectItem: (itemId: string) => dispatch(selectItem(itemId)),
-  clearSelectedItem: () => dispatch(clearSelectedItem()),
+  clearSelectedItem: () => dispatch(clearSelectedItem())
 });
 
-export const ItemPage = connect<any, any, IItemPageParams>(mapStateToProps, mapDispatchToProps)(ItemPageComponent);
+export default connect<any, any, IItemPageParams>(mapStateToProps, mapDispatchToProps)(ItemPage);

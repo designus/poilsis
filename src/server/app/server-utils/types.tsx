@@ -11,7 +11,7 @@ export interface IMulterFile {
 export enum FileUploadErrors {
   limitFileSize = 'LIMIT_FILE_SIZE',
   limitFileCount = 'LIMIT_FILE_COUNT',
-  wrongFileType = 'WRONG_FILE_TYPE',
+  wrongFileType = 'WRONG_FILE_TYPE'
 }
 
 export type TGenericSchemaMap<T> = {

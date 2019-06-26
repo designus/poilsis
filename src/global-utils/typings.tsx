@@ -10,7 +10,7 @@ export interface IImage {
 export enum ImageSize {
   Small = 'S',
   Medium = 'M',
-  Large = 'L',
+  Large = 'L'
 }
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -21,7 +21,7 @@ export interface IResponseError {
   errors: {
     [key: string]: {
       message: string;
-    },
+    }
   };
 }
 
@@ -71,7 +71,7 @@ export type TCityFields = ICityFields<TranslatableField>;
 
 export enum UserRoles {
   admin = 'admin',
-  user = 'user',
+  user = 'user'
 }
 
 export interface IAccessTokenClaims {
@@ -80,4 +80,8 @@ export interface IAccessTokenClaims {
   userId: string;
   userRole: string;
   userItems: string[];
+}
+
+export interface IPhotoFormState {
+  files?: File[];
 }

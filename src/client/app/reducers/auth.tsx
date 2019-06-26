@@ -3,7 +3,7 @@ import {
   LOGOUT_SUCCESS,
   SET_ACCESS_TOKEN,
   SHOW_KEEP_ME_LOGGED_MODAL,
-  REAUTHENTICATE_SUCCESS,
+  REAUTHENTICATE_SUCCESS
 } from '../actions';
 
 export interface IAuthState {
@@ -15,7 +15,7 @@ export interface IAuthState {
 const initialAuthState: IAuthState = {
   isLoggedIn: false,
   accessToken: null,
-  showKeepMeLoggedModal: false,
+  showKeepMeLoggedModal: false
 };
 
 export const auth = (state: IAuthState = initialAuthState, action): IAuthState => {
@@ -25,7 +25,7 @@ export const auth = (state: IAuthState = initialAuthState, action): IAuthState =
         ...state,
         accessToken: action.accessToken,
         isLoggedIn: true,
-        showKeepMeLoggedModal: false,
+        showKeepMeLoggedModal: false
       };
     }
     case LOGOUT_SUCCESS: {
@@ -33,14 +33,14 @@ export const auth = (state: IAuthState = initialAuthState, action): IAuthState =
         ...state,
         accessToken: null,
         isLoggedIn: false,
-        showKeepMeLoggedModal: false,
+        showKeepMeLoggedModal: false
       };
     }
     case REAUTHENTICATE_SUCCESS: {
       return {
         ...state,
         accessToken: action.accessToken,
-        showKeepMeLoggedModal: false,
+        showKeepMeLoggedModal: false
       };
     }
     /* During page reload we extract accessToken from cookies and put it into our state. After this we make
@@ -49,13 +49,13 @@ export const auth = (state: IAuthState = initialAuthState, action): IAuthState =
       return {
         ...state,
         accessToken: action.accessToken,
-        isLoggedIn: false,
+        isLoggedIn: false
       };
     }
     case SHOW_KEEP_ME_LOGGED_MODAL: {
       return {
         ...state,
-        showKeepMeLoggedModal: true,
+        showKeepMeLoggedModal: true
       };
     }
     default:

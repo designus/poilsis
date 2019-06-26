@@ -1,125 +1,125 @@
-import styled, {keyframes} from 'styled-components';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+
 import { UPLOADED_PHOTO_HEIGHT } from 'global-styles';
 import { UPLOADED_ANIMATION_DURATION } from 'client-utils';
 
-const isUploadBarHidden = (props: any) => props.isUploaded || props.hasError || !props.isUploading;
+import { IImagePreview } from './imagePreview';
+
+const isUploadBarHidden = (props: IImagePreview) => props.isUploaded || props.hasError || !props.isUploading;
+const showUploadedAnimation = (props: IImagePreview) => props.isUploaded || props.hasError;
+
 export const uploadIconSize = 54;
 export const viewbox = `0, 0, ${uploadIconSize}, ${uploadIconSize}`;
 
-export const ImagePreviewWrapper = styled.div`
-  padding: ${(props: any) => props.isTemporary ? '0' : '15px 0'};
-  & > label {
-    font-size: 14px;
-  }
-` as any;
-
-export const Images = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-export const Image = styled.div`
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  margin: ${(props: any) => props.isTemporary ? '0 5px 5px 0' : '15px 10px 5px 0'};
-  padding: 4px;
-  border: 1px solid #dbdbdb;
-  background: #fff;
-  box-shadow: 0px 5px 5px -3px #dbdbdb;
-  cursor: ${(props: any) => props.isTemporary ? 'default' : 'move'};
-` as any;
-
-export const ImageSource = styled.div`
-  position: relative;
-  display: block;
-  height: ${UPLOADED_PHOTO_HEIGHT}px;
-
-  &:hover {
-    button {
-      visibility: visible;
+const getStyles = (theme: Theme) => ({
+  imagePreviewWrapper: (props: IImagePreview) => ({
+    padding: props.isTemporary ? '0' : '15px 0',
+    '& > label': {
+      fontSize: '14px'
     }
-  }
-
-  button {
-    visibility: hidden;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 30px;
-    height: 30px;
-    min-height: 30px;
-    svg {
-      width: 18px;
-      height: 18px;
+  }),
+  images: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  image: (props: IImagePreview) => ({
+    position: 'relative',
+    display: 'inline-block',
+    verticalAlign: 'top',
+    margin: props.isTemporary ? '0 5px 5px 0' : '15px 10px 5px 0',
+    padding: '4px',
+    border: '1px solid #dbdbdb',
+    background: '#fff',
+    boxShadow: '0px 5px 5px -3px #dbdbdb',
+    cursor: props.isTemporary ? 'default' : 'move'
+  }),
+  imageSource: {
+    position: 'relative',
+    display: 'block',
+    height: `${UPLOADED_PHOTO_HEIGHT}px`,
+    '&:hover': {
+      '& button': {
+        visibility: 'visible'
+      }
+    },
+    '& button': {
+      visibility: 'hidden',
+      position: 'absolute',
+      top: '-10px',
+      right: '-10px',
+      width: '30px',
+      height: '30px',
+      minHeight: '30px',
+      '& svg': {
+        width: '18px',
+        height: '18px'
+      }
+    },
+    '& img': {
+      height: `${UPLOADED_PHOTO_HEIGHT}px`,
+      width: 'auto'
     }
-  }
+  },
+  uploadProgress: (props: IImagePreview) => ({
+    opacity: isUploadBarHidden(props) ? 0 : 1,
+    transition: isUploadBarHidden(props) ? 'none' : 'all 0.2s linear',
+    zIndex: 1000,
+    pointerEvents: 'none',
+    position: 'absolute',
+    height: '16px',
+    left: '50%',
+    top: '50%',
+    marginTop: '-8px',
+    width: '80px',
+    marginLeft: '-40px',
+    background: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: '8px',
+    overflow: 'hidden'
+  }),
+  uploadBar: (props: IImagePreview) => ({
+    background: 'linear-gradient(to bottom, #666, #444)',
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    bottom: '0',
+    transition: 'width 300ms ease-in-out',
+    width: `${props.progress}%`
+  }),
+  '@keyframes passingThrough': {
+    '0%': {
+      opacity: 0,
+      transform: 'translateY(40px)'
+    },
+    '30%, 70%': {
+      opacity: 1,
+      transform: 'translateY(0px)'
+    },
+    '100%': {
+      opacity: 0,
+      transform: 'translateY(-40px)'
+    }
+  },
+  uploadResult: (props: IImagePreview) => ({
+    opacity: 0,
+    pointerEvents: 'none',
+    zIndex: 500,
+    position: 'absolute',
+    display: 'block',
+    top: '50%',
+    left: '50%',
+    marginLeft: `-${uploadIconSize / 2}px`,
+    marginTop: `-${uploadIconSize / 2}px`,
+    // TODO: Fix animation
+    animation: showUploadedAnimation(props)
+     ? `passingThrough ${UPLOADED_ANIMATION_DURATION / 1000}s cubic-bezier(0.77, 0, 0.175, 1)`
+     : 'none',
+    '& > svg': {
+      width: `${uploadIconSize}px`,
+      height: `${uploadIconSize}px`,
+      fill: 'rgba(255, 255, 255, .8)'
+    }
+  })
+}) as any;
 
-  img {
-    height: ${UPLOADED_PHOTO_HEIGHT}px;
-    width: auto;
-  }
-`;
-
-export const UploadProgress = styled.div`
-  opacity: ${(props: any) => isUploadBarHidden(props) ? 0 : 1};
-  transition: ${(props: any) => isUploadBarHidden(props) ? 'none' : 'all 0.2s linear' };
-  z-index: 1000;
-  pointer-events: none;
-  position: absolute;
-  height: 16px;
-  left: 50%;
-  top: 50%;
-  margin-top: -8px;
-  width: 80px;
-  margin-left: -40px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  overflow: hidden;
-` as any;
-
-export const UploadBar = styled.span`
-  background: linear-gradient(to bottom, #666, #444);
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  transition: width 300ms ease-in-out;
-  width: ${(props: any) => props.progress + '%'}
-` as any;
-
-export const passingThrough = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  30%, 70% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-`;
-
-export const UploadResult = styled.div`
-  opacity: 0;
-  pointer-events: none;
-  z-index: 500;
-  position: absolute;
-  display: block;
-  top: 50%;
-  left: 50%;
-  margin-left: -${uploadIconSize / 2}px;
-  margin-top: -${uploadIconSize / 2}px;
-  animation: ${(props: any) => (props.isUploaded || props.hasError) && props.showLoader ?
-    `${passingThrough} ${UPLOADED_ANIMATION_DURATION / 1000}s cubic-bezier(0.77, 0, 0.175, 1)` :
-     'none'
-  };
-  & > svg {
-    width: ${uploadIconSize}px;
-    height: ${uploadIconSize}px;
-    fill: rgba(255, 255, 255, .8)
-  }
-` as any;
+export const styles = makeStyles(getStyles) as any;

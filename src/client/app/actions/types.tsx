@@ -8,7 +8,7 @@ import {
   TYPE_DELETE_SUCCESS,
   TYPE_CREATE_ERROR,
   TYPE_UPDATE_ERROR,
-  TYPE_DELETE_ERROR,
+  TYPE_DELETE_ERROR
 } from 'data-strings';
 import { getLocale } from 'selectors';
 
@@ -23,17 +23,17 @@ export const REMOVE_TYPE = 'REMOVE_TYPE';
 
 export const selectType = (typeId) => ({
   type: SELECT_TYPE,
-  typeId,
+  typeId
 });
 
 export const receiveClientType = (newType: ITypeFields) => ({
   type: RECEIVE_CLIENT_TYPE,
-  newType,
+  newType
 });
 
 export const removeType = (typeId) => ({
   type: REMOVE_TYPE,
-  typeId,
+  typeId
 });
 
 export const createType = (adminType: TTypeFields) => (dispatch, getState) => {

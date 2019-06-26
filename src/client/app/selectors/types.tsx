@@ -10,5 +10,5 @@ export const getTypesMap = (state: IAppState): ITypesMap => state.types.dataMap;
 
 export const getTypes = createSelector(
   [getTypesMap],
-  (typesMap: ITypesMap) => Object.values(typesMap),
+  (typesMap: ITypesMap) => Object.values(typesMap)
 );

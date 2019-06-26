@@ -29,7 +29,7 @@ export class EnhancedTableHead extends React.Component<ITableHead, any> {
       orderBy,
       numSelected,
       rowCount,
-      columns,
+      columns
     } = this.props;
 
     return (
@@ -46,7 +46,7 @@ export class EnhancedTableHead extends React.Component<ITableHead, any> {
             return (
               <TableCell
                 key={index}
-                padding="dense"
+                size="small"
                 // sortDirection={orderBy === column.id ? order : false}
               >
                 <TableSortLabel

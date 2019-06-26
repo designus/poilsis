@@ -1,22 +1,24 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
+import serialize from 'serialize-javascript';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-// import StaticRouter from 'react-router-dom/StaticRouter';
-import { StaticRouter } from 'react-router-dom';
+import Loadable from 'react-loadable';
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
+import { StaticRouter } from 'react-router';
+import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
-import { JssProvider } from 'react-jss';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import { DEFAULT_LANGUAGE, getTranslationMessages } from 'global-utils';
+import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme } from 'global-utils';
 import { IAuthState } from 'reducers';
 
 import app, { staticFilesPort } from './app';
 import { config } from '../../config';
 import { App, rootReducer, routes } from '../client/app/index';
-import { auth, getMaterialUiCSSParams, preloadData } from './app/index';
+import { auth, preloadData } from './app/index';
+
+const stats = require('./stats/reactLoadable.json');
 
 interface IInitialAuthState {
   auth: IAuthState;
@@ -28,88 +30,83 @@ const getInitialState = (req, user): IInitialAuthState => {
       auth: {
         accessToken: req.cookies.jwt,
         isLoggedIn: true,
-        showKeepMeLoggedModal: false,
-      },
+        showKeepMeLoggedModal: false
+      }
     };
   }
 };
 
+const isDevelopment = () => process.env.NODE_ENV === 'development';
+
 app.get('*', (req, res, next) => {
-  return auth.authenticate((err, user, info) => {
+  return auth.authenticate((err, user) => {
     const location = req.url;
     const initialState = getInitialState(req, user);
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
     const branch = matchRoutes(routes, location);
+
     const promises = branch
-      // .map(({route, match}) => ({fetchData: (route.component as any).fetchData, params: match.params}))
-      .map((item: MatchedRoute<{}>) => ({fetchData: (item.route.component as any).fetchData, params: item.match.params}))
+      .map((item: MatchedRoute<{}>) => {
+        return {fetchData: item.route.fetchData, params: item.match.params};
+      })
       .filter(({fetchData}) => Boolean(fetchData))
       .map(({fetchData, params}) => fetchData.bind(null, store, params));
 
-    if (location.includes('admin')) {
-      // when we are in admin that requires authentication and we are not logged in, we only preload initial data
-      const loadInitialDataOnly = !user;
-      return err ? next(err) : preloadData(promises, loadInitialDataOnly).then(() => sendResponse(res, store, location));
-    } else {
-      return preloadData(promises).then(() => {
-        sendResponse(res, store, location);
-      });
-    }
+    return preloadData(promises).then(() => sendResponse(res, store, location));
   })(req, res, next);
 });
 
 function sendResponse(res, store, location) {
-  const finalState = store.getState();
-  if (!location.includes('admin')) {
-    const sheet: any = new ServerStyleSheet();
-    const context = {};
-    const styleTags = sheet.getStyleTags();
-    const { sheetsRegistry, theme, generateClassName, sheetsManager, materialCSS } = getMaterialUiCSSParams();
-    const responseHtml = renderToString(
-      <StyleSheetManager sheet={sheet.instance}>
-        <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-          <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
-            <Provider store={store} key="provider">
-              <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
-                <StaticRouter location={location} context={context}>
-                  <App />
-                </StaticRouter>
-              </IntlProvider>
-            </Provider>
-          </MuiThemeProvider>
-        </JssProvider>
-      </StyleSheetManager>,
-    );
-    res.status(200).send(renderFullPage(responseHtml, materialCSS, styleTags, finalState));
-  } else {
-    res.status(200).send(renderFullPage('', '', '', finalState));
-  }
-}
+  const modules: string[] = [];
+  const state = store.getState();
+  const sheets = new ServerStyleSheets();
+  const context = {};
 
-function renderFullPage(html, css1, css2, preloadedState) {
-  return `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Redux Universal Example</title>
-      </head>
-      <body>
-        <div id="app">${html}</div>
-        <style id="jss-server-side">${css1}</style>
-        <style id="styled-css">${css2}</style>
-        <script>
-          window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\x3c')}
-        </script>
-        <script src="http://localhost:${staticFilesPort}/public/app.js"></script>
-      </body>
-    </html>
-    `;
-}
+  const html = renderToString(
+    <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+      {sheets.collect(
+        <ThemeProvider theme={theme}>
+          <Provider store={store} key="provider">
+            <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
+              <StaticRouter location={location} context={context}>
+                <App />
+              </StaticRouter>
+            </IntlProvider>
+          </Provider>
+        </ThemeProvider>
+      )}
+    </Loadable.Capture>
+  );
 
-app.listen(config.port, (error) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.info(`==> 🌎  Listening on port ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
-  }
+  const css = sheets.toString();
+  const bundles = getBundles(stats, modules);
+  const preloadedState = serialize(state, { isJSON: true });
+
+  const scripts = bundles
+    .filter(bundle => bundle.file.endsWith('.js'))
+    .map(script => script.file)
+    .filter(removeDuplicates)
+    .map(jsFile => `<script src="${isDevelopment() ? 'http://localhost:8080' : ''}/public/${jsFile}"></script>`)
+    .join('\n');
+
+  res.render('index', {
+    locals: {
+      html,
+      scripts,
+      css,
+      preloadedState
+    }
 });
+}
+
+Loadable.preloadAll()
+  .then(() => {
+    app.listen(config.port, (error) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.info(`==> 🌎  Listening on ports ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
+      }
+    });
+  })
+  .catch(err => console.log(err));

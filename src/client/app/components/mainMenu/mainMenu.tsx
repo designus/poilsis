@@ -38,8 +38,8 @@ export const MainMenu = (props) => {
                 to={{
                   pathname: clientRoutes.items.getLink(locale, city.alias),
                   state: {
-                    cityId: city.id,
-                  },
+                    cityId: city.id
+                  }
                 }}
               >
                 {city.name}

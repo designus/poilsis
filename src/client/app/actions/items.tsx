@@ -8,7 +8,7 @@ import {
   uploadError,
   uploadSuccess,
   receiveAdminItem,
-  receiveAdminItemDesc,
+  receiveAdminItemDesc
 } from 'actions';
 import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
 import {
@@ -17,7 +17,7 @@ import {
   CONTENT_LOADER_ID,
   DIALOG_LOADER_ID,
   getFormDataFromFiles,
-  setAcceptLanguageHeader,
+  setAcceptLanguageHeader
  } from 'client-utils';
 import { IItemsMap, IAppState, Toast, IItem } from 'reducers';
 import {
@@ -30,7 +30,7 @@ import {
   IMAGES_UPLOAD_ERROR,
   IMAGES_UPLOAD_SUCCESS,
   IMAGES_UPDATE_SUCCESS,
-  IMAGES_UPDATE_ERROR,
+  IMAGES_UPDATE_ERROR
 } from 'data-strings';
 import { IImage, IItemFields, TItemFields, TItemDescFields, IItemDescFields } from 'global-utils';
 import { getLocale } from 'selectors';
@@ -55,45 +55,45 @@ interface IReceiveItemsProps {
 
 export const selectItem = (itemId: string) => ({
   type: SELECT_ITEM,
-  itemId,
+  itemId
 });
 
 export const clearSelectedItem = () => ({
-  type: CLEAR_SELECTED_ITEM,
+  type: CLEAR_SELECTED_ITEM
 });
 
 export const receiveItems = (props: IReceiveItemsProps) => ({
   type: RECEIVE_ITEMS,
-  ...props,
+  ...props
 });
 
 export const receiveItem = (item: IItem) => ({
   type: RECEIVE_ITEM,
   itemId: item.id,
-  item,
+  item
 });
 
 export const receiveItemDesc = (itemId: string, descFields: IItemDescFields) => ({
   type: RECEIVE_ITEM_DESCRIPTION,
   itemId,
-  descFields,
+  descFields
 });
 
 export const removeItem = (item: IItem) => ({
   type: REMOVE_ITEM,
-  item,
+  item
 });
 
 export const receiveImages = (id: string, images: IImage[]) => ({
   type: RECEIVE_IMAGES,
   id,
-  images,
+  images
 });
 
 export const toggleItemVisibility = (itemId: string, isEnabled: boolean) => ({
   type: TOGGLE_ITEM_VISIBILITY,
   itemId,
-  isEnabled,
+  isEnabled
 });
 
 export const loadItem = (alias: string, locale: string) => (dispatch, getState) => {
@@ -102,7 +102,7 @@ export const loadItem = (alias: string, locale: string) => (dispatch, getState) 
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(`${config.host}api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
+  return axios.get(`${config.host}/api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(receiveItem(item));
@@ -117,7 +117,7 @@ export const loadItem = (alias: string, locale: string) => (dispatch, getState) 
 export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
   return axios
     .put(`${config.host}/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
-      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent))),
+      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent)))
     })
     .then(handleApiResponse)
     .then((images: IImage[]) => {
@@ -164,7 +164,7 @@ export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) =
   return axios.put(
     `${config.host}/api/items/item/main-info/${adminItem.id}`,
     adminItem,
-    setAcceptLanguageHeader(getLocale(getState())),
+    setAcceptLanguageHeader(getLocale(getState()))
   )
     .then(handleApiResponse)
     .then((clientItem: IItemFields) => {
@@ -182,7 +182,7 @@ export const updateItemDescription = (itemId: string, adminItemDescFields: TItem
   return axios.put(
     `${config.host}/api/items/item/description/${itemId}`,
     adminItemDescFields,
-    setAcceptLanguageHeader(getLocale(getState())),
+    setAcceptLanguageHeader(getLocale(getState()))
   )
   .then(handleApiResponse)
   .then((clientItemDescFields: IItemDescFields) => {
@@ -202,7 +202,7 @@ export const createItem = (adminItem: TItemFields) => (dispatch, getState) => {
   return axios.post(
     `${config.host}/api/items`,
     adminItem,
-    setAcceptLanguageHeader(getLocale(getState())),
+    setAcceptLanguageHeader(getLocale(getState()))
   )
     .then(handleApiResponse)
     .then((clientItem: IItemFields) => {

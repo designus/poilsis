@@ -9,7 +9,7 @@ import {
   CITY_UPDATE_SUCCESS,
   CITY_UPDATE_ERROR,
   CITY_DELETE_SUCCESS,
-  CITY_DELETE_ERROR,
+  CITY_DELETE_ERROR
 } from 'data-strings';
 import { getLocale, getCities } from 'selectors';
 import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
@@ -24,26 +24,25 @@ export const REMOVE_CITY = 'REMOVE_CITY';
 
 export const selectCity = (cityId: string) => ({
   type: SELECT_CITY,
-  cityId,
+  cityId
 });
 
 export const clearSelectedCity = () => ({
-  type: CLEAR_SELECTED_CITY,
+  type: CLEAR_SELECTED_CITY
 });
 
 export const receiveClientCity = (newCity: ICityFields) => ({
   type: RECEIVE_CLIENT_CITY,
-  newCity,
+  newCity
 });
 
 export const removeCity = (cityId: string) => ({
   type: REMOVE_CITY,
-  cityId,
+  cityId
 });
 
 export const loadCityItems = (cityAlias: string, locale: string) => {
   return (dispatch, getState) => {
-
     const state: IAppState = getState();
     const cityId = getCities(state).find(city => city.alias === cityAlias).id;
     const items = state.items;
@@ -53,14 +52,13 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
 
     return axios.get(
       `${config.host}/api/items/city/${cityId}`,
-      setAcceptLanguageHeader(language),
+      setAcceptLanguageHeader(language)
     )
       .then(response => response.data)
       .then((data: IItemFields[]) => {
 
         const filteredData = data.filter(item => !items.dataMap[item.id]);
         const { dataMap, aliases } = getNormalizedData(filteredData);
-
         dispatch(selectCity(cityId));
         dispatch(receiveItems({ dataMap, aliases, cityId }));
         dispatch(endLoading(CONTENT_LOADER_ID));
@@ -92,7 +90,7 @@ export const updateCity = (adminCity: TCityFields) => (dispatch, getState) => {
   return axios.put(
     `${config.host}/api/cities/city/${adminCity.id}`,
      adminCity,
-     setAcceptLanguageHeader(getLocale(getState)),
+     setAcceptLanguageHeader(getLocale(getState))
   )
     .then(handleApiResponse)
     .then((clientCity: ICityFields) => {

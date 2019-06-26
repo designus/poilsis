@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
 import { FormattedMessage } from 'react-intl';
 
-import { extendWithLoader } from 'components';
+import { extendWithLoader } from 'components/extendWithLoader';
 
 export const DialogContentWrapper = (props) => (
   <DialogContentBox classes={{root: props.contentClass}}>
@@ -39,11 +39,11 @@ export const DialogFooter = ({
   onClose,
   onSubmit,
   closeLabelId = 'common.cancel',
-  submitLabelId = 'common.proceed',
+  submitLabelId = 'common.proceed'
 }) => (
   <DialogActions classes={{
     root: classes.actionWrapper,
-    action: classes.buttonWrapper,
+    spacing: classes.buttonWrapper
   }}>
     <Button variant="contained" onClick={onClose} className={classes.cancel}>
       <FormattedMessage id={closeLabelId} />

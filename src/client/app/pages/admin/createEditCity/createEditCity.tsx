@@ -8,9 +8,13 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { TCityFields, ICityFields } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions';
 import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
-import { extendWithLoader, extendWithLanguage, NavigationPrompt, Loader } from 'components';
 import { IAppState, ITypesMap } from 'reducers';
 import { shouldLoadEditCity } from 'selectors';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { extendWithLanguage } from 'components/extendWithLanguage';
+import { NavigationPrompt } from 'components/navigationPrompt';
+import { Loader } from 'components/loader';
+
 import { CityForm, CITY_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(CityForm));
@@ -96,16 +100,16 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
   typesMap: state.types.dataMap,
   loadedCity: state.admin.cities[props.match.params.cityId],
   showNavigationPrompt: isDirty(CITY_FORM_NAME)(state) && !isSubmitting(CITY_FORM_NAME)(state),
-  shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId),
+  shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getCity: (id: string) => dispatch(getAdminCity(id)),
   createCity: (city: TCityFields) => dispatch(createCity(city)),
   updateCity: (city: TCityFields) => dispatch(updateCity(city)),
-  initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city)),
+  initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city))
 });
 
 export const CreateEditCityPage = injectIntl(
-  connect<{}, {}, ICreateEditCityPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent),
+  connect<{}, {}, ICreateEditCityPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent)
 );

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountIcon from '@material-ui/icons/AccountCircle';
@@ -28,7 +27,7 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
 
   state = {
     dropdownAnchorEl: null,
-    dropdownMenuOpen: false,
+    dropdownMenuOpen: false
   };
 
   handleTick = (props) => {
@@ -102,12 +101,12 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
 const mapStateToProps = (state: IAppState) => ({
   isKeepMeLoggedModalVisible: state.auth.showKeepMeLoggedModal,
   currentUser: state.currentUser.details,
-  sessionExpiryTime: getSessionExpiryTime(state),
+  sessionExpiryTime: getSessionExpiryTime(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
-  showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal()),
+  showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal())
 });
 
 const connectedComponent = connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu);

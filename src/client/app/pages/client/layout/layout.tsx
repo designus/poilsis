@@ -2,7 +2,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
 
-import { MainMenu, Toast, UserMenu, LanguageSelector, Loader } from 'components';
+import { MainMenu } from 'components/mainMenu';
+import { Toast } from 'components/toast';
+import { UserMenu } from 'components/userMenu';
+import { LanguageSelector } from 'components/languageSelector';
+import { Loader } from 'components/loader';
 import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
 import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
 import { LoginPage, CityPage, ItemPage } from 'pages';
@@ -26,11 +30,9 @@ interface ILayoutPageParams extends RouteComponentProps<IMatchParams> {
   login: (credentials: any) => void;
 }
 
-class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
+export const loadInitialData = (store, params: IMatchParams) => store.dispatch(getInitialData({ locale: params.locale }));
 
-  static fetchData(store, params: IMatchParams) {
-    return store.dispatch(getInitialData({ locale: params.locale }));
-  }
+class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
 
   componentDidMount() {
     if (!this.props.hasInitialDataLoaded) {
@@ -89,13 +91,13 @@ const mapStateToProps = (state: IAppState) => ({
   isAuthenticated: isLoggedIn(state),
   user: state.currentUser.details && state.currentUser.details.name,
   cities: getCities(state),
-  locale: state.locale,
+  locale: state.locale
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login: (credentials) => dispatch(login(credentials)),
   logout: () => dispatch(logout()),
-  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params)),
+  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params))
 });
 
 export default connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(ClientLayoutPage);

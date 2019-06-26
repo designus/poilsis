@@ -11,7 +11,7 @@ const getInitialState = () => ({
   progress: 0,
   isUploaded: false,
   hasError: false,
-  isUploading: false,
+  isUploading: false
 });
 
 export const uploadProgress = (state: IUploadProgress = getInitialState(), action): IUploadProgress => {
@@ -24,21 +24,21 @@ export const uploadProgress = (state: IUploadProgress = getInitialState(), actio
         progress: action.progress,
         isUploaded: false,
         hasError: false,
-        isUploading: true,
+        isUploading: true
       };
     case UPLOAD_SUCCESS:
       return {
         progress: 0,
         isUploaded: true,
         hasError: false,
-        isUploading: false,
+        isUploading: false
       };
     case UPLOAD_ERROR:
       return {
         progress: 0,
         isUploaded: false,
         hasError: true,
-        isUploading: false,
+        isUploading: false
       };
     default:
       return state;

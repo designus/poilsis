@@ -10,10 +10,17 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { IAppState } from 'reducers';
 import { getAdminItem } from 'actions';
 import { TItemFields } from 'global-utils';
-import { IAdminMenuItem, NotFound, PropsRoute, HorizontalMenu, ProtectedRoute, Loader } from 'components';
 import { adminRoutes } from 'client-utils';
-import { MainInfoPage, PhotosPage, DescriptionPage } from 'pages';
 import { shouldLoadEditItem } from 'selectors';
+import { NotFound } from 'components/notFound';
+import { PropsRoute } from 'components/propsRoute';
+import { HorizontalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { ProtectedRoute } from 'components/protectedRoute';
+import { Loader } from 'components/loader';
+
+import { MainInfoPage } from './mainInfo';
+import { PhotosPage } from './photos';
+import { DescriptionPage } from './description';
 
 interface IMatchParams {
   itemId: string;
@@ -25,7 +32,7 @@ export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchPara
   loadAdminItem: (itemId: string) => Promise<void>;
 }
 
-class CreateEditItemPageComponent extends React.Component<ICreateEditItemPageProps, any> {
+class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> {
 
   constructor(props) {
     super(props);
@@ -47,20 +54,20 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
       {
         icon: () => (<HomeIcon />),
         link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
-        text: formatMessage({ id: 'admin.menu.main_info' }),
+        text: formatMessage({ id: 'admin.menu.main_info' })
       },
       {
         icon: () => (<DescriptionIcon />),
         link: adminRoutes.editItemDescription.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.description' }),
-        isDisabled: this.isCreatePage(),
+        isDisabled: this.isCreatePage()
       },
       {
         icon: () => (<PhotoIcon />),
         link: adminRoutes.editItemPhotos.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.photo_gallery' }),
-        isDisabled: this.isCreatePage(),
-      },
+        isDisabled: this.isCreatePage()
+      }
     ];
   }
 
@@ -118,13 +125,13 @@ class CreateEditItemPageComponent extends React.Component<ICreateEditItemPagePro
 
 const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
   loadedItem: state.admin.items[props.match.params.itemId],
-  shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId),
+  shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadAdminItem: (itemId: string) => dispatch(getAdminItem(itemId)),
+  loadAdminItem: (itemId: string) => dispatch(getAdminItem(itemId))
 });
 
-export const CreateEditItemPage = injectIntl(
-  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPageComponent),
+export default injectIntl(
+  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPage)
 );
