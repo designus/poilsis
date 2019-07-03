@@ -11,7 +11,8 @@
       "pages": ["./src/client/app/pages"],
       "data-strings": ["./src/data-strings"],
       "global-styles": ["./src/client/app/global-styles"],
-      "global-utils": ["./src/global-utils"]
+      "global-utils": ["./src/global-utils"],
+      "global-utils/*": ["./src/global-utils/*"],
     },
     "lib": ["dom", "es7", "es2017"],
     "target": "es2015",

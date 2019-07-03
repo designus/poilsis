@@ -126,9 +126,7 @@ export const resizeImages = (req, res) => {
         });
       });
       return Promise.all(promises).then(() => {
-        setTimeout(() => {
-          resolve();
-        }, 1000);
+        resolve();
       });
     } else {
       return reject();
