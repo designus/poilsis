@@ -1,4 +1,5 @@
-import { SET_UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPLOAD_ERROR, RESET_UPLOAD_STATE, CLEAR_STATE } from 'actions';
+import { SET_UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPLOAD_ERROR, RESET_UPLOAD_STATE } from 'actions/upload';
+import { CLEAR_STATE } from 'actions/initialData';
 
 export interface IUploadProgress {
   progress?: number;

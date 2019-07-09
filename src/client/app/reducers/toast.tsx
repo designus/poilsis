@@ -1,4 +1,5 @@
-import { SHOW_TOAST, HIDE_TOAST, CLEAR_STATE } from 'actions';
+import { SHOW_TOAST, HIDE_TOAST } from 'actions/toast';
+import { CLEAR_STATE } from 'actions/initialData';
 
 export enum Toast {
   warning = 'warning',

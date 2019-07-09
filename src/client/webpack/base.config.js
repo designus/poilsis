@@ -7,7 +7,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const projectRoot = path.join(__dirname, '..', '..', '..');
 
 module.exports = {
-  entry: ['babel-polyfill', './client.tsx'],
+  entry: ['./client.tsx'],
   // The main entry point source/client/index.tsx
   // Main entry point plus each dynamic import generate a bundle
   // Ex: import(/* webpackChunkName: "about" */ "../pages/about") generate about.js
@@ -56,15 +56,27 @@ module.exports = {
             options: {
               babelrc: false,
               presets: [
-                  "react",
-                  [
-                      "env",
-                      {
-                          modules: false
-                      }
-                  ]
+                "@babel/react",
+                [
+                  "@babel/env",
+                  {
+                      modules: false
+                  }
+                ]
               ],
-              plugins: ["syntax-dynamic-import", "react-loadable/babel", 'lodash']
+              plugins: [
+                "syntax-dynamic-import",
+                "react-loadable/babel",
+                'lodash',
+                [require('babel-plugin-transform-imports'), {
+                  'redux-form': {
+                    transform: function(importName, matches) {
+                      return `redux-form/es/${importName}`;
+                    },
+                    preventFullImport: true
+                  }
+                }]
+              ]
             }
           },
           // 1. TypeScript type check and emit JavaScript es2015 (TypeScript without types) consumable by Babel
@@ -90,7 +102,6 @@ module.exports = {
     }),
     new ReactLoadablePlugin({
       filename: path.join(__dirname, "..", "..", "server", "stats", "reactLoadable.json")
-    }),
-    // new BundleAnalyzerPlugin({ generateStatsFile: true })
+    })
   ]
 };

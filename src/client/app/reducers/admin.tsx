@@ -1,17 +1,18 @@
 
 import { TCityFields, TTypeFields, TItemFields } from 'global-utils';
+
+import { CLEAR_STATE } from 'actions/initialData';
+import { REMOVE_CITY } from 'actions/cities';
+import { REMOVE_TYPE } from 'actions/types';
+import { REMOVE_ITEM, RECEIVE_IMAGES } from 'actions/items';
 import {
   RECEIVE_ADMIN_CITY,
   RECEIVE_ADMIN_TYPE,
   RECEIVE_ADMIN_ITEM,
-  REMOVE_CITY,
-  REMOVE_TYPE,
-  REMOVE_ITEM,
-  CLEAR_STATE,
-  RECEIVE_ADMIN_ITEM_DESCRIPTION,
-  RECEIVE_IMAGES
-} from 'actions';
-import { removeItemById } from 'client-utils';
+  RECEIVE_ADMIN_ITEM_DESCRIPTION
+} from 'actions/admin';
+
+import { removeItemById } from 'client-utils/methods';
 
 export interface IAdminState {
   cities: Record<string, TCityFields>;

@@ -15,9 +15,10 @@ import Typography from '@material-ui/core/Typography';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { removeInjectedStyles, adminRoutes, clientRoutes } from 'client-utils';
+import { adminRoutes, clientRoutes } from 'client-utils/routes';
+import { removeInjectedStyles } from 'client-utils/methods';
 import { IAppState } from 'reducers';
-import { getInitialData, IGetInitialDataParams } from 'actions';
+import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
 
 import { Toast } from 'components/toast';
 import { VerticalMenu, IAdminMenuItem } from 'components/adminMenu';
@@ -29,14 +30,12 @@ import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
 import { Loader } from 'components/loader';
 
-import {
-  AdminItemsPage,
-  CreateEditItemPage,
-  CreateEditTypePage,
-  CreateEditCityPage,
-  AdminTypesPage,
-  AdminCitiesPage
-} from 'pages';
+import { AdminItemsPage } from 'pages/admin/items';
+import { CreateEditItemPage } from 'pages/admin/createEditItem';
+import { CreateEditTypePage } from 'pages/admin/createEditType';
+import { CreateEditCityPage } from 'pages/admin/createEditCity';
+import { AdminTypesPage } from 'pages/admin/types';
+import { AdminCitiesPage } from 'pages/admin/cities';
 
 import { hasInitialDataLoaded, shouldLoadInitialData, isInitialDataLoading } from 'selectors';
 

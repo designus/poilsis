@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { TransitionPromptHook } from 'history';
-import { SaveModal } from '../modals';
+import { SaveModal } from '../modals/saveModal';
 
 interface INavigationPromptProps extends RouteComponentProps<any> {
   when: boolean;

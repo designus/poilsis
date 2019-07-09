@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, initialize, isSubmitting } from 'redux-form';
+import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
+import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { IAppState, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
-import { updateMainInfo, createItem } from 'actions';
-import { getBackendErrors, adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
+import { updateMainInfo, createItem } from 'actions/items';
+import { getBackendErrors } from 'client-utils/methods';
+import { adminRoutes } from 'client-utils/routes';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { TItemFields, IItemFields } from 'global-utils';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
@@ -15,6 +18,7 @@ import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
+const { initialize } = reduxFormActions;
 
 interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
   usersMap: IUsersMap;

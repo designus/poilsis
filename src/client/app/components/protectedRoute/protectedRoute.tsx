@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, match } from 'react-router-dom';
-import { renderMergedProps } from 'client-utils';
+import { renderMergedProps } from 'client-utils/methods';
 import { IAppState } from 'reducers';
 import { isLoggedIn } from 'selectors';
 import { NotAuthorized } from 'components/notAuthorized';

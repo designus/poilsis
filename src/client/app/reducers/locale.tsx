@@ -1,4 +1,4 @@
-import { SET_LOCALE } from 'actions';
+import { SET_LOCALE } from 'actions/locale';
 import { DEFAULT_LANGUAGE } from 'global-utils';
 
 export const locale = (state: string = DEFAULT_LANGUAGE, action) => {

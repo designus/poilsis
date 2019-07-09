@@ -10,7 +10,7 @@ import Countdown from 'react-countdown-now';
 import { throttle } from 'lodash';
 
 import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
-import { logout, showKeepMeLoggedModal } from 'actions';
+import { logout, showKeepMeLoggedModal } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
 import { IAppState, ICurrentUser } from 'reducers';
 import { styles } from './styles';

@@ -1,5 +1,6 @@
-import { SELECT_TYPE, RECEIVE_CLIENT_TYPE, REMOVE_TYPE, RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions';
-import { IGenericState, IGenericDataMap } from 'client-utils';
+import { SELECT_TYPE, RECEIVE_CLIENT_TYPE, REMOVE_TYPE } from 'actions/types';
+import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions/initialData';
+import { IGenericState, IGenericDataMap } from 'client-utils/types';
 import { ITypeFields } from 'global-utils';
 
 export interface IType extends ITypeFields {}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { clientRoutes } from '../../client-utils';
+import { clientRoutes } from 'client-utils/routes';
 
 export const getSubmenu = (cityAlias, types, typesMap) => {
   return (

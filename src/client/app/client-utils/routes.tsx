@@ -1,25 +1,8 @@
-import {
-  AdminLayoutPage,
-  AdminItemsPage,
-  CreateEditItemPage,
-  CreateEditTypePage,
-  CreateEditCityPage,
-  AdminTypesPage,
-  AdminCitiesPage,
-  ClientLayoutPage,
-  CityPage,
-  ItemPage
-} from 'pages';
-import { UserRoles } from 'global-utils';
-
-import { MainInfoPage } from '../pages/admin/createEditItem/mainInfo';
-import { DescriptionPage } from '../pages/admin/createEditItem/description';
-import { PhotosPage } from '../pages/admin/createEditItem/photos';
+import { UserRoles } from 'global-utils/typings';
 
 export interface IRoute {
   path: string;
   getLink?: (arg1?, arg2?, arg3?) => string;
-  getComponent?: () => any;
   allowedRoles?: string[];
 }
 
@@ -47,96 +30,79 @@ export type RoutesConfig = {
 export const clientRoutes: RoutesConfig = {
   landing: {
     path: '/:locale(lt|en|ru)?',
-    getLink: (locale: string) => `/${locale}`,
-    getComponent: () => ClientLayoutPage
+    getLink: (locale: string) => `/${locale}`
   },
   items: {
     path: '/:locale(lt|en|ru)/:cityAlias',
-    getLink: (locale: string, cityAlias: string) => `/${locale}/${cityAlias}`,
-    getComponent: () => CityPage
+    getLink: (locale: string, cityAlias: string) => `/${locale}/${cityAlias}`
   },
   item: {
     path: '/:locale(lt|en|ru)/:cityAlias/:itemAlias',
-    getLink: (locale: string, cityAlias: string, itemAlias: string) => `/${locale}/${cityAlias}/${itemAlias}`,
-    getComponent: () => ItemPage
+    getLink: (locale: string, cityAlias: string, itemAlias: string) => `/${locale}/${cityAlias}/${itemAlias}`
   }
 };
 
 export const adminRoutes: RoutesConfig = {
   landing: {
     path: '/admin',
-    getLink: () => '/admin',
-    getComponent: () => AdminLayoutPage
+    getLink: () => '/admin'
   },
   items: {
     path: '/admin/items',
-    getLink: () => '/admin/items',
-    getComponent: () => AdminItemsPage
+    getLink: () => '/admin/items'
   },
   createItem: {
     path: '/admin/item/create',
-    getLink: () => '/admin/item/create',
-    getComponent: () => CreateEditItemPage
+    getLink: () => '/admin/item/create'
   },
   createItemMain: {
     path: '/admin/item/create',
-    getLink: () => '/admin/item/create',
-    getComponent: () => MainInfoPage
+    getLink: () => '/admin/item/create'
   },
   editItem: {
     path: '/admin/item/edit/:userId/:itemId',
-    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}`,
-    getComponent: () => CreateEditItemPage
+    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}`
   },
   editItemMain: {
     path: '/admin/item/edit/:userId/:itemId/main',
-    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/main`,
-    getComponent: () => MainInfoPage
+    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/main`
   },
   editItemDescription: {
     path: '/admin/item/edit/:userId/:itemId/description',
-    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/description`,
-    getComponent: () => DescriptionPage
+    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/description`
   },
   editItemPhotos: {
     path: '/admin/item/edit/:userId/:itemId/photos',
-    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/photos`,
-    getComponent: () => PhotosPage
+    getLink: (userId, itemId) => `/admin/item/edit/${userId}/${itemId}/photos`
   },
   types: {
     path: '/admin/types',
     getLink: () => '/admin/types',
-    allowedRoles: [UserRoles.admin],
-    getComponent: () => AdminTypesPage
+    allowedRoles: [UserRoles.admin]
   },
   createType: {
     path: '/admin/type/create',
     getLink: () => '/admin/type/create',
-    allowedRoles: [UserRoles.admin],
-    getComponent: () => CreateEditTypePage
+    allowedRoles: [UserRoles.admin]
   },
   editType: {
     path: '/admin/type/edit/:typeId',
     getLink: (typeId) => `/admin/type/edit/${typeId}`,
-    allowedRoles: [UserRoles.admin],
-    getComponent: () => CreateEditTypePage
+    allowedRoles: [UserRoles.admin]
   },
   cities: {
     path: '/admin/cities',
     getLink: () => '/admin/cities',
-    allowedRoles: [UserRoles.admin],
-    getComponent: () => AdminCitiesPage
+    allowedRoles: [UserRoles.admin]
   },
   createCity: {
     path: '/admin/city/create',
     getLink: () => '/admin/city/create',
-    allowedRoles: [UserRoles.admin],
-    getComponent: () => CreateEditCityPage
+    allowedRoles: [UserRoles.admin]
   },
   editCity: {
     path: '/admin/city/edit/:cityId',
     getLink: (cityId) => `/admin/city/edit/${cityId}`,
-    allowedRoles: [UserRoles.admin],
-    getComponent: () => CreateEditCityPage
+    allowedRoles: [UserRoles.admin]
   }
 };

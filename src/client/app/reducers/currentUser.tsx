@@ -1,4 +1,7 @@
-import { RECEIVE_USER_DETAILS, RECEIVE_ITEMS, LOGOUT_SUCCESS, CLEAR_STATE } from 'actions';
+import { RECEIVE_USER_DETAILS } from 'actions/currentUser';
+import { CLEAR_STATE } from 'actions/initialData';
+import { LOGOUT_SUCCESS } from 'actions/auth';
+import { RECEIVE_ITEMS } from 'actions/items';
 
 export interface ICurrentUser {
   name?: string;

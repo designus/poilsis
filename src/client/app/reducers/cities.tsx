@@ -1,14 +1,15 @@
 import { ICityFields } from 'global-utils';
-import { IGenericState, removeItemById, IGenericDataMap } from 'client-utils';
+import { IGenericState, IGenericDataMap } from 'client-utils/types';
+import { removeItemById } from 'client-utils/methods';
 import {
   SELECT_CITY,
-  RECEIVE_INITIAL_DATA,
   RECEIVE_CLIENT_CITY,
   CLEAR_SELECTED_CITY,
-  REMOVE_CITY,
-  CLEAR_STATE,
-  RECEIVE_ITEMS
-} from 'actions';
+  REMOVE_CITY
+} from 'actions/cities';
+
+import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions/initialData';
+import { RECEIVE_ITEMS } from 'actions/items';
 
 export interface ICity extends ICityFields {
   hasItems: boolean;

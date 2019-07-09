@@ -8,9 +8,9 @@ import { isEqual } from 'lodash';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState } from 'reducers';
-import { getAdminItem } from 'actions';
+import { getAdminItem } from 'actions/admin';
 import { TItemFields } from 'global-utils';
-import { adminRoutes } from 'client-utils';
+import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem } from 'selectors';
 import { NotFound } from 'components/notFound';
 import { PropsRoute } from 'components/propsRoute';

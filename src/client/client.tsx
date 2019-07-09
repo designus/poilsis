@@ -8,9 +8,9 @@ import { createStore } from './app/store';
 import { App } from 'pages';
 import { ThemeProvider } from '@material-ui/styles';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
-import { theme } from 'global-utils';
+import { theme } from 'global-utils/theme';
 import { IAppState } from 'reducers';
-import { reauthenticateUser } from 'actions';
+import { reauthenticateUser } from 'actions/auth';
 import { isLoggedIn } from 'selectors';
 
 declare global {

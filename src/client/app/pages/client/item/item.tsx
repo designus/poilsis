@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { IAppState, IItemsState, IItem } from 'reducers';
-import { loadItem, selectItem, clearSelectedItem } from 'actions';
+import { loadItem, selectItem, clearSelectedItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
 import { getSelectedItem, shouldLoadViewItem } from 'selectors';
 

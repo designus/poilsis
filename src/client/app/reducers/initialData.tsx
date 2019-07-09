@@ -1,4 +1,4 @@
-import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions';
+import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions/initialData';
 
 export interface IInitialDataState {
   isLoaded: boolean;

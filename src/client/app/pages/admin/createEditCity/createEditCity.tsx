@@ -2,12 +2,16 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
+import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
+import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { TCityFields, ICityFields } from 'global-utils';
-import { createCity, updateCity, getAdminCity } from 'actions';
-import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
+import { createCity, updateCity } from 'actions/cities';
+import { getAdminCity } from 'actions/admin';
+import { getBackendErrors } from 'client-utils/methods';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { adminRoutes } from 'client-utils/routes';
 import { IAppState, ITypesMap } from 'reducers';
 import { shouldLoadEditCity } from 'selectors';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -17,6 +21,7 @@ import { Loader } from 'components/loader';
 
 import { CityForm, CITY_FORM_NAME } from './form';
 
+const { initialize } = reduxFormActions;
 const FormWithLoader = extendWithLoader(extendWithLanguage(CityForm));
 
 interface IMatchParams {

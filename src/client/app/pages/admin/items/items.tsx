@@ -4,15 +4,18 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap, IItem } from 'reducers';
-import { loadUserItems, deleteItem, endLoading, toggleItem } from 'actions';
-import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
+import { deleteItem, toggleItem } from 'actions/items';
+import { loadUserItems } from 'actions/currentUser';
+import { endLoading } from 'actions/loader';
+import { adminRoutes } from 'client-utils/routes';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { shouldLoadUserItems, getUserItems } from 'selectors';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { ItemTypesList } from 'components/itemTypesList';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
-import { DeleteModal } from 'components/modals';
+import { DeleteModal } from 'components/modals/deleteModal';
 import { ToggleAction } from 'components/toggleAction';
 import { AdminHeader } from 'components/adminHeader';
 

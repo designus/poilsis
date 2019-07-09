@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import { config } from '../../../../config';
 import { TCityFields, TTypeFields, TItemFields, TItemDescFields } from 'global-utils';
-import { CONTENT_LOADER_ID } from 'client-utils';
-import { startLoading, endLoading } from 'actions';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { startLoading, endLoading } from 'actions/loader';
 import { handleApiErrors, handleApiResponse } from './utils';
 
 export const RECEIVE_ADMIN_CITY = 'RECEIVE_ADMIN_CITY';

@@ -4,8 +4,9 @@ import Typography from '@material-ui/core/Typography';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { IImage, IPhotoFormState } from 'global-utils';
-import { CONTENT_LOADER_ID } from 'client-utils';
-import { updatePhotos, uploadPhotos, resetUploadState, receiveImages } from 'actions';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { updatePhotos, uploadPhotos, receiveImages } from 'actions/items';
+import { resetUploadState } from 'actions/upload';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { PhotosForm } from './form';
 

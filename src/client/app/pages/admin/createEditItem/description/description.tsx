@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, initialize, isSubmitting } from 'redux-form';
+import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
+import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { EditorState } from 'draft-js';
 
 import { IAppState } from 'reducers';
-import { updateItemDescription } from 'actions';
-import { getBackendErrors, CONTENT_LOADER_ID } from 'client-utils';
+import { updateItemDescription } from 'actions/items';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { getBackendErrors } from 'client-utils/methods';
 import { TItemFields, TItemDescFields, getItemDescriptionFields, TranslatableField, IItemDescFields } from 'global-utils';
 import { stateToHTML } from 'draft-js-export-html';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -18,6 +20,7 @@ import { ICreateEditItemPageProps } from '../createEditItem';
 import { MainInfoForm, ITEM_DESCRIPTION_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
+const { initialize } = reduxFormActions;
 
 type TranslatableEditorState = Record<keyof TranslatableField, EditorState>;
 

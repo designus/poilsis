@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, STOP_ALL_LOADERS } from 'actions';
+import { START_LOADING, END_LOADING, STOP_ALL_LOADERS } from 'actions/loader';
 
 export interface ILoadingState {
   content: boolean;

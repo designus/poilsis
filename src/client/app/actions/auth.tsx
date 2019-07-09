@@ -3,10 +3,12 @@ import * as Cookies from 'js-cookie';
 import * as day from 'dayjs';
 
 import { config } from '../../../../config';
-import { startLoading, endLoading, showToast, receiveUserDetails } from 'actions';
+import { startLoading, endLoading } from 'actions/loader';
+import { showToast } from 'actions/toast';
+import { receiveUserDetails } from 'actions/currentUser';
 import { Toast, IAppState } from 'reducers';
-import { DIALOG_LOADER_ID } from 'client-utils';
-import { getAccessTokenClaims } from 'global-utils';
+import { DIALOG_LOADER_ID } from 'client-utils/constants';
+import { getAccessTokenClaims } from 'global-utils/methods';
 import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_ERROR,

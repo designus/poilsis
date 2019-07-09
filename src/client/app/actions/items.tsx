@@ -1,24 +1,22 @@
 import axios from 'axios';
 
 import {
-  startLoading,
-  endLoading,
-  showToast,
   setUploadProgress,
   uploadError,
-  uploadSuccess,
-  receiveAdminItem,
-  receiveAdminItemDesc
-} from 'actions';
+  uploadSuccess
+} from 'actions/upload';
+
+import { showToast } from 'actions/toast';
+import { receiveAdminItem, receiveAdminItemDesc } from 'actions/admin';
+import { startLoading, endLoading } from 'actions/loader';
 import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
 import {
-  IAlias,
   onUploadProgress,
-  CONTENT_LOADER_ID,
-  DIALOG_LOADER_ID,
   getFormDataFromFiles,
   setAcceptLanguageHeader
- } from 'client-utils';
+ } from 'client-utils/methods';
+import { IAlias } from 'client-utils/types';
+import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { IItemsMap, IAppState, Toast, IItem } from 'reducers';
 import {
   ITEM_UPDATE_SUCCESS,

@@ -4,14 +4,15 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, ICitiesMap, ICity, ITypesMap } from 'reducers';
 import { getCities, getCitiesMap } from 'selectors';
-import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { deleteCity } from 'actions';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { adminRoutes } from 'client-utils/routes';
+import { deleteCity } from 'actions/cities';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { ItemTypesList } from 'components/itemTypesList';
-import { DeleteModal } from 'components/modals';
+import { DeleteModal } from 'components/modals/deleteModal';
 import { AdminHeader } from 'components/adminHeader';
 
 const Table = extendWithLoader(EnhancedTable);

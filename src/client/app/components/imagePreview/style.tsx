@@ -2,7 +2,7 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import { UPLOADED_PHOTO_HEIGHT } from 'global-styles';
-import { UPLOADED_ANIMATION_DURATION } from 'client-utils';
+import { UPLOADED_ANIMATION_DURATION } from 'client-utils/constants';
 
 import { IImagePreview } from './imagePreview';
 

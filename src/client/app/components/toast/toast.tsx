@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IToastState, IAppState, Toast as ToastEnum } from 'reducers';
-import { hideToast } from 'actions';
+import { hideToast } from 'actions/toast';
 import { styles } from './styles';
 
 interface IToastProps extends IToastState, WithStyles<typeof styles>, InjectedIntlProps  {

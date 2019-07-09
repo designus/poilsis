@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 import { ITypeFields, TTypeFields } from 'global-utils';
-import { CONTENT_LOADER_ID, DIALOG_LOADER_ID, setAcceptLanguageHeader } from 'client-utils';
+import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
+import { setAcceptLanguageHeader } from 'client-utils/methods';
 import {
   TYPE_CREATE_SUCCESS,
   TYPE_UPDATE_SUCCESS,

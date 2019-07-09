@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, ITypesMap, IType } from 'reducers';
-import { adminRoutes, CONTENT_LOADER_ID } from 'client-utils';
-import { deleteType } from 'actions';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { adminRoutes } from 'client-utils/routes';
+import { deleteType } from 'actions/types';
 import { getTypes, getTypesMap } from 'selectors';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
-import { DeleteModal } from 'components/modals';
+import { DeleteModal } from 'components/modals/deleteModal';
 import { AdminHeader } from 'components/adminHeader';
 
 const Table = extendWithLoader(EnhancedTable);

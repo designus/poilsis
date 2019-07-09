@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { login } from 'actions';
+import { login } from 'actions/auth';
 import { voidFn } from 'global-utils';
 
 class Login extends React.PureComponent<any, any> {

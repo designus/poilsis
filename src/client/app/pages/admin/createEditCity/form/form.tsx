@@ -3,7 +3,7 @@ import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from 'components/button';
-import { getDropdownOptions } from 'client-utils';
+import { getDropdownOptions } from 'client-utils/methods';
 import { isRequired } from 'global-utils';
 import { ITypesMap } from 'reducers';
 

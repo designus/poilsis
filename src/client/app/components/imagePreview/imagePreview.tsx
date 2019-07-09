@@ -4,7 +4,7 @@ import Fab from '@material-ui/core/Fab';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { IUploadProgress } from 'reducers';
-import { SuccessIcon, ErrorIcon } from 'client-utils';
+import { SuccessIcon, ErrorIcon } from 'client-utils/custom-icons';
 import { IImage } from 'global-utils';
 import { ImageWrapper } from './imageWrapper';
 import { config } from '../../../../../config';

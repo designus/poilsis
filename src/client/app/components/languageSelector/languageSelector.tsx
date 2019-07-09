@@ -6,8 +6,9 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { IAppState } from 'reducers';
 import { Dropdown } from 'components/dropdown';
 import { LANGUAGES } from 'global-utils';
-import { IDropdownOption, capitalize } from 'client-utils';
-import { switchLanguage } from 'actions';
+import { IDropdownOption } from 'client-utils/types';
+import { capitalize } from 'client-utils/methods';
+import { switchLanguage } from 'actions/locale';
 
 import { styles  } from './styles';
 

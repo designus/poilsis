@@ -11,11 +11,13 @@ import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme } from 'global-utils';
-import { IAuthState } from 'reducers';
+import { IAuthState, rootReducer  } from 'reducers';
 
 import app, { staticFilesPort } from './app';
 import { config } from '../../config';
-import { App, rootReducer, routes } from '../client/app/index';
+import { App } from 'pages';
+import { routes } from '../client/app/routes';
+
 import { auth, preloadData } from './app/index';
 
 const stats = require('./stats/reactLoadable.json');
@@ -81,7 +83,7 @@ function sendResponse(res, store, location) {
   const css = sheets.toString();
   const bundles = getBundles(stats, modules);
   const preloadedState = serialize(state, { isJSON: true });
-
+  
   const scripts = bundles
     .filter(bundle => bundle.file.endsWith('.js'))
     .map(script => script.file)

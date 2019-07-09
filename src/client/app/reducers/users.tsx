@@ -1,5 +1,5 @@
-import { RECEIVE_INITIAL_DATA } from '../actions';
-import { IGenericState, IGenericDataMap } from '../client-utils';
+import { RECEIVE_INITIAL_DATA } from 'actions/initialData';
+import { IGenericState, IGenericDataMap } from 'client-utils/types';
 
 export interface IUser {
   id: string;

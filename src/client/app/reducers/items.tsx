@@ -1,4 +1,5 @@
-import { IGenericState, IGenericDataMap, removeItemById } from 'client-utils';
+import { IGenericState, IGenericDataMap } from 'client-utils/types';
+import { removeItemById } from 'client-utils/methods';
 import { IItemFields } from 'global-utils';
 import {
   SELECT_ITEM,
@@ -7,10 +8,10 @@ import {
   REMOVE_ITEM,
   RECEIVE_IMAGES,
   TOGGLE_ITEM_VISIBILITY,
-  CLEAR_STATE,
   CLEAR_SELECTED_ITEM,
   RECEIVE_ITEM_DESCRIPTION
-} from 'actions';
+} from 'actions/items';
+import { CLEAR_STATE } from 'actions/initialData';
 
 export interface IItem extends IItemFields {
   isFullyLoaded?: boolean;

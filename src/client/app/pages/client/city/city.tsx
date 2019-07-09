@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { IAppState, IItem, ICity } from 'reducers';
-import { loadCityItems, clearSelectedCity } from 'actions';
-import { CONTENT_LOADER_ID } from 'client-utils';
+import { loadCityItems, clearSelectedCity } from 'actions/cities';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';

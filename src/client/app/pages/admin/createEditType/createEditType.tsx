@@ -2,12 +2,17 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { SubmissionError, isDirty, isSubmitting, initialize } from 'redux-form';
+import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
+import reduxFormActions from 'redux-form/es/actions';
+
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { ITypeFields, TTypeFields } from 'global-utils';
-import { createType, updateType, getAdminType } from 'actions';
-import { getBackendErrors, CONTENT_LOADER_ID, adminRoutes } from 'client-utils';
+import { createType, updateType } from 'actions/types';
+import { getAdminType } from 'actions/admin';
+import { getBackendErrors } from 'client-utils/methods';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { adminRoutes } from 'client-utils/routes';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
@@ -17,6 +22,7 @@ import { shouldLoadType } from 'selectors';
 
 import { TypeForm, TYPE_FORM_NAME } from './form';
 
+const { initialize } = reduxFormActions;
 const FormWithLoader = extendWithLoader(extendWithLanguage(TypeForm));
 
 interface IMatchParams {

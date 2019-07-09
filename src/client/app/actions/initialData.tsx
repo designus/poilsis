@@ -1,7 +1,10 @@
 import axios from 'axios';
-import { getNormalizedData, setAcceptLanguageHeader, GLOBAL_LOADER_ID } from 'client-utils';
+import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { GLOBAL_LOADER_ID } from 'client-utils/constants';
 import { IAppState } from 'reducers';
-import { receiveUserDetails, startLoading, endLoading, setLocale } from 'actions';
+import { setLocale } from 'actions/locale';
+import { startLoading, endLoading } from 'actions/loader';
+import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
 import { getLocale } from 'selectors';
 import { config } from '../../../../config';

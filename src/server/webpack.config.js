@@ -10,7 +10,7 @@ module.exports = {
   // Exclude node_modules from the bundle
   externals: [nodeExternals()],
   // The main entry point source/server/index.tsx
-  entry: ['babel-polyfill', './server.tsx'],
+  entry: ['@babel/polyfill', './server.tsx'],
   output: {
     path: path.join(projectRoot, 'build', 'server'),    
     filename: "[name].js"
@@ -59,9 +59,9 @@ module.exports = {
             options: {
                 babelrc: false,
                 presets: [
-                  "react",
+                  "@babel/react",
                   [
-                    "env",
+                    "@babel/env",
                     {
                         modules: false
                     }

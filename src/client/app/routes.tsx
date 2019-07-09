@@ -2,12 +2,27 @@ import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
 import { RouteConfig } from 'react-router-config';
 import { IAppState } from 'reducers';
-import { App } from './pages';
+import { App } from 'pages';
+
+import { AdminLayoutPage } from 'pages/admin/layout';
+import { AdminItemsPage } from 'pages/admin/items';
+import { CreateEditItemPage } from 'pages/admin/createEditItem';
+import { CreateEditTypePage } from 'pages/admin/createEditType';
+import { CreateEditCityPage } from 'pages/admin/createEditCity';
+import { AdminTypesPage } from 'pages/admin/types';
+import { AdminCitiesPage } from 'pages/admin/cities';
+import { ClientLayoutPage } from 'pages/client/layout';
+import { CityPage } from 'pages/client/city';
+import { ItemPage } from 'pages/client/item';
+import { MainInfoPage } from 'pages/admin/createEditItem/mainInfo';
+import { DescriptionPage } from 'pages/admin/createEditItem/description';
+import { PhotosPage } from 'pages/admin/createEditItem/photos';
+
 import { loadInitialData } from './pages/client/layout/layout';
 import { loadCityData } from './pages/client/city/city';
 import { loadItemData } from './pages/client/item/item';
 
-import { adminRoutes, clientRoutes, RoutesConfig } from './client-utils';
+import { adminRoutes, clientRoutes } from 'client-utils/routes';
 
 export interface IRoute extends RouteConfig {
   fetchData?: () => ThunkAction<Promise<void>, IAppState, void, Action>;
@@ -19,45 +34,45 @@ export const routes = [
     routes: [
       {
         path: adminRoutes.landing.path,
-        component: adminRoutes.landing.getComponent(),
+        component: AdminLayoutPage,
         fetchData: loadInitialData,
         exact: false,
         routes: [
           {
             path: adminRoutes.items.path,
-            component: adminRoutes.items.getComponent(),
+            component: AdminItemsPage,
             exact: true
           },
           {
             path: adminRoutes.createItem.path,
-            component: adminRoutes.createItem.getComponent(),
+            component: CreateEditItemPage,
             exact: false,
             routes: [
               {
                 path: adminRoutes.createItemMain.path,
-                component: adminRoutes.createItemMain.getComponent(),
+                component: MainInfoPage,
                 exact: false
               }
             ]
           },
           {
             path: adminRoutes.editItem.path,
-            component: adminRoutes.editItem.getComponent(),
+            component: CreateEditItemPage,
             exact: false,
             routes: [
               {
                 path: adminRoutes.editItemMain.path,
-                component: adminRoutes.editItemMain.getComponent(),
+                component: MainInfoPage,
                 exact: false
               },
               {
                 path: adminRoutes.editItemDescription.path,
-                component: adminRoutes.editItemDescription.getComponent(),
+                component: DescriptionPage,
                 exact: false
               },
               {
                 path: adminRoutes.editItemPhotos.path,
-                component: adminRoutes.editItemPhotos.getComponent(),
+                component: PhotosPage,
                 exact: false
               }
             ]
@@ -66,19 +81,19 @@ export const routes = [
       },
       {
         path: clientRoutes.landing.path,
-        component: clientRoutes.landing.getComponent(),
+        component: ClientLayoutPage,
         fetchData: loadInitialData,
         exact: false,
         routes: [
           {
             path: clientRoutes.items.path,
-            component: clientRoutes.items.getComponent(),
+            component: CityPage,
             fetchData: loadCityData,
             exact: true
           },
           {
             path: clientRoutes.item.path,
-            component: clientRoutes.item.getComponent(),
+            component: ItemPage,
             fetchData: loadItemData,
             exact: true
           }

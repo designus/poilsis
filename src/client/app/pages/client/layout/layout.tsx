@@ -7,9 +7,15 @@ import { Toast } from 'components/toast';
 import { UserMenu } from 'components/userMenu';
 import { LanguageSelector } from 'components/languageSelector';
 import { Loader } from 'components/loader';
-import { adminRoutes, clientRoutes, removeInjectedStyles } from 'client-utils';
-import { getInitialData, login, logout, IGetInitialDataParams } from 'actions';
-import { LoginPage, CityPage, ItemPage } from 'pages';
+import { adminRoutes, clientRoutes } from 'client-utils/routes';
+import { removeInjectedStyles } from 'client-utils/methods';
+import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
+import { login, logout } from 'actions/auth';
+
+import { CityPage } from 'pages/client/city';
+import { ItemPage } from 'pages/client/item';
+import { LoginPage } from 'pages/client/login';
+
 import { IAppState, IItemsMap, ICitiesMap, ITypesMap } from 'reducers';
 
 import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn } from 'selectors';

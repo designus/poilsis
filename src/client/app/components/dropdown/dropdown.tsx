@@ -1,12 +1,11 @@
 import * as React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
-import { DropdownItemValue, IDropdownOption } from 'client-utils';
+import { DropdownItemValue, IDropdownOption } from 'client-utils/types';
 
 import { styles } from './styles';
 

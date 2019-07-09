@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { ITypesMap, IItem, IAppState, ICity } from 'reducers';
-import { clientRoutes } from 'client-utils';
+import { clientRoutes } from 'client-utils/routes';
 import { getLocale, getTypesMap } from 'selectors';
 
 import { ItemTypesList } from '../itemTypesList';

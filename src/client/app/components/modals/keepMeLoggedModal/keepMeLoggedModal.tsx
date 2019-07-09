@@ -6,8 +6,8 @@ import Countdown from 'react-countdown-now';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 
 import { IAppState } from 'reducers';
-import { DIALOG_LOADER_ID } from 'client-utils';
-import { logout, reauthenticateUser } from 'actions';
+import { DIALOG_LOADER_ID } from 'client-utils/constants';
+import { logout, reauthenticateUser } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
@@ -35,7 +35,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
     const { classes, isModalOpen, reauthenticateUser, sessionExpiryTime } = this.props;
 
     return (
-      <div>
+      <React.Fragment>
         <Dialog
           open={isModalOpen}
           onClose={this.onCloseModal}
@@ -73,7 +73,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
             onSubmit={reauthenticateUser}
           />
         </Dialog>
-      </div>
+      </React.Fragment>
     );
   }
 }
@@ -90,4 +90,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);
 
-export const KeepMeLoggedModal = withStyles(modalStyles)(connectedComponent);
+export default withStyles(modalStyles)(connectedComponent);

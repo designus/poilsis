@@ -3,7 +3,7 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import { FormattedMessage } from 'react-intl';
 
-import { DIALOG_LOADER_ID } from 'client-utils';
+import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { modalStyles } from '../styles';
 import { DialogHeader, DialogContent, DialogFooter } from '../shared';
 

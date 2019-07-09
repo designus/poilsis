@@ -1,4 +1,4 @@
-import { clearState } from 'actions';
+import { clearState } from 'actions/initialData';
 export const SET_LOCALE = 'SET_LOCALE';
 
 export const setLocale = (locale: string) => ({

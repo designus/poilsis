@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { getNormalizedData, CONTENT_LOADER_ID, setAcceptLanguageHeader } from 'client-utils';
-import { startLoading, endLoading, receiveItems } from 'actions';
+import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { startLoading, endLoading } from 'actions/loader';
+import { receiveItems } from 'actions/items';
 import { IAppState, ICurrentUser } from 'reducers';
 import { isAdmin } from 'global-utils';
 import { getLocale } from 'selectors';

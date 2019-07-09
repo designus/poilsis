@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
-import { IDropdownOption } from 'client-utils';
+import { IDropdownOption } from 'client-utils/types';
 import { styles } from './styles';
 
 export interface ISelectboxProps extends WrappedFieldProps, WithStyles<typeof styles> {

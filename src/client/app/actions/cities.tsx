@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import { ICityFields, TCityFields, IItemFields } from 'global-utils';
 import { IAppState } from 'reducers';
-import { startLoading, endLoading, receiveItems } from 'actions';
+import { startLoading, endLoading } from 'actions/loader';
+import { receiveItems } from 'actions/items';
 import {
   CITY_CREATE_SUCCESS,
   CITY_CREATE_ERROR,
@@ -12,7 +13,8 @@ import {
   CITY_DELETE_ERROR
 } from 'data-strings';
 import { getLocale, getCities } from 'selectors';
-import { getNormalizedData, setAcceptLanguageHeader, CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils';
+import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
+import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { config } from '../../../../config';
 import { receiveAdminCity } from './admin';

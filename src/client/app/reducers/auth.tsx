@@ -4,7 +4,7 @@ import {
   SET_ACCESS_TOKEN,
   SHOW_KEEP_ME_LOGGED_MODAL,
   REAUTHENTICATE_SUCCESS
-} from '../actions';
+} from 'actions/auth';
 
 export interface IAuthState {
   isLoggedIn: boolean;

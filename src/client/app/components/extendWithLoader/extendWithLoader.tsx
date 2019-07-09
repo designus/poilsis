@@ -6,7 +6,7 @@ import { IAppState, ILoadingState } from 'reducers';
 import { Loader } from 'components/loader';
 
 import { styles } from './styles';
-import { GLOBAL_LOADER_ID, CONTENT_LOADER_ID } from 'client-utils';
+import { GLOBAL_LOADER_ID, CONTENT_LOADER_ID } from 'client-utils/constants';
 
 interface IExtendWithLoaderProps extends Partial<WithStyles<typeof styles>> {
   loaderId?: 'content' | 'dialog' | 'global';
