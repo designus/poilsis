@@ -5,6 +5,15 @@ import { LANGUAGES } from './constants';
 export const mapMimeTypesToTypes = (mimeTypes: string[]) =>
   mimeTypes.map(mimeType => mimeType.split('/')[1]).join(', ');
 
+export const isDevelopment = process.env.NODE_ENV === 'development';
+
+export const getStaticFileUri = (file: string): string => {
+  if (typeof window !== 'undefined') {
+    return file;
+  }
+  return `${isDevelopment ? 'http://localhost:8080' : ''}/public/${file}`;
+};
+
 export const isAdmin = (userRole: string) => userRole === UserRoles.admin;
 
 export const voidFn = f => f;

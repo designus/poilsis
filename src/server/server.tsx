@@ -10,7 +10,7 @@ import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
 import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
-import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme } from 'global-utils';
+import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
 import { IAuthState, rootReducer  } from 'reducers';
 
 import app, { staticFilesPort } from './app';
@@ -37,8 +37,6 @@ const getInitialState = (req, user): IInitialAuthState => {
     };
   }
 };
-
-const isDevelopment = () => process.env.NODE_ENV === 'development';
 
 app.get('*', (req, res, next) => {
   return auth.authenticate((err, user) => {
@@ -83,12 +81,12 @@ function sendResponse(res, store, location) {
   const css = sheets.toString();
   const bundles = getBundles(stats, modules);
   const preloadedState = serialize(state, { isJSON: true });
-  
+
   const scripts = bundles
     .filter(bundle => bundle.file.endsWith('.js'))
     .map(script => script.file)
     .filter(removeDuplicates)
-    .map(jsFile => `<script src="${isDevelopment() ? 'http://localhost:8080' : ''}/public/${jsFile}"></script>`)
+    .map(jsFile => `<script src="${getStaticFileUri(jsFile)}"></script>`)
     .join('\n');
 
   res.render('index', {

@@ -17,6 +17,7 @@ import { styles } from './styles';
 
 interface IMenuComponentProps extends WithStyles<typeof styles> {
   currentUser?: ICurrentUser;
+  isInverted?: boolean;
   sessionExpiryTime?: number;
   isKeepMeLoggedModalVisible?: boolean;
   logout?: () => void;
@@ -88,10 +89,8 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
           open={this.state.dropdownMenuOpen}
           onClose={this.handleMenuclose}
         >
-          <div>
-            <MenuItem>My account</MenuItem>
-            <MenuItem onClick={this.props.logout}>Logout</MenuItem>
-          </div>
+          <MenuItem>My account</MenuItem>
+          <MenuItem onClick={this.props.logout}>Logout</MenuItem>
         </Menu>
       </div>
     );
