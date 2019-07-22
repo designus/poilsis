@@ -17,6 +17,7 @@ import { styles } from './styles';
 
 interface IMenuComponentProps extends WithStyles<typeof styles> {
   currentUser?: ICurrentUser;
+  isLoggedIn?: boolean;
   isInverted?: boolean;
   sessionExpiryTime?: number;
   isKeepMeLoggedModalVisible?: boolean;
@@ -62,7 +63,10 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
   }
 
   render() {
-    return this.props.currentUser && (
+    const { currentUser, isLoggedIn } = this.props;
+    if (!currentUser || !isLoggedIn) return null;
+
+    return (
       <div className={this.props.classes.wrapper}>
         <Countdown
           date={this.props.sessionExpiryTime * 1000}

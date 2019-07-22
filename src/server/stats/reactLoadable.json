@@ -151,6 +151,12 @@
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     },
     {
+      "id": "./app/pages/client/layout/topMenu/styles.tsx",
+      "name": "./app/pages/client/layout/topMenu/styles.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    },
+    {
       "id": "./app/components/formFields/textEditor/styles.tsx",
       "name": "./app/components/formFields/textEditor/styles.tsx",
       "file": "descriptionPage.js",
@@ -987,6 +993,22 @@
       "publicPath": "http://localhost:8080/public/clientItem.js"
     }
   ],
+  "./dropdownMenu": [
+    {
+      "id": "./app/components/dropdownMenu/dropdownMenu.tsx",
+      "name": "./app/components/dropdownMenu/dropdownMenu.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "components/dropdownMenu": [
+    {
+      "id": "./app/components/dropdownMenu/index.tsx",
+      "name": "./app/components/dropdownMenu/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
   "components/mainMenu": [
     {
       "id": "./app/components/mainMenu/index.tsx",
@@ -1023,6 +1045,20 @@
     {
       "id": "./app/pages/client/layout/logo.gif",
       "name": "./app/pages/client/layout/logo.gif",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "./topMenu": [
+    {
+      "id": "./app/pages/client/layout/topMenu/index.tsx",
+      "name": "./app/pages/client/layout/topMenu/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    },
+    {
+      "id": "./app/pages/client/layout/topMenu/topMenu.tsx",
+      "name": "./app/pages/client/layout/topMenu/topMenu.tsx",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     }
