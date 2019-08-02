@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+// import Menu from '@material-ui/core/Menu';
 import Countdown from 'react-countdown-now';
 import { throttle } from 'lodash';
 
@@ -13,6 +13,7 @@ import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-ut
 import { logout, showKeepMeLoggedModal } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
 import { IAppState, ICurrentUser } from 'reducers';
+import { DropdownMenu } from 'components/dropdownMenu';
 import { styles } from './styles';
 
 interface IMenuComponentProps extends WithStyles<typeof styles> {
@@ -26,11 +27,6 @@ interface IMenuComponentProps extends WithStyles<typeof styles> {
 }
 
 export class UserMenu extends React.Component<IMenuComponentProps, any> {
-
-  state = {
-    dropdownAnchorEl: null,
-    dropdownMenuOpen: false
-  };
 
   handleTick = (props) => {
     if (props.minutes === 0 && props.seconds <= REAUTHENTICATE_DURATION_SECONDS && !this.props.isKeepMeLoggedModalVisible) {
@@ -46,20 +42,26 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
     this.props.logout();
   }
 
-  handleMenuOpen = event => {
-    this.setState({ dropdownMenuOpen: true, dropdownAnchorEl: event.currentTarget });
-  }
-
-  handleMenuclose = () => {
-    this.setState({ dropdownMenuOpen: false });
-  }
-
   renderCountdown = ({ minutes, seconds }) => {
     return (
       <Typography color="inherit" variant="body1" className={this.props.classes.sessionTimer}>
         {minutes}:{seconds}
       </Typography>
     );
+  }
+
+  getDropdownParentItem = () => {
+    const { classes, isInverted } = this.props;
+    const { icon, iconRegular, iconInverted } = classes; 
+    return (
+      <IconButton
+        aria-label="More"
+        aria-owns="Open right Menu"
+        aria-haspopup="true"
+      >
+        <AccountIcon className={`${icon} ${isInverted ? iconInverted : iconRegular}`} />
+      </IconButton>
+    )
   }
 
   render() {
@@ -78,24 +80,13 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
         <Typography color="inherit" variant="body1" align="right">
           Hello, {this.props.currentUser.name}
         </Typography>
-        <IconButton
-          aria-label="More"
-          aria-owns="Open right Menu"
-          aria-haspopup="true"
-          onClick={this.handleMenuOpen}
-        >
-          <AccountIcon className={this.props.classes.icon} />
-        </IconButton>
-
-        <Menu
+        <DropdownMenu
           id="menuRight"
-          anchorEl={this.state.dropdownAnchorEl}
-          open={this.state.dropdownMenuOpen}
-          onClose={this.handleMenuclose}
+          parentItem={this.getDropdownParentItem()}
         >
           <MenuItem>My account</MenuItem>
           <MenuItem onClick={this.props.logout}>Logout</MenuItem>
-        </Menu>
+        </DropdownMenu>
       </div>
     );
   }
@@ -112,6 +103,6 @@ const mapDispatchToProps = dispatch => ({
   showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal())
 });
 
-const connectedComponent = connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu);
-
-export default withStyles(styles)(connectedComponent);
+export default withStyles(styles)(
+  connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu)
+);

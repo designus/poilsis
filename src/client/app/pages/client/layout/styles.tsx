@@ -43,8 +43,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   logo: {
     flex: 1,
+    padding: '10px 0',
     '& > img': {
-      height: '30px',
+      height: '60px',
       width: 'auto'
     }
   }

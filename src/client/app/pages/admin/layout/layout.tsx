@@ -139,7 +139,7 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
               <Typography className={classes.appBarTitle} variant="h6" color="inherit" noWrap>
                 <FormattedMessage id="admin.menu.dashboard" />
               </Typography>
-              <UserMenu isLoggedIn />
+              <UserMenu isInverted isLoggedIn />
               <LanguageSelector />
             </Toolbar>
           </AppBar>

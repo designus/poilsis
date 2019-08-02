@@ -8,9 +8,11 @@ export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
 
 export const getCitiesMap = (state: IAppState) => state.cities.dataMap;
 
+export const getSelectedCityId = (state: IAppState, routeState = null) =>
+  routeState ? routeState.cityId : state.cities.selectedId;
+
 export const getSelectedCity = (state: IAppState, routeState) => {
-  const selectedId = routeState ? routeState.cityId : state.cities.selectedId;
-  return getCitiesMap(state)[selectedId];
+  return getCitiesMap(state)[getSelectedCityId(state, routeState)];
 };
 
 export const shouldLoadCityItems = (state: IAppState, routeState) => {

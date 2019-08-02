@@ -3,9 +3,14 @@ import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
   icon: {
-    fill: 'rgba(255,255,255,.8)',
     width: '34px',
     height: '34px'
+  },
+  iconRegular: {
+    fill: theme.palette.primary.main
+  },
+  iconInverted: {
+    fill: 'rgba(255,255,255,.8)'
   },
   wrapper: {
     display: 'flex',

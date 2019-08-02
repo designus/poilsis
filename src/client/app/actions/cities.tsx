@@ -46,7 +46,13 @@ export const removeCity = (cityId: string) => ({
 export const loadCityItems = (cityAlias: string, locale: string) => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
-    const cityId = getCities(state).find(city => city.alias === cityAlias).id;
+    const city = getCities(state).find(city => city.alias === cityAlias);
+
+    if (!city) {
+      return null;
+    }
+
+    const cityId = city.id;
     const items = state.items;
     const language = locale || getLocale(state);
 

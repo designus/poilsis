@@ -20,7 +20,7 @@ import { CityPage } from 'pages/client/city';
 import { ItemPage } from 'pages/client/item';
 import { LoginPage } from 'pages/client/login';
 
-import { IAppState, IItemsMap, ICitiesMap, ITypesMap } from 'reducers';
+import { IAppState } from 'reducers';
 
 import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn } from 'selectors';
 
@@ -39,12 +39,10 @@ interface IMatchParams {
 interface ILayoutPageParams extends RouteComponentProps<IMatchParams>, WithStyles<typeof styles> {
   hasInitialDataLoaded: boolean;
   isInitialDataLoading: boolean;
-  itemsMap: IItemsMap;
-  citiesMap: ICitiesMap;
-  typesMap: ITypesMap;
   isLoggedIn: boolean;
   getInitialData: (params?: IGetInitialDataParams) => void;
   login: (credentials: any) => any;
+  locale: string;
 }
 
 export const loadInitialData = (store, params: IMatchParams) => store.dispatch(getInitialData({ locale: params.locale }));
@@ -66,7 +64,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
   }
 
   render() {
-    const { classes, isLoggedIn, login } = this.props;
+    const { classes, isLoggedIn, login, locale } = this.props;
     return (
       <div className={classes.wrapper}>
         <AppBar color="default" position="static">
@@ -78,7 +76,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
           </Toolbar>
         </AppBar>
         <div className="content">
-          <MainMenu {...this.props} showSubmenu={false} />
+          <MainMenu useWrapper={true} showSubmenu={false} />
           <Switch>
             <Route path={'/login'} component={LoginPage} />
             <Route exact path={clientRoutes.items.path} component={CityPage} />
@@ -96,8 +94,6 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  citiesMap: state.cities.dataMap,
-  typesMap: state.types.dataMap,
   hasInitialDataLoaded: hasInitialDataLoaded(state),
   isInitialDataLoading: isInitialDataLoading(state),
   isLoggedIn: isLoggedIn(state),
