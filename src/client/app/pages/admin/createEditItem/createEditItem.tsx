@@ -14,13 +14,14 @@ import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem } from 'selectors';
 import { NotFound } from 'components/notFound';
 import { PropsRoute } from 'components/propsRoute';
-import { HorizontalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { IMenuItem } from 'components/menu';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { Loader } from 'components/loader';
 
 import { MainInfoPage } from './mainInfo';
 import { PhotosPage } from './photos';
 import { DescriptionPage } from './description';
+import { AdminTopMenu as TopMenu } from 'components/menu/adminTopMenu';
 
 interface IMatchParams {
   itemId: string;
@@ -48,21 +49,24 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
   isCreatePage = () => !Boolean(this.props.match.params.itemId);
 
-  getMenuItems(userId?: string, itemId?: string): IAdminMenuItem[] {
+  getMenuItems(userId?: string, itemId?: string): IMenuItem[] {
     const { formatMessage } = this.props.intl;
     return [
       {
+        id: 1,
         icon: () => (<HomeIcon />),
         link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
         text: formatMessage({ id: 'admin.menu.main_info' })
       },
       {
+        id: 2,
         icon: () => (<DescriptionIcon />),
         link: adminRoutes.editItemDescription.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.description' }),
         isDisabled: this.isCreatePage()
       },
       {
+        id: 3,
         icon: () => (<PhotoIcon />),
         link: adminRoutes.editItemPhotos.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.photo_gallery' }),
@@ -93,7 +97,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
     return (loadedItem || isCreatePage) && (
       <React.Fragment>
-        <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
+        <TopMenu items={this.getMenuItems(userId, itemId)} />
         <Switch>
           <ProtectedRoute
             path={adminRoutes.createItem.path}

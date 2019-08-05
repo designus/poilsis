@@ -16,7 +16,6 @@ interface IMainMenu extends Partial<RouteComponentProps<any>>, Partial<WithStyle
   cities?: ICity[];
   selectedCity?: ICity;
   locale?: string;
-  // typesMap: ITypesMap;
 }
 
 const MainMenu = (props: IMainMenu) => {
@@ -70,5 +69,5 @@ const ConnectedComponent = withRouter(
 );
 
 export default React.forwardRef<any, IMainMenu>((props: IMainMenu, ref) =>
-  <ConnectedComponent {...props} ref={ref} />
+  <ConnectedComponent {...props} />
 );

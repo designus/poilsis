@@ -76,3 +76,18 @@ export const getDropdownOptions = memoize(
   (dataMap: IGenericDataMap<object>, labelKey: string): IDropdownOption[] =>
     Object.values(dataMap).map((item: any) => ({ label: item[labelKey], value: item.id }))
 );
+
+export const combineStyles = (...styles) => {
+  return function CombineStyles(theme) {
+    const outStyles = styles.map((arg) => {
+      // Apply the "theme" object for style functions.
+      if (typeof arg === 'function') {
+        return arg(theme);
+      }
+      // Objects need no change.
+      return arg;
+    });
+
+    return outStyles.reduce((acc, val) => Object.assign(acc, val));
+  };
+}

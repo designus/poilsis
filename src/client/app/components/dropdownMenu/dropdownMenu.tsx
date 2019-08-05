@@ -6,22 +6,26 @@ import { styles } from './styles';
 
 interface IDropdownMenu extends WithStyles<typeof styles> {
   children: JSX.Element[] | JSX.Element;
-  parentItem: JSX.Element | string;
+  parentItem: React.ReactElement<any>;
   id: string;
+  className?: any;
 }
 
 const DropdownMenu = (props: IDropdownMenu) => {
   const { useState } = React;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { children, parentItem, id, classes } = props;
+  const { children, parentItem, id, classes, className } = props;
 
   const handleMenuOpen = event => {
     setIsDropdownOpen(true);
     setAnchorEl(event.currentTarget);
   };
 
-  const parentElement = React.cloneElement(parentItem as React.ReactElement<any>, { onClick: handleMenuOpen });
+  const parentElement = React.cloneElement(parentItem, {
+    className: `${parentItem.props.className} ${isDropdownOpen ? 'active' : ''} `,
+    onClick: handleMenuOpen
+   });
 
   const handleMenuclose = () => {
     setIsDropdownOpen(false);
@@ -35,7 +39,7 @@ const DropdownMenu = (props: IDropdownMenu) => {
         anchorEl={anchorEl}
         open={isDropdownOpen}
         onClose={handleMenuclose}
-        classes={{ paper: classes.wrapper }}
+        classes={{ paper: className ? className : classes.wrapper }}
       >
         {children}
       </Menu>

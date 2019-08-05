@@ -37,26 +37,8 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/components/adminMenu/horizontalMenu/styles.tsx",
-      "name": "./app/components/adminMenu/horizontalMenu/styles.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/components/adminMenu/verticalMenu/styles.tsx",
-      "name": "./app/components/adminMenu/verticalMenu/styles.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
       "id": "./app/components/adminPageActions/styles.tsx",
       "name": "./app/components/adminPageActions/styles.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/components/drawer/styles.tsx",
-      "name": "./app/components/drawer/styles.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
@@ -109,6 +91,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/components/drawer/styles.tsx",
+      "name": "./app/components/drawer/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    },
+    {
       "id": "./app/components/dropdown/styles.tsx",
       "name": "./app/components/dropdown/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
@@ -151,8 +139,14 @@
       "publicPath": "http://localhost:8080/public/clientCity.js"
     },
     {
-      "id": "./app/components/mainMenu/styles.tsx",
-      "name": "./app/components/mainMenu/styles.tsx",
+      "id": "./app/components/menu/clientTopMenu/horizontalMenu/styles.tsx",
+      "name": "./app/components/menu/clientTopMenu/horizontalMenu/styles.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    },
+    {
+      "id": "./app/components/menu/clientTopMenu/styles.tsx",
+      "name": "./app/components/menu/clientTopMenu/styles.tsx",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     },
@@ -163,10 +157,10 @@
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     },
     {
-      "id": "./app/pages/client/layout/topMenu/styles.tsx",
-      "name": "./app/pages/client/layout/topMenu/styles.tsx",
-      "file": "clientLayout.js",
-      "publicPath": "http://localhost:8080/public/clientLayout.js"
+      "id": "./app/components/menu/adminTopMenu/styles.tsx",
+      "name": "./app/components/menu/adminTopMenu/styles.tsx",
+      "file": "createEditItemPage.js",
+      "publicPath": "http://localhost:8080/public/createEditItemPage.js"
     },
     {
       "id": "./app/components/formFields/textEditor/styles.tsx",
@@ -267,50 +261,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "./adminMenu": [
-    {
-      "id": "./app/components/adminMenu/adminMenu.tsx",
-      "name": "./app/components/adminMenu/adminMenu.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "./horizontalMenu": [
-    {
-      "id": "./app/components/adminMenu/horizontalMenu/horizontalMenu.tsx",
-      "name": "./app/components/adminMenu/horizontalMenu/horizontalMenu.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/components/adminMenu/horizontalMenu/index.tsx",
-      "name": "./app/components/adminMenu/horizontalMenu/index.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "components/adminMenu": [
-    {
-      "id": "./app/components/adminMenu/index.tsx",
-      "name": "./app/components/adminMenu/index.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "./verticalMenu": [
-    {
-      "id": "./app/components/adminMenu/verticalMenu/index.tsx",
-      "name": "./app/components/adminMenu/verticalMenu/index.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/components/adminMenu/verticalMenu/verticalMenu.tsx",
-      "name": "./app/components/adminMenu/verticalMenu/verticalMenu.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
   "./adminPageActions": [
     {
       "id": "./app/components/adminPageActions/adminPageActions.tsx",
@@ -339,22 +289,6 @@
     {
       "id": "./app/components/button/index.tsx",
       "name": "./app/components/button/index.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "./drawer": [
-    {
-      "id": "./app/components/drawer/drawer.tsx",
-      "name": "./app/components/drawer/drawer.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "components/drawer": [
-    {
-      "id": "./app/components/drawer/index.tsx",
-      "name": "./app/components/drawer/index.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
@@ -463,7 +397,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/itemTypesList": [
+  "../itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -489,6 +423,22 @@
       "name": "./app/components/itemTypesList/itemTypesList.tsx",
       "file": "clientCity.js",
       "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "./adminLeftMenu": [
+    {
+      "id": "./app/components/menu/adminLeftMenu/adminLeftMenu.tsx",
+      "name": "./app/components/menu/adminLeftMenu/adminLeftMenu.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "components/menu/adminLeftMenu": [
+    {
+      "id": "./app/components/menu/adminLeftMenu/index.tsx",
+      "name": "./app/components/menu/adminLeftMenu/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
   "./deleteModal": [
@@ -649,30 +599,6 @@
     {
       "id": "./app/components/table/tableHead/tableHead.tsx",
       "name": "./app/components/table/tableHead/tableHead.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "./colors": [
-    {
-      "id": "./app/global-styles/colors.tsx",
-      "name": "./app/global-styles/colors.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "../../../global-styles": [
-    {
-      "id": "./app/global-styles/index.tsx",
-      "name": "./app/global-styles/index.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "./settings": [
-    {
-      "id": "./app/global-styles/settings.tsx",
-      "name": "./app/global-styles/settings.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
@@ -869,6 +795,22 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "./drawer": [
+    {
+      "id": "./app/components/drawer/drawer.tsx",
+      "name": "./app/components/drawer/drawer.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/drawer": [
+    {
+      "id": "./app/components/drawer/index.tsx",
+      "name": "./app/components/drawer/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./dropdown": [
     {
       "id": "./app/components/dropdown/dropdown.tsx",
@@ -951,6 +893,22 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "components/menu/adminLeftMenu/styles": [
+    {
+      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/menu/menu": [
+    {
+      "id": "./app/components/menu/menu.tsx",
+      "name": "./app/components/menu/menu.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
   "components/toast": [
     {
       "id": "./app/components/toast/index.tsx",
@@ -989,6 +947,30 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
+  "./colors": [
+    {
+      "id": "./app/global-styles/colors.tsx",
+      "name": "./app/global-styles/colors.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "../../global-styles": [
+    {
+      "id": "./app/global-styles/index.tsx",
+      "name": "./app/global-styles/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./settings": [
+    {
+      "id": "./app/global-styles/settings.tsx",
+      "name": "./app/global-styles/settings.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
   "components/itemsList": [
     {
       "id": "./app/components/itemsList/index.tsx",
@@ -1021,18 +1003,54 @@
       "publicPath": "http://localhost:8080/public/clientItem.js"
     }
   ],
-  "components/mainMenu": [
+  "static/images/logo.gif": [
     {
-      "id": "./app/components/mainMenu/index.tsx",
-      "name": "./app/components/mainMenu/index.tsx",
+      "id": "../../static/images/logo.gif",
+      "name": "../../static/images/logo.gif",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     }
   ],
-  "./mainMenu": [
+  "./clientTopMenu": [
     {
-      "id": "./app/components/mainMenu/mainMenu.tsx",
-      "name": "./app/components/mainMenu/mainMenu.tsx",
+      "id": "./app/components/menu/clientTopMenu/clientTopMenu.tsx",
+      "name": "./app/components/menu/clientTopMenu/clientTopMenu.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "./horizontalMenu": [
+    {
+      "id": "./app/components/menu/clientTopMenu/horizontalMenu/horizontalMenu.tsx",
+      "name": "./app/components/menu/clientTopMenu/horizontalMenu/horizontalMenu.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    },
+    {
+      "id": "./app/components/menu/clientTopMenu/horizontalMenu/index.tsx",
+      "name": "./app/components/menu/clientTopMenu/horizontalMenu/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "components/menu/clientTopMenu": [
+    {
+      "id": "./app/components/menu/clientTopMenu/index.tsx",
+      "name": "./app/components/menu/clientTopMenu/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "./verticalMenu": [
+    {
+      "id": "./app/components/menu/clientTopMenu/verticalMenu/index.tsx",
+      "name": "./app/components/menu/clientTopMenu/verticalMenu/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    },
+    {
+      "id": "./app/components/menu/clientTopMenu/verticalMenu/verticalMenu.tsx",
+      "name": "./app/components/menu/clientTopMenu/verticalMenu/verticalMenu.tsx",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     }
@@ -1049,28 +1067,6 @@
     {
       "id": "./app/pages/client/item/index.tsx",
       "name": "./app/pages/client/item/index.tsx",
-      "file": "clientLayout.js",
-      "publicPath": "http://localhost:8080/public/clientLayout.js"
-    }
-  ],
-  "./logo.gif": [
-    {
-      "id": "./app/pages/client/layout/logo.gif",
-      "name": "./app/pages/client/layout/logo.gif",
-      "file": "clientLayout.js",
-      "publicPath": "http://localhost:8080/public/clientLayout.js"
-    }
-  ],
-  "./topMenu": [
-    {
-      "id": "./app/pages/client/layout/topMenu/index.tsx",
-      "name": "./app/pages/client/layout/topMenu/index.tsx",
-      "file": "clientLayout.js",
-      "publicPath": "http://localhost:8080/public/clientLayout.js"
-    },
-    {
-      "id": "./app/pages/client/layout/topMenu/topMenu.tsx",
-      "name": "./app/pages/client/layout/topMenu/topMenu.tsx",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     }
@@ -1119,6 +1115,22 @@
     {
       "id": "../../node_modules/lodash/isEqual.js",
       "name": "../../node_modules/lodash/isEqual.js",
+      "file": "createEditItemPage.js",
+      "publicPath": "http://localhost:8080/public/createEditItemPage.js"
+    }
+  ],
+  "./adminTopMenu": [
+    {
+      "id": "./app/components/menu/adminTopMenu/adminTopMenu.tsx",
+      "name": "./app/components/menu/adminTopMenu/adminTopMenu.tsx",
+      "file": "createEditItemPage.js",
+      "publicPath": "http://localhost:8080/public/createEditItemPage.js"
+    }
+  ],
+  "components/menu/adminTopMenu": [
+    {
+      "id": "./app/components/menu/adminTopMenu/index.tsx",
+      "name": "./app/components/menu/adminTopMenu/index.tsx",
       "file": "createEditItemPage.js",
       "publicPath": "http://localhost:8080/public/createEditItemPage.js"
     }
@@ -5319,22 +5331,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "@material-ui/core/colors/grey": [
-    {
-      "id": "../../node_modules/@material-ui/core/colors/grey.js",
-      "name": "../../node_modules/@material-ui/core/colors/grey.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/colors/indigo": [
-    {
-      "id": "../../node_modules/@material-ui/core/colors/indigo.js",
-      "name": "../../node_modules/@material-ui/core/colors/indigo.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "@material-ui/core/colors/red": [
     {
       "id": "../../node_modules/@material-ui/core/colors/red.js",
@@ -5355,22 +5351,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/Checkbox/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Checkbox/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./Drawer": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Drawer/Drawer.js",
-      "name": "../../node_modules/@material-ui/core/esm/Drawer/Drawer.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/Drawer": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Drawer/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Drawer/index.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -5423,70 +5403,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./Hidden": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Hidden/Hidden.js",
-      "name": "../../node_modules/@material-ui/core/esm/Hidden/Hidden.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./HiddenCss": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Hidden/HiddenCss.js",
-      "name": "../../node_modules/@material-ui/core/esm/Hidden/HiddenCss.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./HiddenJs": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Hidden/HiddenJs.js",
-      "name": "../../node_modules/@material-ui/core/esm/Hidden/HiddenJs.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/Hidden": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Hidden/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Hidden/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./ListItemIcon": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/ListItemIcon/ListItemIcon.js",
-      "name": "../../node_modules/@material-ui/core/esm/ListItemIcon/ListItemIcon.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/ListItemIcon": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/ListItemIcon/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/ListItemIcon/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./ListItemText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/ListItemText/ListItemText.js",
-      "name": "../../node_modules/@material-ui/core/esm/ListItemText/ListItemText.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/ListItemText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/ListItemText/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/ListItemText/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "./Popper": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Popper/Popper.js",
@@ -5499,22 +5415,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/Popper/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Popper/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./Slide": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Slide/Slide.js",
-      "name": "../../node_modules/@material-ui/core/esm/Slide/Slide.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "../Slide": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Slide/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Slide/index.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -5743,38 +5643,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "../useMediaQuery": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./useMediaQuery": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/useMediaQuery.js",
-      "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/useMediaQuery.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "../withWidth": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/withWidth/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/withWidth/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./withWidth": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/withWidth/withWidth.js",
-      "name": "../../node_modules/@material-ui/core/esm/withWidth/withWidth.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "@material-ui/icons/Add": [
     {
       "id": "../../node_modules/@material-ui/icons/Add.js",
@@ -5795,14 +5663,6 @@
     {
       "id": "../../node_modules/@material-ui/icons/BeachAccess.js",
       "name": "../../node_modules/@material-ui/icons/BeachAccess.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/icons/ChevronLeft": [
-    {
-      "id": "../../node_modules/@material-ui/icons/ChevronLeft.js",
-      "name": "../../node_modules/@material-ui/icons/ChevronLeft.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -5843,14 +5703,6 @@
     {
       "id": "../../node_modules/@material-ui/icons/List.js",
       "name": "../../node_modules/@material-ui/icons/List.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/icons/Menu": [
-    {
-      "id": "../../node_modules/@material-ui/icons/Menu.js",
-      "name": "../../node_modules/@material-ui/icons/Menu.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -6583,6 +6435,22 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
+  "@material-ui/core/colors/grey": [
+    {
+      "id": "../../node_modules/@material-ui/core/colors/grey.js",
+      "name": "../../node_modules/@material-ui/core/colors/grey.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/colors/indigo": [
+    {
+      "id": "../../node_modules/@material-ui/core/colors/indigo.js",
+      "name": "../../node_modules/@material-ui/core/colors/indigo.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./AppBar": [
     {
       "id": "../../node_modules/@material-ui/core/esm/AppBar/AppBar.js",
@@ -6611,6 +6479,38 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/ClickAwayListener/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ClickAwayListener/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./Collapse": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Collapse/Collapse.js",
+      "name": "../../node_modules/@material-ui/core/esm/Collapse/Collapse.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/Collapse": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Collapse/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Collapse/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./Drawer": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Drawer/Drawer.js",
+      "name": "../../node_modules/@material-ui/core/esm/Drawer/Drawer.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/Drawer": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Drawer/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Drawer/index.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -6687,6 +6587,38 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "./Hidden": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Hidden/Hidden.js",
+      "name": "../../node_modules/@material-ui/core/esm/Hidden/Hidden.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./HiddenCss": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Hidden/HiddenCss.js",
+      "name": "../../node_modules/@material-ui/core/esm/Hidden/HiddenCss.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./HiddenJs": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Hidden/HiddenJs.js",
+      "name": "../../node_modules/@material-ui/core/esm/Hidden/HiddenJs.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/Hidden": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Hidden/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Hidden/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/Input.js",
@@ -6759,7 +6691,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./ListContext": [
+  "../List/ListContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
       "name": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
@@ -6783,10 +6715,42 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/ListItem": [
+  "../ListItem": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./ListItemIcon": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/ListItemIcon/ListItemIcon.js",
+      "name": "../../node_modules/@material-ui/core/esm/ListItemIcon/ListItemIcon.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/ListItemIcon": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/ListItemIcon/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/ListItemIcon/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./ListItemText": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/ListItemText/ListItemText.js",
+      "name": "../../node_modules/@material-ui/core/esm/ListItemText/ListItemText.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/ListItemText": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/ListItemText/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/ListItemText/index.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -6831,7 +6795,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/MenuList": [
+  "../MenuList": [
     {
       "id": "../../node_modules/@material-ui/core/esm/MenuList/index.js",
       "name": "../../node_modules/@material-ui/core/esm/MenuList/index.js",
@@ -6891,6 +6855,22 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/Select/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Select/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./Slide": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Slide/Slide.js",
+      "name": "../../node_modules/@material-ui/core/esm/Slide/Slide.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "../Slide": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Slide/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Slide/index.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -6959,6 +6939,38 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "../useMediaQuery": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./useMediaQuery": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/useMediaQuery.js",
+      "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/useMediaQuery.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "../withWidth": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/withWidth/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/withWidth/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./withWidth": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/withWidth/withWidth.js",
+      "name": "../../node_modules/@material-ui/core/esm/withWidth/withWidth.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "@material-ui/icons/AccountCircle": [
     {
       "id": "../../node_modules/@material-ui/icons/AccountCircle.js",
@@ -6967,10 +6979,42 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "@material-ui/icons/ChevronLeft": [
+    {
+      "id": "../../node_modules/@material-ui/icons/ChevronLeft.js",
+      "name": "../../node_modules/@material-ui/icons/ChevronLeft.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "@material-ui/icons/Close": [
     {
       "id": "../../node_modules/@material-ui/icons/Close.js",
       "name": "../../node_modules/@material-ui/icons/Close.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/icons/ExpandLess": [
+    {
+      "id": "../../node_modules/@material-ui/icons/ExpandLess.js",
+      "name": "../../node_modules/@material-ui/icons/ExpandLess.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/icons/ExpandMore": [
+    {
+      "id": "../../node_modules/@material-ui/icons/ExpandMore.js",
+      "name": "../../node_modules/@material-ui/icons/ExpandMore.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/icons/Menu": [
+    {
+      "id": "../../node_modules/@material-ui/icons/Menu.js",
+      "name": "../../node_modules/@material-ui/icons/Menu.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -7119,6 +7163,38 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
+  "./Backdrop": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Backdrop/Backdrop.js",
+      "name": "../../node_modules/@material-ui/core/esm/Backdrop/Backdrop.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../Backdrop": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Backdrop/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Backdrop/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./Button": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Button/Button.js",
+      "name": "../../node_modules/@material-ui/core/esm/Button/Button.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "@material-ui/core/Button": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Button/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Button/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
   "./ButtonBase": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ButtonBase/ButtonBase.js",
@@ -7163,6 +7239,22 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/CircularProgress/index.js",
       "name": "../../node_modules/@material-ui/core/esm/CircularProgress/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./Fade": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Fade/Fade.js",
+      "name": "../../node_modules/@material-ui/core/esm/Fade/Fade.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../Fade": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Fade/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Fade/index.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
@@ -7495,38 +7587,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./Backdrop": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Backdrop/Backdrop.js",
-      "name": "../../node_modules/@material-ui/core/esm/Backdrop/Backdrop.js",
-      "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
-    }
-  ],
-  "../Backdrop": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Backdrop/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Backdrop/index.js",
-      "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
-    }
-  ],
-  "./Button": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Button/Button.js",
-      "name": "../../node_modules/@material-ui/core/esm/Button/Button.js",
-      "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
-    }
-  ],
-  "@material-ui/core/Button": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Button/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Button/index.js",
-      "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
-    }
-  ],
   "./Dialog": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Dialog/Dialog.js",
@@ -7603,22 +7663,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/DialogTitle/index.js",
       "name": "../../node_modules/@material-ui/core/esm/DialogTitle/index.js",
-      "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
-    }
-  ],
-  "./Fade": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Fade/Fade.js",
-      "name": "../../node_modules/@material-ui/core/esm/Fade/Fade.js",
-      "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
-    }
-  ],
-  "../Fade": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Fade/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Fade/index.js",
       "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
     }

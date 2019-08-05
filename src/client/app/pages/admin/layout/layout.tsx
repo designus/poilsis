@@ -21,13 +21,14 @@ import { IAppState } from 'reducers';
 import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
 
 import { Toast } from 'components/toast';
-import { VerticalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { IMenuItem } from 'components/menu';
 import { Drawer } from 'components/drawer';
 import { UserMenu } from 'components/userMenu';
 import { NotFound } from 'components/notFound';
 import { NotAuthorized } from 'components/notAuthorized';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
+import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
 import { Loader } from 'components/loader';
 
 import { AdminItemsPage } from 'pages/admin/items';
@@ -81,32 +82,37 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
     this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
   }
 
-  get menuItems(): IAdminMenuItem[] {
+  get menuItems(): IMenuItem[] {
     const { formatMessage } = this.props.intl;
     return [
       {
+        id: 1,
         icon: () => (<DashboardIcon />),
         link: adminRoutes.landing.getLink(),
         text: formatMessage({ id: 'admin.menu.dashboard' })
       },
       {
+        id: 3,
         icon: () => (<ListIcon />),
         link: adminRoutes.items.getLink(),
         text: formatMessage({ id: 'admin.menu.items' })
       },
       {
+        id: 4,
         icon: () => (<TypesIcon />),
         link: adminRoutes.types.getLink(),
         text: formatMessage({ id: 'admin.menu.types' }),
         allowedRoles: adminRoutes.types.allowedRoles
       },
       {
+        id: 5,
         icon: () => (<CitiesIcon />),
         link: adminRoutes.cities.getLink(),
         text: formatMessage({ id: 'admin.menu.cities' }),
         allowedRoles: adminRoutes.cities.allowedRoles
       },
       {
+        id: 6,
         icon: () => (<ArrowBackIcon />),
         link: clientRoutes.landing.getLink(this.props.locale),
         text: formatMessage({ id: 'admin.menu.go_to_website' })
@@ -122,7 +128,7 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
           onClose={this.handleDrawerClose}
           mobileDrawerOpen={this.state.mobileDrawerOpen}
         >
-          <VerticalMenu items={this.menuItems} />
+          <LeftMenu isVertical items={this.menuItems} />
         </Drawer>
         <div className={classes.content}>
           <AppBar className={classes.appBar}>
