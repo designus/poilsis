@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import { Provider } from 'react-redux';
-import { createStore } from './app/store';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+
 import { App } from 'pages';
 import { ThemeProvider } from '@material-ui/styles';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
@@ -12,6 +14,9 @@ import { theme } from 'global-utils/theme';
 import { IAppState } from 'reducers';
 import { reauthenticateUser } from 'actions/auth';
 import { isLoggedIn } from 'selectors';
+import { createStore } from './app/store';
+
+library.add(faUser);
 
 declare global {
   interface Window {

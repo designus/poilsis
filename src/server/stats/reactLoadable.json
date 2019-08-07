@@ -617,6 +617,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/reducers/cities.tsx",
+      "name": "./app/reducers/cities.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
       "id": "../data-strings/cities.tsx",
       "name": "../data-strings/cities.tsx",
       "file": "main.js",
@@ -625,12 +631,6 @@
     {
       "id": "./app/selectors/cities.tsx",
       "name": "./app/selectors/cities.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/cities.tsx",
-      "name": "./app/reducers/cities.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -1207,10 +1207,10 @@
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
-  "./shadows": [
+  "../colors/pink": [
     {
-      "id": "../../node_modules/@material-ui/core/esm/styles/shadows.js",
-      "name": "../../node_modules/@material-ui/core/esm/styles/shadows.js",
+      "id": "../../node_modules/@material-ui/core/esm/colors/pink.js",
+      "name": "../../node_modules/@material-ui/core/esm/colors/pink.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -1307,7 +1307,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../webpack/buildin/global.js": [
+  "./../../webpack/buildin/global.js": [
     {
       "id": "../../node_modules/webpack/buildin/global.js",
       "name": "../../node_modules/webpack/buildin/global.js",
@@ -1795,6 +1795,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     },
     {
+      "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    },
+    {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "name": "../../node_modules/react-dropzone/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "file": "vendors~photosPage.js",
@@ -1993,6 +1999,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     },
     {
+      "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/index.js",
+      "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/index.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    },
+    {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/index.js",
       "name": "../../node_modules/react-dropzone/node_modules/prop-types/index.js",
       "file": "vendors~photosPage.js",
@@ -2059,6 +2071,12 @@
       "name": "../../node_modules/react-transition-group/node_modules/prop-types/factoryWithTypeCheckers.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/factoryWithTypeCheckers.js",
@@ -2171,6 +2189,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     },
     {
+      "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/checkPropTypes.js",
+      "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/checkPropTypes.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    },
+    {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/checkPropTypes.js",
       "name": "../../node_modules/react-dropzone/node_modules/prop-types/checkPropTypes.js",
       "file": "vendors~photosPage.js",
@@ -2235,6 +2259,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     },
     {
+      "id": "../../node_modules/react-is/index.js",
+      "name": "../../node_modules/react-is/index.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    },
+    {
       "id": "../../node_modules/react-dropzone/node_modules/react-is/index.js",
       "name": "../../node_modules/react-dropzone/node_modules/react-is/index.js",
       "file": "vendors~photosPage.js",
@@ -2289,6 +2319,12 @@
       "name": "../../node_modules/react-transition-group/node_modules/react-is/cjs/react-is.development.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/react-is/cjs/react-is.development.js",
+      "name": "../../node_modules/react-is/cjs/react-is.development.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/react-is/cjs/react-is.development.js",
@@ -2715,54 +2751,58 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./app/store": [
+  "@fortawesome/fontawesome-svg-core": [
     {
-      "id": "./app/store.tsx",
-      "name": "./app/store.tsx",
+      "id": "../../node_modules/@fortawesome/fontawesome-svg-core/index.es.js",
+      "name": "../../node_modules/@fortawesome/fontawesome-svg-core/index.es.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "redux-thunk": [
+  "./../../timers-browserify/main.js": [
     {
-      "id": "../../node_modules/redux-thunk/es/index.js",
-      "name": "../../node_modules/redux-thunk/es/index.js",
+      "id": "../../node_modules/timers-browserify/main.js",
+      "name": "../../node_modules/timers-browserify/main.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "redux-devtools-extension": [
+  "setimmediate": [
     {
-      "id": "../../node_modules/redux-devtools-extension/index.js",
-      "name": "../../node_modules/redux-devtools-extension/index.js",
+      "id": "../../node_modules/setimmediate/setImmediate.js",
+      "name": "../../node_modules/setimmediate/setImmediate.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "reducers": [
+  "@fortawesome/free-regular-svg-icons": [
     {
-      "id": "./app/reducers/index.tsx",
-      "name": "./app/reducers/index.tsx",
+      "id": "../../node_modules/@fortawesome/free-regular-svg-icons/index.es.js",
+      "name": "../../node_modules/@fortawesome/free-regular-svg-icons/index.es.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./auth": [
+  "pages": [
     {
-      "id": "./app/reducers/auth.tsx",
-      "name": "./app/reducers/auth.tsx",
+      "id": "./app/pages/index.tsx",
+      "name": "./app/pages/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
+    }
+  ],
+  "./app": [
     {
-      "id": "../data-strings/auth.tsx",
-      "name": "../data-strings/auth.tsx",
+      "id": "./app/pages/app.tsx",
+      "name": "./app/pages/app.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
+    }
+  ],
+  "dayjs": [
     {
-      "id": "./app/selectors/auth.tsx",
-      "name": "./app/selectors/auth.tsx",
+      "id": "../../node_modules/dayjs/dayjs.min.js",
+      "name": "../../node_modules/dayjs/dayjs.min.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -2779,14 +2819,6 @@
     {
       "id": "../../node_modules/js-cookie/src/js.cookie.js",
       "name": "../../node_modules/js-cookie/src/js.cookie.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "dayjs": [
-    {
-      "id": "../../node_modules/dayjs/dayjs.min.js",
-      "name": "../../node_modules/dayjs/dayjs.min.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3221,6 +3253,42 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "reducers": [
+    {
+      "id": "./app/reducers/index.tsx",
+      "name": "./app/reducers/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./auth": [
+    {
+      "id": "./app/reducers/auth.tsx",
+      "name": "./app/reducers/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../data-strings/auth.tsx",
+      "name": "../data-strings/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/auth.tsx",
+      "name": "./app/selectors/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/cities": [
+    {
+      "id": "./app/actions/cities.tsx",
+      "name": "./app/actions/cities.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "data-strings": [
     {
       "id": "../data-strings/index.tsx",
@@ -3377,6 +3445,22 @@
     {
       "id": "./app/reducers/currentUser.tsx",
       "name": "./app/reducers/currentUser.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/initialData": [
+    {
+      "id": "./app/actions/initialData.tsx",
+      "name": "./app/actions/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/locale": [
+    {
+      "id": "./app/actions/locale.tsx",
+      "name": "./app/actions/locale.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3539,10 +3623,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../colors/pink": [
+  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
     {
-      "id": "../../node_modules/@material-ui/core/esm/colors/pink.js",
-      "name": "../../node_modules/@material-ui/core/esm/colors/pink.js",
+      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3579,10 +3663,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
+  "./shadows": [
     {
-      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
-      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "id": "../../node_modules/@material-ui/core/esm/styles/shadows.js",
+      "name": "../../node_modules/@material-ui/core/esm/styles/shadows.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4231,30 +4315,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/cities": [
-    {
-      "id": "./app/actions/cities.tsx",
-      "name": "./app/actions/cities.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/initialData": [
-    {
-      "id": "./app/actions/initialData.tsx",
-      "name": "./app/actions/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/locale": [
-    {
-      "id": "./app/actions/locale.tsx",
-      "name": "./app/actions/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "actions/types": [
     {
       "id": "./app/actions/types.tsx",
@@ -4861,22 +4921,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "pages": [
-    {
-      "id": "./app/pages/index.tsx",
-      "name": "./app/pages/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./app": [
-    {
-      "id": "./app/pages/app.tsx",
-      "name": "./app/pages/app.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "components/propsRoute": [
     {
       "id": "./app/components/propsRoute/index.tsx",
@@ -4997,10 +5041,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "react-intl/locale-data/lt": [
+  "redux-thunk": [
     {
-      "id": "../../node_modules/react-intl/locale-data/lt.js",
-      "name": "../../node_modules/react-intl/locale-data/lt.js",
+      "id": "../../node_modules/redux-thunk/es/index.js",
+      "name": "../../node_modules/redux-thunk/es/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -5099,10 +5143,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "react-intl/locale-data/en": [
+  "./app/store": [
     {
-      "id": "../../node_modules/react-intl/locale-data/en.js",
-      "name": "../../node_modules/react-intl/locale-data/en.js",
+      "id": "./app/store.tsx",
+      "name": "./app/store.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -5123,6 +5167,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "react-intl/locale-data/ru": [
+    {
+      "id": "../../node_modules/react-intl/locale-data/ru.js",
+      "name": "../../node_modules/react-intl/locale-data/ru.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "intl-format-cache": [
     {
       "id": "../../node_modules/intl-format-cache/index.js",
@@ -5139,10 +5191,26 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "react-intl/locale-data/ru": [
+  "react-intl/locale-data/en": [
     {
-      "id": "../../node_modules/react-intl/locale-data/ru.js",
-      "name": "../../node_modules/react-intl/locale-data/ru.js",
+      "id": "../../node_modules/react-intl/locale-data/en.js",
+      "name": "../../node_modules/react-intl/locale-data/en.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "react-intl/locale-data/lt": [
+    {
+      "id": "../../node_modules/react-intl/locale-data/lt.js",
+      "name": "../../node_modules/react-intl/locale-data/lt.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "redux-devtools-extension": [
+    {
+      "id": "../../node_modules/redux-devtools-extension/index.js",
+      "name": "../../node_modules/redux-devtools-extension/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -7671,6 +7739,14 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
     }
   ],
+  "@fortawesome/react-fontawesome": [
+    {
+      "id": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
+      "name": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    }
+  ],
   "@material-ui/icons/FormatBold": [
     {
       "id": "../../node_modules/@material-ui/icons/FormatBold.js",
@@ -8953,14 +9029,6 @@
     {
       "id": "../../node_modules/fbjs/lib/setImmediate.js",
       "name": "../../node_modules/fbjs/lib/setImmediate.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "setimmediate": [
-    {
-      "id": "../../node_modules/setimmediate/setImmediate.js",
-      "name": "../../node_modules/setimmediate/setImmediate.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }

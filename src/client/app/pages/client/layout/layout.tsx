@@ -7,6 +7,7 @@ import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Toast } from 'components/toast';
 import { UserMenu } from 'components/userMenu';
@@ -109,6 +110,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
             <Hidden smDown>
               <TopMenu isLoggedIn={isLoggedIn} login={login} />
             </Hidden>
+            <FontAwesomeIcon icon={['far', 'user']} />
             <UserMenu isLoggedIn={isLoggedIn} />
             <LanguageSelector reloadPageOnChange />
           </Toolbar>
