@@ -59,8 +59,10 @@ export const styles = (theme: Theme) => createStyles({
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: '0 8px',
+    margin: '0 10px',
+    color: '#fff',
     borderBottom: '1px dashed rgba(255, 255, 255, .6)',
     ...theme.mixins.toolbar
   },

@@ -28,7 +28,6 @@ import { IAppState } from 'reducers';
 
 import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn } from 'selectors';
 
-
 // @ts-ignore
 import logoUrl from 'static/images/logo.gif';
 
@@ -87,7 +86,12 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
             onClose={this.handleDrawerClose}
             mobileDrawerOpen={this.state.mobileDrawerOpen}
           >
-            <TopMenu isVertical={true} isLoggedIn={isLoggedIn} login={login} />
+            <TopMenu
+              onRouteChange={this.handleDrawerClose}
+              isVertical={true}
+              isLoggedIn={isLoggedIn}
+              login={login}
+            />
           </Drawer>
         </Hidden>
         <AppBar color="default" position="static">

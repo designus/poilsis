@@ -32,6 +32,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   disabled: {
     background: theme.palette.grey['300'],
+    pointerEvents: 'none',
+    opacity: .5,
     ...commonStyles
   },
   link: {

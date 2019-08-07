@@ -17,14 +17,14 @@ import { styles } from './styles';
 export interface IMenuItem {
   id: string | number;
   text: string;
-  icon?: () => React.ReactElement<any>;
   link?: string;
   isDisabled?: boolean;
   allowedRoles?: string[];
   state?: { [key: string]: string };
-  onClick?: (event: React.SyntheticEvent) => void;
   items?: IMenuItem[];
   isActive?: boolean;
+  onClick?: (event: React.SyntheticEvent) => void;
+  icon?: () => React.ReactElement<any>;
 }
 
 export interface IMenuProps extends Partial<RouteComponentProps<any>>, Partial<WithStyles<typeof styles>> {
@@ -33,9 +33,18 @@ export interface IMenuProps extends Partial<RouteComponentProps<any>>, Partial<W
   userRole?: string;
 }
 
+const { useState, useEffect } = React;
+
 function Menu(props: IMenuProps) {
   const { classes, userRole, items, isVertical } = props;
-  const [dropdownOpen, setDropdownOpen] = React.useState({});
+  const [dropdownOpen, setDropdownOpen] = useState({});
+
+  useEffect(() => {
+    const activeItem = items.find(item => item.isActive);
+    if (activeItem) {
+      setDropdownOpen({ ...dropdownOpen, [activeItem.id]: true });
+    }
+  }, [items]);
 
   const isItemVisible = (item: IMenuItem) =>
     !item.allowedRoles || item.allowedRoles.indexOf(userRole) !== -1;
@@ -63,7 +72,10 @@ function Menu(props: IMenuProps) {
 
   const renderCollapsableMenu = (item: IMenuItem) => (
     <React.Fragment>
-      <div className={classes.collapsableItem} onClick={handleDropdownOpen(item)}>
+      <div
+        className={classes.collapsableItem}
+        onClick={handleDropdownOpen(item)}
+      >
         {renderItemContent(item)}
         <ListItemIcon className={classes.icon}>
           {isDropdownOpen(item) ? <ExpandLess /> : <ExpandMore />}

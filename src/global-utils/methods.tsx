@@ -37,6 +37,12 @@ export const localizeDocument = (item: object, language: string) => {
 
 export const isFunction = fn => typeof fn === 'function';
 
+export const callFn = (fn, ...args) => {
+  if (isFunction(fn)) {
+    fn.apply(null, args);
+  }
+};
+
 export const getLocalizedResponse = (data: any, language: string) => {
   const getObject = data => isFunction(data.toObject) ? data.toObject() : data;
 

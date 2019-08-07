@@ -2,15 +2,16 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
+
 import { getLocale, getCities, getSelectedCityId } from 'selectors';
 import { IAppState, ICity } from 'reducers';
 import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
+import { callFn } from 'global-utils';
 
 import { HorizontalMenu } from './horizontalMenu';
-
-import { styles } from './styles';
 import { VerticalMenu } from './verticalMenu';
+import { styles } from './styles';
 
 const { useState, useEffect } = React;
 
@@ -19,14 +20,20 @@ enum ActiveItem {
   Offers
 }
 
-interface ITopMenu extends RouteComponentProps<any>, WithStyles<typeof styles> {
-  isLoggedIn: boolean;
-  login: (credentials: any) => void;
-  locale: string;
-  selectedCityId: string;
-  cities?: ICity[];
-  isVertical: boolean;
+interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
+  onRouteChange?: () => void;
+  login?: (credentials: any) => void;
+  isVertical?: boolean;
+  isLoggedIn?: boolean;
 }
+
+interface IStateProps {
+  locale?: string;
+  cities?: ICity[];
+  selectedCityId?: string;
+}
+
+type ITopMenu = IStateProps & IOwnProps;
 
 const getActiveItem = (pathName: string, selectedCityId: string) => {
   if (selectedCityId) {
@@ -37,7 +44,7 @@ const getActiveItem = (pathName: string, selectedCityId: string) => {
 };
 
 function ClientTopMenu(props: ITopMenu) {
-  const { classes, cities, isLoggedIn, login, locale, selectedCityId, isVertical } = props;
+  const { classes, cities, isLoggedIn, login, locale, selectedCityId, isVertical, onRouteChange } = props;
   const [activeItem, setActiveItem] = useState(getActiveItem(props.location.pathname, selectedCityId));
 
   const StyledTopMenu = isVertical ? VerticalMenu : HorizontalMenu;
@@ -95,6 +102,7 @@ function ClientTopMenu(props: ITopMenu) {
 
   useEffect(() => {
     setActiveItem(getActiveItem(props.location.pathname, selectedCityId));
+    callFn(onRouteChange);
   }, [selectedCityId, props.location.pathname]);
 
   const signIn = (credentials: any) => () => {
@@ -108,14 +116,14 @@ function ClientTopMenu(props: ITopMenu) {
   );
 }
 
-const mapStateToProps = (state: IAppState, props) => ({
+const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
   locale: getLocale(state),
   cities: getCities(state),
   selectedCityId: getSelectedCityId(state, props.location.state)
 });
 
-export default withRouter(
-  connect(mapStateToProps)(
-    withStyles(styles)(ClientTopMenu)
+export default withStyles(styles)(
+  withRouter(
+    connect<IStateProps, {}, IOwnProps>(mapStateToProps)(ClientTopMenu)
   )
 );

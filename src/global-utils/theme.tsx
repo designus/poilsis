@@ -1,6 +1,33 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
+declare module '@material-ui/core/styles/createMuiTheme' {
+  // tslint:disable-next-line
+  interface Theme {
+    customButton?: {
+      borderRadius: string
+    };
+  }
+  // allow configuration using `createMuiTheme`
+  // tslint:disable-next-line
+  interface ThemeOptions {
+    customButton?: {
+      borderRadius: string
+    };
+  }
+}
+
 export const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#609BFA',
+      main: '#285ABE',
+      dark: '#204283',
+      contrastText: '#fff'
+    }
+  },
+  customButton: {
+    borderRadius: '10px'
+  },
   overrides: {
     MuiButton: {
       root: {
