@@ -7,13 +7,13 @@ import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Toast } from 'components/toast';
 import { UserMenu } from 'components/userMenu';
 import { LanguageSelector } from 'components/languageSelector';
 import { Loader } from 'components/loader';
 import { Drawer } from 'components/drawer';
+import { LoginButton } from 'components/loginButton';
 import { ClientTopMenu as TopMenu } from 'components/menu/clientTopMenu';
 import { clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
@@ -95,7 +95,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
             />
           </Drawer>
         </Hidden>
-        <AppBar color="default" position="static">
+        <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
           <Toolbar className={classes.toolbar}>
             <Hidden mdUp implementation="css">
               <IconButton
@@ -110,7 +110,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
             <Hidden smDown>
               <TopMenu isLoggedIn={isLoggedIn} login={login} />
             </Hidden>
-            <FontAwesomeIcon icon={['far', 'user']} />
+            <LoginButton />
             <UserMenu isLoggedIn={isLoggedIn} />
             <LanguageSelector reloadPageOnChange />
           </Toolbar>

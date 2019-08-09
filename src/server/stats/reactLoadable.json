@@ -145,6 +145,12 @@
       "publicPath": "http://localhost:8080/public/clientCity.js"
     },
     {
+      "id": "./app/components/loginButton/styles.tsx",
+      "name": "./app/components/loginButton/styles.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    },
+    {
       "id": "./app/components/menu/clientTopMenu/horizontalMenu/styles.tsx",
       "name": "./app/components/menu/clientTopMenu/horizontalMenu/styles.tsx",
       "file": "clientLayout.js",
@@ -1005,6 +1011,22 @@
     {
       "id": "../../static/images/logo.gif",
       "name": "../../static/images/logo.gif",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "components/loginButton": [
+    {
+      "id": "./app/components/loginButton/index.tsx",
+      "name": "./app/components/loginButton/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "./loginButton": [
+    {
+      "id": "./app/components/loginButton/loginButton.tsx",
+      "name": "./app/components/loginButton/loginButton.tsx",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     }
@@ -5419,22 +5441,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./Fab": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Fab/Fab.js",
-      "name": "../../node_modules/@material-ui/core/esm/Fab/Fab.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/Fab": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Fab/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Fab/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "./FormControlLabel": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControlLabel/FormControlLabel.js",
@@ -6579,6 +6585,22 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "./Fab": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Fab/Fab.js",
+      "name": "../../node_modules/@material-ui/core/esm/Fab/Fab.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/Fab": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Fab/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Fab/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./FormControl": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/FormControl.js",
@@ -7115,7 +7137,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./debounce": [
+  "lodash/debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
       "name": "../../node_modules/lodash/debounce.js",

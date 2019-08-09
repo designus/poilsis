@@ -16,6 +16,7 @@
   "common.form_validation.max_photo_count": "Prašome įkelti ne daugiau {count} nuotraukų",
   "common.form_validation.max_photo_size": "Kai kurios Jūsų pasirinktos nuotraukos viršyje maksimalų leistina {count} mb limitą",
   "common.form_validation.wrong_file_type": "Prašome pasirinkti vieną iš šių {types} tipų",
+  "common.login": "Prisijungti",
   "admin.menu.dashboard": "Skydelis",
   "admin.menu.items": "Įrašai",
   "admin.menu.types": "Tipai",

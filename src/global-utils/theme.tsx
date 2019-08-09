@@ -24,9 +24,13 @@ export const theme = createMuiTheme({
       dark: '#204283',
       contrastText: '#fff'
     }
+    // secondary: {
+    //   main: '#FED00C',
+    //   contrastText: '#fff'
+    // }
   },
   customButton: {
-    borderRadius: '10px'
+    borderRadius: '16px'
   },
   overrides: {
     MuiButton: {

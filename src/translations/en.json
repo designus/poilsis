@@ -16,6 +16,7 @@
   "common.form_validation.max_photo_count": "You are not allowed to uploade more than {count} photos",
   "common.form_validation.max_photo_size": "Some of your selected files exceeds maximum allowed size of {count} mb",
   "common.form_validation.wrong_file_type": "Field supports only {types} types",
+  "common.login": "Login",
   "admin.menu.dashboard": "Dashboard",
   "admin.menu.items": "Items",
   "admin.menu.types": "Types",

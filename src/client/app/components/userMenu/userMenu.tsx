@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
-// import Menu from '@material-ui/core/Menu';
 import Countdown from 'react-countdown-now';
 import { throttle } from 'lodash';
 
