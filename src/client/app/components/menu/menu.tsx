@@ -11,7 +11,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { WithStyles } from '@material-ui/core/styles';
 
 import { DropdownMenu } from 'components/dropdownMenu';
-import { IAppState } from 'reducers';
+import { getCurrentUser } from 'selectors';
+import { IAppState, ICurrentUser } from 'reducers';
 import { styles } from './styles';
 
 export interface IMenuItem {
@@ -30,13 +31,13 @@ export interface IMenuItem {
 export interface IMenuProps extends Partial<RouteComponentProps<any>>, Partial<WithStyles<typeof styles>> {
   items: IMenuItem[];
   isVertical?: boolean;
-  userRole?: string;
+  currentUser?: ICurrentUser;
 }
 
 const { useState, useEffect } = React;
 
 function Menu(props: IMenuProps) {
-  const { classes, userRole, items, isVertical } = props;
+  const { classes, currentUser, items, isVertical } = props;
   const [dropdownOpen, setDropdownOpen] = useState({});
 
   useEffect(() => {
@@ -46,8 +47,13 @@ function Menu(props: IMenuProps) {
     }
   }, [items]);
 
-  const isItemVisible = (item: IMenuItem) =>
-    !item.allowedRoles || item.allowedRoles.indexOf(userRole) !== -1;
+  const isItemVisible = (item: IMenuItem) => {
+    if (!currentUser || !item.allowedRoles) {
+      return true;
+    }
+
+    return item.allowedRoles.indexOf(currentUser.role) !== -1;
+  };
 
   const isDropdownOpen = (item: IMenuItem) => Boolean(dropdownOpen[item.id]);
 
@@ -164,7 +170,7 @@ function Menu(props: IMenuProps) {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  userRole: state.currentUser.details.role
+  currentUser: getCurrentUser(state)
 });
 
 export default withRouter(

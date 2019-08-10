@@ -44,7 +44,7 @@ const getActiveItem = (pathName: string, selectedCityId: string) => {
 };
 
 function ClientTopMenu(props: ITopMenu) {
-  const { classes, cities, isLoggedIn, login, locale, selectedCityId, isVertical, onRouteChange } = props;
+  const { classes, cities, isLoggedIn, locale, selectedCityId, isVertical, onRouteChange } = props;
   const [activeItem, setActiveItem] = useState(getActiveItem(props.location.pathname, selectedCityId));
 
   const StyledTopMenu = isVertical ? VerticalMenu : HorizontalMenu;
@@ -78,23 +78,6 @@ function ClientTopMenu(props: ITopMenu) {
         text: 'Admin',
         link: adminRoutes.items.getLink()
       });
-    } else {
-      menuItems.push({
-        id: 3,
-        text: 'Login',
-        items: [
-          {
-            id: 31,
-            text: 'Log in with admin',
-            onClick: signIn({username: 'admin', password: 'admin'})
-          },
-          {
-            id: 32,
-            text: 'Log in with user',
-            onClick: signIn({username: 'tomas', password: 'tomas'})
-          }
-        ]
-      });
     }
 
     return menuItems;
@@ -104,10 +87,6 @@ function ClientTopMenu(props: ITopMenu) {
     setActiveItem(getActiveItem(props.location.pathname, selectedCityId));
     callFn(onRouteChange);
   }, [selectedCityId, props.location.pathname]);
-
-  const signIn = (credentials: any) => () => {
-    login(credentials);
-  };
 
   return (
     <div className={classes.topMenu}>

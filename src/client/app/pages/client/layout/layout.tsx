@@ -44,8 +44,6 @@ interface ILayoutPageParams extends RouteComponentProps<IMatchParams>, WithStyle
   isInitialDataLoading: boolean;
   isLoggedIn: boolean;
   getInitialData: (params?: IGetInitialDataParams) => void;
-  login: (credentials: any) => any;
-  locale: string;
 }
 
 export const loadInitialData = (store, params: IMatchParams) => store.dispatch(getInitialData({ locale: params.locale }));
@@ -79,7 +77,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
   }
 
   render() {
-    const { classes, isLoggedIn, login } = this.props;
+    const { classes, isLoggedIn } = this.props;
     return (
       <div className={classes.wrapper}>
         <Hidden mdUp>
@@ -91,7 +89,6 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
               onRouteChange={this.handleDrawerClose}
               isVertical={true}
               isLoggedIn={isLoggedIn}
-              login={login}
             />
           </Drawer>
         </Hidden>
@@ -108,7 +105,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
             </Hidden>
             {this.renderLogo()}
             <Hidden smDown>
-              <TopMenu isLoggedIn={isLoggedIn} login={login} />
+              <TopMenu isLoggedIn={isLoggedIn} />
             </Hidden>
             <LoginButton />
             <UserMenu isLoggedIn={isLoggedIn} />
@@ -136,14 +133,10 @@ const mapStateToProps = (state: IAppState) => ({
   hasInitialDataLoaded: hasInitialDataLoaded(state),
   isInitialDataLoading: isInitialDataLoading(state),
   isLoggedIn: isLoggedIn(state),
-  user: state.currentUser.details && state.currentUser.details.name,
-  cities: getCities(state),
-  locale: state.locale
+  cities: getCities(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (credentials) => dispatch(login(credentials)),
-  logout: () => dispatch(logout()),
   getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params))
 });
 
