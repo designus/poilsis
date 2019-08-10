@@ -959,7 +959,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1079,6 +1079,14 @@
     {
       "id": "./app/pages/client/city/index.tsx",
       "name": "./app/pages/client/city/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "pages/client/home": [
+    {
+      "id": "./app/pages/client/home/index.tsx",
+      "name": "./app/pages/client/home/index.tsx",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     }
@@ -1219,6 +1227,14 @@
       "name": "./app/components/formFields/textEditor/textEditor.tsx",
       "file": "descriptionPage.js",
       "publicPath": "http://localhost:8080/public/descriptionPage.js"
+    }
+  ],
+  "./home": [
+    {
+      "id": "./app/pages/client/home/home.tsx",
+      "name": "./app/pages/client/home/home.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
     }
   ],
   "./keepMeLoggedModal": [
@@ -7765,6 +7781,54 @@
     {
       "id": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
       "name": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    }
+  ],
+  "./Container": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Container/Container.js",
+      "name": "../../node_modules/@material-ui/core/esm/Container/Container.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/Container": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Container/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Container/index.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    }
+  ],
+  "./deprecatedPropType": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/utils/deprecatedPropType.js",
+      "name": "../../node_modules/@material-ui/core/esm/utils/deprecatedPropType.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    }
+  ],
+  "../utils": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/utils/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/utils/index.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    }
+  ],
+  "./requirePropFactory": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/utils/requirePropFactory.js",
+      "name": "../../node_modules/@material-ui/core/esm/utils/requirePropFactory.js",
+      "file": "vendors~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
+    }
+  ],
+  "./unsupportedProp": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/utils/unsupportedProp.js",
+      "name": "../../node_modules/@material-ui/core/esm/utils/unsupportedProp.js",
       "file": "vendors~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }

@@ -7,6 +7,7 @@ export interface IRoute {
 }
 
 export type RouteKeys =
+  | 'login'
   | 'landing'
   | 'items'
   | 'item'
@@ -28,6 +29,10 @@ export type RoutesConfig = {
 };
 
 export const clientRoutes: RoutesConfig = {
+  login: {
+    path: '/:locale(lt|en|ru)?/login',
+    getLink: (locale: string) => `/${locale}/login`
+  },
   landing: {
     path: '/:locale(lt|en|ru)?',
     getLink: (locale: string) => `/${locale}`

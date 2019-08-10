@@ -38,8 +38,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'space-between',
-    padding: '0 15px'
+    justifyContent: 'space-between'
   },
   topMenu: {
     display: 'flex',
@@ -48,6 +47,7 @@ export const styles = (theme: Theme) => createStyles({
   logo: {
     flex: 1,
     padding: '10px 0',
+    cursor: 'pointer',
     '& > img': {
       height: '60px',
       width: 'auto'

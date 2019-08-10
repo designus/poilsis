@@ -7,6 +7,7 @@ import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
+import Container from '@material-ui/core/Container';
 
 import { Toast } from 'components/toast';
 import { UserMenu } from 'components/userMenu';
@@ -18,16 +19,16 @@ import { ClientTopMenu as TopMenu } from 'components/menu/clientTopMenu';
 import { clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
 import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
-import { login, logout } from 'actions/auth';
 import { getStaticFileUri } from 'global-utils';
 
 import { CityPage } from 'pages/client/city';
 import { ItemPage } from 'pages/client/item';
 import { LoginPage } from 'pages/client/login';
+import { HomePage } from 'pages/client/home';
 
 import { IAppState } from 'reducers';
 
-import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn } from 'selectors';
+import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn, getLocale } from 'selectors';
 
 // @ts-ignore
 import logoUrl from 'static/images/logo.gif';
@@ -44,6 +45,7 @@ interface ILayoutPageParams extends RouteComponentProps<IMatchParams>, WithStyle
   isInitialDataLoading: boolean;
   isLoggedIn: boolean;
   getInitialData: (params?: IGetInitialDataParams) => void;
+  locale: string;
 }
 
 export const loadInitialData = (store, params: IMatchParams) => store.dispatch(getInitialData({ locale: params.locale }));
@@ -68,9 +70,13 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
     this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
   }
 
+  handleLogoClick = () => {
+    this.props.history.push(clientRoutes.landing.getLink(this.props.locale));
+  }
+
   renderLogo = () => {
     return (
-      <div className={this.props.classes.logo}>
+      <div onClick={this.handleLogoClick} className={this.props.classes.logo}>
         <img src={getStaticFileUri(logoUrl)} />
       </div>
     );
@@ -93,35 +99,35 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
           </Drawer>
         </Hidden>
         <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
-          <Toolbar className={classes.toolbar}>
-            <Hidden mdUp implementation="css">
-              <IconButton
-                color="inherit"
-                aria-label="Open Drawer"
-                onClick={this.handleDrawerToggle}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Hidden>
-            {this.renderLogo()}
-            <Hidden smDown>
-              <TopMenu isLoggedIn={isLoggedIn} />
-            </Hidden>
-            <LoginButton />
-            <UserMenu isLoggedIn={isLoggedIn} />
-            <LanguageSelector reloadPageOnChange />
-          </Toolbar>
+          <Container maxWidth="xl">
+            <Toolbar disableGutters className={classes.toolbar}>
+              <Hidden mdUp implementation="css">
+                <IconButton
+                  color="inherit"
+                  aria-label="Open Drawer"
+                  onClick={this.handleDrawerToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+              {this.renderLogo()}
+              <Hidden smDown>
+                <TopMenu isLoggedIn={isLoggedIn} />
+              </Hidden>
+              <LoginButton />
+              <UserMenu isLoggedIn={isLoggedIn} />
+              <LanguageSelector reloadPageOnChange />
+            </Toolbar>
+          </Container>
         </AppBar>
-        <div className="content">
+        <Container maxWidth="xl">
           <Switch>
-            <Route path={'/login'} component={LoginPage} />
+            <Route path={clientRoutes.login.path} component={LoginPage} />
             <Route exact path={clientRoutes.items.path} component={CityPage} />
             <Route exact path={clientRoutes.item.path} component={ItemPage} />
+            <Route path={clientRoutes.landing.path} component={HomePage} />
           </Switch>
-        </div>
-        <div className="footer">
-          This is footer
-        </div>
+        </Container>
         <Toast />
         {this.props.isInitialDataLoading && <Loader isLoading />}
       </div>
@@ -133,7 +139,8 @@ const mapStateToProps = (state: IAppState) => ({
   hasInitialDataLoaded: hasInitialDataLoaded(state),
   isInitialDataLoading: isInitialDataLoading(state),
   isLoggedIn: isLoggedIn(state),
-  cities: getCities(state)
+  cities: getCities(state),
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
