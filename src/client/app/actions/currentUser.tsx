@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { getNormalizedData } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveItems } from 'actions/items';
@@ -30,7 +30,7 @@ export const loadUserItems = () => (dispatch, getState) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(endpoint, setAcceptLanguageHeader(getLocale(state)))
+  return axios.get(endpoint)
     .then(response => response.data)
     .then(data => {
       const { dataMap, aliases } = getNormalizedData(data);

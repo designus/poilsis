@@ -2,13 +2,16 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItem, ICity } from 'reducers';
+import { ICity } from 'global-utils/typings';
+import { IAppState } from 'reducers';
 import { loadCityItems, clearSelectedCity } from 'actions/cities';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { getLocalizedText } from 'client-utils/methods';
 import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';
-import { getSelectedCity, shouldLoadCityItems, getCityItems } from 'selectors';
+import { IItem } from 'global-utils/typings';
+import { getSelectedCity, shouldLoadCityItems, getCityItems, getLocale } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
@@ -21,6 +24,7 @@ interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   cityItems: IItem[];
   selectedCity: ICity;
   shouldLoadCityItems: boolean;
+  locale: string;
   loadCityItems: (cityAlias: string, locale: string) => void;
   clearSelectedCity: () => void;
 }
@@ -51,11 +55,11 @@ class CityPage extends React.Component<ICityPageParams, any> {
   }
 
   render() {
-    const { selectedCity } = this.props;
+    const { selectedCity, locale } = this.props;
     return selectedCity ? (
       <div>
-        <h1>{selectedCity.name}</h1>
-        <p>{selectedCity.description}</p>
+        <h1>{getLocalizedText(selectedCity.name, locale)}</h1>
+        <p>{getLocalizedText(selectedCity.description, locale)}</p>
         <ItemsListWithLoader
           loaderId={CONTENT_LOADER_ID}
           items={this.props.cityItems}
@@ -69,7 +73,8 @@ class CityPage extends React.Component<ICityPageParams, any> {
 const mapStateToProps = (state: IAppState, props: ICityPageParams) => ({
   selectedCity: getSelectedCity(state, props.location.state),
   cityItems: getCityItems(state, props.location.state),
-  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state)
+  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state),
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

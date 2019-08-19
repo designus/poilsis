@@ -257,6 +257,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "actions/admin": [
+    {
+      "id": "./app/actions/admin.tsx",
+      "name": "./app/actions/admin.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
   "./adminHeader": [
     {
       "id": "./app/components/adminHeader/adminHeader.tsx",
@@ -959,7 +967,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../global-styles": [
+  "../../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1139,14 +1147,6 @@
       "publicPath": "http://localhost:8080/public/createEditItemPage.js"
     }
   ],
-  "lodash/isEqual": [
-    {
-      "id": "../../node_modules/lodash/isEqual.js",
-      "name": "../../node_modules/lodash/isEqual.js",
-      "file": "createEditItemPage.js",
-      "publicPath": "http://localhost:8080/public/createEditItemPage.js"
-    }
-  ],
   "./adminTopMenu": [
     {
       "id": "./app/components/menu/adminTopMenu/adminTopMenu.tsx",
@@ -1245,10 +1245,22 @@
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
-  "../colors/pink": [
+  "./createStyles": [
     {
-      "id": "../../node_modules/@material-ui/core/esm/colors/pink.js",
-      "name": "../../node_modules/@material-ui/core/esm/colors/pink.js",
+      "id": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
+      "name": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
+      "name": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -1267,14 +1279,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../config sync recursive ^\\.\\/.*$",
-      "name": "../../config sync recursive ^\\.\\/.*$",
+      "id": "../translations sync recursive ^\\.\\/.*\\.json$",
+      "name": "../translations sync recursive ^\\.\\/.*\\.json$",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../translations sync recursive ^\\.\\/.*\\.json$",
-      "name": "../translations sync recursive ^\\.\\/.*\\.json$",
+      "id": "../../config sync recursive ^\\.\\/.*$",
+      "name": "../../config sync recursive ^\\.\\/.*$",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -1345,7 +1357,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../../webpack/buildin/global.js": [
+  "./../webpack/buildin/global.js": [
     {
       "id": "../../node_modules/webpack/buildin/global.js",
       "name": "../../node_modules/webpack/buildin/global.js",
@@ -1477,234 +1489,6 @@
     {
       "id": "./client.tsx",
       "name": "./client.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "axios": [
-    {
-      "id": "../../node_modules/axios/index.js",
-      "name": "../../node_modules/axios/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/axios": [
-    {
-      "id": "../../node_modules/axios/lib/axios.js",
-      "name": "../../node_modules/axios/lib/axios.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./utils": [
-    {
-      "id": "../../node_modules/axios/lib/utils.js",
-      "name": "../../node_modules/axios/lib/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/actions/utils.tsx",
-      "name": "./app/actions/utils.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/intl-messageformat/lib/utils.js",
-      "name": "../../node_modules/intl-messageformat/lib/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./helpers/bind": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/bind.js",
-      "name": "../../node_modules/axios/lib/helpers/bind.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "is-buffer": [
-    {
-      "id": "../../node_modules/is-buffer/index.js",
-      "name": "../../node_modules/is-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./core/Axios": [
-    {
-      "id": "../../node_modules/axios/lib/core/Axios.js",
-      "name": "../../node_modules/axios/lib/core/Axios.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./defaults": [
-    {
-      "id": "../../node_modules/axios/lib/defaults.js",
-      "name": "../../node_modules/axios/lib/defaults.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../../process/browser.js": [
-    {
-      "id": "../../node_modules/process/browser.js",
-      "name": "../../node_modules/process/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./helpers/normalizeHeaderName": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/normalizeHeaderName.js",
-      "name": "../../node_modules/axios/lib/helpers/normalizeHeaderName.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./adapters/xhr": [
-    {
-      "id": "../../node_modules/axios/lib/adapters/xhr.js",
-      "name": "../../node_modules/axios/lib/adapters/xhr.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../core/settle": [
-    {
-      "id": "../../node_modules/axios/lib/core/settle.js",
-      "name": "../../node_modules/axios/lib/core/settle.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "../core/createError": [
-    {
-      "id": "../../node_modules/axios/lib/core/createError.js",
-      "name": "../../node_modules/axios/lib/core/createError.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./enhanceError": [
-    {
-      "id": "../../node_modules/axios/lib/core/enhanceError.js",
-      "name": "../../node_modules/axios/lib/core/enhanceError.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../helpers/buildURL": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/buildURL.js",
-      "name": "../../node_modules/axios/lib/helpers/buildURL.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../helpers/parseHeaders": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/parseHeaders.js",
-      "name": "../../node_modules/axios/lib/helpers/parseHeaders.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../helpers/isURLSameOrigin": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/isURLSameOrigin.js",
-      "name": "../../node_modules/axios/lib/helpers/isURLSameOrigin.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../helpers/btoa": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/btoa.js",
-      "name": "../../node_modules/axios/lib/helpers/btoa.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../helpers/cookies": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/cookies.js",
-      "name": "../../node_modules/axios/lib/helpers/cookies.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./InterceptorManager": [
-    {
-      "id": "../../node_modules/axios/lib/core/InterceptorManager.js",
-      "name": "../../node_modules/axios/lib/core/InterceptorManager.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./dispatchRequest": [
-    {
-      "id": "../../node_modules/axios/lib/core/dispatchRequest.js",
-      "name": "../../node_modules/axios/lib/core/dispatchRequest.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./transformData": [
-    {
-      "id": "../../node_modules/axios/lib/core/transformData.js",
-      "name": "../../node_modules/axios/lib/core/transformData.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./cancel/isCancel": [
-    {
-      "id": "../../node_modules/axios/lib/cancel/isCancel.js",
-      "name": "../../node_modules/axios/lib/cancel/isCancel.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../helpers/isAbsoluteURL": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/isAbsoluteURL.js",
-      "name": "../../node_modules/axios/lib/helpers/isAbsoluteURL.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../helpers/combineURLs": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/combineURLs.js",
-      "name": "../../node_modules/axios/lib/helpers/combineURLs.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./cancel/Cancel": [
-    {
-      "id": "../../node_modules/axios/lib/cancel/Cancel.js",
-      "name": "../../node_modules/axios/lib/cancel/Cancel.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./cancel/CancelToken": [
-    {
-      "id": "../../node_modules/axios/lib/cancel/CancelToken.js",
-      "name": "../../node_modules/axios/lib/cancel/CancelToken.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./helpers/spread": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/spread.js",
-      "name": "../../node_modules/axios/lib/helpers/spread.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -2741,7 +2525,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./warning": [
+  "../utils/warning": [
     {
       "id": "../../node_modules/react-redux/es/utils/warning.js",
       "name": "../../node_modules/react-redux/es/utils/warning.js",
@@ -2813,6 +2597,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "./../node_modules/process/browser.js": [
+    {
+      "id": "../../node_modules/process/browser.js",
+      "name": "../../node_modules/process/browser.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "@fortawesome/free-regular-svg-icons": [
     {
       "id": "../../node_modules/@fortawesome/free-regular-svg-icons/index.es.js",
@@ -2853,42 +2645,230 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "axios": [
+    {
+      "id": "../../node_modules/axios/index.js",
+      "name": "../../node_modules/axios/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./lib/axios": [
+    {
+      "id": "../../node_modules/axios/lib/axios.js",
+      "name": "../../node_modules/axios/lib/axios.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./utils": [
+    {
+      "id": "../../node_modules/axios/lib/utils.js",
+      "name": "../../node_modules/axios/lib/utils.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/actions/utils.tsx",
+      "name": "./app/actions/utils.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/intl-messageformat/lib/utils.js",
+      "name": "../../node_modules/intl-messageformat/lib/utils.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./helpers/bind": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/bind.js",
+      "name": "../../node_modules/axios/lib/helpers/bind.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "is-buffer": [
+    {
+      "id": "../../node_modules/is-buffer/index.js",
+      "name": "../../node_modules/is-buffer/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./core/Axios": [
+    {
+      "id": "../../node_modules/axios/lib/core/Axios.js",
+      "name": "../../node_modules/axios/lib/core/Axios.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./defaults": [
+    {
+      "id": "../../node_modules/axios/lib/defaults.js",
+      "name": "../../node_modules/axios/lib/defaults.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./helpers/normalizeHeaderName": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/normalizeHeaderName.js",
+      "name": "../../node_modules/axios/lib/helpers/normalizeHeaderName.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./adapters/xhr": [
+    {
+      "id": "../../node_modules/axios/lib/adapters/xhr.js",
+      "name": "../../node_modules/axios/lib/adapters/xhr.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../core/settle": [
+    {
+      "id": "../../node_modules/axios/lib/core/settle.js",
+      "name": "../../node_modules/axios/lib/core/settle.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../core/createError": [
+    {
+      "id": "../../node_modules/axios/lib/core/createError.js",
+      "name": "../../node_modules/axios/lib/core/createError.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./enhanceError": [
+    {
+      "id": "../../node_modules/axios/lib/core/enhanceError.js",
+      "name": "../../node_modules/axios/lib/core/enhanceError.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../helpers/buildURL": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/buildURL.js",
+      "name": "../../node_modules/axios/lib/helpers/buildURL.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../helpers/parseHeaders": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/parseHeaders.js",
+      "name": "../../node_modules/axios/lib/helpers/parseHeaders.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../helpers/isURLSameOrigin": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/isURLSameOrigin.js",
+      "name": "../../node_modules/axios/lib/helpers/isURLSameOrigin.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../helpers/btoa": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/btoa.js",
+      "name": "../../node_modules/axios/lib/helpers/btoa.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../helpers/cookies": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/cookies.js",
+      "name": "../../node_modules/axios/lib/helpers/cookies.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./InterceptorManager": [
+    {
+      "id": "../../node_modules/axios/lib/core/InterceptorManager.js",
+      "name": "../../node_modules/axios/lib/core/InterceptorManager.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./dispatchRequest": [
+    {
+      "id": "../../node_modules/axios/lib/core/dispatchRequest.js",
+      "name": "../../node_modules/axios/lib/core/dispatchRequest.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./transformData": [
+    {
+      "id": "../../node_modules/axios/lib/core/transformData.js",
+      "name": "../../node_modules/axios/lib/core/transformData.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./cancel/isCancel": [
+    {
+      "id": "../../node_modules/axios/lib/cancel/isCancel.js",
+      "name": "../../node_modules/axios/lib/cancel/isCancel.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../helpers/isAbsoluteURL": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/isAbsoluteURL.js",
+      "name": "../../node_modules/axios/lib/helpers/isAbsoluteURL.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../helpers/combineURLs": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/combineURLs.js",
+      "name": "../../node_modules/axios/lib/helpers/combineURLs.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./cancel/Cancel": [
+    {
+      "id": "../../node_modules/axios/lib/cancel/Cancel.js",
+      "name": "../../node_modules/axios/lib/cancel/Cancel.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./cancel/CancelToken": [
+    {
+      "id": "../../node_modules/axios/lib/cancel/CancelToken.js",
+      "name": "../../node_modules/axios/lib/cancel/CancelToken.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./helpers/spread": [
+    {
+      "id": "../../node_modules/axios/lib/helpers/spread.js",
+      "name": "../../node_modules/axios/lib/helpers/spread.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "js-cookie": [
     {
       "id": "../../node_modules/js-cookie/src/js.cookie.js",
       "name": "../../node_modules/js-cookie/src/js.cookie.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "../../../../config": [
-    {
-      "id": "../../config/index.tsx",
-      "name": "../../config/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./development": [
-    {
-      "id": "../../config/development.tsx",
-      "name": "../../config/development.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./production": [
-    {
-      "id": "../../config/production.tsx",
-      "name": "../../config/production.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./test": [
-    {
-      "id": "../../config/test.tsx",
-      "name": "../../config/test.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3253,108 +3233,18 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "client-utils/constants": [
+  "global-utils": [
     {
-      "id": "./app/client-utils/constants.tsx",
-      "name": "./app/client-utils/constants.tsx",
+      "id": "../global-utils/index.tsx",
+      "name": "../global-utils/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/items": [
+  "./typings": [
     {
-      "id": "./app/actions/items.tsx",
-      "name": "./app/actions/items.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/upload": [
-    {
-      "id": "./app/actions/upload.tsx",
-      "name": "./app/actions/upload.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./admin": [
-    {
-      "id": "./app/actions/admin.tsx",
-      "name": "./app/actions/admin.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/admin.tsx",
-      "name": "./app/reducers/admin.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "reducers": [
-    {
-      "id": "./app/reducers/index.tsx",
-      "name": "./app/reducers/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./auth": [
-    {
-      "id": "./app/reducers/auth.tsx",
-      "name": "./app/reducers/auth.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../data-strings/auth.tsx",
-      "name": "../data-strings/auth.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/auth.tsx",
-      "name": "./app/selectors/auth.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/cities": [
-    {
-      "id": "./app/actions/cities.tsx",
-      "name": "./app/actions/cities.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "data-strings": [
-    {
-      "id": "../data-strings/index.tsx",
-      "name": "../data-strings/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./images": [
-    {
-      "id": "../data-strings/images.tsx",
-      "name": "../data-strings/images.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./validation": [
-    {
-      "id": "../data-strings/validation.tsx",
-      "name": "../data-strings/validation.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "selectors": [
-    {
-      "id": "./app/selectors/index.tsx",
-      "name": "./app/selectors/index.tsx",
+      "id": "../global-utils/typings.tsx",
+      "name": "../global-utils/typings.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3391,14 +3281,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./typings": [
-    {
-      "id": "../global-utils/typings.tsx",
-      "name": "../global-utils/typings.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "./en.json": [
     {
       "id": "../translations/en.json",
@@ -3423,94 +3305,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./users": [
-    {
-      "id": "./app/selectors/users.tsx",
-      "name": "./app/selectors/users.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/users.tsx",
-      "name": "./app/reducers/users.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./locale": [
-    {
-      "id": "./app/selectors/locale.tsx",
-      "name": "./app/selectors/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/locale.tsx",
-      "name": "./app/reducers/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./initialData": [
-    {
-      "id": "./app/selectors/initialData.tsx",
-      "name": "./app/selectors/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/initialData.tsx",
-      "name": "./app/reducers/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "reselect": [
-    {
-      "id": "../../node_modules/reselect/es/index.js",
-      "name": "../../node_modules/reselect/es/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./currentUser": [
-    {
-      "id": "./app/selectors/currentUser.tsx",
-      "name": "./app/selectors/currentUser.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/currentUser.tsx",
-      "name": "./app/reducers/currentUser.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/initialData": [
-    {
-      "id": "./app/actions/initialData.tsx",
-      "name": "./app/actions/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/locale": [
-    {
-      "id": "./app/actions/locale.tsx",
-      "name": "./app/actions/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "global-utils": [
-    {
-      "id": "../global-utils/index.tsx",
-      "name": "../global-utils/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "./validationRules": [
     {
       "id": "../global-utils/validationRules.tsx",
@@ -3523,6 +3317,14 @@
     {
       "id": "../global-utils/inputValidators.tsx",
       "name": "../global-utils/inputValidators.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./validation": [
+    {
+      "id": "../data-strings/validation.tsx",
+      "name": "../data-strings/validation.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3661,10 +3463,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
+  "../colors/pink": [
     {
-      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
-      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "id": "../../node_modules/@material-ui/core/esm/colors/pink.js",
+      "name": "../../node_modules/@material-ui/core/esm/colors/pink.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3737,26 +3539,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/zIndex.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/zIndex.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./createStyles": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
-      "name": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
-      "name": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3851,6 +3633,14 @@
     {
       "id": "../../node_modules/@material-ui/styles/esm/ThemeProvider/nested.js",
       "name": "../../node_modules/@material-ui/styles/esm/ThemeProvider/nested.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
+    {
+      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4349,6 +4139,202 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/cssUtils.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/cssUtils.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "client-utils/constants": [
+    {
+      "id": "./app/client-utils/constants.tsx",
+      "name": "./app/client-utils/constants.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/items": [
+    {
+      "id": "./app/actions/items.tsx",
+      "name": "./app/actions/items.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/upload": [
+    {
+      "id": "./app/actions/upload.tsx",
+      "name": "./app/actions/upload.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "reducers": [
+    {
+      "id": "./app/reducers/index.tsx",
+      "name": "./app/reducers/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./auth": [
+    {
+      "id": "./app/reducers/auth.tsx",
+      "name": "./app/reducers/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../data-strings/auth.tsx",
+      "name": "../data-strings/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/auth.tsx",
+      "name": "./app/selectors/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/cities": [
+    {
+      "id": "./app/actions/cities.tsx",
+      "name": "./app/actions/cities.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "data-strings": [
+    {
+      "id": "../data-strings/index.tsx",
+      "name": "../data-strings/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./images": [
+    {
+      "id": "../data-strings/images.tsx",
+      "name": "../data-strings/images.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "selectors": [
+    {
+      "id": "./app/selectors/index.tsx",
+      "name": "./app/selectors/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./users": [
+    {
+      "id": "./app/selectors/users.tsx",
+      "name": "./app/selectors/users.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/users.tsx",
+      "name": "./app/reducers/users.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./locale": [
+    {
+      "id": "./app/selectors/locale.tsx",
+      "name": "./app/selectors/locale.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/locale.tsx",
+      "name": "./app/reducers/locale.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./initialData": [
+    {
+      "id": "./app/selectors/initialData.tsx",
+      "name": "./app/selectors/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/initialData.tsx",
+      "name": "./app/reducers/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "reselect": [
+    {
+      "id": "../../node_modules/reselect/es/index.js",
+      "name": "../../node_modules/reselect/es/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./currentUser": [
+    {
+      "id": "./app/selectors/currentUser.tsx",
+      "name": "./app/selectors/currentUser.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/currentUser.tsx",
+      "name": "./app/reducers/currentUser.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../../../../config": [
+    {
+      "id": "../../config/index.tsx",
+      "name": "../../config/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./development.tsx": [
+    {
+      "id": "../../config/development.tsx",
+      "name": "../../config/development.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./production.tsx": [
+    {
+      "id": "../../config/production.tsx",
+      "name": "../../config/production.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./test.tsx": [
+    {
+      "id": "../../config/test.tsx",
+      "name": "../../config/test.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/initialData": [
+    {
+      "id": "./app/actions/initialData.tsx",
+      "name": "./app/actions/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/locale": [
+    {
+      "id": "./app/actions/locale.tsx",
+      "name": "./app/actions/locale.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -6665,7 +6651,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../FormLabel": [
+  "@material-ui/core/FormLabel": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormLabel/index.js",
       "name": "../../node_modules/@material-ui/core/esm/FormLabel/index.js",
@@ -6729,7 +6715,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Input": [
+  "@material-ui/core/Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -6793,7 +6779,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./ListContext": [
+  "../List/ListContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
       "name": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
@@ -7153,7 +7139,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "lodash/debounce": [
+  "./debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
       "name": "../../node_modules/lodash/debounce.js",
@@ -7193,7 +7179,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "@babel/runtime/helpers/assertThisInitialized": [
+  "./assertThisInitialized": [
     {
       "id": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
       "name": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
@@ -8903,7 +8889,7 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
-  "fbjs/lib/UnicodeBidi": [
+  "./UnicodeBidi": [
     {
       "id": "../../node_modules/fbjs/lib/UnicodeBidi.js",
       "name": "../../node_modules/fbjs/lib/UnicodeBidi.js",
@@ -8911,7 +8897,7 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
-  "fbjs/lib/UnicodeBidiDirection": [
+  "./UnicodeBidiDirection": [
     {
       "id": "../../node_modules/fbjs/lib/UnicodeBidiDirection.js",
       "name": "../../node_modules/fbjs/lib/UnicodeBidiDirection.js",
@@ -9171,6 +9157,14 @@
     {
       "id": "../../node_modules/file-selector/dist/es5/index.js",
       "name": "../../node_modules/file-selector/dist/es5/index.js",
+      "file": "vendors~photosPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~photosPage.js"
+    }
+  ],
+  "lodash/isEqual": [
+    {
+      "id": "../../node_modules/lodash/isEqual.js",
+      "name": "../../node_modules/lodash/isEqual.js",
       "file": "vendors~photosPage.js",
       "publicPath": "http://localhost:8080/public/vendors~photosPage.js"
     }

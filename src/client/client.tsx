@@ -31,14 +31,14 @@ window.main = () => {
 
   const store = createStore(preloadedState);
 
-  axios.interceptors.response.use((response) => {
-    const url = response.config.url;
-    if (isLoggedIn(store.getState()) && !url.includes('reauthenticate') && !url.includes('logout')) {
-      store.dispatch(reauthenticateUser());
-    }
-    return response;
-  },
-  Promise.reject);
+  // axios.interceptors.response.use((response) => {
+  //   const url = response.config.url;
+  //   if (isLoggedIn(store.getState()) && !url.includes('reauthenticate') && !url.includes('logout')) {
+  //     store.dispatch(reauthenticateUser());
+  //   }
+  //   return response;
+  // },
+  // Promise.reject);
 
   Loadable.preloadReady().then(() => {
       ReactDOM.hydrate(

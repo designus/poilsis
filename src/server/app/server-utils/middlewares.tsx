@@ -141,11 +141,3 @@ export const handleItemsErrors = (err, req, res, next) => {
     res.send(err);
   }
 };
-
-export const localizeResponse = (body, req: Request, res: Response) => {
-  const language = req.headers['accept-language'] as 'string';
-  if (!body.errors && LANGUAGES.indexOf(language) !== -1) {
-    return getLocalizedResponse(body, language);
-  }
-  return body;
-};

@@ -1,6 +1,6 @@
 'use strict';
 
-import { ITypeFields, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { model, Schema } from 'mongoose';
 import { formatAlias, TGenericSchemaMap, requiredMessage } from '../server-utils';
 
@@ -8,7 +8,7 @@ const shortId = require('shortid');
 const SchemaClass = require('mongoose').Schema;
 const mongooseIntl = require('mongoose-intl');
 
-interface ITypeSchema extends TGenericSchemaMap<ITypeFields> {}
+interface ITypeSchema extends TGenericSchemaMap<IType> {}
 
 const TypesSchemaMap: ITypeSchema = {
   id: {

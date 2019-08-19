@@ -25,14 +25,14 @@ export interface IResponseError {
   };
 }
 
-export interface IItemDescFields<T = string> {
+export interface IItemDescFields<T = TranslatableField> {
   description: T;
   metaTitle: T;
   metaKeywords: T;
   metaDescription: T;
 }
 
-export interface IItemFields<T = string> extends IItemDescFields<T> {
+export interface IItem<T = TranslatableField> extends IItemDescFields<T> {
   id: string;
   createdAt?: string;
   updatedAt?: string;
@@ -42,32 +42,28 @@ export interface IItemFields<T = string> extends IItemDescFields<T> {
   images: IImage[];
   userId: string;
   isEnabled: boolean;
+  isFavorite: boolean;
   name: T;
   alias: T;
+  isFullyLoaded?: boolean;
+  mainImage?: string;
 }
 
-export type TItemFields = IItemFields<TranslatableField>;
-
-export type TItemDescFields = IItemDescFields<TranslatableField>;
-
-export interface ITypeFields<T = string> {
+export interface IType<T = TranslatableField> {
   id: string;
   name: T;
   description: T;
   alias: T;
 }
 
-export type TTypeFields = ITypeFields<TranslatableField>;
-
-export interface ICityFields<T = string> {
+export interface ICity<T = TranslatableField> {
   id: string;
   types: string[];
   name: T;
   description: T;
-  alias: T;
+  alias: string;
+  hasItems?: boolean;
 }
-
-export type TCityFields = ICityFields<TranslatableField>;
 
 export enum UserRoles {
   admin = 'admin',

@@ -10,7 +10,7 @@ import { IAppState } from 'reducers';
 import { updateItemDescription } from 'actions/items';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getBackendErrors } from 'client-utils/methods';
-import { TItemFields, TItemDescFields, getItemDescriptionFields, TranslatableField, IItemDescFields } from 'global-utils';
+import { IItem, IItemDescFields, getItemDescriptionFields, TranslatableField } from 'global-utils';
 import { stateToHTML } from 'draft-js-export-html';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
@@ -31,8 +31,8 @@ type ISubmitDescFields = {
 interface IDescriptionProps extends ICreateEditItemPageProps, InjectedIntlProps {
   userRole: string;
   showNavigationPrompt: boolean;
-  updateItemDescription: (itemId: string, description: TItemDescFields) => Promise<void>;
-  initializeForm: (description: TItemDescFields) => void;
+  updateItemDescription: (itemId: string, description: IItemDescFields) => Promise<void>;
+  initializeForm: (description: IItemDescFields) => void;
 }
 
 class DescriptionPage extends React.Component<IDescriptionProps, any> {
@@ -52,7 +52,7 @@ class DescriptionPage extends React.Component<IDescriptionProps, any> {
     }, {});
   }
 
-  getUpdatedDescription = (fields: ISubmitDescFields): TItemDescFields => ({
+  getUpdatedDescription = (fields: ISubmitDescFields): IItemDescFields => ({
     ...fields,
     description: this.mapEditorStateToHtml(fields.description)
   })
@@ -88,9 +88,9 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateItemDescription: (itemId: string, description: TItemFields) =>
+  updateItemDescription: (itemId: string, description: IItem) =>
     dispatch(updateItemDescription(itemId, description)),
-  initializeForm: (data: TItemFields) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data))
+  initializeForm: (data: IItem) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data))
 });
 
 export default injectIntl(

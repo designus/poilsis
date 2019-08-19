@@ -2,7 +2,6 @@ import axios from 'axios';
 import * as Cookies from 'js-cookie';
 import * as day from 'dayjs';
 
-import { config } from '../../../../config';
 import { startLoading, endLoading } from 'actions/loader';
 import { showToast } from 'actions/toast';
 import { receiveUserDetails } from 'actions/currentUser';
@@ -16,6 +15,7 @@ import {
   USER_LOGOUT_ERROR,
   USER_REAUTHENTICATE_SUCCESS
 } from 'data-strings';
+import { config } from '../../../../config';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';

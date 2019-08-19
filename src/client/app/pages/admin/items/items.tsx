@@ -3,13 +3,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, IItemsMap, IUsersMap, ICitiesMap, ITypesMap, IItem } from 'reducers';
+import { IAppState, IItemsMap, IUsersMap, ICitiesMap } from 'reducers';
 import { deleteItem, toggleItem } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
 import { adminRoutes } from 'client-utils/routes';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { shouldLoadUserItems, getUserItems } from 'selectors';
+import { getLocalizedText } from 'client-utils/methods';
+import {
+  shouldLoadUserItems,
+  getUserItems,
+  getLocale,
+  getCitiesMap,
+  getItemsMap,
+  getUsersMap
+} from 'selectors';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { ItemTypesList } from 'components/itemTypesList';
@@ -18,6 +26,7 @@ import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals/deleteModal';
 import { ToggleAction } from 'components/toggleAction';
 import { AdminHeader } from 'components/adminHeader';
+import { TranslatableField, IItem } from 'global-utils/typings';
 
 const Table = extendWithLoader(EnhancedTable);
 
@@ -25,9 +34,9 @@ interface IItemsPageParams extends InjectedIntlProps {
   itemsMap: IItemsMap;
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
-  typesMap: ITypesMap;
   shouldLoadUserItems: boolean;
   userItems: IItem[];
+  locale: string;
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
   endLoading: (loaderId) => void;
@@ -72,13 +81,14 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
         title: formatMessage({ id: 'admin.common_fields.name' }),
         dataProp: 'name',
         sortType: 'string',
+        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale),
         searchable: true
       },
       {
         title: formatMessage({ id: 'admin.common_fields.city' }),
         dataProp: 'cityId',
         sortType: 'string',
-        format: (cityId: string) => this.props.citiesMap[cityId].name,
+        format: (cityId: string) => getLocalizedText(this.props.citiesMap[cityId].name, this.props.locale),
         searchable: true
       },
       {
@@ -86,10 +96,7 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
         dataProp: 'types',
         format: (types: string[]) => {
           return (
-            <ItemTypesList
-              typeIds={types}
-              typesMap={this.props.typesMap}
-            />
+            <ItemTypesList typeIds={types} />
           );
         }
       },
@@ -152,9 +159,13 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
     this.setState({ isDeleteModalOpen: false });
   }
 
-  get deleteItemName() {
+  get deleteItemName(): string {
     const item = this.props.itemsMap[this.state.deleteId];
-    return item && item.name;
+    if (item) {
+      return getLocalizedText(item.name, this.props.locale);
+    }
+
+    return '';
   }
 
   handleItemDelete = (itemId: string) => {
@@ -194,12 +205,12 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  itemsMap: state.items.dataMap,
-  usersMap: state.users.dataMap,
+  itemsMap: getItemsMap(state),
+  usersMap: getUsersMap(state),
   userItems: getUserItems(state),
-  citiesMap: state.cities.dataMap,
-  typesMap: state.types.dataMap,
-  shouldLoadUserItems: shouldLoadUserItems(state)
+  citiesMap: getCitiesMap(state),
+  shouldLoadUserItems: shouldLoadUserItems(state),
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = dispatch =>

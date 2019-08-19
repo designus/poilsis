@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
+import { TranslatableField, hasLocalizedFields } from 'global-utils';
 import { IGenericState, IGenericDataMap, IDropdownOption } from './types';
 
 export function getNormalizedData(data: any[]) {
@@ -9,7 +10,10 @@ export function getNormalizedData(data: any[]) {
     acc.dataMap[item.id] = item;
     acc.aliases.push({id: item.id, alias: item.alias});
     return acc;
-  }, {dataMap: {}, aliases: []});
+  }, {
+    dataMap: {},
+    aliases: []
+  });
 }
 
 export function getBackendErrors(errors: Record<string, any>) {
@@ -59,12 +63,6 @@ export const getFormDataFromFiles = (files: File[]) => {
 
 export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
 
-export const setAcceptLanguageHeader = (locale = DEFAULT_LANGUAGE) => ({
-  headers: {
-    'Accept-Language': locale
-  }
-});
-
 export const removeItemById = (id: string, dataMap: Record<string, any>) => {
   const { [id]: removedItem, ...remainingItems } = dataMap;
   return remainingItems;
@@ -72,22 +70,21 @@ export const removeItemById = (id: string, dataMap: Record<string, any>) => {
 
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
 
+export const getLocalizedText = (text: string | TranslatableField, locale: string): string => {
+  if (!text) return '';
+
+  if (hasLocalizedFields(text)) {
+    return text[locale] || text[DEFAULT_LANGUAGE];
+  }
+
+  return text as string;
+};
+
 export const getDropdownOptions = memoize(
-  (dataMap: IGenericDataMap<object>, labelKey: string): IDropdownOption[] =>
-    Object.values(dataMap).map((item: any) => ({ label: item[labelKey], value: item.id }))
+  (dataMap: IGenericDataMap<object>, labelKey: string, locale: string): IDropdownOption[] => {
+    return Object.values(dataMap).map((item: any) => ({
+      label: hasLocalizedFields(item[labelKey]) ? getLocalizedText(item[labelKey], locale) : item[labelKey],
+      value: item.id
+    }));
+  }
 );
-
-export const combineStyles = (...styles) => {
-  return function CombineStyles(theme) {
-    const outStyles = styles.map((arg) => {
-      // Apply the "theme" object for style functions.
-      if (typeof arg === 'function') {
-        return arg(theme);
-      }
-      // Objects need no change.
-      return arg;
-    });
-
-    return outStyles.reduce((acc, val) => Object.assign(acc, val));
-  };
-}

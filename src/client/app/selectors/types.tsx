@@ -1,12 +1,15 @@
 import { createSelector } from 'reselect';
 import { IAppState, ITypesMap } from 'reducers';
+import { IType } from 'global-utils/typings';
 import { hasInitialDataLoaded } from 'selectors';
 
-export const shouldLoadType = (state: IAppState, typeId: string) => {
-  return typeId && !state.loader.content && !state.admin.types[typeId] && hasInitialDataLoaded(state);
-};
-
 export const getTypesMap = (state: IAppState): ITypesMap => state.types.dataMap;
+
+export const getTypeById = (state: IAppState, typeId: string): IType => getTypesMap(state)[typeId];
+
+export const shouldLoadType = (state: IAppState, typeId: string) => {
+  return typeId && !state.loader.content && !getTypeById(state, typeId) && hasInitialDataLoaded(state);
+};
 
 export const getTypes = createSelector(
   [getTypesMap],

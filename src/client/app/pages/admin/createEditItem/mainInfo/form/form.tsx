@@ -21,12 +21,13 @@ interface ICustomProps {
   typesMap: ITypesMap;
   usersMap: IUsersMap;
   userRole: string;
+  locale: string;
   formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
   selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
-  const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage } = props;
+  const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage, locale } = props;
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
@@ -57,7 +58,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={SelectBox}
         validate={[isRequired]}
         label={formatMessage({ id: 'admin.common_fields.city'})}
-        options={getDropdownOptions(props.citiesMap, 'name')}
+        options={getDropdownOptions(props.citiesMap, 'name', locale)}
       />
       {isAdmin(props.userRole) &&
         <Field
@@ -66,7 +67,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
           validate={[isRequired]}
           label={formatMessage({ id: 'admin.common_fields.user'})}
           data={props.usersMap}
-          options={getDropdownOptions(props.usersMap, 'name')}
+          options={getDropdownOptions(props.usersMap, 'name', locale)}
         />
       }
       <Field
@@ -74,7 +75,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={CheckboxGroup}
         validate={[minTypesCount, maxTypesCount]}
         label={formatMessage({ id: 'admin.common_fields.types'})}
-        options={getDropdownOptions(props.typesMap, 'name')}
+        options={getDropdownOptions(props.typesMap, 'name', locale)}
       />
       {isAdmin(props.userRole) &&
         <Field

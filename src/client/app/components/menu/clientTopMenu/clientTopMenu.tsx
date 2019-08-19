@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { getLocale, getCities, getSelectedCityId } from 'selectors';
-import { IAppState, ICity } from 'reducers';
+import { IAppState, ICityLocalized } from 'reducers';
 import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { callFn } from 'global-utils';
@@ -29,7 +29,7 @@ interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles> 
 
 interface IStateProps {
   locale?: string;
-  cities?: ICity[];
+  cities?: ICityLocalized[];
   selectedCityId?: string;
 }
 
@@ -61,7 +61,7 @@ function ClientTopMenu(props: ITopMenu) {
         id: 2,
         text: 'Poilsio pasiulymai',
         isActive: activeItem === ActiveItem.Offers,
-        items: cities.map((city: ICity) => ({
+        items: cities.map((city: ICityLocalized) => ({
           id: city.id,
           text: city.name,
           link: clientRoutes.items.getLink(locale, city.alias),

@@ -1,6 +1,6 @@
 import { IGenericState, IGenericDataMap } from 'client-utils/types';
 import { removeItemById } from 'client-utils/methods';
-import { IItemFields } from 'global-utils';
+import { IItem, TranslatableField } from 'global-utils';
 import {
   SELECT_ITEM,
   RECEIVE_ITEMS,
@@ -13,13 +13,8 @@ import {
 } from 'actions/items';
 import { CLEAR_STATE } from 'actions/initialData';
 
-export interface IItem extends IItemFields {
-  isFullyLoaded?: boolean;
-  mainImage?: string;
-}
-
+export interface IItemLocalized extends IItem<string> {}
 export type IItemsMap = IGenericDataMap<IItem>;
-
 export interface IItemsState extends IGenericState<IItem> {
   selectedId?: string;
   hasAllItems?: boolean;

@@ -2,7 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItemsState, IItem } from 'reducers';
+import { IAppState, IItemsState } from 'reducers';
+import { IItem } from 'global-utils/typings';
 import { loadItem, selectItem, clearSelectedItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
 import { getSelectedItem, shouldLoadViewItem } from 'selectors';
@@ -16,13 +17,13 @@ interface IMatchParams {
 interface IItemPageParams extends RouteComponentProps<IMatchParams> {
   items?: IItemsState;
   selectedItem?: IItem;
-  loadItem?: (alias: string, locale: string) => void;
+  loadItem?: (alias: string) => void;
   selectItem?: (itemId: string) => void;
   clearSelectedItem?: () => void;
   shouldLoadItem?: (state: IAppState) => boolean;
 }
 
-export const loadItemData = (store, params: IMatchParams) => store.dispatch(loadItem(params.itemAlias, params.locale));
+export const loadItemData = (store, params: IMatchParams) => store.dispatch(loadItem(params.itemAlias));
 
 class ItemPage extends React.Component<IItemPageParams, any> {
 
@@ -43,8 +44,8 @@ class ItemPage extends React.Component<IItemPageParams, any> {
   }
 
   loadItem = () => {
-    const { itemAlias, locale } = this.props.match.params;
-    this.props.loadItem(itemAlias, locale);
+    const { itemAlias } = this.props.match.params;
+    this.props.loadItem(itemAlias);
   }
 
   render() {
@@ -65,7 +66,7 @@ const mapStateToProps = (state: IAppState, props: IItemPageParams) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadItem: (alias: string, locale: string) => dispatch(loadItem(alias, locale)),
+  loadItem: (alias: string) => dispatch(loadItem(alias)),
   selectItem: (itemId: string) => dispatch(selectItem(itemId)),
   clearSelectedItem: () => dispatch(clearSelectedItem())
 });

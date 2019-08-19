@@ -3,16 +3,16 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { ITypesMap, IItem, IAppState, ICity } from 'reducers';
+import { ICity, IItem } from 'global-utils/typings';
+import { IAppState } from 'reducers';
 import { clientRoutes } from 'client-utils/routes';
-import { getLocale, getTypesMap } from 'selectors';
+import { getLocale } from 'selectors';
 
 import { ItemTypesList } from '../itemTypesList';
 
 interface IItemsListProps {
   locale: string;
   items: IItem[];
-  typesMap: ITypesMap;
   selectedCity: ICity;
 }
 
@@ -31,7 +31,7 @@ export class ItemsList extends React.Component<IItemsListProps> {
         }}
       >
         {item.name}<br />
-        <ItemTypesList typeIds={item.types} typesMap={this.props.typesMap} />
+        <ItemTypesList typeIds={item.types} />
         <hr />
       </NavLink>
     );
@@ -50,8 +50,7 @@ export class ItemsList extends React.Component<IItemsListProps> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  locale: getLocale(state),
-  typesMap: getTypesMap(state)
+  locale: getLocale(state)
 });
 
 export default connect(mapStateToProps)(ItemsList);

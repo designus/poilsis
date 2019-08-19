@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { getNormalizedData } from 'client-utils/methods';
 import { GLOBAL_LOADER_ID } from 'client-utils/constants';
 import { IAppState } from 'reducers';
 import { setLocale } from 'actions/locale';
@@ -46,9 +46,9 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     }
 
     const promises = [
-      axios.get(`${config.host}/api/cities`, setAcceptLanguageHeader(locale)),
-      axios.get(`${config.host}/api/types`, setAcceptLanguageHeader(locale)),
-      axios.get(`${config.host}/api/users`, setAcceptLanguageHeader(locale))
+      axios.get(`${config.host}/api/cities`),
+      axios.get(`${config.host}/api/types`),
+      axios.get(`${config.host}/api/users`)
     ];
 
     return axios.all(promises)

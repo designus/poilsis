@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ICityFields, TCityFields, IItemFields } from 'global-utils';
+import { ICity, IItem } from 'global-utils';
 import { IAppState } from 'reducers';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveItems } from 'actions/items';
@@ -12,16 +12,15 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR
 } from 'data-strings';
-import { getLocale, getCities } from 'selectors';
+import { getCities } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { getNormalizedData } from 'client-utils/methods';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { config } from '../../../../config';
-import { receiveAdminCity } from './admin';
 
 export const SELECT_CITY = 'SELECT_CITY';
 export const CLEAR_SELECTED_CITY = 'CLEAR_SELECTED_CITY';
-export const RECEIVE_CLIENT_CITY = 'RECEIVE_CLIENT_CITY';
+export const RECEIVE_CITY = 'RECEIVE_CITY';
 export const REMOVE_CITY = 'REMOVE_CITY';
 
 export const selectCity = (cityId: string) => ({
@@ -33,8 +32,8 @@ export const clearSelectedCity = () => ({
   type: CLEAR_SELECTED_CITY
 });
 
-export const receiveClientCity = (newCity: ICityFields) => ({
-  type: RECEIVE_CLIENT_CITY,
+export const receiveCity = (newCity: ICity) => ({
+  type: RECEIVE_CITY,
   newCity
 });
 
@@ -54,16 +53,12 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
 
     const cityId = city.id;
     const items = state.items;
-    const language = locale || getLocale(state);
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.get(
-      `${config.host}/api/items/city/${cityId}`,
-      setAcceptLanguageHeader(language)
-    )
+    return axios.get(`${config.host}/api/items/city/${cityId}`)
       .then(response => response.data)
-      .then((data: IItemFields[]) => {
+      .then((data: IItem[]) => {
 
         const filteredData = data.filter(item => !items.dataMap[item.id]);
         const { dataMap, aliases } = getNormalizedData(filteredData);
@@ -79,33 +74,28 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
   };
 };
 
-export const createCity = (adminCity: TCityFields) => (dispatch, getState) => {
+export const createCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(`${config.host}/api/cities`, adminCity, setAcceptLanguageHeader(getLocale(getState())))
+  return axios.post(`${config.host}/api/cities`, city)
     .then(handleApiResponse)
-    .then((clientCity: ICityFields) => {
-      dispatch(receiveClientCity(clientCity));
+    .then((response: ICity) => {
+      dispatch(receiveCity(response));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientCity);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (adminCity: TCityFields) => (dispatch, getState) => {
+export const updateCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(
-    `${config.host}/api/cities/city/${adminCity.id}`,
-     adminCity,
-     setAcceptLanguageHeader(getLocale(getState))
-  )
+  return axios.put(`${config.host}/api/cities/city/${city.id}`, city)
     .then(handleApiResponse)
-    .then((clientCity: ICityFields) => {
-      dispatch(receiveClientCity(clientCity));
-      dispatch(receiveAdminCity(clientCity.id, adminCity));
+    .then((response: ICity) => {
+      dispatch(receiveCity(response));
       dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientCity);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 

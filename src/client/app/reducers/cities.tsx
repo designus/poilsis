@@ -1,9 +1,9 @@
-import { ICityFields } from 'global-utils';
+import { ICity, TranslatableField } from 'global-utils';
 import { IGenericState, IGenericDataMap } from 'client-utils/types';
 import { removeItemById } from 'client-utils/methods';
 import {
   SELECT_CITY,
-  RECEIVE_CLIENT_CITY,
+  RECEIVE_CITY,
   CLEAR_SELECTED_CITY,
   REMOVE_CITY
 } from 'actions/cities';
@@ -11,12 +11,8 @@ import {
 import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions/initialData';
 import { RECEIVE_ITEMS } from 'actions/items';
 
-export interface ICity extends ICityFields {
-  hasItems: boolean;
-}
-
+export interface ICityLocalized extends ICity<string> {}
 export type ICitiesMap = IGenericDataMap<ICity>;
-
 export interface ICityState extends IGenericState<ICity> {
   selectedId?: string;
 }
@@ -53,12 +49,15 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
           }
         }
       : state;
-    case RECEIVE_CLIENT_CITY:
+    case RECEIVE_CITY:
       return {
         ...state,
         aliases: [
           ...state.aliases,
-          { id: action.newCity.id, alias: action.newCity.alias }
+          {
+            id: action.newCity.id,
+            alias: action.newCity.alias
+          }
         ],
         dataMap: {
           ...state.dataMap,

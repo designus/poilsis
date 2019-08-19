@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ITypeFields } from 'global-utils';
+import { IType } from 'global-utils';
 
 import { TypesModel } from '../model';
 import { sendResponse, getAlias } from '../server-utils';
@@ -15,7 +15,7 @@ export const getType = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const addNewType = (req: Request, res: Response, next: NextFunction) => {
-  const type: ITypeFields = req.body;
+  const type: IType = req.body;
   const locale = req.headers['accept-language'] as string;
   const alias = getAlias(type, locale);
   const newType = { ...type, alias, id: shortId.generate() };
@@ -24,7 +24,7 @@ export const addNewType = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const updateType = (req: Request, res: Response, next: NextFunction) => {
-  const type: ITypeFields = req.body;
+  const type: IType = req.body;
   const typeId = req.params.typeId;
 
   TypesModel.findOneAndUpdate({ id: typeId },  { $set: type }, { new: true, runValidators: true },

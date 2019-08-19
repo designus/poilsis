@@ -2,11 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, ITypesMap, IType } from 'reducers';
+import { IAppState, ITypesMap } from 'reducers';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
 import { deleteType } from 'actions/types';
-import { getTypes, getTypesMap } from 'selectors';
+import { getTypes, getTypesMap, getLocale } from 'selectors';
+import { getLocalizedText } from 'client-utils/methods';
+import { TranslatableField, IType } from 'global-utils/typings';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -20,6 +22,7 @@ interface ITypesPageParams extends InjectedIntlProps {
   typesMap: ITypesMap;
   types: IType[];
   deleteType: (typeId: string) => Promise<any>;
+  locale: string;
 }
 
 class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
@@ -29,9 +32,13 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
     deleteId: ''
   };
 
-  get deleteTypeName() {
+  get deleteTypeName(): string {
     const type = this.props.typesMap[this.state.deleteId];
-    return type && type.name;
+    if (type) {
+      return getLocalizedText(type.name, this.props.locale);
+    }
+
+    return '';
   }
 
   get columns(): ITableColumn[] {
@@ -43,7 +50,8 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
       },
       {
         title: formatMessage({id: 'admin.common_fields.name'}),
-        dataProp: 'name'
+        dataProp: 'name',
+        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale)
       },
       {
         title: formatMessage({id: 'admin.common_fields.description'}),
@@ -104,7 +112,8 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
 
 const mapStateToProps = (state: IAppState) => ({
   typesMap: getTypesMap(state),
-  types: getTypes(state)
+  types: getTypes(state),
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

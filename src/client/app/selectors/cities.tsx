@@ -1,12 +1,17 @@
 import { createSelector } from 'reselect';
-import { IAppState, ICity, IItemsMap, IItem } from 'reducers';
-import { hasInitialDataLoaded, getItemsMap } from 'selectors';
+import { ICity, IItem } from 'global-utils/typings';
+import { IAppState, ICityLocalized, IItemLocalized, IItemsMap, ICitiesMap } from 'reducers';
+import { hasInitialDataLoaded, getItemsMap, getLocale } from 'selectors';
+import { getLocalizedText } from 'client-utils/methods';
+
+export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
+
+export const getCityById = (state: IAppState, cityId: string): ICity =>
+  getCitiesMap(state)[cityId];
 
 export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
-  return cityId && !state.loader.content && !state.admin.cities[cityId] && hasInitialDataLoaded(state);
+  return cityId && !state.loader.content && !getCityById(state, cityId) && hasInitialDataLoaded(state);
 };
-
-export const getCitiesMap = (state: IAppState) => state.cities.dataMap;
 
 export const getSelectedCityId = (state: IAppState, routeState = null) =>
   routeState ? routeState.cityId : state.cities.selectedId;
@@ -23,12 +28,33 @@ export const shouldLoadCityItems = (state: IAppState, routeState) => {
 };
 
 export const getCityItems = createSelector(
-  [getSelectedCity, getItemsMap],
-  (selectedCity: ICity, itemsMap: IItemsMap): IItem[] => {
-    return selectedCity ?
-      Object.values(itemsMap).filter((item: IItem) => item.cityId === selectedCity.id) :
-      [];
+  [getSelectedCity, getItemsMap, getLocale],
+  (selectedCity: ICity, itemsMap: IItemsMap, locale: string): IItemLocalized[] => {
+    if (selectedCity) {
+      return Object.values(itemsMap)
+        .filter((item: IItem) => item.cityId === selectedCity.id)
+        .map(item => ({
+          ...item,
+          name: getLocalizedText(item.name, locale),
+          alias: getLocalizedText(item.alias, locale),
+          description: getLocalizedText(item.metaDescription, locale),
+          metaTitle: getLocalizedText(item.metaTitle, locale),
+          metaKeywords: getLocalizedText(item.metaKeywords, locale),
+          metaDescription: getLocalizedText(item.metaDescription, locale)
+        }));
+    }
+    return [];
   }
 );
 
-export const getCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));
+export const getCities = createSelector(
+  [getCitiesMap, getLocale],
+  (citiesMap: ICitiesMap, locale: string) =>
+    Object.values(citiesMap).map((city: ICity): ICityLocalized => {
+      return {
+        ...city,
+        description: getLocalizedText(city.description, locale),
+        name: getLocalizedText(city.name, locale)
+      };
+    })
+);

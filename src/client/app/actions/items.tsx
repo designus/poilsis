@@ -7,17 +7,12 @@ import {
 } from 'actions/upload';
 
 import { showToast } from 'actions/toast';
-import { receiveAdminItem, receiveAdminItemDesc } from 'actions/admin';
 import { startLoading, endLoading } from 'actions/loader';
 import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
-import {
-  onUploadProgress,
-  getFormDataFromFiles,
-  setAcceptLanguageHeader
- } from 'client-utils/methods';
+import { onUploadProgress, getFormDataFromFiles } from 'client-utils/methods';
 import { IAlias } from 'client-utils/types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IItemsMap, IAppState, Toast, IItem } from 'reducers';
+import { IItemsMap, IAppState, Toast } from 'reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -30,8 +25,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItemFields, TItemFields, TItemDescFields, IItemDescFields } from 'global-utils';
-import { getLocale } from 'selectors';
+import { IImage, IItem, IItemDescFields } from 'global-utils/typings';
 import { config } from '../../../../config';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
@@ -94,13 +88,10 @@ export const toggleItemVisibility = (itemId: string, isEnabled: boolean) => ({
   isEnabled
 });
 
-export const loadItem = (alias: string, locale: string) => (dispatch, getState) => {
-  const state: IAppState = getState();
-  const language = locale || getLocale(state);
-
+export const loadItem = (alias: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(`${config.host}/api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
+  return axios.get(`${config.host}/api/items/view-item/${alias}`)
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(receiveItem(item));
@@ -156,57 +147,42 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
     });
 };
 
-export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) => {
+export const updateMainInfo = (item: IItem) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(
-    `${config.host}/api/items/item/main-info/${adminItem.id}`,
-    adminItem,
-    setAcceptLanguageHeader(getLocale(getState()))
-  )
+  return axios.put(`${config.host}/api/items/item/main-info/${item.id}`, item)
     .then(handleApiResponse)
-    .then((clientItem: IItemFields) => {
-      dispatch(receiveItem(clientItem));
-      dispatch(receiveAdminItem(adminItem.id, adminItem));
+    .then((response: IItem) => {
+      dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientItem);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateItemDescription = (itemId: string, adminItemDescFields: TItemDescFields) => (dispatch, getState) => {
+export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(
-    `${config.host}/api/items/item/description/${itemId}`,
-    adminItemDescFields,
-    setAcceptLanguageHeader(getLocale(getState()))
-  )
+  return axios.put(`${config.host}/api/items/item/description/${itemId}`, itemDescFields)
   .then(handleApiResponse)
-  .then((clientItemDescFields: IItemDescFields) => {
-    // TODO: Use single action for updating store
-    dispatch(receiveItemDesc(itemId, clientItemDescFields));
-    dispatch(receiveAdminItemDesc(itemId, adminItemDescFields));
+  .then((response: IItemDescFields) => {
+    dispatch(receiveItemDesc(itemId, response));
     dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
   })
   .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
-export const createItem = (adminItem: TItemFields) => (dispatch, getState) => {
+export const createItem = (item: IItem) => (dispatch) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(
-    `${config.host}/api/items`,
-    adminItem,
-    setAcceptLanguageHeader(getLocale(getState()))
-  )
+  return axios.post(`${config.host}/api/items`, item)
     .then(handleApiResponse)
-    .then((clientItem: IItemFields) => {
-      dispatch(receiveItem(clientItem));
+    .then((response: IItem) => {
+      dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientItem);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };

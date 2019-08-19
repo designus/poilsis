@@ -1,6 +1,6 @@
 import { ItemsModel } from '../model';
 import { Request, Response, NextFunction } from 'express';
-import { IItemFields, itemValidation, getItemDescriptionFields, TItemFields } from 'global-utils';
+import { IItem, itemValidation, getItemDescriptionFields } from 'global-utils';
 import {
   uploadImages,
   resizeImages,
@@ -65,7 +65,7 @@ export const toggleItem = (req: Request, res: Response, next: NextFunction) => {
 export const addNewItem = (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const locale = req.headers['accept-language'] as string;
-  const item: IItemFields = req.body;
+  const item: IItem = req.body;
   const alias = getAlias(item, locale);
   const newItem = { id, alias, ...item };
 
@@ -85,7 +85,7 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const updateMainInfo = (req: Request, res: Response, next: NextFunction) => {
-  const item: IItemFields = req.body;
+  const item: IItem = req.body;
   const updatedAt = new Date();
   const alias = formatAlias(item.alias || item.name);
   const updatedItem = { ...item, alias, updatedAt };
@@ -102,7 +102,7 @@ export const updateItemDescription = (req: Request, res: Response, next: NextFun
     { id: req.params.itemId },
     { $set: fields },
     { new: true, runValidators: true },
-    (err, result: TItemFields) => {
+    (err, result: IItem) => {
       if (err) {
         return next(err);
       }

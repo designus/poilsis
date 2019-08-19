@@ -1,16 +1,18 @@
-import { IAppState, IItemsMap, IItem } from 'reducers';
+import { IAppState, IItemsMap } from 'reducers';
+import { IItem } from 'global-utils/typings';
 
 import { hasInitialDataLoaded } from './initialData';
 
-export const shouldLoadUserItems = (state: IAppState) => {
-  return !state.currentUser.hasItems && !state.loader.content && hasInitialDataLoaded(state);
-};
-
-export const shouldLoadEditItem = (state: IAppState, itemId: string) => {
-  return itemId && !state.loader.content && !state.admin.items[itemId] && hasInitialDataLoaded(state);
-};
+export const shouldLoadUserItems = (state: IAppState) =>
+  !state.currentUser.hasItems && !state.loader.content && hasInitialDataLoaded(state);
 
 export const getItemsMap = (state: IAppState): IItemsMap => state.items.dataMap;
+
+export const getItemById = (state: IAppState, id: string): IItem => getItemsMap(state)[id];
+
+export const shouldLoadEditItem = (state: IAppState, itemId: string) => {
+  return itemId && !state.loader.content && !getItemById(state, itemId) && hasInitialDataLoaded(state);
+};
 
 export const getSelectedItemId = (state: IAppState) => state.items.selectedId;
 

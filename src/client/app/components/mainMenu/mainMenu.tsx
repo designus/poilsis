@@ -5,7 +5,8 @@ import { clientRoutes } from 'client-utils/routes';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { IAppState, ICity, ITypesMap } from 'reducers';
+import { IAppState, ITypesMap } from 'reducers';
+import { ICity } from 'global-utils/typings';
 import { getCities, getTypesMap, getLocale, getSelectedCity } from 'selectors';
 
 import { styles } from './styles';

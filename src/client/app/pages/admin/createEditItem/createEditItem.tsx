@@ -9,9 +9,9 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState } from 'reducers';
 import { getAdminItem } from 'actions/admin';
-import { TItemFields } from 'global-utils';
+import { IItem } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
-import { shouldLoadEditItem } from 'selectors';
+import { shouldLoadEditItem, getItemById } from 'selectors';
 import { NotFound } from 'components/notFound';
 import { PropsRoute } from 'components/propsRoute';
 import { IMenuItem } from 'components/menu';
@@ -28,7 +28,7 @@ interface IMatchParams {
   userId: string;
 }
 export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
-  loadedItem: TItemFields;
+  loadedItem: IItem;
   shouldLoadEditItem: boolean;
   loadAdminItem: (itemId: string) => Promise<void>;
 }
@@ -81,14 +81,6 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
     }
   }
 
-  componentDidUpdate(props: ICreateEditItemPageProps) {
-    const { match, loadAdminItem, shouldLoadEditItem } = this.props;
-    // When we navigate from create page to update we need to load updated city
-    if (!isEqual(props.match.params, match.params) || shouldLoadEditItem) {
-      loadAdminItem(match.params.itemId);
-    }
-  }
-
   render() {
     const { loadedItem, match } = this.props;
     const isCreatePage = this.isCreatePage();
@@ -128,7 +120,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 }
 
 const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
-  loadedItem: state.admin.items[props.match.params.itemId],
+  loadedItem: getItemById(state, props.match.params.itemId),
   shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId)
 });
 

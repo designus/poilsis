@@ -7,7 +7,7 @@ import reduxFormActions from 'redux-form/es/actions';
 
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { ITypeFields, TTypeFields } from 'global-utils';
+import { IType } from 'global-utils';
 import { createType, updateType } from 'actions/types';
 import { getAdminType } from 'actions/admin';
 import { getBackendErrors } from 'client-utils/methods';
@@ -18,7 +18,7 @@ import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
 import { Loader } from 'components/loader';
 import { IAppState } from 'reducers';
-import { shouldLoadType } from 'selectors';
+import { shouldLoadType, getTypeById } from 'selectors';
 
 import { TypeForm, TYPE_FORM_NAME } from './form';
 
@@ -30,12 +30,12 @@ interface IMatchParams {
 }
 
 interface ICreateEditTypePageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
-  loadedType: TTypeFields;
+  loadedType: IType;
   showNavigationPrompt: boolean;
   getType: (typeId: string) => Promise<any>;
-  createType: (type: TTypeFields) => Promise<any>;
-  updateType: (type: TTypeFields) => Promise<any>;
-  initializeForm: (type: TTypeFields) => void;
+  createType: (type: IType) => Promise<any>;
+  updateType: (type: IType) => Promise<any>;
+  initializeForm: (type: IType) => void;
   shouldLoadType: boolean;
 }
 
@@ -51,24 +51,17 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
     }
   }
 
-  componentDidUpdate(props: ICreateEditTypePageProps) {
-    // When we navigate from create page to update we need to load updated city
-    if (props.location.pathname !== this.props.location.pathname || this.props.shouldLoadType) {
-      this.props.getType(this.props.match.params.typeId);
-    }
-  }
-
   handleErrors(errors) {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
   isCreatePage = () => !Boolean(this.props.match.params.typeId);
 
-  onSubmit = (type: TTypeFields) => {
+  onSubmit = (type: IType) => {
     const { createType, history, updateType, initializeForm } = this.props;
     const submitFn = this.isCreatePage() ? createType : updateType;
     return submitFn(type)
-      .then((newType: ITypeFields) => {
+      .then((newType: IType) => {
         if (this.isCreatePage()) {
           history.push(adminRoutes.editType.getLink(newType.id));
         } else {
@@ -80,7 +73,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
 
   render() {
     return (this.props.loadedType || this.isCreatePage()) && (
-      <div>
+      <React.Fragment>
         <Typography variant="h5">
           <FormattedMessage id={`admin.type.${this.isCreatePage() ? 'create' : 'edit'}_title`} />
         </Typography>
@@ -92,22 +85,22 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
           initialValues={this.props.loadedType}
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
-      </div>
+      </React.Fragment>
     ) || <Loader isLoading />;
   }
 }
 
 const mapStateToProps = (state: IAppState, props: ICreateEditTypePageProps) => ({
-  loadedType: state.admin.types[props.match.params.typeId],
+  loadedType: getTypeById(state, props.match.params.typeId),
   showNavigationPrompt: isDirty(TYPE_FORM_NAME)(state) && !isSubmitting(TYPE_FORM_NAME)(state),
   shouldLoadType: shouldLoadType(state, props.match.params.typeId)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getType: (typeId: string) => dispatch(getAdminType(typeId)),
-  createType: (type: TTypeFields) => dispatch(createType(type)),
-  updateType: (type: TTypeFields) => dispatch(updateType(type)),
-  initializeForm: (type: TTypeFields) => dispatch(initialize(TYPE_FORM_NAME, type))
+  createType: (type: IType) => dispatch(createType(type)),
+  updateType: (type: IType) => dispatch(updateType(type)),
+  initializeForm: (type: IType) => dispatch(initialize(TYPE_FORM_NAME, type))
 });
 
 export const CreateEditTypePage = injectIntl(

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ICityFields } from 'global-utils';
+import { ICity } from 'global-utils';
 import { CitiesModel } from '../model';
 import { sendResponse, getAlias } from '../server-utils';
 
@@ -12,7 +12,7 @@ export const getCity = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
-  const city: ICityFields = req.body;
+  const city: ICity = req.body;
   const locale = req.headers['accept-language'] as string;
   const alias = getAlias(city, locale);
   const newCity = { ...city, alias };
@@ -21,7 +21,7 @@ export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export const updateCity = (req: Request, res: Response, next: NextFunction) => {
-  const city: ICityFields = req.body;
+  const city: ICity = req.body;
   const cityId = req.params.cityId;
 
   CitiesModel.findOneAndUpdate({ id: cityId },  { $set: city }, { new: true, runValidators: true },

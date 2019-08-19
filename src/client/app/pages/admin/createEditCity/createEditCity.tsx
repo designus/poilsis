@@ -6,14 +6,14 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { TCityFields, ICityFields } from 'global-utils';
+import { ICity } from 'global-utils';
 import { createCity, updateCity } from 'actions/cities';
 import { getAdminCity } from 'actions/admin';
 import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
 import { IAppState, ITypesMap } from 'reducers';
-import { shouldLoadEditCity } from 'selectors';
+import { shouldLoadEditCity, getTypesMap, getCityById, getLocale } from 'selectors';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
@@ -29,14 +29,15 @@ interface IMatchParams {
 }
 
 interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
-  loadedCity: TCityFields;
+  loadedCity: ICity;
   showNavigationPrompt: boolean;
   typesMap: ITypesMap;
-  createCity: (city: TCityFields) => Promise<any>;
-  updateCity: (city: TCityFields) => Promise<any>;
+  createCity: (city: ICity) => Promise<any>;
+  updateCity: (city: ICity) => Promise<any>;
   getCity: (cityId: string) => Promise<any>;
-  initializeForm: (city: TCityFields) => void;
+  initializeForm: (city: ICity) => void;
   shouldLoadEditCity: boolean;
+  locale: string;
 }
 
 class CreateEditCityPageComponent extends React.Component<ICreateEditCityPageProps, any> {
@@ -51,13 +52,6 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
     }
   }
 
-  componentDidUpdate(props: ICreateEditCityPageProps) {
-    // When we navigate from create page to update we need to load updated city
-    if (props.location.pathname !== this.props.location.pathname || this.props.shouldLoadEditCity) {
-      this.props.getCity(this.props.match.params.cityId);
-    }
-  }
-
   isCreatePage = () => !Boolean(this.props.match.params.cityId);
 
   handleErrors(errors: Record<string, any>) {
@@ -65,11 +59,11 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
     throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onSubmit = (city: TCityFields) => {
+  onSubmit = (city: ICity) => {
     const { createCity, history, updateCity, initializeForm } = this.props;
     const submitFn = this.isCreatePage() ? createCity : updateCity;
     return submitFn(city)
-      .then((newCity: ICityFields) => {
+      .then((newCity: ICity) => {
         if (this.isCreatePage()) {
           history.push(adminRoutes.editCity.getLink(newCity.id));
         } else {
@@ -93,6 +87,7 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
             formatMessage={this.props.intl.formatMessage}
             showLoadingOverlay={true}
             typesMap={this.props.typesMap}
+            locale={this.props.locale}
             initialValues={this.props.loadedCity}
           />
           <NavigationPrompt when={this.props.showNavigationPrompt} />
@@ -102,17 +97,18 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
 }
 
 const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => ({
-  typesMap: state.types.dataMap,
-  loadedCity: state.admin.cities[props.match.params.cityId],
+  typesMap: getTypesMap(state),
+  loadedCity: getCityById(state, props.match.params.cityId),
   showNavigationPrompt: isDirty(CITY_FORM_NAME)(state) && !isSubmitting(CITY_FORM_NAME)(state),
-  shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId)
+  shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId),
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getCity: (id: string) => dispatch(getAdminCity(id)),
-  createCity: (city: TCityFields) => dispatch(createCity(city)),
-  updateCity: (city: TCityFields) => dispatch(updateCity(city)),
-  initializeForm: (city: TCityFields) => dispatch(initialize(CITY_FORM_NAME, city))
+  createCity: (city: ICity) => dispatch(createCity(city)),
+  updateCity: (city: ICity) => dispatch(updateCity(city)),
+  initializeForm: (city: ICity) => dispatch(initialize(CITY_FORM_NAME, city))
 });
 
 export const CreateEditCityPage = injectIntl(

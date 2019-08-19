@@ -1,4 +1,4 @@
-import { TItemFields } from './typings';
+import { IItem } from './typings';
 
 interface IRules {
   minTextLength?: number;
@@ -14,7 +14,7 @@ interface IRules {
 }
 
 type ValidationRules = {
-  [P in keyof TItemFields]?: IRules;
+  [P in keyof IItem]?: IRules;
 };
 
 export const itemValidation: ValidationRules = {

@@ -1,7 +1,7 @@
 require('dotenv').config();
 import * as express from 'express';
 import es6Renderer from 'express-es6-template-engine';
-import { auth, apiRouter, handleItemsErrors, localizeResponse } from './app/index';
+import { auth, apiRouter, handleItemsErrors } from './app/index';
 import { config } from '../../config';
 
 const mongoose = require('mongoose');
@@ -25,8 +25,6 @@ app.set('views', 'views');
 app.set('view engine', 'html');
 app.use(helmet());
 app.use(cors());
-// app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
-app.use(mung.json(localizeResponse));
 app.use('/public', express.static('build/client'));
 app.use('/images', express.static('static/images'));
 app.use('/uploads', express.static('uploads'));

@@ -14,12 +14,13 @@ export const CITY_FORM_NAME = 'CityForm';
 
 interface ICustomProps {
   typesMap: ITypesMap;
+  locale: string;
   selectedLanguage?: string;
   formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
-  const { handleSubmit, selectedLanguage, formatMessage } = props;
+  const { handleSubmit, selectedLanguage, formatMessage, locale } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -41,7 +42,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         name="types"
         component={CheckboxGroup}
         label={formatMessage({ id: 'admin.common_fields.types' })}
-        options={getDropdownOptions(props.typesMap, 'name')}
+        options={getDropdownOptions(props.typesMap, 'name', locale)}
       />
       <Field
         name="description"

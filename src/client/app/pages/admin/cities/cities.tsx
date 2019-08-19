@@ -2,11 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, ICitiesMap, ICity, ITypesMap } from 'reducers';
-import { getCities, getCitiesMap } from 'selectors';
+import { IAppState, ICitiesMap, ITypesMap } from 'reducers';
+import { getCities, getCitiesMap, getLocale, getTypesMap } from 'selectors';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { getLocalizedText } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { deleteCity } from 'actions/cities';
+import { ICity, TranslatableField } from 'global-utils/typings';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -22,6 +24,7 @@ interface ICitiesPageParams extends InjectedIntlProps {
   typesMap: ITypesMap;
   deleteCity: (typeId: string) => Promise<void>;
   cities: ICity[];
+  locale: string;
 }
 
 class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
@@ -31,9 +34,13 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     deleteId: ''
   };
 
-  get deleteCityName() {
+  get deleteCityName(): string {
     const city = this.props.citiesMap[this.state.deleteId];
-    return city && city.name;
+    if (city) {
+      return getLocalizedText(city.name, this.props.locale);
+    }
+
+    return '';
   }
 
   get columns(): ITableColumn[] {
@@ -45,17 +52,15 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
       },
       {
         title: formatMessage({ id: 'admin.common_fields.name'}),
-        dataProp: 'name'
+        dataProp: 'name',
+        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale)
       },
       {
         title: formatMessage({ id: 'admin.common_fields.types'}),
         dataProp: 'types',
         format: (types: string[]) => {
           return (
-            <ItemTypesList
-              typeIds={types}
-              typesMap={this.props.typesMap}
-            />
+            <ItemTypesList typeIds={types} />
           );
         }
       },
@@ -113,9 +118,10 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  typesMap: state.types.dataMap,
+  typesMap: getTypesMap(state),
   citiesMap: getCitiesMap(state),
-  cities: getCities(state)
+  cities: getCities(state),
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
