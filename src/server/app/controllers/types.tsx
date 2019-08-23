@@ -16,8 +16,7 @@ export const getType = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewType = (req: Request, res: Response, next: NextFunction) => {
   const type: IType = req.body;
-  const locale = req.headers['accept-language'] as string;
-  const alias = getAlias(type, locale);
+  const alias = getAlias(type);
   const newType = { ...type, alias, id: shortId.generate() };
 
   new TypesModel(newType).save(sendResponse(res, next));

@@ -13,9 +13,11 @@ export enum ImageSize {
   Large = 'L'
 }
 
+export type Languages = 'en' | 'lt' | 'ru';
+
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
+export type TranslatableField = Record<Languages, string>;
 
 export interface IResponseError {
   errors: {

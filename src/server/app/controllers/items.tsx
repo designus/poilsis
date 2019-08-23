@@ -64,9 +64,8 @@ export const toggleItem = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewItem = (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
-  const locale = req.headers['accept-language'] as string;
   const item: IItem = req.body;
-  const alias = getAlias(item, locale);
+  const alias = getAlias(item);
   const newItem = { id, alias, ...item };
 
   new ItemsModel(newItem).save(sendResponse(res, next));
