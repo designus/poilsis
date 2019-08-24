@@ -7,10 +7,34 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
+  "@material-ui/core/colors/yellow": [
+    {
+      "id": "../../node_modules/@material-ui/core/colors/yellow.js",
+      "name": "../../node_modules/@material-ui/core/colors/yellow.js",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
   "@material-ui/icons/Check": [
     {
       "id": "../../node_modules/@material-ui/icons/Check.js",
       "name": "../../node_modules/@material-ui/icons/Check.js",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
+  "@material-ui/icons/Star": [
+    {
+      "id": "../../node_modules/@material-ui/icons/Star.js",
+      "name": "../../node_modules/@material-ui/icons/Star.js",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
+  "@material-ui/icons/StarBorder": [
+    {
+      "id": "../../node_modules/@material-ui/icons/StarBorder.js",
+      "name": "../../node_modules/@material-ui/icons/StarBorder.js",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
@@ -27,6 +51,12 @@
     {
       "id": "./app/components/toggleAction/styles.tsx",
       "name": "./app/components/toggleAction/styles.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    },
+    {
+      "id": "./app/components/toggleFavorite/styles.tsx",
+      "name": "./app/components/toggleFavorite/styles.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
@@ -227,6 +257,22 @@
     {
       "id": "./app/components/toggleAction/toggleAction.tsx",
       "name": "./app/components/toggleAction/toggleAction.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
+  "components/toggleFavorite": [
+    {
+      "id": "./app/components/toggleFavorite/index.tsx",
+      "name": "./app/components/toggleFavorite/index.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
+  "./toggleFavorite": [
+    {
+      "id": "./app/components/toggleFavorite/toggleFavorite.tsx",
+      "name": "./app/components/toggleFavorite/toggleFavorite.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
@@ -3225,7 +3271,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "global-utils/constants": [
+  "./constants": [
     {
       "id": "../global-utils/constants.tsx",
       "name": "../global-utils/constants.tsx",

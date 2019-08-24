@@ -117,7 +117,6 @@ export const getLocalizedAlias = (item: ICity, locale: Languages): string => {
   return formatAlias(localizedAlias || localizedName);
 };
 
-
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
   if (res.headersSent) return;
 

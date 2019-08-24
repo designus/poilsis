@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap } from 'reducers';
-import { deleteItem, toggleItem } from 'actions/items';
+import { deleteItem, toggleItemEnabledFlag } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
 import { adminRoutes } from 'client-utils/routes';
@@ -25,6 +25,7 @@ import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals/deleteModal';
 import { ToggleAction } from 'components/toggleAction';
+import { ToggleFavorite } from 'components/toggleFavorite';
 import { AdminHeader } from 'components/adminHeader';
 import { TranslatableField, IItem } from 'global-utils/typings';
 
@@ -40,7 +41,7 @@ interface IItemsPageParams extends InjectedIntlProps {
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
   endLoading: (loaderId) => void;
-  toggleItem: (itemId: string, isEnabled: boolean) => void;
+  toggleItemEnabledFlag: (itemId: string, isEnabled: boolean) => void;
 }
 
 class AdminItemsPage extends React.Component<IItemsPageParams, any> {
@@ -123,7 +124,19 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
         format: (itemId: string, isEnabled: boolean) => (
           <ToggleAction
             isEnabled={isEnabled}
-            onToggle={this.toggleItemVisibility(itemId, !isEnabled)}
+            onToggle={this.toggleItemEnabledFlag(itemId, !isEnabled)}
+          />
+        )
+      },
+      {
+        title: formatMessage({ id: 'admin.common_fields.is_favorite' }),
+        dataProp: 'isFavorite',
+        sortType: 'string',
+        formatProps: ['id', 'isFavorite'],
+        format: (itemId: string, isFavorite: boolean) => (
+          <ToggleFavorite
+            isFavorite={isFavorite}
+            onToggle={this.toggleItemFavoriteFlag(itemId, !isFavorite)}
           />
         )
       },
@@ -143,9 +156,11 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
     ];
   }
 
-  toggleItemVisibility = (itemId: string, isEnabled: boolean) => () => {
-    this.props.toggleItem(itemId, isEnabled);
+  toggleItemEnabledFlag = (itemId: string, isEnabled: boolean) => () => {
+    this.props.toggleItemEnabledFlag(itemId, isEnabled);
   }
+
+  toggleItemFavoriteFlag = (itemId: string, isFavorite: boolean) => () => {}
 
   setSearch = (search: string) => {
     this.setState({search});
@@ -219,7 +234,7 @@ const mapDispatchToProps = dispatch =>
       deleteItem,
       loadUserItems,
       endLoading,
-      toggleItem
+      toggleItemEnabledFlag
     },
     dispatch
   );

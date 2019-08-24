@@ -26,6 +26,7 @@ import {
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
 import { IImage, IItem, IItemDescFields } from 'global-utils/typings';
+import { getItemById } from 'selectors';
 import { config } from '../../../../config';
 
 export const SELECT_ITEM = 'SELECT_ITEM';
@@ -200,9 +201,10 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItem = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
+export const toggleItemEnabledFlag = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
   const appState: IAppState = getState();
-  const userId = appState.items.dataMap[itemId].userId;
+  const item = getItemById(appState, itemId);
+  const userId = item.userId;
   return axios.patch(`${config.host}/api/items/item/toggle/${itemId}`, { userId, isEnabled })
     .then(handleApiResponse)
     .then(() => {
