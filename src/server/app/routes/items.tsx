@@ -8,7 +8,7 @@ import {
   getCityItems,
   getUserItems,
   toggleItemIsEnabledField,
-  toggleItemIsFavoriteField,
+  toggleItemIsRecommendedField,
   addNewItem,
   deleteItem,
   updateItemDescription,
@@ -56,7 +56,7 @@ router.route('/user/:userId')
 router.route('/item/toggle-enabled/:itemId')
   .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItemIsEnabledField);
 
-router.route('/item/toggle-favorite/:itemId')
-  .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemIsFavoriteField);
+router.route('/item/toggle-recommended/:itemId')
+  .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemIsRecommendedField);
 
 export default router;

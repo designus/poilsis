@@ -55,8 +55,8 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
     {
-      "id": "./app/components/toggleFavorite/styles.tsx",
-      "name": "./app/components/toggleFavorite/styles.tsx",
+      "id": "./app/components/toggleRecommended/styles.tsx",
+      "name": "./app/components/toggleRecommended/styles.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
@@ -261,18 +261,18 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
-  "components/toggleFavorite": [
+  "components/toggleRecommended": [
     {
-      "id": "./app/components/toggleFavorite/index.tsx",
-      "name": "./app/components/toggleFavorite/index.tsx",
+      "id": "./app/components/toggleRecommended/index.tsx",
+      "name": "./app/components/toggleRecommended/index.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
-  "./toggleFavorite": [
+  "./toggleRecommended": [
     {
-      "id": "./app/components/toggleFavorite/toggleFavorite.tsx",
-      "name": "./app/components/toggleFavorite/toggleFavorite.tsx",
+      "id": "./app/components/toggleRecommended/toggleRecommended.tsx",
+      "name": "./app/components/toggleRecommended/toggleRecommended.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }

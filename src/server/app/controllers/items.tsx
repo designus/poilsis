@@ -62,9 +62,9 @@ export const toggleItemIsEnabledField = (req: Request, res: Response, next: Next
   );
 };
 
-export const toggleItemIsFavoriteField = (req: Request, res: Response, next: NextFunction) => {
+export const toggleItemIsRecommendedField = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndUpdate(
-    { id: req.params.itemId }, { $set: { isFavorite: req.body.isFavorite } }, { new: true, runValidators: true },
+    { id: req.params.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
     sendResponse(res, next)
   );
 };

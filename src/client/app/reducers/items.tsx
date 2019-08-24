@@ -7,8 +7,8 @@ import {
   RECEIVE_ITEM,
   REMOVE_ITEM,
   RECEIVE_IMAGES,
-  TOGGLE_ITEM_VISIBILITY,
-  TOGGLE_ITEM_FAVORABILITY,
+  TOGGLE_ITEM_ENABLED,
+  TOGGLE_ITEM_RECOMMENDED,
   CLEAR_SELECTED_ITEM,
   RECEIVE_ITEM_DESCRIPTION
 } from 'actions/items';
@@ -69,7 +69,7 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           }
         }
       };
-    case TOGGLE_ITEM_VISIBILITY:
+    case TOGGLE_ITEM_ENABLED:
       return {
         ...state,
         dataMap: {
@@ -80,14 +80,14 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           }
         }
       };
-    case TOGGLE_ITEM_FAVORABILITY:
+    case TOGGLE_ITEM_RECOMMENDED:
       return {
         ...state,
         dataMap: {
           ...state.dataMap,
           [action.itemId]: {
             ...state.dataMap[action.itemId],
-            isFavorite: action.isFavorite
+            isRecommended: action.isRecommended
           }
         }
       };

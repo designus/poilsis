@@ -34,8 +34,8 @@ export const CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM';
 export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
-export const TOGGLE_ITEM_VISIBILITY = 'TOGGLE_ITEM_VISIBILITY';
-export const TOGGLE_ITEM_FAVORABILITY = 'TOGGLE_ITEM_FAVORABILITY';
+export const TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED';
+export const TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION';
 
@@ -84,16 +84,16 @@ export const receiveImages = (id: string, images: IImage[]) => ({
   images
 });
 
-export const toggleItemVisibility = (itemId: string, isEnabled: boolean) => ({
-  type: TOGGLE_ITEM_VISIBILITY,
+export const toggleItemEnabledField = (itemId: string, isEnabled: boolean) => ({
+  type: TOGGLE_ITEM_ENABLED,
   itemId,
   isEnabled
 });
 
-export const toggleItemFavorability = (itemId: string, isFavorite: boolean) => ({
-  type: TOGGLE_ITEM_FAVORABILITY,
+export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean) => ({
+  type: TOGGLE_ITEM_RECOMMENDED,
   itemId,
-  isFavorite
+  isRecommended
 });
 
 export const loadItem = (alias: string) => (dispatch) => {
@@ -208,23 +208,23 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabledFlag = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
+export const toggleItemEnabled = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
   const appState: IAppState = getState();
   const item = getItemById(appState, itemId);
   const userId = item.userId;
   return axios.patch(`${config.host}/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled })
     .then(handleApiResponse)
     .then(() => {
-      dispatch(toggleItemVisibility(itemId, isEnabled));
+      dispatch(toggleItemEnabledField(itemId, isEnabled));
     })
     .catch(err => console.error('Err', err));
 };
 
-export const toggleItemFavoriteFlag = (itemId: string, isFavorite: boolean) => (dispatch) => {
-  return axios.patch(`${config.host}/api/items/item/toggle-favorite/${itemId}`, { isFavorite })
+export const toggleItemRecommended = (itemId: string, isRecommended: boolean) => (dispatch) => {
+  return axios.patch(`${config.host}/api/items/item/toggle-recommended/${itemId}`, { isRecommended })
     .then(handleApiResponse)
     .then(() => {
-      dispatch(toggleItemFavorability(itemId, isFavorite));
+      dispatch(toggleItemRecommendedField(itemId, isRecommended));
     })
     .catch(err => console.error('Err', err));
 };

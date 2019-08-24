@@ -34,7 +34,7 @@
   "admin.common_fields.created_at": "Created at",
   "admin.common_fields.user": "User",
   "admin.common_fields.is_enabled": "Is Enabled?",
-  "admin.common_fields.is_favorite": "Is Favorite",
+  "admin.common_fields.is_recommended": "Is Recommended",
   "admin.common_fields.description": "Description",
   "admin.common_fields.actions": "Actions",
   "admin.common_fields.meta_title": "Meta title",

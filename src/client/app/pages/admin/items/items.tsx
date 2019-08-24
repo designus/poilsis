@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap } from 'reducers';
-import { deleteItem, toggleItemEnabledFlag, toggleItemFavoriteFlag } from 'actions/items';
+import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
 import { adminRoutes } from 'client-utils/routes';
@@ -25,7 +25,7 @@ import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals/deleteModal';
 import { ToggleAction } from 'components/toggleAction';
-import { ToggleFavorite } from 'components/toggleFavorite';
+import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
 import { TranslatableField, IItem } from 'global-utils/typings';
 
@@ -37,8 +37,8 @@ interface IDispatchProps {
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
   endLoading: (loaderId: string) => void;
-  toggleItemEnabledFlag: (itemId: string, isEnabled: boolean) => void;
-  toggleItemFavoriteFlag: (itemId: string, isFavorite: boolean) => void;
+  toggleItemEnabled: (itemId: string, isEnabled: boolean) => void;
+  toggleItemRecommended: (itemId: string, isRecommended: boolean) => void;
 }
 
 interface IStateProps {
@@ -132,19 +132,19 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
         format: (itemId: string, isEnabled: boolean) => (
           <ToggleAction
             isEnabled={isEnabled}
-            onToggle={this.toggleItemEnabledFlag(itemId, !isEnabled)}
+            onToggle={this.toggleItemEnabled(itemId, !isEnabled)}
           />
         )
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.is_favorite' }),
-        dataProp: 'isFavorite',
+        title: formatMessage({ id: 'admin.common_fields.is_recommended' }),
+        dataProp: 'isRecommended',
         sortType: 'string',
-        formatProps: ['id', 'isFavorite'],
-        format: (itemId: string, isFavorite: boolean) => (
-          <ToggleFavorite
-            isFavorite={isFavorite}
-            onToggle={this.toggleItemFavoriteFlag(itemId, !isFavorite)}
+        formatProps: ['id', 'isRecommended'],
+        format: (itemId: string, isRecommended: boolean) => (
+          <ToggleRecommended
+            isRecommended={isRecommended}
+            onToggle={this.toggleItemRecommended(itemId, !isRecommended)}
           />
         )
       },
@@ -164,12 +164,12 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
     ];
   }
 
-  toggleItemEnabledFlag = (itemId: string, isEnabled: boolean) => () => {
-    this.props.toggleItemEnabledFlag(itemId, isEnabled);
+  toggleItemEnabled = (itemId: string, isEnabled: boolean) => () => {
+    this.props.toggleItemEnabled(itemId, isEnabled);
   }
 
-  toggleItemFavoriteFlag = (itemId: string, isFavorite: boolean) => () => {
-    this.props.toggleItemFavoriteFlag(itemId, isFavorite);
+  toggleItemRecommended = (itemId: string, isRecommended: boolean) => () => {
+    this.props.toggleItemRecommended(itemId, isRecommended);
   }
 
   setSearch = (search: string) => {
@@ -244,8 +244,8 @@ const mapDispatchToProps = dispatch =>
       deleteItem,
       loadUserItems,
       endLoading,
-      toggleItemEnabledFlag,
-      toggleItemFavoriteFlag
+      toggleItemEnabled,
+      toggleItemRecommended
     },
     dispatch
   );

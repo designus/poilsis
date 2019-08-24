@@ -44,7 +44,7 @@ export interface IItem<T = TranslatableField> extends IItemDescFields<T> {
   images: IImage[];
   userId: string;
   isEnabled: boolean;
-  isFavorite: boolean;
+  isRecommended: boolean;
   name: T;
   alias: T;
   isFullyLoaded?: boolean;

@@ -92,7 +92,7 @@ const ItemsSchemaMap: IItemsSchema = {
     required: [true, requiredMessage]
   },
   isEnabled: Boolean,
-  isFavorite: Boolean,
+  isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,
   images: {
