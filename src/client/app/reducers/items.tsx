@@ -8,6 +8,7 @@ import {
   REMOVE_ITEM,
   RECEIVE_IMAGES,
   TOGGLE_ITEM_VISIBILITY,
+  TOGGLE_ITEM_FAVORABILITY,
   CLEAR_SELECTED_ITEM,
   RECEIVE_ITEM_DESCRIPTION
 } from 'actions/items';
@@ -76,6 +77,17 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           [action.itemId]: {
             ...state.dataMap[action.itemId],
             isEnabled: action.isEnabled
+          }
+        }
+      };
+    case TOGGLE_ITEM_FAVORABILITY:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
+            isFavorite: action.isFavorite
           }
         }
       };

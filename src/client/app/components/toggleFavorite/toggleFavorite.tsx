@@ -12,9 +12,9 @@ export interface IToggleFavoriteProps extends WithStyles<typeof styles> {
 function ToggleFavorite(props: IToggleFavoriteProps) {
   const { classes, isFavorite, onToggle} = props;
   return (
-    <a onClick={onToggle}>
+    <div className={classes.wrapper} onClick={onToggle}>
       {isFavorite ? <StarFilled className={classes.icon} /> : <StarEmpty className={classes.icon} />}
-    </a>
+    </div>
   );
 }
 

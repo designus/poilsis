@@ -55,9 +55,16 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
   ItemsModel.find({ userId: req.params.userId }, sendResponse(res, next));
 };
 
-export const toggleItemEnabledFlag = (req: Request, res: Response, next: NextFunction) => {
+export const toggleItemIsEnabledField = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndUpdate(
     { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
+    sendResponse(res, next)
+  );
+};
+
+export const toggleItemIsFavoriteField = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.findOneAndUpdate(
+    { id: req.params.itemId }, { $set: { isFavorite: req.body.isFavorite } }, { new: true, runValidators: true },
     sendResponse(res, next)
   );
 };

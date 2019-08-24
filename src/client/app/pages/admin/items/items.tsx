@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, IItemsMap, IUsersMap, ICitiesMap } from 'reducers';
-import { deleteItem, toggleItemEnabledFlag } from 'actions/items';
+import { deleteItem, toggleItemEnabledFlag, toggleItemFavoriteFlag } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
 import { adminRoutes } from 'client-utils/routes';
@@ -38,6 +38,7 @@ interface IDispatchProps {
   loadUserItems: () => void;
   endLoading: (loaderId: string) => void;
   toggleItemEnabledFlag: (itemId: string, isEnabled: boolean) => void;
+  toggleItemFavoriteFlag: (itemId: string, isFavorite: boolean) => void;
 }
 
 interface IStateProps {
@@ -167,7 +168,9 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
     this.props.toggleItemEnabledFlag(itemId, isEnabled);
   }
 
-  toggleItemFavoriteFlag = (itemId: string, isFavorite: boolean) => () => {};
+  toggleItemFavoriteFlag = (itemId: string, isFavorite: boolean) => () => {
+    this.props.toggleItemFavoriteFlag(itemId, isFavorite);
+  }
 
   setSearch = (search: string) => {
     this.setState({search});
@@ -241,7 +244,8 @@ const mapDispatchToProps = dispatch =>
       deleteItem,
       loadUserItems,
       endLoading,
-      toggleItemEnabledFlag
+      toggleItemEnabledFlag,
+      toggleItemFavoriteFlag
     },
     dispatch
   );
