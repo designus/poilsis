@@ -36,17 +36,17 @@ export interface IItemDescFields<T = TranslatableField> {
 
 export interface IItem<T = TranslatableField> extends IItemDescFields<T> {
   id: string;
-  createdAt?: string;
-  updatedAt?: string;
+  name: T;
+  alias: T;
   address: string;
   cityId: string;
   types: string[];
   images: IImage[];
   userId: string;
-  isEnabled: boolean;
   isRecommended: boolean;
-  name: T;
-  alias: T;
+  isEnabled: boolean;
+  createdAt?: string;
+  updatedAt?: string;
   isFullyLoaded?: boolean;
   mainImage?: string;
 }

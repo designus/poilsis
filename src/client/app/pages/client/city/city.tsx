@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { ICity } from 'global-utils/typings';
+import { ICity, IItem } from 'global-utils/typings';
 import { IAppState } from 'reducers';
 import { loadCityItems, clearSelectedCity } from 'actions/cities';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
@@ -10,7 +10,6 @@ import { getLocalizedText } from 'client-utils/methods';
 import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';
-import { IItem } from 'global-utils/typings';
 import { getSelectedCity, shouldLoadCityItems, getCityItems, getLocale } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
@@ -25,11 +24,11 @@ interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   selectedCity: ICity;
   shouldLoadCityItems: boolean;
   locale: string;
-  loadCityItems: (cityAlias: string, locale: string) => void;
+  loadCityItems: (cityAlias: string) => void;
   clearSelectedCity: () => void;
 }
 
-export const loadCityData = (store, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias, params.locale));
+export const loadCityData = (store, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
 
 class CityPage extends React.Component<ICityPageParams, any> {
 
@@ -50,8 +49,8 @@ class CityPage extends React.Component<ICityPageParams, any> {
   }
 
   loadCityItems = () => {
-    const { cityAlias, locale } = this.props.match.params;
-    this.props.loadCityItems(cityAlias, locale);
+    const { cityAlias } = this.props.match.params;
+    this.props.loadCityItems(cityAlias);
   }
 
   render() {
@@ -78,7 +77,7 @@ const mapStateToProps = (state: IAppState, props: ICityPageParams) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadCityItems: (cityAlias: string, locale: string) => dispatch(loadCityItems(cityAlias, locale)),
+  loadCityItems: (cityAlias: string) => dispatch(loadCityItems(cityAlias)),
   clearSelectedCity: () => dispatch(clearSelectedCity())
 });
 

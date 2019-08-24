@@ -12,7 +12,7 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR
 } from 'data-strings';
-import { getCities } from 'selectors';
+import { getItemById, getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { getNormalizedData } from 'client-utils/methods';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
@@ -42,17 +42,16 @@ export const removeCity = (cityId: string) => ({
   cityId
 });
 
-export const loadCityItems = (cityAlias: string, locale: string) => {
+export const loadCityItems = (cityAlias: string) => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
-    const city = getCities(state).find(city => city.alias === cityAlias);
+    const city = getCityByAlias(state, cityAlias);
 
     if (!city) {
       return null;
     }
 
     const cityId = city.id;
-    const items = state.items;
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
@@ -60,8 +59,8 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
       .then(response => response.data)
       .then((data: IItem[]) => {
 
-        const filteredData = data.filter(item => !items.dataMap[item.id]);
-        const { dataMap, aliases } = getNormalizedData(filteredData);
+        const uniqueItems = data.filter(item => !getItemById(state, item.id));
+        const { dataMap, aliases } = getNormalizedData(uniqueItems);
         dispatch(selectCity(cityId));
         dispatch(receiveItems({ dataMap, aliases, cityId }));
         dispatch(endLoading(CONTENT_LOADER_ID));

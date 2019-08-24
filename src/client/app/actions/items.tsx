@@ -96,6 +96,20 @@ export const toggleItemRecommendedField = (itemId: string, isRecommended: boolea
   isRecommended
 });
 
+export const loadRecommendedItems = () => (dispatch) => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
+  return axios.get(`${config.host}/api/items/recommended`)
+    .then(handleApiResponse)
+    .then((items: IItem[]) => {
+      // dispatch(receiveItem(item));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    });
+};
+
 export const loadItem = (alias: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 

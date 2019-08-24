@@ -6,8 +6,23 @@ import { getLocalizedText } from 'client-utils/methods';
 
 export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
 
+export const getCities = createSelector(
+  [getCitiesMap, getLocale],
+  (citiesMap: ICitiesMap, locale: string) =>
+    Object.values(citiesMap).map((city: ICity): ICityLocalized => {
+      return {
+        ...city,
+        description: getLocalizedText(city.description, locale),
+        name: getLocalizedText(city.name, locale)
+      };
+    })
+);
+
 export const getCityById = (state: IAppState, cityId: string): ICity =>
   getCitiesMap(state)[cityId];
+
+export const getCityByAlias = (state: IAppState, alias: string) =>
+  getCities(state).find(city => city.alias === alias);
 
 export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
   return cityId && !state.loader.content && !getCityById(state, cityId) && hasInitialDataLoaded(state);
@@ -45,16 +60,4 @@ export const getCityItems = createSelector(
     }
     return [];
   }
-);
-
-export const getCities = createSelector(
-  [getCitiesMap, getLocale],
-  (citiesMap: ICitiesMap, locale: string) =>
-    Object.values(citiesMap).map((city: ICity): ICityLocalized => {
-      return {
-        ...city,
-        description: getLocalizedText(city.description, locale),
-        name: getLocalizedText(city.name, locale)
-      };
-    })
 );

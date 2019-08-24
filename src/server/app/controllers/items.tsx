@@ -24,6 +24,7 @@ const itemProjection =  {
   userId: 1,
   cityId: 1,
   isEnabled: 1,
+  isRecommended: 1,
   mainImage: {
     $let: {
       vars: {
@@ -36,7 +37,7 @@ const itemProjection =  {
       }
     }
   }
-}
+};
 
 export const getAllItems = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.find(sendResponse(res, next));
