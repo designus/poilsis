@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ICity, IItem } from 'global-utils';
 import { IAppState } from 'reducers';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveItems } from 'actions/items';
+import { receiveUniqueItems } from 'actions/items';
 import {
   CITY_CREATE_SUCCESS,
   CITY_CREATE_ERROR,
@@ -12,9 +12,8 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR
 } from 'data-strings';
-import { getItemById, getCityByAlias } from 'selectors';
+import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { getNormalizedData } from 'client-utils/methods';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { config } from '../../../../config';
 
@@ -56,15 +55,9 @@ export const loadCityItems = (cityAlias: string) => {
     dispatch(startLoading(CONTENT_LOADER_ID));
 
     return axios.get(`${config.host}/api/items/city/${cityId}`)
-      .then(response => response.data)
+      .then(handleApiResponse)
       .then((data: IItem[]) => {
-
-        const uniqueItems = data.filter(item => !getItemById(state, item.id));
-        const { dataMap, aliases } = getNormalizedData(uniqueItems);
-        dispatch(selectCity(cityId));
-        dispatch(receiveItems({ dataMap, aliases, cityId }));
-        dispatch(endLoading(CONTENT_LOADER_ID));
-
+        dispatch(receiveUniqueItems(data, { cityId }));
       })
       .catch(err => {
         console.error(err);

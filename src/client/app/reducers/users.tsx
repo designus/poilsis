@@ -13,7 +13,10 @@ export interface IUsersState extends IGenericState<IUser> {}
 export const users = (state: IUsersState = null, action): IUsersState => {
   switch (action.type) {
     case RECEIVE_INITIAL_DATA: {
-      return {...state, ...action.data.users };
+      return {
+        ...state,
+        ...action.data.users
+      };
     }
     default:
       return state;

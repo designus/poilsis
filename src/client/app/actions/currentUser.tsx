@@ -1,11 +1,10 @@
 import axios from 'axios';
-import { getNormalizedData } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveItems } from 'actions/items';
+import { receiveUniqueItems } from 'actions/items';
 import { IAppState, ICurrentUser } from 'reducers';
-import { isAdmin } from 'global-utils';
-import { getLocale } from 'selectors';
+import { isAdmin, IItem } from 'global-utils';
+import { handleApiResponse } from './utils';
 import { config } from '../../../../config';
 
 export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
@@ -31,13 +30,9 @@ export const loadUserItems = () => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.get(endpoint)
-    .then(response => response.data)
-    .then(data => {
-      const { dataMap, aliases } = getNormalizedData(data);
-      const hasAllItems = isAdministrator;
-
-      dispatch(receiveItems({ dataMap, aliases, hasAllItems, userId: user.id }));
-      dispatch(endLoading(CONTENT_LOADER_ID));
+    .then(handleApiResponse)
+    .then((items: IItem[]) => {
+      dispatch(receiveUniqueItems(items, { userId: user.id }));
     })
     .catch(err => {
       console.error(err);

@@ -9,7 +9,7 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
-import { onUploadProgress, getFormDataFromFiles } from 'client-utils/methods';
+import { onUploadProgress, getFormDataFromFiles, getNormalizedData } from 'client-utils/methods';
 import { IAlias } from 'client-utils/types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { IItemsMap, IAppState, Toast } from 'reducers';
@@ -39,12 +39,14 @@ export const TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED';
 export const RECEIVE_ITEM = 'RECEIVE_ITEM';
 export const RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION';
 
-interface IReceiveItemsProps {
-  dataMap: IItemsMap;
-  aliases: IAlias[];
-  hasAllItems?: boolean;
+interface IUniqueItemProps {
   cityId?: string;
   userId?: string;
+}
+
+interface IItemsProps extends IUniqueItemProps {
+  dataMap: IItemsMap;
+  aliases: IAlias[];
 }
 
 export const selectItem = (itemId: string) => ({
@@ -56,9 +58,12 @@ export const clearSelectedItem = () => ({
   type: CLEAR_SELECTED_ITEM
 });
 
-export const receiveItems = (props: IReceiveItemsProps) => ({
+export const receiveItems = ({ dataMap, aliases, cityId, userId }: IItemsProps) => ({
   type: RECEIVE_ITEMS,
-  ...props
+  dataMap,
+  aliases,
+  cityId,
+  userId
 });
 
 export const receiveItem = (item: IItem) => ({
@@ -96,13 +101,21 @@ export const toggleItemRecommendedField = (itemId: string, isRecommended: boolea
   isRecommended
 });
 
+export const receiveUniqueItems = (items: IItem[], params: IUniqueItemProps = {}) => (dispatch, getState) => {
+  const { userId, cityId } = params;
+  const state: IAppState = getState();
+  const uniqueItems = items.filter(item => !getItemById(state, item.id));
+  const { dataMap, aliases } = getNormalizedData(uniqueItems);
+  dispatch(receiveItems({ dataMap, aliases, userId, cityId }));
+  dispatch(endLoading(CONTENT_LOADER_ID));
+};
+
 export const loadRecommendedItems = () => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
   return axios.get(`${config.host}/api/items/recommended`)
     .then(handleApiResponse)
     .then((items: IItem[]) => {
-      // dispatch(receiveItem(item));
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(receiveUniqueItems(items));
     })
     .catch(err => {
       console.error(err);

@@ -38,7 +38,7 @@ export const getSelectedCity = (state: IAppState, routeState) => {
 export const shouldLoadCityItems = (state: IAppState, routeState) => {
   const selectedCity = getSelectedCity(state, routeState);
   if (selectedCity) {
-    return !selectedCity.hasItems && !state.items.hasAllItems && hasInitialDataLoaded(state);
+    return !selectedCity.hasItems && hasInitialDataLoaded(state);
   }
 };
 

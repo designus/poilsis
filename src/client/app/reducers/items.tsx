@@ -18,13 +18,11 @@ export interface IItemLocalized extends IItem<string> {}
 export type IItemsMap = IGenericDataMap<IItem>;
 export interface IItemsState extends IGenericState<IItem> {
   selectedId?: string;
-  hasAllItems?: boolean;
 }
 
 const getInitialState = (): IItemsState => ({
   dataMap: {},
-  aliases: [],
-  hasAllItems: false
+  aliases: []
 });
 
 export const items = (state: IItemsState = getInitialState(), action): IItemsState => {
@@ -32,13 +30,15 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
     case CLEAR_STATE:
       return getInitialState();
     case SELECT_ITEM:
-      return {...state, selectedId: action.itemId};
+      return {
+        ...state,
+        selectedId: action.itemId
+      };
     case RECEIVE_ITEMS:
       return {
         ...state,
         dataMap: {...state.dataMap, ...action.dataMap},
-        aliases: [...state.aliases, ...action.aliases],
-        hasAllItems: action.hasAllItems
+        aliases: [...state.aliases, ...action.aliases]
       };
     case CLEAR_SELECTED_ITEM:
       return {

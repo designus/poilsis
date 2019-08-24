@@ -1291,22 +1291,10 @@
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
-  "./createStyles": [
+  "@babel/runtime/helpers/typeof": [
     {
-      "id": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
-      "name": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
-      "name": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
+      "id": "../../node_modules/@babel/runtime/helpers/typeof.js",
+      "name": "../../node_modules/@babel/runtime/helpers/typeof.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -2943,6 +2931,58 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "client-utils/constants": [
+    {
+      "id": "./app/client-utils/constants.tsx",
+      "name": "./app/client-utils/constants.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/items": [
+    {
+      "id": "./app/actions/items.tsx",
+      "name": "./app/actions/items.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/upload": [
+    {
+      "id": "./app/actions/upload.tsx",
+      "name": "./app/actions/upload.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "reducers": [
+    {
+      "id": "./app/reducers/index.tsx",
+      "name": "./app/reducers/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./auth": [
+    {
+      "id": "./app/reducers/auth.tsx",
+      "name": "./app/reducers/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../data-strings/auth.tsx",
+      "name": "../data-strings/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/auth.tsx",
+      "name": "./app/selectors/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "client-utils/methods": [
     {
       "id": "./app/client-utils/methods.tsx",
@@ -3271,7 +3311,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "global-utils/constants": [
+  "./constants": [
     {
       "id": "../global-utils/constants.tsx",
       "name": "../global-utils/constants.tsx",
@@ -3367,7 +3407,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./validation": [
+  "../data-strings/validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -3589,6 +3629,26 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "./createStyles": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
+      "name": "../../node_modules/@material-ui/core/esm/styles/createStyles.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/createStyles/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
+      "name": "../../node_modules/@material-ui/styles/esm/createStyles/createStyles.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "@material-ui/styles": [
     {
       "id": "../../node_modules/@material-ui/styles/esm/index.js",
@@ -3645,10 +3705,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "@babel/runtime/helpers/typeof": [
+  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
     {
-      "id": "../../node_modules/@babel/runtime/helpers/typeof.js",
-      "name": "../../node_modules/@babel/runtime/helpers/typeof.js",
+      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3679,14 +3739,6 @@
     {
       "id": "../../node_modules/@material-ui/styles/esm/ThemeProvider/nested.js",
       "name": "../../node_modules/@material-ui/styles/esm/ThemeProvider/nested.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
-    {
-      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
-      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4185,58 +4237,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/cssUtils.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/cssUtils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "client-utils/constants": [
-    {
-      "id": "./app/client-utils/constants.tsx",
-      "name": "./app/client-utils/constants.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/items": [
-    {
-      "id": "./app/actions/items.tsx",
-      "name": "./app/actions/items.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/upload": [
-    {
-      "id": "./app/actions/upload.tsx",
-      "name": "./app/actions/upload.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "reducers": [
-    {
-      "id": "./app/reducers/index.tsx",
-      "name": "./app/reducers/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./auth": [
-    {
-      "id": "./app/reducers/auth.tsx",
-      "name": "./app/reducers/auth.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../data-strings/auth.tsx",
-      "name": "../data-strings/auth.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/auth.tsx",
-      "name": "./app/selectors/auth.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
