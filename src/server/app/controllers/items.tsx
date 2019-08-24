@@ -14,39 +14,48 @@ const { images: { maxPhotos } } = itemValidation;
 
 const shortId = require('shortid');
 
+const itemProjection =  {
+  _id: 0,
+  id: 1,
+  name: 1,
+  alias: 1,
+  types: 1,
+  address: 1,
+  userId: 1,
+  cityId: 1,
+  isEnabled: 1,
+  mainImage: {
+    $let: {
+      vars: {
+        firstImage: {
+          $arrayElemAt: ['$images', 0]
+        }
+      },
+      in: {
+        $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName']
+      }
+    }
+  }
+}
+
 export const getAllItems = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.find(sendResponse(res, next));
+};
+
+export const getRecommendedItems = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel
+    .aggregate([
+      { $match: { isRecommended: true } },
+      { $project: itemProjection }
+    ])
+    .exec(sendResponse(res, next));
 };
 
 export const getCityItems = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel
     .aggregate([
       { $match: { cityId: req.params.cityId } },
-      {
-        $project: {
-          _id: 0,
-          id: 1,
-          name: 1,
-          alias: 1,
-          types: 1,
-          address: 1,
-          userId: 1,
-          cityId: 1,
-          isEnabled: 1,
-          mainImage: {
-            $let: {
-              vars: {
-                firstImage: {
-                  $arrayElemAt: ['$images', 0]
-                }
-              },
-              in: {
-                $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName']
-              }
-            }
-          }
-        }
-      }
+      { $project: itemProjection }
     ])
     .exec(sendResponse(res, next));
 };

@@ -6,6 +6,7 @@ import {
   getViewItem,
   getAllItems,
   getCityItems,
+  getRecommendedItems,
   getUserItems,
   toggleItemIsEnabledField,
   toggleItemIsRecommendedField,
@@ -27,6 +28,9 @@ const router = Router();
 router.route('/')
   .get(getAllItems)
   .post(auth.authenticate(), auth.authorize(['admin', 'user']), addNewItem);
+
+router.route('/recommended')
+  .get(getRecommendedItems);
 
 router.route('/item/:itemId')
   .get(getEditItem)
