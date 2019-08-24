@@ -160,7 +160,7 @@ class AdminItemsPage extends React.Component<IItemsPageParams, any> {
     this.props.toggleItemEnabledFlag(itemId, isEnabled);
   }
 
-  toggleItemFavoriteFlag = (itemId: string, isFavorite: boolean) => () => {}
+  toggleItemFavoriteFlag = (itemId: string, isFavorite: boolean) => () => {};
 
   setSearch = (search: string) => {
     this.setState({search});
