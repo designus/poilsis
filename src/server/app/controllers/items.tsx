@@ -55,7 +55,7 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
   ItemsModel.find({ userId: req.params.userId }, sendResponse(res, next));
 };
 
-export const toggleItem = (req: Request, res: Response, next: NextFunction) => {
+export const toggleItemEnabledFlag = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndUpdate(
     { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
     sendResponse(res, next)

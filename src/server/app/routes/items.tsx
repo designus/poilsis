@@ -7,7 +7,7 @@ import {
   getAllItems,
   getCityItems,
   getUserItems,
-  toggleItem,
+  toggleItemEnabledFlag,
   addNewItem,
   deleteItem,
   updateItemDescription,
@@ -52,7 +52,7 @@ router.route('/city/:cityId')
 router.route('/user/:userId')
   .get(getUserItems);
 
-router.route('/item/toggle/:itemId')
-  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItem);
+router.route('/item/toggle-enabled/:itemId')
+  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItemEnabledFlag);
 
 export default router;

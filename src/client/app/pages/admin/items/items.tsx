@@ -31,20 +31,27 @@ import { TranslatableField, IItem } from 'global-utils/typings';
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface IItemsPageParams extends InjectedIntlProps {
+interface IOwnProps extends InjectedIntlProps {}
+
+interface IDispatchProps {
+  deleteItem: (itemId: string) => Promise<void>;
+  loadUserItems: () => void;
+  endLoading: (loaderId: string) => void;
+  toggleItemEnabledFlag: (itemId: string, isEnabled: boolean) => void;
+}
+
+interface IStateProps {
   itemsMap: IItemsMap;
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   shouldLoadUserItems: boolean;
   userItems: IItem[];
   locale: string;
-  deleteItem: (itemId: string) => Promise<void>;
-  loadUserItems: () => void;
-  endLoading: (loaderId) => void;
-  toggleItemEnabledFlag: (itemId: string, isEnabled: boolean) => void;
 }
 
-class AdminItemsPage extends React.Component<IItemsPageParams, any> {
+type IItemsPageProps = IOwnProps & IStateProps & IDispatchProps;
+
+class AdminItemsPage extends React.Component<IItemsPageProps, any> {
 
   static fetchData(store) {
     return store.dispatch(loadUserItems());
@@ -240,5 +247,5 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default injectIntl(
-  connect<{}, {}, IItemsPageParams>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
+  connect<IStateProps, {}, IOwnProps>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
 );

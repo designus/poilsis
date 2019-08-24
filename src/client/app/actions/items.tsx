@@ -205,7 +205,7 @@ export const toggleItemEnabledFlag = (itemId: string, isEnabled: boolean) => (di
   const appState: IAppState = getState();
   const item = getItemById(appState, itemId);
   const userId = item.userId;
-  return axios.patch(`${config.host}/api/items/item/toggle/${itemId}`, { userId, isEnabled })
+  return axios.patch(`${config.host}/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled })
     .then(handleApiResponse)
     .then(() => {
       dispatch(toggleItemVisibility(itemId, isEnabled));
