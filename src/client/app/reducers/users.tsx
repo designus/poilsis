@@ -1,4 +1,4 @@
-import { RECEIVE_INITIAL_DATA } from 'actions/initialData';
+import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 import { IGenericState, IGenericDataMap } from 'client-utils/types';
 
 export interface IUser {
@@ -12,7 +12,7 @@ export interface IUsersState extends IGenericState<IUser> {}
 
 export const users = (state: IUsersState = null, action): IUsersState => {
   switch (action.type) {
-    case RECEIVE_INITIAL_DATA: {
+    case InitialDataActionTypes.RECEIVE_INITIAL_DATA: {
       return {
         ...state,
         ...action.data.users

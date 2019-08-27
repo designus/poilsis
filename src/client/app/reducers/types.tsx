@@ -1,5 +1,6 @@
 import { SELECT_TYPE, RECEIVE_TYPE, REMOVE_TYPE } from 'actions/types';
-import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions/initialData';
+import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
+
 import { IGenericState, IGenericDataMap } from 'client-utils/types';
 import { IType } from 'global-utils';
 
@@ -15,9 +16,9 @@ const getInitialState = () => ({
 
 export const types = (state: ITypesState = getInitialState(), action): ITypesState => {
   switch (action.type) {
-    case CLEAR_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case RECEIVE_INITIAL_DATA:
+    case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {...state, ...action.data.types};
     case RECEIVE_TYPE:
       return {

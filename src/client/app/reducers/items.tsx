@@ -1,21 +1,14 @@
+import { Reducer } from 'redux';
 import { IGenericState, IGenericDataMap } from 'client-utils/types';
 import { removeItemById } from 'client-utils/methods';
-import { IItem, TranslatableField } from 'global-utils';
-import {
-  SELECT_ITEM,
-  RECEIVE_ITEMS,
-  RECEIVE_ITEM,
-  REMOVE_ITEM,
-  RECEIVE_IMAGES,
-  TOGGLE_ITEM_ENABLED,
-  TOGGLE_ITEM_RECOMMENDED,
-  CLEAR_SELECTED_ITEM,
-  RECEIVE_ITEM_DESCRIPTION
-} from 'actions/items';
-import { CLEAR_STATE } from 'actions/initialData';
+import { IItem } from 'global-utils';
+import { ItemsActionTypes, ItemsActions } from 'actions/items';
+import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 
-export interface IItemLocalized extends IItem<string> {}
+type ActionTypes = ItemsActions | InitialDataActions;
+
 export type IItemsMap = IGenericDataMap<IItem>;
+export interface IItemLocalized extends IItem<string> {}
 export interface IItemsState extends IGenericState<IItem> {
   selectedId?: string;
 }
@@ -25,40 +18,46 @@ const getInitialState = (): IItemsState => ({
   aliases: []
 });
 
-export const items = (state: IItemsState = getInitialState(), action): IItemsState => {
+export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState(), action): IItemsState => {
   switch (action.type) {
-    case CLEAR_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case SELECT_ITEM:
+    case ItemsActionTypes.SELECT_ITEM:
       return {
         ...state,
         selectedId: action.itemId
       };
-    case RECEIVE_ITEMS:
+    case ItemsActionTypes.RECEIVE_ITEMS:
       return {
         ...state,
-        dataMap: {...state.dataMap, ...action.dataMap},
-        aliases: [...state.aliases, ...action.aliases]
+        dataMap: {
+          ...state.dataMap,
+          ...action.dataMap
+        },
+        aliases: [
+          ...state.aliases,
+          ...action.aliases
+        ]
       };
-    case CLEAR_SELECTED_ITEM:
+    case ItemsActionTypes.CLEAR_SELECTED_ITEM:
       return {
         ...state,
         selectedId: null
       };
-    case RECEIVE_ITEM:
+    case ItemsActionTypes.RECEIVE_ITEM:
       return {
         ...state,
-        selectedId: action.itemId,
+        selectedId: action.item.id,
         dataMap: {
           ...state.dataMap,
-          [action.itemId]: {
-            ...(state.dataMap[action.itemId] || {}),
+          [action.item.id]: {
+            ...(state.dataMap[action.item.id] || {}),
             ...action.item,
             isFullyLoaded: true
           }
         }
       };
-    case RECEIVE_ITEM_DESCRIPTION:
+    case ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION:
       return {
         ...state,
         dataMap: {
@@ -69,7 +68,7 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           }
         }
       };
-    case TOGGLE_ITEM_ENABLED:
+    case ItemsActionTypes.TOGGLE_ITEM_ENABLED:
       return {
         ...state,
         dataMap: {
@@ -80,7 +79,7 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           }
         }
       };
-    case TOGGLE_ITEM_RECOMMENDED:
+    case ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED:
       return {
         ...state,
         dataMap: {
@@ -91,18 +90,18 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           }
         }
       };
-    case REMOVE_ITEM:
+    case ItemsActionTypes.REMOVE_ITEM:
       return {
         ...state,
-        dataMap: removeItemById(action.item.id, state.dataMap)
+        dataMap: removeItemById(action.itemId, state.dataMap)
       };
-    case RECEIVE_IMAGES:
+    case ItemsActionTypes.RECEIVE_IMAGES:
       return {
         ...state,
         dataMap: {
           ...state.dataMap,
-          [action.id]: {
-            ...state.dataMap[action.id],
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
             images: action.images
           }
         }

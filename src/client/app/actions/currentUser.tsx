@@ -32,7 +32,7 @@ export const loadUserItems = () => (dispatch, getState) => {
   return axios.get(endpoint)
     .then(handleApiResponse)
     .then((items: IItem[]) => {
-      dispatch(receiveUniqueItems(items, { userId: user.id }));
+      dispatch(receiveUniqueItems(items, { userId: user.id, dataType: 'currentUser' }));
     })
     .catch(err => {
       console.error(err);

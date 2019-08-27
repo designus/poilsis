@@ -17,6 +17,8 @@ export type Languages = 'en' | 'lt' | 'ru';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
+export type Value<T, K extends keyof T> = T[K];
+
 export type TranslatableField = Record<Languages, string>;
 
 export interface IResponseError {

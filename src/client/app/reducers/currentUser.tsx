@@ -1,7 +1,7 @@
 import { RECEIVE_USER_DETAILS } from 'actions/currentUser';
-import { CLEAR_STATE } from 'actions/initialData';
 import { LOGOUT_SUCCESS } from 'actions/auth';
-import { RECEIVE_ITEMS } from 'actions/items';
+import { ItemsActionTypes, ItemsActions } from 'actions/items';
+import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 
 export interface ICurrentUser {
   name?: string;
@@ -21,7 +21,7 @@ const getInitialState = () => ({
 
 export const currentUser = (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
   switch (action.type) {
-    case RECEIVE_ITEMS:
+    case ItemsActionTypes.RECEIVE_ITEMS:
       return action.userId ? { ...state, hasItems: true } : state;
     case RECEIVE_USER_DETAILS: {
       return {
@@ -29,7 +29,7 @@ export const currentUser = (state: ICurrentUserState = getInitialState(), action
         details: action.userDetails
       };
     }
-    case CLEAR_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return {
         ...state,
         hasItems: false

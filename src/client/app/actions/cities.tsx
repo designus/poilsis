@@ -57,7 +57,7 @@ export const loadCityItems = (cityAlias: string) => {
     return axios.get(`${config.host}/api/items/city/${cityId}`)
       .then(handleApiResponse)
       .then((data: IItem[]) => {
-        dispatch(receiveUniqueItems(data, { cityId }));
+        dispatch(receiveUniqueItems(data, { cityId, dataType: 'cities' }));
       })
       .catch(err => {
         console.error(err);

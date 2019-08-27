@@ -1,5 +1,5 @@
 import { SHOW_TOAST, HIDE_TOAST } from 'actions/toast';
-import { CLEAR_STATE } from 'actions/initialData';
+import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 
 export enum Toast {
   warning = 'warning',
@@ -25,7 +25,7 @@ const getInitialState = () => ({
 
 export const toast = (state: IToastState = getInitialState(), action) => {
   switch (action.type) {
-    case CLEAR_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
     case SHOW_TOAST:
       return {

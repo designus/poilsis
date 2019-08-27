@@ -1,4 +1,4 @@
-import { ICity, TranslatableField } from 'global-utils';
+import { ICity } from 'global-utils';
 import { IGenericState, IGenericDataMap } from 'client-utils/types';
 import { removeItemById } from 'client-utils/methods';
 import {
@@ -8,8 +8,8 @@ import {
   REMOVE_CITY
 } from 'actions/cities';
 
-import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions/initialData';
-import { RECEIVE_ITEMS } from 'actions/items';
+import { ItemsActionTypes, ItemsActions } from 'actions/items';
+import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 
 export interface ICityLocalized extends ICity<string> {}
 export type ICitiesMap = IGenericDataMap<ICity>;
@@ -24,7 +24,7 @@ const getInitialState = () => ({
 
 export const cities = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
-    case CLEAR_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
     case SELECT_CITY:
       return {
@@ -36,7 +36,7 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
         ...state,
         selectedId: null
       };
-    case RECEIVE_ITEMS:
+    case ItemsActionTypes.RECEIVE_ITEMS:
       return action.cityId ?
         {
           ...state,
@@ -73,7 +73,7 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
         dataMap: removeItemById(action.cityId, state.dataMap),
         aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)]
       };
-    case RECEIVE_INITIAL_DATA:
+    case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {
         ...state,
         ...action.data.cities

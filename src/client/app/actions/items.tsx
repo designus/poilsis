@@ -25,97 +25,157 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields } from 'global-utils/typings';
+import { IImage, IItem, IItemDescFields, Omit, Value } from 'global-utils/typings';
 import { getItemById } from 'selectors';
+
 import { config } from '../../../../config';
 
-export const SELECT_ITEM = 'SELECT_ITEM';
-export const CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM';
-export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
-export const REMOVE_ITEM = 'REMOVE_ITEM';
-export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
-export const TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED';
-export const TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED';
-export const RECEIVE_ITEM = 'RECEIVE_ITEM';
-export const RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION';
+export enum ItemsActionTypes {
+  RECEIVE_ITEMS = 'RECEIVE_ITEMS',
+  SELECT_ITEM = 'SELECT_ITEM',
+  RECEIVE_ITEM = 'RECEIVE_ITEM',
+  RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION',
+  CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM',
+  REMOVE_ITEM = 'REMOVE_ITEM',
+  RECEIVE_IMAGES = 'RECEIVE_IMAGES',
+  TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
+  TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED'
+}
 
 interface IUniqueItemProps {
   cityId?: string;
   userId?: string;
+  dataType?: 'cities' | 'currentUser' | 'recommendedItems';
 }
 
-interface IItemsProps extends IUniqueItemProps {
+interface IReceiveItems extends IUniqueItemProps {
+  type: ItemsActionTypes.RECEIVE_ITEMS;
   dataMap: IItemsMap;
   aliases: IAlias[];
 }
 
-export const selectItem = (itemId: string) => ({
-  type: SELECT_ITEM,
+interface ISelectItem {
+  type: ItemsActionTypes.SELECT_ITEM;
+  itemId: string;
+}
+
+interface IReceiveItem {
+  type: ItemsActionTypes.RECEIVE_ITEM;
+  item: IItem;
+}
+
+interface IReceiveItemDescription {
+  type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION;
+  itemId: string;
+  descFields: IItemDescFields;
+}
+
+interface IClearSelectedItem {
+  type: ItemsActionTypes.CLEAR_SELECTED_ITEM;
+}
+
+interface IRemoveItem {
+  type: ItemsActionTypes.REMOVE_ITEM;
+  itemId: string;
+}
+
+interface IReceiveImages {
+  type: ItemsActionTypes.RECEIVE_IMAGES;
+  itemId: string;
+  images: IImage[];
+}
+
+interface IToggleItemEnabled {
+  type: ItemsActionTypes.TOGGLE_ITEM_ENABLED;
+  itemId: string;
+  isEnabled: boolean;
+}
+
+interface IToggleItemRecommended {
+  type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED;
+  itemId: string;
+  isRecommended: boolean;
+}
+
+export type ItemsActions =
+  | IReceiveItems
+  | ISelectItem
+  | IReceiveItem
+  | IReceiveItemDescription
+  | IClearSelectedItem
+  | IRemoveItem
+  | IReceiveImages
+  | IToggleItemEnabled
+  | IToggleItemRecommended;
+
+export const selectItem = (itemId: Value<ISelectItem, 'itemId'>): ISelectItem => ({
+  type: ItemsActionTypes.SELECT_ITEM,
   itemId
 });
 
-export const clearSelectedItem = () => ({
-  type: CLEAR_SELECTED_ITEM
+export const clearSelectedItem = (): IClearSelectedItem => ({
+  type: ItemsActionTypes.CLEAR_SELECTED_ITEM
 });
 
-export const receiveItems = ({ dataMap, aliases, cityId, userId }: IItemsProps) => ({
-  type: RECEIVE_ITEMS,
-  dataMap,
-  aliases,
-  cityId,
-  userId
+export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems => ({
+  type: ItemsActionTypes.RECEIVE_ITEMS,
+  dataMap: props.dataMap,
+  aliases: props.aliases,
+  cityId: props.cityId,
+  userId: props.userId,
+  dataType: props.dataType
 });
 
-export const receiveItem = (item: IItem) => ({
-  type: RECEIVE_ITEM,
-  itemId: item.id,
+export const receiveItem = (item: IItem): IReceiveItem => ({
+  type: ItemsActionTypes.RECEIVE_ITEM,
   item
 });
 
-export const receiveItemDesc = (itemId: string, descFields: IItemDescFields) => ({
-  type: RECEIVE_ITEM_DESCRIPTION,
+export const receiveItemDescription = (itemId: string, descFields: IItemDescFields): IReceiveItemDescription => ({
+  type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION,
   itemId,
   descFields
 });
 
-export const removeItem = (item: IItem) => ({
-  type: REMOVE_ITEM,
-  item
+export const removeItem = (itemId: string): IRemoveItem => ({
+  type: ItemsActionTypes.REMOVE_ITEM,
+  itemId
 });
 
-export const receiveImages = (id: string, images: IImage[]) => ({
-  type: RECEIVE_IMAGES,
-  id,
+export const receiveImages = (itemId: string, images: IImage[]): IReceiveImages => ({
+  type: ItemsActionTypes.RECEIVE_IMAGES,
+  itemId,
   images
 });
 
-export const toggleItemEnabledField = (itemId: string, isEnabled: boolean) => ({
-  type: TOGGLE_ITEM_ENABLED,
+export const toggleItemEnabledField = (itemId: string, isEnabled: boolean): IToggleItemEnabled => ({
+  type: ItemsActionTypes.TOGGLE_ITEM_ENABLED,
   itemId,
   isEnabled
 });
 
-export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean) => ({
-  type: TOGGLE_ITEM_RECOMMENDED,
+export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean): IToggleItemRecommended => ({
+  type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED,
   itemId,
   isRecommended
 });
 
+export const getUniqueItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
+
 export const receiveUniqueItems = (items: IItem[], params: IUniqueItemProps = {}) => (dispatch, getState) => {
-  const { userId, cityId } = params;
+  const { userId, cityId, dataType } = params;
   const state: IAppState = getState();
-  const uniqueItems = items.filter(item => !getItemById(state, item.id));
-  const { dataMap, aliases } = getNormalizedData(uniqueItems);
-  dispatch(receiveItems({ dataMap, aliases, userId, cityId }));
+  const { dataMap, aliases } = getNormalizedData(getUniqueItems(items, state));
+  dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
   dispatch(endLoading(CONTENT_LOADER_ID));
 };
 
-export const loadRecommendedItems = () => (dispatch) => {
+export const loadRecommendedItems = () => (dispatch, getState) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
   return axios.get(`${config.host}/api/items/recommended`)
     .then(handleApiResponse)
     .then((items: IItem[]) => {
-      dispatch(receiveUniqueItems(items));
+      dispatch(receiveUniqueItems(items, { dataType: 'recommendedItems' }));
     })
     .catch(err => {
       console.error(err);
@@ -201,7 +261,7 @@ export const updateItemDescription = (itemId: string, itemDescFields: IItemDescF
   return axios.put(`${config.host}/api/items/item/description/${itemId}`, itemDescFields)
   .then(handleApiResponse)
   .then((response: IItemDescFields) => {
-    dispatch(receiveItemDesc(itemId, response));
+    dispatch(receiveItemDescription(itemId, response));
     dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
   })
   .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
@@ -228,8 +288,8 @@ export const deleteItem = (itemId: string) => (dispatch) => {
 
   return axios.delete(`${config.host}/api/items/item/${itemId}`)
     .then(handleApiResponse)
-    .then(item => {
-      dispatch(removeItem(item));
+    .then((item: IItem) => {
+      dispatch(removeItem(item.id));
       dispatch(stopLoading(false, ITEM_DELETE_SUCCESS, CONTENT_LOADER_ID));
     })
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getNormalizedData } from 'client-utils/methods';
 import { GLOBAL_LOADER_ID } from 'client-utils/constants';
-import { IAppState } from 'reducers';
+import { IAppState, ICityState, ITypesState, IUsersState } from 'reducers';
 import { setLocale } from 'actions/locale';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveUserDetails } from 'actions/currentUser';
@@ -9,20 +9,39 @@ import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
 import { getLocale } from 'selectors';
 import { config } from '../../../../config';
 
-export const RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA';
-export const CLEAR_STATE = 'CLEAR_STATE';
-
 export interface IGetInitialDataParams {
   pathName?: string;
   locale?: string;
 }
 
-export const clearState = () => ({
-  type: CLEAR_STATE
+export enum InitialDataActionTypes {
+  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA',
+  CLEAR_STATE = 'CLEAR_STATE'
+}
+
+interface IInitialDataState {
+  cities: ICityState;
+  types: ITypesState;
+  users: IUsersState;
+}
+
+interface IClearState {
+  type: InitialDataActionTypes.CLEAR_STATE;
+}
+
+interface IReceiveInitialData {
+  type: InitialDataActionTypes.RECEIVE_INITIAL_DATA;
+  data: IInitialDataState;
+}
+
+export type InitialDataActions = IClearState | IReceiveInitialData;
+
+export const clearState = (): IClearState => ({
+  type: InitialDataActionTypes.CLEAR_STATE
 });
 
-export const receiveInitialData = (data) => ({
-  type: RECEIVE_INITIAL_DATA,
+export const receiveInitialData = (data: IInitialDataState): IReceiveInitialData => ({
+  type: InitialDataActionTypes.RECEIVE_INITIAL_DATA,
   data
 });
 
@@ -53,9 +72,9 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
 
     return axios.all(promises)
       .then(axios.spread((citiesResponse, typesResponse, usersResponse) => {
-        const cities = getNormalizedData(citiesResponse.data);
-        const types = getNormalizedData(typesResponse.data);
-        const users = getNormalizedData(usersResponse.data);
+        const cities: ICityState = getNormalizedData(citiesResponse.data);
+        const types: ITypesState = getNormalizedData(typesResponse.data);
+        const users: IUsersState = getNormalizedData(usersResponse.data);
         dispatch(receiveInitialData({cities, types, users}));
 
         if (accessTokenClaims) {
