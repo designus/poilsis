@@ -7185,7 +7185,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./debounce": [
+  "lodash/debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
       "name": "../../node_modules/lodash/debounce.js",
