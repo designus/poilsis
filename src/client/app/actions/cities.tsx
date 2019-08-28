@@ -17,27 +17,54 @@ import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { config } from '../../../../config';
 
-export const SELECT_CITY = 'SELECT_CITY';
-export const CLEAR_SELECTED_CITY = 'CLEAR_SELECTED_CITY';
-export const RECEIVE_CITY = 'RECEIVE_CITY';
-export const REMOVE_CITY = 'REMOVE_CITY';
+export enum CitiesActionTypes {
+  SELECT_CITY = 'SELECT_CITY',
+  CLEAR_SELECTED_CITY = 'CLEAR_SELECTED_CITY',
+  RECEIVE_CITY = 'RECEIVE_CITY',
+  REMOVE_CITY = 'REMOVE_CITY'
+}
 
-export const selectCity = (cityId: string) => ({
-  type: SELECT_CITY,
+interface ISelectCity {
+  type: CitiesActionTypes.SELECT_CITY;
+  cityId: string;
+}
+
+interface IClearSelectedCity {
+  type: CitiesActionTypes.CLEAR_SELECTED_CITY;
+}
+
+interface IReceiveCity {
+  type: CitiesActionTypes.RECEIVE_CITY;
+  city: ICity;
+}
+
+interface IRemoveCity {
+  type: CitiesActionTypes.REMOVE_CITY;
+  cityId: string;
+}
+
+export type CitiesActions =
+  | ISelectCity
+  | IClearSelectedCity
+  | IReceiveCity
+  | IRemoveCity;
+
+export const selectCity = (cityId: string): ISelectCity => ({
+  type: CitiesActionTypes.SELECT_CITY,
   cityId
 });
 
-export const clearSelectedCity = () => ({
-  type: CLEAR_SELECTED_CITY
+export const clearSelectedCity = (): IClearSelectedCity => ({
+  type: CitiesActionTypes.CLEAR_SELECTED_CITY
 });
 
-export const receiveCity = (newCity: ICity) => ({
-  type: RECEIVE_CITY,
-  newCity
+export const receiveCity = (city: ICity): IReceiveCity => ({
+  type: CitiesActionTypes.RECEIVE_CITY,
+  city
 });
 
-export const removeCity = (cityId: string) => ({
-  type: REMOVE_CITY,
+export const removeCity = (cityId: string): IRemoveCity => ({
+  type: CitiesActionTypes.REMOVE_CITY,
   cityId
 });
 
