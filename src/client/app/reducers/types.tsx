@@ -1,13 +1,13 @@
 import { Reducer } from 'redux';
 import { TypesActionTypes, TypesActions } from 'actions/types';
 import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
-import { IGenericState, IGenericDataMap } from 'client-utils/types';
-import { IType } from 'global-utils';
+import { IGenericState, IGenericDataMap } from 'types/generic';
+import { IType, TranslatableField } from 'global-utils';
 
 type ActionTypes = TypesActions | InitialDataActions;
 
 export type ITypesMap = IGenericDataMap<IType>;
-export interface ITypesState extends IGenericState<IType> {
+export interface ITypesState extends IGenericState<IType, TranslatableField> {
   selectedId?: string;
 }
 

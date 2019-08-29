@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { ItemsActionTypes, ItemsActions } from 'actions/items';
+import { ItemsActionTypes, ItemsActions } from 'types/items';
 
 export interface IHomeState {
   isLoaded: boolean;

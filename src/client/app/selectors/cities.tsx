@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
 import { ICity, IItem } from 'global-utils/typings';
-import { IAppState, ICityLocalized, IItemLocalized, IItemsMap, ICitiesMap } from 'reducers';
+import { IAppState, ICityLocalized, ICitiesMap } from 'reducers';
 import { hasInitialDataLoaded, getItemsMap, getLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
+import { IItemLocalized, IItemsMap } from 'types/items';
 
 export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
 

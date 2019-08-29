@@ -1,17 +1,9 @@
 import { Reducer } from 'redux';
-import { IGenericState, IGenericDataMap } from 'client-utils/types';
 import { removeItemById } from 'client-utils/methods';
-import { IItem } from 'global-utils';
-import { ItemsActionTypes, ItemsActions } from 'actions/items';
+import { ItemsActionTypes, ItemsActions, IItemsState } from 'types/items';
 import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 
 type ActionTypes = ItemsActions | InitialDataActions;
-
-export type IItemsMap = IGenericDataMap<IItem>;
-export interface IItemLocalized extends IItem<string> {}
-export interface IItemsState extends IGenericState<IItem> {
-  selectedId?: string;
-}
 
 const getInitialState = (): IItemsState => ({
   dataMap: {},

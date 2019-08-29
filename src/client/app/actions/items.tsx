@@ -8,11 +8,11 @@ import {
 
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
-import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData } from 'client-utils/methods';
-import { IAlias } from 'client-utils/types';
+import { IAlias, IItemsMap } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IItemsMap, IAppState, Toast } from 'reducers';
+import { IAppState } from 'reducers/root';
+import { Toast } from 'reducers/toast';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -27,86 +27,22 @@ import {
 } from 'data-strings';
 import { IImage, IItem, IItemDescFields, Omit, Value } from 'global-utils/typings';
 import { getItemById } from 'selectors';
+import {
+  ItemsActionTypes,
+  ISelectItem,
+  IClearSelectedItem,
+  IReceiveItems,
+  IReceiveItem,
+  IReceiveImages,
+  IReceiveItemDescription,
+  IRemoveItem,
+  IToggleItemEnabled,
+  IToggleItemRecommended,
+  IUniqueItemProps
+} from 'types/items';
 
+import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
 import { config } from '../../../../config';
-
-export enum ItemsActionTypes {
-  RECEIVE_ITEMS = 'RECEIVE_ITEMS',
-  SELECT_ITEM = 'SELECT_ITEM',
-  RECEIVE_ITEM = 'RECEIVE_ITEM',
-  RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION',
-  CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM',
-  REMOVE_ITEM = 'REMOVE_ITEM',
-  RECEIVE_IMAGES = 'RECEIVE_IMAGES',
-  TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
-  TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED'
-}
-
-interface IUniqueItemProps {
-  cityId?: string;
-  userId?: string;
-  dataType?: 'cities' | 'currentUser' | 'recommendedItems';
-}
-
-interface IReceiveItems extends IUniqueItemProps {
-  type: ItemsActionTypes.RECEIVE_ITEMS;
-  dataMap: IItemsMap;
-  aliases: IAlias[];
-}
-
-interface ISelectItem {
-  type: ItemsActionTypes.SELECT_ITEM;
-  itemId: string;
-}
-
-interface IReceiveItem {
-  type: ItemsActionTypes.RECEIVE_ITEM;
-  item: IItem;
-}
-
-interface IReceiveItemDescription {
-  type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION;
-  itemId: string;
-  descFields: IItemDescFields;
-}
-
-interface IClearSelectedItem {
-  type: ItemsActionTypes.CLEAR_SELECTED_ITEM;
-}
-
-interface IRemoveItem {
-  type: ItemsActionTypes.REMOVE_ITEM;
-  itemId: string;
-}
-
-interface IReceiveImages {
-  type: ItemsActionTypes.RECEIVE_IMAGES;
-  itemId: string;
-  images: IImage[];
-}
-
-interface IToggleItemEnabled {
-  type: ItemsActionTypes.TOGGLE_ITEM_ENABLED;
-  itemId: string;
-  isEnabled: boolean;
-}
-
-interface IToggleItemRecommended {
-  type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED;
-  itemId: string;
-  isRecommended: boolean;
-}
-
-export type ItemsActions =
-  | IReceiveItems
-  | ISelectItem
-  | IReceiveItem
-  | IReceiveItemDescription
-  | IClearSelectedItem
-  | IRemoveItem
-  | IReceiveImages
-  | IToggleItemEnabled
-  | IToggleItemRecommended;
 
 export const selectItem = (itemId: Value<ISelectItem, 'itemId'>): ISelectItem => ({
   type: ItemsActionTypes.SELECT_ITEM,

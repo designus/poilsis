@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { IItemsState } from 'types/items';
 import {
   cities,
   items,
@@ -9,8 +10,7 @@ import {
   ICityState,
   IInitialDataState,
   IToastState,
-  IAuthState,
-  IItemsState
+  IAuthState
 } from '../reducers';
 
 import { loader, ILoadingState } from './loader';

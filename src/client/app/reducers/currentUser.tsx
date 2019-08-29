@@ -1,6 +1,6 @@
 import { RECEIVE_USER_DETAILS } from 'actions/currentUser';
 import { LOGOUT_SUCCESS } from 'actions/auth';
-import { ItemsActionTypes, ItemsActions } from 'actions/items';
+import { ItemsActionTypes, ItemsActions } from 'types/items';
 import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 
 export interface ICurrentUser {

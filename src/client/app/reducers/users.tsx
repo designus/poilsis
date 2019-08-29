@@ -1,5 +1,5 @@
 import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
-import { IGenericState, IGenericDataMap } from 'client-utils/types';
+import { IGenericState, IGenericDataMap } from 'types/generic';
 
 export interface IUser {
   id: string;

@@ -1,10 +1,9 @@
 import { Reducer } from 'redux';
 import { ICity } from 'global-utils';
-import { IGenericState, IGenericDataMap } from 'client-utils/types';
+import { IGenericState, IGenericDataMap } from 'types/generic';
+import { ItemsActionTypes, ItemsActions } from 'types/items';
 import { removeItemById } from 'client-utils/methods';
 import { CitiesActionTypes, CitiesActions } from 'actions/cities';
-
-import { ItemsActionTypes, ItemsActions } from 'actions/items';
 import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 
 type ActionTypes = CitiesActions | ItemsActions | InitialDataActions;

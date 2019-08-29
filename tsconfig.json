@@ -13,6 +13,8 @@
       "actions/*": ["./src/client/app/actions/*"],
       "pages": ["./src/client/app/pages"],
       "pages/*": ["./src/client/app/pages/*"],
+      "types": ["./src/client/app/types"],
+      "types/*": ["./src/client/app/types/*"],
       "data-strings": ["./src/data-strings"],
       "global-styles": ["./src/client/app/global-styles"],
       "global-utils": ["./src/global-utils"],
