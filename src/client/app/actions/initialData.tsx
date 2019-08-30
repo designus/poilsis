@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { getNormalizedData } from 'client-utils/methods';
 import { GLOBAL_LOADER_ID } from 'client-utils/constants';
-import { IAppState, ICityState, ITypesState, IUsersState } from 'reducers';
+import { IAppState, ITypesState, IUsersState } from 'reducers';
 import { setLocale } from 'actions/locale';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
+import { ICityState } from 'types';
 import { getLocale } from 'selectors';
 import { config } from '../../../../config';
 

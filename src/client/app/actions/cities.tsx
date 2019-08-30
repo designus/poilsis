@@ -14,40 +14,10 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
+import { CitiesActionTypes, ISelectCity, IClearSelectedCity, IReceiveCity, IRemoveCity } from 'types';
+
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { config } from '../../../../config';
-
-export enum CitiesActionTypes {
-  SELECT_CITY = 'SELECT_CITY',
-  CLEAR_SELECTED_CITY = 'CLEAR_SELECTED_CITY',
-  RECEIVE_CITY = 'RECEIVE_CITY',
-  REMOVE_CITY = 'REMOVE_CITY'
-}
-
-interface ISelectCity {
-  type: CitiesActionTypes.SELECT_CITY;
-  cityId: string;
-}
-
-interface IClearSelectedCity {
-  type: CitiesActionTypes.CLEAR_SELECTED_CITY;
-}
-
-interface IReceiveCity {
-  type: CitiesActionTypes.RECEIVE_CITY;
-  city: ICity;
-}
-
-interface IRemoveCity {
-  type: CitiesActionTypes.REMOVE_CITY;
-  cityId: string;
-}
-
-export type CitiesActions =
-  | ISelectCity
-  | IClearSelectedCity
-  | IReceiveCity
-  | IRemoveCity;
 
 export const selectCity = (cityId: string): ISelectCity => ({
   type: CitiesActionTypes.SELECT_CITY,

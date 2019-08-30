@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
-import { DropdownItemValue, IDropdownOption } from 'client-utils/types';
+import { DropdownItemValue, IDropdownOption } from 'types/generic';
 
 import { styles } from './styles';
 

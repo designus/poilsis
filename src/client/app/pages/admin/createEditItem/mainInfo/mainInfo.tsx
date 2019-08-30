@@ -6,7 +6,8 @@ import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { getTypesMap, getUsersMap, getCitiesMap, getCurrentUserRole, getLocale } from 'selectors';
-import { IAppState, IUsersMap, ICitiesMap, ITypesMap } from 'reducers';
+import { ICitiesMap } from 'types';
+import { IAppState, IUsersMap, ITypesMap } from 'reducers';
 import { updateMainInfo, createItem } from 'actions/items';
 import { getBackendErrors } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';

@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Tooltip from '@material-ui/core/Tooltip';
-import { IDropdownOption } from 'client-utils/types';
+import { IDropdownOption } from 'types/generic';
 import { styles } from './styles';
 
 export interface ICheckboxGroupParams extends WrappedFieldProps, WithStyles<typeof styles> {

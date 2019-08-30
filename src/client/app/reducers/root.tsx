@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { IItemsState } from 'types/items';
+import { IItemsState, ICityState } from 'types';
 import {
   cities,
   items,
   initialData,
   toast,
   auth,
-  ICityState,
   IInitialDataState,
   IToastState,
   IAuthState

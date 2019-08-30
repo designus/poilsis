@@ -3,7 +3,7 @@ import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { TranslatableField, hasLocalizedFields } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption } from './types';
+import { IGenericState, IGenericDataMap, IDropdownOption } from 'types/generic';
 
 export function getNormalizedData(data: any[]) {
   return data.reduce((acc: IGenericState<object>, item: any) => {

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
+import { ITypesMap, IUsersMap } from 'reducers';
+import { ICitiesMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
 import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
 
