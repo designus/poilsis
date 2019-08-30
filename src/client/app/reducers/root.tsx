@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { IItemsState, ICityState } from 'types';
+import { IItemsState, ICityState, ITypesState } from 'types';
 import {
   cities,
   items,
@@ -13,7 +13,7 @@ import {
 } from '../reducers';
 
 import { loader, ILoadingState } from './loader';
-import { types, ITypesState } from './types';
+import { types } from './types';
 import { uploadProgress, IUploadProgress } from './uploadProgress';
 import { currentUser, ICurrentUserState } from './currentUser';
 import { users, IUsersState } from './users';

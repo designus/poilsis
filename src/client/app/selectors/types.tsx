@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { IAppState, ITypesMap } from 'reducers';
+import { IAppState } from 'reducers';
+import { ITypesMap } from 'types';
 import { IType } from 'global-utils/typings';
 import { hasInitialDataLoaded } from 'selectors';
 

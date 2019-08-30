@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Button } from 'components/button';
 import { getDropdownOptions } from 'client-utils/methods';
 import { isRequired } from 'global-utils';
-import { ITypesMap } from 'reducers';
+import { ITypesMap } from 'types';
 
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';

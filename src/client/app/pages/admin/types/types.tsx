@@ -2,13 +2,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, ITypesMap } from 'reducers';
+import { IAppState } from 'reducers';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
 import { deleteType } from 'actions/types';
 import { getTypes, getTypesMap, getLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 import { TranslatableField, IType } from 'global-utils/typings';
+import { ITypesMap } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';

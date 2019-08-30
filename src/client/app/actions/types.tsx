@@ -10,36 +10,11 @@ import {
   TYPE_UPDATE_ERROR,
   TYPE_DELETE_ERROR
 } from 'data-strings';
+import { TypesActionTypes, ISelectType, IReceiveType, IRemoveType } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { startLoading } from './loader';
 import { config } from '../../../../config';
-
-export enum TypesActionTypes {
-  SELECT_TYPE = 'SELECT_TYPE',
-  RECEIVE_TYPE = 'RECEIVE_TYPE',
-  REMOVE_TYPE = 'REMOVE_TYPE'
-}
-
-interface ISelectType {
-  type: TypesActionTypes.SELECT_TYPE;
-  typeId: string;
-}
-
-interface IReceiveType {
-  type: TypesActionTypes.RECEIVE_TYPE;
-  newType: IType;
-}
-
-interface IRemoveType {
-  type: TypesActionTypes.REMOVE_TYPE;
-  typeId: string;
-}
-
-export type TypesActions =
-  | ISelectType
-  | IReceiveType
-  | IRemoveType;
 
 export const selectType = (typeId: string): ISelectType => ({
   type: TypesActionTypes.SELECT_TYPE,
