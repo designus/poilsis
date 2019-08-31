@@ -115,12 +115,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/components/extendWithLoader/styles.tsx",
-      "name": "./app/components/extendWithLoader/styles.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    },
-    {
       "id": "./app/components/drawer/styles.tsx",
       "name": "./app/components/drawer/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
@@ -163,6 +157,18 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
+      "id": "./app/components/extendWithLoader/styles.tsx",
+      "name": "./app/components/extendWithLoader/styles.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    },
+    {
+      "id": "./app/components/extendWithLoader/styles.tsx",
+      "name": "./app/components/extendWithLoader/styles.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
       "id": "./app/components/loginButton/styles.tsx",
       "name": "./app/components/loginButton/styles.tsx",
       "file": "clientLayout.js",
@@ -203,6 +209,12 @@
       "name": "./app/pages/admin/createEditItem/description/form/styles.tsx",
       "file": "descriptionPage.js",
       "publicPath": "http://localhost:8080/public/descriptionPage.js"
+    },
+    {
+      "id": "./app/components/recommendedItems/styles.tsx",
+      "name": "./app/components/recommendedItems/styles.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
     },
     {
       "id": "./app/components/extendWithLoader/styles.tsx",
@@ -273,12 +285,6 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
     {
-      "id": "./app/types/items.tsx",
-      "name": "./app/types/items.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
       "id": "../data-strings/items.tsx",
       "name": "../data-strings/items.tsx",
       "file": "main.js",
@@ -295,22 +301,6 @@
       "name": "./app/reducers/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/admin": [
-    {
-      "id": "./app/actions/admin.tsx",
-      "name": "./app/actions/admin.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "actions/types": [
-    {
-      "id": "./app/actions/types.tsx",
-      "name": "./app/actions/types.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
   "./adminHeader": [
@@ -425,6 +415,34 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
+  "../itemTypesList": [
+    {
+      "id": "./app/components/itemTypesList/index.tsx",
+      "name": "./app/components/itemTypesList/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/itemTypesList/index.tsx",
+      "name": "./app/components/itemTypesList/index.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "./itemTypesList": [
+    {
+      "id": "./app/components/itemTypesList/itemTypesList.tsx",
+      "name": "./app/components/itemTypesList/itemTypesList.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/itemTypesList/itemTypesList.tsx",
+      "name": "./app/components/itemTypesList/itemTypesList.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
   "./adminLeftMenu": [
     {
       "id": "./app/components/menu/adminLeftMenu/adminLeftMenu.tsx",
@@ -515,6 +533,46 @@
       "name": "./app/components/navigationPrompt/navigationPrompt.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "components/notFound": [
+    {
+      "id": "./app/components/notFound/index.tsx",
+      "name": "./app/components/notFound/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/notFound/index.tsx",
+      "name": "./app/components/notFound/index.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
+      "id": "./app/components/notFound/index.tsx",
+      "name": "./app/components/notFound/index.tsx",
+      "file": "clientItem.js",
+      "publicPath": "http://localhost:8080/public/clientItem.js"
+    }
+  ],
+  "./notFound": [
+    {
+      "id": "./app/components/notFound/notFound.tsx",
+      "name": "./app/components/notFound/notFound.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/notFound/notFound.tsx",
+      "name": "./app/components/notFound/notFound.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
+      "id": "./app/components/notFound/notFound.tsx",
+      "name": "./app/components/notFound/notFound.tsx",
+      "file": "clientItem.js",
+      "publicPath": "http://localhost:8080/public/clientItem.js"
     }
   ],
   "../search": [
@@ -743,6 +801,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/actions/types.tsx",
+      "name": "./app/actions/types.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    },
+    {
       "id": "./app/types/types.tsx",
       "name": "./app/types/types.tsx",
       "file": "main.js",
@@ -765,86 +829,6 @@
       "name": "./app/reducers/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/cities": [
-    {
-      "id": "./app/actions/cities.tsx",
-      "name": "./app/actions/cities.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    }
-  ],
-  "./extendWithLoader": [
-    {
-      "id": "./app/components/extendWithLoader/extendWithLoader.tsx",
-      "name": "./app/components/extendWithLoader/extendWithLoader.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    },
-    {
-      "id": "./app/components/extendWithLoader/extendWithLoader.tsx",
-      "name": "./app/components/extendWithLoader/extendWithLoader.tsx",
-      "file": "keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
-    }
-  ],
-  "components/extendWithLoader": [
-    {
-      "id": "./app/components/extendWithLoader/index.tsx",
-      "name": "./app/components/extendWithLoader/index.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    },
-    {
-      "id": "./app/components/extendWithLoader/index.tsx",
-      "name": "./app/components/extendWithLoader/index.tsx",
-      "file": "keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
-    }
-  ],
-  "components/itemTypesList": [
-    {
-      "id": "./app/components/itemTypesList/index.tsx",
-      "name": "./app/components/itemTypesList/index.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    }
-  ],
-  "./itemTypesList": [
-    {
-      "id": "./app/components/itemTypesList/itemTypesList.tsx",
-      "name": "./app/components/itemTypesList/itemTypesList.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    }
-  ],
-  "components/notFound": [
-    {
-      "id": "./app/components/notFound/index.tsx",
-      "name": "./app/components/notFound/index.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    },
-    {
-      "id": "./app/components/notFound/index.tsx",
-      "name": "./app/components/notFound/index.tsx",
-      "file": "clientItem.js",
-      "publicPath": "http://localhost:8080/public/clientItem.js"
-    }
-  ],
-  "./notFound": [
-    {
-      "id": "./app/components/notFound/notFound.tsx",
-      "name": "./app/components/notFound/notFound.tsx",
-      "file": "adminLayoutPage~clientCity.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity.js"
-    },
-    {
-      "id": "./app/components/notFound/notFound.tsx",
-      "name": "./app/components/notFound/notFound.tsx",
-      "file": "clientItem.js",
-      "publicPath": "http://localhost:8080/public/clientItem.js"
     }
   ],
   "./drawer": [
@@ -1019,7 +1003,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../global-styles": [
+  "../../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1033,6 +1017,68 @@
       "name": "./app/global-styles/settings.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./admin": [
+    {
+      "id": "./app/actions/admin.tsx",
+      "name": "./app/actions/admin.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    }
+  ],
+  "actions/cities": [
+    {
+      "id": "./app/actions/cities.tsx",
+      "name": "./app/actions/cities.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    },
+    {
+      "id": "./app/actions/cities.tsx",
+      "name": "./app/actions/cities.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "./extendWithLoader": [
+    {
+      "id": "./app/components/extendWithLoader/extendWithLoader.tsx",
+      "name": "./app/components/extendWithLoader/extendWithLoader.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    },
+    {
+      "id": "./app/components/extendWithLoader/extendWithLoader.tsx",
+      "name": "./app/components/extendWithLoader/extendWithLoader.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
+      "id": "./app/components/extendWithLoader/extendWithLoader.tsx",
+      "name": "./app/components/extendWithLoader/extendWithLoader.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    }
+  ],
+  "components/extendWithLoader": [
+    {
+      "id": "./app/components/extendWithLoader/index.tsx",
+      "name": "./app/components/extendWithLoader/index.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    },
+    {
+      "id": "./app/components/extendWithLoader/index.tsx",
+      "name": "./app/components/extendWithLoader/index.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
+      "id": "./app/components/extendWithLoader/index.tsx",
+      "name": "./app/components/extendWithLoader/index.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
   "components/itemsList": [
@@ -1281,12 +1327,48 @@
       "publicPath": "http://localhost:8080/public/descriptionPage.js"
     }
   ],
+  "actions": [
+    {
+      "id": "./app/actions/index.tsx",
+      "name": "./app/actions/index.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "components/recommendedItems": [
+    {
+      "id": "./app/components/recommendedItems/index.tsx",
+      "name": "./app/components/recommendedItems/index.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "./recommendedItems": [
+    {
+      "id": "./app/components/recommendedItems/recommendedItems.tsx",
+      "name": "./app/components/recommendedItems/recommendedItems.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
   "./home": [
     {
       "id": "./app/pages/client/home/home.tsx",
       "name": "./app/pages/client/home/home.tsx",
       "file": "homePage.js",
       "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/selectors/home.tsx",
+      "name": "./app/selectors/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/home.tsx",
+      "name": "./app/reducers/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "./keepMeLoggedModal": [
@@ -1297,10 +1379,10 @@
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
-  "./elementTypeAcceptingRef": [
+  "./exactProp": [
     {
-      "id": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
-      "name": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
+      "id": "../../node_modules/@material-ui/utils/esm/exactProp.js",
+      "name": "../../node_modules/@material-ui/utils/esm/exactProp.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -1397,7 +1479,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../../webpack/buildin/global.js": [
+  "./../webpack/buildin/global.js": [
     {
       "id": "../../node_modules/webpack/buildin/global.js",
       "name": "../../node_modules/webpack/buildin/global.js",
@@ -2565,7 +2647,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./warning": [
+  "../utils/warning": [
     {
       "id": "../../node_modules/react-redux/es/utils/warning.js",
       "name": "../../node_modules/react-redux/es/utils/warning.js",
@@ -2637,7 +2719,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../process/browser.js": [
+  "./../node_modules/process/browser.js": [
     {
       "id": "../../node_modules/process/browser.js",
       "name": "../../node_modules/process/browser.js",
@@ -2991,6 +3073,14 @@
     {
       "id": "./app/reducers/initialData.tsx",
       "name": "./app/reducers/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "types/items": [
+    {
+      "id": "./app/types/items.tsx",
+      "name": "./app/types/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3393,7 +3483,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "global-utils/typings": [
+  "./typings": [
     {
       "id": "../global-utils/typings.tsx",
       "name": "../global-utils/typings.tsx",
@@ -3473,7 +3563,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../data-strings/validation": [
+  "./validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -3747,18 +3837,18 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
+  "./elementTypeAcceptingRef": [
     {
-      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
-      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "id": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
+      "name": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./exactProp": [
+  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
     {
-      "id": "../../node_modules/@material-ui/utils/esm/exactProp.js",
-      "name": "../../node_modules/@material-ui/utils/esm/exactProp.js",
+      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4093,7 +4183,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../useTheme/ThemeContext": [
+  "./ThemeContext": [
     {
       "id": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
       "name": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
@@ -4375,7 +4465,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./development": [
+  "./development.tsx": [
     {
       "id": "../../config/development.tsx",
       "name": "../../config/development.tsx",
@@ -4383,7 +4473,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./production": [
+  "./production.tsx": [
     {
       "id": "../../config/production.tsx",
       "name": "../../config/production.tsx",
@@ -4391,7 +4481,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./test": [
+  "./test.tsx": [
     {
       "id": "../../config/test.tsx",
       "name": "../../config/test.tsx",
@@ -4519,10 +4609,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/locale": [
+  "actions/initialData": [
     {
-      "id": "./app/actions/locale.tsx",
-      "name": "./app/actions/locale.tsx",
+      "id": "./app/actions/initialData.tsx",
+      "name": "./app/actions/initialData.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4611,6 +4701,14 @@
     {
       "id": "../../node_modules/intl-relativeformat/lib/en.js",
       "name": "../../node_modules/intl-relativeformat/lib/en.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/locale": [
+    {
+      "id": "./app/actions/locale.tsx",
+      "name": "./app/actions/locale.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -5285,14 +5383,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/initialData": [
-    {
-      "id": "./app/actions/initialData.tsx",
-      "name": "./app/actions/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "./Switch": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
@@ -5553,7 +5643,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./TableContext": [
+  "../Table/TableContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
       "name": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
@@ -6833,7 +6923,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./ListContext": [
+  "../List/ListContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
       "name": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
@@ -7233,7 +7323,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "@babel/runtime/helpers/assertThisInitialized": [
+  "./assertThisInitialized": [
     {
       "id": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
       "name": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
@@ -7545,7 +7635,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "@material-ui/core/Typography": [
+  "../Typography": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Typography/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Typography/index.js",
@@ -7561,7 +7651,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./focusVisible": [
+  "../utils/focusVisible": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/focusVisible.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/focusVisible.js",
@@ -7601,7 +7691,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./reactHelpers": [
+  "../utils/reactHelpers": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/reactHelpers.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/reactHelpers.js",
@@ -9007,7 +9097,7 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
-  "fbjs/lib/containsNode": [
+  "./containsNode": [
     {
       "id": "../../node_modules/fbjs/lib/containsNode.js",
       "name": "../../node_modules/fbjs/lib/containsNode.js",

@@ -17,6 +17,7 @@ export interface IUniqueItemProps {
 
 export enum ItemsActionTypes {
   RECEIVE_ITEMS = 'RECEIVE_ITEMS',
+  RECEIVE_RECOMMENDED_ITEMS = 'RECEIVE_RECOMMENDED_ITEMS',
   SELECT_ITEM = 'SELECT_ITEM',
   RECEIVE_ITEM = 'RECEIVE_ITEM',
   RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION',
@@ -31,6 +32,11 @@ export interface IReceiveItems extends IUniqueItemProps {
   type: ItemsActionTypes.RECEIVE_ITEMS;
   dataMap: IItemsMap;
   aliases: IAlias[];
+}
+
+export interface IReceiveRecommendedItems {
+  type: ItemsActionTypes.RECEIVE_RECOMMENDED_ITEMS;
+  items: string[];
 }
 
 export interface ISelectItem {
@@ -84,4 +90,5 @@ export type ItemsActions = IReceiveItems
   | IRemoveItem
   | IReceiveImages
   | IToggleItemEnabled
-  | IToggleItemRecommended;
+  | IToggleItemRecommended
+  | IReceiveRecommendedItems;

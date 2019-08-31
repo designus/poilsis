@@ -15,6 +15,7 @@ import { uploadProgress } from './uploadProgress';
 import { currentUser } from './currentUser';
 import { users } from './users';
 import { locale } from './locale';
+import { home } from './home';
 
 export const rootReducer = combineReducers({
   cities,
@@ -23,6 +24,7 @@ export const rootReducer = combineReducers({
   items,
   initialData,
   loader,
+  home,
   toast,
   uploadProgress,
   currentUser,

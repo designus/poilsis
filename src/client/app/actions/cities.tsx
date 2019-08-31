@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ICity, IItem } from 'global-utils';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveUniqueItems } from 'actions/items';
+import { receiveNewItems } from 'actions/items';
 import {
   CITY_CREATE_SUCCESS,
   CITY_CREATE_ERROR,
@@ -53,7 +53,8 @@ export const loadCityItems = (cityAlias: string) => {
     return axios.get(`${config.host}/api/items/city/${cityId}`)
       .then(handleApiResponse)
       .then((data: IItem[]) => {
-        dispatch(receiveUniqueItems(data, { cityId, dataType: 'cities' }));
+        dispatch(receiveNewItems(data, { cityId, dataType: 'cities' }));
+        dispatch(endLoading(CONTENT_LOADER_ID));
       })
       .catch(err => {
         console.error(err);

@@ -8,9 +8,11 @@ import { IInitialDataState } from './initialData';
 import { ILoadingState } from './loader';
 import { IToastState } from './toast';
 import { IUploadProgressState } from './uploadProgress';
+import { IHomeState } from './home';
 
 export interface IAppState {
   cities: ICityState;
+  home: IHomeState;
   auth: IAuthState;
   locale: string;
   currentUser: ICurrentUserState;

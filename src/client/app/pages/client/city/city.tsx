@@ -56,7 +56,7 @@ class CityPage extends React.Component<ICityPageParams, any> {
   render() {
     const { selectedCity, locale } = this.props;
     return selectedCity ? (
-      <div>
+      <React.Fragment>
         <h1>{getLocalizedText(selectedCity.name, locale)}</h1>
         <p>{getLocalizedText(selectedCity.description, locale)}</p>
         <ItemsListWithLoader
@@ -64,7 +64,7 @@ class CityPage extends React.Component<ICityPageParams, any> {
           items={this.props.cityItems}
           selectedCity={this.props.selectedCity}
         />
-      </div>
+      </React.Fragment>
     ) : <NotFound/>;
   }
 }

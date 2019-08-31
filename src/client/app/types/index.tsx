@@ -10,3 +10,4 @@ export * from './types';
 export * from './toast';
 export * from './users';
 export * from './uploadProgress';
+export * from './home';

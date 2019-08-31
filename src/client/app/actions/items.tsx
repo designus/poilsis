@@ -31,6 +31,7 @@ import {
   IClearSelectedItem,
   IReceiveItems,
   IReceiveItem,
+  IReceiveRecommendedItems,
   IReceiveImages,
   IReceiveItemDescription,
   IRemoveItem,
@@ -58,6 +59,11 @@ export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems 
   cityId: props.cityId,
   userId: props.userId,
   dataType: props.dataType
+});
+
+export const receiveRecommendedItems = (items: string[]): IReceiveRecommendedItems => ({
+  type: ItemsActionTypes.RECEIVE_RECOMMENDED_ITEMS,
+  items
 });
 
 export const receiveItem = (item: IItem): IReceiveItem => ({
@@ -94,14 +100,14 @@ export const toggleItemRecommendedField = (itemId: string, isRecommended: boolea
   isRecommended
 });
 
-export const getUniqueItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
+export const getNewItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
 
-export const receiveUniqueItems = (items: IItem[], params: IUniqueItemProps = {}) => (dispatch, getState) => {
+export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) => (dispatch, getState) => {
   const { userId, cityId, dataType } = params;
   const state: IAppState = getState();
-  const { dataMap, aliases } = getNormalizedData(getUniqueItems(items, state));
+  const newItems = getNewItems(items, state);
+  const { dataMap, aliases } = getNormalizedData(newItems);
   dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
-  dispatch(endLoading(CONTENT_LOADER_ID));
 };
 
 export const loadRecommendedItems = () => (dispatch, getState) => {
@@ -109,7 +115,10 @@ export const loadRecommendedItems = () => (dispatch, getState) => {
   return axios.get(`${config.host}/api/items/recommended`)
     .then(handleApiResponse)
     .then((items: IItem[]) => {
-      dispatch(receiveUniqueItems(items, { dataType: 'recommendedItems' }));
+      const recommendedItems = items.map(item => item.id);
+      dispatch(receiveNewItems(items));
+      dispatch(receiveRecommendedItems(recommendedItems));
+      dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {
       console.error(err);

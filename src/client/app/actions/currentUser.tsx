@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveUniqueItems } from 'actions/items';
+import { receiveNewItems } from 'actions/items';
 import { IAppState, ICurrentUser, CurrentUserActionTypes, IReceiveUserDetails } from 'types';
 import { isAdmin, IItem } from 'global-utils';
 import { handleApiResponse } from './utils';
@@ -30,7 +30,8 @@ export const loadUserItems = () => (dispatch, getState) => {
   return axios.get(endpoint)
     .then(handleApiResponse)
     .then((items: IItem[]) => {
-      dispatch(receiveUniqueItems(items, { userId: user.id, dataType: 'currentUser' }));
+      dispatch(receiveNewItems(items, { userId: user.id, dataType: 'currentUser' }));
+      dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {
       console.error(err);

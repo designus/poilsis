@@ -1,10 +1,5 @@
 import { Reducer } from 'redux';
-import { ItemsActionTypes, ItemsActions } from 'types/items';
-
-export interface IHomeState {
-  isLoaded: boolean;
-  recommendedItems: string[];
-}
+import { ItemsActionTypes, ItemsActions, IHomeState } from 'types';
 
 const getInitialState = (): IHomeState => ({
   isLoaded: false,
@@ -13,10 +8,11 @@ const getInitialState = (): IHomeState => ({
 
 export const home: Reducer<IHomeState, ItemsActions> = (state = getInitialState(), action) => {
   switch (action.type) {
-    case ItemsActionTypes.RECEIVE_ITEMS:
+    case ItemsActionTypes.RECEIVE_RECOMMENDED_ITEMS:
       return {
         ...state,
-        isLoaded: true
+        isLoaded: true,
+        recommendedItems: action.items
       };
     default:
       return state;

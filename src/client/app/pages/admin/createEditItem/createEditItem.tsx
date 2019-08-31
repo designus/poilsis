@@ -4,7 +4,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { Switch, RouteComponentProps } from 'react-router-dom';
-import { isEqual } from 'lodash';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState } from 'types';
