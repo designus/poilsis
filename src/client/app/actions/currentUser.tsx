@@ -2,15 +2,14 @@ import axios from 'axios';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveUniqueItems } from 'actions/items';
-import { IAppState, ICurrentUser } from 'reducers';
+import { IAppState } from 'reducers';
+import { ICurrentUser, CurrentUserActionTypes, IReceiveUserDetails } from 'types';
 import { isAdmin, IItem } from 'global-utils';
 import { handleApiResponse } from './utils';
 import { config } from '../../../../config';
 
-export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
-
-export const receiveUserDetails = (userDetails: ICurrentUser) => ({
-  type: RECEIVE_USER_DETAILS,
+export const receiveUserDetails = (userDetails: ICurrentUser): IReceiveUserDetails => ({
+  type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
   userDetails
 });
 

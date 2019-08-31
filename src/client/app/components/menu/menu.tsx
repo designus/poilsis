@@ -12,7 +12,8 @@ import { WithStyles } from '@material-ui/core/styles';
 
 import { DropdownMenu } from 'components/dropdownMenu';
 import { getCurrentUser } from 'selectors';
-import { IAppState, ICurrentUser } from 'reducers';
+import { IAppState } from 'reducers';
+import { ICurrentUser } from 'types';
 import { styles } from './styles';
 
 export interface IMenuItem {

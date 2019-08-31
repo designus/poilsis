@@ -11,7 +11,8 @@ import { throttle } from 'lodash';
 import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
 import { logout, showKeepMeLoggedModal } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
-import { IAppState, ICurrentUser } from 'reducers';
+import { IAppState } from 'reducers';
+import { ICurrentUser } from 'types';
 import { DropdownMenu } from 'components/dropdownMenu';
 import { styles } from './styles';
 

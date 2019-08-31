@@ -1,29 +1,28 @@
-import { RECEIVE_USER_DETAILS } from 'actions/currentUser';
-import { LOGOUT_SUCCESS } from 'actions/auth';
-import { ItemsActionTypes, ItemsActions } from 'types/items';
+import { Reducer } from 'redux';
 import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
+import {
+  AuthActionTypes,
+  AuthActions,
+  ItemsActionTypes,
+  CurrentUserActions,
+  CurrentUserActionTypes,
+  ItemsActions,
+  ICurrentUserState
+} from 'types';
 
-export interface ICurrentUser {
-  name?: string;
-  role?: string;
-  id?: string;
-}
-
-export interface ICurrentUserState {
-  details: ICurrentUser;
-  hasItems?: boolean;
-}
-
-const getInitialState = () => ({
+const getInitialState = (): ICurrentUserState => ({
   details: {},
   hasItems: false
 });
 
-export const currentUser = (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
+type ActionTypes = CurrentUserActions | ItemsActions | InitialDataActions | AuthActions;
+
+export const currentUser: Reducer<ICurrentUserState, ActionTypes> =
+(state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
   switch (action.type) {
     case ItemsActionTypes.RECEIVE_ITEMS:
       return action.userId ? { ...state, hasItems: true } : state;
-    case RECEIVE_USER_DETAILS: {
+    case CurrentUserActionTypes.RECEIVE_USER_DETAILS: {
       return {
         ...state,
         details: action.userDetails
@@ -34,7 +33,7 @@ export const currentUser = (state: ICurrentUserState = getInitialState(), action
         ...state,
         hasItems: false
       };
-    case LOGOUT_SUCCESS: {
+    case AuthActionTypes.LOGOUT_SUCCESS: {
       return getInitialState();
     }
     default:

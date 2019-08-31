@@ -11,7 +11,8 @@ import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
-import { IAuthState, rootReducer  } from 'reducers';
+import { rootReducer  } from 'reducers';
+import { IAuthState } from 'types';
 
 import app, { staticFilesPort } from './app';
 import { config } from '../../config';

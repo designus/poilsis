@@ -9,6 +9,15 @@ import { Toast, IAppState } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { getAccessTokenClaims } from 'global-utils/methods';
 import {
+  AuthActionTypes,
+  ILoginSucces,
+  ILogoutSuccess,
+  IShowKeepMeLoggedModal,
+  IReauthenticateSuccess,
+  ISetAccessToken
+} from 'types';
+
+import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_ERROR,
   USER_LOGOUT_SUCCESS,
@@ -17,17 +26,28 @@ import {
 } from 'data-strings';
 import { config } from '../../../../config';
 
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const SHOW_KEEP_ME_LOGGED_MODAL = 'SHOW_KEEP_ME_LOGGED_MODAL';
-export const REAUTHENTICATE_SUCCESS = 'REAUTHENTICATE_SUCCESS';
-export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
+export const loginSuccess = (accessToken: string): ILoginSucces => ({
+  type: AuthActionTypes.LOGIN_SUCCESS,
+  accessToken
+});
 
-export const loginSuccess = (accessToken) => ({type: LOGIN_SUCCESS, accessToken});
-export const logoutSuccess = () => ({type: LOGOUT_SUCCESS});
-export const showKeepMeLoggedModal = () => ({type: SHOW_KEEP_ME_LOGGED_MODAL});
-export const reauthenticateSuccess = (accessToken) => ({type: REAUTHENTICATE_SUCCESS, accessToken});
-export const setAccessToken = (accessToken) => ({type: SET_ACCESS_TOKEN, accessToken});
+export const logoutSuccess = (): ILogoutSuccess => ({
+  type: AuthActionTypes.LOGOUT_SUCCESS
+});
+
+export const showKeepMeLoggedModal = (): IShowKeepMeLoggedModal => ({
+  type: AuthActionTypes.SHOW_KEEP_ME_LOGGED_MODAL
+});
+
+export const reauthenticateSuccess = (accessToken: string): IReauthenticateSuccess => ({
+  type: AuthActionTypes.REAUTHENTICATE_SUCCESS,
+  accessToken
+});
+
+export const setAccessToken = (accessToken: string): ISetAccessToken => ({
+  type: AuthActionTypes.SET_ACCESS_TOKEN,
+  accessToken
+});
 
 export const handleAuthError = (dispatch, isLogin: boolean) => (error) => {
   const genericMessage = isLogin ? USER_LOGIN_ERROR : USER_LOGOUT_ERROR;
