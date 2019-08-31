@@ -11,8 +11,7 @@ import { throttle } from 'lodash';
 import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
 import { logout, showKeepMeLoggedModal } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
-import { IAppState } from 'reducers';
-import { ICurrentUser } from 'types';
+import { IAppState, ICurrentUser } from 'types';
 import { DropdownMenu } from 'components/dropdownMenu';
 import { styles } from './styles';
 
@@ -52,7 +51,7 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
 
   getDropdownParentItem = () => {
     const { classes, isInverted } = this.props;
-    const { icon, iconRegular, iconInverted } = classes; 
+    const { icon, iconRegular, iconInverted } = classes;
     return (
       <IconButton
         aria-label="More"
@@ -61,7 +60,7 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
       >
         <AccountIcon className={`${icon} ${isInverted ? iconInverted : iconRegular}`} />
       </IconButton>
-    )
+    );
   }
 
   render() {

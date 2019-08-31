@@ -5,16 +5,17 @@ import * as day from 'dayjs';
 import { startLoading, endLoading } from 'actions/loader';
 import { showToast } from 'actions/toast';
 import { receiveUserDetails } from 'actions/currentUser';
-import { Toast, IAppState } from 'reducers';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { getAccessTokenClaims } from 'global-utils/methods';
 import {
+  IAppState,
   AuthActionTypes,
   ILoginSucces,
   ILogoutSuccess,
   IShowKeepMeLoggedModal,
   IReauthenticateSuccess,
-  ISetAccessToken
+  ISetAccessToken,
+  Toast
 } from 'types';
 
 import {

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { ICity, IItem } from 'global-utils';
-import { IAppState } from 'reducers';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveUniqueItems } from 'actions/items';
 import {
@@ -14,7 +13,7 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { CitiesActionTypes, ISelectCity, IClearSelectedCity, IReceiveCity, IRemoveCity } from 'types';
+import { IAppState, CitiesActionTypes, ISelectCity, IClearSelectedCity, IReceiveCity, IRemoveCity } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { config } from '../../../../config';

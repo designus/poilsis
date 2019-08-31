@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { getNormalizedData } from 'client-utils/methods';
 import { GLOBAL_LOADER_ID } from 'client-utils/constants';
-import { IAppState } from 'reducers';
 import { setLocale } from 'actions/locale';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
 import {
+  IAppState,
   ICityState,
   ITypesState,
   IClearState,
@@ -33,9 +33,9 @@ export const receiveInitialData = (data: IInitialData): IReceiveInitialData => (
 });
 
 // Loader will only be stopped if no additional data has to be loaded in child components
-const shouldStopLoader = (pathName: string) => pathName ?
-  ['cities', 'types', 'users'].some(str => pathName.includes(str)) :
-  true;
+// const shouldStopLoader = (pathName: string) => pathName ?
+//   ['cities', 'types', 'users'].some(str => pathName.includes(str)) :
+//   true;
 
 export const getInitialData = (params: IGetInitialDataParams = {}) => {
   return (dispatch, getState) => {
@@ -43,8 +43,6 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     const locale = params.locale || getLocale(state) || DEFAULT_LANGUAGE;
     const token = state.auth.accessToken;
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
-
-    dispatch(startLoading(GLOBAL_LOADER_ID));
 
     // When page is reloaded we need to set locale
     if (!state.locale) {
@@ -67,10 +65,6 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
         if (accessTokenClaims) {
           const { userId: id, userName: name, userRole: role } = accessTokenClaims;
           dispatch(receiveUserDetails({ id, name, role }));
-        }
-
-        if (shouldStopLoader(params.pathName)) {
-          dispatch(endLoading());
         }
 
       }))

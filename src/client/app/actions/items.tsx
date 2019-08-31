@@ -9,10 +9,8 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData } from 'client-utils/methods';
-import { IAlias, IItemsMap } from 'types';
+import { IAlias, IItemsMap, Toast, IAppState } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IAppState } from 'reducers/root';
-import { Toast } from 'reducers/toast';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,

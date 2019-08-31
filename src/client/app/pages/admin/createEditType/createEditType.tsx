@@ -17,7 +17,7 @@ import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
 import { Loader } from 'components/loader';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { shouldLoadType, getTypeById } from 'selectors';
 
 import { TypeForm, TYPE_FORM_NAME } from './form';

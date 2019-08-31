@@ -17,7 +17,7 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
 
 import { Toast } from 'components/toast';

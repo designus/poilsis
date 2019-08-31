@@ -1,5 +1,4 @@
-import { IAppState } from 'reducers';
-import { IItemsMap } from 'types/items';
+import { IAppState, IItemsMap } from 'types';
 import { IItem } from 'global-utils/typings';
 
 import { hasInitialDataLoaded } from './initialData';

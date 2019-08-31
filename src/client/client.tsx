@@ -11,7 +11,7 @@ import { App } from 'pages';
 import { ThemeProvider } from '@material-ui/styles';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
 import { theme } from 'global-utils/theme';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { reauthenticateUser } from 'actions/auth';
 import { isLoggedIn } from 'selectors';
 import { createStore } from './app/store';

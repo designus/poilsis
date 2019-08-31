@@ -6,7 +6,7 @@ import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 import { EditorState } from 'draft-js';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { updateItemDescription } from 'actions/items';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getBackendErrors } from 'client-utils/methods';

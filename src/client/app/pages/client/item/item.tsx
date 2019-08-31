@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { IItemsState } from 'types/items';
 import { IItem } from 'global-utils/typings';
 import { loadItem, selectItem, clearSelectedItem } from 'actions/items';

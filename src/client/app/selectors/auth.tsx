@@ -1,4 +1,4 @@
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { getAccessTokenClaims } from 'global-utils/methods';
 
 export const isLoggedIn = (state: IAppState) => state.auth.isLoggedIn;

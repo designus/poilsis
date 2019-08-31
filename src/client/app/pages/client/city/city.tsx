@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { ICity, IItem } from 'global-utils/typings';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { loadCityItems, clearSelectedCity } from 'actions/cities';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';

@@ -2,8 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState } from 'reducers';
-import { ICitiesMap, ITypesMap } from 'types';
+import { IAppState, ICitiesMap, ITypesMap } from 'types';
 import { getCities, getCitiesMap, getLocale, getTypesMap } from 'selectors';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';

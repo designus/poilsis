@@ -1,27 +1,21 @@
-import { START_LOADING, END_LOADING, STOP_ALL_LOADERS } from 'actions/loader';
+import { Reducer } from 'redux';
+import { LoaderActionTypes, LoaderActions, ILoadingState } from 'types';
 
-export interface ILoadingState {
-  content: boolean;
-  dialog: boolean;
-  global: boolean;
-}
-
-const getInitialData = () => ({
+const getInitialData = (): ILoadingState => ({
   content: false,
   dialog: false,
   global: false
 });
 
-export const loader = (state: ILoadingState = getInitialData(), action) => {
+export const loader: Reducer<ILoadingState, LoaderActions> =
+(state: ILoadingState = getInitialData(), action): ILoadingState => {
   switch (action.type) {
-    case START_LOADING:
+    case LoaderActionTypes.START_LOADING:
       return {
         ...state,
-        [action.id]: true
+        [action.loaderId]: true
       };
-    case END_LOADING:
-      return getInitialData();
-    case STOP_ALL_LOADERS:
+    case LoaderActionTypes.END_LOADING:
       return getInitialData();
     default:
       return state;

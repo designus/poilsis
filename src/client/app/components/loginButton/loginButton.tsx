@@ -11,7 +11,7 @@ import { DropdownMenu } from 'components/dropdownMenu';
 import { login } from 'actions/auth';
 
 import { styles } from './styles';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 
 interface IOwnProps extends WithStyles<typeof styles>, InjectedIntlProps {}
 

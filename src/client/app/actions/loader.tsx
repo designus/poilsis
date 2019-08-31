@@ -1,12 +1,11 @@
-export const START_LOADING = 'START_LOADING';
-export const END_LOADING = 'END_LOADING';
-export const STOP_ALL_LOADERS = 'STOP_ALL_LOADERS';
+import { LoaderActionTypes, IStartLoading, IEndLoading } from 'types';
 
-export const startLoading = (id: string) => ({
-  type: START_LOADING,
-  id
+export const startLoading = (loaderId: string): IStartLoading => ({
+  type: LoaderActionTypes.START_LOADING,
+  loaderId
 });
 
-export const endLoading = (id?: string) => ({
-  type: END_LOADING
+export const endLoading = (loaderId: string): IEndLoading => ({
+  type: LoaderActionTypes.END_LOADING,
+  loaderId
 });

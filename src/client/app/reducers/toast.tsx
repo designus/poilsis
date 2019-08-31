@@ -1,33 +1,20 @@
-import { SHOW_TOAST, HIDE_TOAST } from 'actions/toast';
-import { InitialDataActionTypes, InitialDataActions } from 'types';
+import { Reducer } from 'redux';
+import { Toast, IToastState, ToastActionTypes, ToastActions, InitialDataActionTypes, InitialDataActions } from 'types';
 
-export enum Toast {
-  warning = 'warning',
-  error = 'error',
-  success = 'success'
-}
+type ActionTypes = ToastActions | InitialDataActions;
 
-export type ToastType = Toast.warning | Toast.error | Toast.success;
-
-export interface IToastState {
-  toastType?: ToastType;
-  message?: string;
-  show?: boolean;
-  error?: string;
-}
-
-const getInitialState = () => ({
+const getInitialState = (): IToastState => ({
   show: false,
   message: '',
   toastType: Toast.success,
   error: null
 });
 
-export const toast = (state: IToastState = getInitialState(), action) => {
+export const toast: Reducer<IToastState, ActionTypes> = (state: IToastState = getInitialState(), action): IToastState => {
   switch (action.type) {
     case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case SHOW_TOAST:
+    case ToastActionTypes.SHOW_TOAST:
       return {
         ...state,
         toastType: action.toastType,
@@ -35,7 +22,7 @@ export const toast = (state: IToastState = getInitialState(), action) => {
         error: action.error,
         show: true
       };
-    case HIDE_TOAST:
+    case ToastActionTypes.HIDE_TOAST:
       return {
         ...state,
         show: false,

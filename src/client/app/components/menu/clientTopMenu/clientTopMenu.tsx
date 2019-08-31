@@ -4,8 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { getLocale, getCities, getSelectedCityId } from 'selectors';
-import { IAppState } from 'reducers';
-import { ICityLocalized } from 'types';
+import { IAppState, ICityLocalized } from 'types';
 import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { callFn } from 'global-utils';

@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState } from 'reducers';
-import { IItemsMap, ICitiesMap, IUsersMap } from 'types';
+import { IAppState, IItemsMap, ICitiesMap, IUsersMap } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';

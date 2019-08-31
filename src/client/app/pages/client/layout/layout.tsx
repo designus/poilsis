@@ -26,7 +26,7 @@ import { ItemPage } from 'pages/client/item';
 import { LoginPage } from 'pages/client/login';
 import { HomePage } from 'pages/client/home';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 
 import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn, getLocale } from 'selectors';
 

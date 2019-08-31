@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IAppState } from 'reducers';
-import { ITypesMap } from 'types';
+import { ITypesMap, IAppState } from 'types';
 import { getTypesMap, getLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 

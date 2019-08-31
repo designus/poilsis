@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
 import { RouteConfig } from 'react-router-config';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { App } from 'pages';
 
 import { AdminLayoutPage } from 'pages/admin/layout';

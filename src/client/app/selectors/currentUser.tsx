@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
-import { IAppState } from 'reducers';
-import { IItemsMap, ICurrentUser } from 'types';
+import { IItemsMap, ICurrentUser, IAppState } from 'types';
 import { IItem } from 'global-utils/typings';
 import { getItemsMap } from 'selectors';
 

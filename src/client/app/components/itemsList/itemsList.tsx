@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { ICity, IItem } from 'global-utils/typings';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { clientRoutes } from 'client-utils/routes';
 import { getLocale } from 'selectors';
 

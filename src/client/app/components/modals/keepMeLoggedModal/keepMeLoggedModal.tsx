@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Countdown from 'react-countdown-now';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { logout, reauthenticateUser } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';

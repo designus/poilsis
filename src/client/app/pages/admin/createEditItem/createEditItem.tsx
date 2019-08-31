@@ -7,7 +7,7 @@ import { Switch, RouteComponentProps } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { getAdminItem } from 'actions/admin';
 import { IItem } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
