@@ -1,12 +1,20 @@
 import axios from 'axios';
 import { getNormalizedData } from 'client-utils/methods';
 import { GLOBAL_LOADER_ID } from 'client-utils/constants';
-import { IAppState, IUsersState } from 'reducers';
+import { IAppState } from 'reducers';
 import { setLocale } from 'actions/locale';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE } from 'global-utils';
-import { ICityState, ITypesState } from 'types';
+import {
+  ICityState,
+  ITypesState,
+  IClearState,
+  InitialDataActionTypes,
+  IInitialData,
+  IReceiveInitialData,
+  IUsersState
+} from 'types';
 import { getLocale } from 'selectors';
 import { config } from '../../../../config';
 
@@ -15,33 +23,11 @@ export interface IGetInitialDataParams {
   locale?: string;
 }
 
-export enum InitialDataActionTypes {
-  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA',
-  CLEAR_STATE = 'CLEAR_STATE'
-}
-
-interface IInitialDataState {
-  cities: ICityState;
-  types: ITypesState;
-  users: IUsersState;
-}
-
-interface IClearState {
-  type: InitialDataActionTypes.CLEAR_STATE;
-}
-
-interface IReceiveInitialData {
-  type: InitialDataActionTypes.RECEIVE_INITIAL_DATA;
-  data: IInitialDataState;
-}
-
-export type InitialDataActions = IClearState | IReceiveInitialData;
-
 export const clearState = (): IClearState => ({
   type: InitialDataActionTypes.CLEAR_STATE
 });
 
-export const receiveInitialData = (data: IInitialDataState): IReceiveInitialData => ({
+export const receiveInitialData = (data: IInitialData): IReceiveInitialData => ({
   type: InitialDataActionTypes.RECEIVE_INITIAL_DATA,
   data
 });

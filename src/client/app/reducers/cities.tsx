@@ -1,7 +1,14 @@
 import { Reducer } from 'redux';
-import { ItemsActionTypes, ItemsActions, ICityState, CitiesActionTypes, CitiesActions } from 'types';
 import { removeItemById } from 'client-utils/methods';
-import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
+import {
+  ItemsActionTypes,
+  ItemsActions,
+  ICityState,
+  CitiesActionTypes,
+  CitiesActions,
+  InitialDataActionTypes,
+  InitialDataActions
+} from 'types';
 
 type ActionTypes = CitiesActions | ItemsActions | InitialDataActions;
 

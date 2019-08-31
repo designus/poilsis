@@ -1,4 +1,5 @@
-import { IAppState, IUsersMap } from 'reducers';
+import { IAppState } from 'reducers';
+import { IUsersMap } from 'types';
 
 export const getCurrentUserId = (state: IAppState) => state.currentUser.details.id;
 

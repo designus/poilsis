@@ -1,7 +1,6 @@
 import { Reducer } from 'redux';
 import { removeItemById } from 'client-utils/methods';
-import { ItemsActionTypes, ItemsActions, IItemsState } from 'types/items';
-import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
+import { ItemsActionTypes, ItemsActions, IItemsState, InitialDataActionTypes, InitialDataActions } from 'types';
 
 type ActionTypes = ItemsActions | InitialDataActions;
 

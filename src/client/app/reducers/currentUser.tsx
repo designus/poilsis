@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
 import {
   AuthActionTypes,
   AuthActions,
@@ -7,7 +6,9 @@ import {
   CurrentUserActions,
   CurrentUserActionTypes,
   ItemsActions,
-  ICurrentUserState
+  ICurrentUserState,
+  InitialDataActionTypes,
+  InitialDataActions
 } from 'types';
 
 const getInitialState = (): ICurrentUserState => ({

@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { IItemsState, ICityState, ITypesState, ICurrentUserState, IAuthState } from 'types';
+import { IItemsState, ICityState, ITypesState, ICurrentUserState, IAuthState, IUsersState, IInitialDataState } from 'types';
 import {
   cities,
   items,
   initialData,
   toast,
   auth,
-  IInitialDataState,
   IToastState
 } from '../reducers';
 
@@ -15,7 +14,7 @@ import { loader, ILoadingState } from './loader';
 import { types } from './types';
 import { uploadProgress, IUploadProgress } from './uploadProgress';
 import { currentUser } from './currentUser';
-import { users, IUsersState } from './users';
+import { users } from './users';
 import { locale } from './locale';
 
 export interface IAppState {

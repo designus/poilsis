@@ -1,6 +1,5 @@
 import { Reducer } from 'redux';
-import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
-import { ITypesState, TypesActionTypes, TypesActions } from 'types';
+import { ITypesState, TypesActionTypes, TypesActions, InitialDataActionTypes, InitialDataActions } from 'types';
 
 type ActionTypes = TypesActions | InitialDataActions;
 

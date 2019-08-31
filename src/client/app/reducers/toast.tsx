@@ -1,5 +1,5 @@
 import { SHOW_TOAST, HIDE_TOAST } from 'actions/toast';
-import { InitialDataActionTypes, InitialDataActions } from 'actions/initialData';
+import { InitialDataActionTypes, InitialDataActions } from 'types';
 
 export enum Toast {
   warning = 'warning',

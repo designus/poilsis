@@ -279,14 +279,20 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
     {
-      "id": "./app/selectors/items.tsx",
-      "name": "./app/selectors/items.tsx",
+      "id": "./app/types/items.tsx",
+      "name": "./app/types/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
       "id": "../data-strings/items.tsx",
       "name": "../data-strings/items.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/items.tsx",
+      "name": "./app/selectors/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -571,8 +577,8 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/selectors/cities.tsx",
-      "name": "./app/selectors/cities.tsx",
+      "id": "./app/types/cities.tsx",
+      "name": "./app/types/cities.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -583,8 +589,8 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/types/cities.tsx",
-      "name": "./app/types/cities.tsx",
+      "id": "./app/selectors/cities.tsx",
+      "name": "./app/selectors/cities.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -743,8 +749,8 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/selectors/types.tsx",
-      "name": "./app/selectors/types.tsx",
+      "id": "./app/types/types.tsx",
+      "name": "./app/types/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -755,8 +761,8 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/types/types.tsx",
-      "name": "./app/types/types.tsx",
+      "id": "./app/selectors/types.tsx",
+      "name": "./app/selectors/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -999,7 +1005,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -3013,7 +3019,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "lodash/isFunction": [
+  "./isFunction": [
     {
       "id": "../../node_modules/lodash/isFunction.js",
       "name": "../../node_modules/lodash/isFunction.js",
@@ -3365,7 +3371,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./validation": [
+  "../data-strings/validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -4199,34 +4205,18 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/initialData": [
+  "types": [
     {
-      "id": "./app/actions/initialData.tsx",
-      "name": "./app/actions/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions/locale": [
-    {
-      "id": "./app/actions/locale.tsx",
-      "name": "./app/actions/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "selectors": [
-    {
-      "id": "./app/selectors/index.tsx",
-      "name": "./app/selectors/index.tsx",
+      "id": "./app/types/index.tsx",
+      "name": "./app/types/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "./auth": [
     {
-      "id": "./app/selectors/auth.tsx",
-      "name": "./app/selectors/auth.tsx",
+      "id": "./app/types/auth.tsx",
+      "name": "./app/types/auth.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -4237,14 +4227,78 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/reducers/auth.tsx",
-      "name": "./app/reducers/auth.tsx",
+      "id": "./app/selectors/auth.tsx",
+      "name": "./app/selectors/auth.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/types/auth.tsx",
-      "name": "./app/types/auth.tsx",
+      "id": "./app/reducers/auth.tsx",
+      "name": "./app/reducers/auth.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./currentUser": [
+    {
+      "id": "./app/types/currentUser.tsx",
+      "name": "./app/types/currentUser.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/currentUser.tsx",
+      "name": "./app/selectors/currentUser.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/currentUser.tsx",
+      "name": "./app/reducers/currentUser.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./initialData": [
+    {
+      "id": "./app/types/initialData.tsx",
+      "name": "./app/types/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/initialData.tsx",
+      "name": "./app/selectors/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/initialData.tsx",
+      "name": "./app/reducers/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "data-strings": [
+    {
+      "id": "../data-strings/index.tsx",
+      "name": "../data-strings/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./images": [
+    {
+      "id": "../data-strings/images.tsx",
+      "name": "../data-strings/images.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "selectors": [
+    {
+      "id": "./app/selectors/index.tsx",
+      "name": "./app/selectors/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4277,20 +4331,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./initialData": [
-    {
-      "id": "./app/selectors/initialData.tsx",
-      "name": "./app/selectors/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/initialData.tsx",
-      "name": "./app/reducers/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "reselect": [
     {
       "id": "../../node_modules/reselect/es/index.js",
@@ -4299,94 +4339,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./currentUser": [
-    {
-      "id": "./app/selectors/currentUser.tsx",
-      "name": "./app/selectors/currentUser.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/types/currentUser.tsx",
-      "name": "./app/types/currentUser.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/currentUser.tsx",
-      "name": "./app/reducers/currentUser.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "../../../../config": [
-    {
-      "id": "../../config/index.tsx",
-      "name": "../../config/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./development": [
-    {
-      "id": "../../config/development.tsx",
-      "name": "../../config/development.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./production": [
-    {
-      "id": "../../config/production.tsx",
-      "name": "../../config/production.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./test": [
-    {
-      "id": "../../config/test.tsx",
-      "name": "../../config/test.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "data-strings": [
-    {
-      "id": "../data-strings/index.tsx",
-      "name": "../data-strings/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./images": [
-    {
-      "id": "../data-strings/images.tsx",
-      "name": "../data-strings/images.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "types/items": [
-    {
-      "id": "./app/types/items.tsx",
-      "name": "./app/types/items.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "reducers": [
     {
       "id": "./app/reducers/index.tsx",
       "name": "./app/reducers/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "types": [
-    {
-      "id": "./app/types/index.tsx",
-      "name": "./app/types/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4985,6 +4941,54 @@
     {
       "id": "./app/reducers/uploadProgress.tsx",
       "name": "./app/reducers/uploadProgress.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/locale": [
+    {
+      "id": "./app/actions/locale.tsx",
+      "name": "./app/actions/locale.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions/initialData": [
+    {
+      "id": "./app/actions/initialData.tsx",
+      "name": "./app/actions/initialData.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../../../../config": [
+    {
+      "id": "../../config/index.tsx",
+      "name": "../../config/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./development": [
+    {
+      "id": "../../config/development.tsx",
+      "name": "../../config/development.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./production": [
+    {
+      "id": "../../config/production.tsx",
+      "name": "../../config/production.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./test": [
+    {
+      "id": "../../config/test.tsx",
+      "name": "../../config/test.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }

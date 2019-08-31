@@ -1,15 +1,11 @@
 import { Reducer } from 'redux';
-import { InitialDataActionTypes, InitialDataActions as ActionTypes } from 'actions/initialData';
-
-export interface IInitialDataState {
-  isLoaded: boolean;
-}
+import { InitialDataActionTypes, InitialDataActions, IInitialDataState } from 'types';
 
 const getInitialState = (): IInitialDataState => ({
   isLoaded: false
 });
 
-export const initialData: Reducer<IInitialDataState, ActionTypes> =
+export const initialData: Reducer<IInitialDataState, InitialDataActions> =
 (state = getInitialState(), action): IInitialDataState => {
   switch (action.type) {
     case InitialDataActionTypes.CLEAR_STATE:
