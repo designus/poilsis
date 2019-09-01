@@ -19,6 +19,7 @@
       "global-styles": ["./src/client/app/global-styles"],
       "global-utils": ["./src/global-utils"],
       "global-utils/*": ["./src/global-utils/*"],
+      "config": ["./config"]
     },
     "lib": ["dom", "es7", "es2017"],
     "target": "es2015",

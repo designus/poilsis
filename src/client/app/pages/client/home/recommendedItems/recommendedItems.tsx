@@ -7,7 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import { config } from '../../../../../config';
+import { config } from 'config';
 
 import { IItem } from 'global-utils/typings';
 import { connect } from 'react-redux';

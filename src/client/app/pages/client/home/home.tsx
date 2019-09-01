@@ -2,19 +2,19 @@ import * as React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { extendWithLoader } from 'components/extendWithLoader';
-import { RecommendedItems as Items } from 'components/recommendedItems';
+import { RecommendedItems } from './recommendedItems';
 
 import { styles } from './styles';
 
-const RecommendedItems = extendWithLoader(Items);
+const RecommendedItemsWithLoader = extendWithLoader(RecommendedItems);
 
-interface IHomePageProps extends WithStyles<typeof styles> {};
+interface IHomePageProps extends WithStyles<typeof styles> {}
 
 class HomePage extends React.Component<IHomePageProps, any> {
   render() {
     return (
       <div className={this.props.classes.wrapper}>
-        <RecommendedItems showLoadingOverlay loaderId={CONTENT_LOADER_ID} />
+        <RecommendedItemsWithLoader showLoadingOverlay loaderId={CONTENT_LOADER_ID} />
       </div>
     );
   }
