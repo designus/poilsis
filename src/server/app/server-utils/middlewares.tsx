@@ -116,8 +116,8 @@ export const resizeImages = (req, res) => {
             .then((image) => {
               const [name, extension] = file.filename.split('.');
               image
-                .resize(240, 200)
-                .quality(60)
+                .resize(280, 220)
+                .quality(80)
                 .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
                   resolve();
                 });

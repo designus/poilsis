@@ -29,6 +29,28 @@ export const theme = createMuiTheme({
     //   contrastText: '#fff'
     // }
   },
+  mixins: {
+    toolbar: {
+      minHeight: 56,
+      '@media (min-width: 600px)': {
+        minHeight: 74
+      }
+    }
+  },
+  typography: {
+    h1: {
+      fontSize: '3rem'
+    },
+    h2: {
+      fontSize: '2rem'
+    },
+    h3: {
+      fontSize: '1.5rem'
+    },
+    h4: {
+      fontSize: '1.25rem'
+    }
+  },
   customButton: {
     borderRadius: '16px'
   },

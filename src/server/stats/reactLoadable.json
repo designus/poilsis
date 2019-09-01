@@ -217,6 +217,12 @@
       "publicPath": "http://localhost:8080/public/homePage.js"
     },
     {
+      "id": "./app/pages/client/home/styles.tsx",
+      "name": "./app/pages/client/home/styles.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
       "id": "./app/components/extendWithLoader/styles.tsx",
       "name": "./app/components/extendWithLoader/styles.tsx",
       "file": "keepMeLoggedModal.js",
@@ -283,6 +289,12 @@
       "name": "./app/pages/admin/items/items.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    },
+    {
+      "id": "./app/types/items.tsx",
+      "name": "./app/types/items.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     },
     {
       "id": "../data-strings/items.tsx",
@@ -415,7 +427,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "../itemTypesList": [
+  "components/itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -1479,7 +1491,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../webpack/buildin/global.js": [
+  "./../../webpack/buildin/global.js": [
     {
       "id": "../../node_modules/webpack/buildin/global.js",
       "name": "../../node_modules/webpack/buildin/global.js",
@@ -2647,7 +2659,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "../utils/warning": [
+  "./warning": [
     {
       "id": "../../node_modules/react-redux/es/utils/warning.js",
       "name": "../../node_modules/react-redux/es/utils/warning.js",
@@ -2719,7 +2731,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../node_modules/process/browser.js": [
+  "./../process/browser.js": [
     {
       "id": "../../node_modules/process/browser.js",
       "name": "../../node_modules/process/browser.js",
@@ -3073,14 +3085,6 @@
     {
       "id": "./app/reducers/initialData.tsx",
       "name": "./app/reducers/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "types/items": [
-    {
-      "id": "./app/types/items.tsx",
-      "name": "./app/types/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3483,7 +3487,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./typings": [
+  "global-utils/typings": [
     {
       "id": "../global-utils/typings.tsx",
       "name": "../global-utils/typings.tsx",
@@ -4183,7 +4187,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./ThemeContext": [
+  "../useTheme/ThemeContext": [
     {
       "id": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
       "name": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
@@ -4465,7 +4469,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./development.tsx": [
+  "./development": [
     {
       "id": "../../config/development.tsx",
       "name": "../../config/development.tsx",
@@ -4473,7 +4477,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./production.tsx": [
+  "./production": [
     {
       "id": "../../config/production.tsx",
       "name": "../../config/production.tsx",
@@ -4481,7 +4485,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./test.tsx": [
+  "./test": [
     {
       "id": "../../config/test.tsx",
       "name": "../../config/test.tsx",
@@ -5643,7 +5647,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "../Table/TableContext": [
+  "./TableContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
       "name": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
@@ -7323,7 +7327,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./assertThisInitialized": [
+  "@babel/runtime/helpers/assertThisInitialized": [
     {
       "id": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
       "name": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
@@ -7635,7 +7639,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../Typography": [
+  "@material-ui/core/Typography": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Typography/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Typography/index.js",
@@ -7651,7 +7655,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/focusVisible": [
+  "./focusVisible": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/focusVisible.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/focusVisible.js",
@@ -7691,7 +7695,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/reactHelpers": [
+  "./reactHelpers": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/reactHelpers.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/reactHelpers.js",
@@ -9097,7 +9101,7 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
-  "./containsNode": [
+  "fbjs/lib/containsNode": [
     {
       "id": "../../node_modules/fbjs/lib/containsNode.js",
       "name": "../../node_modules/fbjs/lib/containsNode.js",
@@ -9263,6 +9267,86 @@
       "name": "../../node_modules/webpack/buildin/amd-options.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./Card": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Card/Card.js",
+      "name": "../../node_modules/@material-ui/core/esm/Card/Card.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "@material-ui/core/Card": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Card/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Card/index.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "./CardActionArea": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardActionArea/CardActionArea.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardActionArea/CardActionArea.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "@material-ui/core/CardActionArea": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardActionArea/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardActionArea/index.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "./CardContent": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardContent/CardContent.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardContent/CardContent.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "@material-ui/core/CardContent": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardContent/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardContent/index.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "./CardMedia": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardMedia/CardMedia.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardMedia/CardMedia.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "@material-ui/core/CardMedia": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "./Grid": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
+      "name": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "@material-ui/core/Grid": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Grid/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Grid/index.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
     }
   ],
   "@material-ui/icons/CloudUpload": [

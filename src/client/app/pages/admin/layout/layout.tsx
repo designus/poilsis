@@ -132,7 +132,7 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
         </Drawer>
         <div className={classes.content}>
           <AppBar className={classes.appBar}>
-            <Toolbar>
+            <Toolbar className={classes.toolbar}>
               <Hidden mdUp implementation="css">
                 <IconButton
                   color="inherit"

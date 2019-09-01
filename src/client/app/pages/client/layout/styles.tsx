@@ -49,7 +49,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: '10px 0',
     cursor: 'pointer',
     '& > img': {
-      height: '60px',
+      height: '50px',
       width: 'auto'
     }
   }

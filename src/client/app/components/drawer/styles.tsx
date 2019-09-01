@@ -64,7 +64,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: '0 10px',
     color: '#fff',
     borderBottom: '1px dashed rgba(255, 255, 255, .6)',
-    ...theme.mixins.toolbar
+    minHeight: theme.mixins.toolbar.minHeight
   },
   drawerContentWrapper: {
     height: '100%'
