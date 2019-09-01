@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import { config } from 'config';
-
-import { IItem } from 'global-utils/typings';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getLocalizedText } from 'client-utils/methods';
 import { IAppState, IItemsMap } from 'types';
 import { loadRecommendedItems } from 'actions';
+import { ItemCard } from 'components/itemCard';
 import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getLocale } from 'selectors';
 
 import { styles } from './styles';
@@ -43,26 +36,9 @@ function RecommendedItems(props: RecommendedItemsProps) {
   }, [hasLoaded, loadRecommendedItems]);
 
   const renderItem = (itemId: string) => {
-    const item = itemsMap[itemId];
-    console.log('Main image', item.mainImage);
     return (
       <Grid key={itemId} item xs={6} md={3} lg={2}>
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={`${classes.media} ${!item.mainImage ? classes.noImage : ''}`}
-              image={item.mainImage || `${config.host}/images/no-image.png`}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h4">
-                {getLocalizedText(item.name, locale)}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                This is short description
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
+        <ItemCard item={itemsMap[itemId]} locale={locale} />
       </Grid>
     );
   };
@@ -77,7 +53,9 @@ function RecommendedItems(props: RecommendedItemsProps) {
 
   return (
     <div className={classes.wrapper}>
-      <Typography variant="h2">Recomenduojame</Typography>
+      <Typography variant="h2">
+        <FormattedMessage id="client.home.recommended" defaultMessage="Recommended" />
+      </Typography>
       {hasLoaded && renderItems()}
     </div>
   );
