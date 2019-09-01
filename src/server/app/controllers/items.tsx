@@ -14,6 +14,19 @@ const { images: { maxPhotos } } = itemValidation;
 
 const shortId = require('shortid');
 
+const mainImageProjection = {
+  $let: {
+    vars: {
+      firstImage: {
+        $arrayElemAt: ['$images', 0]
+      }
+    },
+    in: {
+      $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName']
+    }
+  }
+};
+
 const itemProjection =  {
   _id: 0,
   id: 1,
@@ -25,22 +38,19 @@ const itemProjection =  {
   cityId: 1,
   isEnabled: 1,
   isRecommended: 1,
-  mainImage: {
-    $let: {
-      vars: {
-        firstImage: {
-          $arrayElemAt: ['$images', 0]
-        }
-      },
-      in: {
-        $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName']
-      }
-    }
-  }
+  mainImage: mainImageProjection
 };
 
 export const getAllItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.find(sendResponse(res, next));
+  ItemsModel
+    .aggregate([
+      {
+        $addFields: {
+          mainImage: mainImageProjection
+        }
+      }
+    ])
+    .exec(sendResponse(res, next));
 };
 
 export const getRecommendedItems = (req: Request, res: Response, next: NextFunction) => {
@@ -62,7 +72,16 @@ export const getCityItems = (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const getUserItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.find({ userId: req.params.userId }, sendResponse(res, next));
+  ItemsModel
+    .aggregate([
+      { $match: req.params.userId },
+      {
+        $addFields: {
+          mainImage: mainImageProjection
+        }
+      }
+    ])
+    .exec(sendResponse(res, next));
 };
 
 export const toggleItemIsEnabledField = (req: Request, res: Response, next: NextFunction) => {
