@@ -31,7 +31,6 @@ import {
   IClearSelectedItem,
   IReceiveItems,
   IReceiveItem,
-  IReceiveRecommendedItems,
   IReceiveImages,
   IReceiveItemDescription,
   IRemoveItem,
@@ -41,7 +40,7 @@ import {
 } from 'types/items';
 
 import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
-import { config } from '../../../../config';
+import { config } from 'config';
 
 export const selectItem = (itemId: Value<ISelectItem, 'itemId'>): ISelectItem => ({
   type: ItemsActionTypes.SELECT_ITEM,
@@ -59,11 +58,6 @@ export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems 
   cityId: props.cityId,
   userId: props.userId,
   dataType: props.dataType
-});
-
-export const receiveRecommendedItems = (items: string[]): IReceiveRecommendedItems => ({
-  type: ItemsActionTypes.RECEIVE_RECOMMENDED_ITEMS,
-  items
 });
 
 export const receiveItem = (item: IItem): IReceiveItem => ({
@@ -108,22 +102,6 @@ export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) =
   const newItems = getNewItems(items, state);
   const { dataMap, aliases } = getNormalizedData(newItems);
   dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
-};
-
-export const loadRecommendedItems = () => (dispatch, getState) => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`${config.host}/api/items/recommended`)
-    .then(handleApiResponse)
-    .then((items: IItem[]) => {
-      const recommendedItems = items.map(item => item.id);
-      dispatch(receiveNewItems(items));
-      dispatch(receiveRecommendedItems(recommendedItems));
-      dispatch(endLoading(CONTENT_LOADER_ID));
-    })
-    .catch(err => {
-      console.error(err);
-      dispatch(endLoading(CONTENT_LOADER_ID));
-    });
 };
 
 export const loadItem = (alias: string) => (dispatch) => {

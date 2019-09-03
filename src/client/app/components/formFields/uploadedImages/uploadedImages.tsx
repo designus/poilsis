@@ -27,7 +27,6 @@ let loadedImages = 0;
 function UploadedImages(props: IUploadedImagesParams) {
   const { useState, useEffect } = React;
   const { images: initialImages, onSaveImages, onLoadedImages, intl: { formatMessage } } = props;
-  console.log('Images', initialImages);
   const [images, setImages] = useState([...initialImages]);
 
   useEffect(() => {

@@ -88,3 +88,11 @@ export const getDropdownOptions = memoize(
     }));
   }
 );
+
+export const toggleItemInArray = (items: string[], item: string, shouldAddItem: boolean): string[] => {
+  if (shouldAddItem) {
+    return [...items, item];
+  }
+
+  return items.filter(current => current !== item);
+};

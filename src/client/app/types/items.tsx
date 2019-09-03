@@ -34,11 +34,6 @@ export interface IReceiveItems extends IUniqueItemProps {
   aliases: IAlias[];
 }
 
-export interface IReceiveRecommendedItems {
-  type: ItemsActionTypes.RECEIVE_RECOMMENDED_ITEMS;
-  items: string[];
-}
-
 export interface ISelectItem {
   type: ItemsActionTypes.SELECT_ITEM;
   itemId: string;
@@ -90,5 +85,4 @@ export type ItemsActions = IReceiveItems
   | IRemoveItem
   | IReceiveImages
   | IToggleItemEnabled
-  | IToggleItemRecommended
-  | IReceiveRecommendedItems;
+  | IToggleItemRecommended;
