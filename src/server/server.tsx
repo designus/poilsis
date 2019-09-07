@@ -15,7 +15,7 @@ import { rootReducer  } from 'reducers';
 import { IAuthState } from 'types';
 
 import app, { staticFilesPort } from './app';
-import { config } from '../../config';
+import { config } from 'config';
 import { App } from 'pages';
 import { routes } from '../client/app/routes';
 
@@ -48,10 +48,21 @@ app.get('*', (req, res, next) => {
 
     const promises = branch
       .map((item: MatchedRoute<{}>) => {
-        return {fetchData: item.route.fetchData, params: item.match.params};
+        const { fetchData } = item.route;
+        const { params } = item.match;
+        if (Array.isArray(fetchData)) {
+          return fetchData.map(fn => ({ fetchData: fn, params }));
+        } else {
+          return { fetchData, params };
+        }
       })
+      // Flatten array to 1 level deep
+      .reduce((acc: any[], val) => acc.concat(val), [])
       .filter(({fetchData}) => Boolean(fetchData))
-      .map(({fetchData, params}) => fetchData.bind(null, store, params));
+      .map((item) => {
+        const {fetchData, params} = item;
+        return fetchData.bind(null, store, params);
+      });
 
     return preloadData(promises).then(() => sendResponse(res, store, location));
   })(req, res, next);

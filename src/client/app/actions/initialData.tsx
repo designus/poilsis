@@ -16,7 +16,7 @@ import {
   IUsersState
 } from 'types';
 import { getLocale } from 'selectors';
-import { config } from '../../../../config';
+import { config } from 'config';
 
 export interface IGetInitialDataParams {
   pathName?: string;
@@ -31,11 +31,6 @@ export const receiveInitialData = (data: IInitialData): IReceiveInitialData => (
   type: InitialDataActionTypes.RECEIVE_INITIAL_DATA,
   data
 });
-
-// Loader will only be stopped if no additional data has to be loaded in child components
-// const shouldStopLoader = (pathName: string) => pathName ?
-//   ['cities', 'types', 'users'].some(str => pathName.includes(str)) :
-//   true;
 
 export const getInitialData = (params: IGetInitialDataParams = {}) => {
   return (dispatch, getState) => {

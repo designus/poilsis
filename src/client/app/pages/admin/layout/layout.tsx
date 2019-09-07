@@ -29,7 +29,7 @@ import { NotAuthorized } from 'components/notAuthorized';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
 import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
-import { Loader } from 'components/loader';
+import { getLocale } from 'selectors';
 
 import { AdminItemsPage } from 'pages/admin/items';
 import { CreateEditItemPage } from 'pages/admin/createEditItem';
@@ -38,14 +38,9 @@ import { CreateEditCityPage } from 'pages/admin/createEditCity';
 import { AdminTypesPage } from 'pages/admin/types';
 import { AdminCitiesPage } from 'pages/admin/cities';
 
-import { hasInitialDataLoaded, shouldLoadInitialData, isInitialDataLoading } from 'selectors';
-
 import { styles } from './styles';
 
 interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
-  hasInitialDataLoaded: boolean;
-  shouldLoadInitialData: boolean;
-  isInitialDataLoading: boolean;
   locale: string;
   getInitialData: (params?: IGetInitialDataParams) => void;
   isLoading: () => boolean;
@@ -61,17 +56,10 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
     if (this.props.location !== prevProps.location) {
       this.handleDrawerClose();
     }
-
-    if (this.props.shouldLoadInitialData) {
-      this.props.getInitialData({ pathName: this.props.location.pathname });
-    }
   }
 
   componentDidMount() {
-    if (this.props.shouldLoadInitialData) {
-      removeInjectedStyles();
-      this.props.getInitialData({ pathName: this.props.location.pathname });
-    }
+    removeInjectedStyles();
   }
 
   handleDrawerClose = () => {
@@ -201,17 +189,13 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
             </main>
         </div>
         <Toast />
-        {this.props.isInitialDataLoading && <Loader isLoading />}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  hasInitialDataLoaded: hasInitialDataLoaded(state),
-  shouldLoadInitialData: shouldLoadInitialData(state),
-  isInitialDataLoading: isInitialDataLoading(state),
-  locale: state.locale
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = dispatch => ({

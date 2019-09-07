@@ -21,6 +21,7 @@ import { PhotosPage } from 'pages/admin/createEditItem/photos';
 import { loadInitialData } from './pages/client/layout/layout';
 import { loadCityData } from './pages/client/city/city';
 import { loadItemData } from './pages/client/item/item';
+import { loadRecommendedItemsData } from './pages/client/home/recommendedItems/recommendedItems';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 
@@ -82,7 +83,7 @@ export const routes = [
       {
         path: clientRoutes.landing.path,
         component: ClientLayoutPage,
-        fetchData: loadInitialData,
+        fetchData: [loadInitialData, loadRecommendedItemsData],
         exact: false,
         routes: [
           {

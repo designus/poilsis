@@ -27,6 +27,8 @@ interface IStateProps {
 
 type RecommendedItemsProps = IOwnProps & IStateProps & IDispatchProps;
 
+export const loadRecommendedItemsData = store => store.dispatch(loadRecommendedItems());
+
 function RecommendedItems(props: RecommendedItemsProps) {
   const { recommendedItems, hasLoaded, loadRecommendedItems, classes, itemsMap, citiesMap, locale } = props;
 

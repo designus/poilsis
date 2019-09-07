@@ -28,7 +28,7 @@ import { HomePage } from 'pages/client/home';
 
 import { IAppState } from 'types';
 
-import { hasInitialDataLoaded, isInitialDataLoading, getCities, isLoggedIn, getLocale } from 'selectors';
+import { getCities, isLoggedIn, getLocale } from 'selectors';
 
 // @ts-ignore
 import logoUrl from 'static/images/logo.gif';
@@ -41,8 +41,6 @@ interface IMatchParams {
 }
 
 interface ILayoutPageParams extends RouteComponentProps<IMatchParams>, WithStyles<typeof styles> {
-  hasInitialDataLoaded: boolean;
-  isInitialDataLoading: boolean;
   isLoggedIn: boolean;
   getInitialData: (params?: IGetInitialDataParams) => void;
   locale: string;
@@ -56,10 +54,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
   };
 
   componentDidMount() {
-    if (!this.props.hasInitialDataLoaded) {
-      removeInjectedStyles();
-      this.props.getInitialData({ locale: this.props.match.params.locale });
-    }
+    removeInjectedStyles();
   }
 
   handleDrawerClose = () => {
@@ -129,15 +124,12 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
           </Switch>
         </Container>
         <Toast />
-        {this.props.isInitialDataLoading && <Loader isLoading />}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  hasInitialDataLoaded: hasInitialDataLoaded(state),
-  isInitialDataLoading: isInitialDataLoading(state),
   isLoggedIn: isLoggedIn(state),
   cities: getCities(state),
   locale: getLocale(state)
