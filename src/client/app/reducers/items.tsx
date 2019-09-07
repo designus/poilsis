@@ -39,6 +39,9 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
       return {
         ...state,
         selectedId: action.item.id,
+        aliases: state.aliases
+          .filter(alias => alias.id !== action.item.id)
+          .concat({ id: action.item.id, alias: action.item.alias }),
         dataMap: {
           ...state.dataMap,
           [action.item.id]: {

@@ -4,10 +4,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { IAppState, IItemsMap } from 'types';
+import { IAppState, IItemsMap, ICitiesMap } from 'types';
 import { loadRecommendedItems } from 'actions';
 import { ItemCard } from 'components/itemCard';
-import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getLocale } from 'selectors';
+import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getLocale, getCitiesMap } from 'selectors';
 
 import { styles } from './styles';
 
@@ -21,13 +21,14 @@ interface IStateProps {
   recommendedItems: string[];
   hasLoaded: boolean;
   itemsMap: IItemsMap;
+  citiesMap: ICitiesMap;
   locale: string;
 }
 
 type RecommendedItemsProps = IOwnProps & IStateProps & IDispatchProps;
 
 function RecommendedItems(props: RecommendedItemsProps) {
-  const { recommendedItems, hasLoaded, loadRecommendedItems, classes, itemsMap, locale } = props;
+  const { recommendedItems, hasLoaded, loadRecommendedItems, classes, itemsMap, citiesMap, locale } = props;
 
   useEffect(() => {
     if (!hasLoaded) {
@@ -36,9 +37,11 @@ function RecommendedItems(props: RecommendedItemsProps) {
   }, [hasLoaded, loadRecommendedItems]);
 
   const renderItem = (itemId: string) => {
+    const item = itemsMap[itemId];
+    const city = citiesMap[item.cityId];
     return (
       <Grid key={itemId} item xs={6} md={3} lg={2}>
-        <ItemCard item={itemsMap[itemId]} locale={locale} />
+        <ItemCard city={city} item={item} locale={locale} />
       </Grid>
     );
   };
@@ -65,6 +68,7 @@ const mapStateToProps = (state: IAppState) => ({
   recommendedItems: getRecommendedItems(state),
   hasLoaded: hasRecommendedItemsLoaded(state),
   itemsMap: getItemsMap(state),
+  citiesMap: getCitiesMap(state),
   locale: getLocale(state)
 });
 

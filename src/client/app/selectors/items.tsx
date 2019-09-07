@@ -1,5 +1,6 @@
 import { IAppState, IItemsMap } from 'types';
 import { IItem } from 'global-utils/typings';
+import { getLocale } from './locale';
 
 import { hasInitialDataLoaded } from './initialData';
 
@@ -8,22 +9,22 @@ export const shouldLoadUserItems = (state: IAppState) =>
 
 export const getItemsMap = (state: IAppState): IItemsMap => state.items.dataMap;
 
+export const getItemsAliases = (state: IAppState) => state.items.aliases;
+
 export const getItemById = (state: IAppState, id: string): IItem => getItemsMap(state)[id];
 
 export const shouldLoadEditItem = (state: IAppState, itemId: string) => {
   return itemId && !state.loader.content && !getItemById(state, itemId) && hasInitialDataLoaded(state);
 };
 
-export const getSelectedItemId = (state: IAppState) => state.items.selectedId;
-
-export const getSelectedItem = (state: IAppState, routeState): Partial<IItem> => {
-  const selectedId = routeState ? routeState.itemId : getSelectedItemId(state);
-  return getItemsMap(state)[selectedId];
-};
-
-export const shouldLoadViewItem = (state: IAppState, routeState) => {
-  const selectedItem = getSelectedItem(state, routeState);
-  if (selectedItem) {
-    return (!selectedItem || !selectedItem.isFullyLoaded) && hasInitialDataLoaded(state);
+export const getItemByAlias = (state: IAppState, itemAlias: string, locale: string): IItem => {
+  const aliases = getItemsAliases(state);
+  const itemsMap = getItemsMap(state);
+  const alias = aliases.find(alias => alias.alias === itemAlias);
+  if (alias) {
+    return itemsMap[alias.id];
   }
+
+  return null;
 };
+

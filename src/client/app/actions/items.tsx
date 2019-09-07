@@ -105,6 +105,7 @@ export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) =
 };
 
 export const loadItem = (alias: string) => (dispatch) => {
+  console.log('Load item', alias);
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return axios.get(`${config.host}/api/items/view-item/${alias}`)
