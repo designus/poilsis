@@ -85,3 +85,10 @@ export interface IAccessTokenClaims {
 export interface IPhotoFormState {
   files?: File[];
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  role: string;
+  alias: string;
+}

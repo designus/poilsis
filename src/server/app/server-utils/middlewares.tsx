@@ -1,10 +1,7 @@
 import { readdir } from 'fs';
-import { Request, Response } from 'express';
 import {
   ImageSize,
   IImage,
-  getLocalizedResponse,
-  LANGUAGES,
   itemValidation
 } from 'global-utils';
 

@@ -2,7 +2,7 @@ import { IType, TranslatableField } from 'global-utils/typings';
 import { IGenericDataMap, IGenericState } from './generic';
 
 export type ITypesMap = IGenericDataMap<IType>;
-export interface ITypesState extends IGenericState<IType, TranslatableField> {
+export interface ITypesState extends IGenericState<IType> {
   selectedId?: string;
 }
 

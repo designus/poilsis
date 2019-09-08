@@ -151,12 +151,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
       "id": "./app/components/toast/styles.tsx",
       "name": "./app/components/toast/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
@@ -491,7 +485,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/itemTypesList": [
+  "../itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -705,6 +699,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/actions/cities.tsx",
+      "name": "./app/actions/cities.tsx",
+      "file": "adminLayoutPage~clientCity~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity~homePage.js"
+    },
+    {
       "id": "./app/types/cities.tsx",
       "name": "./app/types/cities.tsx",
       "file": "main.js",
@@ -869,14 +869,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "actions/cities": [
-    {
-      "id": "./app/actions/cities.tsx",
-      "name": "./app/actions/cities.tsx",
-      "file": "adminLayoutPage~clientCity~homePage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity~homePage.js"
-    }
-  ],
   "./extendWithLoader": [
     {
       "id": "./app/components/extendWithLoader/extendWithLoader.tsx",
@@ -1005,6 +997,14 @@
     {
       "id": "./app/components/languageSelector/languageSelector.tsx",
       "name": "./app/components/languageSelector/languageSelector.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/menu/adminLeftMenu/styles": [
+    {
+      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
@@ -2871,6 +2871,12 @@
       "name": "../../node_modules/intl-messageformat/lib/utils.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
   "./helpers/bind": [
@@ -3187,7 +3193,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/upload": [
+  "./upload": [
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",
@@ -3203,7 +3209,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "lodash/memoize": [
+  "./memoize": [
     {
       "id": "../../node_modules/lodash/memoize.js",
       "name": "../../node_modules/lodash/memoize.js",
@@ -3619,7 +3625,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../data-strings/validation": [
+  "./validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -6451,7 +6457,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "redux-form/es/SubmissionError": [
+  "./SubmissionError": [
     {
       "id": "../../node_modules/redux-form/es/SubmissionError.js",
       "name": "../../node_modules/redux-form/es/SubmissionError.js",
@@ -6459,7 +6465,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "redux-form/es/actions": [
+  "./actions": [
     {
       "id": "../../node_modules/redux-form/es/actions.js",
       "name": "../../node_modules/redux-form/es/actions.js",
@@ -6947,14 +6953,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../InputBase/utils": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
   "./InputLabel": [
     {
       "id": "../../node_modules/@material-ui/core/esm/InputLabel/InputLabel.js",
@@ -6987,7 +6985,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../List": [
+  "@material-ui/core/List": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/index.js",
       "name": "../../node_modules/@material-ui/core/esm/List/index.js",
@@ -7043,7 +7041,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Menu/Menu": [
+  "./Menu": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
       "name": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
@@ -7715,7 +7713,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/ownerDocument": [
+  "./ownerDocument": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/ownerDocument.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/ownerDocument.js",

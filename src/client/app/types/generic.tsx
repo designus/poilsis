@@ -1,14 +1,13 @@
-export interface IAlias<T = string> {
-  alias: T;
-  id: string;
+export interface IAlias {
+  [key: string]: string;
 }
 
 export interface IGenericDataMap<T> {
   [key: string]: T;
 }
 
-export interface IGenericState<T, U = string> {
-  aliases: Array<IAlias<U>>;
+export interface IGenericState<T> {
+  aliases: IAlias;
   dataMap: IGenericDataMap<T>;
 }
 

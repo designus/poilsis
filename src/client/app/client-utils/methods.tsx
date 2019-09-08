@@ -2,18 +2,21 @@ import * as React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
-import { TranslatableField, hasLocalizedFields } from 'global-utils';
+import { TranslatableField, IItem, IType, ICity, IUser, hasLocalizedFields } from 'global-utils';
 import { IGenericState, IGenericDataMap, IDropdownOption } from 'types/generic';
 
-export function getNormalizedData(data: any[]) {
-  return data.reduce((acc: IGenericState<object>, item: any) => {
+export function getNormalizedData<T extends IItem | IType | ICity | IUser>(data: T[]): IGenericState<T> {
+  return data.reduce((acc: IGenericState<T>, item: T) => {
     acc.dataMap[item.id] = item;
-    acc.aliases.push({id: item.id, alias: item.alias});
+    if (hasLocalizedFields(item.alias)) {
+      Object.values(item.alias).forEach((alias: string) => {
+        acc.aliases[alias] = item.id;
+      });
+    } else {
+      acc.aliases[(item as ICity).alias] = item.id;
+    }
     return acc;
-  }, {
-    dataMap: {},
-    aliases: []
-  });
+  }, { dataMap: {}, aliases: {} });
 }
 
 export function getBackendErrors(errors: Record<string, any>) {
