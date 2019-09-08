@@ -41,7 +41,6 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between'
   },
   topMenu: {
-    display: 'flex',
     flex: 3
   },
   logo: {

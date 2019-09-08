@@ -6,6 +6,7 @@ import { App } from 'pages';
 
 import { AdminLayoutPage } from 'pages/admin/layout';
 import { AdminItemsPage } from 'pages/admin/items';
+import { loadUserItemsData } from 'pages/admin/items/items';
 import { CreateEditItemPage } from 'pages/admin/createEditItem';
 import { CreateEditTypePage } from 'pages/admin/createEditType';
 import { CreateEditCityPage } from 'pages/admin/createEditCity';
@@ -42,6 +43,7 @@ export const routes = [
           {
             path: adminRoutes.items.path,
             component: AdminItemsPage,
+            fetchData: loadUserItemsData,
             exact: true
           },
           {

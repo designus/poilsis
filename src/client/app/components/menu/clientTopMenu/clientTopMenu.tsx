@@ -105,9 +105,7 @@ function ClientTopMenu(props: ITopMenu) {
   }, [selectedCityId, props.location.pathname]);
 
   return (
-    <div className={classes.topMenu}>
-      <StyledTopMenu isVertical={isVertical} items={getMenuItems()} />
-    </div>
+    <StyledTopMenu isVertical={isVertical} items={getMenuItems()} />
   );
 }
 

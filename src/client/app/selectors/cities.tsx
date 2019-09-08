@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { ICity, IItem } from 'global-utils/typings';
-import { hasInitialDataLoaded, getItemsMap, getLocale } from 'selectors';
+import { getItemsMap, getLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 import { IAppState, IItemLocalized, IItemsMap, ICityLocalized, ICitiesMap } from 'types';
 
@@ -25,7 +25,7 @@ export const getCityByAlias = (state: IAppState, alias: string) =>
   getCities(state).find(city => city.alias === alias);
 
 export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
-  return cityId && !state.loader.content && !getCityById(state, cityId) && hasInitialDataLoaded(state);
+  return cityId && !state.loader.content && !getCityById(state, cityId);
 };
 
 export const getSelectedCityId = (state: IAppState, routeState = null) =>
@@ -38,7 +38,7 @@ export const getSelectedCity = (state: IAppState, routeState) => {
 export const shouldLoadCityItems = (state: IAppState, routeState) => {
   const selectedCity = getSelectedCity(state, routeState);
   if (selectedCity) {
-    return !selectedCity.hasItems && hasInitialDataLoaded(state);
+    return !selectedCity.hasItems;
   }
 };
 

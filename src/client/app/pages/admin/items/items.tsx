@@ -52,6 +52,8 @@ interface IStateProps {
 
 type IItemsPageProps = IOwnProps & IStateProps & IDispatchProps;
 
+export const loadUserItemsData = (store) => store.dispatch(loadUserItems());
+
 class AdminItemsPage extends React.Component<IItemsPageProps, any> {
 
   static fetchData(store) {
