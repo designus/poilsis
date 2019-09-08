@@ -116,8 +116,8 @@ export const resizeImages = (req, res) => {
             .then((image) => {
               const [name, extension] = file.filename.split('.');
               image
-                .resize(240, 200)
-                .quality(60)
+                .resize(280, 220)
+                .quality(80)
                 .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
                   resolve();
                 });
@@ -140,12 +140,4 @@ export const handleItemsErrors = (err, req, res, next) => {
   } else {
     res.send(err);
   }
-};
-
-export const localizeResponse = (body, req: Request, res: Response) => {
-  const language = req.headers['accept-language'] as 'string';
-  if (!body.errors && LANGUAGES.indexOf(language) !== -1) {
-    return getLocalizedResponse(body, language);
-  }
-  return body;
 };

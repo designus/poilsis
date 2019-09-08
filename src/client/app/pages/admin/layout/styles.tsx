@@ -47,6 +47,9 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
     display: 'block'
   },
+  toolbar: {
+    minHeight: theme.mixins.toolbar.minHeight
+  },
   content: {
     minWidth: `calc(100% - ${DRAWER_WIDTH}px)`,
     width: '100%',

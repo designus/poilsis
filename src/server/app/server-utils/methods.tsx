@@ -6,7 +6,14 @@ import {
   IImage,
   IResponseError,
   mapMimeTypesToTypes,
-  itemValidation
+  itemValidation,
+  DEFAULT_LANGUAGE,
+  IType,
+  ICity,
+  IItem,
+  TranslatableField,
+  hasLocalizedFields,
+  Languages
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -97,9 +104,18 @@ export const formatAlias = alias => alias
   .join('-')
   .toLowerCase();
 
-export const getAliasFromName = (name, locale: string) => formatAlias(name[locale] || name);
+export const getAlias = (item: IType | IItem) =>
+  Object.entries(item.alias).reduce((acc, [key, value]: [Languages, string]) => {
+    acc[key] = formatAlias(value || item.name[key]);
+    return acc;
+  }, {});
 
-export const getAlias = (item, locale: string) => item.alias || getAliasFromName(item.name, locale);
+export const getLocalizedAlias = (item: ICity, locale: Languages): string => {
+  const localizedName = item.name[locale];
+  const localizedAlias = item.alias[locale];
+
+  return formatAlias(localizedAlias || localizedName);
+};
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
   if (res.headersSent) return;

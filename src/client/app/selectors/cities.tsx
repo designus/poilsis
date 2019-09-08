@@ -1,32 +1,63 @@
 import { createSelector } from 'reselect';
-import { IAppState, ICity, IItemsMap, IItem } from 'reducers';
-import { hasInitialDataLoaded, getItemsMap } from 'selectors';
+import { ICity, IItem } from 'global-utils/typings';
+import { getItemsMap, getLocale } from 'selectors';
+import { getLocalizedText } from 'client-utils/methods';
+import { IAppState, IItemLocalized, IItemsMap, ICityLocalized, ICitiesMap } from 'types';
+
+export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
+
+export const getCities = createSelector(
+  [getCitiesMap, getLocale],
+  (citiesMap: ICitiesMap, locale: string) =>
+    Object.values(citiesMap).map((city: ICity): ICityLocalized => {
+      return {
+        ...city,
+        description: getLocalizedText(city.description, locale),
+        name: getLocalizedText(city.name, locale)
+      };
+    })
+);
+
+export const getCityById = (state: IAppState, cityId: string): ICity =>
+  getCitiesMap(state)[cityId];
+
+export const getCityByAlias = (state: IAppState, alias: string) =>
+  getCities(state).find(city => city.alias === alias);
 
 export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
-  return cityId && !state.loader.content && !state.admin.cities[cityId] && hasInitialDataLoaded(state);
+  return cityId && !state.loader.content && !getCityById(state, cityId);
 };
 
-export const getCitiesMap = (state: IAppState) => state.cities.dataMap;
+export const getSelectedCityId = (state: IAppState, routeState = null) =>
+  routeState ? routeState.cityId : state.cities.selectedId;
 
 export const getSelectedCity = (state: IAppState, routeState) => {
-  const selectedId = routeState ? routeState.cityId : state.cities.selectedId;
-  return getCitiesMap(state)[selectedId];
+  return getCitiesMap(state)[getSelectedCityId(state, routeState)];
 };
 
 export const shouldLoadCityItems = (state: IAppState, routeState) => {
   const selectedCity = getSelectedCity(state, routeState);
   if (selectedCity) {
-    return !selectedCity.hasItems && !state.items.hasAllItems && hasInitialDataLoaded(state);
+    return !selectedCity.hasItems;
   }
 };
 
 export const getCityItems = createSelector(
-  [getSelectedCity, getItemsMap],
-  (selectedCity: ICity, itemsMap: IItemsMap): IItem[] => {
-    return selectedCity ?
-      Object.values(itemsMap).filter((item: IItem) => item.cityId === selectedCity.id) :
-      [];
+  [getSelectedCity, getItemsMap, getLocale],
+  (selectedCity: ICity, itemsMap: IItemsMap, locale: string): IItemLocalized[] => {
+    if (selectedCity) {
+      return Object.values(itemsMap)
+        .filter((item: IItem) => item.cityId === selectedCity.id)
+        .map(item => ({
+          ...item,
+          name: getLocalizedText(item.name, locale),
+          alias: getLocalizedText(item.alias, locale),
+          description: getLocalizedText(item.metaDescription, locale),
+          metaTitle: getLocalizedText(item.metaTitle, locale),
+          metaKeywords: getLocalizedText(item.metaKeywords, locale),
+          metaDescription: getLocalizedText(item.metaDescription, locale)
+        }));
+    }
+    return [];
   }
 );
-
-export const getCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));

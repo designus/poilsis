@@ -4,7 +4,7 @@ import * as day from 'dayjs';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles, IItemFields, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
+import { UserRoles, IItem, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
 import { USER_NOT_FOUND, INVALID_CREDENTIALS, AUTHORIZATION_FAILED } from 'data-strings';
 
 import { UsersModel as User } from '../model/users';
@@ -47,7 +47,7 @@ class Auth {
 
   private getUserItems = async (userRole: string, userId: string) => {
     const itemDocs = userRole !== UserRoles.admin ? await ItemsModel.find({ userId }).exec() : [];
-    return itemDocs.length ? itemDocs.map((item: IItemFields) => item.id) : [];
+    return itemDocs.length ? itemDocs.map((item: IItem) => item.id) : [];
   }
 
   public reauthenticate = async (req, res) => {

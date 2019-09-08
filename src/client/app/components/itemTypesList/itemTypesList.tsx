@@ -1,28 +1,44 @@
 import * as React from 'react';
-import { ITypesMap } from 'reducers';
+import { connect } from 'react-redux';
+import { ITypesMap, IAppState } from 'types';
+import { getTypesMap, getLocale } from 'selectors';
+import { getLocalizedText } from 'client-utils/methods';
 
-export interface IItemsTypesList {
+interface IOwnProps {
   typeIds: string[];
-  typesMap: ITypesMap;
 }
 
-export const ItemTypesList = ({typeIds, typesMap}: IItemsTypesList) => {
+interface IStateProps {
+  typesMap: ITypesMap;
+  locale: string;
+}
 
+type ItemsTypesListProps = IOwnProps & IStateProps;
+
+const ItemTypesList = ({typeIds, typesMap, locale}: ItemsTypesListProps) => {
   return (
-    <div>
+    <React.Fragment>
       {
         typeIds.map((typeId) => {
           const type = typesMap[typeId];
           if (type) {
             return (
               <span key={typeId} className="types" style={{ fontSize: 12 + 'px' }}>
-                {typesMap[typeId].name}&nbsp;
+                {getLocalizedText(typesMap[typeId].name, locale)}
+                &nbsp;
               </span>
             );
           }
           return null;
         })
       }
-    </div>
+    </React.Fragment>
   );
 };
+
+const mapStateToProps = (state: IAppState) => ({
+  typesMap: getTypesMap(state),
+  locale: getLocale(state)
+});
+
+export default connect<IStateProps, {}, IOwnProps>(mapStateToProps)(ItemTypesList);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { LANGUAGES } from 'global-utils';
 
 import { languageStyles } from './styles';

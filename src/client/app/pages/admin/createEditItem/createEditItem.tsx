@@ -4,30 +4,30 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { Switch, RouteComponentProps } from 'react-router-dom';
-import { isEqual } from 'lodash';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { getAdminItem } from 'actions/admin';
-import { TItemFields } from 'global-utils';
+import { IItem } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
-import { shouldLoadEditItem } from 'selectors';
+import { shouldLoadEditItem, getItemById } from 'selectors';
 import { NotFound } from 'components/notFound';
 import { PropsRoute } from 'components/propsRoute';
-import { HorizontalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { IMenuItem } from 'components/menu';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { Loader } from 'components/loader';
 
 import { MainInfoPage } from './mainInfo';
 import { PhotosPage } from './photos';
 import { DescriptionPage } from './description';
+import { AdminTopMenu as TopMenu } from 'components/menu/adminTopMenu';
 
 interface IMatchParams {
   itemId: string;
   userId: string;
 }
 export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
-  loadedItem: TItemFields;
+  loadedItem: IItem;
   shouldLoadEditItem: boolean;
   loadAdminItem: (itemId: string) => Promise<void>;
 }
@@ -48,21 +48,24 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
   isCreatePage = () => !Boolean(this.props.match.params.itemId);
 
-  getMenuItems(userId?: string, itemId?: string): IAdminMenuItem[] {
+  getMenuItems(userId?: string, itemId?: string): IMenuItem[] {
     const { formatMessage } = this.props.intl;
     return [
       {
+        id: 1,
         icon: () => (<HomeIcon />),
         link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
         text: formatMessage({ id: 'admin.menu.main_info' })
       },
       {
+        id: 2,
         icon: () => (<DescriptionIcon />),
         link: adminRoutes.editItemDescription.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.description' }),
         isDisabled: this.isCreatePage()
       },
       {
+        id: 3,
         icon: () => (<PhotoIcon />),
         link: adminRoutes.editItemPhotos.getLink(userId, itemId),
         text: formatMessage({ id: 'admin.menu.photo_gallery' }),
@@ -77,14 +80,6 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
     }
   }
 
-  componentDidUpdate(props: ICreateEditItemPageProps) {
-    const { match, loadAdminItem, shouldLoadEditItem } = this.props;
-    // When we navigate from create page to update we need to load updated city
-    if (!isEqual(props.match.params, match.params) || shouldLoadEditItem) {
-      loadAdminItem(match.params.itemId);
-    }
-  }
-
   render() {
     const { loadedItem, match } = this.props;
     const isCreatePage = this.isCreatePage();
@@ -93,7 +88,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
     return (loadedItem || isCreatePage) && (
       <React.Fragment>
-        <HorizontalMenu items={this.getMenuItems(userId, itemId)} />
+        <TopMenu items={this.getMenuItems(userId, itemId)} />
         <Switch>
           <ProtectedRoute
             path={adminRoutes.createItem.path}
@@ -124,7 +119,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 }
 
 const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
-  loadedItem: state.admin.items[props.match.params.itemId],
+  loadedItem: getItemById(state, props.match.params.itemId),
   shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId)
 });
 

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { Dropdown } from 'components/dropdown';
 import { LANGUAGES } from 'global-utils';
-import { IDropdownOption } from 'client-utils/types';
+import { IDropdownOption } from 'types/generic';
 import { capitalize } from 'client-utils/methods';
 import { switchLanguage } from 'actions/locale';
 

@@ -2,13 +2,15 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { IAppState, IItem, ICity } from 'reducers';
+import { ICity, IItem } from 'global-utils/typings';
+import { IAppState } from 'types';
 import { loadCityItems, clearSelectedCity } from 'actions/cities';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { getLocalizedText } from 'client-utils/methods';
 import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';
-import { getSelectedCity, shouldLoadCityItems, getCityItems } from 'selectors';
+import { getSelectedCity, shouldLoadCityItems, getCityItems, getLocale } from 'selectors';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
@@ -21,11 +23,12 @@ interface ICityPageParams extends RouteComponentProps<IMatchParams> {
   cityItems: IItem[];
   selectedCity: ICity;
   shouldLoadCityItems: boolean;
-  loadCityItems: (cityAlias: string, locale: string) => void;
+  locale: string;
+  loadCityItems: (cityAlias: string) => void;
   clearSelectedCity: () => void;
 }
 
-export const loadCityData = (store, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias, params.locale));
+export const loadCityData = (store, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
 
 class CityPage extends React.Component<ICityPageParams, any> {
 
@@ -46,22 +49,22 @@ class CityPage extends React.Component<ICityPageParams, any> {
   }
 
   loadCityItems = () => {
-    const { cityAlias, locale } = this.props.match.params;
-    this.props.loadCityItems(cityAlias, locale);
+    const { cityAlias } = this.props.match.params;
+    this.props.loadCityItems(cityAlias);
   }
 
   render() {
-    const { selectedCity } = this.props;
+    const { selectedCity, locale } = this.props;
     return selectedCity ? (
-      <div>
-        <h1>{selectedCity.name}</h1>
-        <p>{selectedCity.description}</p>
+      <React.Fragment>
+        <h1>{getLocalizedText(selectedCity.name, locale)}</h1>
+        <p>{getLocalizedText(selectedCity.description, locale)}</p>
         <ItemsListWithLoader
           loaderId={CONTENT_LOADER_ID}
           items={this.props.cityItems}
           selectedCity={this.props.selectedCity}
         />
-      </div>
+      </React.Fragment>
     ) : <NotFound/>;
   }
 }
@@ -69,11 +72,12 @@ class CityPage extends React.Component<ICityPageParams, any> {
 const mapStateToProps = (state: IAppState, props: ICityPageParams) => ({
   selectedCity: getSelectedCity(state, props.location.state),
   cityItems: getCityItems(state, props.location.state),
-  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state)
+  shouldLoadCityItems: shouldLoadCityItems(state, props.location.state),
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadCityItems: (cityAlias: string, locale: string) => dispatch(loadCityItems(cityAlias, locale)),
+  loadCityItems: (cityAlias: string) => dispatch(loadCityItems(cityAlias)),
   clearSelectedCity: () => dispatch(clearSelectedCity())
 });
 

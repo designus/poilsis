@@ -10,11 +10,12 @@ import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
 import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
-import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme } from 'global-utils';
-import { IAuthState, rootReducer  } from 'reducers';
+import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
+import { rootReducer  } from 'reducers';
+import { IAuthState } from 'types';
 
 import app, { staticFilesPort } from './app';
-import { config } from '../../config';
+import { config } from 'config';
 import { App } from 'pages';
 import { routes } from '../client/app/routes';
 
@@ -38,8 +39,6 @@ const getInitialState = (req, user): IInitialAuthState => {
   }
 };
 
-const isDevelopment = () => process.env.NODE_ENV === 'development';
-
 app.get('*', (req, res, next) => {
   return auth.authenticate((err, user) => {
     const location = req.url;
@@ -49,10 +48,21 @@ app.get('*', (req, res, next) => {
 
     const promises = branch
       .map((item: MatchedRoute<{}>) => {
-        return {fetchData: item.route.fetchData, params: item.match.params};
+        const { fetchData } = item.route;
+        const { params } = item.match;
+        if (Array.isArray(fetchData)) {
+          return fetchData.map(fn => ({ fetchData: fn, params }));
+        } else {
+          return { fetchData, params };
+        }
       })
+      // Flatten array to 1 level deep
+      .reduce((acc: any[], val) => acc.concat(val), [])
       .filter(({fetchData}) => Boolean(fetchData))
-      .map(({fetchData, params}) => fetchData.bind(null, store, params));
+      .map((item) => {
+        const {fetchData, params} = item;
+        return fetchData.bind(null, store, params);
+      });
 
     return preloadData(promises).then(() => sendResponse(res, store, location));
   })(req, res, next);
@@ -83,12 +93,12 @@ function sendResponse(res, store, location) {
   const css = sheets.toString();
   const bundles = getBundles(stats, modules);
   const preloadedState = serialize(state, { isJSON: true });
-  
+
   const scripts = bundles
     .filter(bundle => bundle.file.endsWith('.js'))
     .map(script => script.file)
     .filter(removeDuplicates)
-    .map(jsFile => `<script src="${isDevelopment() ? 'http://localhost:8080' : ''}/public/${jsFile}"></script>`)
+    .map(jsFile => `<script src="${getStaticFileUri(jsFile)}"></script>`)
     .join('\n');
 
   res.render('index', {

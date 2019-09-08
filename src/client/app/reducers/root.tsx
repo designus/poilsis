@@ -1,49 +1,30 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+
 import {
   cities,
   items,
   initialData,
   toast,
-  auth,
-  ICityState,
-  IInitialDataState,
-  IToastState,
-  IAuthState,
-  IItemsState
+  auth
 } from '../reducers';
 
-import { loader, ILoadingState } from './loader';
-import { types, ITypesState } from './types';
-import { uploadProgress, IUploadProgress } from './uploadProgress';
-import { currentUser, ICurrentUserState } from './currentUser';
-import { users, IUsersState } from './users';
-import { admin, IAdminState } from './admin';
+import { loader } from './loader';
+import { types } from './types';
+import { uploadProgress } from './uploadProgress';
+import { currentUser } from './currentUser';
+import { users } from './users';
 import { locale } from './locale';
-
-export interface IAppState {
-  cities: ICityState;
-  auth: IAuthState;
-  locale: string;
-  admin: IAdminState;
-  currentUser: ICurrentUserState;
-  users: IUsersState;
-  items: IItemsState;
-  types: ITypesState;
-  initialData: IInitialDataState;
-  loader: ILoadingState;
-  toast: IToastState;
-  uploadProgress: IUploadProgress;
-}
+import { home } from './home';
 
 export const rootReducer = combineReducers({
   cities,
   types,
   auth,
-  admin,
   items,
   initialData,
   loader,
+  home,
   toast,
   uploadProgress,
   currentUser,

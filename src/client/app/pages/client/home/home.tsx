@@ -1,11 +1,23 @@
 import * as React from 'react';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { extendWithLoader } from 'components/extendWithLoader';
+import { RecommendedItems } from './recommendedItems';
 
-export class HomePage extends React.Component<any, any> {
+import { styles } from './styles';
+
+const RecommendedItemsWithLoader = extendWithLoader(RecommendedItems);
+
+interface IHomePageProps extends WithStyles<typeof styles> {}
+
+class HomePage extends React.Component<IHomePageProps, any> {
   render() {
     return (
-      <div>
-        <div>This is index page</div>
+      <div className={this.props.classes.wrapper}>
+        <RecommendedItemsWithLoader showLoadingOverlay loaderId={CONTENT_LOADER_ID} />
       </div>
     );
   }
 }
+
+export default withStyles(styles)(HomePage);

@@ -7,17 +7,10 @@ import {
 } from 'actions/upload';
 
 import { showToast } from 'actions/toast';
-import { receiveAdminItem, receiveAdminItemDesc } from 'actions/admin';
 import { startLoading, endLoading } from 'actions/loader';
-import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
-import {
-  onUploadProgress,
-  getFormDataFromFiles,
-  setAcceptLanguageHeader
- } from 'client-utils/methods';
-import { IAlias } from 'client-utils/types';
+import { onUploadProgress, getFormDataFromFiles, getNormalizedData } from 'client-utils/methods';
+import { IAlias, IItemsMap, Toast, IAppState } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IItemsMap, IAppState, Toast, IItem } from 'reducers';
 import {
   ITEM_UPDATE_SUCCESS,
   ITEM_UPDATE_ERROR,
@@ -30,77 +23,92 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItemFields, TItemFields, TItemDescFields, IItemDescFields } from 'global-utils';
-import { getLocale } from 'selectors';
-import { config } from '../../../../config';
+import { IImage, IItem, IItemDescFields, Omit, Value } from 'global-utils/typings';
+import { getItemById } from 'selectors';
+import {
+  ItemsActionTypes,
+  ISelectItem,
+  IClearSelectedItem,
+  IReceiveItems,
+  IReceiveItem,
+  IReceiveImages,
+  IReceiveItemDescription,
+  IRemoveItem,
+  IToggleItemEnabled,
+  IToggleItemRecommended,
+  IUniqueItemProps
+} from 'types/items';
 
-export const SELECT_ITEM = 'SELECT_ITEM';
-export const CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM';
-export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
-export const REMOVE_ITEM = 'REMOVE_ITEM';
-export const RECEIVE_IMAGES = 'RECEIVE_IMAGES';
-export const TOGGLE_ITEM_VISIBILITY = 'TOGGLE_ITEM_VISIBILITY';
-export const RECEIVE_ITEM = 'RECEIVE_ITEM';
-export const RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION';
+import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
+import { config } from 'config';
 
-interface IReceiveItemsProps {
-  dataMap: IItemsMap;
-  aliases: IAlias[];
-  hasAllItems?: boolean;
-  cityId?: string;
-  userId?: string;
-}
-
-export const selectItem = (itemId: string) => ({
-  type: SELECT_ITEM,
+export const selectItem = (itemId: Value<ISelectItem, 'itemId'>): ISelectItem => ({
+  type: ItemsActionTypes.SELECT_ITEM,
   itemId
 });
 
-export const clearSelectedItem = () => ({
-  type: CLEAR_SELECTED_ITEM
+export const clearSelectedItem = (): IClearSelectedItem => ({
+  type: ItemsActionTypes.CLEAR_SELECTED_ITEM
 });
 
-export const receiveItems = (props: IReceiveItemsProps) => ({
-  type: RECEIVE_ITEMS,
-  ...props
+export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems => ({
+  type: ItemsActionTypes.RECEIVE_ITEMS,
+  dataMap: props.dataMap,
+  aliases: props.aliases,
+  cityId: props.cityId,
+  userId: props.userId,
+  dataType: props.dataType
 });
 
-export const receiveItem = (item: IItem) => ({
-  type: RECEIVE_ITEM,
-  itemId: item.id,
+export const receiveItem = (item: IItem): IReceiveItem => ({
+  type: ItemsActionTypes.RECEIVE_ITEM,
   item
 });
 
-export const receiveItemDesc = (itemId: string, descFields: IItemDescFields) => ({
-  type: RECEIVE_ITEM_DESCRIPTION,
+export const receiveItemDescription = (itemId: string, descFields: IItemDescFields): IReceiveItemDescription => ({
+  type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION,
   itemId,
   descFields
 });
 
-export const removeItem = (item: IItem) => ({
-  type: REMOVE_ITEM,
-  item
+export const removeItem = (itemId: string): IRemoveItem => ({
+  type: ItemsActionTypes.REMOVE_ITEM,
+  itemId
 });
 
-export const receiveImages = (id: string, images: IImage[]) => ({
-  type: RECEIVE_IMAGES,
-  id,
+export const receiveImages = (itemId: string, images: IImage[]): IReceiveImages => ({
+  type: ItemsActionTypes.RECEIVE_IMAGES,
+  itemId,
   images
 });
 
-export const toggleItemVisibility = (itemId: string, isEnabled: boolean) => ({
-  type: TOGGLE_ITEM_VISIBILITY,
+export const toggleItemEnabledField = (itemId: string, isEnabled: boolean): IToggleItemEnabled => ({
+  type: ItemsActionTypes.TOGGLE_ITEM_ENABLED,
   itemId,
   isEnabled
 });
 
-export const loadItem = (alias: string, locale: string) => (dispatch, getState) => {
-  const state: IAppState = getState();
-  const language = locale || getLocale(state);
+export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean): IToggleItemRecommended => ({
+  type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED,
+  itemId,
+  isRecommended
+});
 
+export const getNewItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
+
+export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) => (dispatch, getState) => {
+  const { userId, cityId, dataType } = params;
+  const state: IAppState = getState();
+  const newItems = getNewItems(items, state);
+  const { dataMap, aliases } = getNormalizedData(newItems);
+  dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
+};
+
+export const loadItem = (alias: string) => (dispatch) => {
+  console.log('Load item', alias);
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(`${config.host}/api/items/view-item/${alias}`, setAcceptLanguageHeader(language))
+  return axios.get(`${config.host}/api/items/view-item/${alias}`)
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(receiveItem(item));
@@ -156,57 +164,42 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
     });
 };
 
-export const updateMainInfo = (adminItem: TItemFields) => (dispatch, getState) => {
+export const updateMainInfo = (item: IItem) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(
-    `${config.host}/api/items/item/main-info/${adminItem.id}`,
-    adminItem,
-    setAcceptLanguageHeader(getLocale(getState()))
-  )
+  return axios.put(`${config.host}/api/items/item/main-info/${item.id}`, item)
     .then(handleApiResponse)
-    .then((clientItem: IItemFields) => {
-      dispatch(receiveItem(clientItem));
-      dispatch(receiveAdminItem(adminItem.id, adminItem));
+    .then((response: IItem) => {
+      dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientItem);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateItemDescription = (itemId: string, adminItemDescFields: TItemDescFields) => (dispatch, getState) => {
+export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(
-    `${config.host}/api/items/item/description/${itemId}`,
-    adminItemDescFields,
-    setAcceptLanguageHeader(getLocale(getState()))
-  )
+  return axios.put(`${config.host}/api/items/item/description/${itemId}`, itemDescFields)
   .then(handleApiResponse)
-  .then((clientItemDescFields: IItemDescFields) => {
-    // TODO: Use single action for updating store
-    dispatch(receiveItemDesc(itemId, clientItemDescFields));
-    dispatch(receiveAdminItemDesc(itemId, adminItemDescFields));
+  .then((response: IItemDescFields) => {
+    dispatch(receiveItemDescription(itemId, response));
     dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
   })
   .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
-export const createItem = (adminItem: TItemFields) => (dispatch, getState) => {
+export const createItem = (item: IItem) => (dispatch) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(
-    `${config.host}/api/items`,
-    adminItem,
-    setAcceptLanguageHeader(getLocale(getState()))
-  )
+  return axios.post(`${config.host}/api/items`, item)
     .then(handleApiResponse)
-    .then((clientItem: IItemFields) => {
-      dispatch(receiveItem(clientItem));
+    .then((response: IItem) => {
+      dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientItem);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
@@ -217,20 +210,30 @@ export const deleteItem = (itemId: string) => (dispatch) => {
 
   return axios.delete(`${config.host}/api/items/item/${itemId}`)
     .then(handleApiResponse)
-    .then(item => {
-      dispatch(removeItem(item));
+    .then((item: IItem) => {
+      dispatch(removeItem(item.id));
       dispatch(stopLoading(false, ITEM_DELETE_SUCCESS, CONTENT_LOADER_ID));
     })
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItem = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
+export const toggleItemEnabled = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
   const appState: IAppState = getState();
-  const userId = appState.items.dataMap[itemId].userId;
-  return axios.patch(`${config.host}/api/items/item/toggle/${itemId}`, { userId, isEnabled })
+  const item = getItemById(appState, itemId);
+  const userId = item.userId;
+  return axios.patch(`${config.host}/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled })
     .then(handleApiResponse)
     .then(() => {
-      dispatch(toggleItemVisibility(itemId, isEnabled));
+      dispatch(toggleItemEnabledField(itemId, isEnabled));
+    })
+    .catch(err => console.error('Err', err));
+};
+
+export const toggleItemRecommended = (itemId: string, isRecommended: boolean) => (dispatch) => {
+  return axios.patch(`${config.host}/api/items/item/toggle-recommended/${itemId}`, { isRecommended })
+    .then(handleApiResponse)
+    .then(() => {
+      dispatch(toggleItemRecommendedField(itemId, isRecommended));
     })
     .catch(err => console.error('Err', err));
 };

@@ -1,40 +1,36 @@
-import { SET_UPLOAD_PROGRESS, UPLOAD_SUCCESS, UPLOAD_ERROR, RESET_UPLOAD_STATE } from 'actions/upload';
-import { CLEAR_STATE } from 'actions/initialData';
+import { Reducer } from 'redux';
+import { UploadActionTypes, UploadActions, IUploadProgressState, InitialDataActionTypes, InitialDataActions } from 'types';
 
-export interface IUploadProgress {
-  progress?: number;
-  isUploaded?: boolean;
-  hasError?: boolean;
-  isUploading?: boolean;
-}
+type ActionTypes = UploadActions | InitialDataActions;
 
-const getInitialState = () => ({
+const getInitialState = (): IUploadProgressState => ({
   progress: 0,
   isUploaded: false,
   hasError: false,
   isUploading: false
 });
 
-export const uploadProgress = (state: IUploadProgress = getInitialState(), action): IUploadProgress => {
+export const uploadProgress: Reducer<IUploadProgressState, ActionTypes> =
+  (state: IUploadProgressState = getInitialState(), action): IUploadProgressState => {
   switch (action.type) {
-    case RESET_UPLOAD_STATE:
-    case CLEAR_STATE:
+    case UploadActionTypes.RESET_UPLOAD_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case SET_UPLOAD_PROGRESS:
+    case UploadActionTypes.SET_UPLOAD_PROGRESS:
       return {
         progress: action.progress,
         isUploaded: false,
         hasError: false,
         isUploading: true
       };
-    case UPLOAD_SUCCESS:
+    case UploadActionTypes.UPLOAD_SUCCESS:
       return {
         progress: 0,
         isUploaded: true,
         hasError: false,
         isUploading: false
       };
-    case UPLOAD_ERROR:
+    case UploadActionTypes.UPLOAD_ERROR:
       return {
         progress: 0,
         isUploaded: false,

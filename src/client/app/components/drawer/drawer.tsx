@@ -21,21 +21,24 @@ const DrawerContent = ({ classes, onClose, children }) => {
   return (
     <div className={classes.drawerContentWrapper}>
       <div className={classes.drawerContent}>
-        <Hidden mdUp implementation="css">
           <div className={classes.drawerHeader}>
-            <Button
-              onClick={onClose}
-              className={classes.closeButton}
-              variant="text"
-              size="small"
-            >
-              <ChevronLeftIcon />
-              <Typography className={classes.closeButtonText} variant="body1">
-                Close
-              </Typography>
-            </Button>
+            <Typography variant="h6">
+              Menu
+            </Typography>
+            <Hidden mdUp implementation="css">
+              <Button
+                onClick={onClose}
+                className={classes.closeButton}
+                variant="text"
+                size="small"
+              >
+                <ChevronLeftIcon />
+                <Typography className={classes.closeButtonText} variant="body1">
+                  Close
+                </Typography>
+              </Button>
+            </Hidden>
           </div>
-        </Hidden>
         {children}
       </div>
       <div className={classes.bgImage} />

@@ -1,6 +1,5 @@
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const { ReactLoadablePlugin } = require("react-loadable/webpack");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -86,6 +85,12 @@ module.exports = {
               configFile: require.resolve("../../../tsconfig.json"),
             }
           }
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
         ]
       }
     ]

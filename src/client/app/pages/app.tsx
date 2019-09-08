@@ -7,7 +7,7 @@ import { PropsRoute } from 'components/propsRoute';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 
-import { IAppState } from 'reducers/root';
+import { IAppState } from 'types';
 import { isLoggedIn, getSessionExpiryTime } from 'selectors';
 
 import { ClientLayoutPage } from 'pages/client/layout';

@@ -17,18 +17,19 @@ import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
 
 import { Toast } from 'components/toast';
-import { VerticalMenu, IAdminMenuItem } from 'components/adminMenu';
+import { IMenuItem } from 'components/menu';
 import { Drawer } from 'components/drawer';
 import { UserMenu } from 'components/userMenu';
 import { NotFound } from 'components/notFound';
 import { NotAuthorized } from 'components/notAuthorized';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
-import { Loader } from 'components/loader';
+import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
+import { getLocale } from 'selectors';
 
 import { AdminItemsPage } from 'pages/admin/items';
 import { CreateEditItemPage } from 'pages/admin/createEditItem';
@@ -37,14 +38,9 @@ import { CreateEditCityPage } from 'pages/admin/createEditCity';
 import { AdminTypesPage } from 'pages/admin/types';
 import { AdminCitiesPage } from 'pages/admin/cities';
 
-import { hasInitialDataLoaded, shouldLoadInitialData, isInitialDataLoading } from 'selectors';
-
 import { styles } from './styles';
 
 interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
-  hasInitialDataLoaded: boolean;
-  shouldLoadInitialData: boolean;
-  isInitialDataLoading: boolean;
   locale: string;
   getInitialData: (params?: IGetInitialDataParams) => void;
   isLoading: () => boolean;
@@ -60,17 +56,10 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
     if (this.props.location !== prevProps.location) {
       this.handleDrawerClose();
     }
-
-    if (this.props.shouldLoadInitialData) {
-      this.props.getInitialData({ pathName: this.props.location.pathname });
-    }
   }
 
   componentDidMount() {
-    if (this.props.shouldLoadInitialData) {
-      removeInjectedStyles();
-      this.props.getInitialData({ pathName: this.props.location.pathname });
-    }
+    removeInjectedStyles();
   }
 
   handleDrawerClose = () => {
@@ -81,32 +70,37 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
     this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
   }
 
-  get menuItems(): IAdminMenuItem[] {
+  get menuItems(): IMenuItem[] {
     const { formatMessage } = this.props.intl;
     return [
       {
+        id: 1,
         icon: () => (<DashboardIcon />),
         link: adminRoutes.landing.getLink(),
         text: formatMessage({ id: 'admin.menu.dashboard' })
       },
       {
+        id: 3,
         icon: () => (<ListIcon />),
         link: adminRoutes.items.getLink(),
         text: formatMessage({ id: 'admin.menu.items' })
       },
       {
+        id: 4,
         icon: () => (<TypesIcon />),
         link: adminRoutes.types.getLink(),
         text: formatMessage({ id: 'admin.menu.types' }),
         allowedRoles: adminRoutes.types.allowedRoles
       },
       {
+        id: 5,
         icon: () => (<CitiesIcon />),
         link: adminRoutes.cities.getLink(),
         text: formatMessage({ id: 'admin.menu.cities' }),
         allowedRoles: adminRoutes.cities.allowedRoles
       },
       {
+        id: 6,
         icon: () => (<ArrowBackIcon />),
         link: clientRoutes.landing.getLink(this.props.locale),
         text: formatMessage({ id: 'admin.menu.go_to_website' })
@@ -122,11 +116,11 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
           onClose={this.handleDrawerClose}
           mobileDrawerOpen={this.state.mobileDrawerOpen}
         >
-          <VerticalMenu items={this.menuItems} />
+          <LeftMenu isVertical items={this.menuItems} />
         </Drawer>
         <div className={classes.content}>
           <AppBar className={classes.appBar}>
-            <Toolbar>
+            <Toolbar className={classes.toolbar}>
               <Hidden mdUp implementation="css">
                 <IconButton
                   color="inherit"
@@ -139,7 +133,7 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
               <Typography className={classes.appBarTitle} variant="h6" color="inherit" noWrap>
                 <FormattedMessage id="admin.menu.dashboard" />
               </Typography>
-              <UserMenu />
+              <UserMenu isInverted isLoggedIn />
               <LanguageSelector />
             </Toolbar>
           </AppBar>
@@ -195,17 +189,13 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
             </main>
         </div>
         <Toast />
-        {this.props.isInitialDataLoading && <Loader isLoading />}
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  hasInitialDataLoaded: hasInitialDataLoaded(state),
-  shouldLoadInitialData: shouldLoadInitialData(state),
-  isInitialDataLoading: isInitialDataLoading(state),
-  locale: state.locale
+  locale: getLocale(state)
 });
 
 const mapDispatchToProps = dispatch => ({

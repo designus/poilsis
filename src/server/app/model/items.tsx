@@ -3,7 +3,7 @@
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 import {
   IImage,
-  IItemFields,
+  IItem,
   LANGUAGES,
   DEFAULT_LANGUAGE,
   itemValidation
@@ -16,7 +16,7 @@ import {
   requiredMessage
 } from '../server-utils';
 
-interface IItemsSchema extends TGenericSchemaMap<IItemFields> {}
+interface IItemsSchema extends TGenericSchemaMap<IItem> {}
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -92,6 +92,7 @@ const ItemsSchemaMap: IItemsSchema = {
     required: [true, requiredMessage]
   },
   isEnabled: Boolean,
+  isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,
   images: {

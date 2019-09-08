@@ -5,7 +5,7 @@ import { isEqual } from 'lodash';
 
 import { Button } from 'components/button';
 import { IImage, itemValidation } from 'global-utils';
-import { IUploadProgress } from 'reducers';
+import { IUploadProgressState } from 'types';
 
 import { ImagePreview } from 'components/imagePreview';
 import { styles } from './styles';
@@ -14,7 +14,7 @@ const { images: { maxPhotos } } = itemValidation;
 
 export interface IUploadedImagesParams extends
   WithStyles<typeof styles>,
-  IUploadProgress,
+  IUploadProgressState,
   InjectedIntlProps  {
     images: IImage[];
     onSortImages: (images: IImage[]) => void;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
-import { IAppState, ILoadingState } from 'reducers';
+import { ILoadingState, IAppState } from 'types';
 import { Loader } from 'components/loader';
 
 import { styles } from './styles';

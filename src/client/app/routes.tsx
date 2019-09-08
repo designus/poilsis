@@ -1,11 +1,12 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
 import { RouteConfig } from 'react-router-config';
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 import { App } from 'pages';
 
 import { AdminLayoutPage } from 'pages/admin/layout';
 import { AdminItemsPage } from 'pages/admin/items';
+import { loadUserItemsData } from 'pages/admin/items/items';
 import { CreateEditItemPage } from 'pages/admin/createEditItem';
 import { CreateEditTypePage } from 'pages/admin/createEditType';
 import { CreateEditCityPage } from 'pages/admin/createEditCity';
@@ -21,6 +22,7 @@ import { PhotosPage } from 'pages/admin/createEditItem/photos';
 import { loadInitialData } from './pages/client/layout/layout';
 import { loadCityData } from './pages/client/city/city';
 import { loadItemData } from './pages/client/item/item';
+import { loadRecommendedItemsData } from './pages/client/home/recommendedItems/recommendedItems';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 
@@ -41,6 +43,7 @@ export const routes = [
           {
             path: adminRoutes.items.path,
             component: AdminItemsPage,
+            fetchData: loadUserItemsData,
             exact: true
           },
           {
@@ -82,7 +85,7 @@ export const routes = [
       {
         path: clientRoutes.landing.path,
         component: ClientLayoutPage,
-        fetchData: loadInitialData,
+        fetchData: [loadInitialData, loadRecommendedItemsData],
         exact: false,
         routes: [
           {

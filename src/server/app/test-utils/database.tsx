@@ -2,7 +2,7 @@ import { MongoClient, Db, Collection } from 'mongodb';
 import { join } from 'path';
 import { flatMap } from 'lodash';
 
-import { IImage, IItemFields, voidFn } from 'global-utils';
+import { IImage, IItem, voidFn } from 'global-utils';
 import { config } from '../../../../config';
 import {
   checkIfDirectoryExists,
@@ -104,7 +104,7 @@ class Database {
   }
 
   getImagePaths = (items) => {
-    return flatMap(items, (item: IItemFields) => item.images[0].path);
+    return flatMap(items, (item: IItem) => item.images[0].path);
   }
 
   addImages = (items) => {
@@ -112,7 +112,7 @@ class Database {
     const createDirectories = paths.map(path => this.createDirectory(path));
     return Promise.all(createDirectories)
       .then(() => {
-        const images = flatMap(items, (item: IItemFields) => item.images);
+        const images = flatMap(items, (item: IItem) => item.images);
         const createFiles = images.map(this.createFilePipeline);
         return Promise.all(createFiles);
       });

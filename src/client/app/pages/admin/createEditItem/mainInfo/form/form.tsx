@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { ICitiesMap, ITypesMap, IUsersMap } from 'reducers';
+import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
 import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
 
@@ -21,12 +21,13 @@ interface ICustomProps {
   typesMap: ITypesMap;
   usersMap: IUsersMap;
   userRole: string;
+  locale: string;
   formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
   selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
-  const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage } = props;
+  const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage, locale } = props;
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
@@ -42,6 +43,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
       <Field
         name="alias"
         type="text"
+        intl
         component={TextInput}
         label={formatMessage({ id: 'admin.common_fields.alias'})}
       />
@@ -57,7 +59,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={SelectBox}
         validate={[isRequired]}
         label={formatMessage({ id: 'admin.common_fields.city'})}
-        options={getDropdownOptions(props.citiesMap, 'name')}
+        options={getDropdownOptions(props.citiesMap, 'name', locale)}
       />
       {isAdmin(props.userRole) &&
         <Field
@@ -66,7 +68,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
           validate={[isRequired]}
           label={formatMessage({ id: 'admin.common_fields.user'})}
           data={props.usersMap}
-          options={getDropdownOptions(props.usersMap, 'name')}
+          options={getDropdownOptions(props.usersMap, 'name', locale)}
         />
       }
       <Field
@@ -74,7 +76,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={CheckboxGroup}
         validate={[minTypesCount, maxTypesCount]}
         label={formatMessage({ id: 'admin.common_fields.types'})}
-        options={getDropdownOptions(props.typesMap, 'name')}
+        options={getDropdownOptions(props.typesMap, 'name', locale)}
       />
       {isAdmin(props.userRole) &&
         <Field

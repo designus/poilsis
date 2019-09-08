@@ -4,7 +4,7 @@ import reduxFormActions from 'redux-form/es/actions';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
-import { IAppState, IUploadProgress } from 'reducers';
+import { IUploadProgressState, IAppState } from 'types';
 
 import { FileUpload } from 'components/fileUpload';
 import { ImagePreview } from 'components/imagePreview';
@@ -13,7 +13,7 @@ import { styles } from './styles';
 
 const { submit } = reduxFormActions;
 
-export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgress {
+export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgressState {
   formName: string;
   uploadImages: () => void;
   clearDroppedImages: () => void;

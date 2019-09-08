@@ -6,7 +6,7 @@ import * as lt from 'react-intl/locale-data/lt';
 import * as ru from 'react-intl/locale-data/ru';
 import { getTranslationMessages } from 'global-utils/methods';
 
-import { IAppState } from 'reducers';
+import { IAppState } from 'types';
 
 addLocaleData([...en, ...lt, ...ru]);
 

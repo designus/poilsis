@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-import { ICityFields, TCityFields, IItemFields } from 'global-utils';
-import { IAppState } from 'reducers';
+import { ICity, IItem } from 'global-utils';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveItems } from 'actions/items';
+import { receiveNewItems } from 'actions/items';
 import {
   CITY_CREATE_SUCCESS,
   CITY_CREATE_ERROR,
@@ -12,59 +11,50 @@ import {
   CITY_DELETE_SUCCESS,
   CITY_DELETE_ERROR
 } from 'data-strings';
-import { getLocale, getCities } from 'selectors';
+import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { IAppState, CitiesActionTypes, ISelectCity, IClearSelectedCity, IReceiveCity, IRemoveCity } from 'types';
+
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
 import { config } from '../../../../config';
-import { receiveAdminCity } from './admin';
 
-export const SELECT_CITY = 'SELECT_CITY';
-export const CLEAR_SELECTED_CITY = 'CLEAR_SELECTED_CITY';
-export const RECEIVE_CLIENT_CITY = 'RECEIVE_CLIENT_CITY';
-export const REMOVE_CITY = 'REMOVE_CITY';
-
-export const selectCity = (cityId: string) => ({
-  type: SELECT_CITY,
+export const selectCity = (cityId: string): ISelectCity => ({
+  type: CitiesActionTypes.SELECT_CITY,
   cityId
 });
 
-export const clearSelectedCity = () => ({
-  type: CLEAR_SELECTED_CITY
+export const clearSelectedCity = (): IClearSelectedCity => ({
+  type: CitiesActionTypes.CLEAR_SELECTED_CITY
 });
 
-export const receiveClientCity = (newCity: ICityFields) => ({
-  type: RECEIVE_CLIENT_CITY,
-  newCity
+export const receiveCity = (city: ICity): IReceiveCity => ({
+  type: CitiesActionTypes.RECEIVE_CITY,
+  city
 });
 
-export const removeCity = (cityId: string) => ({
-  type: REMOVE_CITY,
+export const removeCity = (cityId: string): IRemoveCity => ({
+  type: CitiesActionTypes.REMOVE_CITY,
   cityId
 });
 
-export const loadCityItems = (cityAlias: string, locale: string) => {
+export const loadCityItems = (cityAlias: string) => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
-    const cityId = getCities(state).find(city => city.alias === cityAlias).id;
-    const items = state.items;
-    const language = locale || getLocale(state);
+    const city = getCityByAlias(state, cityAlias);
+
+    if (!city) {
+      return null;
+    }
+
+    const cityId = city.id;
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.get(
-      `${config.host}/api/items/city/${cityId}`,
-      setAcceptLanguageHeader(language)
-    )
-      .then(response => response.data)
-      .then((data: IItemFields[]) => {
-
-        const filteredData = data.filter(item => !items.dataMap[item.id]);
-        const { dataMap, aliases } = getNormalizedData(filteredData);
-        dispatch(selectCity(cityId));
-        dispatch(receiveItems({ dataMap, aliases, cityId }));
+    return axios.get(`${config.host}/api/items/city/${cityId}`)
+      .then(handleApiResponse)
+      .then((data: IItem[]) => {
+        dispatch(receiveNewItems(data, { cityId, dataType: 'cities' }));
         dispatch(endLoading(CONTENT_LOADER_ID));
-
       })
       .catch(err => {
         console.error(err);
@@ -73,33 +63,28 @@ export const loadCityItems = (cityAlias: string, locale: string) => {
   };
 };
 
-export const createCity = (adminCity: TCityFields) => (dispatch, getState) => {
+export const createCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(`${config.host}/api/cities`, adminCity, setAcceptLanguageHeader(getLocale(getState())))
+  return axios.post(`${config.host}/api/cities`, city)
     .then(handleApiResponse)
-    .then((clientCity: ICityFields) => {
-      dispatch(receiveClientCity(clientCity));
+    .then((response: ICity) => {
+      dispatch(receiveCity(response));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientCity);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (adminCity: TCityFields) => (dispatch, getState) => {
+export const updateCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(
-    `${config.host}/api/cities/city/${adminCity.id}`,
-     adminCity,
-     setAcceptLanguageHeader(getLocale(getState))
-  )
+  return axios.put(`${config.host}/api/cities/city/${city.id}`, city)
     .then(handleApiResponse)
-    .then((clientCity: ICityFields) => {
-      dispatch(receiveClientCity(clientCity));
-      dispatch(receiveAdminCity(clientCity.id, adminCity));
+    .then((response: ICity) => {
+      dispatch(receiveCity(response));
       dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(clientCity);
+      return Promise.resolve(response);
     })
     .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 

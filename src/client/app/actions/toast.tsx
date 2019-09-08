@@ -1,12 +1,12 @@
-import { ToastType } from '../reducers';
-export const SHOW_TOAST = 'SHOW_TOAST';
-export const HIDE_TOAST = 'HIDE_TOAST';
+import { ToastType, ToastActionTypes, IShowToast, IHideToast } from 'types';
 
-export const showToast = (toastType: ToastType, message: string, error?: string) => ({
-  type: SHOW_TOAST,
+export const showToast = (toastType: ToastType, message: string, error?: string): IShowToast => ({
+  type: ToastActionTypes.SHOW_TOAST,
   toastType,
   message,
   error
 });
 
-export const hideToast = () => ({type: HIDE_TOAST});
+export const hideToast = (): IHideToast => ({
+  type: ToastActionTypes.HIDE_TOAST
+});

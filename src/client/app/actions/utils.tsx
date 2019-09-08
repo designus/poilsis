@@ -1,6 +1,6 @@
 import { AxiosResponse as IResponse } from 'axios';
 
-import { Toast } from '../reducers';
+import { Toast } from 'types';
 import { showToast } from './toast';
 import { endLoading } from './loader';
 

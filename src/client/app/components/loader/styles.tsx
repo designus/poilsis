@@ -9,8 +9,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     height: '100%',
     position: 'absolute',
-    zIndex: 100,
-    background: 'rgb(250, 250, 250)'
+    zIndex: 100
   },
   round: {
     padding: '7px',

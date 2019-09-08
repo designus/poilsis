@@ -9,7 +9,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IToastState, IAppState, Toast as ToastEnum } from 'reducers';
+import { IAppState, IToastState, Toast as ToastEnum } from 'types';
 import { hideToast } from 'actions/toast';
 import { styles } from './styles';
 

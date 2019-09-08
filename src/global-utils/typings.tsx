@@ -13,9 +13,13 @@ export enum ImageSize {
   Large = 'L'
 }
 
+export type Languages = 'en' | 'lt' | 'ru';
+
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
-export type TranslatableField = Record<'en' | 'lt' | 'ru', string>;
+export type Value<T, K extends keyof T> = T[K];
+
+export type TranslatableField = Record<Languages, string>;
 
 export interface IResponseError {
   errors: {
@@ -25,49 +29,45 @@ export interface IResponseError {
   };
 }
 
-export interface IItemDescFields<T = string> {
+export interface IItemDescFields<T = TranslatableField> {
   description: T;
   metaTitle: T;
   metaKeywords: T;
   metaDescription: T;
 }
 
-export interface IItemFields<T = string> extends IItemDescFields<T> {
+export interface IItem<T = TranslatableField> extends IItemDescFields<T> {
   id: string;
-  createdAt?: string;
-  updatedAt?: string;
+  name: T;
+  alias: T;
   address: string;
   cityId: string;
   types: string[];
   images: IImage[];
   userId: string;
+  isRecommended: boolean;
   isEnabled: boolean;
-  name: T;
-  alias: T;
+  createdAt?: string;
+  updatedAt?: string;
+  isFullyLoaded?: boolean;
+  mainImage?: string;
 }
 
-export type TItemFields = IItemFields<TranslatableField>;
-
-export type TItemDescFields = IItemDescFields<TranslatableField>;
-
-export interface ITypeFields<T = string> {
+export interface IType<T = TranslatableField> {
   id: string;
   name: T;
   description: T;
   alias: T;
 }
 
-export type TTypeFields = ITypeFields<TranslatableField>;
-
-export interface ICityFields<T = string> {
+export interface ICity<T = TranslatableField> {
   id: string;
   types: string[];
   name: T;
   description: T;
-  alias: T;
+  alias: string;
+  hasItems?: boolean;
 }
-
-export type TCityFields = ICityFields<TranslatableField>;
 
 export enum UserRoles {
   admin = 'admin',

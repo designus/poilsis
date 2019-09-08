@@ -1,46 +1,37 @@
-import { ICityFields } from 'global-utils';
-import { IGenericState, IGenericDataMap } from 'client-utils/types';
+import { Reducer } from 'redux';
 import { removeItemById } from 'client-utils/methods';
 import {
-  SELECT_CITY,
-  RECEIVE_CLIENT_CITY,
-  CLEAR_SELECTED_CITY,
-  REMOVE_CITY
-} from 'actions/cities';
+  ItemsActionTypes,
+  ItemsActions,
+  ICityState,
+  CitiesActionTypes,
+  CitiesActions,
+  InitialDataActionTypes,
+  InitialDataActions
+} from 'types';
 
-import { RECEIVE_INITIAL_DATA, CLEAR_STATE } from 'actions/initialData';
-import { RECEIVE_ITEMS } from 'actions/items';
+type ActionTypes = CitiesActions | ItemsActions | InitialDataActions;
 
-export interface ICity extends ICityFields {
-  hasItems: boolean;
-}
-
-export type ICitiesMap = IGenericDataMap<ICity>;
-
-export interface ICityState extends IGenericState<ICity> {
-  selectedId?: string;
-}
-
-const getInitialState = () => ({
+const getInitialState = (): ICityState => ({
   dataMap: {},
   aliases: []
 });
 
-export const cities = (state: ICityState = getInitialState(), action): ICityState => {
+export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
-    case CLEAR_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case SELECT_CITY:
+    case CitiesActionTypes.SELECT_CITY:
       return {
         ...state,
         selectedId: action.cityId
       };
-    case CLEAR_SELECTED_CITY:
+    case CitiesActionTypes.CLEAR_SELECTED_CITY:
       return {
         ...state,
         selectedId: null
       };
-    case RECEIVE_ITEMS:
+    case ItemsActionTypes.RECEIVE_ITEMS:
       return action.cityId ?
         {
           ...state,
@@ -53,28 +44,31 @@ export const cities = (state: ICityState = getInitialState(), action): ICityStat
           }
         }
       : state;
-    case RECEIVE_CLIENT_CITY:
+    case CitiesActionTypes.RECEIVE_CITY:
       return {
         ...state,
         aliases: [
           ...state.aliases,
-          { id: action.newCity.id, alias: action.newCity.alias }
+          {
+            id: action.city.id,
+            alias: action.city.alias
+          }
         ],
         dataMap: {
           ...state.dataMap,
-          [action.newCity.id]: {
-            ...(state.dataMap[action.newCity.id] || {}),
-            ...action.newCity
+          [action.city.id]: {
+            ...(state.dataMap[action.city.id] || {}),
+            ...action.city
           }
         }
       };
-    case REMOVE_CITY:
+    case CitiesActionTypes.REMOVE_CITY:
       return {
         ...state,
         dataMap: removeItemById(action.cityId, state.dataMap),
         aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)]
       };
-    case RECEIVE_INITIAL_DATA:
+    case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {
         ...state,
         ...action.data.cities

@@ -1,68 +1,57 @@
-import { IGenericState, IGenericDataMap } from 'client-utils/types';
+import { Reducer } from 'redux';
 import { removeItemById } from 'client-utils/methods';
-import { IItemFields } from 'global-utils';
-import {
-  SELECT_ITEM,
-  RECEIVE_ITEMS,
-  RECEIVE_ITEM,
-  REMOVE_ITEM,
-  RECEIVE_IMAGES,
-  TOGGLE_ITEM_VISIBILITY,
-  CLEAR_SELECTED_ITEM,
-  RECEIVE_ITEM_DESCRIPTION
-} from 'actions/items';
-import { CLEAR_STATE } from 'actions/initialData';
+import { ItemsActionTypes, ItemsActions, IItemsState, InitialDataActionTypes, InitialDataActions } from 'types';
 
-export interface IItem extends IItemFields {
-  isFullyLoaded?: boolean;
-  mainImage?: string;
-}
-
-export type IItemsMap = IGenericDataMap<IItem>;
-
-export interface IItemsState extends IGenericState<IItem> {
-  selectedId?: string;
-  hasAllItems?: boolean;
-}
+type ActionTypes = ItemsActions | InitialDataActions;
 
 const getInitialState = (): IItemsState => ({
   dataMap: {},
-  aliases: [],
-  hasAllItems: false
+  aliases: []
 });
 
-export const items = (state: IItemsState = getInitialState(), action): IItemsState => {
+export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState(), action): IItemsState => {
   switch (action.type) {
-    case CLEAR_STATE:
+    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case SELECT_ITEM:
-      return {...state, selectedId: action.itemId};
-    case RECEIVE_ITEMS:
+    case ItemsActionTypes.SELECT_ITEM:
       return {
         ...state,
-        dataMap: {...state.dataMap, ...action.dataMap},
-        aliases: [...state.aliases, ...action.aliases],
-        hasAllItems: action.hasAllItems
+        selectedId: action.itemId
       };
-    case CLEAR_SELECTED_ITEM:
+    case ItemsActionTypes.RECEIVE_ITEMS:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          ...action.dataMap
+        },
+        aliases: [
+          ...state.aliases,
+          ...action.aliases
+        ]
+      };
+    case ItemsActionTypes.CLEAR_SELECTED_ITEM:
       return {
         ...state,
         selectedId: null
       };
-    case RECEIVE_ITEM:
+    case ItemsActionTypes.RECEIVE_ITEM:
       return {
         ...state,
-        selectedId: action.itemId,
+        selectedId: action.item.id,
+        aliases: state.aliases
+          .filter(alias => alias.id !== action.item.id)
+          .concat({ id: action.item.id, alias: action.item.alias }),
         dataMap: {
           ...state.dataMap,
-          [action.itemId]: {
-            ...(state.dataMap[action.itemId] || {}),
+          [action.item.id]: {
+            ...(state.dataMap[action.item.id] || {}),
             ...action.item,
             isFullyLoaded: true
           }
         }
       };
-    case RECEIVE_ITEM_DESCRIPTION:
+    case ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION:
       return {
         ...state,
         dataMap: {
@@ -73,7 +62,7 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           }
         }
       };
-    case TOGGLE_ITEM_VISIBILITY:
+    case ItemsActionTypes.TOGGLE_ITEM_ENABLED:
       return {
         ...state,
         dataMap: {
@@ -84,18 +73,29 @@ export const items = (state: IItemsState = getInitialState(), action): IItemsSta
           }
         }
       };
-    case REMOVE_ITEM:
-      return {
-        ...state,
-        dataMap: removeItemById(action.item.id, state.dataMap)
-      };
-    case RECEIVE_IMAGES:
+    case ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED:
       return {
         ...state,
         dataMap: {
           ...state.dataMap,
-          [action.id]: {
-            ...state.dataMap[action.id],
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
+            isRecommended: action.isRecommended
+          }
+        }
+      };
+    case ItemsActionTypes.REMOVE_ITEM:
+      return {
+        ...state,
+        dataMap: removeItemById(action.itemId, state.dataMap)
+      };
+    case ItemsActionTypes.RECEIVE_IMAGES:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
             images: action.images
           }
         }

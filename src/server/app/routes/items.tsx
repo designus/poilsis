@@ -6,8 +6,10 @@ import {
   getViewItem,
   getAllItems,
   getCityItems,
+  getRecommendedItems,
   getUserItems,
-  toggleItem,
+  toggleItemIsEnabledField,
+  toggleItemIsRecommendedField,
   addNewItem,
   deleteItem,
   updateItemDescription,
@@ -26,6 +28,9 @@ const router = Router();
 router.route('/')
   .get(getAllItems)
   .post(auth.authenticate(), auth.authorize(['admin', 'user']), addNewItem);
+
+router.route('/recommended')
+  .get(getRecommendedItems);
 
 router.route('/item/:itemId')
   .get(getEditItem)
@@ -52,7 +57,10 @@ router.route('/city/:cityId')
 router.route('/user/:userId')
   .get(getUserItems);
 
-router.route('/item/toggle/:itemId')
-  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItem);
+router.route('/item/toggle-enabled/:itemId')
+  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItemIsEnabledField);
+
+router.route('/item/toggle-recommended/:itemId')
+  .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemIsRecommendedField);
 
 export default router;

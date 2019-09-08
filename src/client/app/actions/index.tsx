@@ -9,3 +9,4 @@ export * from './toast';
 export * from './upload';
 export * from './currentUser';
 export * from './locale';
+export * from './home';

@@ -1,17 +1,14 @@
 import axios from 'axios';
-import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveItems } from 'actions/items';
-import { IAppState, ICurrentUser } from 'reducers';
-import { isAdmin } from 'global-utils';
-import { getLocale } from 'selectors';
+import { receiveNewItems } from 'actions/items';
+import { IAppState, ICurrentUser, CurrentUserActionTypes, IReceiveUserDetails } from 'types';
+import { isAdmin, IItem } from 'global-utils';
+import { handleApiResponse } from './utils';
 import { config } from '../../../../config';
 
-export const RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS';
-
-export const receiveUserDetails = (userDetails: ICurrentUser) => ({
-  type: RECEIVE_USER_DETAILS,
+export const receiveUserDetails = (userDetails: ICurrentUser): IReceiveUserDetails => ({
+  type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
   userDetails
 });
 
@@ -30,13 +27,10 @@ export const loadUserItems = () => (dispatch, getState) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(endpoint, setAcceptLanguageHeader(getLocale(state)))
-    .then(response => response.data)
-    .then(data => {
-      const { dataMap, aliases } = getNormalizedData(data);
-      const hasAllItems = isAdministrator;
-
-      dispatch(receiveItems({ dataMap, aliases, hasAllItems, userId: user.id }));
+  return axios.get(endpoint)
+    .then(handleApiResponse)
+    .then((items: IItem[]) => {
+      dispatch(receiveNewItems(items, { userId: user.id, dataType: 'currentUser' }));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {
