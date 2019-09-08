@@ -1,4 +1,7 @@
 {
+  "client.header.top_menu.home": "Home",
+  "client.header.top_menu.items": "Deals",
+  "client.header.top_menu.admin": "Admin",
   "client.home.recommended": "Recommended",
   "common.submit": "Send",
   "common.save": "Save",

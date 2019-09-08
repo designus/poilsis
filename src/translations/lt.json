@@ -1,4 +1,7 @@
 {
+  "client.header.top_menu.home": "Pradinis",
+  "client.header.top_menu.items": "Pasiūlymai",
+  "client.header.top_menu.admin": "Admin",
   "client.home.recommended": "Rekomenduojame",
   "common.submit": "Siųsti",
   "common.save": "Išsaugoti",

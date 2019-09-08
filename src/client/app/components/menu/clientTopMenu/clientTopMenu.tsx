@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { injectIntl, InjectedIntlProps, defineMessages } from 'react-intl';
 
 import { getLocale, getCities, getSelectedCityId } from 'selectors';
 import { IAppState, ICityLocalized } from 'types';
@@ -15,12 +16,27 @@ import { styles } from './styles';
 
 const { useState, useEffect } = React;
 
+const messages = defineMessages({
+  home: {
+    id: 'client.header.top_menu.home',
+    defaultMessage: 'Home'
+  },
+  items: {
+    id: 'client.header.top_menu.items',
+    defaultMessage: 'Items'
+  },
+  admin: {
+    id: 'client.header.top_menu.admin',
+    defaultMessage: 'Admin'
+  }
+});
+
 enum ActiveItem {
   Home,
   Offers
 }
 
-interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
+interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles>, InjectedIntlProps {
   onRouteChange?: () => void;
   login?: (credentials: any) => void;
   isVertical?: boolean;
@@ -44,7 +60,7 @@ const getActiveItem = (pathName: string, selectedCityId: string) => {
 };
 
 function ClientTopMenu(props: ITopMenu) {
-  const { classes, cities, isLoggedIn, locale, selectedCityId, isVertical, onRouteChange } = props;
+  const { classes, cities, isLoggedIn, locale, selectedCityId, isVertical, onRouteChange, intl } = props;
   const [activeItem, setActiveItem] = useState(getActiveItem(props.location.pathname, selectedCityId));
 
   const StyledTopMenu = isVertical ? VerticalMenu : HorizontalMenu;
@@ -54,12 +70,12 @@ function ClientTopMenu(props: ITopMenu) {
       {
         id: 1,
         link: clientRoutes.landing.getLink(locale),
-        text: 'Pradinis',
+        text: intl.formatMessage(messages.home),
         isActive: activeItem === ActiveItem.Home
       },
       {
         id: 2,
-        text: 'Poilsio pasiulymai',
+        text: intl.formatMessage(messages.items),
         isActive: activeItem === ActiveItem.Offers,
         items: cities.map((city: ICityLocalized) => ({
           id: city.id,
@@ -75,7 +91,7 @@ function ClientTopMenu(props: ITopMenu) {
     if (isLoggedIn) {
       menuItems.push({
         id: 3,
-        text: 'Admin',
+        text: intl.formatMessage(messages.admin),
         link: adminRoutes.items.getLink()
       });
     }
@@ -103,6 +119,8 @@ const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
 
 export default withStyles(styles)(
   withRouter(
-    connect<IStateProps, {}, IOwnProps>(mapStateToProps)(ClientTopMenu)
+    injectIntl(
+      connect<IStateProps, {}, IOwnProps>(mapStateToProps)(ClientTopMenu)
+    )
   )
 );

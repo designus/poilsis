@@ -1,4 +1,7 @@
 {
+  "client.header.top_menu.home": "[RU] Home",
+  "client.header.top_menu.items": "[RU] Deals",
+  "client.header.top_menu.admin": "[RU] Admin",
   "client.home.recommended": "[RU] Recommended",
   "common.submit": "[RU] Send",
   "common.save": "[RU] Save",

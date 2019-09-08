@@ -106,7 +106,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
                 </IconButton>
               </Hidden>
               {this.renderLogo()}
-              <Hidden smDown>
+              <Hidden smDown implementation="css">
                 <TopMenu isLoggedIn={isLoggedIn} />
               </Hidden>
               <LoginButton />
