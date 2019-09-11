@@ -1,3 +1,5 @@
+import { IItem, IType, ICity, IUser } from 'global-utils';
+
 import { ICityState } from './cities';
 import { IAuthState } from './auth';
 import { ICurrentUserState } from './currentUser';
@@ -24,3 +26,5 @@ export interface IAppState {
   toast: IToastState;
   uploadProgress: IUploadProgressState;
 }
+
+export type AppTypes = IItem | IType | ICity | IUser;

@@ -1,12 +1,12 @@
 import { Reducer } from 'redux';
-import { removeItemById } from 'client-utils/methods';
+import { removeByKeys, getAliasState, getAliasKeysById } from 'client-utils/methods';
 import { ItemsActionTypes, ItemsActions, IItemsState, InitialDataActionTypes, InitialDataActions } from 'types';
 
 type ActionTypes = ItemsActions | InitialDataActions;
 
 const getInitialState = (): IItemsState => ({
   dataMap: {},
-  aliases: []
+  aliases: {}
 });
 
 export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState(), action): IItemsState => {
@@ -25,10 +25,10 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
           ...state.dataMap,
           ...action.dataMap
         },
-        aliases: [
+        aliases: {
           ...state.aliases,
           ...action.aliases
-        ]
+        }
       };
     case ItemsActionTypes.CLEAR_SELECTED_ITEM:
       return {
@@ -39,9 +39,10 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
       return {
         ...state,
         selectedId: action.item.id,
-        aliases: state.aliases
-          .filter(alias => alias.id !== action.item.id)
-          .concat({ id: action.item.id, alias: action.item.alias }),
+        aliases: {
+          ...state.aliases,
+          ...getAliasState(action.item.alias, action.item.id)
+        },
         dataMap: {
           ...state.dataMap,
           [action.item.id]: {
@@ -87,7 +88,8 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
     case ItemsActionTypes.REMOVE_ITEM:
       return {
         ...state,
-        dataMap: removeItemById(action.itemId, state.dataMap)
+        dataMap: removeByKeys([action.itemId], state.dataMap),
+        aliases: removeByKeys(getAliasKeysById(state, action.itemId), state.aliases)
       };
     case ItemsActionTypes.RECEIVE_IMAGES:
       return {

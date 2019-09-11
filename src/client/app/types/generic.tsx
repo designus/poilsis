@@ -1,4 +1,4 @@
-export interface IAlias {
+export interface IAliasMap {
   [key: string]: string;
 }
 
@@ -7,7 +7,7 @@ export interface IGenericDataMap<T> {
 }
 
 export interface IGenericState<T> {
-  aliases: IAlias;
+  aliases: IAliasMap;
   dataMap: IGenericDataMap<T>;
 }
 

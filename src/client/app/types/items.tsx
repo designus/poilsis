@@ -1,5 +1,5 @@
 import { IItem, IImage, IItemDescFields } from 'global-utils/typings';
-import { IGenericState, IAlias, IGenericDataMap } from './generic';
+import { IGenericState, IAliasMap, IGenericDataMap } from './generic';
 
 export type IItemsMap = IGenericDataMap<IItem>;
 
@@ -31,7 +31,7 @@ export enum ItemsActionTypes {
 export interface IReceiveItems extends IUniqueItemProps {
   type: ItemsActionTypes.RECEIVE_ITEMS;
   dataMap: IItemsMap;
-  aliases: IAlias[];
+  aliases: IAliasMap;
 }
 
 export interface ISelectItem {

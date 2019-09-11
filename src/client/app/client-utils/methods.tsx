@@ -2,21 +2,35 @@ import * as React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
-import { TranslatableField, IItem, IType, ICity, IUser, hasLocalizedFields } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption } from 'types/generic';
+import { TranslatableField, hasLocalizedFields } from 'global-utils';
+import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, AppTypes } from 'types';
 
-export function getNormalizedData<T extends IItem | IType | ICity | IUser>(data: T[]): IGenericState<T> {
+export function getNormalizedData<T extends AppTypes>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
     acc.dataMap[item.id] = item;
-    if (hasLocalizedFields(item.alias)) {
-      Object.values(item.alias).forEach((alias: string) => {
-        acc.aliases[alias] = item.id;
-      });
-    } else {
-      acc.aliases[(item as ICity).alias] = item.id;
-    }
+    acc.aliases = { ...acc.aliases, ...getAliasState(item.alias, item.id) };
     return acc;
   }, { dataMap: {}, aliases: {} });
+}
+
+export const getAliasState = (alias: string | TranslatableField, id: string): IAliasMap => {
+  const aliases = {};
+  if (hasLocalizedFields(alias)) {
+    Object.values(alias).forEach((alias: string) => {
+      aliases[alias] = id;
+    });
+  }
+
+  if (typeof alias === 'string') {
+    aliases[alias] = id;
+  }
+
+  return aliases;
+};
+
+export function getAliasKeysById<T extends AppTypes>(state: IGenericState<T>, id: string): string[] {
+  const { alias } = state.dataMap[id];
+  return hasLocalizedFields(alias) ? Object.values(alias) : [alias as string];
 }
 
 export function getBackendErrors(errors: Record<string, any>) {
@@ -66,10 +80,14 @@ export const getFormDataFromFiles = (files: File[]) => {
 
 export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
 
-export const removeItemById = (id: string, dataMap: Record<string, any>) => {
-  const { [id]: removedItem, ...remainingItems } = dataMap;
-  return remainingItems;
-};
+export function removeByKeys<T>(keys: string[], dataMap: IGenericDataMap<T>): IGenericDataMap<T> {
+  return Object.keys(dataMap).reduce((acc, key) => {
+    if (!keys.includes(key)) {
+      acc[key] = dataMap[key];
+    }
+    return acc;
+  }, {});
+}
 
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
 

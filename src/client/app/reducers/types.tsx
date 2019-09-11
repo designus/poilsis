@@ -1,11 +1,12 @@
 import { Reducer } from 'redux';
 import { ITypesState, TypesActionTypes, TypesActions, InitialDataActionTypes, InitialDataActions } from 'types';
+import { getAliasState, removeByKeys, getAliasKeysById } from 'client-utils/methods';
 
 type ActionTypes = TypesActions | InitialDataActions;
 
 const getInitialState = (): ITypesState => ({
   dataMap: {},
-  aliases: []
+  aliases: {}
 });
 
 export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = getInitialState(), action): ITypesState => {
@@ -20,13 +21,10 @@ export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = ge
     case TypesActionTypes.RECEIVE_TYPE:
       return {
         ...state,
-        aliases: [
+        aliases: {
           ...state.aliases,
-          {
-            id: action.newType.id,
-            alias: action.newType.alias
-          }
-        ],
+          ...getAliasState(action.newType.alias, action.newType.id)
+        },
         dataMap: {
           ...state.dataMap,
           [action.newType.id]: {
@@ -36,11 +34,10 @@ export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = ge
         }
       };
     case TypesActionTypes.REMOVE_TYPE:
-      const { [action.typeId]: removedType, ...dataMap } = state.dataMap;
       return {
         ...state,
-        dataMap,
-        aliases: [...state.aliases.filter(alias => alias.id !== action.typeId)]
+        dataMap: removeByKeys([action.typeId], state.dataMap),
+        aliases: removeByKeys(getAliasKeysById(state, action.typeId), state.aliases)
       };
     case TypesActionTypes.SELECT_TYPE:
       return {...state, selectedId: action.typeId};
