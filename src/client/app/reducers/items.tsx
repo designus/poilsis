@@ -28,7 +28,6 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
     case ItemsActionTypes.RECEIVE_ITEM:
       return {
         ...state,
-        selectedId: action.item.id,
         aliases: {
           ...state.aliases,
           ...getAliasState(action.item.alias, action.item.id)

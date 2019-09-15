@@ -3,24 +3,11 @@ import { IGenericDataMap, IGenericState } from './generic';
 
 export type ICitiesMap = IGenericDataMap<ICity>;
 export interface ICityLocalized extends ICity<string> {}
-export interface ICityState extends IGenericState<ICity> {
-  selectedId?: string;
-}
+export interface ICityState extends IGenericState<ICity> {}
 
 export enum CitiesActionTypes {
-  SELECT_CITY = 'SELECT_CITY',
-  CLEAR_SELECTED_CITY = 'CLEAR_SELECTED_CITY',
   RECEIVE_CITY = 'RECEIVE_CITY',
   REMOVE_CITY = 'REMOVE_CITY'
-}
-
-export interface ISelectCity {
-  type: CitiesActionTypes.SELECT_CITY;
-  cityId: string;
-}
-
-export interface IClearSelectedCity {
-  type: CitiesActionTypes.CLEAR_SELECTED_CITY;
 }
 
 export interface IReceiveCity {
@@ -34,7 +21,5 @@ export interface IRemoveCity {
 }
 
 export type CitiesActions =
-  | ISelectCity
-  | IClearSelectedCity
   | IReceiveCity
   | IRemoveCity;

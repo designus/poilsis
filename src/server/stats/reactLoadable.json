@@ -1463,10 +1463,10 @@
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
-  "./elementTypeAcceptingRef": [
+  "./exactProp": [
     {
-      "id": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
-      "name": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
+      "id": "../../node_modules/@material-ui/utils/esm/exactProp.js",
+      "name": "../../node_modules/@material-ui/utils/esm/exactProp.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3281,7 +3281,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./isFunction": [
+  "lodash/isFunction": [
     {
       "id": "../../node_modules/lodash/isFunction.js",
       "name": "../../node_modules/lodash/isFunction.js",
@@ -3907,18 +3907,18 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
+  "./elementTypeAcceptingRef": [
     {
-      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
-      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "id": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
+      "name": "../../node_modules/@material-ui/utils/esm/elementTypeAcceptingRef.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./exactProp": [
+  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
     {
-      "id": "../../node_modules/@material-ui/utils/esm/exactProp.js",
-      "name": "../../node_modules/@material-ui/utils/esm/exactProp.js",
+      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4523,6 +4523,22 @@
     {
       "id": "../../node_modules/reselect/es/index.js",
       "name": "../../node_modules/reselect/es/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./common": [
+    {
+      "id": "./app/selectors/common.tsx",
+      "name": "./app/selectors/common.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "components/menu/clientTopMenu/types": [
+    {
+      "id": "./app/components/menu/clientTopMenu/types.tsx",
+      "name": "./app/components/menu/clientTopMenu/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -6993,7 +7009,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../List/ListContext": [
+  "./ListContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
       "name": "../../node_modules/@material-ui/core/esm/List/ListContext.js",

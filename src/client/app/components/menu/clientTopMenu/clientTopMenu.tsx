@@ -1,20 +1,23 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { injectIntl, InjectedIntlProps, defineMessages } from 'react-intl';
+import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { injectIntl, defineMessages } from 'react-intl';
 
-import { getLocale, getCities, getSelectedCityId } from 'selectors';
-import { IAppState, ICityLocalized } from 'types';
+import { getLocale, getCitiesList, getActiveTopMenuItem } from 'selectors';
+import { IAppState } from 'types';
 import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
+import { getLocalizedText } from 'client-utils/methods';
 import { callFn } from 'global-utils';
+import { ICity } from 'global-utils/typings';
 
 import { HorizontalMenu } from './horizontalMenu';
 import { VerticalMenu } from './verticalMenu';
+import { ITopMenuProps, ActiveItem, IOwnProps, IStateProps } from './types';
 import { styles } from './styles';
 
-const { useState, useEffect } = React;
+const { useEffect } = React;
 
 const messages = defineMessages({
   home: {
@@ -31,37 +34,8 @@ const messages = defineMessages({
   }
 });
 
-enum ActiveItem {
-  Home,
-  Offers
-}
-
-interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles>, InjectedIntlProps {
-  onRouteChange?: () => void;
-  login?: (credentials: any) => void;
-  isVertical?: boolean;
-  isLoggedIn?: boolean;
-}
-
-interface IStateProps {
-  locale?: string;
-  cities?: ICityLocalized[];
-  selectedCityId?: string;
-}
-
-type ITopMenu = IStateProps & IOwnProps;
-
-const getActiveItem = (pathName: string, selectedCityId: string) => {
-  if (selectedCityId) {
-    return ActiveItem.Offers;
-  }
-
-  return ActiveItem.Home;
-};
-
-function ClientTopMenu(props: ITopMenu) {
-  const { classes, cities, isLoggedIn, locale, selectedCityId, isVertical, onRouteChange, intl } = props;
-  const [activeItem, setActiveItem] = useState(getActiveItem(props.location.pathname, selectedCityId));
+function ClientTopMenu(props: ITopMenuProps) {
+  const { classes, activeItem, cities, isLoggedIn, locale, isVertical, onRouteChange, intl } = props;
 
   const StyledTopMenu = isVertical ? VerticalMenu : HorizontalMenu;
 
@@ -77,13 +51,10 @@ function ClientTopMenu(props: ITopMenu) {
         id: 2,
         text: intl.formatMessage(messages.items),
         isActive: activeItem === ActiveItem.Offers,
-        items: cities.map((city: ICityLocalized) => ({
+        items: cities.map((city: ICity) => ({
           id: city.id,
-          text: city.name,
-          link: clientRoutes.items.getLink(locale, city.alias),
-          state: {
-            cityId: city.id
-          }
+          text: getLocalizedText(city.name, locale),
+          link: clientRoutes.items.getLink(locale, city.alias)
         }))
       }
     ];
@@ -100,9 +71,8 @@ function ClientTopMenu(props: ITopMenu) {
   };
 
   useEffect(() => {
-    setActiveItem(getActiveItem(props.location.pathname, selectedCityId));
     callFn(onRouteChange);
-  }, [selectedCityId, props.location.pathname]);
+  }, [props.location.pathname]);
 
   return (
     <StyledTopMenu isVertical={isVertical} items={getMenuItems()} />
@@ -111,8 +81,8 @@ function ClientTopMenu(props: ITopMenu) {
 
 const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
   locale: getLocale(state),
-  cities: getCities(state),
-  selectedCityId: getSelectedCityId(state, props.location.state)
+  cities: getCitiesList(state),
+  activeItem: getActiveTopMenuItem(state, props.location.pathname)
 });
 
 export default withStyles(styles)(

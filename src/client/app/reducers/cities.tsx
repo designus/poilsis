@@ -21,16 +21,6 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
   switch (action.type) {
     case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case CitiesActionTypes.SELECT_CITY:
-      return {
-        ...state,
-        selectedId: action.cityId
-      };
-    case CitiesActionTypes.CLEAR_SELECTED_CITY:
-      return {
-        ...state,
-        selectedId: null
-      };
     case ItemsActionTypes.RECEIVE_ITEMS:
       return action.cityId ?
         {

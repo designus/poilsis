@@ -13,19 +13,10 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IAppState, CitiesActionTypes, ISelectCity, IClearSelectedCity, IReceiveCity, IRemoveCity } from 'types';
+import { IAppState, CitiesActionTypes, IReceiveCity, IRemoveCity } from 'types';
+import { config } from 'config';
 
 import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
-import { config } from '../../../../config';
-
-export const selectCity = (cityId: string): ISelectCity => ({
-  type: CitiesActionTypes.SELECT_CITY,
-  cityId
-});
-
-export const clearSelectedCity = (): IClearSelectedCity => ({
-  type: CitiesActionTypes.CLEAR_SELECTED_CITY
-});
 
 export const receiveCity = (city: ICity): IReceiveCity => ({
   type: CitiesActionTypes.RECEIVE_CITY,
@@ -37,10 +28,10 @@ export const removeCity = (cityId: string): IRemoveCity => ({
   cityId
 });
 
-export const loadCityItems = (cityAlias: string) => {
+export const loadCityItems = (alias: string) => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
-    const city = getCityByAlias(state, cityAlias);
+    const city = getCityByAlias(state, alias);
 
     if (!city) {
       return null;

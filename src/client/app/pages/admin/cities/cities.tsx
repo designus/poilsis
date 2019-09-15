@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, ICitiesMap, ITypesMap } from 'types';
-import { getCities, getCitiesMap, getLocale, getTypesMap } from 'selectors';
+import { getCitiesList, getCitiesMap, getLocale, getTypesMap } from 'selectors';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
@@ -120,7 +120,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
 const mapStateToProps = (state: IAppState) => ({
   typesMap: getTypesMap(state),
   citiesMap: getCitiesMap(state),
-  cities: getCities(state),
+  cities: getCitiesList(state),
   locale: getLocale(state)
 });
 
