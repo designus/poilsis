@@ -1,4 +1,4 @@
-import { UserRoles } from 'global-utils/typings';
+import { UserRoles, TranslatableField } from 'global-utils/typings';
 
 export interface IRoute {
   path: string;
@@ -28,7 +28,26 @@ export type RoutesConfig = {
   [P in RouteKeys]?: IRoute;
 };
 
-export const clientRoutes: RoutesConfig = {
+interface IRoutesConfig {
+  login: {
+    path: string,
+    getLink: (locale: string) => string
+  };
+  landing: {
+    path: string,
+    getLink: (locale: string) => string
+  };
+  items: {
+    path: string,
+    getLink: (locale: string, cityAlias: string) => string
+  };
+  item: {
+    path: string,
+    getLink: (locale: string, cityAlias: string, itemAlias: TranslatableField) => string
+  };
+}
+
+export const clientRoutes: IRoutesConfig = {
   login: {
     path: '/:locale(lt|en|ru)?/login',
     getLink: (locale: string) => `/${locale}/login`
@@ -43,7 +62,7 @@ export const clientRoutes: RoutesConfig = {
   },
   item: {
     path: '/:locale(lt|en|ru)/:cityAlias/:itemAlias',
-    getLink: (locale: string, cityAlias: string, itemAlias: string) => `/${locale}/${cityAlias}/${itemAlias}`
+    getLink: (locale: string, cityAlias: string, itemAlias: TranslatableField) => `/${locale}/${cityAlias}/${itemAlias[locale]}`
   }
 };
 

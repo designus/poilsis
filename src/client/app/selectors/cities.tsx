@@ -31,7 +31,7 @@ export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
 export const getSelectedCityId = (state: IAppState, routeState = null) =>
   routeState ? routeState.cityId : state.cities.selectedId;
 
-export const getSelectedCity = (state: IAppState, routeState) => {
+export const getSelectedCity = (state: IAppState, routeState): ICity => {
   return getCitiesMap(state)[getSelectedCityId(state, routeState)];
 };
 
@@ -42,21 +42,12 @@ export const shouldLoadCityItems = (state: IAppState, routeState) => {
   }
 };
 
+// TODO: Add types to selector
 export const getCityItems = createSelector(
   [getSelectedCity, getItemsMap, getLocale],
-  (selectedCity: ICity, itemsMap: IItemsMap, locale: string): IItemLocalized[] => {
+  (selectedCity: ICity, itemsMap: IItemsMap, locale: string): IItem[] => {
     if (selectedCity) {
-      return Object.values(itemsMap)
-        .filter((item: IItem) => item.cityId === selectedCity.id)
-        .map(item => ({
-          ...item,
-          name: getLocalizedText(item.name, locale),
-          alias: getLocalizedText(item.alias, locale),
-          description: getLocalizedText(item.metaDescription, locale),
-          metaTitle: getLocalizedText(item.metaTitle, locale),
-          metaKeywords: getLocalizedText(item.metaKeywords, locale),
-          metaDescription: getLocalizedText(item.metaDescription, locale)
-        }));
+      return Object.values(itemsMap).filter((item: IItem) => item.cityId === selectedCity.id);
     }
     return [];
   }

@@ -33,6 +33,12 @@ export function getAliasKeysById<T extends AppTypes>(state: IGenericState<T>, id
   return hasLocalizedFields(alias) ? Object.values(alias) : [alias as string];
 }
 
+export const setAcceptLanguageHeader = (locale = DEFAULT_LANGUAGE) => ({
+  headers: {
+    'Accept-Language': locale
+  }
+});
+
 export function getBackendErrors(errors: Record<string, any>) {
   return Object.keys(errors).reduce((acc, key) => {
     // We only want to display validation errors to the user

@@ -30,14 +30,3 @@ export const getAdminType = (typeId: string) => dispatch => {
     })
     .catch(handleApiErrors('Unable to load type', CONTENT_LOADER_ID, dispatch));
 };
-
-export const getAdminItem = (itemId: string) => dispatch => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`${config.host}/api/items/item/${itemId}`)
-    .then(handleApiResponse)
-    .then((response: IItem) => {
-      dispatch(receiveItem(response));
-      dispatch(endLoading(CONTENT_LOADER_ID));
-    })
-    .catch(handleApiErrors('Unable to load Item', CONTENT_LOADER_ID, dispatch));
-};

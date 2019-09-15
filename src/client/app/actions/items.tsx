@@ -8,7 +8,7 @@ import {
 
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
-import { onUploadProgress, getFormDataFromFiles, getNormalizedData } from 'client-utils/methods';
+import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { IAliasMap, IItemsMap, Toast, IAppState } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
@@ -27,8 +27,6 @@ import { IImage, IItem, IItemDescFields, Omit, Value } from 'global-utils/typing
 import { getItemById } from 'selectors';
 import {
   ItemsActionTypes,
-  ISelectItem,
-  IClearSelectedItem,
   IReceiveItems,
   IReceiveItem,
   IReceiveImages,
@@ -41,15 +39,6 @@ import {
 
 import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
 import { config } from 'config';
-
-export const selectItem = (itemId: Value<ISelectItem, 'itemId'>): ISelectItem => ({
-  type: ItemsActionTypes.SELECT_ITEM,
-  itemId
-});
-
-export const clearSelectedItem = (): IClearSelectedItem => ({
-  type: ItemsActionTypes.CLEAR_SELECTED_ITEM
-});
 
 export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems => ({
   type: ItemsActionTypes.RECEIVE_ITEMS,
@@ -104,11 +93,10 @@ export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) =
   dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
 };
 
-export const loadItem = (alias: string) => (dispatch) => {
-  console.log('Load item', alias);
+export const loadItem = (locale: string, alias: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(`${config.host}/api/items/view-item/${alias}`)
+  return axios.get(`${config.host}/api/items/view-item/${alias}`, setAcceptLanguageHeader(locale))
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(receiveItem(item));
@@ -118,6 +106,17 @@ export const loadItem = (alias: string) => (dispatch) => {
       console.error(err);
       dispatch(endLoading(CONTENT_LOADER_ID));
     });
+};
+
+export const getItem = (itemId: string) => dispatch => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
+  return axios.get(`${config.host}/api/items/item/${itemId}`)
+    .then(handleApiResponse)
+    .then((response: IItem) => {
+      dispatch(receiveItem(response));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    })
+    .catch(handleApiErrors('Unable to load Item', CONTENT_LOADER_ID, dispatch));
 };
 
 export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {

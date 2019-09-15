@@ -112,7 +112,8 @@ export const getEditItem = (req: Request, res: Response, next: NextFunction) => 
 };
 
 export const getViewItem = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.findOne({ alias: req.params.alias }, sendResponse(res, next));
+  const locale = req.headers['accept-language'] as string;
+  ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
 };
 
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {

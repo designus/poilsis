@@ -13,11 +13,6 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
   switch (action.type) {
     case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
-    case ItemsActionTypes.SELECT_ITEM:
-      return {
-        ...state,
-        selectedId: action.itemId
-      };
     case ItemsActionTypes.RECEIVE_ITEMS:
       return {
         ...state,
@@ -29,11 +24,6 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
           ...state.aliases,
           ...action.aliases
         }
-      };
-    case ItemsActionTypes.CLEAR_SELECTED_ITEM:
-      return {
-        ...state,
-        selectedId: null
       };
     case ItemsActionTypes.RECEIVE_ITEM:
       return {

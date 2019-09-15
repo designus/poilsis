@@ -18,10 +18,8 @@ export interface IUniqueItemProps {
 export enum ItemsActionTypes {
   RECEIVE_ITEMS = 'RECEIVE_ITEMS',
   RECEIVE_RECOMMENDED_ITEMS = 'RECEIVE_RECOMMENDED_ITEMS',
-  SELECT_ITEM = 'SELECT_ITEM',
   RECEIVE_ITEM = 'RECEIVE_ITEM',
   RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION',
-  CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM',
   REMOVE_ITEM = 'REMOVE_ITEM',
   RECEIVE_IMAGES = 'RECEIVE_IMAGES',
   TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
@@ -34,11 +32,6 @@ export interface IReceiveItems extends IUniqueItemProps {
   aliases: IAliasMap;
 }
 
-export interface ISelectItem {
-  type: ItemsActionTypes.SELECT_ITEM;
-  itemId: string;
-}
-
 export interface IReceiveItem {
   type: ItemsActionTypes.RECEIVE_ITEM;
   item: IItem;
@@ -48,10 +41,6 @@ export interface IReceiveItemDescription {
   type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION;
   itemId: string;
   descFields: IItemDescFields;
-}
-
-export interface IClearSelectedItem {
-  type: ItemsActionTypes.CLEAR_SELECTED_ITEM;
 }
 
 export interface IRemoveItem {
@@ -78,10 +67,8 @@ export interface IToggleItemRecommended {
 }
 
 export type ItemsActions = IReceiveItems
-  | ISelectItem
   | IReceiveItem
   | IReceiveItemDescription
-  | IClearSelectedItem
   | IRemoveItem
   | IReceiveImages
   | IToggleItemEnabled
