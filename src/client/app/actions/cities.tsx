@@ -14,9 +14,8 @@ import {
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { IAppState, CitiesActionTypes, IReceiveCity, IRemoveCity } from 'types';
-import { config } from 'config';
 
-import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
+import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 
 export const receiveCity = (city: ICity): IReceiveCity => ({
   type: CitiesActionTypes.RECEIVE_CITY,
@@ -41,7 +40,7 @@ export const loadCityItems = (alias: string) => {
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.get(`${config.host}/api/items/city/${cityId}`)
+    return http.get(`/api/items/city/${cityId}`)
       .then(handleApiResponse)
       .then((data: IItem[]) => {
         dispatch(receiveNewItems(data, { cityId, dataType: 'cities' }));
@@ -57,7 +56,7 @@ export const loadCityItems = (alias: string) => {
 export const createCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(`${config.host}/api/cities`, city)
+  return http.post('/api/cities', city)
     .then(handleApiResponse)
     .then((response: ICity) => {
       dispatch(receiveCity(response));
@@ -70,7 +69,7 @@ export const createCity = (city: ICity) => (dispatch) => {
 export const updateCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`${config.host}/api/cities/city/${city.id}`, city)
+  return http.put(`/api/cities/city/${city.id}`, city)
     .then(handleApiResponse)
     .then((response: ICity) => {
       dispatch(receiveCity(response));
@@ -83,7 +82,7 @@ export const updateCity = (city: ICity) => (dispatch) => {
 
 export const deleteCity = (cityId: string) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-  return axios.delete(`${config.host}/api/cities/city/${cityId}`)
+  return http.delete(`/api/cities/city/${cityId}`)
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeCity(cityId));

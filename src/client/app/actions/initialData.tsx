@@ -12,6 +12,7 @@ import {
 } from 'types';
 import { getLocale } from 'selectors';
 import { config } from 'config';
+import { http } from './utils';
 
 export interface IGetInitialDataParams {
   pathName?: string;
@@ -42,9 +43,9 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     }
 
     const promises = [
-      axios.get(`${config.host}/api/cities`),
-      axios.get(`${config.host}/api/types`),
-      axios.get(`${config.host}/api/users`)
+      http.get('/api/cities'),
+      http.get('/api/types'),
+      http.get('/api/users')
     ];
 
     return Promise.all(promises)

@@ -37,8 +37,7 @@ import {
   IUniqueItemProps
 } from 'types/items';
 
-import { stopLoading, handleApiResponse, handleApiErrors } from './utils';
-import { config } from 'config';
+import { stopLoading, handleApiResponse, handleApiErrors, http } from './utils';
 
 export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems => ({
   type: ItemsActionTypes.RECEIVE_ITEMS,
@@ -96,7 +95,7 @@ export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) =
 export const loadItem = (locale: string, alias: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(`${config.host}/api/items/view-item/${alias}`, setAcceptLanguageHeader(locale))
+  return http.get(`/api/items/view-item/${alias}`, setAcceptLanguageHeader(locale))
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(receiveItem(item));
@@ -110,7 +109,7 @@ export const loadItem = (locale: string, alias: string) => (dispatch) => {
 
 export const getItem = (itemId: string) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return axios.get(`${config.host}/api/items/item/${itemId}`)
+  return http.get(`/api/items/item/${itemId}`)
     .then(handleApiResponse)
     .then((response: IItem) => {
       dispatch(receiveItem(response));
@@ -120,8 +119,8 @@ export const getItem = (itemId: string) => dispatch => {
 };
 
 export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
-  return axios
-    .put(`${config.host}/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
+  return http
+    .put(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
       onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent)))
     })
     .then(handleApiResponse)
@@ -145,7 +144,7 @@ export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
 export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`${config.host}/api/items/item/update-photos/${itemId}`, {images})
+  return http.put(`/api/items/item/update-photos/${itemId}`, {images})
     .then(handleApiResponse)
     .then((images: IImage[]) => {
       dispatch(receiveImages(itemId, images));
@@ -166,7 +165,7 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
 export const updateMainInfo = (item: IItem) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`${config.host}/api/items/item/main-info/${item.id}`, item)
+  return http.put(`/api/items/item/main-info/${item.id}`, item)
     .then(handleApiResponse)
     .then((response: IItem) => {
       dispatch(receiveItem(response));
@@ -179,7 +178,7 @@ export const updateMainInfo = (item: IItem) => (dispatch) => {
 export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`${config.host}/api/items/item/description/${itemId}`, itemDescFields)
+  return http.put(`/api/items/item/description/${itemId}`, itemDescFields)
   .then(handleApiResponse)
   .then((response: IItemDescFields) => {
     dispatch(receiveItemDescription(itemId, response));
@@ -193,7 +192,7 @@ export const createItem = (item: IItem) => (dispatch) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(`${config.host}/api/items`, item)
+  return http.post(`/api/items`, item)
     .then(handleApiResponse)
     .then((response: IItem) => {
       dispatch(receiveItem(response));
@@ -207,7 +206,7 @@ export const deleteItem = (itemId: string) => (dispatch) => {
 
   dispatch(startLoading(DIALOG_LOADER_ID));
 
-  return axios.delete(`${config.host}/api/items/item/${itemId}`)
+  return http.delete(`/api/items/item/${itemId}`)
     .then(handleApiResponse)
     .then((item: IItem) => {
       dispatch(removeItem(item.id));
@@ -220,7 +219,7 @@ export const toggleItemEnabled = (itemId: string, isEnabled: boolean) => (dispat
   const appState: IAppState = getState();
   const item = getItemById(appState, itemId);
   const userId = item.userId;
-  return axios.patch(`${config.host}/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled })
+  return http.patch(`/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled })
     .then(handleApiResponse)
     .then(() => {
       dispatch(toggleItemEnabledField(itemId, isEnabled));
@@ -229,7 +228,7 @@ export const toggleItemEnabled = (itemId: string, isEnabled: boolean) => (dispat
 };
 
 export const toggleItemRecommended = (itemId: string, isRecommended: boolean) => (dispatch) => {
-  return axios.patch(`${config.host}/api/items/item/toggle-recommended/${itemId}`, { isRecommended })
+  return http.patch(`/api/items/item/toggle-recommended/${itemId}`, { isRecommended })
     .then(handleApiResponse)
     .then(() => {
       dispatch(toggleItemRecommendedField(itemId, isRecommended));
