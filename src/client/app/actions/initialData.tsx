@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { getNormalizedData } from 'client-utils/methods';
 import { setLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
@@ -31,10 +31,7 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     const token = state.auth.accessToken;
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
 
-    // When page is reloaded we need to set locale
-    if (!state.locale) {
-      dispatch(setLocale(locale));
-    }
+    dispatch(setLocale(locale));
 
     const promises = [
       http.get('/api/cities'),

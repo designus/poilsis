@@ -13,7 +13,7 @@ export interface IInitialDataState {
 }
 
 export enum InitialDataActionTypes {
-  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA',
+  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA'
 }
 
 export interface IReceiveInitialData {

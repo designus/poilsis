@@ -5,6 +5,7 @@ import * as en from 'react-intl/locale-data/en';
 import * as lt from 'react-intl/locale-data/lt';
 import * as ru from 'react-intl/locale-data/ru';
 import { getTranslationMessages } from 'global-utils/methods';
+import { getLocale } from 'selectors';
 
 import { IAppState } from 'types';
 
@@ -29,7 +30,7 @@ class ConnectedIntl extends React.Component<IConnectedIntlProps, any> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  locale: state.locale
+  locale: getLocale(state)
 });
 
 export const ConnectedIntlProvider = connect<any, any, {}>(mapStateToProps)(ConnectedIntl);

@@ -6,7 +6,6 @@ import {
   IHomeState,
   ItemsActions,
   ItemsActionTypes,
-  InitialDataActionTypes,
   InitialDataActions
 } from 'types';
 
@@ -34,7 +33,7 @@ export const home: Reducer<IHomeState, ActionTypes> = (state = getInitialState()
       return {
         ...state,
         recommendedItems: toggleItemInArray(state.recommendedItems, action.itemId, false)
-      }
+      };
     default:
       return state;
   }
