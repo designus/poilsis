@@ -5,23 +5,17 @@ import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, IUser } from 'global-utils';
 import {
   IAppState,
-  IClearState,
   InitialDataActionTypes,
   IInitialData,
   IReceiveInitialData
 } from 'types';
 import { getLocale } from 'selectors';
-import { config } from 'config';
 import { http } from './utils';
 
 export interface IGetInitialDataParams {
   pathName?: string;
   locale?: string;
 }
-
-export const clearState = (): IClearState => ({
-  type: InitialDataActionTypes.CLEAR_STATE
-});
 
 export const receiveInitialData = (data: IInitialData): IReceiveInitialData => ({
   type: InitialDataActionTypes.RECEIVE_INITIAL_DATA,

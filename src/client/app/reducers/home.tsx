@@ -19,8 +19,6 @@ const getInitialState = (): IHomeState => ({
 
 export const home: Reducer<IHomeState, ActionTypes> = (state = getInitialState(), action): IHomeState => {
   switch (action.type) {
-    case InitialDataActionTypes.CLEAR_STATE:
-      return getInitialState();
     case HomeActionTypes.RECEIVE_RECOMMENDED_ITEMS:
       return {
         ...state,

@@ -6,7 +6,9 @@ import { styles } from './styles';
 
 export enum ActiveItem {
   Home,
-  Offers
+  City,
+  Type,
+  Item
 }
 
 export interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles>, InjectedIntlProps {

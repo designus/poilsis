@@ -14,7 +14,6 @@ export const uploadProgress: Reducer<IUploadProgressState, ActionTypes> =
   (state: IUploadProgressState = getInitialState(), action): IUploadProgressState => {
   switch (action.type) {
     case UploadActionTypes.RESET_UPLOAD_STATE:
-    case InitialDataActionTypes.CLEAR_STATE:
       return getInitialState();
     case UploadActionTypes.SET_UPLOAD_PROGRESS:
       return {

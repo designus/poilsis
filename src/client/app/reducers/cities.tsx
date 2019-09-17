@@ -19,8 +19,6 @@ const getInitialState = (): ICityState => ({
 
 export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
-    case InitialDataActionTypes.CLEAR_STATE:
-      return getInitialState();
     case ItemsActionTypes.RECEIVE_ITEMS:
       return action.cityId ?
         {

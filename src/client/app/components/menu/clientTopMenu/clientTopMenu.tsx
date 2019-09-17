@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, defineMessages } from 'react-intl';
 
-import { getLocale, getCitiesList, getActiveTopMenuItem } from 'selectors';
+import { getLocale, getCitiesList, getActiveItem } from 'selectors';
 import { IAppState } from 'types';
 import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
@@ -50,7 +50,7 @@ function ClientTopMenu(props: ITopMenuProps) {
       {
         id: 2,
         text: intl.formatMessage(messages.items),
-        isActive: activeItem === ActiveItem.Offers,
+        isActive: [ActiveItem.City, ActiveItem.Type, ActiveItem.Item].includes(activeItem),
         items: cities.map((city: ICity) => ({
           id: city.id,
           text: getLocalizedText(city.name, locale),
@@ -82,7 +82,7 @@ function ClientTopMenu(props: ITopMenuProps) {
 const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
   locale: getLocale(state),
   cities: getCitiesList(state),
-  activeItem: getActiveTopMenuItem(state, props.location.pathname)
+  activeItem: getActiveItem(state, props.location.pathname)
 });
 
 export default withStyles(styles)(

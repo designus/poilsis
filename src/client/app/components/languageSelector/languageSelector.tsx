@@ -8,6 +8,7 @@ import { Dropdown } from 'components/dropdown';
 import { LANGUAGES } from 'global-utils';
 import { IDropdownOption } from 'types/generic';
 import { capitalize } from 'client-utils/methods';
+import { getLocale } from 'selectors';
 import { switchLanguage } from 'actions/locale';
 
 import { styles  } from './styles';
@@ -18,7 +19,6 @@ const mapLanguagesToDropdown = (languages: string[]): IDropdownOption[] =>
 interface ILanguageSelectorProps extends Partial<WithStyles<typeof styles>>, RouteComponentProps<any> {
   onSelectLanguage: (language: string) => () => void;
   selectedLanguage: string;
-  reloadPageOnChange?: boolean;
 }
 
 export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps>  {
@@ -26,11 +26,7 @@ export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps
   options = mapLanguagesToDropdown(LANGUAGES);
 
   onChange = (locale: string) => {
-    if (this.props.reloadPageOnChange) {
-      window.location.href = this.props.location.pathname.replace(new RegExp('(' + LANGUAGES.join('|') + ')'), locale);
-    } else {
-      this.props.onSelectLanguage(locale);
-    }
+    this.props.onSelectLanguage(locale);
   }
 
   render() {
@@ -47,7 +43,7 @@ export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  selectedLanguage: state.locale
+  selectedLanguage: getLocale(state)
 });
 
 const mapDispatchToProps = dispatch => ({

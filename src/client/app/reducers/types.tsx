@@ -11,8 +11,6 @@ const getInitialState = (): ITypesState => ({
 
 export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = getInitialState(), action): ITypesState => {
   switch (action.type) {
-    case InitialDataActionTypes.CLEAR_STATE:
-      return getInitialState();
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {
         ...state,

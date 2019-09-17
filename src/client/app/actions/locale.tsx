@@ -1,4 +1,5 @@
-import { clearState } from 'actions/initialData';
+import { clientRoutes } from 'client-utils/routes';
+
 export const SET_LOCALE = 'SET_LOCALE';
 
 export const setLocale = (locale: string) => ({
@@ -6,7 +7,7 @@ export const setLocale = (locale: string) => ({
   locale
 });
 
-export const switchLanguage = (language: string) => dispatch => {
-  dispatch(setLocale(language));
-  dispatch(clearState());
+export const switchLanguage = (locale: string) => dispatch => {
+  dispatch(setLocale(locale));
+  window.history.pushState('', '', clientRoutes.landing.getLink(locale));
 };

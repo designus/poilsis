@@ -113,7 +113,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
               </div>
               <LoginButton />
               <UserMenu isLoggedIn={isLoggedIn} />
-              <LanguageSelector reloadPageOnChange />
+              <LanguageSelector />
             </Toolbar>
           </Container>
         </AppBar>

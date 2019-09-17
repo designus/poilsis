@@ -29,11 +29,6 @@ export const currentUser: Reducer<ICurrentUserState, ActionTypes> =
         details: action.userDetails
       };
     }
-    case InitialDataActionTypes.CLEAR_STATE:
-      return {
-        ...state,
-        hasItems: false
-      };
     case AuthActionTypes.LOGOUT_SUCCESS: {
       return getInitialState();
     }

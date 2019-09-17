@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { removeByKeys, getAliasState, getAliasKeysById } from 'client-utils/methods';
-import { ItemsActionTypes, ItemsActions, IItemsState, InitialDataActionTypes, InitialDataActions } from 'types';
+import { ItemsActionTypes, ItemsActions, IItemsState, InitialDataActions } from 'types';
 
 type ActionTypes = ItemsActions | InitialDataActions;
 
@@ -11,8 +11,6 @@ const getInitialState = (): IItemsState => ({
 
 export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState(), action): IItemsState => {
   switch (action.type) {
-    case InitialDataActionTypes.CLEAR_STATE:
-      return getInitialState();
     case ItemsActionTypes.RECEIVE_ITEMS:
       return {
         ...state,

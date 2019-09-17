@@ -8,8 +8,6 @@ const getInitialState = (): IInitialDataState => ({
 export const initialData: Reducer<IInitialDataState, InitialDataActions> =
 (state = getInitialState(), action): IInitialDataState => {
   switch (action.type) {
-    case InitialDataActionTypes.CLEAR_STATE:
-      return getInitialState();
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {...state, isLoaded: true };
     default:
