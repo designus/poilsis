@@ -13,7 +13,7 @@ import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
 import { IAppState, ITypesMap } from 'types';
-import { shouldLoadEditCity, getTypesMap, getCityById, getLocale } from 'selectors';
+import { shouldLoadEditCity, getTypesMap, getCityById, getAdminLocale } from 'selectors';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
@@ -101,7 +101,7 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
   loadedCity: getCityById(state, props.match.params.cityId),
   showNavigationPrompt: isDirty(CITY_FORM_NAME)(state) && !isSubmitting(CITY_FORM_NAME)(state),
   shouldLoadEditCity: shouldLoadEditCity(state, props.match.params.cityId),
-  locale: getLocale(state)
+  locale: getAdminLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

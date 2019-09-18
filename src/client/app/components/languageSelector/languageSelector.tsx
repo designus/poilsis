@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { IAppState } from 'types';
 import { Dropdown } from 'components/dropdown';
 import { LANGUAGES } from 'global-utils';
 import { IDropdownOption } from 'types/generic';
 import { capitalize } from 'client-utils/methods';
-import { getLocale } from 'selectors';
 import { switchLanguage } from 'actions/locale';
 
 import { styles  } from './styles';
@@ -17,8 +15,9 @@ const mapLanguagesToDropdown = (languages: string[]): IDropdownOption[] =>
   languages.map(locale => ({ label: capitalize(locale), value: locale }));
 
 interface ILanguageSelectorProps extends Partial<WithStyles<typeof styles>>, RouteComponentProps<any> {
-  onSelectLanguage: (language: string) => () => void;
-  selectedLanguage: string;
+  onSelectLanguage: (locale: string, isAdmin: boolean) => () => void;
+  locale: string;
+  isAdmin: boolean;
 }
 
 export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps>  {
@@ -26,7 +25,7 @@ export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps
   options = mapLanguagesToDropdown(LANGUAGES);
 
   onChange = (locale: string) => {
-    this.props.onSelectLanguage(locale);
+    this.props.onSelectLanguage(locale, this.props.isAdmin);
   }
 
   render() {
@@ -34,7 +33,7 @@ export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps
       <div className={this.props.classes.wrapper}>
         <Dropdown
           options={this.options}
-          selectedValue={this.props.selectedLanguage}
+          selectedValue={this.props.locale}
           onChange={this.onChange}
         />
       </div>
@@ -42,16 +41,12 @@ export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
-  selectedLanguage: getLocale(state)
-});
-
 const mapDispatchToProps = dispatch => ({
-  onSelectLanguage: (language: string) => dispatch(switchLanguage(language))
+  onSelectLanguage: (language: string, isAdmin: boolean) => dispatch(switchLanguage(language, isAdmin))
 });
 
 export default withStyles(styles)(
-  connect(mapStateToProps, mapDispatchToProps)(
+  connect(undefined, mapDispatchToProps)(
     withRouter(LanguageSelector)
   )
 );

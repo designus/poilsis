@@ -5,7 +5,7 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
 import { deleteType } from 'actions/types';
-import { getTypes, getTypesMap, getLocale } from 'selectors';
+import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 import { TranslatableField, IType } from 'global-utils/typings';
 import { IAppState, ITypesMap } from 'types';
@@ -113,7 +113,7 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
 const mapStateToProps = (state: IAppState) => ({
   typesMap: getTypesMap(state),
   types: getTypes(state),
-  locale: getLocale(state)
+  locale: getAdminLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

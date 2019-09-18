@@ -8,7 +8,7 @@ import { getLocalizedText } from 'client-utils/methods';
 import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';
-import { getCityByAlias, shouldLoadCityItems, getCityItems, getLocale } from 'selectors';
+import { getCityByAlias, shouldLoadCityItems, getCityItems, getClientLocale } from 'selectors';
 import { IMatchParams, ICityPageProps, ICityOwnProps, ICityStateProps, ICityDispatchProps } from './types';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
@@ -54,7 +54,7 @@ const mapStateToProps = (state: IAppState, props: ICityOwnProps) => ({
   selectedCity: getCityByAlias(state, props.match.params.cityAlias),
   cityItems: getCityItems(state, props.match.params.cityAlias),
   shouldLoadCityItems: shouldLoadCityItems(state, props.match.params.cityAlias),
-  locale: getLocale(state)
+  locale: getClientLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

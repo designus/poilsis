@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ITypesMap, IAppState } from 'types';
-import { getTypesMap, getLocale } from 'selectors';
+import { getTypesMap } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 
 interface IOwnProps {
   typeIds: string[];
+  locale: string;
 }
 
 interface IStateProps {
   typesMap: ITypesMap;
-  locale: string;
 }
 
 type ItemsTypesListProps = IOwnProps & IStateProps;
@@ -37,8 +37,7 @@ const ItemTypesList = ({typeIds, typesMap, locale}: ItemsTypesListProps) => {
 };
 
 const mapStateToProps = (state: IAppState) => ({
-  typesMap: getTypesMap(state),
-  locale: getLocale(state)
+  typesMap: getTypesMap(state)
 });
 
 export default connect<IStateProps, {}, IOwnProps>(mapStateToProps)(ItemTypesList);

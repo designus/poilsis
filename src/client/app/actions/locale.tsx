@@ -1,13 +1,21 @@
 import { clientRoutes } from 'client-utils/routes';
+import { LocaleActionTypes, ISetClientLocale, ISetAdminLocale } from 'types';
 
-export const SET_LOCALE = 'SET_LOCALE';
-
-export const setLocale = (locale: string) => ({
-  type: SET_LOCALE,
+export const setClientLocale = (locale: string): ISetClientLocale => ({
+  type: LocaleActionTypes.SET_CLIENT_LOCALE,
   locale
 });
 
-export const switchLanguage = (locale: string) => dispatch => {
-  dispatch(setLocale(locale));
-  window.history.pushState('', '', clientRoutes.landing.getLink(locale));
+export const setAdminLocale = (locale: string): ISetAdminLocale => ({
+  type: LocaleActionTypes.SET_ADMIN_LOCALE,
+  locale
+});
+
+export const switchLanguage = (locale: string, isAdmin: boolean) => dispatch => {
+  if (isAdmin) {
+    dispatch(setAdminLocale(locale))
+  } else {
+    dispatch(setClientLocale(locale));
+    window.history.pushState('', '', clientRoutes.landing.getLink(locale));
+  }
 };

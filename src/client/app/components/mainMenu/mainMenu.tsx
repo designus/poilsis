@@ -7,7 +7,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { IAppState, ITypesMap } from 'types';
 import { ICity } from 'global-utils/typings';
-import { getCitiesList, getTypesMap, getLocale } from 'selectors';
+import { getCitiesList, getTypesMap, getClientLocale } from 'selectors';
 
 import { styles } from './styles';
 
@@ -55,7 +55,7 @@ const MainMenu = (props: IMainMenu) => {
 const mapStateToProps = (state: IAppState, props) => ({
   typesMap: getTypesMap(state),
   citiesList: getCitiesList(state),
-  locale: getLocale(state)
+  locale: getClientLocale(state)
 });
 
 const ConnectedComponent = withRouter(

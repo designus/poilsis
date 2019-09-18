@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { IAppState, IItemsMap, ICitiesMap } from 'types';
 import { loadRecommendedItems } from 'actions';
 import { ItemCard } from 'components/itemCard';
-import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getLocale, getCitiesMap } from 'selectors';
+import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getClientLocale, getCitiesMap } from 'selectors';
 
 import { styles } from './styles';
 
@@ -71,7 +71,7 @@ const mapStateToProps = (state: IAppState) => ({
   hasLoaded: hasRecommendedItemsLoaded(state),
   itemsMap: getItemsMap(state),
   citiesMap: getCitiesMap(state),
-  locale: getLocale(state)
+  locale: getClientLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

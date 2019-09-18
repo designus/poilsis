@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { getNormalizedData } from 'client-utils/methods';
-import { setLocale } from 'actions/locale';
+import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, IUser } from 'global-utils';
 import {
@@ -9,7 +9,7 @@ import {
   IInitialData,
   IReceiveInitialData
 } from 'types';
-import { getLocale } from 'selectors';
+import { getClientLocale } from 'selectors';
 import { http } from './utils';
 
 export interface IGetInitialDataParams {
@@ -27,11 +27,11 @@ type InitialDataResponse = [AxiosResponse<ICity[]>, AxiosResponse<IType[]>, Axio
 export const getInitialData = (params: IGetInitialDataParams = {}) => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
-    const locale = params.locale || getLocale(state) || DEFAULT_LANGUAGE;
+    const locale = params.locale || getClientLocale(state) || DEFAULT_LANGUAGE;
     const token = state.auth.accessToken;
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
 
-    dispatch(setLocale(locale));
+    dispatch(setClientLocale(locale));
 
     const promises = [
       http.get('/api/cities'),

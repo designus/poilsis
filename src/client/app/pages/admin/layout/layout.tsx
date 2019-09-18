@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,8 +12,8 @@ import TypesIcon from '@material-ui/icons/Gesture';
 import CitiesIcon from '@material-ui/icons/BeachAccess';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
-import { Switch, RouteComponentProps } from 'react-router-dom';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { Switch, withRouter } from 'react-router-dom';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
@@ -29,7 +29,8 @@ import { NotAuthorized } from 'components/notAuthorized';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
 import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
-import { getLocale } from 'selectors';
+import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
+import { getAdminLocale, getClientLocale } from 'selectors';
 
 import { AdminItemsPage } from 'pages/admin/items';
 import { CreateEditItemPage } from 'pages/admin/createEditItem';
@@ -38,21 +39,17 @@ import { CreateEditCityPage } from 'pages/admin/createEditCity';
 import { AdminTypesPage } from 'pages/admin/types';
 import { AdminCitiesPage } from 'pages/admin/cities';
 
+import { IOwnProps, IStateProps, IDispatchProps, AdminLayoutProps } from './types';
+
 import { styles } from './styles';
 
-interface IAdminLayoutProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<object> {
-  locale: string;
-  getInitialData: (params?: IGetInitialDataParams) => void;
-  isLoading: () => boolean;
-}
-
-class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
+class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
   state = {
     mobileDrawerOpen: false,
     menuItems: this.menuItems
   };
 
-  componentDidUpdate(prevProps: IAdminLayoutProps) {
+  componentDidUpdate(prevProps: AdminLayoutProps) {
     if (this.props.location !== prevProps.location) {
       this.handleDrawerClose();
     }
@@ -102,100 +99,103 @@ class AdminLayoutPage extends React.PureComponent<IAdminLayoutProps, any> {
       {
         id: 6,
         icon: () => (<ArrowBackIcon />),
-        link: clientRoutes.landing.getLink(this.props.locale),
+        link: clientRoutes.landing.getLink(this.props.clientLocale),
         text: formatMessage({ id: 'admin.menu.go_to_website' })
       }
     ];
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, adminLocale } = this.props;
     return (
-      <div className={classes.wrapper}>
-        <Drawer
-          onClose={this.handleDrawerClose}
-          mobileDrawerOpen={this.state.mobileDrawerOpen}
-        >
-          <LeftMenu isVertical items={this.menuItems} />
-        </Drawer>
-        <div className={classes.content}>
-          <AppBar className={classes.appBar}>
-            <Toolbar className={classes.toolbar}>
-              <Hidden mdUp implementation="css">
-                <IconButton
-                  color="inherit"
-                  aria-label="Open Drawer"
-                  onClick={this.handleDrawerToggle}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Hidden>
-              <Typography className={classes.appBarTitle} variant="h6" color="inherit" noWrap>
-                <FormattedMessage id="admin.menu.dashboard" />
-              </Typography>
-              <UserMenu isInverted isLoggedIn />
-              <LanguageSelector />
-            </Toolbar>
-          </AppBar>
-            <main className={classes.main}>
-              <Switch>
-                <ProtectedRoute
-                  exact
-                  path={adminRoutes.items.path}
-                  component={AdminItemsPage}
-                />
-                <ProtectedRoute
-                  exact
-                  path={adminRoutes.types.path}
-                  component={AdminTypesPage}
-                  allowedRoles={adminRoutes.types.allowedRoles}
-                />
-                <ProtectedRoute
-                  exact
-                  path={adminRoutes.cities.path}
-                  component={AdminCitiesPage}
-                  allowedRoles={adminRoutes.cities.allowedRoles}
-                />
-                <ProtectedRoute
-                  path={adminRoutes.editItem.path}
-                  component={CreateEditItemPage}
-                />
-                <ProtectedRoute
-                  path={adminRoutes.createItem.path}
-                  component={CreateEditItemPage}
-                />
-                <ProtectedRoute
-                  path={adminRoutes.createType.path}
-                  component={CreateEditTypePage}
-                />
-                <ProtectedRoute
-                  path={adminRoutes.editType.path}
-                  component={CreateEditTypePage}
-                />
-                <ProtectedRoute
-                  path={adminRoutes.createCity.path}
-                  component={CreateEditCityPage}
-                />
-                <ProtectedRoute
-                  path={adminRoutes.editCity.path}
-                  component={CreateEditCityPage}
-                />
-                <ProtectedRoute
-                  path={'/admin/not-authorized'}
-                  component={NotAuthorized}
-                />
-                <ProtectedRoute component={NotFound}/>
-              </Switch>
-            </main>
+      <ConnectedIntlProvider locale={adminLocale}>
+        <div className={classes.wrapper}>
+          <Drawer
+            onClose={this.handleDrawerClose}
+            mobileDrawerOpen={this.state.mobileDrawerOpen}
+          >
+            <LeftMenu isVertical items={this.menuItems} />
+          </Drawer>
+          <div className={classes.content}>
+            <AppBar className={classes.appBar}>
+              <Toolbar className={classes.toolbar}>
+                <Hidden mdUp implementation="css">
+                  <IconButton
+                    color="inherit"
+                    aria-label="Open Drawer"
+                    onClick={this.handleDrawerToggle}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Hidden>
+                <Typography className={classes.appBarTitle} variant="h6" color="inherit" noWrap>
+                  <FormattedMessage id="admin.menu.dashboard" />
+                </Typography>
+                <UserMenu isInverted isLoggedIn />
+                <LanguageSelector isAdmin={true} locale={adminLocale} />
+              </Toolbar>
+            </AppBar>
+              <main className={classes.main}>
+                <Switch>
+                  <ProtectedRoute
+                    exact
+                    path={adminRoutes.items.path}
+                    component={AdminItemsPage}
+                  />
+                  <ProtectedRoute
+                    exact
+                    path={adminRoutes.types.path}
+                    component={AdminTypesPage}
+                    allowedRoles={adminRoutes.types.allowedRoles}
+                  />
+                  <ProtectedRoute
+                    exact
+                    path={adminRoutes.cities.path}
+                    component={AdminCitiesPage}
+                    allowedRoles={adminRoutes.cities.allowedRoles}
+                  />
+                  <ProtectedRoute
+                    path={adminRoutes.editItem.path}
+                    component={CreateEditItemPage}
+                  />
+                  <ProtectedRoute
+                    path={adminRoutes.createItem.path}
+                    component={CreateEditItemPage}
+                  />
+                  <ProtectedRoute
+                    path={adminRoutes.createType.path}
+                    component={CreateEditTypePage}
+                  />
+                  <ProtectedRoute
+                    path={adminRoutes.editType.path}
+                    component={CreateEditTypePage}
+                  />
+                  <ProtectedRoute
+                    path={adminRoutes.createCity.path}
+                    component={CreateEditCityPage}
+                  />
+                  <ProtectedRoute
+                    path={adminRoutes.editCity.path}
+                    component={CreateEditCityPage}
+                  />
+                  <ProtectedRoute
+                    path={'/admin/not-authorized'}
+                    component={NotAuthorized}
+                  />
+                  <ProtectedRoute component={NotFound}/>
+                </Switch>
+              </main>
+          </div>
+          <Toast />
         </div>
-        <Toast />
-      </div>
+      </ConnectedIntlProvider>
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  locale: getLocale(state)
+  adminLocale: getAdminLocale(state),
+  clientLocale: getClientLocale(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -203,7 +203,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withStyles(styles)(
-  connect<any, any, IAdminLayoutProps>(mapStateToProps, mapDispatchToProps)(
-    injectIntl(AdminLayoutPage)
+  withRouter(
+    injectIntl(
+      connect<IStateProps, IDispatchProps, IOwnProps>(mapStateToProps, mapDispatchToProps)(
+        AdminLayoutPage
+      )
+    )
   )
 );
