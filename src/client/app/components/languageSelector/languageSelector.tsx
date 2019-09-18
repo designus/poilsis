@@ -1,26 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 
 import { Dropdown } from 'components/dropdown';
 import { LANGUAGES } from 'global-utils';
 import { IDropdownOption } from 'types/generic';
 import { capitalize } from 'client-utils/methods';
 import { switchLanguage } from 'actions/locale';
+import { LanguageSelectorProps, IOwnProps, IDispatchProps } from './types';
 
-import { styles  } from './styles';
+import { styles } from './styles';
 
 const mapLanguagesToDropdown = (languages: string[]): IDropdownOption[] =>
   languages.map(locale => ({ label: capitalize(locale), value: locale }));
 
-interface ILanguageSelectorProps extends Partial<WithStyles<typeof styles>>, RouteComponentProps<any> {
-  onSelectLanguage: (locale: string, isAdmin: boolean) => () => void;
-  locale: string;
-  isAdmin: boolean;
-}
-
-export class LanguageSelector extends React.PureComponent<ILanguageSelectorProps>  {
+export class LanguageSelector extends React.PureComponent<LanguageSelectorProps>  {
 
   options = mapLanguagesToDropdown(LANGUAGES);
 
@@ -46,7 +41,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withStyles(styles)(
-  connect(undefined, mapDispatchToProps)(
-    withRouter(LanguageSelector)
+  withRouter(
+    connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatchToProps)(
+      LanguageSelector
+    )
   )
 );
