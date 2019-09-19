@@ -85,7 +85,8 @@ const ItemsSchemaMap: IItemsSchema = {
     type: String,
     lowercase: true,
     trim: true,
-    set: formatAlias
+    set: formatAlias,
+    intl: true
   },
   userId: {
     type: String,

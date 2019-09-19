@@ -13,7 +13,7 @@ import { getLocalizedText } from 'client-utils/methods';
 import {
   shouldLoadUserItems,
   getUserItems,
-  getLocale,
+  getAdminLocale,
   getCitiesMap,
   getItemsMap,
   getUsersMap
@@ -107,7 +107,7 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
         dataProp: 'types',
         format: (types: string[]) => {
           return (
-            <ItemTypesList typeIds={types} />
+            <ItemTypesList locale={this.props.locale} typeIds={types} />
           );
         }
       },
@@ -237,7 +237,7 @@ const mapStateToProps = (state: IAppState) => ({
   userItems: getUserItems(state),
   citiesMap: getCitiesMap(state),
   shouldLoadUserItems: shouldLoadUserItems(state),
-  locale: getLocale(state)
+  locale: getAdminLocale(state)
 });
 
 const mapDispatchToProps = dispatch =>

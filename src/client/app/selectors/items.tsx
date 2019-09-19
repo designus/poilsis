@@ -14,14 +14,13 @@ export const shouldLoadEditItem = (state: IAppState, itemId: string) => {
   return itemId && !state.loader.content && !getItemById(state, itemId);
 };
 
-export const getItemByAlias = (state: IAppState, itemAlias: string, locale: string): IItem => {
+export const getItemByAlias = (state: IAppState, alias: string): IItem => {
   const aliases = getItemsAliases(state);
   const itemsMap = getItemsMap(state);
-  const alias = aliases.find(alias => alias.alias === itemAlias);
-  if (alias) {
-    return itemsMap[alias.id];
+  const itemId = aliases[alias];
+  if (itemId) {
+    return itemsMap[itemId];
   }
 
   return null;
 };
-

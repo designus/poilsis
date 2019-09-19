@@ -1,13 +1,11 @@
 import { IItem, IImage, IItemDescFields } from 'global-utils/typings';
-import { IGenericState, IAlias, IGenericDataMap } from './generic';
+import { IGenericState, IAliasMap, IGenericDataMap } from './generic';
 
 export type IItemsMap = IGenericDataMap<IItem>;
 
 export interface IItemLocalized extends IItem<string> {}
 
-export interface IItemsState extends IGenericState<IItem> {
-  selectedId?: string;
-}
+export interface IItemsState extends IGenericState<IItem> {}
 
 export interface IUniqueItemProps {
   cityId?: string;
@@ -18,10 +16,8 @@ export interface IUniqueItemProps {
 export enum ItemsActionTypes {
   RECEIVE_ITEMS = 'RECEIVE_ITEMS',
   RECEIVE_RECOMMENDED_ITEMS = 'RECEIVE_RECOMMENDED_ITEMS',
-  SELECT_ITEM = 'SELECT_ITEM',
   RECEIVE_ITEM = 'RECEIVE_ITEM',
   RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION',
-  CLEAR_SELECTED_ITEM = 'CLEAR_SELECTED_ITEM',
   REMOVE_ITEM = 'REMOVE_ITEM',
   RECEIVE_IMAGES = 'RECEIVE_IMAGES',
   TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
@@ -31,12 +27,7 @@ export enum ItemsActionTypes {
 export interface IReceiveItems extends IUniqueItemProps {
   type: ItemsActionTypes.RECEIVE_ITEMS;
   dataMap: IItemsMap;
-  aliases: IAlias[];
-}
-
-export interface ISelectItem {
-  type: ItemsActionTypes.SELECT_ITEM;
-  itemId: string;
+  aliases: IAliasMap;
 }
 
 export interface IReceiveItem {
@@ -48,10 +39,6 @@ export interface IReceiveItemDescription {
   type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION;
   itemId: string;
   descFields: IItemDescFields;
-}
-
-export interface IClearSelectedItem {
-  type: ItemsActionTypes.CLEAR_SELECTED_ITEM;
 }
 
 export interface IRemoveItem {
@@ -78,10 +65,8 @@ export interface IToggleItemRecommended {
 }
 
 export type ItemsActions = IReceiveItems
-  | ISelectItem
   | IReceiveItem
   | IReceiveItemDescription
-  | IClearSelectedItem
   | IRemoveItem
   | IReceiveImages
   | IToggleItemEnabled

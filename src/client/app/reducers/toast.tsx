@@ -12,8 +12,6 @@ const getInitialState = (): IToastState => ({
 
 export const toast: Reducer<IToastState, ActionTypes> = (state: IToastState = getInitialState(), action): IToastState => {
   switch (action.type) {
-    case InitialDataActionTypes.CLEAR_STATE:
-      return getInitialState();
     case ToastActionTypes.SHOW_TOAST:
       return {
         ...state,

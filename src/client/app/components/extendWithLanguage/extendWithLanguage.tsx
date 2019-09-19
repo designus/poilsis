@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { IAppState } from 'types';
+import { getAdminLocale } from 'selectors';
 import { LANGUAGES } from 'global-utils';
 
 import { languageStyles } from './styles';
@@ -60,7 +61,7 @@ export function extendWithLanguage<TOriginalProps extends {}>(
     }
 
     const mapStateToProps = (state: IAppState) => ({
-      locale: state.locale
+      locale: getAdminLocale(state)
     });
 
     // @ts-ignore

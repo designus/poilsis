@@ -12,9 +12,8 @@ import {
 } from 'data-strings';
 import { TypesActionTypes, ISelectType, IReceiveType, IRemoveType } from 'types';
 
-import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
+import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 import { startLoading } from './loader';
-import { config } from '../../../../config';
 
 export const selectType = (typeId: string): ISelectType => ({
   type: TypesActionTypes.SELECT_TYPE,
@@ -34,7 +33,7 @@ export const removeType = (typeId: string): IRemoveType => ({
 export const createType = (type: IType) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(`${config.host}/api/types`, type)
+  return http.post('/api/types', type)
     .then(handleApiResponse)
     .then((response: IType) => {
       dispatch(receiveType(response));
@@ -47,7 +46,7 @@ export const createType = (type: IType) => (dispatch) => {
 export const updateType = (adminType: IType) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`${config.host}/api/types/type/${adminType.id}`, adminType)
+  return http.put(`/api/types/type/${adminType.id}`, adminType)
     .then(handleApiResponse)
     .then((response: IType) => {
       dispatch(receiveType(response));
@@ -60,7 +59,7 @@ export const updateType = (adminType: IType) => dispatch => {
 
 export const deleteType = (typeId: string) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-  return axios.delete(`${config.host}/api/types/type/${typeId}`)
+  return http.delete(`/api/types/type/${typeId}`)
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeType(typeId));

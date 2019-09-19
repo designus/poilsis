@@ -5,7 +5,7 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { getTypesMap, getUsersMap, getCitiesMap, getCurrentUserRole, getLocale } from 'selectors';
+import { getTypesMap, getUsersMap, getCitiesMap, getCurrentUserRole, getAdminLocale } from 'selectors';
 import { IAppState, ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { updateMainInfo, createItem } from 'actions/items';
 import { getBackendErrors } from 'client-utils/methods';
@@ -88,7 +88,7 @@ const mapStateToProps = (state: IAppState) => ({
   typesMap: getTypesMap(state),
   userRole: getCurrentUserRole(state),
   showNavigationPrompt: isDirty(MAIN_INFO_FORM_NAME)(state) && !isSubmitting(MAIN_INFO_FORM_NAME)(state),
-  locale: getLocale(state)
+  locale: getAdminLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

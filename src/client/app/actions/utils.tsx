@@ -1,8 +1,13 @@
-import { AxiosResponse as IResponse } from 'axios';
-
+import axios, { AxiosResponse as IResponse } from 'axios';
+import { config } from 'config';
 import { Toast } from 'types';
+
 import { showToast } from './toast';
 import { endLoading } from './loader';
+
+export const http = axios.create({
+  baseURL: config.host
+});
 
 export const stopLoading = (isError, toastMessage, loaderId) => dispatch => {
   const toastType = isError ? Toast.error : Toast.success;

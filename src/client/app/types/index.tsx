@@ -11,3 +11,4 @@ export * from './toast';
 export * from './users';
 export * from './uploadProgress';
 export * from './home';
+export * from './locale';

@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 const shortId = require('shortid');
 import { requiredMessage } from '../server-utils';
 
-export interface IUser extends mongoose.Document {
+interface IUser extends mongoose.Document {
   name: string;
   username: string;
   password: string;

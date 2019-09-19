@@ -15,6 +15,7 @@ import { LanguageSelector } from 'components/languageSelector';
 import { Loader } from 'components/loader';
 import { Drawer } from 'components/drawer';
 import { LoginButton } from 'components/loginButton';
+import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
 import { ClientTopMenu as TopMenu } from 'components/menu/clientTopMenu';
 import { clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
@@ -28,7 +29,7 @@ import { HomePage } from 'pages/client/home';
 
 import { IAppState } from 'types';
 
-import { getCities, isLoggedIn, getLocale } from 'selectors';
+import { getCitiesList, isLoggedIn, getClientLocale } from 'selectors';
 
 // @ts-ignore
 import logoUrl from 'static/images/logo.gif';
@@ -78,63 +79,65 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
   }
 
   render() {
-    const { classes, isLoggedIn } = this.props;
+    const { classes, isLoggedIn, locale } = this.props;
     return (
-      <div className={classes.wrapper}>
-        <Hidden mdUp>
-          <Drawer
-            onClose={this.handleDrawerClose}
-            mobileDrawerOpen={this.state.mobileDrawerOpen}
-          >
-            <TopMenu
-              onRouteChange={this.handleDrawerClose}
-              isVertical={true}
-              isLoggedIn={isLoggedIn}
-            />
-          </Drawer>
-        </Hidden>
-        <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
-          <Container maxWidth="xl">
-            <Toolbar disableGutters className={classes.toolbar}>
-              <Hidden mdUp implementation="css">
-                <IconButton
-                  color="inherit"
-                  aria-label="Open Drawer"
-                  onClick={this.handleDrawerToggle}
-                >
-                  <MenuIcon />
-                </IconButton>
-              </Hidden>
-              {this.renderLogo()}
-              <div className={classes.topMenu}>
-                <Hidden smDown implementation="css">
-                  <TopMenu isLoggedIn={isLoggedIn} />
+      <ConnectedIntlProvider locale={locale}>
+        <div className={classes.wrapper}>
+          <Hidden mdUp>
+            <Drawer
+              onClose={this.handleDrawerClose}
+              mobileDrawerOpen={this.state.mobileDrawerOpen}
+            >
+              <TopMenu
+                onRouteChange={this.handleDrawerClose}
+                isVertical={true}
+                isLoggedIn={isLoggedIn}
+              />
+            </Drawer>
+          </Hidden>
+          <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
+            <Container maxWidth="xl">
+              <Toolbar disableGutters className={classes.toolbar}>
+                <Hidden mdUp implementation="css">
+                  <IconButton
+                    color="inherit"
+                    aria-label="Open Drawer"
+                    onClick={this.handleDrawerToggle}
+                  >
+                    <MenuIcon />
+                  </IconButton>
                 </Hidden>
-              </div>
-              <LoginButton />
-              <UserMenu isLoggedIn={isLoggedIn} />
-              <LanguageSelector reloadPageOnChange />
-            </Toolbar>
+                {this.renderLogo()}
+                <div className={classes.topMenu}>
+                  <Hidden smDown implementation="css">
+                    <TopMenu isLoggedIn={isLoggedIn} />
+                  </Hidden>
+                </div>
+                <LoginButton />
+                <UserMenu isLoggedIn={isLoggedIn} />
+                <LanguageSelector isAdmin={false} locale={this.props.locale} />
+              </Toolbar>
+            </Container>
+          </AppBar>
+          <Container maxWidth="xl">
+            <Switch>
+              <Route path={clientRoutes.login.path} component={LoginPage} />
+              <Route exact path={clientRoutes.items.path} component={CityPage} />
+              <Route exact path={clientRoutes.item.path} component={ItemPage} />
+              <Route path={clientRoutes.landing.path} component={HomePage} />
+            </Switch>
           </Container>
-        </AppBar>
-        <Container maxWidth="xl">
-          <Switch>
-            <Route path={clientRoutes.login.path} component={LoginPage} />
-            <Route exact path={clientRoutes.items.path} component={CityPage} />
-            <Route exact path={clientRoutes.item.path} component={ItemPage} />
-            <Route path={clientRoutes.landing.path} component={HomePage} />
-          </Switch>
-        </Container>
-        <Toast />
-      </div>
+          <Toast />
+        </div>
+      </ConnectedIntlProvider>
     );
   }
 }
 
 const mapStateToProps = (state: IAppState) => ({
   isLoggedIn: isLoggedIn(state),
-  cities: getCities(state),
-  locale: getLocale(state)
+  cities: getCitiesList(state),
+  locale: getClientLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

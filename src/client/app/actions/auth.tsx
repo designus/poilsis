@@ -25,7 +25,7 @@ import {
   USER_LOGOUT_ERROR,
   USER_REAUTHENTICATE_SUCCESS
 } from 'data-strings';
-import { config } from '../../../../config';
+import { http } from './utils';
 
 export const loginSuccess = (accessToken: string): ILoginSucces => ({
   type: AuthActionTypes.LOGIN_SUCCESS,
@@ -61,7 +61,7 @@ export const handleAuthError = (dispatch, isLogin: boolean) => (error) => {
 
 export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-  return axios.post(`${config.host}/api/users/login`, credentials)
+  return http.post('/api/users/login', credentials)
     .then(response => response.data)
     .then(data => {
       const { accessToken, refreshToken } = data;
@@ -84,7 +84,7 @@ export const reauthenticateUser = (displayToast = false) => (dispatch, getState)
   const oldAccessToken = state.auth.accessToken;
   const refreshToken = localStorage.getItem('refreshToken');
   const dataToSend = {...getAccessTokenClaims(oldAccessToken), refreshToken };
-  return axios.post(`${config.host}/api/users/reauthenticate`, dataToSend)
+  return http.post('/api/users/reauthenticate', dataToSend)
     .then(response => response.data)
     .then((data) => {
       const accessToken = data.accessToken;
@@ -104,7 +104,7 @@ export const logout = () => (dispatch, getState) => {
   const state: IAppState = getState();
   const accessToken = state.auth.accessToken;
   const { userId } = getAccessTokenClaims(accessToken);
-  return axios.delete(`${config.host}/api/users/logout/${userId}`)
+  return http.delete(`/api/users/logout/${userId}`)
     .then(response => response.data)
     .then(() => {
       Cookies.remove('jwt');

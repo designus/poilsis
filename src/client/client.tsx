@@ -44,11 +44,9 @@ window.main = () => {
       ReactDOM.hydrate(
         <ThemeProvider theme={theme}>
           <Provider store={store} key="provider">
-            <ConnectedIntlProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </ConnectedIntlProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
           </Provider>
         </ThemeProvider>,
         document.getElementById('app')

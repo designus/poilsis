@@ -3,18 +3,41 @@ import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { TranslatableField, hasLocalizedFields } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption } from 'types/generic';
+import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, AppTypes } from 'types';
 
-export function getNormalizedData(data: any[]) {
-  return data.reduce((acc: IGenericState<object>, item: any) => {
+export function getNormalizedData<T extends AppTypes>(data: T[]): IGenericState<T> {
+  return data.reduce((acc: IGenericState<T>, item: T) => {
     acc.dataMap[item.id] = item;
-    acc.aliases.push({id: item.id, alias: item.alias});
+    acc.aliases = { ...acc.aliases, ...getAliasState(item.alias, item.id) };
     return acc;
-  }, {
-    dataMap: {},
-    aliases: []
-  });
+  }, { dataMap: {}, aliases: {} });
 }
+
+export const getAliasState = (alias: string | TranslatableField, id: string): IAliasMap => {
+  const aliases = {};
+  if (hasLocalizedFields(alias)) {
+    Object.values(alias).forEach((alias: string) => {
+      aliases[alias] = id;
+    });
+  }
+
+  if (typeof alias === 'string') {
+    aliases[alias] = id;
+  }
+
+  return aliases;
+};
+
+export function getAliasKeysById<T extends AppTypes>(state: IGenericState<T>, id: string): string[] {
+  const { alias } = state.dataMap[id];
+  return hasLocalizedFields(alias) ? Object.values(alias) : [alias as string];
+}
+
+export const setAcceptLanguageHeader = (locale = DEFAULT_LANGUAGE) => ({
+  headers: {
+    'Accept-Language': locale
+  }
+});
 
 export function getBackendErrors(errors: Record<string, any>) {
   return Object.keys(errors).reduce((acc, key) => {
@@ -63,10 +86,14 @@ export const getFormDataFromFiles = (files: File[]) => {
 
 export const getSelectedLanguage = () => DEFAULT_LANGUAGE;
 
-export const removeItemById = (id: string, dataMap: Record<string, any>) => {
-  const { [id]: removedItem, ...remainingItems } = dataMap;
-  return remainingItems;
-};
+export function removeByKeys<T>(keys: string[], dataMap: IGenericDataMap<T>): IGenericDataMap<T> {
+  return Object.keys(dataMap).reduce((acc, key) => {
+    if (!keys.includes(key)) {
+      acc[key] = dataMap[key];
+    }
+    return acc;
+  }, {});
+}
 
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
 

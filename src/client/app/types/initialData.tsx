@@ -13,12 +13,7 @@ export interface IInitialDataState {
 }
 
 export enum InitialDataActionTypes {
-  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA',
-  CLEAR_STATE = 'CLEAR_STATE'
-}
-
-export interface IClearState {
-  type: InitialDataActionTypes.CLEAR_STATE;
+  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA'
 }
 
 export interface IReceiveInitialData {
@@ -26,4 +21,4 @@ export interface IReceiveInitialData {
   data: IInitialData;
 }
 
-export type InitialDataActions = IClearState | IReceiveInitialData;
+export type InitialDataActions = IReceiveInitialData;

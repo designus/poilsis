@@ -112,23 +112,39 @@ export const getEditItem = (req: Request, res: Response, next: NextFunction) => 
 };
 
 export const getViewItem = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.findOne({ alias: req.params.alias }, sendResponse(res, next));
+  const locale = req.headers['accept-language'] as string;
+  ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
 };
 
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
 };
 
-export const updateMainInfo = (req: Request, res: Response, next: NextFunction) => {
-  const item: IItem = req.body;
-  const updatedAt = new Date();
-  const alias = formatAlias(item.alias || item.name);
-  const updatedItem = { ...item, alias, updatedAt };
+export const updateMainInfo = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const item: IItem = req.body;
+    const updatedAt = new Date();
+    const alias = getAlias(item);
+    const updatedItem = { ...item, alias, updatedAt };
 
-  ItemsModel.findOneAndUpdate(
-    { id: req.params.itemId }, { $set: updatedItem}, { new: true, runValidators: true },
-    sendResponse(res, next)
-  );
+    const newItem = await ItemsModel.findOneAndUpdate(
+      { id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true }
+    );
+
+    if (!newItem) {
+      throw new Error('Unable to create a new item');
+    }
+
+    res.status(200).json(newItem);
+
+    // await ItemsModel.findOneAndUpdate(
+    //   { id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true },
+    //   sendResponse(res, next)
+    // );
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const updateItemDescription = (req: Request, res: Response, next: NextFunction) => {

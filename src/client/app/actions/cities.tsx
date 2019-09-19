@@ -13,19 +13,9 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IAppState, CitiesActionTypes, ISelectCity, IClearSelectedCity, IReceiveCity, IRemoveCity } from 'types';
+import { IAppState, CitiesActionTypes, IReceiveCity, IRemoveCity } from 'types';
 
-import { stopLoading, handleApiErrors, handleApiResponse } from './utils';
-import { config } from '../../../../config';
-
-export const selectCity = (cityId: string): ISelectCity => ({
-  type: CitiesActionTypes.SELECT_CITY,
-  cityId
-});
-
-export const clearSelectedCity = (): IClearSelectedCity => ({
-  type: CitiesActionTypes.CLEAR_SELECTED_CITY
-});
+import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 
 export const receiveCity = (city: ICity): IReceiveCity => ({
   type: CitiesActionTypes.RECEIVE_CITY,
@@ -37,10 +27,10 @@ export const removeCity = (cityId: string): IRemoveCity => ({
   cityId
 });
 
-export const loadCityItems = (cityAlias: string) => {
+export const loadCityItems = (alias: string) => {
   return (dispatch, getState) => {
     const state: IAppState = getState();
-    const city = getCityByAlias(state, cityAlias);
+    const city = getCityByAlias(state, alias);
 
     if (!city) {
       return null;
@@ -50,7 +40,7 @@ export const loadCityItems = (cityAlias: string) => {
 
     dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return axios.get(`${config.host}/api/items/city/${cityId}`)
+    return http.get(`/api/items/city/${cityId}`)
       .then(handleApiResponse)
       .then((data: IItem[]) => {
         dispatch(receiveNewItems(data, { cityId, dataType: 'cities' }));
@@ -66,7 +56,7 @@ export const loadCityItems = (cityAlias: string) => {
 export const createCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.post(`${config.host}/api/cities`, city)
+  return http.post('/api/cities', city)
     .then(handleApiResponse)
     .then((response: ICity) => {
       dispatch(receiveCity(response));
@@ -79,7 +69,7 @@ export const createCity = (city: ICity) => (dispatch) => {
 export const updateCity = (city: ICity) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.put(`${config.host}/api/cities/city/${city.id}`, city)
+  return http.put(`/api/cities/city/${city.id}`, city)
     .then(handleApiResponse)
     .then((response: ICity) => {
       dispatch(receiveCity(response));
@@ -92,7 +82,7 @@ export const updateCity = (city: ICity) => (dispatch) => {
 
 export const deleteCity = (cityId: string) => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-  return axios.delete(`${config.host}/api/cities/city/${cityId}`)
+  return http.delete(`/api/cities/city/${cityId}`)
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeCity(cityId));

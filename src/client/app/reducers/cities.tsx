@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { removeItemById } from 'client-utils/methods';
+import { removeByKeys, getAliasKeysById } from 'client-utils/methods';
 import {
   ItemsActionTypes,
   ItemsActions,
@@ -14,23 +14,11 @@ type ActionTypes = CitiesActions | ItemsActions | InitialDataActions;
 
 const getInitialState = (): ICityState => ({
   dataMap: {},
-  aliases: []
+  aliases: {}
 });
 
 export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
-    case InitialDataActionTypes.CLEAR_STATE:
-      return getInitialState();
-    case CitiesActionTypes.SELECT_CITY:
-      return {
-        ...state,
-        selectedId: action.cityId
-      };
-    case CitiesActionTypes.CLEAR_SELECTED_CITY:
-      return {
-        ...state,
-        selectedId: null
-      };
     case ItemsActionTypes.RECEIVE_ITEMS:
       return action.cityId ?
         {
@@ -47,13 +35,10 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
     case CitiesActionTypes.RECEIVE_CITY:
       return {
         ...state,
-        aliases: [
+        aliases: {
           ...state.aliases,
-          {
-            id: action.city.id,
-            alias: action.city.alias
-          }
-        ],
+          [action.city.alias]: action.city.id
+        },
         dataMap: {
           ...state.dataMap,
           [action.city.id]: {
@@ -65,8 +50,8 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
     case CitiesActionTypes.REMOVE_CITY:
       return {
         ...state,
-        dataMap: removeItemById(action.cityId, state.dataMap),
-        aliases: [...state.aliases.filter(alias => alias.id !== action.cityId)]
+        dataMap: removeByKeys([action.cityId], state.dataMap),
+        aliases: removeByKeys(getAliasKeysById(state, action.cityId), state.aliases)
       };
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {

@@ -105,12 +105,12 @@ export const formatAlias = alias => alias
   .toLowerCase();
 
 export const getAlias = (item: IType | IItem) =>
-  Object.entries(item.alias).reduce((acc, [key, value]: [Languages, string]) => {
-    acc[key] = formatAlias(value || item.name[key]);
+  Object.entries(item.alias).reduce((acc, [locale, value]: [Languages, string]) => {
+    acc[locale] = formatAlias(value || item.name[locale]);
     return acc;
   }, {});
 
-export const getLocalizedAlias = (item: ICity, locale: Languages): string => {
+export const getLocalizedAlias = (item: IItem | IType | ICity, locale: Languages): string => {
   const localizedName = item.name[locale];
   const localizedAlias = item.alias[locale];
 

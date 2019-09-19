@@ -1,3 +1,5 @@
+import { IItem, IType, ICity, IUser } from 'global-utils';
+
 import { ICityState } from './cities';
 import { IAuthState } from './auth';
 import { ICurrentUserState } from './currentUser';
@@ -7,6 +9,7 @@ import { ITypesState } from './types';
 import { IInitialDataState } from './initialData';
 import { ILoadingState } from './loader';
 import { IToastState } from './toast';
+import { ILocaleState } from './locale';
 import { IUploadProgressState } from './uploadProgress';
 import { IHomeState } from './home';
 
@@ -14,7 +17,7 @@ export interface IAppState {
   cities: ICityState;
   home: IHomeState;
   auth: IAuthState;
-  locale: string;
+  locale: ILocaleState;
   currentUser: ICurrentUserState;
   users: IUsersState;
   items: IItemsState;
@@ -24,3 +27,5 @@ export interface IAppState {
   toast: IToastState;
   uploadProgress: IUploadProgressState;
 }
+
+export type AppTypes = IItem | IType | ICity | IUser;

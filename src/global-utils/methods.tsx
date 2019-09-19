@@ -22,33 +22,12 @@ export const getAccessTokenClaims = (token: string): IAccessTokenClaims => JWT(t
 
 export const hasLocalizedFields = (field) => field && Object.keys(field).some(field => LANGUAGES.indexOf(field) !== -1);
 
-export const localizeDocument = (item: object, language: string) => {
-  return Object.keys(item).reduce((acc: any, key: string) => {
-    if (key === '_id') {
-      return acc;
-    }
-
-    const field = item[key];
-    acc[key] = hasLocalizedFields(field) ? field[language] : field;
-
-    return acc;
-  }, {});
-};
-
 export const isFunction = fn => typeof fn === 'function';
 
 export const callFn = (fn, ...args) => {
   if (isFunction(fn)) {
     fn.apply(null, args);
   }
-};
-
-export const getLocalizedResponse = (data: any, language: string) => {
-  const getObject = data => isFunction(data.toObject) ? data.toObject() : data;
-
-  return data.constructor === Array ?
-    data.map(document => localizeDocument(getObject(document), language)) :
-    localizeDocument(getObject(data), language);
 };
 
 export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);

@@ -7,7 +7,7 @@ import { Switch, RouteComponentProps } from 'react-router-dom';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState } from 'types';
-import { getAdminItem } from 'actions/admin';
+import { getItem } from 'actions';
 import { IItem } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem, getItemById } from 'selectors';
@@ -40,7 +40,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
   static fetchData(store, params: IMatchParams) {
     if (params.itemId) {
-      return store.dispatch(getAdminItem(params.itemId));
+      return store.dispatch(getItem(params.itemId));
     } else {
       return Promise.resolve(null);
     }
@@ -124,7 +124,7 @@ const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => (
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadAdminItem: (itemId: string) => dispatch(getAdminItem(itemId))
+  loadAdminItem: (itemId: string) => dispatch(getItem(itemId))
 });
 
 export default injectIntl(

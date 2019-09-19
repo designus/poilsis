@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import { ICity, IItem } from 'global-utils/typings';
 import { IAppState } from 'types';
 import { clientRoutes } from 'client-utils/routes';
-import { getLocale } from 'selectors';
+import { getLocalizedText } from 'client-utils/methods';
+
+import { getClientLocale } from 'selectors';
 
 import { ItemTypesList } from '../itemTypesList';
 
@@ -24,14 +26,11 @@ export class ItemsList extends React.Component<IItemsListProps> {
         key={item.id}
         activeStyle={{ color: 'red' }}
         to={{
-          pathname: clientRoutes.item.getLink(this.props.locale, this.props.selectedCity.alias, item.alias),
-          state: {
-            itemId: item.id
-          }
+          pathname: clientRoutes.item.getLink(this.props.locale, this.props.selectedCity.alias, item.alias)
         }}
       >
-        {item.name}<br />
-        <ItemTypesList typeIds={item.types} />
+        {getLocalizedText(item.name, this.props.locale)}<br />
+        <ItemTypesList locale={this.props.locale} typeIds={item.types} />
         <hr />
       </NavLink>
     );
@@ -50,7 +49,7 @@ export class ItemsList extends React.Component<IItemsListProps> {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  locale: getLocale(state)
+  locale: getClientLocale(state)
 });
 
 export default connect(mapStateToProps)(ItemsList);

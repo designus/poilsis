@@ -4,8 +4,7 @@ import { startLoading, endLoading } from 'actions/loader';
 import { receiveNewItems } from 'actions/items';
 import { IAppState, ICurrentUser, CurrentUserActionTypes, IReceiveUserDetails } from 'types';
 import { isAdmin, IItem } from 'global-utils';
-import { handleApiResponse } from './utils';
-import { config } from '../../../../config';
+import { handleApiResponse, http } from './utils';
 
 export const receiveUserDetails = (userDetails: ICurrentUser): IReceiveUserDetails => ({
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
@@ -18,8 +17,8 @@ export const loadUserItems = () => (dispatch, getState) => {
   const user = currentUser.details;
   const isAdministrator = isAdmin(user.role);
   const endpoint = isAdministrator ?
-    `${config.host}/api/items` :
-    `${config.host}/api/items/user/${user.id}`;
+    '/api/items' :
+    `/api/items/user/${user.id}`;
 
   if (currentUser.hasItems) {
     return;
@@ -27,7 +26,7 @@ export const loadUserItems = () => (dispatch, getState) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return axios.get(endpoint)
+  return http.get(endpoint)
     .then(handleApiResponse)
     .then((items: IItem[]) => {
       dispatch(receiveNewItems(items, { userId: user.id, dataType: 'currentUser' }));
