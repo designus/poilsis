@@ -12,28 +12,27 @@ import { LanguageSelectorProps, IOwnProps, IDispatchProps } from './types';
 
 import { styles } from './styles';
 
-const mapLanguagesToDropdown = (languages: string[]): IDropdownOption[] =>
-  languages.map(locale => ({ label: capitalize(locale), value: locale }));
+export function LanguageSelector(props: LanguageSelectorProps)  {
+  const { isAdmin, onSelectLanguage, classes, locale } = props;
 
-export class LanguageSelector extends React.PureComponent<LanguageSelectorProps>  {
+  const options = React.useMemo((): IDropdownOption[] =>
+    LANGUAGES.map(locale => ({ label: capitalize(locale), value: locale })),
+    []
+  );
 
-  options = mapLanguagesToDropdown(LANGUAGES);
+  const onChange = (locale: string) => {
+    onSelectLanguage(locale, isAdmin);
+  };
 
-  onChange = (locale: string) => {
-    this.props.onSelectLanguage(locale, this.props.isAdmin);
-  }
-
-  render() {
-    return (
-      <div className={this.props.classes.wrapper}>
-        <Dropdown
-          options={this.options}
-          selectedValue={this.props.locale}
-          onChange={this.onChange}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className={`${classes.wrapper} ${isAdmin ? classes.admin : ''}`}>
+      <Dropdown
+        options={options}
+        selectedValue={locale}
+        onChange={onChange}
+      />
+    </div>
+  );
 }
 
 const mapDispatchToProps = dispatch => ({

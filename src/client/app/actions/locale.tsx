@@ -13,7 +13,7 @@ export const setAdminLocale = (locale: string): ISetAdminLocale => ({
 
 export const switchLanguage = (locale: string, isAdmin: boolean) => dispatch => {
   if (isAdmin) {
-    dispatch(setAdminLocale(locale))
+    dispatch(setAdminLocale(locale));
   } else {
     dispatch(setClientLocale(locale));
     window.history.pushState('', '', clientRoutes.landing.getLink(locale));

@@ -8,5 +8,10 @@ export const styles = (theme: Theme) => createStyles({
     '& > div': {
       color: '#fff'
     }
+  },
+  admin: {
+    '& p, & svg': {
+      color: '#fff'
+    }
   }
 });
