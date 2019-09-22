@@ -22,8 +22,8 @@
       "global-utils/*": ["./src/global-utils/*"],
       "config": ["./config"]
     },
-    "lib": ["dom", "es7", "es2017"],
-    "target": "es2015",
+    "lib": ["es2017", "dom", "es7"],
+    "target": "es2017",
     // Preserve dynamic import
     "module": "esnext",
     // Preserve React jsx syntax
@@ -31,16 +31,16 @@
     // Allow import X from "x"
     "allowSyntheticDefaultImports": true,
     // Find dependencies in node_modules
-     "moduleResolution": "node",
+     "moduleResolution": "node"
 
     // Full power of TypeScript with strict options enabled
-    //  "alwaysStrict": true,
-    //  "noImplicitAny": true,
-    //  "noImplicitReturns": true,
-    //  "noImplicitThis": true,
-    //  "strictFunctionTypes": true,
-    //  "strictPropertyInitialization": true,
-    //  "strictNullChecks": true
+    // "alwaysStrict": true,
+    // "noImplicitAny": true,
+    // "noImplicitReturns": true,
+    // "noImplicitThis": true,
+    // "strictFunctionTypes": true,
+    // "strictPropertyInitialization": true,
+    // "strictNullChecks": true
   },
   "include": [
     "src/**/*"

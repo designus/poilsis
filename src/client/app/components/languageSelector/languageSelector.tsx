@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { History } from 'history';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 
+import { clientRoutes } from 'client-utils/routes';
 import { Dropdown } from 'components/dropdown';
 import { LANGUAGES } from 'global-utils';
 import { IDropdownOption } from 'types/generic';
 import { capitalize } from 'client-utils/methods';
+
 import { switchLanguage } from 'actions/locale';
 import { LanguageSelectorProps, IOwnProps, IDispatchProps } from './types';
 
@@ -22,6 +25,9 @@ export function LanguageSelector(props: LanguageSelectorProps)  {
 
   const onChange = (locale: string) => {
     onSelectLanguage(locale, isAdmin);
+    if (!isAdmin) {
+      props.history.push(clientRoutes.landing.getLink(locale));
+    }
   };
 
   return (

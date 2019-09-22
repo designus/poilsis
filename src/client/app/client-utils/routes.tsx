@@ -39,11 +39,11 @@ interface IRoutesConfig {
   };
   items: {
     path: string,
-    getLink: (locale: string, cityAlias: string) => string
+    getLink: (locale: string, cityAlias: TranslatableField) => string
   };
   item: {
     path: string,
-    getLink: (locale: string, cityAlias: string, itemAlias: TranslatableField) => string
+    getLink: (locale: string, cityAlias: TranslatableField, itemAlias: TranslatableField) => string
   };
 }
 
@@ -58,11 +58,12 @@ export const clientRoutes: IRoutesConfig = {
   },
   items: {
     path: '/:locale(lt|en|ru)/:cityAlias',
-    getLink: (locale: string, cityAlias: string) => `/${locale}/${cityAlias}`
+    getLink: (locale: string, cityAlias: TranslatableField) => `/${locale}/${cityAlias[locale]}`
   },
   item: {
     path: '/:locale(lt|en|ru)/:cityAlias/:itemAlias',
-    getLink: (locale: string, cityAlias: string, itemAlias: TranslatableField) => `/${locale}/${cityAlias}/${itemAlias[locale]}`
+    getLink: (locale: string, cityAlias: TranslatableField, itemAlias: TranslatableField) =>
+      `/${locale}/${cityAlias[locale]}/${itemAlias[locale]}`
   }
 };
 

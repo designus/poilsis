@@ -3,8 +3,6 @@ import { IGenericState, IAliasMap, IGenericDataMap } from './generic';
 
 export type IItemsMap = IGenericDataMap<IItem>;
 
-export interface IItemLocalized extends IItem<string> {}
-
 export interface IItemsState extends IGenericState<IItem> {}
 
 export interface IUniqueItemProps {

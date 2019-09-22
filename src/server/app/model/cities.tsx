@@ -26,6 +26,7 @@ const schemaMap: ICitySchema = {
   alias: {
     type: String,
     lowercase: true,
+    intl: true,
     trim: true,
     required: [true, requiredMessage],
     set: formatAlias

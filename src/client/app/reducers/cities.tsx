@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { removeByKeys, getAliasKeysById } from 'client-utils/methods';
+import { removeByKeys, getAliasKeysById, getAliasState } from 'client-utils/methods';
 import {
   ItemsActionTypes,
   ItemsActions,
@@ -37,7 +37,7 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
         ...state,
         aliases: {
           ...state.aliases,
-          [action.city.alias]: action.city.id
+          ...getAliasState(action.city.alias, action.city.id)
         },
         dataMap: {
           ...state.dataMap,

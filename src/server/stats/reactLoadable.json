@@ -455,7 +455,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/itemTypesList": [
+  "../itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -3617,7 +3617,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../styles/createBreakpoints": [
+  "./createBreakpoints": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/createBreakpoints.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/createBreakpoints.js",
@@ -4121,7 +4121,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./ThemeContext": [
+  "../useTheme/ThemeContext": [
     {
       "id": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
       "name": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
@@ -5619,7 +5619,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./TableContext": [
+  "../Table/TableContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
       "name": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
@@ -6835,7 +6835,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Input": [
+  "@material-ui/core/Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -6899,7 +6899,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./ListContext": [
+  "../List/ListContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
       "name": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
@@ -7123,7 +7123,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Toolbar": [
+  "@material-ui/core/Toolbar": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Toolbar/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Toolbar/index.js",

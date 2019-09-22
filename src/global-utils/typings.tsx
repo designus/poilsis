@@ -29,17 +29,17 @@ export interface IResponseError {
   };
 }
 
-export interface IItemDescFields<T = TranslatableField> {
-  description: T;
-  metaTitle: T;
-  metaKeywords: T;
-  metaDescription: T;
+export interface IItemDescFields {
+  description: TranslatableField;
+  metaTitle: TranslatableField;
+  metaKeywords: TranslatableField;
+  metaDescription: TranslatableField;
 }
 
-export interface IItem<T = TranslatableField> extends IItemDescFields<T> {
+export interface IItem extends IItemDescFields {
   id: string;
-  name: T;
-  alias: T;
+  name: TranslatableField;
+  alias: TranslatableField;
   address: string;
   cityId: string;
   types: string[];
@@ -53,19 +53,19 @@ export interface IItem<T = TranslatableField> extends IItemDescFields<T> {
   mainImage?: string;
 }
 
-export interface IType<T = TranslatableField> {
+export interface IType {
   id: string;
-  name: T;
-  description: T;
-  alias: T;
+  name: TranslatableField;
+  description: TranslatableField;
+  alias: TranslatableField;
 }
 
-export interface ICity<T = TranslatableField> {
+export interface ICity {
   id: string;
   types: string[];
-  name: T;
-  description: T;
-  alias: string;
+  name: TranslatableField;
+  description: TranslatableField;
+  alias: TranslatableField;
   hasItems?: boolean;
 }
 

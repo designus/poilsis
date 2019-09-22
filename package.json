@@ -6,7 +6,7 @@
   "scripts": {
     "analyze": "source-map-explorer ./build/client/main.js{,.map}",
     "clean": "rimraf build",
-    "nodemon": "nodemon --inspect ./build/server/main.js",
+    "nodemon": "nodemon ./build/server/main.js",
     "start": "cross-env NODE_ENV=production node ./build/server/main.js",
     "start-prod": "npm run build-prod && cross-env NODE_ENV=production node ./build/server/main.js",
     "watch:dev-server": "cd ./src/server && webpack --watch --mode=development",
