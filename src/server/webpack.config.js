@@ -13,9 +13,10 @@ module.exports = {
   entry: ['@babel/polyfill', './server.tsx'],
   output: {
     path: path.join(projectRoot, 'build', 'server'),    
-    filename: "[name].js"
+    filename: "[name].js",
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]'
   },
-  devtool: 'source-map',
+  devtool: 'cheap-source-map',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     modules: [path.resolve(__dirname), 'node_modules', 'app'],

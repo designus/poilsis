@@ -17,3 +17,10 @@ export interface IDropdownOption {
   label: string;
   value: DropdownItemValue;
 }
+
+export enum ActiveItem {
+  Home,
+  City,
+  Type,
+  Item
+}

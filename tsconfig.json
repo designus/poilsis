@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "sourceMap": true,
     "paths": {
       "components": ["./src/client/app/components"],
       "components/*": ["./src/client/app/components/*"],

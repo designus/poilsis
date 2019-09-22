@@ -3,7 +3,7 @@ import { join } from 'path';
 import { flatMap } from 'lodash';
 
 import { IImage, IItem, voidFn } from 'global-utils';
-import { config } from '../../../../config';
+import { config } from 'config';
 import {
   checkIfDirectoryExists,
   readDirectoryContent,
@@ -25,7 +25,10 @@ class Database {
         this.db = db;
         return Promise.resolve();
       })
-      .catch(() => done());
+      .catch((err) => {
+        console.log('Unable to connect', err);
+        done();
+      });
   }
 
   disconnect = (done) => {

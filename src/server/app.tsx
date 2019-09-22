@@ -1,8 +1,8 @@
 require('dotenv').config();
 import * as express from 'express';
-import es6Renderer from 'express-es6-template-engine';
+// import es6Renderer from 'express-es6-template-engine';
 import { auth, apiRouter, handleItemsErrors } from './app/index';
-import { config } from '../../config';
+import { config } from 'config';
 
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -20,7 +20,7 @@ export const staticFilesPort = app.get('env') === 'production' ? config.port : 8
 mongoose.Promise = global.Promise;
 mongoose.connect(config.db);
 
-app.engine('html', es6Renderer);
+app.engine('html', require('express-es6-template-engine'));
 app.set('views', 'views');
 app.set('view engine', 'html');
 app.use(helmet());

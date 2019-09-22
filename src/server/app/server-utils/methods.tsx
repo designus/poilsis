@@ -118,10 +118,9 @@ export const getLocalizedAlias = (item: IItem | IType | ICity, locale: Languages
 };
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
-  if (res.headersSent) return;
-
   if (err) {
     return next(err);
   }
+
   res.status(200).json(result);
 };

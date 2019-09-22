@@ -20,7 +20,7 @@ const newItem = {
   isEnabled: true
 };
 
-describe('Integration tests: Items', () => {
+describe.skip('Integration tests: Items', () => {
   beforeAll((done) => {
     testDB.initialize(done);
   });

@@ -13,8 +13,7 @@ module.exports = {
     "actions": "<rootDir>/src/client/app/actions/",
     "reducers": "<rootDir>/src/client/app/reducers/",
     "^(client-utils/.+)$": "<rootDir>/src/client/app/$1",
-    // "components": "<rootDir>/src/client/app/components/",
-    "^components/(?!.*Provider)*": "<rootDir>/src/client/app/components/*",
+    "^(components/.+)$": "<rootDir>/src/client/app/components/$1",
     "pages": "<rootDir>/src/client/app/pages/"
   },
   globals: {

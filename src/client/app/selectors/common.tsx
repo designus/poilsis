@@ -1,5 +1,4 @@
-import { IAppState } from 'types';
-import { ActiveItem } from 'components/menu/clientTopMenu/types';
+import { IAppState, ActiveItem } from 'types';
 import { getCitiesAliases } from './cities';
 import { getItemsAliases } from './items';
 import { getTypesAliases } from './types';

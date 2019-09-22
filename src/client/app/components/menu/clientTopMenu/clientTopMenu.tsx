@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, defineMessages } from 'react-intl';
 
 import { getClientLocale, getCitiesList, getActiveItem } from 'selectors';
-import { IAppState } from 'types';
+import { IAppState, ActiveItem } from 'types';
 import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { getLocalizedText } from 'client-utils/methods';
@@ -14,7 +14,7 @@ import { ICity } from 'global-utils/typings';
 
 import { HorizontalMenu } from './horizontalMenu';
 import { VerticalMenu } from './verticalMenu';
-import { ITopMenuProps, ActiveItem, IOwnProps, IStateProps } from './types';
+import { ITopMenuProps, IOwnProps, IStateProps } from './types';
 import { styles } from './styles';
 
 const { useEffect } = React;

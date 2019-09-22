@@ -2,14 +2,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import { WithStyles } from '@material-ui/core/styles';
 import { InjectedIntlProps } from 'react-intl';
 import { ICity } from 'global-utils/typings';
+import { ActiveItem } from 'types';
 import { styles } from './styles';
-
-export enum ActiveItem {
-  Home,
-  City,
-  Type,
-  Item
-}
 
 export interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles>, InjectedIntlProps {
   onRouteChange?: () => void;
