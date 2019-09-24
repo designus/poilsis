@@ -44,7 +44,6 @@ class App extends React.Component<IAppProps, any> {
           <ProtectedRoute path={adminRoutes.landing.path} component={AdminLayoutPage} />
           <PropsRoute path={clientRoutes.landing.path} component={ClientLayoutPage} />
         </Switch>
-        {this.props.isLoggedIn && <KeepMeLoggedModal />}
       </React.Fragment>
     );
   }

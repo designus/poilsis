@@ -23,7 +23,7 @@
       "config": ["./config"]
     },
     "lib": ["es2017", "dom", "es7"],
-    "target": "es2017",
+    "target": "ES2017",
     // Preserve dynamic import
     "module": "esnext",
     // Preserve React jsx syntax

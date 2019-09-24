@@ -1,4 +1,5 @@
 'use strict';
+import { Document, Schema, Model, model} from 'mongoose';
 
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 import {
@@ -16,16 +17,14 @@ import {
   requiredMessage
 } from '../server-utils';
 
-interface IItemsSchema extends TGenericSchemaMap<IItem> {}
-
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const shortId = require('shortid');
 const mongooseIntl = require('mongoose-intl');
 
 const maxLength = maxLength => value => value.length <= maxLength;
 const minLength = minLength => value => value.length >= minLength;
 const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(max)(value);
+
+export interface IItemModel extends IItem, Document {}
 
 const {
   types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
@@ -53,7 +52,7 @@ const ImageSchemaMap: TGenericSchemaMap<IImage> = {
   }
 };
 
-const ItemsSchemaMap: IItemsSchema = {
+const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
   id: {
     type: String,
     unique: true,
@@ -133,4 +132,5 @@ ItemsSchema.pre('save', function(next) {
   next();
 });
 
-export const ItemsModel = mongoose.model('Items', ItemsSchema);
+// export const ItemsModel = model('Items', ItemsSchema);
+export const ItemsModel: Model<IItemModel> = model<IItemModel>('Items', ItemsSchema);

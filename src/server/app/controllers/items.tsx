@@ -1,13 +1,16 @@
-import { ItemsModel } from '../model';
+import { flatten } from 'lodash';
+import { Schema, Document } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
-import { IItem, itemValidation, getItemDescriptionFields } from 'global-utils';
+import { IItem, itemValidation, getItemDescriptionFields, TranslatableField } from 'global-utils';
+import { ItemsModel, IItemModel } from '../model';
 import {
   uploadImages,
   resizeImages,
   getImages,
   sendResponse,
   formatAlias,
-  getAlias
+  getAlias,
+  extendAliasWithId
 } from '../server-utils';
 
 const { images: { maxPhotos } } = itemValidation;
@@ -98,10 +101,11 @@ export const toggleItemIsRecommendedField = (req: Request, res: Response, next: 
   );
 };
 
-export const addNewItem = (req: Request, res: Response, next: NextFunction) => {
+export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: IItem = req.body;
-  const alias = getAlias(item);
+  const alias: any = getAlias(item);
+
   const newItem = { id, alias, ...item };
 
   new ItemsModel(newItem).save(sendResponse(res, next));
@@ -122,10 +126,28 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 
 export const updateMainInfo = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const item: IItem = req.body;
+    const updateItem: IItem = req.body;
     const updatedAt = new Date();
-    const alias = getAlias(item);
-    const updatedItem = { ...item, alias, updatedAt };
+    const alias = getAlias(updateItem);
+
+    const aliasValues = Object.values(alias);
+    const query = Object.keys(alias).map(locale => ({
+      [`alias.${locale}`]: { $in: aliasValues }
+    }));
+
+    const documents: IItemModel[] = await ItemsModel.find({ $or: query });
+    const itemsByAlias = documents.map(item => (item.toJSON() as IItem));
+
+    const existingAliases = itemsByAlias
+      .filter(item => item.id !== updateItem.id)
+      .map(item => Object.values(item.alias))
+      .reduce((acc: string[], val: string[]) => acc.concat(val), []);
+
+    const newAlias = existingAliases.length > 0
+      ? extendAliasWithId(alias, updateItem.id, existingAliases)
+      : alias;
+
+    const updatedItem = { ...updateItem, alias: newAlias, updatedAt };
 
     const newItem = await ItemsModel.findOneAndUpdate(
       { id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true }
@@ -136,11 +158,6 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
     }
 
     res.status(200).json(newItem);
-
-    // await ItemsModel.findOneAndUpdate(
-    //   { id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true },
-    //   sendResponse(res, next)
-    // );
 
   } catch (err) {
     return next(err);

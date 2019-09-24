@@ -104,7 +104,7 @@ export const formatAlias = alias => alias
   .join('-')
   .toLowerCase();
 
-export const getAlias = (item: IType | IItem) =>
+export const getAlias = (item: IType | ICity | IItem): TranslatableField =>
   Object.entries(item.alias).reduce((acc, [locale, value]: [Languages, string]) => {
     acc[locale] = formatAlias(value || item.name[locale]);
     return acc;
@@ -115,6 +115,13 @@ export const getLocalizedAlias = (item: IItem | IType | ICity, locale: Languages
   const localizedAlias = item.alias[locale];
 
   return formatAlias(localizedAlias || localizedName);
+};
+
+export const extendAliasWithId = (newAlias: TranslatableField, id: string, existingAliases: string[]): TranslatableField => {
+  return Object.entries(newAlias).reduce((acc, [locale, value]: [Languages, string]) => {
+    acc[locale] = existingAliases.includes(value) ? `${value}-${id}` : value;
+    return acc;
+  }, {});
 };
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {

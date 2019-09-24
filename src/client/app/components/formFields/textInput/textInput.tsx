@@ -7,6 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
 import { debounce } from 'lodash';
 
+import { usePrevious } from 'client-utils/customHooks';
+
 import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields } from 'global-utils';
 import { styles } from './styles';
 
@@ -16,7 +18,6 @@ export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof st
   multiline: boolean;
 }
 
-// TODO: Memoize this fn
 const getInitialValue = (value, isIntl: boolean) => {
   if (isIntl) {
     const isLocalized = hasLocalizedFields(value);
@@ -34,81 +35,80 @@ const getInitialValue = (value, isIntl: boolean) => {
   return value;
 };
 
-class InputComponent extends React.Component<ITextInputProps, any> {
+const { useState, useEffect, useCallback } = React;
 
-  initialValue = getInitialValue(this.props.input.value, this.props.intl);
+function TextInput(props: ITextInputProps) {
+  const { intl, input, meta, selectedLanguage, classes, label, multiline } = props;
 
-  constructor(props: ITextInputProps) {
-    super(props);
-    this.state = {
-      value: this.initialValue
-    };
-  }
+  const [inputValue, setInputValue] = useState(getInitialValue(input.value, intl));
+  const prevInputValue = usePrevious(input.value);
 
-  handleChange = lang => event => {
-    const oldValue = this.state.value;
+  useEffect(() => {
+    if (input.value !== prevInputValue) {
+      setInputValue(getInitialValue(input.value, intl));
+    }
+  }, [input.value, intl]);
+
+  const onChange = useCallback(
+    debounce(input.onChange, 600), [input.onChange]
+  );
+
+  const handleChange = (lang: string) => event => {
+    const oldValue = inputValue;
     const newValue = event.target.value;
-    const newState = this.props.intl ? { ...oldValue, [lang]: newValue } : newValue;
+    const newState = intl ? { ...oldValue, [lang]: newValue } : newValue;
 
-    this.setState({ value: newState });
-    this.onChange(newState);
-  }
+    setInputValue(newState);
+    onChange(newState);
+  };
 
-  updateStoreValue = (value: string) => {
-    this.props.input.onChange(value);
-  }
-
-  onChange = debounce(this.updateStoreValue, 600);
-
-  showError = (language: string) => {
-    const { meta, selectedLanguage } = this.props;
+  const showError = (language: string) => {
     const hasError = Boolean(meta.touched && meta.invalid && meta.error);
     if (language) {
       return hasError && selectedLanguage === DEFAULT_LANGUAGE && language === DEFAULT_LANGUAGE;
     }
     return hasError;
-  }
+  };
 
-  renderInput = (value: string, language?: string) => {
-    const { classes, label, meta, selectedLanguage, multiline } = this.props;
+  const renderInput = (value: string, language?: string) => {
     return (
       <div
         className={`${classes.wrapper} ${language !== selectedLanguage ? classes.hidden : ''}`}
         key={language}
       >
-        <Tooltip open={this.showError(language)} title={meta.error || ''} placement="right-end">
+        <Tooltip open={showError(language)} title={meta.error || ''} placement="right-end">
           <FormControl
             className={`${classes.formControl} ${multiline ? classes.multiline : ''}`}
-            error={this.showError(language)}
+            error={showError(language)}
           >
             <InputLabel htmlFor={label}>
               {label}
             </InputLabel>
             <Input
-              id={this.props.label}
+              id={label}
               value={value}
               multiline={multiline}
               rows={4}
-              onChange={this.handleChange(language)}
+              onChange={handleChange(language)}
               margin="dense"
               className={`${multiline ? classes.multilineInput : ''}`}
               classes={{
-                error: this.props.classes.error
+                error: classes.error
               }}
             />
           </FormControl>
         </Tooltip>
       </div>
     );
-  }
+  };
 
-  renderIntlInputs = () => LANGUAGES.map(lang => this.renderInput(this.state.value[lang], lang));
+  const renderIntlInputs = () => LANGUAGES.map(lang => renderInput(inputValue[lang], lang));
 
-  render() {
-    return this.props.intl
-      ? this.renderIntlInputs()
-      : this.renderInput(this.state.value);
-  }
+  return (
+    <React.Fragment>
+      {intl ? renderIntlInputs() : renderInput(inputValue)}
+    </React.Fragment>
+  );
 }
 
-export const TextInput = withStyles(styles)(InputComponent) as any;
+export default withStyles(styles)(TextInput);

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { ICity, DEFAULT_LANGUAGE } from 'global-utils';
+import { ICity } from 'global-utils';
 import { CitiesModel } from '../model';
-import { sendResponse, getLocalizedAlias } from '../server-utils';
+import { sendResponse, getAlias } from '../server-utils';
 
 export const getAllCities = (req: Request, res: Response, next: NextFunction) => {
   CitiesModel.find(sendResponse(res, next));
@@ -13,7 +13,7 @@ export const getCity = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
   const city: ICity = req.body;
-  const alias = getLocalizedAlias(city, DEFAULT_LANGUAGE);
+  const alias = getAlias(city);
   const newCity = { ...city, alias };
   new CitiesModel(newCity).save(sendResponse(res, next));
 };

@@ -30,6 +30,7 @@ import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
 import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
+import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 import { getAdminLocale, getClientLocale } from 'selectors';
 
 import { AdminItemsPage } from 'pages/admin/items';
@@ -187,6 +188,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
               </main>
           </div>
           <Toast />
+          <KeepMeLoggedModal />
         </div>
       </ConnectedIntlProvider>
     );

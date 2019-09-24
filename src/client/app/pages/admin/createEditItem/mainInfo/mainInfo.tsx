@@ -52,7 +52,8 @@ class MainInfoPage extends React.Component<IMainInfoProps, any> {
         if (isCreatePage) {
           history.push(adminRoutes.editItemMain.getLink(newItem.userId, newItem.id));
         } else {
-          initializeForm(item);
+          console.log('Initialize form', newItem);
+          initializeForm(newItem);
         }
       })
       .catch(this.handleErrors);

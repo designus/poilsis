@@ -28,7 +28,6 @@ interface ICustomProps {
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   const { handleSubmit, submitting, pristine, selectedLanguage, formatMessage, locale } = props;
-
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
