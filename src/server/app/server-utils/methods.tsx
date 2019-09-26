@@ -13,7 +13,8 @@ import {
   IItem,
   TranslatableField,
   hasLocalizedFields,
-  Languages
+  Languages,
+  DataTypes
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -104,13 +105,13 @@ export const formatAlias = alias => alias
   .join('-')
   .toLowerCase();
 
-export const getAlias = (item: IType | ICity | IItem): TranslatableField =>
+export const getAlias = (item: DataTypes): TranslatableField =>
   Object.entries(item.alias).reduce((acc, [locale, value]: [Languages, string]) => {
     acc[locale] = formatAlias(value || item.name[locale]);
     return acc;
   }, {});
 
-export const getLocalizedAlias = (item: IItem | IType | ICity, locale: Languages): string => {
+export const getLocalizedAlias = (item: DataTypes, locale: Languages): string => {
   const localizedName = item.name[locale];
   const localizedAlias = item.alias[locale];
 
@@ -123,6 +124,28 @@ export const extendAliasWithId = (newAlias: TranslatableField, id: string, exist
     return acc;
   }, {});
 };
+
+export const itemsByAliases = (alias: TranslatableField) => {
+  const aliasValues = Object.values(alias);
+  const query = Object.keys(alias).map(locale => ({
+    [`alias.${locale}`]: { $in: aliasValues }
+  }));
+
+  return {
+    $or: query
+  };
+};
+
+export function getUniqueAlias<T extends DataTypes[]>(items: T, uniqueId: string, alias: TranslatableField): TranslatableField {
+  const existingAliases = items
+    .filter(item => item.id !== uniqueId)
+    .map(item => Object.values(item.alias))
+    .reduce((acc: string[], val: string[]) => acc.concat(val), []);
+
+  return existingAliases.length > 0
+    ? extendAliasWithId(alias, uniqueId, existingAliases)
+    : alias;
+}
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
   if (err) {

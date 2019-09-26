@@ -10,7 +10,9 @@ import {
   sendResponse,
   formatAlias,
   getAlias,
-  extendAliasWithId
+  extendAliasWithId,
+  getUniqueAlias,
+  itemsByAliases
 } from '../server-utils';
 
 const { images: { maxPhotos } } = itemValidation;
@@ -130,24 +132,14 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
     const updatedAt = new Date();
     const alias = getAlias(updateItem);
 
-    const aliasValues = Object.values(alias);
-    const query = Object.keys(alias).map(locale => ({
-      [`alias.${locale}`]: { $in: aliasValues }
-    }));
-
-    const documents: IItemModel[] = await ItemsModel.find({ $or: query });
+    const documents: IItemModel[] = await ItemsModel.find(itemsByAliases(alias));
     const itemsByAlias = documents.map(item => (item.toJSON() as IItem));
 
-    const existingAliases = itemsByAlias
-      .filter(item => item.id !== updateItem.id)
-      .map(item => Object.values(item.alias))
-      .reduce((acc: string[], val: string[]) => acc.concat(val), []);
-
-    const newAlias = existingAliases.length > 0
-      ? extendAliasWithId(alias, updateItem.id, existingAliases)
-      : alias;
-
-    const updatedItem = { ...updateItem, alias: newAlias, updatedAt };
+    const updatedItem = {
+      ...updateItem,
+      alias: getUniqueAlias(itemsByAlias, updateItem.id, alias),
+      updatedAt
+    };
 
     const newItem = await ItemsModel.findOneAndUpdate(
       { id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true }

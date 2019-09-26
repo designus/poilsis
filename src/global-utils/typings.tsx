@@ -92,3 +92,5 @@ export interface IUser {
   role: string;
   alias: string;
 }
+
+export type DataTypes = IItem | IType | ICity;
