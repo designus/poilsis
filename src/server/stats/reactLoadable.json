@@ -3081,7 +3081,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/upload": [
+  "./upload": [
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",

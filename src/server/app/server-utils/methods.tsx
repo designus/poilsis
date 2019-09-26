@@ -129,14 +129,15 @@ export const itemsByAliases = (alias: TranslatableField) => {
   };
 };
 
-export function getUniqueAlias<T extends DataTypes[]>(items: T, uniqueId: string, alias: TranslatableField): TranslatableField {
+export function getUniqueAlias<T extends DataTypes[]>(items: T, itemId: string, alias: TranslatableField): TranslatableField {
   const existingAliases = items
-    .filter(item => item.id !== uniqueId)
+    // we remove existing (or it's own) item
+    .filter(item => item.id !== itemId)
     .map(item => Object.values(item.alias))
     .reduce((acc: string[], val: string[]) => acc.concat(val), []);
 
   return existingAliases.length > 0
-    ? extendAliasWithId(alias, uniqueId, existingAliases)
+    ? extendAliasWithId(alias, itemId, existingAliases)
     : alias;
 }
 

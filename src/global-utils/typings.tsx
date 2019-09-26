@@ -30,10 +30,10 @@ export interface IResponseError {
 }
 
 export interface IItemDescFields {
-  description: TranslatableField;
-  metaTitle: TranslatableField;
-  metaKeywords: TranslatableField;
-  metaDescription: TranslatableField;
+  description?: TranslatableField;
+  metaTitle?: TranslatableField;
+  metaKeywords?: TranslatableField;
+  metaDescription?: TranslatableField;
 }
 
 export interface IItem extends IItemDescFields {
