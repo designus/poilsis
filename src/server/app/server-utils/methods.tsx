@@ -111,13 +111,6 @@ export const getAlias = (item: DataTypes): TranslatableField =>
     return acc;
   }, {});
 
-export const getLocalizedAlias = (item: DataTypes, locale: Languages): string => {
-  const localizedName = item.name[locale];
-  const localizedAlias = item.alias[locale];
-
-  return formatAlias(localizedAlias || localizedName);
-};
-
 export const extendAliasWithId = (newAlias: TranslatableField, id: string, existingAliases: string[]): TranslatableField => {
   return Object.entries(newAlias).reduce((acc, [locale, value]: [Languages, string]) => {
     acc[locale] = existingAliases.includes(value) ? `${value}-${id}` : value;
