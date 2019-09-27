@@ -132,5 +132,4 @@ ItemsSchema.pre('save', function(next) {
   next();
 });
 
-// export const ItemsModel = model('Items', ItemsSchema);
 export const ItemsModel: Model<IItemModel> = model<IItemModel>('Items', ItemsSchema);

@@ -1,5 +1,5 @@
 import { TranslatableField, DataTypes } from 'global-utils/typings';
-import { extendAliasWithId, getUniqueAlias } from '../methods';
+import { extendAliasWithId, getAlias, getUniqueAlias } from '../methods';
 import { extend } from 'dayjs';
 
 describe('server-utils/methods', () => {
@@ -16,7 +16,7 @@ describe('server-utils/methods', () => {
       });
     });
 
-    it('getUniqueAlias() should adjust duplicated alias to include unique id', () => {
+    it('getUniqueAlias()', () => {
       const items = [
         {
           id: '123',
@@ -32,7 +32,7 @@ describe('server-utils/methods', () => {
         }
       ] as DataTypes[];
 
-      const duplicatedAlias = {
+      const existingAlias = {
         en: 'hotel-xxx'
       };
 
@@ -40,8 +40,31 @@ describe('server-utils/methods', () => {
         en: 'apartments-in-paris'
       };
 
-      expect(getUniqueAlias(items, '789', duplicatedAlias)).toEqual({ en: 'hotel-xxx-789' });
+      expect(getUniqueAlias(items, '789', existingAlias)).toEqual({ en: 'hotel-xxx-789' });
       expect(getUniqueAlias(items, '789', uniqueAlias)).toEqual(uniqueAlias);
+    });
+
+    it('getAlias()', () => {
+      // tslint:disable-next-line: no-object-literal-type-assertion
+      const itemWithEmptyAlias = {
+        id: '123',
+        alias: {
+          en: ''
+        },
+        name: {
+          en: 'Custom name'
+        }
+      } as DataTypes;
+
+      const itemWithFilledAlias = {
+        ...itemWithEmptyAlias,
+        alias: {
+          en: 'Custom   Alias'
+        }
+      };
+
+      expect(getAlias(itemWithEmptyAlias)).toEqual({ en: 'custom-name' });
+      expect(getAlias(itemWithFilledAlias)).toEqual({ en: 'custom-alias' });
     });
   });
 });
