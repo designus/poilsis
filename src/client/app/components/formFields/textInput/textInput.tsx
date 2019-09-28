@@ -2,6 +2,8 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -70,6 +72,12 @@ function TextInput(props: ITextInputProps) {
     return hasError;
   };
 
+  const renderLoader = () => meta.asyncValidating && (
+    <InputAdornment position="end">
+      <CircularProgress size={15} />
+    </InputAdornment>
+  );
+
   const renderInput = (value: string, language?: string) => {
     return (
       <div
@@ -89,12 +97,14 @@ function TextInput(props: ITextInputProps) {
               value={value}
               multiline={multiline}
               rows={4}
+              onBlur={input.onBlur}
               onChange={handleChange(language)}
               margin="dense"
               className={`${multiline ? classes.multilineInput : ''}`}
               classes={{
                 error: classes.error
               }}
+              endAdornment={renderLoader()}
             />
           </FormControl>
         </Tooltip>
@@ -111,4 +121,4 @@ function TextInput(props: ITextInputProps) {
   );
 }
 
-export default withStyles(styles)(TextInput);
+export default withStyles(styles)(TextInput) as any;

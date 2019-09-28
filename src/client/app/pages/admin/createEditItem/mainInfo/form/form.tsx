@@ -14,6 +14,15 @@ import { Switcher } from 'components/formFields/switch';
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+const asyncValidate = values => {
+  console.log('Values', values);
+  return sleep(1000).then(() => {
+    return undefined;
+  });
+};
+
 export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
 
 interface ICustomProps {
@@ -94,4 +103,8 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   );
 };
 
-export const MainInfoForm = reduxForm<{}, ICustomProps>({ form: MAIN_INFO_FORM_NAME })(Form);
+export const MainInfoForm = reduxForm<{}, ICustomProps>({
+  asyncValidate,
+  asyncBlurFields: ['alias'],
+  form: MAIN_INFO_FORM_NAME
+})(Form);

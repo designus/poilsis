@@ -9,7 +9,7 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { IAliasMap, IItemsMap, Toast, IAppState } from 'types';
+import { Toast, IAppState } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -23,7 +23,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Omit, Value } from 'global-utils/typings';
+import { IImage, IItem, IItemDescFields, Omit } from 'global-utils/typings';
 import { getItemById } from 'selectors';
 import {
   ItemsActionTypes,
