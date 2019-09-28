@@ -1,6 +1,5 @@
-import { TranslatableField, DataTypes } from 'global-utils/typings';
-import { extendAliasWithId, getAlias, getUniqueAlias } from '../methods';
-import { extend } from 'dayjs';
+import { DataTypes } from 'global-utils/typings';
+import { extendAliasWithId, getAlias, getUniqueAlias, formatAlias } from '../methods';
 
 describe('server-utils/methods', () => {
   describe('Aliases', () => {
@@ -45,7 +44,6 @@ describe('server-utils/methods', () => {
     });
 
     it('getAlias()', () => {
-      // tslint:disable-next-line: no-object-literal-type-assertion
       const itemWithEmptyAlias = {
         id: '123',
         alias: {
@@ -65,6 +63,11 @@ describe('server-utils/methods', () => {
 
       expect(getAlias(itemWithEmptyAlias)).toEqual({ en: 'custom-name' });
       expect(getAlias(itemWithFilledAlias)).toEqual({ en: 'custom-alias' });
+    });
+
+    it('formatAlias()', () => {
+      expect(formatAlias('kambarių ...,, nuoma Palangoje')).toBe('kambariu-nuoma-palangoje');
+      expect(formatAlias('% svečių | namai   ----. nidoje 1')).toBe('sveciu-namai-nidoje-1');
     });
   });
 });

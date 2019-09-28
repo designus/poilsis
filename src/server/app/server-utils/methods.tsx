@@ -1,18 +1,12 @@
 import { Response, NextFunction } from 'express';
 import { unlink } from 'fs';
-
 import {
   ImageSize,
   IImage,
   IResponseError,
   mapMimeTypesToTypes,
   itemValidation,
-  DEFAULT_LANGUAGE,
-  IType,
-  ICity,
-  IItem,
   TranslatableField,
-  hasLocalizedFields,
   Languages,
   DataTypes
 } from 'global-utils';
@@ -21,6 +15,8 @@ import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
 
 import { IMulterFile, FileUploadErrors } from './types';
 import { getValidationMessage } from './validationMessages';
+
+const AsciiFolder = require('fold-to-ascii');
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {
@@ -100,10 +96,13 @@ export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));
 };
 
-export const formatAlias = alias => alias
-  .split(/\s+/)
-  .join('-')
-  .toLowerCase();
+export const formatAlias = (alias: string): string =>
+  AsciiFolder.foldReplacing(alias)
+    .replace(/[^a-zA-Z0-9]+/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .join('-')
+    .toLowerCase();
 
 export const getAlias = (item: DataTypes): TranslatableField =>
   Object.entries(item.alias).reduce((acc, [locale, value]: [Languages, string]) => {
