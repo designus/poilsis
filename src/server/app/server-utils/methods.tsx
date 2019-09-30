@@ -8,7 +8,8 @@ import {
   itemValidation,
   TranslatableField,
   Languages,
-  DataTypes
+  DataTypes,
+  LANGUAGES
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -104,11 +105,16 @@ export const formatAlias = (alias: string): string =>
     .join('-')
     .toLowerCase();
 
-export const getAlias = (item: DataTypes): TranslatableField =>
-  Object.entries(item.alias).reduce((acc, [locale, value]: [Languages, string]) => {
-    acc[locale] = formatAlias(value || item.name[locale]);
+export const getAlias = (item: DataTypes, languages: string[]): TranslatableField => {
+  return languages.reduce((acc, locale) => {
+    let alias = item.name[locale];
+    if (item.alias && item.alias[locale]) {
+      alias = item.alias[locale];
+    }
+    acc[locale] = formatAlias(alias);
     return acc;
   }, {});
+};
 
 export const extendAliasWithId = (newAlias: TranslatableField, id: string, existingAliases: string[]): TranslatableField => {
   return Object.entries(newAlias).reduce((acc, [locale, value]: [Languages, string]) => {
@@ -117,10 +123,9 @@ export const extendAliasWithId = (newAlias: TranslatableField, id: string, exist
   }, {});
 };
 
-export const itemsByAliases = (alias: TranslatableField) => {
-  const aliasValues = Object.values(alias);
-  const query = Object.keys(alias).map(locale => ({
-    [`alias.${locale}`]: { $in: aliasValues }
+export const itemsByAliases = (aliases: string[]) => {
+  const query = LANGUAGES.map(locale => ({
+    [`alias.${locale}`]: { $in: aliases }
   }));
 
   return {
@@ -128,15 +133,18 @@ export const itemsByAliases = (alias: TranslatableField) => {
   };
 };
 
-export function getUniqueAlias<T extends DataTypes[]>(items: T, itemId: string, alias: TranslatableField): TranslatableField {
-  const existingAliases = items
-    // we remove existing (or it's own) item
-    .filter(item => item.id !== itemId)
+export function getExistingAliases<T extends DataTypes[]>(items: T, ownItemId?: string) {
+  return items
+    // we remove own item
+    .filter(item => item.id !== ownItemId)
     .map(item => Object.values(item.alias))
     .reduce((acc: string[], val: string[]) => acc.concat(val), []);
+}
 
+export function getUniqueAlias<T extends DataTypes[]>(items: T, ownItemId: string, alias: TranslatableField): TranslatableField {
+  const existingAliases = getExistingAliases(items, ownItemId);
   return existingAliases.length > 0
-    ? extendAliasWithId(alias, itemId, existingAliases)
+    ? extendAliasWithId(alias, ownItemId, existingAliases)
     : alias;
 }
 

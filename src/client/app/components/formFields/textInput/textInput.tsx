@@ -43,6 +43,7 @@ function TextInput(props: ITextInputProps) {
   const { intl, input, meta, selectedLanguage, classes, label, multiline } = props;
 
   const [inputValue, setInputValue] = useState(getInitialValue(input.value, intl));
+
   const prevInputValue = usePrevious(input.value);
 
   useEffect(() => {
@@ -55,13 +56,20 @@ function TextInput(props: ITextInputProps) {
     debounce(input.onChange, 600), [input.onChange]
   );
 
-  const handleChange = (lang: string) => event => {
+  const getNewState = (locale: string, newValue: string) => {
     const oldValue = inputValue;
-    const newValue = event.target.value;
-    const newState = intl ? { ...oldValue, [lang]: newValue } : newValue;
+    return intl ? { ...oldValue, [locale]: newValue } : newValue;
+  };
 
+  const handleOnChange = (locale: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newState = getNewState(locale, event.target.value);
     setInputValue(newState);
     onChange(newState);
+  };
+
+  const handleOnBlur = (locale: string) => (event) => {
+    const newState = getNewState(locale, event.target.value);
+    input.onBlur(newState);
   };
 
   const showError = (language: string) => {
@@ -97,8 +105,8 @@ function TextInput(props: ITextInputProps) {
               value={value}
               multiline={multiline}
               rows={4}
-              onBlur={input.onBlur}
-              onChange={handleChange(language)}
+              onBlur={handleOnBlur(language)}
+              onChange={handleOnChange(language)}
               margin="dense"
               className={`${multiline ? classes.multilineInput : ''}`}
               classes={{

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ICity } from 'global-utils';
+import { ICity, LANGUAGES } from 'global-utils';
 import { CitiesModel } from '../model';
 import { sendResponse, getAlias } from '../server-utils';
 
@@ -13,7 +13,7 @@ export const getCity = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewCity = (req: Request, res: Response, next: NextFunction) => {
   const city: ICity = req.body;
-  const alias = getAlias(city);
+  const alias = getAlias(city, LANGUAGES);
   const newCity = { ...city, alias };
   new CitiesModel(newCity).save(sendResponse(res, next));
 };

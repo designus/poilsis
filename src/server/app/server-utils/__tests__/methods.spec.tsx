@@ -44,6 +44,7 @@ describe('server-utils/methods', () => {
     });
 
     it('getAlias()', () => {
+      const languages = ['en'];
       const itemWithEmptyAlias = {
         id: '123',
         alias: {
@@ -61,8 +62,16 @@ describe('server-utils/methods', () => {
         }
       };
 
-      expect(getAlias(itemWithEmptyAlias)).toEqual({ en: 'custom-name' });
-      expect(getAlias(itemWithFilledAlias)).toEqual({ en: 'custom-alias' });
+      const itemWithoutAlias = {
+        id: '123',
+        name: {
+          en: 'Custom name'
+        }
+      } as DataTypes;
+
+      expect(getAlias(itemWithEmptyAlias, languages)).toEqual({ en: 'custom-name' });
+      expect(getAlias(itemWithFilledAlias, languages)).toEqual({ en: 'custom-alias' });
+      expect(getAlias(itemWithoutAlias, languages)).toEqual({ en: 'custom-name' });
     });
 
     it('formatAlias()', () => {

@@ -1,7 +1,7 @@
 import { flatten } from 'lodash';
 import { Schema, Document } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
-import { IItem, itemValidation, getItemDescriptionFields, TranslatableField } from 'global-utils';
+import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, DataTypes } from 'global-utils';
 import { ItemsModel, IItemModel } from '../model';
 import {
   uploadImages,
@@ -11,6 +11,7 @@ import {
   formatAlias,
   getAlias,
   extendAliasWithId,
+  getExistingAliases,
   getUniqueAlias,
   itemsByAliases
 } from '../server-utils';
@@ -18,6 +19,14 @@ import {
 const { images: { maxPhotos } } = itemValidation;
 
 const shortId = require('shortid');
+
+const getItemsByAlias = async (alias: TranslatableField) => {
+  const aliasValues = Object.values(alias);
+  const documents: IItemModel[] = await ItemsModel.find(itemsByAliases(aliasValues));
+  const itemsByAlias = documents.map(item => (item.toJSON() as DataTypes));
+
+  return itemsByAlias;
+};
 
 const mainImageProjection = {
   $let: {
@@ -106,9 +115,12 @@ export const toggleItemIsRecommendedField = (req: Request, res: Response, next: 
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: IItem = req.body;
-  const alias: any = getAlias(item);
-
-  const newItem = { id, alias, ...item };
+  const alias: TranslatableField = getAlias(item, LANGUAGES);
+  const newItem = {
+    ...item,
+    alias: getUniqueAlias(await getItemsByAlias(alias), id, alias),
+    id
+  };
 
   new ItemsModel(newItem).save(sendResponse(res, next));
 };
@@ -122,6 +134,13 @@ export const getViewItem = (req: Request, res: Response, next: NextFunction) => 
   ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
 };
 
+export const doesAliasExist = async (req: Request, res: Response, next: NextFunction) => {
+  const alias: TranslatableField = req.params.alias;
+  const existingAliases = getExistingAliases(await getItemsByAlias(alias));
+
+  return existingAliases.length > 0;
+};
+
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
 };
@@ -130,14 +149,11 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   try {
     const updateItem: IItem = req.body;
     const updatedAt = new Date();
-    const alias = getAlias(updateItem);
-
-    const documents: IItemModel[] = await ItemsModel.find(itemsByAliases(alias));
-    const itemsByAlias = documents.map(item => (item.toJSON() as IItem));
+    const alias = getAlias(updateItem, LANGUAGES);
 
     const updatedItem = {
       ...updateItem,
-      alias: getUniqueAlias(itemsByAlias, updateItem.id, alias),
+      alias: getUniqueAlias(await getItemsByAlias(alias), updateItem.id, alias),
       updatedAt
     };
 

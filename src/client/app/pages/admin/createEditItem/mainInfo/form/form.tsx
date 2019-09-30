@@ -3,21 +3,21 @@ import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
-import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
+import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount, IItem } from 'global-utils';
 
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';
 import { Switcher } from 'components/formFields/switch';
+import { http } from 'actions/utils';
 
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const asyncValidate = values => {
-  console.log('Values', values);
+const asyncValidate = (values: IItem) => {
   return sleep(1000).then(() => {
     return undefined;
   });

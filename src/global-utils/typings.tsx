@@ -38,8 +38,8 @@ export interface IItemDescFields {
 
 export interface IItem extends IItemDescFields {
   id?: string;
+  alias?: TranslatableField;
   name: TranslatableField;
-  alias: TranslatableField;
   address: string;
   cityId: string;
   types: string[];
@@ -55,17 +55,17 @@ export interface IItem extends IItemDescFields {
 
 export interface IType {
   id: string;
+  alias?: TranslatableField;
   name: TranslatableField;
   description: TranslatableField;
-  alias: TranslatableField;
 }
 
 export interface ICity {
   id: string;
+  alias?: TranslatableField;
   types: string[];
   name: TranslatableField;
   description: TranslatableField;
-  alias: TranslatableField;
   hasItems?: boolean;
 }
 
