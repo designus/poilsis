@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AxiosResponse } from 'axios';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
@@ -15,12 +16,17 @@ import { http } from 'actions/utils';
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-const asyncValidate = (values: IItem) => {
-  return sleep(1000).then(() => {
-    return undefined;
-  });
+const asyncValidate = (item: IItem) => {
+  return http.post('/api/items/item/alias-exist', { id: item.id, name: item.name, alias: item.alias })
+    .then((response: AxiosResponse<boolean>) => response.data)
+    .then(doesExist => {
+      if (doesExist) {
+        throw {
+          alias: 'This alias already exist'
+        };
+      }
+      return undefined;
+    });
 };
 
 export const MAIN_INFO_FORM_NAME = 'MainInfoForm';

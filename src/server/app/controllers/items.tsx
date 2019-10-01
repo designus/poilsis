@@ -1,5 +1,4 @@
-import { flatten } from 'lodash';
-import { Schema, Document } from 'mongoose';
+
 import { Request, Response, NextFunction } from 'express';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, DataTypes } from 'global-utils';
 import { ItemsModel, IItemModel } from '../model';
@@ -8,12 +7,10 @@ import {
   resizeImages,
   getImages,
   sendResponse,
-  formatAlias,
   getAlias,
-  extendAliasWithId,
   getExistingAliases,
   getUniqueAlias,
-  itemsByAliases
+  getItemsByAliasesQuery
 } from '../server-utils';
 
 const { images: { maxPhotos } } = itemValidation;
@@ -21,8 +18,8 @@ const { images: { maxPhotos } } = itemValidation;
 const shortId = require('shortid');
 
 const getItemsByAlias = async (alias: TranslatableField) => {
-  const aliasValues = Object.values(alias);
-  const documents: IItemModel[] = await ItemsModel.find(itemsByAliases(aliasValues));
+  const aliasValues = Object.values(alias).filter(Boolean);
+  const documents: IItemModel[] = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
   const itemsByAlias = documents.map(item => (item.toJSON() as DataTypes));
 
   return itemsByAlias;
@@ -115,7 +112,7 @@ export const toggleItemIsRecommendedField = (req: Request, res: Response, next: 
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: IItem = req.body;
-  const alias: TranslatableField = getAlias(item, LANGUAGES);
+  const alias = getAlias(item, LANGUAGES) as TranslatableField;
   const newItem = {
     ...item,
     alias: getUniqueAlias(await getItemsByAlias(alias), id, alias),
@@ -134,11 +131,15 @@ export const getViewItem = (req: Request, res: Response, next: NextFunction) => 
   ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
 };
 
-export const doesAliasExist = async (req: Request, res: Response, next: NextFunction) => {
-  const alias: TranslatableField = req.params.alias;
-  const existingAliases = getExistingAliases(await getItemsByAlias(alias));
-
-  return existingAliases.length > 0;
+export const doesItemAliasExist = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const alias = getAlias(req.body, LANGUAGES, next) as TranslatableField;
+    const itemsByAlias = await getItemsByAlias(alias);
+    const existingAliases = getExistingAliases(itemsByAlias);
+    res.status(200).json(existingAliases.length > 0);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
@@ -149,7 +150,7 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   try {
     const updateItem: IItem = req.body;
     const updatedAt = new Date();
-    const alias = getAlias(updateItem, LANGUAGES);
+    const alias = getAlias(updateItem, LANGUAGES) as TranslatableField;
 
     const updatedItem = {
       ...updateItem,

@@ -105,15 +105,20 @@ export const formatAlias = (alias: string): string =>
     .join('-')
     .toLowerCase();
 
-export const getAlias = (item: DataTypes, languages: string[]): TranslatableField => {
-  return languages.reduce((acc, locale) => {
-    let alias = item.name[locale];
-    if (item.alias && item.alias[locale]) {
-      alias = item.alias[locale];
-    }
-    acc[locale] = formatAlias(alias);
-    return acc;
-  }, {});
+export const getAlias = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
+  try {
+    const result = languages.reduce((acc, locale) => {
+      let alias = item.name[locale];
+      if (item.alias && item.alias[locale]) {
+        alias = item.alias[locale];
+      }
+      acc[locale] = alias ? formatAlias(alias) : '';
+      return acc;
+    }, {});
+    return result;
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const extendAliasWithId = (newAlias: TranslatableField, id: string, existingAliases: string[]): TranslatableField => {
@@ -123,7 +128,7 @@ export const extendAliasWithId = (newAlias: TranslatableField, id: string, exist
   }, {});
 };
 
-export const itemsByAliases = (aliases: string[]) => {
+export const getItemsByAliasesQuery = (aliases: string[]) => {
   const query = LANGUAGES.map(locale => ({
     [`alias.${locale}`]: { $in: aliases }
   }));
