@@ -107,12 +107,20 @@ export const formatAlias = (alias: string): string =>
 
 export const getAlias = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
   try {
+    const getNewAlias = (value: string, values: TranslatableField, locale: string) => {
+      const existingValues = Object.keys(values)
+        .filter(key => key !== locale)
+        .map(key => values[key]);
+
+      return existingValues.includes(value) ? `${value}-${locale}` : value;
+    };
+
     const result = languages.reduce((acc, locale) => {
-      let alias = item.name[locale];
-      if (item.alias && item.alias[locale]) {
-        alias = item.alias[locale];
-      }
-      acc[locale] = alias ? formatAlias(alias) : '';
+      const newAlias = item.alias && item.alias[locale]
+        ? getNewAlias(item.alias[locale], item.alias, locale)
+        : getNewAlias(item.name[locale], item.name, locale);
+
+      acc[locale] = newAlias ? formatAlias(newAlias) : '';
       return acc;
     }, {});
     return result;
