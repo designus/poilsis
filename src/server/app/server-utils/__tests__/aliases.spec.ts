@@ -1,9 +1,9 @@
-import { DataTypes } from 'global-utils/typings';
-import { extendAliasWithId, getAlias, getUniqueAlias, getExistingAliases, formatAlias } from '../methods';
+import { DataTypes } from '../../../../global-utils/typings';
+import { extendAliasWithId, getAlias, getUniqueAlias, getAliasList, formatAlias, extendAliasWithLocale } from '../aliases';
 
 describe('server-utils/methods', () => {
   describe('Aliases', () => {
-    it('extendAliasWithId() should append id to the end of the alias if alias already exists', () => {
+    it('extendAliasWithId() should add id to the end of the alias if alias already exists in other items', () => {
       const alias = {
         en: 'name',
         lt: 'pavadinimas'
@@ -136,8 +136,45 @@ describe('server-utils/methods', () => {
       expect(formatAlias('% svečių | namai   ----. nidoje 1')).toBe('sveciu-namai-nidoje-1');
     });
 
-    // it('getExistingAliases()', () => {
+    it('getAliasList()', () => {
+      const items = [
+        {
+          id: '123',
+          alias: {
+            en: '123-alias-en',
+            lt: '123-alias-lt'
+          }
+        },
+        {
+          id: '345',
+          alias: {
+            en: '345-alias-en',
+            lt: '345-alias-lt'
+          }
+        }
+      ] as DataTypes[];
 
-    // })
+      expect(getAliasList(items, undefined)).toEqual(['123-alias-en', '123-alias-lt', '345-alias-en', '345-alias-lt']);
+      expect(getAliasList(items, '123')).toEqual(['345-alias-en', '345-alias-lt']);
+    });
+
+    it('extendAliasWithLocale() should add locale if alias already exists in same item but other locales', () => {
+      const aliasValue = 'alias';
+      const locale = 'lt';
+
+      const aliasWithUniqueValues = {
+        en: 'alias-en',
+        lt: 'alias'
+      };
+
+      expect(extendAliasWithLocale(aliasValue, aliasWithUniqueValues, locale)).toBe('alias');
+
+      const aliasWithDuplicatedValues = {
+        en: 'alias',
+        lt: 'alias'
+      };
+
+      expect(extendAliasWithLocale(aliasValue, aliasWithDuplicatedValues, locale)).toBe('alias-lt');
+    });
   });
 });

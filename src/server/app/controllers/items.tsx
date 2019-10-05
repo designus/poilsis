@@ -1,18 +1,21 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, DataTypes } from 'global-utils';
-import { ItemsModel, IItemModel } from '../model';
 import {
   uploadImages,
   resizeImages,
   getImages,
-  sendResponse,
+  sendResponse
+} from 'server-utils';
+
+import {
   getAlias,
-  getExistingAliases,
+  getAliasList,
   getUniqueAlias,
   getItemsByAliasesQuery
-} from '../server-utils';
+} from 'server-utils/aliases';
 
+import { ItemsModel, IItemModel } from '../model';
 const { images: { maxPhotos } } = itemValidation;
 
 const shortId = require('shortid');
@@ -133,9 +136,10 @@ export const getViewItem = (req: Request, res: Response, next: NextFunction) => 
 
 export const doesItemAliasExist = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const alias = getAlias(req.body, LANGUAGES, next) as TranslatableField;
+    const item: IItem = req.body;
+    const alias = getAlias(item, LANGUAGES, next) as TranslatableField;
     const itemsByAlias = await getItemsByAlias(alias);
-    const existingAliases = getExistingAliases(itemsByAlias);
+    const existingAliases = getAliasList(itemsByAlias, item.id);
     res.status(200).json(existingAliases.length > 0);
   } catch (err) {
     return next(err);

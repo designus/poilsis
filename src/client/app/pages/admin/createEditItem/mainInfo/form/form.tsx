@@ -17,7 +17,8 @@ const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
 const asyncValidate = (item: IItem) => {
-  return http.post('/api/items/item/alias-exist', { id: item.id, name: item.name, alias: item.alias })
+  const { id, name, alias } = item;
+  return http.post('/api/items/item/alias-exist', { id, name, alias })
     .then((response: AxiosResponse<boolean>) => response.data)
     .then(doesExist => {
       if (doesExist) {

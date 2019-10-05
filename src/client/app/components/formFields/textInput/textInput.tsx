@@ -41,8 +41,8 @@ const { useState, useEffect, useCallback } = React;
 
 function TextInput(props: ITextInputProps) {
   const { intl, input, meta, selectedLanguage, classes, label, multiline } = props;
-
-  const [inputValue, setInputValue] = useState(getInitialValue(input.value, intl));
+  const [initialState] = useState(getInitialValue(input.value, intl));
+  const [inputValue, setInputValue] = useState(initialState);
 
   const prevInputValue = usePrevious(input.value);
 
@@ -69,7 +69,9 @@ function TextInput(props: ITextInputProps) {
 
   const handleOnBlur = (locale: string) => (event) => {
     const newState = getNewState(locale, event.target.value);
-    input.onBlur(newState);
+    if (newState[locale] && newState[locale] !== initialState[locale]) {
+      input.onBlur(newState);
+    }
   };
 
   const showError = (language: string) => {

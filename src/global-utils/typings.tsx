@@ -37,8 +37,8 @@ export interface IItemDescFields {
 }
 
 export interface IItem extends IItemDescFields {
-  id?: string;
-  alias?: TranslatableField;
+  id: string;
+  alias: TranslatableField;
   name: TranslatableField;
   address: string;
   cityId: string;

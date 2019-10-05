@@ -11,7 +11,6 @@ export default function Loading(props: LoadingComponentProps) {
       return null;
     }
   } else if (props.error) {
-    console.log('Error', props.error);
     return <p>Error! Component failed to load</p>;
   } else {
     return null;
