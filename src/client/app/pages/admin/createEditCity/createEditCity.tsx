@@ -68,7 +68,7 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
           history.push(adminRoutes.editCity.getLink(newCity.id));
         } else {
           // We should initialize form with internationalized fields
-          initializeForm(city);
+          initializeForm(newCity);
         }
       })
       .catch(this.handleErrors);

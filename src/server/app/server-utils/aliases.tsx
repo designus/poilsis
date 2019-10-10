@@ -36,7 +36,7 @@ export const getAlias = (item: DataTypes, languages: string[], next?: NextFuncti
 
 export const extendAliasWithId = (newAlias: TranslatableField, id: string, existingAliases: string[]): TranslatableField => {
   return Object.entries(newAlias).reduce((acc, [locale, value]: [Languages, string]) => {
-    acc[locale] = existingAliases.includes(value) ? `${value}-${id}` : value;
+    acc[locale] = value && existingAliases.includes(value) ? `${value}-${id}` : value;
     return acc;
   }, {});
 };

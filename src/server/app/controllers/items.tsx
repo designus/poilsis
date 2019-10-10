@@ -1,31 +1,17 @@
 
 import { Request, Response, NextFunction } from 'express';
-import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, DataTypes } from 'global-utils';
-import {
-  uploadImages,
-  resizeImages,
-  getImages,
-  sendResponse
-} from 'server-utils';
-
-import {
-  getAlias,
-  getAliasList,
-  getUniqueAlias,
-  getItemsByAliasesQuery
-} from 'server-utils/aliases';
+import shortId from 'shortid';
+import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
+import { getImages, sendResponse } from 'server-utils/methods';
+import { uploadImages, resizeImages } from 'server-utils/middlewares';
+import { getAlias, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
 
 import { ItemsModel, IItemModel } from '../model';
-const { images: { maxPhotos } } = itemValidation;
-
-const shortId = require('shortid');
 
 const getItemsByAlias = async (alias: TranslatableField) => {
   const aliasValues = Object.values(alias).filter(Boolean);
   const documents: IItemModel[] = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
-  const itemsByAlias = documents.map(item => (item.toJSON() as DataTypes));
-
-  return itemsByAlias;
+  return documents.map(item => (item.toJSON() as IItem));
 };
 
 const mainImageProjection = {
@@ -152,13 +138,13 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 
 export const updateMainInfo = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const updateItem: IItem = req.body;
+    const item: IItem = req.body;
     const updatedAt = new Date();
-    const alias = getAlias(updateItem, LANGUAGES) as TranslatableField;
+    const alias = getAlias(item, LANGUAGES) as TranslatableField;
 
     const updatedItem = {
-      ...updateItem,
-      alias: getUniqueAlias(await getItemsByAlias(alias), updateItem.id, alias),
+      ...item,
+      alias: getUniqueAlias(await getItemsByAlias(alias), item.id, alias),
       updatedAt
     };
 
@@ -167,7 +153,7 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
     );
 
     if (!newItem) {
-      throw new Error('Unable to create a new item');
+      throw new Error('Unable to update item');
     }
 
     res.status(200).json(newItem);
@@ -213,7 +199,7 @@ export const updatePhotos = (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const uploadPhotos = (req, res: Response, next: NextFunction) => {
-  const uploadPhotos = uploadImages.array('files[]', maxPhotos);
+  const uploadPhotos = uploadImages.array('files[]', itemValidation.images.maxPhotos);
   uploadPhotos(req, res, (err) => {
     if (err) { return next(err); }
 
