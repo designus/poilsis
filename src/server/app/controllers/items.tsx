@@ -8,7 +8,7 @@ import { getAlias, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from '
 
 import { ItemsModel, IItemModel } from '../model';
 
-const getItemsByAlias = async (alias: TranslatableField) => {
+const getItemsByAlias = async (alias: TranslatableField): Promise<IItem[]> => {
   const aliasValues = Object.values(alias).filter(Boolean);
   const documents: IItemModel[] = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
   return documents.map(item => (item.toJSON() as IItem));

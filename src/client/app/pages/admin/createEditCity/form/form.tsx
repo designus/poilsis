@@ -6,6 +6,7 @@ import { Button } from 'components/button';
 import { getDropdownOptions } from 'client-utils/methods';
 import { isRequired } from 'global-utils';
 import { ITypesMap } from 'types';
+import { asyncValidateAlias } from 'actions';
 
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
@@ -63,4 +64,8 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
   );
 };
 
-export const CityForm = reduxForm<{}, ICustomProps>({ form: CITY_FORM_NAME })(Form);
+export const CityForm = reduxForm<{}, ICustomProps>({
+  asyncValidate: asyncValidateAlias('/api/cities/city/alias-exist'),
+  asyncBlurFields: ['alias'],
+  form: CITY_FORM_NAME
+})(Form);

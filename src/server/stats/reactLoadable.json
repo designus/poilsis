@@ -335,6 +335,78 @@
       "publicPath": "http://localhost:8080/public/homePage.js"
     }
   ],
+  "./common": [
+    {
+      "id": "./app/actions/common.tsx",
+      "name": "./app/actions/common.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/actions/common.tsx",
+      "name": "./app/actions/common.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/selectors/common.tsx",
+      "name": "./app/selectors/common.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./home": [
+    {
+      "id": "./app/actions/home.tsx",
+      "name": "./app/actions/home.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/actions/home.tsx",
+      "name": "./app/actions/home.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/pages/client/home/home.tsx",
+      "name": "./app/pages/client/home/home.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/types/home.tsx",
+      "name": "./app/types/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/home.tsx",
+      "name": "./app/selectors/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/home.tsx",
+      "name": "./app/reducers/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "actions": [
+    {
+      "id": "./app/actions/index.tsx",
+      "name": "./app/actions/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/actions/index.tsx",
+      "name": "./app/actions/index.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
   "actions/types": [
     {
       "id": "./app/actions/types.tsx",
@@ -1399,58 +1471,6 @@
       "name": "../../node_modules/@material-ui/icons/Photo.js",
       "file": "createEditItemPage.js",
       "publicPath": "http://localhost:8080/public/createEditItemPage.js"
-    }
-  ],
-  "./home": [
-    {
-      "id": "./app/actions/home.tsx",
-      "name": "./app/actions/home.tsx",
-      "file": "createEditItemPage.js",
-      "publicPath": "http://localhost:8080/public/createEditItemPage.js"
-    },
-    {
-      "id": "./app/actions/home.tsx",
-      "name": "./app/actions/home.tsx",
-      "file": "homePage.js",
-      "publicPath": "http://localhost:8080/public/homePage.js"
-    },
-    {
-      "id": "./app/pages/client/home/home.tsx",
-      "name": "./app/pages/client/home/home.tsx",
-      "file": "homePage.js",
-      "publicPath": "http://localhost:8080/public/homePage.js"
-    },
-    {
-      "id": "./app/types/home.tsx",
-      "name": "./app/types/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/home.tsx",
-      "name": "./app/selectors/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/home.tsx",
-      "name": "./app/reducers/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "actions": [
-    {
-      "id": "./app/actions/index.tsx",
-      "name": "./app/actions/index.tsx",
-      "file": "createEditItemPage.js",
-      "publicPath": "http://localhost:8080/public/createEditItemPage.js"
-    },
-    {
-      "id": "./app/actions/index.tsx",
-      "name": "./app/actions/index.tsx",
-      "file": "homePage.js",
-      "publicPath": "http://localhost:8080/public/homePage.js"
     }
   ],
   "./adminTopMenu": [
@@ -4383,14 +4403,6 @@
     {
       "id": "../../node_modules/reselect/es/index.js",
       "name": "../../node_modules/reselect/es/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./common": [
-    {
-      "id": "./app/selectors/common.tsx",
-      "name": "./app/selectors/common.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }

@@ -1,34 +1,19 @@
 import * as React from 'react';
-import { AxiosResponse } from 'axios';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
-import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount, IItem } from 'global-utils';
+import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
+import { asyncValidateAlias } from 'actions';
 
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';
 import { Switcher } from 'components/formFields/switch';
-import { http } from 'actions/utils';
 
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
-
-const asyncValidate = (item: IItem) => {
-  const { id, name, alias } = item;
-  return http.post('/api/items/item/alias-exist', { id, name, alias })
-    .then((response: AxiosResponse<boolean>) => response.data)
-    .then(doesExist => {
-      if (doesExist) {
-        throw {
-          alias: 'This alias already exist'
-        };
-      }
-      return undefined;
-    });
-};
 
 export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
 
@@ -111,7 +96,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
 };
 
 export const MainInfoForm = reduxForm<{}, ICustomProps>({
-  asyncValidate,
+  asyncValidate: asyncValidateAlias('/api/items/item/alias-exist'),
   asyncBlurFields: ['alias'],
   form: MAIN_INFO_FORM_NAME
 })(Form);
