@@ -129,6 +129,29 @@ describe('server-utils/methods', () => {
 
       });
 
+      it('should not add alias if name field is empty', () => {
+        const languages = ['en', 'lt', 'ru'];
+        const itemWithEmptyName = {
+          id: '123',
+          name: {
+            en: 'Custom name',
+            lt: '',
+            ru: ''
+          },
+          alias: {
+            en: '',
+            lt: '',
+            ru: ''
+          }
+        } as DataTypes;
+
+        expect(getAlias(itemWithEmptyName, languages)).toEqual({
+          en: 'custom-name',
+          lt: '',
+          ru: ''
+        });
+      });
+
     });
 
     it('formatAlias()', () => {
@@ -159,7 +182,6 @@ describe('server-utils/methods', () => {
     });
 
     it('extendAliasWithLocale() should add locale if alias already exists in same item but other locales', () => {
-      const aliasValue = 'alias';
       const locale = 'lt';
 
       const aliasWithUniqueValues = {
@@ -167,14 +189,14 @@ describe('server-utils/methods', () => {
         lt: 'alias'
       };
 
-      expect(extendAliasWithLocale(aliasValue, aliasWithUniqueValues, locale)).toBe('alias');
+      expect(extendAliasWithLocale(aliasWithUniqueValues, locale, false)).toBe('alias');
 
       const aliasWithDuplicatedValues = {
         en: 'alias',
         lt: 'alias'
       };
 
-      expect(extendAliasWithLocale(aliasValue, aliasWithDuplicatedValues, locale)).toBe('alias-lt');
+      expect(extendAliasWithLocale(aliasWithDuplicatedValues, locale, false)).toBe('alias-lt');
     });
   });
 });

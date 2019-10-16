@@ -65,7 +65,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
         if (this.isCreatePage()) {
           history.push(adminRoutes.editType.getLink(newType.id));
         } else {
-          initializeForm(type);
+          initializeForm(newType);
         }
       })
       .catch(this.handleErrors);

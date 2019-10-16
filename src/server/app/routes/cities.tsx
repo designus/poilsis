@@ -8,7 +8,7 @@ router.route('/')
   .post(auth.authenticate(), auth.authorize(['admin']), addNewCity);
 
 router.route('/city/alias-exist')
- .post(doesCityAliasExist);
+  .post(doesCityAliasExist);
 
 router.route('/city/:cityId')
   .get(getCity)
