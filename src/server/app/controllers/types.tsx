@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { IType, LANGUAGES, TranslatableField } from 'global-utils';
 import shortId from 'shortid';
 
-import { getUniqueAlias, getAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
+import { getUniqueAlias, getAlias, getItemsByAliasesQuery, getAliasList } from 'server-utils/aliases';
 import { sendResponse } from 'server-utils/methods';
 import { TypesModel, ITypeModel } from '../model';
 
@@ -52,6 +52,18 @@ export const updateType = async (req: Request, res: Response, next: NextFunction
     }
 
     res.status(200).json(updatedType);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+export const doesTypeAliasExist = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const type: IType = req.body;
+    const alias = getAlias(type, LANGUAGES, next) as TranslatableField;
+    const citiesByAlias = await getTypesByAlias(alias);
+    const existingAliases = getAliasList(citiesByAlias, type.id);
+    res.status(200).json(existingAliases.length > 0);
   } catch (err) {
     return next(err);
   }

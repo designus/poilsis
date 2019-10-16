@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Button } from 'components/button';
+import { asyncValidateAlias } from 'actions';
 import { isRequired } from 'global-utils';
+import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 
 export const TYPE_FORM_NAME = 'TypeForm';
@@ -51,4 +52,8 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
   );
 };
 
-export const TypeForm = reduxForm<{}, ICustomProps>({ form: TYPE_FORM_NAME })(Form);
+export const TypeForm = reduxForm<{}, ICustomProps>({
+  asyncValidate: asyncValidateAlias('/api/types/type/alias-exist'),
+  asyncBlurFields: ['alias'],
+  form: TYPE_FORM_NAME
+})(Form);

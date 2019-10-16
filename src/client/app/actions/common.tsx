@@ -14,4 +14,4 @@ export const asyncValidateAlias = (url: string) => <T extends AppTypes>(item: T)
       }
       return undefined;
     });
-}
+};
