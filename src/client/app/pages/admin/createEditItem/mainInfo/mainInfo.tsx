@@ -70,7 +70,7 @@ class MainInfoPage extends React.Component<IMainInfoProps, any> {
           showLoadingOverlay={true}
           citiesMap={this.props.citiesMap}
           locale={this.props.locale}
-          formatMessage={this.props.intl.formatMessage}
+          intl={this.props.intl}
           typesMap={this.props.typesMap}
           userRole={this.props.userRole}
           usersMap={this.props.usersMap}

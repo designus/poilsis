@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, InjectedIntl } from 'react-intl';
 import Typography from '@material-ui/core/Typography';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
@@ -13,14 +13,14 @@ import { styles } from './styles';
 export const ITEM_DESCRIPTION_FORM_NAME = 'ItemDescriptionForm';
 
 interface ICustomProps extends WithStyles<typeof styles> {
-  formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
+  intl: InjectedIntl;
   selectedLanguage?: string;
 }
 
 class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomProps>> {
 
   render() {
-    const { handleSubmit, selectedLanguage, formatMessage, classes } = this.props;
+    const { handleSubmit, selectedLanguage, intl, classes } = this.props;
 
     return (
       <form onSubmit={handleSubmit} autoComplete="off">
@@ -28,7 +28,7 @@ class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomP
           name="description"
           type="text"
           component={TextEditor}
-          label={formatMessage({ id: 'admin.common_fields.description'})}
+          label={intl.formatMessage({ id: 'admin.common_fields.description'})}
           selectedLanguage={selectedLanguage}
         />
         <Typography variant="caption" className={classes.root}>
@@ -41,24 +41,24 @@ class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomP
             name="metaTitle"
             type="text"
             component={TextInput}
-            label={formatMessage({ id: 'admin.common_fields.meta_title'})}
-            intl
+            label={intl.formatMessage({ id: 'admin.common_fields.meta_title'})}
+            hasIntl
             selectedLanguage={selectedLanguage}
           />
           <Field
             name="metaDescription"
             type="text"
             component={TextInput}
-            label={formatMessage({ id: 'admin.common_fields.meta_description'})}
-            intl
+            label={intl.formatMessage({ id: 'admin.common_fields.meta_description'})}
+            hasIntl
             selectedLanguage={selectedLanguage}
           />
           <Field
             name="metaKeywords"
             type="text"
             component={TextInput}
-            label={formatMessage({ id: 'admin.common_fields.meta_keywords'})}
-            intl
+            label={intl.formatMessage({ id: 'admin.common_fields.meta_keywords'})}
+            hasIntl
             selectedLanguage={selectedLanguage}
           />
         </div>

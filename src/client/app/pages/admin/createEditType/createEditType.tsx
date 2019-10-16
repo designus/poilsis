@@ -51,7 +51,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
     }
   }
 
-  handleErrors(errors) {
+  handleErrors(errors: any) {
     throw new SubmissionError(getBackendErrors(errors));
   }
 

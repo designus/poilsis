@@ -74,7 +74,7 @@ class DescriptionPage extends React.Component<IDescriptionProps, any> {
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
-          formatMessage={this.props.intl.formatMessage}
+          intl={this.props.intl}
           initialValues={getItemDescriptionFields(this.props.loadedItem)}
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />

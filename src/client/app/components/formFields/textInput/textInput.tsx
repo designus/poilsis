@@ -15,7 +15,7 @@ import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields } from 'global-utils';
 import { styles } from './styles';
 
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
-  intl: boolean;
+  hasIntl: boolean;
   selectedLanguage: string;
   multiline: boolean;
 }
@@ -40,17 +40,17 @@ const getInitialValue = (value, isIntl: boolean) => {
 const { useState, useEffect, useCallback } = React;
 
 function TextInput(props: ITextInputProps) {
-  const { intl, input, meta, selectedLanguage, classes, label, multiline } = props;
-  const [initialState] = useState(getInitialValue(input.value, intl));
+  const { hasIntl, input, meta, selectedLanguage, classes, label, multiline } = props;
+  const [initialState] = useState(getInitialValue(input.value, hasIntl));
   const [inputValue, setInputValue] = useState(initialState);
 
   const prevInputValue = usePrevious(input.value);
 
   useEffect(() => {
     if (input.value !== prevInputValue) {
-      setInputValue(getInitialValue(input.value, intl));
+      setInputValue(getInitialValue(input.value, hasIntl));
     }
-  }, [input.value, intl]);
+  }, [input.value, hasIntl]);
 
   const onChange = useCallback(
     debounce(input.onChange, 600), [input.onChange]
@@ -58,7 +58,7 @@ function TextInput(props: ITextInputProps) {
 
   const getNewState = (locale: string, newValue: string) => {
     const oldValue = inputValue;
-    return intl ? { ...oldValue, [locale]: newValue } : newValue;
+    return hasIntl ? { ...oldValue, [locale]: newValue } : newValue;
   };
 
   const handleOnChange = (locale: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +126,7 @@ function TextInput(props: ITextInputProps) {
 
   return (
     <React.Fragment>
-      {intl ? renderIntlInputs() : renderInput(inputValue)}
+      {hasIntl ? renderIntlInputs() : renderInput(inputValue)}
     </React.Fragment>
   );
 }

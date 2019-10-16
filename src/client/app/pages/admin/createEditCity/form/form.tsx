@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, InjectedIntl } from 'react-intl';
 
 import { Button } from 'components/button';
 import { getDropdownOptions } from 'client-utils/methods';
@@ -17,11 +17,11 @@ interface ICustomProps {
   typesMap: ITypesMap;
   locale: string;
   selectedLanguage?: string;
-  formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
+  intl: InjectedIntl;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
-  const { handleSubmit, selectedLanguage, formatMessage, locale } = props;
+  const { handleSubmit, selectedLanguage, intl, locale } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -29,30 +29,30 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         type="text"
         component={TextInput}
         validate={[isRequired]}
-        label={formatMessage({ id: 'admin.common_fields.name' })}
-        intl
+        label={intl.formatMessage({ id: 'admin.common_fields.name' })}
+        hasIntl
         selectedLanguage={selectedLanguage}
       />
       <Field
         name="alias"
         type="text"
-        intl
+        hasIntl
         component={TextInput}
-        label={formatMessage({ id: 'admin.common_fields.alias' })}
+        label={intl.formatMessage({ id: 'admin.common_fields.alias' })}
         selectedLanguage={selectedLanguage}
       />
       <Field
         name="types"
         component={CheckboxGroup}
-        label={formatMessage({ id: 'admin.common_fields.types' })}
+        label={intl.formatMessage({ id: 'admin.common_fields.types' })}
         options={getDropdownOptions(props.typesMap, 'name', locale)}
       />
       <Field
         name="description"
         type="text"
         component={TextInput}
-        label={formatMessage({ id: 'admin.common_fields.description' })}
-        intl
+        label={intl.formatMessage({ id: 'admin.common_fields.description' })}
+        hasIntl
         selectedLanguage={selectedLanguage}
       />
       <div>

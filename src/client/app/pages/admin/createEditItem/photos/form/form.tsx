@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { InjectedIntl } from 'react-intl';
 
 import { maxUploadedPhotos, maxUploadedPhotoSize, IImage } from 'global-utils';
 
@@ -19,7 +19,7 @@ interface ICustomProps {
   onResetUploadState: () => void;
   onSaveImages: (images: IImage[]) => void;
   onSortImages: (images: IImage[]) => void;
-  formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
+  intl: InjectedIntl;
 }
 
 type FormProps = ICustomProps & InjectedFormProps<{}, ICustomProps>;

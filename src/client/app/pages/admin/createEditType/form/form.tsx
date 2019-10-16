@@ -25,7 +25,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         validate={[isRequired]}
         label={formatMessage({id: 'admin.common_fields.name'})}
         selectedLanguage={selectedLanguage}
-        intl
+        hasIntl
       />
       <Field
         name="alias"
@@ -33,7 +33,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         component={TextInput}
         label={formatMessage({id: 'admin.common_fields.alias'})}
         selectedLanguage={selectedLanguage}
-        intl
+        hasIntl
       />
       <Field
         name="description"
@@ -41,7 +41,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         component={TextInput}
         label={formatMessage({id: 'admin.common_fields.description'})}
         selectedLanguage={selectedLanguage}
-        intl
+        hasIntl
       />
       <div>
         <Button type="submit">
