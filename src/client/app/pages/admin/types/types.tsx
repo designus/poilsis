@@ -55,7 +55,8 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
       },
       {
         title: formatMessage({id: 'admin.common_fields.description'}),
-        dataProp: 'description'
+        dataProp: 'description',
+        format: (description: TranslatableField) => getLocalizedText(description, this.props.locale)
       },
       {
         title: formatMessage({id: 'admin.common_fields.actions'}),

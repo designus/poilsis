@@ -42,7 +42,7 @@ class PhotosPage extends React.Component<any, any> {
           onSortImages={this.props.sortImages(this.props.loadedItem.id)}
           onResetUploadState={this.props.resetUploadState}
           loaderId={CONTENT_LOADER_ID}
-          formatMessage={this.props.intl.formatMessage}
+          intl={this.props.intl}
           showLoadingOverlay={true}
           initialValues={{files: []}}
           images={this.props.loadedItem.images}

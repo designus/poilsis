@@ -3,8 +3,8 @@
       "jsx": "react",
       "noImplicitAny": false,
       "sourceMap": true,
-      "target": "es5",
-      "lib": ["es5", "es2015", "dom", "es2017"],
+      "target": "ES2017",
+      "lib": ["es2017", "es2015", "dom"],
       "baseUrl": ".",
       "paths": {
         "components": ["./src/client/app/components"],

@@ -1,18 +1,18 @@
-import { ItemsModel } from '../model';
+
 import { Request, Response, NextFunction } from 'express';
-import { IItem, itemValidation, getItemDescriptionFields } from 'global-utils';
-import {
-  uploadImages,
-  resizeImages,
-  getImages,
-  sendResponse,
-  formatAlias,
-  getAlias
-} from '../server-utils';
+import shortId from 'shortid';
+import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
+import { getImages, sendResponse } from 'server-utils/methods';
+import { uploadImages, resizeImages } from 'server-utils/middlewares';
+import { getAlias, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
 
-const { images: { maxPhotos } } = itemValidation;
+import { ItemsModel, IItemModel } from '../model';
 
-const shortId = require('shortid');
+const getItemsByAlias = async (alias: TranslatableField): Promise<IItem[]> => {
+  const aliasValues = Object.values(alias).filter(Boolean);
+  const documents: IItemModel[] = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
+  return documents.map(item => (item.toJSON() as IItem));
+};
 
 const mainImageProjection = {
   $let: {
@@ -98,11 +98,15 @@ export const toggleItemIsRecommendedField = (req: Request, res: Response, next: 
   );
 };
 
-export const addNewItem = (req: Request, res: Response, next: NextFunction) => {
+export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: IItem = req.body;
-  const alias = getAlias(item);
-  const newItem = { id, alias, ...item };
+  const alias = getAlias(item, LANGUAGES) as TranslatableField;
+  const newItem = {
+    ...item,
+    alias: getUniqueAlias(await getItemsByAlias(alias), id, alias),
+    id
+  };
 
   new ItemsModel(newItem).save(sendResponse(res, next));
 };
@@ -116,6 +120,18 @@ export const getViewItem = (req: Request, res: Response, next: NextFunction) => 
   ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
 };
 
+export const doesItemAliasExist = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const item: IItem = req.body;
+    const alias = getAlias(item, LANGUAGES, next) as TranslatableField;
+    const itemsByAlias = await getItemsByAlias(alias);
+    const existingAliases = getAliasList(itemsByAlias, item.id);
+    res.status(200).json(existingAliases.length > 0);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
 };
@@ -124,23 +140,23 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   try {
     const item: IItem = req.body;
     const updatedAt = new Date();
-    const alias = getAlias(item);
-    const updatedItem = { ...item, alias, updatedAt };
+    const alias = getAlias(item, LANGUAGES) as TranslatableField;
+
+    const updatedItem = {
+      ...item,
+      alias: getUniqueAlias(await getItemsByAlias(alias), item.id, alias),
+      updatedAt
+    };
 
     const newItem = await ItemsModel.findOneAndUpdate(
       { id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true }
     );
 
     if (!newItem) {
-      throw new Error('Unable to create a new item');
+      throw new Error('Unable to update item');
     }
 
     res.status(200).json(newItem);
-
-    // await ItemsModel.findOneAndUpdate(
-    //   { id: req.params.itemId }, { $set: updatedItem }, { new: true, runValidators: true },
-    //   sendResponse(res, next)
-    // );
 
   } catch (err) {
     return next(err);
@@ -183,7 +199,7 @@ export const updatePhotos = (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const uploadPhotos = (req, res: Response, next: NextFunction) => {
-  const uploadPhotos = uploadImages.array('files[]', maxPhotos);
+  const uploadPhotos = uploadImages.array('files[]', itemValidation.images.maxPhotos);
   uploadPhotos(req, res, (err) => {
     if (err) { return next(err); }
 

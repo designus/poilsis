@@ -21,7 +21,7 @@ class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
         <FormControlLabel
           control={
             <Switch
-              checked={input.value}
+              checked={Boolean(input.value)}
               onChange={this.handleChange}
             />
           }

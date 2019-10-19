@@ -135,6 +135,6 @@ export const handleItemsErrors = (err, req, res, next) => {
   if (req.route && req.route.path === '/item/upload-photos/:itemId') {
     handleFileUploadErrors(err, res);
   } else {
-    res.send(err);
+    res.status(500).send({ message: err.message });
   }
 };

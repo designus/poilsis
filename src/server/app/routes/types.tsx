@@ -1,12 +1,15 @@
 
 import { Router } from 'express';
-import { auth, getAllTypes, addNewType, updateType, deleteType, getType } from '../controllers';
+import { auth, getAllTypes, addNewType, updateType, deleteType, getType, doesTypeAliasExist } from '../controllers';
 
 const router = Router();
 
 router.route('/')
   .get(getAllTypes)
   .post(auth.authenticate(), auth.authorize(['admin']), addNewType);
+
+router.route('/type/alias-exist')
+  .post(doesTypeAliasExist);
 
 router.route('/type/:typeId')
   .get(getType)

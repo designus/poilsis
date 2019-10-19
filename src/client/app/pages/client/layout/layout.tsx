@@ -16,6 +16,7 @@ import { Loader } from 'components/loader';
 import { Drawer } from 'components/drawer';
 import { LoginButton } from 'components/loginButton';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
+import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 import { ClientTopMenu as TopMenu } from 'components/menu/clientTopMenu';
 import { clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
@@ -128,6 +129,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
             </Switch>
           </Container>
           <Toast />
+          {this.props.isLoggedIn && <KeepMeLoggedModal />}
         </div>
       </ConnectedIntlProvider>
     );

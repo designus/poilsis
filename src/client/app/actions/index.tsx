@@ -1,6 +1,7 @@
 export * from './auth';
 export * from './admin';
 export * from './cities';
+export * from './common';
 export * from './items';
 export * from './initialData';
 export * from './loader';

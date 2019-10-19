@@ -1,19 +1,11 @@
 import { Response, NextFunction } from 'express';
 import { unlink } from 'fs';
-
 import {
   ImageSize,
   IImage,
   IResponseError,
   mapMimeTypesToTypes,
-  itemValidation,
-  DEFAULT_LANGUAGE,
-  IType,
-  ICity,
-  IItem,
-  TranslatableField,
-  hasLocalizedFields,
-  Languages
+  itemValidation
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -97,24 +89,6 @@ export function removeFiles(files, next) {
 export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   const [loadInitialData, ...loadOtherData] = data;
   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));
-};
-
-export const formatAlias = alias => alias
-  .split(/\s+/)
-  .join('-')
-  .toLowerCase();
-
-export const getAlias = (item: IType | IItem) =>
-  Object.entries(item.alias).reduce((acc, [locale, value]: [Languages, string]) => {
-    acc[locale] = formatAlias(value || item.name[locale]);
-    return acc;
-  }, {});
-
-export const getLocalizedAlias = (item: IItem | IType | ICity, locale: Languages): string => {
-  const localizedName = item.name[locale];
-  const localizedAlias = item.alias[locale];
-
-  return formatAlias(localizedAlias || localizedName);
 };
 
 export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {

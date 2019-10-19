@@ -1,4 +1,4 @@
-import { FormattedMessage, MessageValue } from 'react-intl';
+import { FormattedMessage, MessageValue, InjectedIntl } from 'react-intl';
 import {
   DEFAULT_LANGUAGE,
   hasLocalizedFields,
@@ -12,12 +12,12 @@ import * as errors from '../data-strings/validation';
 const { images: { maxPhotos, maxPhotoSizeBytes } } = itemValidation;
 
 export interface IFormProps {
-  formatMessage?: (messages: FormattedMessage.MessageDescriptor, values?: {[key: string]: MessageValue}) => string;
+  intl?: InjectedIntl;
   images?: IImage[];
 }
 
 export const isRequired = (fieldValue, formState, formProps: IFormProps) => {
-  const errorMessage = formProps.formatMessage({ id: errors.REQUIRED });
+  const errorMessage = formProps.intl.formatMessage({ id: errors.REQUIRED });
 
   if (fieldValue) {
     if (hasLocalizedFields(fieldValue) && !fieldValue[DEFAULT_LANGUAGE]) {
@@ -30,7 +30,7 @@ export const isRequired = (fieldValue, formState, formProps: IFormProps) => {
 
 export const maxTextLength = max => (fieldValue, formState, formProps: IFormProps) => {
   if (fieldValue && fieldValue.length > max) {
-    return formProps.formatMessage({ id: errors.MAX_TEXT_LENGTH }, { count: max });
+    return formProps.intl.formatMessage({ id: errors.MAX_TEXT_LENGTH }, { count: max });
   }
 
   return undefined;
@@ -41,7 +41,7 @@ export const minTextLength = min => (fieldValue, formState, formProps: IFormProp
     if (hasLocalizedFields(fieldValue) && !fieldValue[DEFAULT_LANGUAGE]) {
       return undefined;
     }
-    return formProps.formatMessage({ id: errors.MIN_TEXT_LENGTH }, { count: min });
+    return formProps.intl.formatMessage({ id: errors.MIN_TEXT_LENGTH }, { count: min });
   }
 
   return undefined;
@@ -49,7 +49,7 @@ export const minTextLength = min => (fieldValue, formState, formProps: IFormProp
 
 export const minCheckedCount = min => (fieldValue, formState, formProps: IFormProps) => {
   if (!fieldValue || fieldValue.length < min) {
-    return formProps.formatMessage({ id: errors.MIN_CHECKED_LENGTH }, { count: min });
+    return formProps.intl.formatMessage({ id: errors.MIN_CHECKED_LENGTH }, { count: min });
   }
 
   return undefined;
@@ -57,7 +57,7 @@ export const minCheckedCount = min => (fieldValue, formState, formProps: IFormPr
 
 export const maxCheckedCount = max => (fieldValue, formState, formProps: IFormProps) => {
   if (!fieldValue || fieldValue.length > max) {
-    return formProps.formatMessage({ id: errors.MAX_CHECKED_LENGTH }, { count: max });
+    return formProps.intl.formatMessage({ id: errors.MAX_CHECKED_LENGTH }, { count: max });
   }
 
   return undefined;
@@ -65,7 +65,7 @@ export const maxCheckedCount = max => (fieldValue, formState, formProps: IFormPr
 
 export const isNumber = (fieldValue, formState, formProps: IFormProps) => {
   if (fieldValue && isNaN(Number(fieldValue))) {
-    return formProps.formatMessage({ id: errors.WRONG_NUMBER });
+    return formProps.intl.formatMessage({ id: errors.WRONG_NUMBER });
   }
 
   return undefined;
@@ -73,7 +73,7 @@ export const isNumber = (fieldValue, formState, formProps: IFormProps) => {
 
 export const isEmail = (fieldValue, formState, formProps: IFormProps) => {
   if (fieldValue && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(fieldValue)) {
-    return formProps.formatMessage({ id: errors.WRONG_EMAIL });
+    return formProps.intl.formatMessage({ id: errors.WRONG_EMAIL });
   }
 
   return undefined;
@@ -81,7 +81,7 @@ export const isEmail = (fieldValue, formState, formProps: IFormProps) => {
 
 export const maxUploadedPhotos = (fieldValue: File[], formState: IPhotoFormState, formProps: IFormProps) => {
   if (fieldValue && (formProps.images.length + formState.files.length) > maxPhotos) {
-    return formProps.formatMessage({ id: errors.MAX_PHOTO_COUNT }, { count: maxPhotos });
+    return formProps.intl.formatMessage({ id: errors.MAX_PHOTO_COUNT }, { count: maxPhotos });
   }
 
   return undefined;
@@ -93,6 +93,6 @@ export const maxUploadedPhotoSize = (fieldValue: File[], formState: IPhotoFormSt
 
   const doesAnyFileExceedsMaxPhotoSize = fieldValue.some((file: File) => file.size > maxPhotoSizeBytes);
   if (doesAnyFileExceedsMaxPhotoSize) {
-    return formProps.formatMessage({ id: errors.MAX_PHOTO_SIZE }, { count: maxPhotoSizeBytes });
+    return formProps.intl.formatMessage({ id: errors.MAX_PHOTO_SIZE }, { count: maxPhotoSizeBytes });
   }
 };

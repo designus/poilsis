@@ -19,7 +19,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type Value<T, K extends keyof T> = T[K];
 
-export type TranslatableField = Record<Languages, string>;
+export type TranslatableField = Partial<Record<Languages, string>>;
 
 export interface IResponseError {
   errors: {
@@ -38,8 +38,8 @@ export interface IItemDescFields {
 
 export interface IItem extends IItemDescFields {
   id: string;
-  name: TranslatableField;
   alias: TranslatableField;
+  name: TranslatableField;
   address: string;
   cityId: string;
   types: string[];
@@ -55,17 +55,17 @@ export interface IItem extends IItemDescFields {
 
 export interface IType {
   id: string;
+  alias?: TranslatableField;
   name: TranslatableField;
   description: TranslatableField;
-  alias: TranslatableField;
 }
 
 export interface ICity {
   id: string;
+  alias?: TranslatableField;
   types: string[];
   name: TranslatableField;
   description: TranslatableField;
-  alias: TranslatableField;
   hasItems?: boolean;
 }
 
@@ -92,3 +92,5 @@ export interface IUser {
   role: string;
   alias: string;
 }
+
+export type DataTypes = IItem | IType | ICity;

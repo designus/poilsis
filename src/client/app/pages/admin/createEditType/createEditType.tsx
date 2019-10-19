@@ -51,7 +51,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
     }
   }
 
-  handleErrors(errors) {
+  handleErrors(errors: any) {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
@@ -65,7 +65,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
         if (this.isCreatePage()) {
           history.push(adminRoutes.editType.getLink(newType.id));
         } else {
-          initializeForm(type);
+          initializeForm(newType);
         }
       })
       .catch(this.handleErrors);
@@ -79,7 +79,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
         </Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
-          formatMessage={this.props.intl.formatMessage}
+          intl={this.props.intl}
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           initialValues={this.props.loadedType}
