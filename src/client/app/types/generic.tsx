@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 export interface IAliasMap {
   [key: string]: string;
 }
@@ -24,3 +26,7 @@ export enum ActiveItem {
   Type,
   Item
 }
+
+export type TranslatedMessages = {
+  [key: string]: FormattedMessage.MessageDescriptor;
+};

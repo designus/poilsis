@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Dispatch } from 'react-redux';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
-import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount } from 'global-utils';
+import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount, IItem } from 'global-utils';
 import { asyncValidateAlias } from 'actions';
 
 import { Button } from 'components/button';
@@ -95,8 +96,10 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   );
 };
 
-export const MainInfoForm = reduxForm<{}, ICustomProps>({
-  asyncValidate: asyncValidateAlias('/api/items/item/alias-exist'),
+export const MainInfoForm = reduxForm<IItem, ICustomProps>({
+  asyncValidate: (item: IItem, dispatch: Dispatch<any>, props) => {
+    return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
+  },
   asyncBlurFields: ['alias'],
   form: MAIN_INFO_FORM_NAME
 })(Form);

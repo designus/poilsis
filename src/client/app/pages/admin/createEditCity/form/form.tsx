@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Dispatch } from 'react-redux';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 
 import { Button } from 'components/button';
 import { getDropdownOptions } from 'client-utils/methods';
-import { isRequired } from 'global-utils';
+import { isRequired, ICity } from 'global-utils';
 import { ITypesMap } from 'types';
 import { asyncValidateAlias } from 'actions';
 
@@ -64,8 +65,10 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
   );
 };
 
-export const CityForm = reduxForm<{}, ICustomProps>({
-  asyncValidate: asyncValidateAlias('/api/cities/city/alias-exist'),
+export const CityForm = reduxForm<ICity, ICustomProps>({
+  asyncValidate: (values: ICity, dispatch: Dispatch<any>, props) => {
+    return asyncValidateAlias(values, '/api/cities/city/alias-exist', props.intl);
+  },
   asyncBlurFields: ['alias'],
   form: CITY_FORM_NAME
 })(Form);

@@ -20,6 +20,7 @@
   "common.form_validation.max_photo_count": "[RU] You are not allowed to uploade more than {count} photos",
   "common.form_validation.max_photo_size": "[RU] Some of your selected files exceeds maximum allowed size of {count} mb",
   "common.form_validation.wrong_file_type": "[RU] Field supports only {types} types",
+  "common.form_validation.duplicated_alias": "[RU] This alias already exist",
   "common.login": "[RU] Login",
   "admin.menu.dashboard": "[RU] Dashboard",
   "admin.menu.items": "[RU] Items",

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { Dispatch } from 'react-redux';
+import { Field, reduxForm, InjectedFormProps, ConfigProps } from 'redux-form';
+import { FormattedMessage, InjectedIntl } from 'react-intl';
 
 import { asyncValidateAlias } from 'actions';
-import { isRequired } from 'global-utils';
+import { isRequired, IType } from 'global-utils';
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 
@@ -11,11 +12,11 @@ export const TYPE_FORM_NAME = 'TypeForm';
 
 interface ICustomProps {
   selectedLanguage?: string;
-  formatMessage: (messages: FormattedMessage.MessageDescriptor) => string;
+  intl: InjectedIntl;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
-  const { handleSubmit, selectedLanguage, formatMessage } = props;
+  const { handleSubmit, selectedLanguage, intl } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -23,7 +24,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         type="text"
         component={TextInput}
         validate={[isRequired]}
-        label={formatMessage({id: 'admin.common_fields.name'})}
+        label={intl.formatMessage({id: 'admin.common_fields.name'})}
         selectedLanguage={selectedLanguage}
         hasIntl
       />
@@ -31,7 +32,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         name="alias"
         type="text"
         component={TextInput}
-        label={formatMessage({id: 'admin.common_fields.alias'})}
+        label={intl.formatMessage({id: 'admin.common_fields.alias'})}
         selectedLanguage={selectedLanguage}
         hasIntl
       />
@@ -39,7 +40,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         name="description"
         type="text"
         component={TextInput}
-        label={formatMessage({id: 'admin.common_fields.description'})}
+        label={intl.formatMessage({id: 'admin.common_fields.description'})}
         selectedLanguage={selectedLanguage}
         hasIntl
       />
@@ -52,8 +53,10 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
   );
 };
 
-export const TypeForm = reduxForm<{}, ICustomProps>({
-  asyncValidate: asyncValidateAlias('/api/types/type/alias-exist'),
+export const TypeForm = reduxForm<IType, ICustomProps>({
+  asyncValidate: (values: IType, dispatch: Dispatch<any>, props) => {
+    return asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl);
+  },
   asyncBlurFields: ['alias'],
   form: TYPE_FORM_NAME
 })(Form);

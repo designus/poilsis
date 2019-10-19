@@ -79,7 +79,7 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
         </Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
-          formatMessage={this.props.intl.formatMessage}
+          intl={this.props.intl}
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           initialValues={this.props.loadedType}
