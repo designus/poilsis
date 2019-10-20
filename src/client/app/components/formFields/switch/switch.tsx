@@ -15,10 +15,19 @@ export interface ISwitchProps extends WrappedFieldProps, WithStyles<typeof style
 
 class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
 
+  getIntlValue = (value: boolean) => {
+    return LANGUAGES.reduce((acc, lang) => {
+      acc[lang] = lang === this.props.selectedLanguage
+        ? value
+        : this.props.input.value[lang] || false;
+      return acc;
+    }, {});
+  }
+
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
     if (this.props.hasIntl) {
-      this.props.input.onChange({ ...this.props.input.value, [this.props.selectedLanguage]: isChecked });
+      this.props.input.onChange(this.getIntlValue(isChecked));
     } else {
       this.props.input.onChange(isChecked);
     }

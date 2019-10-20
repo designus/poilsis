@@ -92,9 +92,10 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage]
   },
-  isEnabled: {
-    type: Boolean
-  },
+  isEnabled: LANGUAGES.reduce((acc, lang) => {
+    acc[lang] = Boolean;
+    return acc;
+  }, {}),
   isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,
