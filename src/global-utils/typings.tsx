@@ -19,7 +19,11 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type Value<T, K extends keyof T> = T[K];
 
+export type IntlSetting<T> = Partial<Record<Languages, T>>;
+
 export type TranslatableField = Partial<Record<Languages, string>>;
+
+export type IsEnabled = IntlSetting<boolean>;
 
 export interface IResponseError {
   errors: {
@@ -46,7 +50,7 @@ export interface IItem extends IItemDescFields {
   images: IImage[];
   userId: string;
   isRecommended: boolean;
-  isEnabled: boolean;
+  isEnabled: IsEnabled;
   createdAt?: string;
   updatedAt?: string;
   isFullyLoaded?: boolean;

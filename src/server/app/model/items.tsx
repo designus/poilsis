@@ -1,5 +1,5 @@
 'use strict';
-import { Document, Schema, Model, model} from 'mongoose';
+import { Document, Schema, Model, model } from 'mongoose';
 
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 import {
@@ -92,7 +92,9 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage]
   },
-  isEnabled: Boolean,
+  isEnabled: {
+    type: Boolean
+  },
   isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,

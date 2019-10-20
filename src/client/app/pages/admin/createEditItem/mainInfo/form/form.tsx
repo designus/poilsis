@@ -92,7 +92,9 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
       <Field
         name="isEnabled"
         component={Switcher}
-        isHidden={isHidden(false)}
+        isHidden={isHidden(true)}
+        selectedLanguage={selectedLanguage}
+        hasIntl
         label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
       <div>

@@ -1,4 +1,4 @@
-import { IItem, IImage, IItemDescFields } from 'global-utils/typings';
+import { IItem, IImage, IItemDescFields, IsEnabled } from 'global-utils/typings';
 import { IGenericState, IAliasMap, IGenericDataMap } from './generic';
 
 export type IItemsMap = IGenericDataMap<IItem>;
@@ -53,7 +53,7 @@ export interface IReceiveImages {
 export interface IToggleItemEnabled {
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED;
   itemId: string;
-  isEnabled: boolean;
+  isEnabled: IsEnabled;
 }
 
 export interface IToggleItemRecommended {

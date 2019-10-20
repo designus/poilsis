@@ -23,7 +23,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Omit } from 'global-utils/typings';
+import { IImage, IItem, IItemDescFields, Omit, IsEnabled } from 'global-utils/typings';
 import { getItemById } from 'selectors';
 import {
   ItemsActionTypes,
@@ -70,7 +70,7 @@ export const receiveImages = (itemId: string, images: IImage[]): IReceiveImages 
   images
 });
 
-export const toggleItemEnabledField = (itemId: string, isEnabled: boolean): IToggleItemEnabled => ({
+export const toggleItemEnabledField = (itemId: string, isEnabled: IsEnabled): IToggleItemEnabled => ({
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED,
   itemId,
   isEnabled
@@ -215,7 +215,7 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
+export const toggleItemEnabled = (itemId: string, isEnabled: IsEnabled) => (dispatch, getState) => {
   const appState: IAppState = getState();
   const item = getItemById(appState, itemId);
   const userId = item.userId;
