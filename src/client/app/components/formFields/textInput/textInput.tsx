@@ -17,6 +17,7 @@ import { styles } from './styles';
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
   hasIntl: boolean;
   selectedLanguage: string;
+  isHidden: string;
   multiline: boolean;
 }
 
@@ -40,7 +41,7 @@ const getInitialValue = (value, isIntl: boolean) => {
 const { useState, useEffect, useCallback } = React;
 
 function TextInput(props: ITextInputProps) {
-  const { hasIntl, input, meta, selectedLanguage, classes, label, multiline } = props;
+  const { hasIntl, input, meta, selectedLanguage, classes, label, multiline, isHidden } = props;
   const [initialState] = useState(getInitialValue(input.value, hasIntl));
   const [inputValue, setInputValue] = useState(initialState);
 
@@ -91,7 +92,7 @@ function TextInput(props: ITextInputProps) {
   const renderInput = (value: string, language?: string) => {
     return (
       <div
-        className={`${classes.wrapper} ${language !== selectedLanguage ? classes.hidden : ''}`}
+        className={`${classes.wrapper} ${language !== selectedLanguage || isHidden ? classes.hidden : ''}`}
         key={language}
       >
         <Tooltip open={showError(language)} title={meta.error || ''} placement="right-end">

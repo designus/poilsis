@@ -6,7 +6,9 @@ import Switch from '@material-ui/core/Switch';
 
 import { styles } from './styles';
 
-export interface ISwitchProps extends WrappedFieldProps, WithStyles<typeof styles> {}
+export interface ISwitchProps extends WrappedFieldProps, WithStyles<typeof styles> {
+  isHidden: boolean;
+}
 
 class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
 
@@ -15,9 +17,9 @@ class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
   }
 
   render() {
-    const { classes, label, input } = this.props;
+    const { classes, label, input, isHidden } = this.props;
     return (
-      <div className={classes.wrapper}>
+      <div className={`${classes.wrapper} ${isHidden ? classes.hidden : ''}`}>
         <FormControlLabel
           control={
             <Switch
