@@ -57,7 +57,10 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
           ...state.dataMap,
           [action.itemId]: {
             ...state.dataMap[action.itemId],
-            isEnabled: action.isEnabled
+            isEnabled: {
+              ...state.dataMap[action.itemId].isEnabled,
+              [action.locale]: action.isEnabled
+            }
           }
         }
       };

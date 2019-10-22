@@ -61,6 +61,12 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
     {
+      "id": "./app/pages/admin/items/styles.tsx",
+      "name": "./app/pages/admin/items/styles.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    },
+    {
       "id": "./app/components/adminHeader/styles.tsx",
       "name": "./app/components/adminHeader/styles.tsx",
       "file": "adminLayoutPage.js",
@@ -3181,7 +3187,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "lodash/isFunction": [
+  "./isFunction": [
     {
       "id": "../../node_modules/lodash/isFunction.js",
       "name": "../../node_modules/lodash/isFunction.js",

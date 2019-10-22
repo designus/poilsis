@@ -84,11 +84,22 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
     .exec(sendResponse(res, next));
 };
 
-export const toggleItemIsEnabledField = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.findOneAndUpdate(
-    { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
-    sendResponse(res, next)
-  );
+export const toggleItemIsEnabledField = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { isEnabled, locale } = req.body;
+    const newItem = await ItemsModel.findOneAndUpdate(
+      { id: req.params.itemId }, { $set: { [`isEnabled.${locale}`]: isEnabled } }, { new: true, runValidators: true }
+    );
+
+    if (!newItem) {
+      throw new Error('Unable to enable item');
+    }
+
+    res.status(200).json(newItem);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const toggleItemIsRecommendedField = (req: Request, res: Response, next: NextFunction) => {

@@ -70,10 +70,11 @@ export const receiveImages = (itemId: string, images: IImage[]): IReceiveImages 
   images
 });
 
-export const toggleItemEnabledField = (itemId: string, isEnabled: IsEnabled): IToggleItemEnabled => ({
+export const toggleItemEnabledField = (itemId: string, isEnabled: boolean, locale: string): IToggleItemEnabled => ({
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED,
   itemId,
-  isEnabled
+  isEnabled,
+  locale
 });
 
 export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean): IToggleItemRecommended => ({
@@ -215,14 +216,14 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (itemId: string, isEnabled: IsEnabled) => (dispatch, getState) => {
+export const toggleItemEnabled = (itemId: string, isEnabled: boolean, locale: string) => (dispatch, getState) => {
   const appState: IAppState = getState();
   const item = getItemById(appState, itemId);
   const userId = item.userId;
-  return http.patch(`/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled })
+  return http.patch(`/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled, locale })
     .then(handleApiResponse)
     .then(() => {
-      dispatch(toggleItemEnabledField(itemId, isEnabled));
+      dispatch(toggleItemEnabledField(itemId, isEnabled, locale));
     })
     .catch(err => console.error('Err', err));
 };

@@ -53,7 +53,8 @@ export interface IReceiveImages {
 export interface IToggleItemEnabled {
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED;
   itemId: string;
-  isEnabled: IsEnabled;
+  isEnabled: boolean;
+  locale: string;
 }
 
 export interface IToggleItemRecommended {

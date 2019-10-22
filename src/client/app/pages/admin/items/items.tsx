@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { IAppState, IItemsMap, ICitiesMap, IUsersMap } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
@@ -27,17 +28,20 @@ import { DeleteModal } from 'components/modals/deleteModal';
 import { ToggleAction } from 'components/toggleAction';
 import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
-import { TranslatableField, IItem } from 'global-utils/typings';
+import { TranslatableField, IItem, IsEnabled } from 'global-utils/typings';
+import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
+
+import { styles } from './styles';
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface IOwnProps extends InjectedIntlProps {}
+interface IOwnProps extends InjectedIntlProps, WithStyles<typeof styles> {}
 
 interface IDispatchProps {
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
   endLoading: (loaderId: string) => void;
-  toggleItemEnabled: (itemId: string, isEnabled: boolean) => void;
+  toggleItemEnabled: (itemId: string, isEnabled: boolean, locale: string) => void;
   toggleItemRecommended: (itemId: string, isRecommended: boolean) => void;
 }
 
@@ -131,12 +135,21 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
         dataProp: 'isEnabled',
         sortType: 'string',
         formatProps: ['id', 'isEnabled'],
-        format: (itemId: string, isEnabled: boolean) => (
-          <ToggleAction
-            isEnabled={isEnabled}
-            onToggle={this.toggleItemEnabled(itemId, !isEnabled)}
-          />
-        )
+        format: (itemId: string, isEnabled: IsEnabled) => {
+          return (
+            <div className={this.props.classes.isEnabledWrapper}>
+              {LANGUAGES.map(lang => {
+                return (
+                  <ToggleAction
+                    key={lang}
+                    isEnabled={isEnabled[lang]}
+                    onToggle={this.toggleItemEnabled(itemId, !isEnabled[lang], lang)}
+                  />
+                );
+              })}
+            </div>
+          );
+        }
       },
       {
         title: formatMessage({ id: 'admin.common_fields.is_recommended' }),
@@ -166,8 +179,8 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
     ];
   }
 
-  toggleItemEnabled = (itemId: string, isEnabled: boolean) => () => {
-    this.props.toggleItemEnabled(itemId, isEnabled);
+  toggleItemEnabled = (itemId: string, isEnabled: boolean, locale: string) => () => {
+    this.props.toggleItemEnabled(itemId, isEnabled, locale);
   }
 
   toggleItemRecommended = (itemId: string, isRecommended: boolean) => () => {
@@ -253,5 +266,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default injectIntl(
-  connect<IStateProps, {}, IOwnProps>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
+  withStyles(styles)(
+    connect<IStateProps, {}, IOwnProps>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
+  )
 );

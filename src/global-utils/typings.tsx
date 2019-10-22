@@ -23,7 +23,7 @@ export type IntlSetting<T> = Partial<Record<Languages, T>>;
 
 export type TranslatableField = Partial<Record<Languages, string>>;
 
-export type IsEnabled = IntlSetting<boolean>;
+export type IsEnabled = Partial<IntlSetting<boolean>>;
 
 export interface IResponseError {
   errors: {

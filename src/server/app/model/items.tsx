@@ -53,6 +53,19 @@ const ImageSchemaMap: TGenericSchemaMap<IImage> = {
   }
 };
 
+// const IsEnabledSchemaMap = LANGUAGES.reduce((acc, lang) => {
+//   acc[lang] = {
+//     type: Boolean
+//   };
+//   return acc;
+// }, {});
+
+const IsEnabledSchemaMap = {
+  lt: Boolean,
+  en: Boolean,
+  ru: Boolean
+};
+
 const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
   id: {
     type: String,
@@ -92,10 +105,19 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage]
   },
-  isEnabled: LANGUAGES.reduce((acc, lang) => {
-    acc[lang] = Boolean;
-    return acc;
-  }, {}),
+  isEnabled: {
+    type: IsEnabledSchemaMap
+    // validate: {
+    //   validator: (value) => {
+    //     if (typeof value === 'object') {
+    //       return LANGUAGES.some(lang => typeof value[lang] === 'boolean');
+    //     }
+
+    //     return false;
+    //   },
+    //   message: props => `${props.value} is not valid isEnabled field`
+    // }
+  },
   isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,
@@ -127,6 +149,10 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
 const ItemsSchema = new Schema(ItemsSchemaMap);
 
 ItemsSchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
+
+// ItemsSchema.pre('validate', function(next) {
+
+// })
 
 ItemsSchema.pre('save', function(next) {
   const now = new Date();
