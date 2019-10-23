@@ -141,6 +141,7 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
               {LANGUAGES.map(lang => {
                 return (
                   <ToggleAction
+                    label={lang}
                     key={lang}
                     isEnabled={isEnabled[lang]}
                     onToggle={this.toggleItemEnabled(itemId, !isEnabled[lang], lang)}

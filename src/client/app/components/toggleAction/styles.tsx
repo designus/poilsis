@@ -11,7 +11,10 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: '50%',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    color: '#fff',
+    textTransform: 'uppercase',
+    fontSize: '11px'
   },
   icon: {
     color: '#fff',

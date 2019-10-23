@@ -7,20 +7,21 @@ import { styles } from './styles';
 export interface IToggleActionProps extends WithStyles<typeof styles> {
   isEnabled: boolean;
   onToggle: () => void;
+  label?: string;
 }
 
-class ToggleActionComponent extends React.PureComponent<IToggleActionProps, any> {
+const ToggleAction = (props: IToggleActionProps) => {
+  const { classes, isEnabled, onToggle, label } = props;
 
-  render() {
-    const { classes, isEnabled, onToggle} = this.props;
-    return (
-      <a
-        className={`${classes.button} ${isEnabled ? classes.green : classes.red}`}
-        onClick={onToggle}>
-          {isEnabled ? <CheckIcon className={classes.icon} /> : <CloseIcon className={classes.icon} />}
-      </a>
-    );
-  }
-}
+  const renderIcons = () => isEnabled ? <CheckIcon className={classes.icon} /> : <CloseIcon className={classes.icon} />;
 
-export const ToggleAction = withStyles(styles)(ToggleActionComponent);
+  return (
+    <a
+      className={`${classes.button} ${isEnabled ? classes.green : classes.red}`}
+      onClick={onToggle}>
+        {typeof label === 'string' ? label : renderIcons()}
+    </a>
+  );
+};
+
+export default withStyles(styles)(ToggleAction);
