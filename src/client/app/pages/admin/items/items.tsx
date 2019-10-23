@@ -141,6 +141,9 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
               {LANGUAGES.map(lang => {
                 return (
                   <ToggleAction
+                    isDisabled={lang === 'ru'}
+                    showTooltip={lang === 'ru'}
+                    tooltipText="You must enter at least item name in this language to enable it"
                     label={lang}
                     key={lang}
                     isEnabled={isEnabled[lang]}

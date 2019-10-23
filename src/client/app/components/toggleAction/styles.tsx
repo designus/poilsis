@@ -26,5 +26,11 @@ export const styles = (theme: Theme) => createStyles({
   },
   red: {
     background: red[500]
+  },
+  disabled: {
+    background: '#ccc'
+  },
+  tooltip: {
+    maxWidth: '200px'
   }
 });
