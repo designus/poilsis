@@ -91,5 +91,6 @@
   "admin.authenticate.reauthenticate_success": "You have reauthenticated successfully.",
   "admin.authenticate.invalid_credentials": "Invalid credentials",
   "admin.authenticate.user_not_found": "User not found",
-  "admin.authenticate.not_authorized": "You are not authorized"
+  "admin.authenticate.not_authorized": "You are not authorized",
+  "admin.items.toggle_tooltip_message": "You must fill at least name field in {language} to be able to enable it"
 }

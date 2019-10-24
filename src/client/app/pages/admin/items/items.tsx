@@ -28,8 +28,8 @@ import { DeleteModal } from 'components/modals/deleteModal';
 import { ToggleAction } from 'components/toggleAction';
 import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
-import { TranslatableField, IItem, IsEnabled } from 'global-utils/typings';
-import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
+import { IItem } from 'global-utils/typings';
+import { LANGUAGES } from 'global-utils/constants';
 
 import { styles } from './styles';
 
@@ -138,11 +138,12 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
           return (
             <div className={this.props.classes.isEnabledWrapper}>
               {LANGUAGES.map(lang => {
+                const isDisabled = !item.name[lang];
                 return (
                   <ToggleAction
-                    isDisabled={lang === 'ru'}
-                    showTooltip={lang === 'ru'}
-                    tooltipText="You must enter at least item name in this language to enable it"
+                    isDisabled={isDisabled}
+                    showTooltip={isDisabled}
+                    tooltipText={formatMessage({ id: 'admin.items.toggle_tooltip_message'}, { language: lang })}
                     label={lang}
                     key={lang}
                     isEnabled={item.isEnabled[lang]}

@@ -85,5 +85,6 @@
   "admin.authenticate.reauthenticate_success": "Jūs sėkmingai pratęsėte savo prisijungimo galiojimo laiką",
   "admin.authenticate.invalid_credentials": "Neteisingi prisijungimo duomenys",
   "admin.authenticate.user_not_found": "Vartotojas nerastas",
-  "admin.authenticate.not_authorized": "Jūs neturite prieigos teisių"
+  "admin.authenticate.not_authorized": "Jūs neturite prieigos teisių",
+  "admin.items.toggle_tooltip_message": "Norint paskelbti įrašą {language} kalba, prašome įvesti bent jau įrašo pavadinimą"
 }
