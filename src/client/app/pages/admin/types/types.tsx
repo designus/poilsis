@@ -41,31 +41,31 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
     return '';
   }
 
-  get columns(): ITableColumn[] {
+  get columns(): Array<ITableColumn<IType>> {
     const { formatMessage } = this.props.intl;
     return [
       {
-        title: formatMessage({id: 'admin.common_fields.id'}),
-        dataProp: 'id'
+        headerName: formatMessage({id: 'admin.common_fields.id'}),
+        field: 'id'
       },
       {
-        title: formatMessage({id: 'admin.common_fields.name'}),
-        dataProp: 'name',
-        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale)
+        headerName: formatMessage({id: 'admin.common_fields.name'}),
+        field: 'name',
+        cellRenderer: (type) => getLocalizedText(type.name, this.props.locale)
       },
       {
-        title: formatMessage({id: 'admin.common_fields.description'}),
-        dataProp: 'description',
-        format: (description: TranslatableField) => getLocalizedText(description, this.props.locale)
+        headerName: formatMessage({id: 'admin.common_fields.description'}),
+        field: 'description',
+        cellRenderer: (type) => getLocalizedText(type.description, this.props.locale)
       },
       {
-        title: formatMessage({id: 'admin.common_fields.actions'}),
-        dataProp: 'id',
-        format: (typeId: string) => {
+        headerName: formatMessage({id: 'admin.common_fields.actions'}),
+        field: 'id',
+        cellRenderer: (type) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editType.getLink(typeId)}
-              onDelete={this.openDeleteModal(typeId)}
+              editLink={adminRoutes.editType.getLink(type.id)}
+              onDelete={this.openDeleteModal(type.id)}
             />
           );
         }

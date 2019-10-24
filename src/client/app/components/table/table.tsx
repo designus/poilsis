@@ -14,13 +14,12 @@ import { styles } from './styles';
 export type SortType = 'string' | 'number' | 'date';
 export type OrderType = 'asc' | 'desc';
 
-export interface ITableColumn {
-  title: string;
-  dataProp: string;
-  formatProps?: string[];
+export interface ITableColumn<T = object> {
+  headerName: string;
+  field: string;
   sortType?: SortType;
   searchable?: boolean;
-  format?: any;
+  cellRenderer?: (data: T) => JSX.Element | string | number;
 }
 
 export interface ITableProps extends Partial<WithStyles<typeof styles>> {
@@ -36,10 +35,7 @@ export interface ITableFilters {
   search: string;
 }
 
-export interface ISearchableColumn {
-  dataProp: string;
-  format: any;
-}
+type SearchableColumn = Pick<ITableColumn, 'field' | 'cellRenderer'>;
 
 export interface ITableState {
   order: OrderType;
@@ -49,12 +45,10 @@ export interface ITableState {
   page: number;
   rowsPerPage: number;
   filters: ITableFilters;
-  searchableColumns: ISearchableColumn[];
+  searchableColumns: SearchableColumn[];
 }
 
-class EnhancedTable extends React.Component<ITableProps, any> {
-
-  state: ITableState;
+class EnhancedTable extends React.Component<ITableProps, ITableState> {
 
   constructor(props: ITableProps, context) {
     super(props, context);
@@ -87,7 +81,7 @@ class EnhancedTable extends React.Component<ITableProps, any> {
   getSearchableColumns(columns: ITableColumn[]) {
     return columns
       .filter((column: ITableColumn) => column.searchable)
-      .map((column: ITableColumn) => ({dataProp: column.dataProp, format: column.format}));
+      .map((column: ITableColumn) => ({field: column.field, cellRenderer: column.cellRenderer}));
   }
 
   handleSearch(search: string) {
@@ -110,9 +104,9 @@ class EnhancedTable extends React.Component<ITableProps, any> {
 
   searchData(items: any[], search: string) {
     return items.filter(item => {
-      return this.state.searchableColumns.some((column: ISearchableColumn) => {
-        const itemVal = item[column.dataProp];
-        const formattedItem = column.format ? column.format(itemVal) : itemVal;
+      return this.state.searchableColumns.some((column: SearchableColumn) => {
+        const itemVal = item[column.field];
+        const formattedItem = column.cellRenderer ? column.cellRenderer(itemVal) : itemVal;
         return formattedItem && formattedItem.search(new RegExp(search, 'i')) !== -1;
       });
     });
@@ -120,11 +114,7 @@ class EnhancedTable extends React.Component<ITableProps, any> {
 
   handleRequestSort = (event, property, sortType: SortType) => {
     const orderBy = property;
-    let order = 'desc';
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
+    const order: OrderType = this.state.orderBy === property && this.state.order === 'desc' ? 'asc' : 'desc';
 
     const data = this.state.data.sort((a, b) => {
       let comparison = 0;
@@ -182,15 +172,8 @@ class EnhancedTable extends React.Component<ITableProps, any> {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
-  getColumnValue = (row, column: ITableColumn) => {
-    const defaultValue = row[column.dataProp];
-    if (column.format) {
-      const args = column.formatProps ? column.formatProps.map(prop => row[prop]) : [defaultValue];
-      return column.format(...args);
-    } else {
-      return defaultValue;
-    }
-  }
+  getColumnValue = (item: any, column: ITableColumn) =>
+    typeof column.cellRenderer === 'function' ? column.cellRenderer(item) : item[column.field]
 
   render() {
     const { columns, classes } = this.props;
@@ -235,10 +218,10 @@ class EnhancedTable extends React.Component<ITableProps, any> {
                     <Checkbox checked={isSelected} />
                   </TableCell>
                   {
-                    columns.map((column, index) => {
+                    columns.map((columnDef, index) => {
                       return (
                         <TableCell size="small" key={index}>
-                          {this.getColumnValue(item, column)}
+                          {this.getColumnValue(item, columnDef)}
                         </TableCell>
                       );
                     })

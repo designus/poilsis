@@ -43,35 +43,35 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     return '';
   }
 
-  get columns(): ITableColumn[] {
+  get columns(): Array<ITableColumn<ICity>> {
     const { formatMessage } = this.props.intl;
     return [
       {
-        title: formatMessage({ id: 'admin.common_fields.id'}),
-        dataProp: 'id'
+        headerName: formatMessage({ id: 'admin.common_fields.id'}),
+        field: 'id'
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.name'}),
-        dataProp: 'name',
-        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale)
+        headerName: formatMessage({ id: 'admin.common_fields.name'}),
+        field: 'name',
+        cellRenderer: (city) => getLocalizedText(city.name, this.props.locale)
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.types'}),
-        dataProp: 'types',
-        format: (types: string[]) => {
+        headerName: formatMessage({ id: 'admin.common_fields.types'}),
+        field: 'types',
+        cellRenderer: (city) => {
           return (
-            <ItemTypesList locale={this.props.locale} typeIds={types} />
+            <ItemTypesList locale={this.props.locale} typeIds={city.types} />
           );
         }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.actions'}),
-        dataProp: 'id',
-        format: (cityId: string) => {
+        headerName: formatMessage({ id: 'admin.common_fields.actions'}),
+        field: 'id',
+        cellRenderer: (city) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editCity.getLink(cityId)}
-              onDelete={this.openDeleteModal(cityId)}
+              editLink={adminRoutes.editCity.getLink(city.id)}
+              onDelete={this.openDeleteModal(city.id)}
             />
           );
         }

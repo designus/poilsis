@@ -84,58 +84,57 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
     }
   }
 
-  get columns(): ITableColumn[] {
+  get columns(): Array<ITableColumn<IItem>> {
     const { formatMessage, formatDate } = this.props.intl;
     return [
       {
-        title: formatMessage({ id: 'admin.common_fields.id' }),
-        dataProp: 'id',
+        headerName: formatMessage({ id: 'admin.common_fields.id' }),
+        field: 'id',
         searchable: true
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.name' }),
-        dataProp: 'name',
+        headerName: formatMessage({ id: 'admin.common_fields.name' }),
+        field: 'name',
         sortType: 'string',
-        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale),
+        cellRenderer: item => getLocalizedText(item.name, this.props.locale),
         searchable: true
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.city' }),
-        dataProp: 'cityId',
+        headerName: formatMessage({ id: 'admin.common_fields.city' }),
+        field: 'cityId',
         sortType: 'string',
-        format: (cityId: string) => getLocalizedText(this.props.citiesMap[cityId].name, this.props.locale),
+        cellRenderer: (item) => getLocalizedText(this.props.citiesMap[item.cityId].name, this.props.locale),
         searchable: true
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.types' }),
-        dataProp: 'types',
-        format: (types: string[]) => {
+        headerName: formatMessage({ id: 'admin.common_fields.types' }),
+        field: 'types',
+        cellRenderer: (item) => {
           return (
-            <ItemTypesList locale={this.props.locale} typeIds={types} />
+            <ItemTypesList locale={this.props.locale} typeIds={item.types} />
           );
         }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.created_at' }),
-        dataProp: 'createdAt',
+        headerName: formatMessage({ id: 'admin.common_fields.created_at' }),
+        field: 'createdAt',
         sortType: 'date',
-        format: (date: string) => formatDate(date)
+        cellRenderer: (item) => formatDate(item.createdAt)
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.user' }),
-        dataProp: 'userId',
+        headerName: formatMessage({ id: 'admin.common_fields.user' }),
+        field: 'userId',
         sortType: 'string',
-        format: (userId: string) => {
-          const user = this.props.usersMap[userId];
+        cellRenderer: (item) => {
+          const user = this.props.usersMap[item.userId];
           return user && user.name || null;
         }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.is_enabled' }),
-        dataProp: 'isEnabled',
+        headerName: formatMessage({ id: 'admin.common_fields.is_enabled' }),
+        field: 'isEnabled',
         sortType: 'string',
-        formatProps: ['id', 'isEnabled'],
-        format: (itemId: string, isEnabled: IsEnabled) => {
+        cellRenderer: (item) => {
           return (
             <div className={this.props.classes.isEnabledWrapper}>
               {LANGUAGES.map(lang => {
@@ -146,8 +145,8 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
                     tooltipText="You must enter at least item name in this language to enable it"
                     label={lang}
                     key={lang}
-                    isEnabled={isEnabled[lang]}
-                    onToggle={this.toggleItemEnabled(itemId, !isEnabled[lang], lang)}
+                    isEnabled={item.isEnabled[lang]}
+                    onToggle={this.toggleItemEnabled(item.id, !item.isEnabled[lang], lang)}
                   />
                 );
               })}
@@ -156,26 +155,24 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
         }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.is_recommended' }),
-        dataProp: 'isRecommended',
+        headerName: formatMessage({ id: 'admin.common_fields.is_recommended' }),
+        field: 'isRecommended',
         sortType: 'string',
-        formatProps: ['id', 'isRecommended'],
-        format: (itemId: string, isRecommended: boolean) => (
+        cellRenderer: (item) => (
           <ToggleRecommended
-            isRecommended={isRecommended}
-            onToggle={this.toggleItemRecommended(itemId, !isRecommended)}
+            isRecommended={item.isRecommended}
+            onToggle={this.toggleItemRecommended(item.id, !item.isRecommended)}
           />
         )
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.actions' }),
-        dataProp: 'id',
-        formatProps: ['userId', 'id'],
-        format: (userId: string, itemId: string) => {
+        headerName: formatMessage({ id: 'admin.common_fields.actions' }),
+        field: 'id',
+        cellRenderer: (item) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editItemMain.getLink(userId, itemId)}
-              onDelete={this.openDeleteModal(itemId)}
+              editLink={adminRoutes.editItemMain.getLink(item.userId, item.id)}
+              onDelete={this.openDeleteModal(item.id)}
             />
           );
         }
