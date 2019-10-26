@@ -2,9 +2,9 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
-import { getImages, sendResponse } from 'server-utils/methods';
+import { getImages, sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
-import { getAlias, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
+import { getAdjustedAliasValue, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
 
 import { ItemsModel, IItemModel } from '../model';
 
@@ -112,10 +112,14 @@ export const toggleItemIsRecommendedField = (req: Request, res: Response, next: 
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: IItem = req.body;
-  const alias = getAlias(item, LANGUAGES) as TranslatableField;
+  const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
+  const alias = getUniqueAlias(await getItemsByAlias(adjustedAlias), id, adjustedAlias);
+  const isEnabled = getAdjustedIsEnabledValue(item);
+
   const newItem = {
     ...item,
-    alias: getUniqueAlias(await getItemsByAlias(alias), id, alias),
+    alias,
+    isEnabled,
     id
   };
 
@@ -134,7 +138,7 @@ export const getViewItem = (req: Request, res: Response, next: NextFunction) => 
 export const doesItemAliasExist = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item: IItem = req.body;
-    const alias = getAlias(item, LANGUAGES, next) as TranslatableField;
+    const alias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
     const itemsByAlias = await getItemsByAlias(alias);
     const existingAliases = getAliasList(itemsByAlias, item.id);
     res.status(200).json(existingAliases.length > 0);
@@ -151,11 +155,14 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   try {
     const item: IItem = req.body;
     const updatedAt = new Date();
-    const alias = getAlias(item, LANGUAGES) as TranslatableField;
+    const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
+    const alias = getUniqueAlias(await getItemsByAlias(adjustedAlias), item.id, adjustedAlias);
+    const isEnabled = getAdjustedIsEnabledValue(item);
 
     const updatedItem = {
       ...item,
-      alias: getUniqueAlias(await getItemsByAlias(alias), item.id, alias),
+      alias,
+      isEnabled,
       updatedAt
     };
 

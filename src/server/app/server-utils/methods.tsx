@@ -5,7 +5,8 @@ import {
   IImage,
   IResponseError,
   mapMimeTypesToTypes,
-  itemValidation
+  itemValidation,
+  IItem
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -97,4 +98,12 @@ export const sendResponse = (res: Response, next: NextFunction) => (err, result)
   }
 
   res.status(200).json(result);
+};
+
+export const getAdjustedIsEnabledValue = (item: IItem) => {
+  return Object.keys(item.isEnabled).reduce((acc, key) => {
+    const oldValue = item.isEnabled[key];
+    acc[key] = item.name[key] ? oldValue : false;
+    return acc;
+  }, {});
 };

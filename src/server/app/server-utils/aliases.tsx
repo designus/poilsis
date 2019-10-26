@@ -11,7 +11,7 @@ export const formatAlias = (alias: string): string =>
     .join('-')
     .toLowerCase();
 
-export const getAlias = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
+export const getAdjustedAliasValue = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
   try {
     return languages.reduce((acc, locale): TranslatableField => {
       const newAlias = item.alias && item.alias[locale] ? item.alias[locale] : item.name[locale];

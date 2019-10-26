@@ -77,6 +77,16 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage],
     intl: true
+    // validate: {
+    //   validator: (value) => {
+    //     // if (typeof value === 'object') {
+    //     //   return LANGUAGES.some(lang => typeof value[lang] === 'boolean');
+    //     // }
+
+    //     return false;
+    //   },
+    //   message: props => `${props.value} is not valid isEnabled field`
+    // }
   },
   cityId: {
     type: String,
@@ -107,16 +117,6 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
   },
   isEnabled: {
     type: IsEnabledSchemaMap
-    // validate: {
-    //   validator: (value) => {
-    //     if (typeof value === 'object') {
-    //       return LANGUAGES.some(lang => typeof value[lang] === 'boolean');
-    //     }
-
-    //     return false;
-    //   },
-    //   message: props => `${props.value} is not valid isEnabled field`
-    // }
   },
   isRecommended: Boolean,
   createdAt: Date,

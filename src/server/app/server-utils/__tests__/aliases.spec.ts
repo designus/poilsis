@@ -1,7 +1,7 @@
 import { DataTypes } from '../../../../global-utils/typings';
-import { extendAliasWithId, getAlias, getUniqueAlias, getAliasList, formatAlias } from '../aliases';
+import { extendAliasWithId, getAdjustedAliasValue, getUniqueAlias, getAliasList, formatAlias } from '../aliases';
 
-describe('server-utils/methods', () => {
+describe('server-utils/aliases', () => {
   describe('Aliases', () => {
     it('extendAliasWithId() should add id to the end of the alias if alias already exists in other items', () => {
       const alias = {
@@ -43,7 +43,7 @@ describe('server-utils/methods', () => {
       expect(getUniqueAlias(items, '789', uniqueAlias)).toEqual(uniqueAlias);
     });
 
-    describe('getAlias()', () => {
+    describe('getAdjustedAliasValue()', () => {
       it('should handle all cases when name and alias are unique', () => {
         const languages = ['en'];
         const itemWithEmptyAlias = {
@@ -73,9 +73,9 @@ describe('server-utils/methods', () => {
           }
         } as DataTypes;
 
-        expect(getAlias(itemWithEmptyAlias, languages)).toEqual({ en: 'custom-name' });
-        expect(getAlias(itemWithFilledAlias, languages)).toEqual({ en: 'custom-alias' });
-        expect(getAlias(itemWithoutAlias, languages)).toEqual({ en: 'custom-name' });
+        expect(getAdjustedAliasValue(itemWithEmptyAlias, languages)).toEqual({ en: 'custom-name' });
+        expect(getAdjustedAliasValue(itemWithFilledAlias, languages)).toEqual({ en: 'custom-alias' });
+        expect(getAdjustedAliasValue(itemWithoutAlias, languages)).toEqual({ en: 'custom-name' });
       });
 
       it('should not add alias if name field is empty', () => {
@@ -94,7 +94,7 @@ describe('server-utils/methods', () => {
           }
         } as DataTypes;
 
-        expect(getAlias(itemWithEmptyName, languages)).toEqual({
+        expect(getAdjustedAliasValue(itemWithEmptyName, languages)).toEqual({
           en: 'custom-name',
           lt: '',
           ru: ''
