@@ -1,20 +1,43 @@
-import { FormattedMessage, MessageValue, InjectedIntl } from 'react-intl';
+import { InjectedIntl } from 'react-intl';
 import {
   DEFAULT_LANGUAGE,
   hasLocalizedFields,
   itemValidation,
   IImage,
-  IPhotoFormState
+  IPhotoFormState,
+  TranslatableField
 } from 'global-utils';
 
 import * as errors from '../data-strings/validation';
+import { IsEnabled } from './typings';
+import { LANGUAGES } from './constants';
 
 const { images: { maxPhotos, maxPhotoSizeBytes } } = itemValidation;
 
 export interface IFormProps {
   intl?: InjectedIntl;
   images?: IImage[];
+  values?: any;
 }
+
+export const RequiredWhenEnabled = (fieldValue: TranslatableField, formState, formProps: IFormProps) => {
+  if (!fieldValue) return undefined;
+  const isEnabled = formProps.values.isEnabled as IsEnabled;
+  const requiredError = formProps.intl.formatMessage({ id: errors.REQUIRED });
+  const requiredWhenEnabledError = formProps.intl.formatMessage({ id: errors.REQUIRED_WHEN_ENABLED });
+
+  const err = LANGUAGES.reduce((acc, lang) => {
+    // default language input field is always required
+    if (!fieldValue[lang] && (lang === DEFAULT_LANGUAGE || isEnabled[lang])) {
+      acc[lang] = lang === DEFAULT_LANGUAGE ? requiredError : requiredWhenEnabledError;
+    }
+
+    return acc;
+  }, {});
+
+  return Object.keys(err).length > 0 ? err : undefined;
+
+};
 
 export const isRequired = (fieldValue, formState, formProps: IFormProps) => {
   const errorMessage = formProps.intl.formatMessage({ id: errors.REQUIRED });

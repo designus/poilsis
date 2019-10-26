@@ -21,6 +21,7 @@
   "common.form_validation.max_photo_size": "Some of your selected files exceeds maximum allowed size of {count} mb",
   "common.form_validation.wrong_file_type": "Field supports only {types} types",
   "common.form_validation.duplicated_alias": "This alias already exist",
+  "common.form_validation.required_when_enabled": "This field is required when you want to enable this item",
   "common.login": "Login",
   "admin.menu.dashboard": "Dashboard",
   "admin.menu.items": "Items",

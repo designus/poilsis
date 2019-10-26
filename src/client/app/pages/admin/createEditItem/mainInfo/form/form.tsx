@@ -4,8 +4,17 @@ import { Dispatch } from 'react-redux';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
-import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount, IItem, DEFAULT_LANGUAGE } from 'global-utils';
 import { asyncValidateAlias } from 'actions';
+import { 
+  isAdmin,
+  itemValidation,
+  isRequired,
+  RequiredWhenEnabled,
+  minCheckedCount,
+  maxCheckedCount,
+  IItem,
+  DEFAULT_LANGUAGE
+} from 'global-utils';
 
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
@@ -39,7 +48,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="name"
         type="text"
         component={TextInput}
-        validate={[isRequired]}
+        validate={[RequiredWhenEnabled]}
         label={intl.formatMessage({ id: 'admin.common_fields.name'})}
         hasIntl
         isHidden={isHidden(true)}
