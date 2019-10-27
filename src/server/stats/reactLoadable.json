@@ -39,15 +39,29 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
-  "components/toggleAction": [
+  "./adminItemToggle": [
     {
-      "id": "./app/components/toggleAction/index.tsx",
-      "name": "./app/components/toggleAction/index.tsx",
+      "id": "./app/components/adminItemToggle/adminItemToggle.tsx",
+      "name": "./app/components/adminItemToggle/adminItemToggle.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
+  "components/adminItemToggle": [
+    {
+      "id": "./app/components/adminItemToggle/index.tsx",
+      "name": "./app/components/adminItemToggle/index.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
   "./styles": [
+    {
+      "id": "./app/components/adminItemToggle/styles.tsx",
+      "name": "./app/components/adminItemToggle/styles.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    },
     {
       "id": "./app/components/toggleAction/styles.tsx",
       "name": "./app/components/toggleAction/styles.tsx",
@@ -57,12 +71,6 @@
     {
       "id": "./app/components/toggleRecommended/styles.tsx",
       "name": "./app/components/toggleRecommended/styles.tsx",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    },
-    {
-      "id": "./app/pages/admin/items/styles.tsx",
-      "name": "./app/pages/admin/items/styles.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
@@ -269,6 +277,14 @@
       "name": "./app/components/formFields/uploadedImages/styles.tsx",
       "file": "photosPage.js",
       "publicPath": "http://localhost:8080/public/photosPage.js"
+    }
+  ],
+  "../toggleAction": [
+    {
+      "id": "./app/components/toggleAction/index.tsx",
+      "name": "./app/components/toggleAction/index.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
   "./toggleAction": [
@@ -3123,7 +3139,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./memoize": [
+  "lodash/memoize": [
     {
       "id": "../../node_modules/lodash/memoize.js",
       "name": "../../node_modules/lodash/memoize.js",

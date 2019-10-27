@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 
 import { IAppState, IItemsMap, ICitiesMap, IUsersMap } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
@@ -26,16 +25,15 @@ import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals/deleteModal';
 import { ToggleAction } from 'components/toggleAction';
+import { AdminItemToggle } from 'components/adminItemToggle';
 import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
 import { IItem } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 
-import { styles } from './styles';
-
 const Table = extendWithLoader(EnhancedTable);
 
-interface IOwnProps extends InjectedIntlProps, WithStyles<typeof styles> {}
+interface IOwnProps extends InjectedIntlProps {}
 
 interface IDispatchProps {
   deleteItem: (itemId: string) => Promise<void>;
@@ -135,23 +133,29 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
         field: 'isEnabled',
         sortType: 'string',
         cellRenderer: (item) => {
+          // return (
+          //   <div className={this.props.classes.isEnabledWrapper}>
+          //     {LANGUAGES.map(lang => {
+          //       const isDisabled = !item.name[lang];
+          //       return (
+          //         <ToggleAction
+          //           isDisabled={isDisabled}
+          //           showTooltip={isDisabled}
+          //           tooltipText={formatMessage({ id: 'admin.items.toggle_tooltip_message'}, { language: lang })}
+          //           label={lang}
+          //           key={lang}
+          //           isEnabled={item.isEnabled[lang]}
+          //           onToggle={this.toggleItemEnabled(item.id, !item.isEnabled[lang], lang)}
+          //         />
+          //       );
+          //     })}
+          //   </div>
+          // );
           return (
-            <div className={this.props.classes.isEnabledWrapper}>
-              {LANGUAGES.map(lang => {
-                const isDisabled = !item.name[lang];
-                return (
-                  <ToggleAction
-                    isDisabled={isDisabled}
-                    showTooltip={isDisabled}
-                    tooltipText={formatMessage({ id: 'admin.items.toggle_tooltip_message'}, { language: lang })}
-                    label={lang}
-                    key={lang}
-                    isEnabled={item.isEnabled[lang]}
-                    onToggle={this.toggleItemEnabled(item.id, !item.isEnabled[lang], lang)}
-                  />
-                );
-              })}
-            </div>
+            <AdminItemToggle
+              item={item}
+              onToggle={this.toggleItemEnabled}
+            />
           );
         }
       },
@@ -268,7 +272,5 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default injectIntl(
-  withStyles(styles)(
-    connect<IStateProps, {}, IOwnProps>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
-  )
+  connect<IStateProps, {}, IOwnProps>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
 );
