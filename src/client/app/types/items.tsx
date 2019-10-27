@@ -1,5 +1,6 @@
 import { IItem, IImage, IItemDescFields, IsEnabled } from 'global-utils/typings';
 import { IGenericState, IAliasMap, IGenericDataMap } from './generic';
+import { toggleItemEnabled } from 'actions/items';
 
 export type IItemsMap = IGenericDataMap<IItem>;
 
@@ -56,6 +57,8 @@ export interface IToggleItemEnabled {
   isEnabled: boolean;
   locale: string;
 }
+
+export type ToggleItemEnabledParams = Omit<IToggleItemEnabled, 'type'>;
 
 export interface IToggleItemRecommended {
   type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED;

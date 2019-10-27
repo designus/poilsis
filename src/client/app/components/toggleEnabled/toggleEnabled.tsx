@@ -3,17 +3,23 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { DataTypes } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
+import { ToggleItemEnabledParams } from 'types';
 
 import { ToggleAction } from '../toggleAction';
 
 import { styles } from './styles';
 
-interface IAdminItemToggleProps extends WithStyles<typeof styles>, InjectedIntlProps {
+interface IToggleEnabledProps extends WithStyles<typeof styles>, InjectedIntlProps {
   item: DataTypes;
-  onToggle: (id: string, isEnabled: boolean, lang: string) => () => void;
+  onToggle: (params: ToggleItemEnabledParams) => void;
 }
 
-function AdminItemToggle(props: IAdminItemToggleProps) {
+function ToggleEnabled(props: IToggleEnabledProps) {
+
+  const handleToggle = (itemId: string, isEnabled: boolean, locale: string) => () => {
+    props.onToggle({ itemId, isEnabled, locale });
+  };
+
   return (
     <div className={props.classes.isEnabledWrapper}>
       {LANGUAGES.map(lang => {
@@ -26,7 +32,7 @@ function AdminItemToggle(props: IAdminItemToggleProps) {
             label={lang}
             key={lang}
             isEnabled={props.item.isEnabled[lang]}
-            onToggle={props.onToggle(props.item.id, !props.item.isEnabled[lang], lang)}
+            onToggle={handleToggle(props.item.id, !props.item.isEnabled[lang], lang)}
           />
         );
       })}
@@ -35,5 +41,5 @@ function AdminItemToggle(props: IAdminItemToggleProps) {
 }
 
 export default injectIntl(
-  withStyles(styles)(AdminItemToggle)
+  withStyles(styles)(ToggleEnabled)
 );

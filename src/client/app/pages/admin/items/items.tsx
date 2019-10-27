@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, IItemsMap, ICitiesMap, IUsersMap } from 'types';
+import { IAppState, IItemsMap, ICitiesMap, IUsersMap, ToggleItemEnabledParams } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
@@ -24,12 +24,10 @@ import { ItemTypesList } from 'components/itemTypesList';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals/deleteModal';
-import { ToggleAction } from 'components/toggleAction';
-import { AdminItemToggle } from 'components/adminItemToggle';
+import { ToggleEnabled } from 'components/toggleEnabled';
 import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
 import { IItem } from 'global-utils/typings';
-import { LANGUAGES } from 'global-utils/constants';
 
 const Table = extendWithLoader(EnhancedTable);
 
@@ -39,7 +37,7 @@ interface IDispatchProps {
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
   endLoading: (loaderId: string) => void;
-  toggleItemEnabled: (itemId: string, isEnabled: boolean, locale: string) => void;
+  toggleItemEnabled: (params: ToggleItemEnabledParams) => void;
   toggleItemRecommended: (itemId: string, isRecommended: boolean) => void;
 }
 
@@ -133,28 +131,10 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
         field: 'isEnabled',
         sortType: 'string',
         cellRenderer: (item) => {
-          // return (
-          //   <div className={this.props.classes.isEnabledWrapper}>
-          //     {LANGUAGES.map(lang => {
-          //       const isDisabled = !item.name[lang];
-          //       return (
-          //         <ToggleAction
-          //           isDisabled={isDisabled}
-          //           showTooltip={isDisabled}
-          //           tooltipText={formatMessage({ id: 'admin.items.toggle_tooltip_message'}, { language: lang })}
-          //           label={lang}
-          //           key={lang}
-          //           isEnabled={item.isEnabled[lang]}
-          //           onToggle={this.toggleItemEnabled(item.id, !item.isEnabled[lang], lang)}
-          //         />
-          //       );
-          //     })}
-          //   </div>
-          // );
           return (
-            <AdminItemToggle
+            <ToggleEnabled
               item={item}
-              onToggle={this.toggleItemEnabled}
+              onToggle={this.props.toggleItemEnabled}
             />
           );
         }
@@ -183,10 +163,6 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
         }
       }
     ];
-  }
-
-  toggleItemEnabled = (itemId: string, isEnabled: boolean, locale: string) => () => {
-    this.props.toggleItemEnabled(itemId, isEnabled, locale);
   }
 
   toggleItemRecommended = (itemId: string, isRecommended: boolean) => () => {

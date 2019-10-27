@@ -9,7 +9,7 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { Toast, IAppState } from 'types';
+import { Toast, IAppState, ToggleItemEnabledParams } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -216,7 +216,8 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (itemId: string, isEnabled: boolean, locale: string) => (dispatch, getState) => {
+export const toggleItemEnabled = (params: ToggleItemEnabledParams) => (dispatch, getState) => {
+  const { itemId, isEnabled, locale } = params;
   const appState: IAppState = getState();
   const item = getItemById(appState, itemId);
   const userId = item.userId;

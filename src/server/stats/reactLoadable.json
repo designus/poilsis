@@ -39,32 +39,24 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
-  "./adminItemToggle": [
+  "../toggleAction": [
     {
-      "id": "./app/components/adminItemToggle/adminItemToggle.tsx",
-      "name": "./app/components/adminItemToggle/adminItemToggle.tsx",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    }
-  ],
-  "components/adminItemToggle": [
-    {
-      "id": "./app/components/adminItemToggle/index.tsx",
-      "name": "./app/components/adminItemToggle/index.tsx",
+      "id": "./app/components/toggleAction/index.tsx",
+      "name": "./app/components/toggleAction/index.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
   "./styles": [
     {
-      "id": "./app/components/adminItemToggle/styles.tsx",
-      "name": "./app/components/adminItemToggle/styles.tsx",
+      "id": "./app/components/toggleAction/styles.tsx",
+      "name": "./app/components/toggleAction/styles.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
     {
-      "id": "./app/components/toggleAction/styles.tsx",
-      "name": "./app/components/toggleAction/styles.tsx",
+      "id": "./app/components/toggleEnabled/styles.tsx",
+      "name": "./app/components/toggleEnabled/styles.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
@@ -279,18 +271,26 @@
       "publicPath": "http://localhost:8080/public/photosPage.js"
     }
   ],
-  "../toggleAction": [
-    {
-      "id": "./app/components/toggleAction/index.tsx",
-      "name": "./app/components/toggleAction/index.tsx",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    }
-  ],
   "./toggleAction": [
     {
       "id": "./app/components/toggleAction/toggleAction.tsx",
       "name": "./app/components/toggleAction/toggleAction.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
+  "components/toggleEnabled": [
+    {
+      "id": "./app/components/toggleEnabled/index.tsx",
+      "name": "./app/components/toggleEnabled/index.tsx",
+      "file": "adminItemsPage.js",
+      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
+    }
+  ],
+  "./toggleEnabled": [
+    {
+      "id": "./app/components/toggleEnabled/toggleEnabled.tsx",
+      "name": "./app/components/toggleEnabled/toggleEnabled.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
@@ -6979,7 +6979,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/ListItem": [
+  "../ListItem": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
@@ -7019,7 +7019,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Menu/Menu": [
+  "./Menu": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
       "name": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
@@ -7315,7 +7315,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "lodash/debounce": [
+  "./debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
       "name": "../../node_modules/lodash/debounce.js",
@@ -7379,7 +7379,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./assertThisInitialized": [
+  "@babel/runtime/helpers/assertThisInitialized": [
     {
       "id": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
       "name": "../../node_modules/@babel/runtime/helpers/assertThisInitialized.js",
