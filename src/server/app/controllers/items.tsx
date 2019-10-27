@@ -87,15 +87,23 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
 export const toggleItemIsEnabledField = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { isEnabled, locale } = req.body;
-    const newItem = await ItemsModel.findOneAndUpdate(
-      { id: req.params.itemId }, { $set: { [`isEnabled.${locale}`]: isEnabled } }, { new: true, runValidators: true }
-    );
+    const document: IItemModel = await ItemsModel.findOne({ id: req.params.itemId });
+    const item = document.toJSON() as IItem;
 
-    if (!newItem) {
+    if (!item.name[locale]) {
+      throw new Error('Unable to enable item with empty name field');
+    }
+
+    document.isEnabled[locale] = isEnabled;
+    document.markModified('isEnabled');
+
+    const updatedItem: IItemModel = await document.save();
+
+    if (!updatedItem) {
       throw new Error('Unable to enable item');
     }
 
-    res.status(200).json(newItem);
+    res.status(200).json(updatedItem);
 
   } catch (err) {
     return next(err);

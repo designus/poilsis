@@ -8,7 +8,8 @@ import {
   IItem,
   LANGUAGES,
   DEFAULT_LANGUAGE,
-  itemValidation
+  itemValidation,
+  IsEnabled
 } from 'global-utils';
 
 import {
@@ -128,10 +129,6 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
 const ItemsSchema = new Schema(ItemsSchemaMap);
 
 ItemsSchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
-
-// ItemsSchema.pre('validate', function(next) {
-
-// })
 
 ItemsSchema.pre('save', function(next) {
   const now = new Date();
