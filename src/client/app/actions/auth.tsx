@@ -65,8 +65,8 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
     .then(response => response.data)
     .then(data => {
       const { accessToken, refreshToken } = data;
-      const { userId: id, expires, userName: name, userRole: role } = getAccessTokenClaims(accessToken);
-      const expiryDate = day(expires * 1000).toDate();
+      const { userId: id, exp, userName: name, userRole: role } = getAccessTokenClaims(accessToken);
+      const expiryDate = day(exp * 1000).toDate();
       dispatch(loginSuccess(accessToken));
       dispatch(receiveUserDetails({ id, name, role }));
       dispatch(endLoading(DIALOG_LOADER_ID));
@@ -88,8 +88,8 @@ export const reauthenticateUser = (displayToast = false) => (dispatch, getState)
     .then(response => response.data)
     .then((data) => {
       const accessToken = data.accessToken;
-      const { expires } = getAccessTokenClaims(accessToken);
-      const expiryDate = day(expires * 1000).toDate();
+      const { exp } = getAccessTokenClaims(accessToken);
+      const expiryDate = day(exp * 1000).toDate();
       dispatch(endLoading(DIALOG_LOADER_ID));
       dispatch(reauthenticateSuccess(accessToken));
       Cookies.set('jwt', accessToken, { expires: expiryDate });

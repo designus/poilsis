@@ -81,7 +81,7 @@ export enum UserRoles {
 }
 
 export interface IAccessTokenClaims {
-  expires: number;
+  exp: number;
   userName: string;
   userId: string;
   userRole: string;
