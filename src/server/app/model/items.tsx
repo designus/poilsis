@@ -1,5 +1,6 @@
 'use strict';
 import { Document, Schema, Model, model } from 'mongoose';
+import shortId from 'shortid';
 
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 import {
@@ -12,12 +13,13 @@ import {
 
 import {
   formatAlias,
-  TGenericSchemaMap,
+  GenericSchemaMap,
   getValidationMessage,
   requiredMessage
 } from '../server-utils';
 
-const shortId = require('shortid');
+import { IsEnabledSchemaMap } from './common';
+
 const mongooseIntl = require('mongoose-intl');
 
 const maxLength = maxLength => value => value.length <= maxLength;
@@ -32,7 +34,7 @@ const {
   images: { maxPhotos }
 } = itemValidation;
 
-const ImageSchemaMap: TGenericSchemaMap<IImage> = {
+const ImageSchemaMap: GenericSchemaMap<IImage> = {
   id: {
     type: String,
     sparse: true,
@@ -53,20 +55,7 @@ const ImageSchemaMap: TGenericSchemaMap<IImage> = {
   }
 };
 
-// const IsEnabledSchemaMap = LANGUAGES.reduce((acc, lang) => {
-//   acc[lang] = {
-//     type: Boolean
-//   };
-//   return acc;
-// }, {});
-
-const IsEnabledSchemaMap = {
-  lt: Boolean,
-  en: Boolean,
-  ru: Boolean
-};
-
-const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
+const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   id: {
     type: String,
     unique: true,
@@ -77,16 +66,6 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage],
     intl: true
-    // validate: {
-    //   validator: (value) => {
-    //     // if (typeof value === 'object') {
-    //     //   return LANGUAGES.some(lang => typeof value[lang] === 'boolean');
-    //     // }
-
-    //     return false;
-    //   },
-    //   message: props => `${props.value} is not valid isEnabled field`
-    // }
   },
   cityId: {
     type: String,

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { ICity, IItem } from 'global-utils/typings';
 import { IAppState } from 'types';
 import { clientRoutes } from 'client-utils/routes';
-import { getLocalizedText } from 'client-utils/methods';
+import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 
 import { getClientLocale } from 'selectors';
 
@@ -21,7 +21,7 @@ interface IItemsListProps {
 export class ItemsList extends React.Component<IItemsListProps> {
 
   renderItem = (item: IItem) => {
-    return item.isEnabled && (
+    return isItemEnabled(item, this.props.locale) && (
       <NavLink
         key={item.id}
         activeStyle={{ color: 'red' }}

@@ -62,6 +62,7 @@ export interface IType {
   alias?: TranslatableField;
   name: TranslatableField;
   description: TranslatableField;
+  isEnabled: IsEnabled;
 }
 
 export interface ICity {
@@ -71,6 +72,7 @@ export interface ICity {
   name: TranslatableField;
   description: TranslatableField;
   hasItems?: boolean;
+  isEnabled: IsEnabled;
 }
 
 export enum UserRoles {
@@ -95,6 +97,7 @@ export interface IUser {
   name: string;
   role: string;
   alias: string;
+  isEnabled: boolean;
 }
 
 export type DataTypes = IItem | IType | ICity;

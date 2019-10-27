@@ -29,7 +29,8 @@ const usersSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, requiredMessage]
-  }
+  },
+  isEnabled: Boolean
 }, {
   timestamps: {
     createdAt: 'created_at',

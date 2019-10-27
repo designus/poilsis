@@ -3,14 +3,15 @@
 import { Document, Schema, Model, model} from 'mongoose';
 import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import shortId from 'shortid';
-import { formatAlias, TGenericSchemaMap, requiredMessage } from '../server-utils';
+import { formatAlias, GenericSchemaMap, requiredMessage } from '../server-utils';
+import { IsEnabledSchemaMap } from './common';
 
 const mongooseIntl = require('mongoose-intl');
 
 // @ts-ignore
 export interface ITypeModel extends ICity, Document {}
 
-const schemaMap: TGenericSchemaMap<IType> = {
+const schemaMap: GenericSchemaMap<IType> = {
   id: {
     type: String,
     unique: true,
@@ -25,6 +26,9 @@ const schemaMap: TGenericSchemaMap<IType> = {
   description: {
     type: String,
     intl: true
+  },
+  isEnabled: {
+    type: IsEnabledSchemaMap
   },
   alias: {
     type: String,

@@ -27,5 +27,3 @@ export interface IAppState {
   toast: IToastState;
   uploadProgress: IUploadProgressState;
 }
-
-export type AppTypes = IItem | IType | ICity | IUser;
