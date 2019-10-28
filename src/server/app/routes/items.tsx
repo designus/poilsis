@@ -61,7 +61,7 @@ router.route('/city/:cityId')
 router.route('/user/:userId')
   .get(getUserItems);
 
-router.route('/item/toggle-enabled/:itemId')
+router.route('/item/toggle-enabled')
   .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItemIsEnabledField);
 
 router.route('/item/toggle-recommended/:itemId')

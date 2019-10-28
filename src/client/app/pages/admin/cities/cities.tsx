@@ -2,13 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, ICitiesMap, ITypesMap } from 'types';
+import { IAppState, ICitiesMap, ITypesMap, ToggleEnabledParams } from 'types';
 import { getCitiesList, getCitiesMap, getAdminLocale, getTypesMap } from 'selectors';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
-import { deleteCity } from 'actions/cities';
-import { ICity, TranslatableField } from 'global-utils/typings';
+import { deleteCity, toggleCityEnabled } from 'actions/cities';
+import { ICity } from 'global-utils/typings';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -16,18 +16,27 @@ import { ItemActions } from 'components/itemActions';
 import { ItemTypesList } from 'components/itemTypesList';
 import { DeleteModal } from 'components/modals/deleteModal';
 import { AdminHeader } from 'components/adminHeader';
+import { ToggleEnabled } from 'components/toggleEnabled';
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface ICitiesPageParams extends InjectedIntlProps {
+interface IOwnProps extends InjectedIntlProps {}
+
+interface IDispatchProps {
+  deleteCity: (typeId: string) => Promise<void>;
+  toggleCityEnabled: (params: ToggleEnabledParams) => void;
+}
+
+interface IStateProps  {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  deleteCity: (typeId: string) => Promise<void>;
   cities: ICity[];
   locale: string;
 }
 
-class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
+type ICitiesPageProps = IOwnProps & IStateProps & IDispatchProps;
+
+class AdminCitiesPageComponent extends React.Component<ICitiesPageProps, any> {
 
   state = {
     isDeleteModalOpen: false,
@@ -61,6 +70,19 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
         cellRenderer: (city) => {
           return (
             <ItemTypesList locale={this.props.locale} typeIds={city.types} />
+          );
+        }
+      },
+      {
+        headerName: formatMessage({ id: 'admin.common_fields.is_enabled' }),
+        field: 'isEnabled',
+        sortType: 'string',
+        cellRenderer: (item) => {
+          return (
+            <ToggleEnabled
+              item={item}
+              onToggle={this.props.toggleCityEnabled}
+            />
           );
         }
       },
@@ -117,7 +139,7 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   typesMap: getTypesMap(state),
   citiesMap: getCitiesMap(state),
   cities: getCitiesList(state),
@@ -125,9 +147,10 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteCity: (cityId: string) => dispatch(deleteCity(cityId))
+  deleteCity: (cityId: string) => dispatch(deleteCity(cityId)),
+  toggleCityEnabled: (params: ToggleEnabledParams) => dispatch(toggleCityEnabled(params))
 });
 
 export const AdminCitiesPage = injectIntl(
-  connect<{}, {}, ICitiesPageParams>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent)
 );

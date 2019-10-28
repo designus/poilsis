@@ -1,4 +1,7 @@
 import { FormattedMessage } from 'react-intl';
+import { Omit } from 'global-utils/typings';
+import { ItemsActionTypes } from './items';
+import { CitiesActionTypes } from './cities';
 
 export interface IAliasMap {
   [key: string]: string;
@@ -30,3 +33,12 @@ export enum ActiveItem {
 export type TranslatedMessages = {
   [key: string]: FormattedMessage.MessageDescriptor;
 };
+
+export interface IToggleEnabled {
+  type: ItemsActionTypes.TOGGLE_ITEM_ENABLED | CitiesActionTypes.TOGGLE_CITY_ENABLED;
+  id: string;
+  isEnabled: boolean;
+  locale: string;
+}
+
+export type ToggleEnabledParams = Omit<IToggleEnabled, 'type'>;

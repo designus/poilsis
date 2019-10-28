@@ -4,6 +4,7 @@ import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
 import { getImages, sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
+import { ToggleEnabledParams } from 'types';
 import { getAdjustedAliasValue, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
 
 import { ItemsModel, IItemModel } from '../model';
@@ -86,8 +87,9 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
 
 export const toggleItemIsEnabledField = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { isEnabled, locale } = req.body;
-    const document: IItemModel = await ItemsModel.findOne({ id: req.params.itemId });
+    const params = req.body as ToggleEnabledParams;
+    const { isEnabled, locale, id } = params;
+    const document: IItemModel = await ItemsModel.findOne({ id });
     const item = document.toJSON() as IItem;
 
     if (!item.name[locale]) {

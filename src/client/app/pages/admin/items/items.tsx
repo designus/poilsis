@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, IItemsMap, ICitiesMap, IUsersMap, ToggleItemEnabledParams } from 'types';
+import { IAppState, IItemsMap, ICitiesMap, IUsersMap, ToggleEnabledParams } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
@@ -37,7 +37,7 @@ interface IDispatchProps {
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
   endLoading: (loaderId: string) => void;
-  toggleItemEnabled: (params: ToggleItemEnabledParams) => void;
+  toggleItemEnabled: (params: ToggleEnabledParams) => void;
   toggleItemRecommended: (itemId: string, isRecommended: boolean) => void;
 }
 
