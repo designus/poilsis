@@ -4,14 +4,13 @@ import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
 import { getImages, sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
-import { ToggleEnabledParams } from 'types';
 import { getAdjustedAliasValue, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
 
-import { ItemsModel, IItemModel } from '../model';
+import { ItemsModel } from '../model';
 
 const getItemsByAlias = async (alias: TranslatableField): Promise<IItem[]> => {
   const aliasValues = Object.values(alias).filter(Boolean);
-  const documents: IItemModel[] = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
+  const documents = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
   return documents.map(item => (item.toJSON() as IItem));
 };
 
@@ -83,33 +82,6 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
       }
     ])
     .exec(sendResponse(res, next));
-};
-
-export const toggleItemIsEnabledField = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const params = req.body as ToggleEnabledParams;
-    const { isEnabled, locale, id } = params;
-    const document: IItemModel = await ItemsModel.findOne({ id });
-    const item = document.toJSON() as IItem;
-
-    if (!item.name[locale]) {
-      throw new Error('Unable to enable item with empty name field');
-    }
-
-    document.isEnabled[locale] = isEnabled;
-    document.markModified('isEnabled');
-
-    const updatedItem: IItemModel = await document.save();
-
-    if (!updatedItem) {
-      throw new Error('Unable to enable item');
-    }
-
-    res.status(200).json(updatedItem);
-
-  } catch (err) {
-    return next(err);
-  }
 };
 
 export const toggleItemIsRecommendedField = (req: Request, res: Response, next: NextFunction) => {
@@ -197,7 +169,7 @@ export const updateItemDescription = (req: Request, res: Response, next: NextFun
     { id: req.params.itemId },
     { $set: fields },
     { new: true, runValidators: true },
-    (err, result: IItem) => {
+    (err, result) => {
       if (err) {
         return next(err);
       }

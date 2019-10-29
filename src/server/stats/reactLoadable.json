@@ -271,6 +271,12 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
     {
+      "id": "./app/types/items.tsx",
+      "name": "./app/types/items.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
       "id": "../data-strings/items.tsx",
       "name": "../data-strings/items.tsx",
       "file": "main.js",
@@ -3031,14 +3037,6 @@
     {
       "id": "./app/reducers/initialData.tsx",
       "name": "./app/reducers/initialData.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "types/items": [
-    {
-      "id": "./app/types/items.tsx",
-      "name": "./app/types/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -7115,7 +7113,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Select": [
+  "@material-ui/core/Select": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Select/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Select/index.js",

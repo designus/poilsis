@@ -3,11 +3,11 @@ import shortId from 'shortid';
 import { ICity, LANGUAGES, TranslatableField } from 'global-utils';
 import { sendResponse } from 'server-utils/methods';
 import { getAdjustedAliasValue, getItemsByAliasesQuery, getUniqueAlias, getAliasList } from 'server-utils/aliases';
-import { CitiesModel, ICityModel } from '../model';
+import { CitiesModel } from '../model';
 
 const getCitiesByAlias = async (alias: TranslatableField): Promise<ICity[]> => {
   const aliasValues = Object.values(alias).filter(Boolean);
-  const documents: ICityModel[] = await CitiesModel.find(getItemsByAliasesQuery(aliasValues));
+  const documents = await CitiesModel.find(getItemsByAliasesQuery(aliasValues));
   return documents.map(item => (item.toJSON() as ICity));
 };
 

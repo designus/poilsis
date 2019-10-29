@@ -10,7 +10,8 @@ import { IsEnabledSchemaMap } from './common';
 const mongooseIntl = require('mongoose-intl');
 
 // @ts-ignore
-export interface ICityModel extends ICity, Document {}
+export interface ICityDocument extends ICity, Document {}
+export type CityModelType = Model<ICityDocument>;
 
 const schemaMap: GenericSchemaMap<ICity> = {
   id: {
@@ -51,4 +52,4 @@ CitySchema.plugin(mongooseIntl, {
   defaultLanguage: DEFAULT_LANGUAGE
 });
 
-export const CitiesModel: Model<ICityModel> = model<ICityModel>('Cities', CitySchema);
+export const CitiesModel: CityModelType = model<ICityDocument>('Cities', CitySchema);

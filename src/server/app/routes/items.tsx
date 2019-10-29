@@ -8,7 +8,7 @@ import {
   getCityItems,
   getRecommendedItems,
   getUserItems,
-  toggleItemIsEnabledField,
+  toggleIsEnabledField,
   toggleItemIsRecommendedField,
   addNewItem,
   deleteItem,
@@ -23,6 +23,8 @@ import {
   removeImagesFromFs,
   removeImagesDir
 } from '../server-utils';
+
+import { ItemsModel } from '../model';
 
 const router = Router();
 
@@ -62,7 +64,7 @@ router.route('/user/:userId')
   .get(getUserItems);
 
 router.route('/item/toggle-enabled')
-  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItemIsEnabledField);
+  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleIsEnabledField(ItemsModel));
 
 router.route('/item/toggle-recommended/:itemId')
   .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemIsRecommendedField);

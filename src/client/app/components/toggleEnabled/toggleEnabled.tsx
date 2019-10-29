@@ -24,7 +24,7 @@ function ToggleEnabled(props: IToggleEnabledProps) {
     <div className={props.classes.isEnabledWrapper}>
       {LANGUAGES.map(lang => {
         const isDisabled = !props.item.name[lang];
-        return (
+        return props.item.isEnabled && (
           <ToggleAction
             isDisabled={isDisabled}
             showTooltip={isDisabled}

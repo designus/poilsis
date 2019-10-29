@@ -28,7 +28,8 @@ const minLength = minLength => value => value.length >= minLength;
 const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(max)(value);
 
 // @ts-ignore
-export interface IItemModel extends IItem, Document {}
+export interface IItemDocument extends IItem, Document {}
+export type ItemModelType = Model<IItemDocument>;
 
 const {
   types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
@@ -138,4 +139,4 @@ ItemsSchema.pre('save', function(next) {
   next();
 });
 
-export const ItemsModel: Model<IItemModel> = model<IItemModel>('Items', ItemsSchema);
+export const ItemsModel: ItemModelType = model<IItemDocument>('Items', ItemsSchema);
