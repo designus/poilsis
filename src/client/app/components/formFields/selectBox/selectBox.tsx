@@ -8,11 +8,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
 import { IDropdownOption } from 'types/generic';
+
 import { styles } from './styles';
 
 export interface ISelectboxProps extends WrappedFieldProps, WithStyles<typeof styles> {
   options: IDropdownOption[];
   isHidden: boolean;
+  selectedLanguage: string;
 }
 
 const SelectBoxComponent = (props: ISelectboxProps) => {

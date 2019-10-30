@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { ICity, LANGUAGES, TranslatableField } from 'global-utils';
-import { sendResponse } from 'server-utils/methods';
+import { sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
 import { getAdjustedAliasValue, getItemsByAliasesQuery, getUniqueAlias, getAliasList } from 'server-utils/aliases';
 import { CitiesModel } from '../model';
 
@@ -23,10 +23,12 @@ export const addNewCity = async (req: Request, res: Response, next: NextFunction
   const id = shortId.generate();
   const city: ICity = req.body;
   const alias = getAdjustedAliasValue(city, LANGUAGES) as TranslatableField;
+  const isEnabled = getAdjustedIsEnabledValue(city);
   const newCity = {
     id,
     ...city,
-    alias: getUniqueAlias(await getCitiesByAlias(alias), id, alias)
+    alias: getUniqueAlias(await getCitiesByAlias(alias), id, alias),
+    isEnabled
   };
 
   new CitiesModel(newCity).save(sendResponse(res, next));
@@ -37,10 +39,12 @@ export const updateCity = async (req: Request, res: Response, next: NextFunction
     const city: ICity = req.body;
     const cityId = req.params.cityId;
     const alias = getAdjustedAliasValue(city, LANGUAGES) as TranslatableField;
+    const isEnabled = getAdjustedIsEnabledValue(city);
 
     const updatedCity = {
       ...city,
-      alias: getUniqueAlias(await getCitiesByAlias(alias), city.id, alias)
+      alias: getUniqueAlias(await getCitiesByAlias(alias), city.id, alias),
+      isEnabled
     };
 
     const newCity = await CitiesModel.findOneAndUpdate({ id: cityId },  { $set: updatedCity }, { new: true, runValidators: true });

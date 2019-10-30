@@ -10,10 +10,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { debounce } from 'lodash';
 
 import { usePrevious } from 'client-utils/customHooks';
+import { isInputHidden } from 'client-utils/methods';
 
 import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields, TranslatableField } from 'global-utils';
 import { styles } from './styles';
-import { select } from 'async';
 
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
   hasIntl: boolean;
@@ -42,7 +42,7 @@ const getInitialValue = (value, isIntl: boolean) => {
 const { useState, useEffect, useCallback } = React;
 
 function TextInput(props: ITextInputProps) {
-  const { hasIntl, input, meta, selectedLanguage, classes, label, multiline, isHidden } = props;
+  const { hasIntl, input, meta, selectedLanguage, classes, label, multiline } = props;
   const [initialState] = useState(getInitialValue(input.value, hasIntl));
   const [inputValue, setInputValue] = useState(initialState);
 
@@ -105,14 +105,14 @@ function TextInput(props: ITextInputProps) {
     return '';
   };
 
-  const renderInput = (value: string, language?: string) => {
-    const hasError = showError(meta.error, language);
+  const renderInput = (value: string, languageOption?: string) => {
+    const hasError = showError(meta.error, languageOption);
     const tooltipText = getError(meta.error);
 
     return (
       <div
-        className={`${classes.wrapper} ${language !== selectedLanguage || isHidden ? classes.hidden : ''}`}
-        key={language}
+        className={`${classes.wrapper} ${isInputHidden(languageOption, selectedLanguage, hasIntl) ? classes.hidden : ''}`}
+        key={languageOption}
       >
         <Tooltip open={hasError} title={tooltipText} placement="right-end">
           <FormControl
@@ -127,8 +127,8 @@ function TextInput(props: ITextInputProps) {
               value={value}
               multiline={multiline}
               rows={4}
-              onBlur={handleOnBlur(language)}
-              onChange={handleOnChange(language)}
+              onBlur={handleOnBlur(languageOption)}
+              onChange={handleOnChange(languageOption)}
               margin="dense"
               className={`${multiline ? classes.multilineInput : ''}`}
               classes={{

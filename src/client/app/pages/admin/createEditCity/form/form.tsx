@@ -5,12 +5,13 @@ import { FormattedMessage, InjectedIntl } from 'react-intl';
 
 import { Button } from 'components/button';
 import { getDropdownOptions } from 'client-utils/methods';
-import { isRequired, ICity } from 'global-utils';
+import { ICity, DEFAULT_LANGUAGE, RequiredWhenEnabled } from 'global-utils';
 import { ITypesMap } from 'types';
 import { asyncValidateAlias } from 'actions';
 
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
+import { Switcher } from 'components/formFields/switch';
 
 export const CITY_FORM_NAME = 'CityForm';
 
@@ -23,13 +24,16 @@ interface ICustomProps {
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
   const { handleSubmit, selectedLanguage, intl, locale } = props;
+
+  const isHidden = () => selectedLanguage !== DEFAULT_LANGUAGE;
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
         name="name"
         type="text"
         component={TextInput}
-        validate={[isRequired]}
+        validate={[RequiredWhenEnabled]}
         label={intl.formatMessage({ id: 'admin.common_fields.name' })}
         hasIntl
         selectedLanguage={selectedLanguage}
@@ -45,6 +49,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
       <Field
         name="types"
         component={CheckboxGroup}
+        isHidden={isHidden()}
         label={intl.formatMessage({ id: 'admin.common_fields.types' })}
         options={getDropdownOptions(props.typesMap, 'name', locale)}
       />
@@ -55,6 +60,13 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         label={intl.formatMessage({ id: 'admin.common_fields.description' })}
         hasIntl
         selectedLanguage={selectedLanguage}
+      />
+      <Field
+        name="isEnabled"
+        component={Switcher}
+        selectedLanguage={selectedLanguage}
+        hasIntl
+        label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
       <div>
         <Button type="submit">

@@ -126,3 +126,11 @@ export const toggleItemInArray = (items: string[], item: string, shouldAddItem: 
 };
 
 export const isItemEnabled = (item: DataTypes, locale: string) => item && item.isEnabled[locale];
+
+export const isInputHidden = (languageOption: string, selectedLanguage: string, hasIntl: boolean) => {
+  if (hasIntl) {
+    return languageOption !== selectedLanguage;
+  }
+
+  return selectedLanguage !== DEFAULT_LANGUAGE;
+};

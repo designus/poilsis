@@ -63,6 +63,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/components/formFields/switch/styles.tsx",
+      "name": "./app/components/formFields/switch/styles.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
       "id": "./app/components/formFields/textInput/styles.tsx",
       "name": "./app/components/formFields/textInput/styles.tsx",
       "file": "adminLayoutPage.js",
@@ -233,12 +239,6 @@
     {
       "id": "./app/components/formFields/selectBox/styles.tsx",
       "name": "./app/components/formFields/selectBox/styles.tsx",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    },
-    {
-      "id": "./app/components/formFields/switch/styles.tsx",
-      "name": "./app/components/formFields/switch/styles.tsx",
       "file": "mainInfoPage.js",
       "publicPath": "http://localhost:8080/public/mainInfoPage.js"
     },
@@ -479,6 +479,22 @@
     {
       "id": "./app/components/formFields/checkboxGroup/index.tsx",
       "name": "./app/components/formFields/checkboxGroup/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "components/formFields/switch": [
+    {
+      "id": "./app/components/formFields/switch/index.tsx",
+      "name": "./app/components/formFields/switch/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "./switch": [
+    {
+      "id": "./app/components/formFields/switch/switch.tsx",
+      "name": "./app/components/formFields/switch/switch.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
@@ -1227,7 +1243,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -5389,22 +5405,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./Switch": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
-      "name": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
-  "@material-ui/core/Switch": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Switch/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Switch/index.js",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
   "components/formFields/selectBox": [
     {
       "id": "./app/components/formFields/selectBox/index.tsx",
@@ -5417,22 +5417,6 @@
     {
       "id": "./app/components/formFields/selectBox/selectBox.tsx",
       "name": "./app/components/formFields/selectBox/selectBox.tsx",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
-  "components/formFields/switch": [
-    {
-      "id": "./app/components/formFields/switch/index.tsx",
-      "name": "./app/components/formFields/switch/index.tsx",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
-  "./switch": [
-    {
-      "id": "./app/components/formFields/switch/switch.tsx",
-      "name": "./app/components/formFields/switch/switch.tsx",
       "file": "mainInfoPage.js",
       "publicPath": "http://localhost:8080/public/mainInfoPage.js"
     }
@@ -5661,6 +5645,22 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/Popper/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Popper/index.js",
+      "file": "vendors~adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+    }
+  ],
+  "./Switch": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
+      "name": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
+      "file": "vendors~adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+    }
+  ],
+  "@material-ui/core/Switch": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Switch/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Switch/index.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -6793,7 +6793,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../FormControl/FormControlContext": [
+  "./FormControlContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
@@ -6961,7 +6961,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/List": [
+  "../List": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/index.js",
       "name": "../../node_modules/@material-ui/core/esm/List/index.js",

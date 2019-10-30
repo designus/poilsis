@@ -4,11 +4,11 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import Switch from '@material-ui/core/Switch';
+import { isInputHidden } from 'client-utils/methods';
 
 import { styles } from './styles';
 
 export interface ISwitchProps extends WrappedFieldProps, WithStyles<typeof styles> {
-  isHidden: boolean;
   selectedLanguage: string;
   hasIntl: boolean;
 }
@@ -33,12 +33,15 @@ class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
     }
   }
 
-  renderInput = (value: boolean, lang?: string) => {
-    const { classes, label, isHidden, selectedLanguage } = this.props;
+  renderInput = (value: boolean, languageOption?: string) => {
+    const { classes, label, selectedLanguage } = this.props;
     return (
       <div
-        className={`${classes.wrapper} ${isHidden || lang !== selectedLanguage ? classes.hidden : ''}`}
-        key={lang}
+        className={`
+          ${classes.wrapper}
+          ${isInputHidden(languageOption, this.props.selectedLanguage, this.props.hasIntl) ? classes.hidden : ''}
+        `}
+        key={languageOption}
       >
         <FormControlLabel
           control={
