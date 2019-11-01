@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { injectIntl, defineMessages } from 'react-intl';
 
-import { getClientLocale, getCitiesList, getActiveItem } from 'selectors';
+import { getClientLocale, getEnabledCities, getActiveItem } from 'selectors';
 import { IAppState, ActiveItem } from 'types';
 import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
@@ -81,7 +81,7 @@ function ClientTopMenu(props: ITopMenuProps) {
 
 const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
   locale: getClientLocale(state),
-  cities: getCitiesList(state),
+  cities: getEnabledCities(state),
   activeItem: getActiveItem(state, props.location.pathname)
 });
 

@@ -21,8 +21,10 @@ export interface IFormProps {
 }
 
 export const RequiredWhenEnabled = (fieldValue: TranslatableField, formState, formProps: IFormProps) => {
-  if (!fieldValue) return undefined;
   const isEnabled = formProps.values.isEnabled as IsEnabled;
+
+  if (!fieldValue || !isEnabled) return undefined;
+
   const requiredError = formProps.intl.formatMessage({ id: errors.REQUIRED });
   const requiredWhenEnabledError = formProps.intl.formatMessage({ id: errors.REQUIRED_WHEN_ENABLED });
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { IAppState } from 'types';
 import { loadCityItems } from 'actions/cities';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { getLocalizedText } from 'client-utils/methods';
+import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -36,7 +36,7 @@ class CityPage extends React.Component<ICityPageProps, any> {
 
   render() {
     const { selectedCity, locale } = this.props;
-    return selectedCity ? (
+    return isItemEnabled(selectedCity, locale) ? (
       <React.Fragment>
         <h1>{getLocalizedText(selectedCity.name, locale)}</h1>
         <p>{getLocalizedText(selectedCity.description, locale)}</p>

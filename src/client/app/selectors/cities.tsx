@@ -1,11 +1,17 @@
 import { createSelector } from 'reselect';
 import { ICity, IItem } from 'global-utils/typings';
-import { getItemsMap } from 'selectors';
+import { getItemsMap, getClientLocale } from 'selectors';
 import { IAppState, IItemsMap, ICitiesMap } from 'types';
 
 export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
 
-export const getCitiesList = (state: IAppState) => Object.values(getCitiesMap(state));
+export const getAllCities = (state: IAppState) => Object.values(getCitiesMap(state));
+
+export const getEnabledCities = (state: IAppState) => {
+  const allCities = getAllCities(state);
+  const locale = getClientLocale(state);
+  return allCities.filter(city => city.isEnabled && city.isEnabled[locale]);
+};
 
 export const getCitiesAliases = (state: IAppState) => state.cities.aliases;
 

@@ -30,7 +30,7 @@ import { HomePage } from 'pages/client/home';
 
 import { IAppState } from 'types';
 
-import { getCitiesList, isLoggedIn, getClientLocale } from 'selectors';
+import { getEnabledCities, isLoggedIn, getClientLocale } from 'selectors';
 
 // @ts-ignore
 import logoUrl from 'static/images/logo.gif';
@@ -138,7 +138,7 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
 
 const mapStateToProps = (state: IAppState) => ({
   isLoggedIn: isLoggedIn(state),
-  cities: getCitiesList(state),
+  cities: getEnabledCities(state),
   locale: getClientLocale(state)
 });
 
