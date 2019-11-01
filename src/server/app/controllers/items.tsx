@@ -112,18 +112,6 @@ export const getViewItem = (req: Request, res: Response, next: NextFunction) => 
   ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
 };
 
-export const doesItemAliasExist = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const item: IItem = req.body;
-    const alias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
-    const itemsByAlias = await getDataByAlias(ItemsModel, alias);
-    const existingAliases = getAliasList(itemsByAlias, item.id);
-    res.status(200).json(existingAliases.length > 0);
-  } catch (err) {
-    return next(err);
-  }
-};
-
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
 };

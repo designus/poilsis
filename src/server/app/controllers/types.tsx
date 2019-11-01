@@ -56,18 +56,6 @@ export const updateType = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-export const doesTypeAliasExist = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const type: IType = req.body;
-    const alias = getAdjustedAliasValue(type, LANGUAGES, next) as TranslatableField;
-    const typesByAlias = await getDataByAlias(TypesModel, alias);
-    const existingAliases = getAliasList(typesByAlias, type.id);
-    res.status(200).json(existingAliases.length > 0);
-  } catch (err) {
-    return next(err);
-  }
-};
-
 export const deleteType = (req: Request, res: Response, next: NextFunction) => {
   TypesModel.findOneAndRemove({ id: req.params.typeId }, sendResponse(res, next));
 };

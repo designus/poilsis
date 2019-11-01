@@ -7,7 +7,7 @@ import {
   updateType,
   deleteType,
   getType,
-  doesTypeAliasExist,
+  doesAliasExist,
   toggleIsEnabledField
 } from '../controllers';
 
@@ -20,7 +20,7 @@ router.route('/')
   .post(auth.authenticate(), auth.authorize(['admin']), addNewType);
 
 router.route('/type/alias-exist')
-  .post(doesTypeAliasExist);
+  .post(doesAliasExist(TypesModel));
 
 router.route('/type/toggle-enabled')
   .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleIsEnabledField(TypesModel));

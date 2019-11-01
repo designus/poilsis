@@ -56,18 +56,6 @@ export const updateCity = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-export const doesCityAliasExist = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const city: ICity = req.body;
-    const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
-    const citiesByAlias = await getDataByAlias(CitiesModel, alias);
-    const existingAliases = getAliasList(citiesByAlias, city.id);
-    res.status(200).json(existingAliases.length > 0);
-  } catch (err) {
-    return next(err);
-  }
-};
-
 export const deleteCity = (req: Request, res: Response, next: NextFunction) => {
   CitiesModel.findOneAndRemove({ id: req.params.cityId }, sendResponse(res, next));
 };

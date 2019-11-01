@@ -2,7 +2,8 @@ import { Model } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import { ToggleEnabledParams } from 'types';
 import { DataTypes, TranslatableField } from 'global-utils/typings';
-import { getItemsByAliasesQuery } from 'server-utils/aliases';
+import { LANGUAGES } from 'global-utils/constants';
+import { getItemsByAliasesQuery, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
 import { IItemDocument, ICityDocument, ITypeDocument } from '../model';
 
 type DocumentModelType = Model<IItemDocument | ICityDocument | ITypeDocument>;
@@ -36,6 +37,18 @@ export const toggleIsEnabledField = (DocumentModel: DocumentModelType) =>
       return next(err);
     }
   };
+
+export const doesAliasExist = (DocumentModel: DocumentModelType) => async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data: DataTypes = req.body;
+    const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
+    const typesByAlias = await getDataByAlias(DocumentModel, alias);
+    const existingAliases = getAliasList(typesByAlias, data.id);
+    res.status(200).json(existingAliases.length > 0);
+  } catch (err) {
+    return next(err);
+  }
+};
 
 export const getDataByAlias = async (DocumentModel: DocumentModelType, alias: TranslatableField): Promise<DataTypes[]> => {
   const aliasValues = Object.values(alias).filter(Boolean);

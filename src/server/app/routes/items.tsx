@@ -16,7 +16,7 @@ import {
   updateMainInfo,
   updatePhotos,
   uploadPhotos,
-  doesItemAliasExist
+  doesAliasExist
 } from '../controllers';
 import {
   createUploadPath,
@@ -43,7 +43,7 @@ router.route('/view-item/:alias')
   .get(getViewItem);
 
 router.route('/item/alias-exist')
-  .post(doesItemAliasExist);
+  .post(doesAliasExist(ItemsModel));
 
 router.route('/item/main-info/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateMainInfo);
