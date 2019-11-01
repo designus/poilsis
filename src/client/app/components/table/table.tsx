@@ -41,7 +41,7 @@ export interface ITableState {
   order: OrderType;
   orderBy: string;
   selected: string[];
-  data: string[];
+  data: any[];
   page: number;
   rowsPerPage: number;
   filters: ITableFilters;
@@ -70,7 +70,7 @@ class EnhancedTable extends React.Component<ITableProps, ITableState> {
   componentWillReceiveProps(nextProps: ITableProps) {
     const data = nextProps.items;
     if (data !== this.state.data) {
-      this.setState({data});
+      this.setState({ data });
     }
 
     if (nextProps.search !== this.state.filters.search) {
@@ -176,9 +176,8 @@ class EnhancedTable extends React.Component<ITableProps, ITableState> {
     typeof column.cellRenderer === 'function' ? column.cellRenderer(item) : item[column.field]
 
   render() {
-    const { columns, classes } = this.props;
+    const { columns, classes, items: data } = this.props;
     const {
-      data,
       order,
       orderBy,
       selected,

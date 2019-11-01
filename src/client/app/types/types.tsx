@@ -1,5 +1,5 @@
 import { IType } from 'global-utils/typings';
-import { IGenericDataMap, IGenericState } from './generic';
+import { IGenericDataMap, IGenericState, IToggleEnabled } from './generic';
 
 export type ITypesMap = IGenericDataMap<IType>;
 export interface ITypesState extends IGenericState<IType> {
@@ -31,4 +31,5 @@ export interface IRemoveType {
 export type TypesActions =
   | ISelectType
   | IReceiveType
-  | IRemoveType;
+  | IRemoveType
+  | IToggleEnabled;

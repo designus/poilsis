@@ -1,6 +1,17 @@
 
 import { Router } from 'express';
-import { auth, getAllTypes, addNewType, updateType, deleteType, getType, doesTypeAliasExist } from '../controllers';
+import {
+  auth,
+  getAllTypes,
+  addNewType,
+  updateType,
+  deleteType,
+  getType,
+  doesTypeAliasExist,
+  toggleIsEnabledField
+} from '../controllers';
+
+import { TypesModel } from '../model';
 
 const router = Router();
 
@@ -10,6 +21,9 @@ router.route('/')
 
 router.route('/type/alias-exist')
   .post(doesTypeAliasExist);
+
+router.route('/type/toggle-enabled')
+  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleIsEnabledField(TypesModel));
 
 router.route('/type/:typeId')
   .get(getType)

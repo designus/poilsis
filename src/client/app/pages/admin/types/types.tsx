@@ -50,7 +50,7 @@ class AdminTypesPage extends React.Component<ITypesPageProps, any> {
     return '';
   }
 
-  get columns(): Array<ITableColumn<IType>> {
+  getColumns(): Array<ITableColumn<IType>> {
     const { formatMessage } = this.props.intl;
     return [
       {
@@ -118,7 +118,7 @@ class AdminTypesPage extends React.Component<ITypesPageProps, any> {
           showLoadingOverlay={true}
           loaderId={CONTENT_LOADER_ID}
           items={this.props.types}
-          columns={this.columns}
+          columns={this.getColumns()}
           limit={10}
         />
         <DeleteModal

@@ -77,10 +77,10 @@ class AdminCitiesPage extends React.Component<ICitiesPageProps, any> {
         headerName: formatMessage({ id: 'admin.common_fields.is_enabled' }),
         field: 'isEnabled',
         sortType: 'string',
-        cellRenderer: (item) => {
+        cellRenderer: (city) => {
           return (
             <ToggleEnabled
-              item={item}
+              item={city}
               onToggle={this.props.toggleCityEnabled}
             />
           );

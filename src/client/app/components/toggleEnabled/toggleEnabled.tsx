@@ -15,7 +15,6 @@ interface IToggleEnabledProps extends WithStyles<typeof styles>, InjectedIntlPro
 }
 
 function ToggleEnabled(props: IToggleEnabledProps) {
-
   const handleToggle = (id: string, isEnabled: boolean, locale: string) => () => {
     props.onToggle({ id, isEnabled, locale });
   };
