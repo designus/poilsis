@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
-import { DataTypes, IUser, Languages } from 'global-utils/typings';
+import { DataTypes, IUser, IItem } from 'global-utils/typings';
 import { TranslatableField, hasLocalizedFields } from 'global-utils';
 import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap } from 'types';
 
@@ -125,7 +125,13 @@ export const toggleItemInArray = (items: string[], item: string, shouldAddItem: 
   return items.filter(current => current !== item);
 };
 
-export const isItemEnabled = (item: DataTypes, locale: string) => item && item.isEnabled && item.isEnabled[locale];
+export const isDataEnabled = (item: DataTypes, locale: string) =>
+  item &&
+  item.isEnabled &&
+  item.isEnabled[locale];
+
+export const isItemEnabled = (item: IItem, locale: string) =>
+  isDataEnabled(item, locale) && item.isApprovedByAdmin;
 
 export const isInputHidden = (languageOption: string, selectedLanguage: string, hasIntl: boolean) => {
   if (hasIntl) {

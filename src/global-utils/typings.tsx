@@ -1,3 +1,4 @@
+import { LANGUAGES } from './constants';
 export interface IImage {
   id?: string;
   name?: string;
@@ -21,9 +22,9 @@ export type Value<T, K extends keyof T> = T[K];
 
 export type IntlSetting<T> = Partial<Record<Languages, T>>;
 
-export type TranslatableField = Partial<Record<Languages, string>>;
+export type TranslatableField = IntlSetting<string>;
 
-export type IsEnabled = Partial<IntlSetting<boolean>>;
+export type IsEnabled = IntlSetting<boolean>;
 
 export interface IResponseError {
   errors: {
@@ -51,6 +52,7 @@ export interface IItem extends IItemDescFields {
   userId: string;
   isRecommended: boolean;
   isEnabled: IsEnabled;
+  isApprovedByAdmin: boolean;
   createdAt?: string;
   updatedAt?: string;
   isFullyLoaded?: boolean;

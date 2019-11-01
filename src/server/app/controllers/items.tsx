@@ -32,6 +32,9 @@ const itemProjection =  {
   cityId: 1,
   isEnabled: 1,
   isRecommended: 1,
+  createdAt: 1,
+  updatedAt: 1,
+  isApprovedByAdmin: 1,
   mainImage: mainImageProjection
 };
 

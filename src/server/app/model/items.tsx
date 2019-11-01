@@ -99,6 +99,7 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   isEnabled: {
     type: IsEnabledSchemaMap
   },
+  isApprovedByAdmin: Boolean,
   isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,

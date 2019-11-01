@@ -103,6 +103,14 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         hasIntl
         label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
+      {isAdmin(props.userRole) &&
+        <Field
+          name="isApprovedByAdmin"
+          component={Switcher}
+          selectedLanguage={selectedLanguage}
+          label={intl.formatMessage({ id: 'admin.common_fields.approved_by_admin'})}
+        />
+      }
       <div>
         <Button type="submit" disabled={submitting || pristine}>
           <FormattedMessage id="common.submit" />
