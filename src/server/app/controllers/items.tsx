@@ -2,9 +2,9 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
-import { getImages, sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
+import { getImages, sendResponse, getAdjustedIsEnabledValue, isApprovedByAdmin } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
-import { getAdjustedAliasValue, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
+import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
 
@@ -96,10 +96,11 @@ export const addNewItem = async (req: Request, res: Response, next: NextFunction
   const alias = getUniqueAlias(itemsByAlias, id, adjustedAlias);
   const isEnabled = getAdjustedIsEnabledValue(item);
 
-  const newItem = {
+  const newItem: IItem = {
     ...item,
     alias,
     isEnabled,
+    isApprovedByAdmin: isApprovedByAdmin(req.body.userRole, item),
     id
   };
 
@@ -122,17 +123,18 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 export const updateMainInfo = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item: IItem = req.body;
-    const updatedAt = new Date();
+    const updatedAt = new Date().toUTCString();
     const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
     const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
     const alias = getUniqueAlias(itemsByAlias, item.id, adjustedAlias);
     const isEnabled = getAdjustedIsEnabledValue(item);
 
-    const updatedItem = {
+    const updatedItem: IItem = {
       ...item,
       alias,
       isEnabled,
-      updatedAt
+      updatedAt,
+      isApprovedByAdmin: isApprovedByAdmin(req.body.userRole, item)
     };
 
     const newItem = await ItemsModel.findOneAndUpdate(

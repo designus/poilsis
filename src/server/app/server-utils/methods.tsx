@@ -7,7 +7,8 @@ import {
   mapMimeTypesToTypes,
   itemValidation,
   IItem,
-  DataTypes
+  DataTypes,
+  UserRoles
 } from 'global-utils';
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
@@ -108,3 +109,6 @@ export const getAdjustedIsEnabledValue = (item: DataTypes) => {
     return acc;
   }, {});
 };
+
+export const isApprovedByAdmin = (userRole: UserRoles, item: IItem) =>
+  userRole === UserRoles.admin ? item.isApprovedByAdmin : false;
