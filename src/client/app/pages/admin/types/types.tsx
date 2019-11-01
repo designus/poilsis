@@ -4,28 +4,37 @@ import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
-import { deleteType } from 'actions/types';
+import { deleteType, toggleTypeEnabled } from 'actions/types';
 import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
-import { TranslatableField, IType } from 'global-utils/typings';
-import { IAppState, ITypesMap } from 'types';
+import { IType } from 'global-utils/typings';
+import { IAppState, ITypesMap, ToggleEnabledParams } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals/deleteModal';
 import { AdminHeader } from 'components/adminHeader';
+import { ToggleEnabled } from 'components/toggleEnabled';
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface ITypesPageParams extends InjectedIntlProps {
+interface IOwnProps extends InjectedIntlProps {}
+
+interface IDispatchProps {
+  deleteType: (typeId: string) => Promise<void>;
+  toggleTypeEnabled: (params: ToggleEnabledParams) => void;
+}
+
+interface IStateProps {
   typesMap: ITypesMap;
   types: IType[];
-  deleteType: (typeId: string) => Promise<any>;
   locale: string;
 }
 
-class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
+type ITypesPageProps = IOwnProps & IStateProps & IDispatchProps;
+
+class AdminTypesPage extends React.Component<ITypesPageProps, any> {
 
   state = {
     isDeleteModalOpen: false,
@@ -57,6 +66,19 @@ class AdminTypesPageComponent extends React.Component<ITypesPageParams, any> {
         headerName: formatMessage({id: 'admin.common_fields.description'}),
         field: 'description',
         cellRenderer: (type) => getLocalizedText(type.description, this.props.locale)
+      },
+      {
+        headerName: formatMessage({ id: 'admin.common_fields.is_enabled' }),
+        field: 'isEnabled',
+        sortType: 'string',
+        cellRenderer: (type) => {
+          return (
+            <ToggleEnabled
+              item={type}
+              onToggle={this.props.toggleTypeEnabled}
+            />
+          );
+        }
       },
       {
         headerName: formatMessage({id: 'admin.common_fields.actions'}),
@@ -118,9 +140,10 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteType: (typeId: string) => dispatch(deleteType(typeId))
+  deleteType: (typeId: string) => dispatch(deleteType(typeId)),
+  toggleTypeEnabled: (params: ToggleEnabledParams) => dispatch(toggleTypeEnabled(params))
 });
 
-export const AdminTypesPage = injectIntl(
-  connect<{}, {}, ITypesPageParams>(mapStateToProps, mapDispatchToProps)(AdminTypesPageComponent)
+export default injectIntl(
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(AdminTypesPage)
 );

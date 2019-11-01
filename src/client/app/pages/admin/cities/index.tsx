@@ -1,1 +1,1 @@
-export * from './cities';
+export { default as AdminCitiesPage } from './cities';

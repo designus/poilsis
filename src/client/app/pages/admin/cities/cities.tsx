@@ -36,7 +36,7 @@ interface IStateProps  {
 
 type ICitiesPageProps = IOwnProps & IStateProps & IDispatchProps;
 
-class AdminCitiesPageComponent extends React.Component<ICitiesPageProps, any> {
+class AdminCitiesPage extends React.Component<ICitiesPageProps, any> {
 
   state = {
     isDeleteModalOpen: false,
@@ -151,6 +151,6 @@ const mapDispatchToProps = (dispatch) => ({
   toggleCityEnabled: (params: ToggleEnabledParams) => dispatch(toggleCityEnabled(params))
 });
 
-export const AdminCitiesPage = injectIntl(
-  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent)
+export default injectIntl(
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(AdminCitiesPage)
 );

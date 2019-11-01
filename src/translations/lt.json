@@ -87,6 +87,7 @@
   "admin.type.update_error": "Failed to update type",
   "admin.type.delete_error": "Failed to delete type",
   "admin.type.delete_success": "Type was deleted successfully",
+  "admin.type.enable_error": "Failed to enable type.",
   "admin.authenticate.login_success": "Jūs prisijungėte sėkmingai",
   "admin.authenticate.login_error": "Nepavyko prisijungti",
   "admin.authenticate.logout_success": "Jūs sėkmingai atsijungėte",

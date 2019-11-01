@@ -561,7 +561,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/itemTypesList": [
+  "../itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -807,12 +807,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/actions/cities.tsx",
-      "name": "./app/actions/cities.tsx",
-      "file": "adminLayoutPage~clientCity~homePage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity~homePage.js"
-    },
-    {
       "id": "./app/types/cities.tsx",
       "name": "./app/types/cities.tsx",
       "file": "main.js",
@@ -983,6 +977,14 @@
       "name": "./app/pages/admin/types/index.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "actions/cities": [
+    {
+      "id": "./app/actions/cities.tsx",
+      "name": "./app/actions/cities.tsx",
+      "file": "adminLayoutPage~clientCity~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity~homePage.js"
     }
   ],
   "./extendWithLoader": [
@@ -1215,30 +1217,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "./locale": [
+  "actions/locale": [
     {
       "id": "./app/actions/locale.tsx",
       "name": "./app/actions/locale.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "./app/types/locale.tsx",
-      "name": "./app/types/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/locale.tsx",
-      "name": "./app/selectors/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/locale.tsx",
-      "name": "./app/reducers/locale.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "components/drawer": [
@@ -3085,6 +3069,26 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "./locale": [
+    {
+      "id": "./app/types/locale.tsx",
+      "name": "./app/types/locale.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/locale.tsx",
+      "name": "./app/selectors/locale.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/locale.tsx",
+      "name": "./app/reducers/locale.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "actions/toast": [
     {
       "id": "./app/actions/toast.tsx",
@@ -3133,7 +3137,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./memoize": [
+  "lodash/memoize": [
     {
       "id": "../../node_modules/lodash/memoize.js",
       "name": "../../node_modules/lodash/memoize.js",
@@ -4435,6 +4439,12 @@
       "name": "../../node_modules/axios/lib/utils.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
     {
       "id": "../../node_modules/intl-messageformat/lib/utils.js",
@@ -6421,7 +6431,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./SubmissionError": [
+  "redux-form/es/SubmissionError": [
     {
       "id": "../../node_modules/redux-form/es/SubmissionError.js",
       "name": "../../node_modules/redux-form/es/SubmissionError.js",
@@ -6429,7 +6439,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./actions": [
+  "redux-form/es/actions": [
     {
       "id": "../../node_modules/redux-form/es/actions.js",
       "name": "../../node_modules/redux-form/es/actions.js",
@@ -6781,7 +6791,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./FormControlContext": [
+  "../FormControl/FormControlContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
@@ -6913,14 +6923,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
       "name": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "../InputBase/utils": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -7669,7 +7671,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../Typography": [
+  "@material-ui/core/Typography": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Typography/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Typography/index.js",
@@ -7685,7 +7687,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/focusVisible": [
+  "./focusVisible": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/focusVisible.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/focusVisible.js",
@@ -7709,7 +7711,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/ownerDocument": [
+  "./ownerDocument": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/ownerDocument.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/ownerDocument.js",
@@ -7717,7 +7719,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/ownerWindow": [
+  "./ownerWindow": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/ownerWindow.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/ownerWindow.js",
@@ -7725,7 +7727,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/reactHelpers": [
+  "./reactHelpers": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/reactHelpers.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/reactHelpers.js",
@@ -7733,7 +7735,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "../utils/withForwardedRef": [
+  "./withForwardedRef": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/withForwardedRef.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/withForwardedRef.js",

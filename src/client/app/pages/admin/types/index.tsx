@@ -1,1 +1,1 @@
-export * from './types';
+export { default as AdminTypesPage } from './types';
