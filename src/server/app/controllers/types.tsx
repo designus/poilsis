@@ -3,7 +3,7 @@ import { IType, LANGUAGES, TranslatableField } from 'global-utils';
 import shortId from 'shortid';
 
 import { getUniqueAlias, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
-import { sendResponse } from 'server-utils/methods';
+import { sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
 import { TypesModel } from '../model';
 import { getDataByAlias } from './common';
 
@@ -20,10 +20,12 @@ export const addNewType = async (req: Request, res: Response, next: NextFunction
   const data: IType = req.body;
   const alias = getAdjustedAliasValue(data, LANGUAGES) as TranslatableField;
   const typesByAlias = await getDataByAlias(TypesModel, alias);
+  const isEnabled = getAdjustedIsEnabledValue(data);
   const newType = {
-    id,
     ...data,
-    alias: getUniqueAlias(typesByAlias, id, alias)
+    alias: getUniqueAlias(typesByAlias, id, alias),
+    isEnabled,
+    id
   };
 
   new TypesModel(newType).save(sendResponse(res, next));
@@ -35,9 +37,11 @@ export const updateType = async (req: Request, res: Response, next: NextFunction
     const typeId = req.params.typeId;
     const alias = getAdjustedAliasValue(data, LANGUAGES) as TranslatableField;
     const typesByAlias = await getDataByAlias(TypesModel, alias);
+    const isEnabled = getAdjustedIsEnabledValue(data);
     const type = {
       ...data,
-      alias: getUniqueAlias(typesByAlias, data.id, alias)
+      alias: getUniqueAlias(typesByAlias, data.id, alias),
+      isEnabled
     };
 
     const updatedType = await TypesModel.findOneAndUpdate({ id: typeId }, { $set: type }, { new: true, runValidators: true });

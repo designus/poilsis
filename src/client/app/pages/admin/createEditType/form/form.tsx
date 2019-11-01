@@ -7,6 +7,7 @@ import { asyncValidateAlias } from 'actions';
 import { isRequired, IType } from 'global-utils';
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
+import { Switcher } from 'components/formFields/switch';
 
 export const TYPE_FORM_NAME = 'TypeForm';
 
@@ -43,6 +44,13 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         label={intl.formatMessage({id: 'admin.common_fields.description'})}
         selectedLanguage={selectedLanguage}
         hasIntl
+      />
+      <Field
+        name="isEnabled"
+        component={Switcher}
+        selectedLanguage={selectedLanguage}
+        hasIntl
+        label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
       <div>
         <Button type="submit">
