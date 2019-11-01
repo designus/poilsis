@@ -2,16 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import { IType, LANGUAGES, TranslatableField } from 'global-utils';
 import shortId from 'shortid';
 
-import { getUniqueAlias, getAdjustedAliasValue, getItemsByAliasesQuery, getAliasList } from 'server-utils/aliases';
+import { getUniqueAlias, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
 import { sendResponse } from 'server-utils/methods';
-import { TypesModel, ITypeModel } from '../model';
-
-const getTypesByAlias = async (alias: TranslatableField): Promise<IType[]> => {
-  const aliasValues = Object.values(alias).filter(Boolean);
-  const query = getItemsByAliasesQuery(aliasValues);
-  const documents: ITypeModel[] = await TypesModel.find(query);
-  return documents.map(item => (item.toJSON() as IType));
-};
+import { TypesModel } from '../model';
+import { getDataByAlias } from './common';
 
 export const getAllTypes = (req: Request, res: Response, next: NextFunction) => {
   TypesModel.find(sendResponse(res, next));
@@ -25,10 +19,11 @@ export const addNewType = async (req: Request, res: Response, next: NextFunction
   const id = shortId.generate();
   const data: IType = req.body;
   const alias = getAdjustedAliasValue(data, LANGUAGES) as TranslatableField;
+  const typesByAlias = await getDataByAlias(TypesModel, alias);
   const newType = {
     id,
     ...data,
-    alias: getUniqueAlias(await getTypesByAlias(alias), id, alias)
+    alias: getUniqueAlias(typesByAlias, id, alias)
   };
 
   new TypesModel(newType).save(sendResponse(res, next));
@@ -39,10 +34,10 @@ export const updateType = async (req: Request, res: Response, next: NextFunction
     const data: IType = req.body;
     const typeId = req.params.typeId;
     const alias = getAdjustedAliasValue(data, LANGUAGES) as TranslatableField;
-    const existingTypes = await getTypesByAlias(alias);
+    const typesByAlias = await getDataByAlias(TypesModel, alias);
     const type = {
       ...data,
-      alias: getUniqueAlias(existingTypes, data.id, alias)
+      alias: getUniqueAlias(typesByAlias, data.id, alias)
     };
 
     const updatedType = await TypesModel.findOneAndUpdate({ id: typeId }, { $set: type }, { new: true, runValidators: true });
@@ -61,8 +56,8 @@ export const doesTypeAliasExist = async (req: Request, res: Response, next: Next
   try {
     const type: IType = req.body;
     const alias = getAdjustedAliasValue(type, LANGUAGES, next) as TranslatableField;
-    const citiesByAlias = await getTypesByAlias(alias);
-    const existingAliases = getAliasList(citiesByAlias, type.id);
+    const typesByAlias = await getDataByAlias(TypesModel, alias);
+    const existingAliases = getAliasList(typesByAlias, type.id);
     res.status(200).json(existingAliases.length > 0);
   } catch (err) {
     return next(err);

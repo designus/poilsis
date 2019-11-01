@@ -5,14 +5,8 @@ import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LAN
 import { getImages, sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
-
+import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
-
-const getItemsByAlias = async (alias: TranslatableField): Promise<IItem[]> => {
-  const aliasValues = Object.values(alias).filter(Boolean);
-  const documents = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
-  return documents.map(item => (item.toJSON() as IItem));
-};
 
 const mainImageProjection = {
   $let: {
@@ -95,7 +89,8 @@ export const addNewItem = async (req: Request, res: Response, next: NextFunction
   const id = shortId.generate();
   const item: IItem = req.body;
   const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
-  const alias = getUniqueAlias(await getItemsByAlias(adjustedAlias), id, adjustedAlias);
+  const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
+  const alias = getUniqueAlias(itemsByAlias, id, adjustedAlias);
   const isEnabled = getAdjustedIsEnabledValue(item);
 
   const newItem = {
@@ -121,7 +116,7 @@ export const doesItemAliasExist = async (req: Request, res: Response, next: Next
   try {
     const item: IItem = req.body;
     const alias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
-    const itemsByAlias = await getItemsByAlias(alias);
+    const itemsByAlias = await getDataByAlias(ItemsModel, alias);
     const existingAliases = getAliasList(itemsByAlias, item.id);
     res.status(200).json(existingAliases.length > 0);
   } catch (err) {
@@ -138,7 +133,8 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
     const item: IItem = req.body;
     const updatedAt = new Date();
     const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
-    const alias = getUniqueAlias(await getItemsByAlias(adjustedAlias), item.id, adjustedAlias);
+    const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
+    const alias = getUniqueAlias(itemsByAlias, item.id, adjustedAlias);
     const isEnabled = getAdjustedIsEnabledValue(item);
 
     const updatedItem = {

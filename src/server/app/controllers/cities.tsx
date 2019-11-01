@@ -2,14 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { ICity, LANGUAGES, TranslatableField } from 'global-utils';
 import { sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
-import { getAdjustedAliasValue, getItemsByAliasesQuery, getUniqueAlias, getAliasList } from 'server-utils/aliases';
+import { getAdjustedAliasValue, getUniqueAlias, getAliasList } from 'server-utils/aliases';
+import { getDataByAlias } from './common';
 import { CitiesModel } from '../model';
-
-const getCitiesByAlias = async (alias: TranslatableField): Promise<ICity[]> => {
-  const aliasValues = Object.values(alias).filter(Boolean);
-  const documents = await CitiesModel.find(getItemsByAliasesQuery(aliasValues));
-  return documents.map(item => (item.toJSON() as ICity));
-};
 
 export const getAllCities = (req: Request, res: Response, next: NextFunction) => {
   CitiesModel.find(sendResponse(res, next));
@@ -24,10 +19,11 @@ export const addNewCity = async (req: Request, res: Response, next: NextFunction
   const city: ICity = req.body;
   const alias = getAdjustedAliasValue(city, LANGUAGES) as TranslatableField;
   const isEnabled = getAdjustedIsEnabledValue(city);
+  const citiesByAlias = await getDataByAlias(CitiesModel, alias);
   const newCity = {
     id,
     ...city,
-    alias: getUniqueAlias(await getCitiesByAlias(alias), id, alias),
+    alias: getUniqueAlias(citiesByAlias, id, alias),
     isEnabled
   };
 
@@ -40,10 +36,11 @@ export const updateCity = async (req: Request, res: Response, next: NextFunction
     const cityId = req.params.cityId;
     const alias = getAdjustedAliasValue(city, LANGUAGES) as TranslatableField;
     const isEnabled = getAdjustedIsEnabledValue(city);
+    const citiesByAlias = await getDataByAlias(CitiesModel, alias);
 
     const updatedCity = {
       ...city,
-      alias: getUniqueAlias(await getCitiesByAlias(alias), city.id, alias),
+      alias: getUniqueAlias(citiesByAlias, city.id, alias),
       isEnabled
     };
 
@@ -63,7 +60,7 @@ export const doesCityAliasExist = async (req: Request, res: Response, next: Next
   try {
     const city: ICity = req.body;
     const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
-    const citiesByAlias = await getCitiesByAlias(alias);
+    const citiesByAlias = await getDataByAlias(CitiesModel, alias);
     const existingAliases = getAliasList(citiesByAlias, city.id);
     res.status(200).json(existingAliases.length > 0);
   } catch (err) {

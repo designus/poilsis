@@ -1,10 +1,13 @@
 import { Model } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import { ToggleEnabledParams } from 'types';
-import { DataTypes } from 'global-utils/typings';
-import { IItemDocument, ICityDocument } from '../model';
+import { DataTypes, TranslatableField } from 'global-utils/typings';
+import { getItemsByAliasesQuery } from 'server-utils/aliases';
+import { IItemDocument, ICityDocument, ITypeDocument } from '../model';
 
-export const toggleIsEnabledField = (DocumentModel: Model<IItemDocument | ICityDocument>) =>
+type DocumentModelType = Model<IItemDocument | ICityDocument | ITypeDocument>;
+
+export const toggleIsEnabledField = (DocumentModel: DocumentModelType) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const params = req.body as ToggleEnabledParams;
@@ -33,3 +36,9 @@ export const toggleIsEnabledField = (DocumentModel: Model<IItemDocument | ICityD
       return next(err);
     }
   };
+
+export const getDataByAlias = async (DocumentModel: DocumentModelType, alias: TranslatableField): Promise<DataTypes[]> => {
+  const aliasValues = Object.values(alias).filter(Boolean);
+  const documents = await DocumentModel.find(getItemsByAliasesQuery(aliasValues));
+  return documents.map(item => (item.toJSON() as DataTypes));
+};
