@@ -13,7 +13,7 @@ import {
   minCheckedCount,
   maxCheckedCount,
   IItem,
-  DEFAULT_LANGUAGE
+  DEFAULT_LANGUAGE,
 } from 'global-utils';
 
 import { Button } from 'components/button';

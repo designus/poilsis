@@ -40,7 +40,7 @@
   "admin.common_fields.created_at": "Sukūrimo data",
   "admin.common_fields.user": "Vartotojas",
   "admin.common_fields.is_enabled": "Rodyti?",
-  "admin.common_fields.approved_by_admin": "Patvirtinti (admin leidimas)",
+  "admin.common_fields.approved_by_admin": "Patvirtinti",
   "admin.common_fields.is_recommended": "Rekomenduotinas",
   "admin.common_fields.description": "Aprašymas",
   "admin.common_fields.actions": "Veiksmai",

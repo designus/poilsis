@@ -14,9 +14,9 @@ import { styles } from './styles';
 export type SortType = 'string' | 'number' | 'date';
 export type OrderType = 'asc' | 'desc';
 
-export interface ITableColumn<T = object> {
+export interface ITableColumn<T = any> {
   headerName: string;
-  field: string;
+  field: Partial<keyof T>;
   sortType?: SortType;
   searchable?: boolean;
   cellRenderer?: (data: T) => JSX.Element | string | number;
