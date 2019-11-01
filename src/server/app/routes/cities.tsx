@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { auth, getAllCities, addNewCity, updateCity, deleteCity, getCity, doesAliasExist, toggleIsEnabledField } from '../controllers';
+import { auth, getAllCities, addNewCity, updateCity, deleteCity, getCity, doesAliasExist, toggleEnabled } from '../controllers';
 
 import { CitiesModel } from '../model';
 
@@ -13,7 +13,7 @@ router.route('/city/alias-exist')
   .post(doesAliasExist(CitiesModel));
 
 router.route('/city/toggle-enabled')
-  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleIsEnabledField(CitiesModel));
+  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleEnabled(CitiesModel));
 
 router.route('/city/:cityId')
   .get(getCity)

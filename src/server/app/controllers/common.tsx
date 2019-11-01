@@ -8,7 +8,7 @@ import { IItemDocument, ICityDocument, ITypeDocument } from '../model';
 
 type DocumentModelType = Model<IItemDocument | ICityDocument | ITypeDocument>;
 
-export const toggleIsEnabledField = (DocumentModel: DocumentModelType) =>
+export const toggleEnabled = (DocumentModel: DocumentModelType) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const params = req.body as ToggleEnabledParams;

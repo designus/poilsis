@@ -81,9 +81,16 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
     .exec(sendResponse(res, next));
 };
 
-export const toggleItemIsRecommendedField = (req: Request, res: Response, next: NextFunction) => {
+export const toggleItemRecommended = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndUpdate(
-    { id: req.params.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
+    { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
+    sendResponse(res, next)
+  );
+};
+
+export const toggleItemApproved = (req: Request, res: Response, next: NextFunction) => {
+  ItemsModel.findOneAndUpdate(
+    { id: req.body.itemId }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true },
     sendResponse(res, next)
   );
 };

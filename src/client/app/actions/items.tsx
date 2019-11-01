@@ -244,7 +244,7 @@ export const toggleItemApproved = (itemId: string, isApproved: boolean) => (disp
 };
 
 export const toggleItemRecommended = (itemId: string, isRecommended: boolean) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-recommended/${itemId}`, { isRecommended })
+  return http.patch(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
     .then(handleApiResponse)
     .then(() => {
       dispatch(toggleItemRecommendedField(itemId, isRecommended));
