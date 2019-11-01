@@ -64,6 +64,17 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
           }
         }
       };
+    case ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
+            isApprovedByAdmin: action.isApproved
+          }
+        }
+      }
     case ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED:
       return {
         ...state,

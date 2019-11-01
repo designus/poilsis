@@ -19,7 +19,8 @@ export enum ItemsActionTypes {
   REMOVE_ITEM = 'REMOVE_ITEM',
   RECEIVE_IMAGES = 'RECEIVE_IMAGES',
   TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
-  TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED'
+  TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED',
+  TOGGLE_ITEM_APPROVED_BY_ADMIN = 'TOGGLE_ITEM_APPROVED_BY_ADMIN'
 }
 
 export interface IReceiveItems extends IUniqueItemProps {
@@ -56,10 +57,17 @@ export interface IToggleItemRecommended {
   isRecommended: boolean;
 }
 
+export interface IToggleItemApprovedByAdmin {
+  type: ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN;
+  itemId: string;
+  isApproved: boolean;
+}
+
 export type ItemsActions = IReceiveItems
   | IReceiveItem
   | IReceiveItemDescription
   | IRemoveItem
   | IReceiveImages
   | IToggleEnabled
-  | IToggleItemRecommended;
+  | IToggleItemRecommended
+  | IToggleItemApprovedByAdmin;

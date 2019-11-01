@@ -81,6 +81,7 @@
   "admin.item.delete_success": "[RU] Item was deleted successfully",
   "admin.item.delete_error": "[RU] Item was not deleted",
   "admin.item.enable_error": "[RU] Unable to enable item",
+  "admin.item.approve_error": "[RU] Unable to approve item",
   "admin.item.seo_info": "[RU] To get your add indexed by search engines better please fill the following fields",
   "admin.type.create_success": "[RU] New type was created succesfully",
   "admin.type.create_error": "[RU] Failed to create new type",

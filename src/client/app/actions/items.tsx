@@ -9,7 +9,7 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { Toast, IAppState, ToggleEnabledParams, IToggleEnabled } from 'types';
+import { Toast, IAppState, ToggleEnabledParams, IToggleEnabled, IToggleItemApprovedByAdmin } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -72,6 +72,12 @@ export const receiveImages = (itemId: string, images: IImage[]): IReceiveImages 
 export const toggleItemEnabledField = (params: ToggleEnabledParams): IToggleEnabled => ({
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED,
   ...params
+});
+
+export const toggleItemApprovedField = (itemId: string, isApproved: boolean): IToggleItemApprovedByAdmin => ({
+  type: ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN,
+  itemId,
+  isApproved
 });
 
 export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean): IToggleItemRecommended => ({
@@ -222,6 +228,18 @@ export const toggleItemEnabled = (params: ToggleEnabledParams) => (dispatch) => 
     .catch(err => {
       console.error('Err', err);
       dispatch(showToast(Toast.error, 'admin.item.enable_error'));
+    });
+};
+
+export const toggleItemApproved = (itemId: string, isApproved: boolean) => (dispatch) => {
+  return http.patch(`/api/items/item/toggle-approved`, { itemId, isApproved })
+    .then(handleApiResponse)
+    .then(() => {
+      dispatch(toggleItemApprovedField(itemId, isApproved));
+    })
+    .catch(err => {
+      console.error('Err', err);
+      dispatch(showToast(Toast.error, 'admin.item.approve_error'));
     });
 };
 

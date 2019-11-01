@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState, IItemsMap, ICitiesMap, IUsersMap, ToggleEnabledParams } from 'types';
-import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
+import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApproved } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
 import { adminRoutes } from 'client-utils/routes';
@@ -42,6 +42,7 @@ interface IDispatchProps {
   endLoading: (loaderId: string) => void;
   toggleItemEnabled: (params: ToggleEnabledParams) => void;
   toggleItemRecommended: (itemId: string, isRecommended: boolean) => void;
+  toggleItemApproved: (itemId: string, isApproved: boolean) => void;
 }
 
 interface IStateProps {
@@ -82,6 +83,10 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
     if (this.props.shouldLoadUserItems) {
       this.props.loadUserItems();
     }
+  }
+
+  handleToggleApproved = (itemId: string, isApproved: boolean) => () => {
+    this.props.toggleItemApproved(itemId, isApproved);
   }
 
   getColumns(): Array<ITableColumn<IItem>> {
@@ -143,30 +148,6 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
           );
         }
       },
-      // {
-      //   headerName: formatMessage({ id: 'admin.common_fields.approved_by_admin' }),
-      //   field: 'isApprovedByAdmin',
-      //   sortType: 'string',
-      //   cellRenderer: (item) => {
-      //     return (
-      //       <ToggleAction
-      //         isEnabled={item.isApprovedByAdmin}
-      //         onToggle={() => ({})}
-      //       />
-      //     );
-      //   }
-      // },
-      // {
-      //   headerName: formatMessage({ id: 'admin.common_fields.is_recommended' }),
-      //   field: 'isRecommended',
-      //   sortType: 'string',
-      //   cellRenderer: (item) => (
-      //     <ToggleRecommended
-      //       isRecommended={item.isRecommended}
-      //       onToggle={this.toggleItemRecommended(item.id, !item.isRecommended)}
-      //     />
-      //   )
-      // },
       {
         headerName: formatMessage({ id: 'admin.common_fields.actions' }),
         field: 'id',
@@ -191,7 +172,7 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
             return (
               <ToggleAction
                 isEnabled={item.isApprovedByAdmin}
-                onToggle={() => ({})}
+                onToggle={this.handleToggleApproved(item.id, !item.isApprovedByAdmin)}
               />
             );
           }
@@ -291,7 +272,8 @@ const mapDispatchToProps = dispatch =>
       loadUserItems,
       endLoading,
       toggleItemEnabled,
-      toggleItemRecommended
+      toggleItemRecommended,
+      toggleItemApproved
     },
     dispatch
   );
