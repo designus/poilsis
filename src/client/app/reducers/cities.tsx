@@ -53,6 +53,20 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
         dataMap: removeByKeys([action.cityId], state.dataMap),
         aliases: removeByKeys(getAliasKeysById(state, action.cityId), state.aliases)
       };
+    case CitiesActionTypes.TOGGLE_CITY_ENABLED:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.id]: {
+            ...state.dataMap[action.id],
+            isEnabled: {
+              ...state.dataMap[action.id].isEnabled,
+              [action.locale]: action.isEnabled
+            }
+          }
+        }
+      };
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {
         ...state,

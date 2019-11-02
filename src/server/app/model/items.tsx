@@ -1,5 +1,6 @@
 'use strict';
-import { Document, Schema, Model, model} from 'mongoose';
+import { Document, Schema, Model, model } from 'mongoose';
+import shortId from 'shortid';
 
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 import {
@@ -7,17 +8,19 @@ import {
   IItem,
   LANGUAGES,
   DEFAULT_LANGUAGE,
-  itemValidation
+  itemValidation,
+  IsEnabled
 } from 'global-utils';
 
 import {
   formatAlias,
-  TGenericSchemaMap,
+  GenericSchemaMap,
   getValidationMessage,
   requiredMessage
 } from '../server-utils';
 
-const shortId = require('shortid');
+import { IsEnabledSchemaMap } from './common';
+
 const mongooseIntl = require('mongoose-intl');
 
 const maxLength = maxLength => value => value.length <= maxLength;
@@ -25,14 +28,15 @@ const minLength = minLength => value => value.length >= minLength;
 const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(max)(value);
 
 // @ts-ignore
-export interface IItemModel extends IItem, Document {}
+export interface IItemDocument extends IItem, Document {}
+export type ItemModelType = Model<IItemDocument>;
 
 const {
   types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
   images: { maxPhotos }
 } = itemValidation;
 
-const ImageSchemaMap: TGenericSchemaMap<IImage> = {
+const ImageSchemaMap: GenericSchemaMap<IImage> = {
   id: {
     type: String,
     sparse: true,
@@ -53,7 +57,7 @@ const ImageSchemaMap: TGenericSchemaMap<IImage> = {
   }
 };
 
-const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
+const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   id: {
     type: String,
     unique: true,
@@ -92,7 +96,10 @@ const ItemsSchemaMap: TGenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage]
   },
-  isEnabled: Boolean,
+  isEnabled: {
+    type: IsEnabledSchemaMap
+  },
+  isApprovedByAdmin: Boolean,
   isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,
@@ -133,4 +140,4 @@ ItemsSchema.pre('save', function(next) {
   next();
 });
 
-export const ItemsModel: Model<IItemModel> = model<IItemModel>('Items', ItemsSchema);
+export const ItemsModel: ItemModelType = model<IItemDocument>('Items', ItemsSchema);

@@ -5,9 +5,9 @@ import { clientRoutes } from 'client-utils/routes';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { IAppState, ITypesMap } from 'types';
+import { IAppState } from 'types';
 import { ICity } from 'global-utils/typings';
-import { getCitiesList, getTypesMap, getClientLocale } from 'selectors';
+import { getEnabledCities, getTypesMap, getClientLocale } from 'selectors';
 
 import { styles } from './styles';
 
@@ -54,7 +54,7 @@ const MainMenu = (props: IMainMenu) => {
 
 const mapStateToProps = (state: IAppState, props) => ({
   typesMap: getTypesMap(state),
-  citiesList: getCitiesList(state),
+  citiesList: getEnabledCities(state),
   locale: getClientLocale(state)
 });
 

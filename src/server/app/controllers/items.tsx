@@ -2,17 +2,11 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
-import { getImages, sendResponse } from 'server-utils/methods';
+import { getImages, sendResponse, getAdjustedIsEnabledValue, isApprovedByAdmin } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
-import { getAlias, getAliasList, getUniqueAlias, getItemsByAliasesQuery } from 'server-utils/aliases';
-
-import { ItemsModel, IItemModel } from '../model';
-
-const getItemsByAlias = async (alias: TranslatableField): Promise<IItem[]> => {
-  const aliasValues = Object.values(alias).filter(Boolean);
-  const documents: IItemModel[] = await ItemsModel.find(getItemsByAliasesQuery(aliasValues));
-  return documents.map(item => (item.toJSON() as IItem));
-};
+import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
+import { getDataByAlias } from './common';
+import { ItemsModel } from '../model';
 
 const mainImageProjection = {
   $let: {
@@ -38,6 +32,9 @@ const itemProjection =  {
   cityId: 1,
   isEnabled: 1,
   isRecommended: 1,
+  createdAt: 1,
+  updatedAt: 1,
+  isApprovedByAdmin: 1,
   mainImage: mainImageProjection
 };
 
@@ -84,16 +81,16 @@ export const getUserItems = (req: Request, res: Response, next: NextFunction) =>
     .exec(sendResponse(res, next));
 };
 
-export const toggleItemIsEnabledField = (req: Request, res: Response, next: NextFunction) => {
+export const toggleItemRecommended = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndUpdate(
-    { id: req.params.itemId }, { $set: { isEnabled: req.body.isEnabled } }, { new: true, runValidators: true },
+    { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
     sendResponse(res, next)
   );
 };
 
-export const toggleItemIsRecommendedField = (req: Request, res: Response, next: NextFunction) => {
+export const toggleItemApproved = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndUpdate(
-    { id: req.params.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
+    { id: req.body.itemId }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true },
     sendResponse(res, next)
   );
 };
@@ -101,10 +98,16 @@ export const toggleItemIsRecommendedField = (req: Request, res: Response, next: 
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: IItem = req.body;
-  const alias = getAlias(item, LANGUAGES) as TranslatableField;
-  const newItem = {
+  const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
+  const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
+  const alias = getUniqueAlias(itemsByAlias, id, adjustedAlias);
+  const isEnabled = getAdjustedIsEnabledValue(item);
+
+  const newItem: IItem = {
     ...item,
-    alias: getUniqueAlias(await getItemsByAlias(alias), id, alias),
+    alias,
+    isEnabled,
+    isApprovedByAdmin: isApprovedByAdmin(req.body.userRole, item),
     id
   };
 
@@ -120,18 +123,6 @@ export const getViewItem = (req: Request, res: Response, next: NextFunction) => 
   ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
 };
 
-export const doesItemAliasExist = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const item: IItem = req.body;
-    const alias = getAlias(item, LANGUAGES, next) as TranslatableField;
-    const itemsByAlias = await getItemsByAlias(alias);
-    const existingAliases = getAliasList(itemsByAlias, item.id);
-    res.status(200).json(existingAliases.length > 0);
-  } catch (err) {
-    return next(err);
-  }
-};
-
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOneAndRemove({id: req.params.itemId}, sendResponse(res, next));
 };
@@ -139,13 +130,18 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 export const updateMainInfo = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item: IItem = req.body;
-    const updatedAt = new Date();
-    const alias = getAlias(item, LANGUAGES) as TranslatableField;
+    const updatedAt = new Date().toUTCString();
+    const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
+    const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
+    const alias = getUniqueAlias(itemsByAlias, item.id, adjustedAlias);
+    const isEnabled = getAdjustedIsEnabledValue(item);
 
-    const updatedItem = {
+    const updatedItem: IItem = {
       ...item,
-      alias: getUniqueAlias(await getItemsByAlias(alias), item.id, alias),
-      updatedAt
+      alias,
+      isEnabled,
+      updatedAt,
+      isApprovedByAdmin: isApprovedByAdmin(req.body.userRole, item)
     };
 
     const newItem = await ItemsModel.findOneAndUpdate(
@@ -169,7 +165,7 @@ export const updateItemDescription = (req: Request, res: Response, next: NextFun
     { id: req.params.itemId },
     { $set: fields },
     { new: true, runValidators: true },
-    (err, result: IItem) => {
+    (err, result) => {
       if (err) {
         return next(err);
       }

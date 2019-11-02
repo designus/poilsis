@@ -1,3 +1,4 @@
+import { LANGUAGES } from './constants';
 export interface IImage {
   id?: string;
   name?: string;
@@ -19,7 +20,11 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type Value<T, K extends keyof T> = T[K];
 
-export type TranslatableField = Partial<Record<Languages, string>>;
+export type IntlSetting<T> = Partial<Record<Languages, T>>;
+
+export type TranslatableField = IntlSetting<string>;
+
+export type IsEnabled = IntlSetting<boolean>;
 
 export interface IResponseError {
   errors: {
@@ -46,7 +51,8 @@ export interface IItem extends IItemDescFields {
   images: IImage[];
   userId: string;
   isRecommended: boolean;
-  isEnabled: boolean;
+  isEnabled: IsEnabled;
+  isApprovedByAdmin: boolean;
   createdAt?: string;
   updatedAt?: string;
   isFullyLoaded?: boolean;
@@ -58,6 +64,7 @@ export interface IType {
   alias?: TranslatableField;
   name: TranslatableField;
   description: TranslatableField;
+  isEnabled: IsEnabled;
 }
 
 export interface ICity {
@@ -67,6 +74,7 @@ export interface ICity {
   name: TranslatableField;
   description: TranslatableField;
   hasItems?: boolean;
+  isEnabled: IsEnabled;
 }
 
 export enum UserRoles {
@@ -75,7 +83,7 @@ export enum UserRoles {
 }
 
 export interface IAccessTokenClaims {
-  expires: number;
+  exp: number;
   userName: string;
   userId: string;
   userRole: string;
@@ -91,6 +99,7 @@ export interface IUser {
   name: string;
   role: string;
   alias: string;
+  isEnabled: boolean;
 }
 
 export type DataTypes = IItem | IType | ICity;

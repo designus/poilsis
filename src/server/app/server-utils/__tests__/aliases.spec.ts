@@ -1,7 +1,7 @@
 import { DataTypes } from '../../../../global-utils/typings';
-import { extendAliasWithId, getAlias, getUniqueAlias, getAliasList, formatAlias, extendAliasWithLocale } from '../aliases';
+import { extendAliasWithId, getAdjustedAliasValue, getUniqueAlias, getAliasList, formatAlias } from '../aliases';
 
-describe('server-utils/methods', () => {
+describe('server-utils/aliases', () => {
   describe('Aliases', () => {
     it('extendAliasWithId() should add id to the end of the alias if alias already exists in other items', () => {
       const alias = {
@@ -43,7 +43,7 @@ describe('server-utils/methods', () => {
       expect(getUniqueAlias(items, '789', uniqueAlias)).toEqual(uniqueAlias);
     });
 
-    describe('getAlias()', () => {
+    describe('getAdjustedAliasValue()', () => {
       it('should handle all cases when name and alias are unique', () => {
         const languages = ['en'];
         const itemWithEmptyAlias = {
@@ -73,60 +73,9 @@ describe('server-utils/methods', () => {
           }
         } as DataTypes;
 
-        expect(getAlias(itemWithEmptyAlias, languages)).toEqual({ en: 'custom-name' });
-        expect(getAlias(itemWithFilledAlias, languages)).toEqual({ en: 'custom-alias' });
-        expect(getAlias(itemWithoutAlias, languages)).toEqual({ en: 'custom-name' });
-      });
-
-      it('should handle all cases when name and alias are not unique', () => {
-        const languages = ['en', 'lt'];
-        const itemWithEmptyAlias = {
-          id: '123',
-          name: {
-            en: 'Custom name',
-            lt: 'Custom name'
-          },
-          alias: {
-            en: '',
-            lt: ''
-          }
-        } as DataTypes;
-
-        const itemWithFilledAlias = {
-          id: '123',
-          name: {
-            en: 'Custom name',
-            lt: 'Custom name'
-          },
-          alias: {
-            en: 'Custom   Alias',
-            lt: 'Custom   Alias'
-          }
-        } as DataTypes;
-
-        const itemWithoutAlias = {
-          id: '123',
-          name: {
-            en: 'Custom name',
-            lt: 'Custom name'
-          }
-        } as DataTypes;
-
-        expect(getAlias(itemWithEmptyAlias, languages)).toEqual({
-          en: 'custom-name-en',
-          lt: 'custom-name-lt'
-        });
-
-        expect(getAlias(itemWithFilledAlias, languages)).toEqual({
-          en: 'custom-alias-en',
-          lt: 'custom-alias-lt'
-        });
-
-        expect(getAlias(itemWithoutAlias, languages)).toEqual({
-          en: 'custom-name-en',
-          lt: 'custom-name-lt'
-        });
-
+        expect(getAdjustedAliasValue(itemWithEmptyAlias, languages)).toEqual({ en: 'custom-name' });
+        expect(getAdjustedAliasValue(itemWithFilledAlias, languages)).toEqual({ en: 'custom-alias' });
+        expect(getAdjustedAliasValue(itemWithoutAlias, languages)).toEqual({ en: 'custom-name' });
       });
 
       it('should not add alias if name field is empty', () => {
@@ -145,7 +94,7 @@ describe('server-utils/methods', () => {
           }
         } as DataTypes;
 
-        expect(getAlias(itemWithEmptyName, languages)).toEqual({
+        expect(getAdjustedAliasValue(itemWithEmptyName, languages)).toEqual({
           en: 'custom-name',
           lt: '',
           ru: ''
@@ -179,24 +128,6 @@ describe('server-utils/methods', () => {
 
       expect(getAliasList(items, undefined)).toEqual(['123-alias-en', '123-alias-lt', '345-alias-en', '345-alias-lt']);
       expect(getAliasList(items, '123')).toEqual(['345-alias-en', '345-alias-lt']);
-    });
-
-    it('extendAliasWithLocale() should add locale if alias already exists in same item but other locales', () => {
-      const locale = 'lt';
-
-      const aliasWithUniqueValues = {
-        en: 'alias-en',
-        lt: 'alias'
-      };
-
-      expect(extendAliasWithLocale(aliasWithUniqueValues, locale, false)).toBe('alias');
-
-      const aliasWithDuplicatedValues = {
-        en: 'alias',
-        lt: 'alias'
-      };
-
-      expect(extendAliasWithLocale(aliasWithDuplicatedValues, locale, false)).toBe('alias-lt');
     });
   });
 });

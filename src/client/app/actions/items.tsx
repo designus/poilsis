@@ -9,7 +9,7 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { Toast, IAppState } from 'types';
+import { Toast, IAppState, ToggleEnabledParams, IToggleEnabled, IToggleItemApprovedByAdmin } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -23,7 +23,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Omit } from 'global-utils/typings';
+import { IImage, IItem, IItemDescFields, Omit, IsEnabled } from 'global-utils/typings';
 import { getItemById } from 'selectors';
 import {
   ItemsActionTypes,
@@ -32,7 +32,6 @@ import {
   IReceiveImages,
   IReceiveItemDescription,
   IRemoveItem,
-  IToggleItemEnabled,
   IToggleItemRecommended,
   IUniqueItemProps
 } from 'types/items';
@@ -70,10 +69,15 @@ export const receiveImages = (itemId: string, images: IImage[]): IReceiveImages 
   images
 });
 
-export const toggleItemEnabledField = (itemId: string, isEnabled: boolean): IToggleItemEnabled => ({
+export const toggleItemEnabledField = (params: ToggleEnabledParams): IToggleEnabled => ({
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED,
+  ...params
+});
+
+export const toggleItemApprovedField = (itemId: string, isApproved: boolean): IToggleItemApprovedByAdmin => ({
+  type: ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN,
   itemId,
-  isEnabled
+  isApproved
 });
 
 export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean): IToggleItemRecommended => ({
@@ -215,20 +219,32 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (itemId: string, isEnabled: boolean) => (dispatch, getState) => {
-  const appState: IAppState = getState();
-  const item = getItemById(appState, itemId);
-  const userId = item.userId;
-  return http.patch(`/api/items/item/toggle-enabled/${itemId}`, { userId, isEnabled })
+export const toggleItemEnabled = (params: ToggleEnabledParams) => (dispatch) => {
+  return http.patch(`/api/items/item/toggle-enabled`, params)
     .then(handleApiResponse)
     .then(() => {
-      dispatch(toggleItemEnabledField(itemId, isEnabled));
+      dispatch(toggleItemEnabledField(params));
     })
-    .catch(err => console.error('Err', err));
+    .catch(err => {
+      console.error('Err', err);
+      dispatch(showToast(Toast.error, 'admin.item.enable_error'));
+    });
+};
+
+export const toggleItemApproved = (itemId: string, isApproved: boolean) => (dispatch) => {
+  return http.patch(`/api/items/item/toggle-approved`, { itemId, isApproved })
+    .then(handleApiResponse)
+    .then(() => {
+      dispatch(toggleItemApprovedField(itemId, isApproved));
+    })
+    .catch(err => {
+      console.error('Err', err);
+      dispatch(showToast(Toast.error, 'admin.item.approve_error'));
+    });
 };
 
 export const toggleItemRecommended = (itemId: string, isRecommended: boolean) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-recommended/${itemId}`, { isRecommended })
+  return http.patch(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
     .then(handleApiResponse)
     .then(() => {
       dispatch(toggleItemRecommendedField(itemId, isRecommended));

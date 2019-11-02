@@ -13,7 +13,7 @@ import { ItemsModel } from '../model/items';
 
 const randToken = require('rand-token');
 
-type TokenParams = Omit<IAccessTokenClaims, 'expires'>;
+type TokenParams = Omit<IAccessTokenClaims, 'exp'>;
 class Auth {
 
   public initialize = () => {
@@ -38,8 +38,8 @@ class Auth {
   }
 
   private genToken = (params: TokenParams) => {
-    const expires = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
-    const claims: IAccessTokenClaims = { ...params, expires };
+    const exp = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
+    const claims: IAccessTokenClaims = { ...params, exp };
     const token = jwt.encode(claims, process.env.JWT_SECRET);
 
     return token;

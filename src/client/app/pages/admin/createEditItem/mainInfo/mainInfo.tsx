@@ -11,7 +11,7 @@ import { updateMainInfo, createItem } from 'actions/items';
 import { getBackendErrors } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { IItem } from 'global-utils';
+import { IItem, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
@@ -75,6 +75,8 @@ class MainInfoPage extends React.Component<IMainInfoProps, any> {
           userRole={this.props.userRole}
           usersMap={this.props.usersMap}
           initialValues={this.props.loadedItem}
+          languages={LANGUAGES}
+          defaultLanguage={DEFAULT_LANGUAGE}
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
       </div>

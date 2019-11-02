@@ -10,13 +10,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { debounce } from 'lodash';
 
 import { usePrevious } from 'client-utils/customHooks';
+import { isInputHidden } from 'client-utils/methods';
 
-import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields } from 'global-utils';
+import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields, TranslatableField } from 'global-utils';
 import { styles } from './styles';
 
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
   hasIntl: boolean;
   selectedLanguage: string;
+  isHidden: string;
   multiline: boolean;
 }
 
@@ -74,12 +76,17 @@ function TextInput(props: ITextInputProps) {
     }
   };
 
-  const showError = (language: string) => {
-    const hasError = Boolean(meta.touched && meta.invalid && meta.error);
-    if (language) {
-      return hasError && selectedLanguage === DEFAULT_LANGUAGE && language === DEFAULT_LANGUAGE;
+  const showError = (error: string | TranslatableField, language: string) => {
+    if (typeof error === 'string') {
+      const hasError = Boolean(meta.touched && meta.invalid && meta.error);
+      if (language) {
+        // Show error only on main language tab
+        return hasError && selectedLanguage === DEFAULT_LANGUAGE && language === DEFAULT_LANGUAGE;
+      }
+      return hasError;
     }
-    return hasError;
+
+    return Boolean(meta.touched && meta.invalid && meta.error[language] && language === selectedLanguage);
   };
 
   const renderLoader = () => meta.asyncValidating && (
@@ -88,16 +95,29 @@ function TextInput(props: ITextInputProps) {
     </InputAdornment>
   );
 
-  const renderInput = (value: string, language?: string) => {
+  const getError = (error: string | TranslatableField) => {
+    if (typeof error === 'string') {
+      return error;
+    } else if (hasLocalizedFields(error)) {
+      return error[selectedLanguage] || '';
+    }
+
+    return '';
+  };
+
+  const renderInput = (value: string, languageOption?: string) => {
+    const hasError = showError(meta.error, languageOption);
+    const tooltipText = getError(meta.error);
+
     return (
       <div
-        className={`${classes.wrapper} ${language !== selectedLanguage ? classes.hidden : ''}`}
-        key={language}
+        className={`${classes.wrapper} ${isInputHidden(languageOption, selectedLanguage, hasIntl) ? classes.hidden : ''}`}
+        key={languageOption}
       >
-        <Tooltip open={showError(language)} title={meta.error || ''} placement="right-end">
+        <Tooltip open={hasError} title={tooltipText} placement="right-end">
           <FormControl
             className={`${classes.formControl} ${multiline ? classes.multiline : ''}`}
-            error={showError(language)}
+            error={hasError}
           >
             <InputLabel htmlFor={label}>
               {label}
@@ -107,8 +127,8 @@ function TextInput(props: ITextInputProps) {
               value={value}
               multiline={multiline}
               rows={4}
-              onBlur={handleOnBlur(language)}
-              onChange={handleOnChange(language)}
+              onBlur={handleOnBlur(languageOption)}
+              onChange={handleOnChange(languageOption)}
               margin="dense"
               className={`${multiline ? classes.multilineInput : ''}`}
               classes={{

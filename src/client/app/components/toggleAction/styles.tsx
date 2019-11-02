@@ -11,7 +11,10 @@ export const styles = (theme: Theme) => createStyles({
     borderRadius: '50%',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    color: '#fff',
+    textTransform: 'uppercase',
+    fontSize: '11px'
   },
   icon: {
     color: '#fff',
@@ -23,5 +26,11 @@ export const styles = (theme: Theme) => createStyles({
   },
   red: {
     background: red[500]
+  },
+  disabled: {
+    background: '#ccc'
+  },
+  tooltip: {
+    maxWidth: '200px'
   }
 });

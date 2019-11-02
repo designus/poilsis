@@ -1,4 +1,5 @@
 export const REQUIRED = 'common.form_validation.required';
+export const REQUIRED_WHEN_ENABLED = 'common.form_validation.required_when_enabled';
 export const MIN_TEXT_LENGTH = 'common.form_validation.min_text_length';
 export const MAX_TEXT_LENGTH = 'common.form_validation.max_text_length';
 export const MIN_CHECKED_LENGTH = 'common.form_validation.min_checked_length';

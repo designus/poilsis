@@ -1,24 +1,8 @@
 {
-  "@material-ui/core/colors/green": [
-    {
-      "id": "../../node_modules/@material-ui/core/colors/green.js",
-      "name": "../../node_modules/@material-ui/core/colors/green.js",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    }
-  ],
   "@material-ui/core/colors/yellow": [
     {
       "id": "../../node_modules/@material-ui/core/colors/yellow.js",
       "name": "../../node_modules/@material-ui/core/colors/yellow.js",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    }
-  ],
-  "@material-ui/icons/Check": [
-    {
-      "id": "../../node_modules/@material-ui/icons/Check.js",
-      "name": "../../node_modules/@material-ui/icons/Check.js",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
@@ -39,21 +23,15 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
-  "components/toggleAction": [
+  "components/toggleRecommended": [
     {
-      "id": "./app/components/toggleAction/index.tsx",
-      "name": "./app/components/toggleAction/index.tsx",
+      "id": "./app/components/toggleRecommended/index.tsx",
+      "name": "./app/components/toggleRecommended/index.tsx",
       "file": "adminItemsPage.js",
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
   "./styles": [
-    {
-      "id": "./app/components/toggleAction/styles.tsx",
-      "name": "./app/components/toggleAction/styles.tsx",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    },
     {
       "id": "./app/components/toggleRecommended/styles.tsx",
       "name": "./app/components/toggleRecommended/styles.tsx",
@@ -85,6 +63,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/components/formFields/switch/styles.tsx",
+      "name": "./app/components/formFields/switch/styles.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
       "id": "./app/components/formFields/textInput/styles.tsx",
       "name": "./app/components/formFields/textInput/styles.tsx",
       "file": "adminLayoutPage.js",
@@ -105,6 +89,18 @@
     {
       "id": "./app/components/table/styles.tsx",
       "name": "./app/components/table/styles.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/toggleAction/styles.tsx",
+      "name": "./app/components/toggleAction/styles.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/toggleEnabled/styles.tsx",
+      "name": "./app/components/toggleEnabled/styles.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
@@ -247,12 +243,6 @@
       "publicPath": "http://localhost:8080/public/mainInfoPage.js"
     },
     {
-      "id": "./app/components/formFields/switch/styles.tsx",
-      "name": "./app/components/formFields/switch/styles.tsx",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    },
-    {
       "id": "./app/components/formFields/dropzoneInput/styles.tsx",
       "name": "./app/components/formFields/dropzoneInput/styles.tsx",
       "file": "photosPage.js",
@@ -263,22 +253,6 @@
       "name": "./app/components/formFields/uploadedImages/styles.tsx",
       "file": "photosPage.js",
       "publicPath": "http://localhost:8080/public/photosPage.js"
-    }
-  ],
-  "./toggleAction": [
-    {
-      "id": "./app/components/toggleAction/toggleAction.tsx",
-      "name": "./app/components/toggleAction/toggleAction.tsx",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    }
-  ],
-  "components/toggleRecommended": [
-    {
-      "id": "./app/components/toggleRecommended/index.tsx",
-      "name": "./app/components/toggleRecommended/index.tsx",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     }
   ],
   "./toggleRecommended": [
@@ -505,6 +479,22 @@
     {
       "id": "./app/components/formFields/checkboxGroup/index.tsx",
       "name": "./app/components/formFields/checkboxGroup/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "components/formFields/switch": [
+    {
+      "id": "./app/components/formFields/switch/index.tsx",
+      "name": "./app/components/formFields/switch/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "./switch": [
+    {
+      "id": "./app/components/formFields/switch/switch.tsx",
+      "name": "./app/components/formFields/switch/switch.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
@@ -743,6 +733,38 @@
     {
       "id": "./app/components/table/tableHead/tableHead.tsx",
       "name": "./app/components/table/tableHead/tableHead.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "components/toggleAction": [
+    {
+      "id": "./app/components/toggleAction/index.tsx",
+      "name": "./app/components/toggleAction/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "./toggleAction": [
+    {
+      "id": "./app/components/toggleAction/toggleAction.tsx",
+      "name": "./app/components/toggleAction/toggleAction.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "components/toggleEnabled": [
+    {
+      "id": "./app/components/toggleEnabled/index.tsx",
+      "name": "./app/components/toggleEnabled/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "./toggleEnabled": [
+    {
+      "id": "./app/components/toggleEnabled/toggleEnabled.tsx",
+      "name": "./app/components/toggleEnabled/toggleEnabled.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
@@ -5377,22 +5399,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./Switch": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
-      "name": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
-  "@material-ui/core/Switch": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Switch/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Switch/index.js",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
   "components/formFields/selectBox": [
     {
       "id": "./app/components/formFields/selectBox/index.tsx",
@@ -5405,22 +5411,6 @@
     {
       "id": "./app/components/formFields/selectBox/selectBox.tsx",
       "name": "./app/components/formFields/selectBox/selectBox.tsx",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
-  "components/formFields/switch": [
-    {
-      "id": "./app/components/formFields/switch/index.tsx",
-      "name": "./app/components/formFields/switch/index.tsx",
-      "file": "mainInfoPage.js",
-      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
-    }
-  ],
-  "./switch": [
-    {
-      "id": "./app/components/formFields/switch/switch.tsx",
-      "name": "./app/components/formFields/switch/switch.tsx",
       "file": "mainInfoPage.js",
       "publicPath": "http://localhost:8080/public/mainInfoPage.js"
     }
@@ -5557,6 +5547,14 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
+  "@material-ui/core/colors/green": [
+    {
+      "id": "../../node_modules/@material-ui/core/colors/green.js",
+      "name": "../../node_modules/@material-ui/core/colors/green.js",
+      "file": "vendors~adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+    }
+  ],
   "@material-ui/core/colors/red": [
     {
       "id": "../../node_modules/@material-ui/core/colors/red.js",
@@ -5641,6 +5639,22 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/Popper/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Popper/index.js",
+      "file": "vendors~adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+    }
+  ],
+  "./Switch": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
+      "name": "../../node_modules/@material-ui/core/esm/Switch/Switch.js",
+      "file": "vendors~adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+    }
+  ],
+  "@material-ui/core/Switch": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Switch/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Switch/index.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -5889,6 +5903,14 @@
     {
       "id": "../../node_modules/@material-ui/icons/BeachAccess.js",
       "name": "../../node_modules/@material-ui/icons/BeachAccess.js",
+      "file": "vendors~adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+    }
+  ],
+  "@material-ui/icons/Check": [
+    {
+      "id": "../../node_modules/@material-ui/icons/Check.js",
+      "name": "../../node_modules/@material-ui/icons/Check.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }

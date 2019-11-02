@@ -1,1 +1,1 @@
-export * from './toggleAction';
+export { default as ToggleAction } from './toggleAction';

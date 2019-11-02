@@ -8,21 +8,24 @@ import {
   getCityItems,
   getRecommendedItems,
   getUserItems,
-  toggleItemIsEnabledField,
-  toggleItemIsRecommendedField,
+  toggleEnabled,
+  toggleItemRecommended,
+  toggleItemApproved,
   addNewItem,
   deleteItem,
   updateItemDescription,
   updateMainInfo,
   updatePhotos,
   uploadPhotos,
-  doesItemAliasExist
+  doesAliasExist
 } from '../controllers';
 import {
   createUploadPath,
   removeImagesFromFs,
   removeImagesDir
 } from '../server-utils';
+
+import { ItemsModel } from '../model';
 
 const router = Router();
 
@@ -41,7 +44,7 @@ router.route('/view-item/:alias')
   .get(getViewItem);
 
 router.route('/item/alias-exist')
-  .post(doesItemAliasExist);
+  .post(doesAliasExist(ItemsModel));
 
 router.route('/item/main-info/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateMainInfo);
@@ -61,10 +64,13 @@ router.route('/city/:cityId')
 router.route('/user/:userId')
   .get(getUserItems);
 
-router.route('/item/toggle-enabled/:itemId')
-  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleItemIsEnabledField);
+router.route('/item/toggle-enabled')
+  .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleEnabled(ItemsModel));
 
-router.route('/item/toggle-recommended/:itemId')
-  .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemIsRecommendedField);
+router.route('/item/toggle-recommended')
+  .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemRecommended);
+
+router.route('/item/toggle-approved')
+  .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemApproved);
 
 export default router;

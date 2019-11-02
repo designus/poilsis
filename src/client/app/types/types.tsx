@@ -1,5 +1,5 @@
-import { IType, TranslatableField } from 'global-utils/typings';
-import { IGenericDataMap, IGenericState } from './generic';
+import { IType } from 'global-utils/typings';
+import { IGenericDataMap, IGenericState, IToggleEnabled } from './generic';
 
 export type ITypesMap = IGenericDataMap<IType>;
 export interface ITypesState extends IGenericState<IType> {
@@ -9,7 +9,8 @@ export interface ITypesState extends IGenericState<IType> {
 export enum TypesActionTypes {
   SELECT_TYPE = 'SELECT_TYPE',
   RECEIVE_TYPE = 'RECEIVE_TYPE',
-  REMOVE_TYPE = 'REMOVE_TYPE'
+  REMOVE_TYPE = 'REMOVE_TYPE',
+  TOGGLE_TYPE_ENABLED = 'TOGGLE_TYPE_ENABLED'
 }
 
 export interface ISelectType {
@@ -30,4 +31,5 @@ export interface IRemoveType {
 export type TypesActions =
   | ISelectType
   | IReceiveType
-  | IRemoveType;
+  | IRemoveType
+  | IToggleEnabled;

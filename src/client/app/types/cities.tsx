@@ -1,12 +1,13 @@
 import { ICity } from 'global-utils/typings';
-import { IGenericDataMap, IGenericState } from './generic';
+import { IGenericDataMap, IGenericState, IToggleEnabled } from './generic';
 
 export type ICitiesMap = IGenericDataMap<ICity>;
 export interface ICityState extends IGenericState<ICity> {}
 
 export enum CitiesActionTypes {
   RECEIVE_CITY = 'RECEIVE_CITY',
-  REMOVE_CITY = 'REMOVE_CITY'
+  REMOVE_CITY = 'REMOVE_CITY',
+  TOGGLE_CITY_ENABLED = 'TOGGLE_CITY_ENABLED'
 }
 
 export interface IReceiveCity {
@@ -21,4 +22,5 @@ export interface IRemoveCity {
 
 export type CitiesActions =
   | IReceiveCity
-  | IRemoveCity;
+  | IRemoveCity
+  | IToggleEnabled;

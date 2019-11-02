@@ -7,7 +7,7 @@ import { IItem } from 'global-utils/typings';
 import { loadItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
 import { getItemByAlias } from 'selectors';
-import { getLocalizedText } from 'client-utils/methods';
+import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 
 interface IMatchParams {
   locale: string;
@@ -49,7 +49,7 @@ class ItemPage extends React.Component<IItemPageParams, any> {
     const { selectedItem } = this.props;
     const { locale } = this.props.match.params;
 
-    return selectedItem && selectedItem.isEnabled ? (
+    return isItemEnabled(selectedItem, locale) ? (
       <React.Fragment>
         <div>{getLocalizedText(selectedItem.name, locale)}</div>
         <div>{selectedItem.address}</div>

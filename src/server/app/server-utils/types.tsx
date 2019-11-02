@@ -14,6 +14,6 @@ export enum FileUploadErrors {
   wrongFileType = 'WRONG_FILE_TYPE'
 }
 
-export type TGenericSchemaMap<T> = {
+export type GenericSchemaMap<T> = {
   [I in keyof T]: SchemaTypeOpts<any>;
 };

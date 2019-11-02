@@ -1,8 +1,7 @@
-import axios from 'axios';
-
 import { ICity, IItem } from 'global-utils';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveNewItems } from 'actions/items';
+import { showToast } from 'actions/toast';
 import {
   CITY_CREATE_SUCCESS,
   CITY_CREATE_ERROR,
@@ -13,7 +12,7 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IAppState, CitiesActionTypes, IReceiveCity, IRemoveCity } from 'types';
+import { IAppState, CitiesActionTypes, IReceiveCity, IRemoveCity, ToggleEnabledParams, IToggleEnabled, Toast } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 
@@ -25,6 +24,11 @@ export const receiveCity = (city: ICity): IReceiveCity => ({
 export const removeCity = (cityId: string): IRemoveCity => ({
   type: CitiesActionTypes.REMOVE_CITY,
   cityId
+});
+
+export const toggleCityEnabledField = (params: ToggleEnabledParams): IToggleEnabled => ({
+  type: CitiesActionTypes.TOGGLE_CITY_ENABLED,
+  ...params
 });
 
 export const loadCityItems = (alias: string) => {
@@ -90,4 +94,16 @@ export const deleteCity = (cityId: string) => dispatch => {
       return Promise.resolve();
     })
     .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
+};
+
+export const toggleCityEnabled = (params: ToggleEnabledParams) => (dispatch) => {
+  return http.patch(`/api/cities/city/toggle-enabled`, params)
+    .then(handleApiResponse)
+    .then(() => {
+      dispatch(toggleCityEnabledField(params));
+    })
+    .catch(err => {
+      console.error('Err', err);
+      dispatch(showToast(Toast.error, 'admin.city.enable_error'));
+    });
 };

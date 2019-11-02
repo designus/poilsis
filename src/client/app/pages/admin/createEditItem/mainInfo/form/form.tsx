@@ -4,8 +4,17 @@ import { Dispatch } from 'react-redux';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
-import { isAdmin, itemValidation, isRequired, minCheckedCount, maxCheckedCount, IItem } from 'global-utils';
 import { asyncValidateAlias } from 'actions';
+import {
+  isAdmin,
+  itemValidation,
+  isRequired,
+  requiredWhenEnabled,
+  minCheckedCount,
+  maxCheckedCount,
+  IItem,
+  DEFAULT_LANGUAGE,
+} from 'global-utils';
 
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
@@ -25,18 +34,23 @@ interface ICustomProps {
   userRole: string;
   locale: string;
   intl: InjectedIntl;
+  languages: string[];
+  defaultLanguage: string;
   selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   const { handleSubmit, submitting, pristine, selectedLanguage, intl, locale } = props;
+
+  const isHidden = () => selectedLanguage !== DEFAULT_LANGUAGE;
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
         name="name"
         type="text"
         component={TextInput}
-        validate={[isRequired]}
+        validate={[requiredWhenEnabled]}
         label={intl.formatMessage({ id: 'admin.common_fields.name'})}
         hasIntl
         selectedLanguage={selectedLanguage}
@@ -54,12 +68,14 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         type="text"
         validate={[isRequired]}
         component={TextInput}
+        selectedLanguage={selectedLanguage}
         label={intl.formatMessage({ id: 'admin.common_fields.address'})}
       />
       <Field
         name="cityId"
         component={SelectBox}
         validate={[isRequired]}
+        isHidden={isHidden()}
         label={intl.formatMessage({ id: 'admin.common_fields.city'})}
         options={getDropdownOptions(props.citiesMap, 'name', locale)}
       />
@@ -69,6 +85,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
           component={SelectBox}
           validate={[isRequired]}
           label={intl.formatMessage({ id: 'admin.common_fields.user'})}
+          isHidden={isHidden()}
           data={props.usersMap}
           options={getDropdownOptions(props.usersMap, 'name', locale)}
         />
@@ -78,13 +95,22 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         component={CheckboxGroup}
         validate={[minTypesCount, maxTypesCount]}
         label={intl.formatMessage({ id: 'admin.common_fields.types'})}
+        isHidden={isHidden()}
         options={getDropdownOptions(props.typesMap, 'name', locale)}
+      />
+      <Field
+        name="isEnabled"
+        component={Switcher}
+        selectedLanguage={selectedLanguage}
+        hasIntl
+        label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
       {isAdmin(props.userRole) &&
         <Field
-          name="isEnabled"
+          name="isApprovedByAdmin"
           component={Switcher}
-          label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
+          selectedLanguage={selectedLanguage}
+          label={intl.formatMessage({ id: 'admin.common_fields.approved_by_admin'})}
         />
       }
       <div>

@@ -2,10 +2,11 @@ import * as React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
+import { DataTypes, IUser, IItem } from 'global-utils/typings';
 import { TranslatableField, hasLocalizedFields } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, AppTypes } from 'types';
+import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap } from 'types';
 
-export function getNormalizedData<T extends AppTypes>(data: T[]): IGenericState<T> {
+export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
     acc.dataMap[item.id] = item;
     acc.aliases = { ...acc.aliases, ...getAliasState(item.alias, item.id) };
@@ -28,7 +29,7 @@ export const getAliasState = (alias: string | TranslatableField, id: string): IA
   return aliases;
 };
 
-export function getAliasKeysById<T extends AppTypes>(state: IGenericState<T>, id: string): string[] {
+export function getAliasKeysById<T extends DataTypes>(state: IGenericState<T>, id: string): string[] {
   const { alias } = state.dataMap[id];
   return hasLocalizedFields(alias) ? Object.values(alias) : [alias as string];
 }
@@ -122,4 +123,20 @@ export const toggleItemInArray = (items: string[], item: string, shouldAddItem: 
   }
 
   return items.filter(current => current !== item);
+};
+
+export const isDataEnabled = (item: DataTypes, locale: string) =>
+  item &&
+  item.isEnabled &&
+  item.isEnabled[locale];
+
+export const isItemEnabled = (item: IItem, locale: string) =>
+  isDataEnabled(item, locale) && item.isApprovedByAdmin;
+
+export const isInputHidden = (languageOption: string, selectedLanguage: string, hasIntl: boolean) => {
+  if (hasIntl) {
+    return languageOption !== selectedLanguage;
+  }
+
+  return selectedLanguage !== DEFAULT_LANGUAGE;
 };

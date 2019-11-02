@@ -1,5 +1,5 @@
-import { IItem, IImage, IItemDescFields } from 'global-utils/typings';
-import { IGenericState, IAliasMap, IGenericDataMap } from './generic';
+import { IItem, IImage, IItemDescFields, IsEnabled } from 'global-utils/typings';
+import { IGenericState, IAliasMap, IGenericDataMap, IToggleEnabled } from './generic';
 
 export type IItemsMap = IGenericDataMap<IItem>;
 
@@ -19,7 +19,8 @@ export enum ItemsActionTypes {
   REMOVE_ITEM = 'REMOVE_ITEM',
   RECEIVE_IMAGES = 'RECEIVE_IMAGES',
   TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
-  TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED'
+  TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED',
+  TOGGLE_ITEM_APPROVED_BY_ADMIN = 'TOGGLE_ITEM_APPROVED_BY_ADMIN'
 }
 
 export interface IReceiveItems extends IUniqueItemProps {
@@ -50,16 +51,16 @@ export interface IReceiveImages {
   images: IImage[];
 }
 
-export interface IToggleItemEnabled {
-  type: ItemsActionTypes.TOGGLE_ITEM_ENABLED;
-  itemId: string;
-  isEnabled: boolean;
-}
-
 export interface IToggleItemRecommended {
   type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED;
   itemId: string;
   isRecommended: boolean;
+}
+
+export interface IToggleItemApprovedByAdmin {
+  type: ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN;
+  itemId: string;
+  isApproved: boolean;
 }
 
 export type ItemsActions = IReceiveItems
@@ -67,5 +68,6 @@ export type ItemsActions = IReceiveItems
   | IReceiveItemDescription
   | IRemoveItem
   | IReceiveImages
-  | IToggleItemEnabled
-  | IToggleItemRecommended;
+  | IToggleEnabled
+  | IToggleItemRecommended
+  | IToggleItemApprovedByAdmin;

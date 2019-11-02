@@ -12,6 +12,7 @@ import { styles } from './styles';
 
 export interface ICheckboxGroupParams extends WrappedFieldProps, WithStyles<typeof styles> {
   options: IDropdownOption[];
+  isHidden: boolean;
 }
 
 class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
@@ -51,11 +52,11 @@ class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
   }
 
   render() {
-    const { classes, label, meta, options } = this.props;
+    const { classes, label, meta, options, isHidden } = this.props;
     const showError = Boolean(meta.touched && meta.invalid && meta.error);
 
     return (
-      <div className={classes.wrapper}>
+      <div className={`${classes.wrapper} ${isHidden ? classes.hidden : ''}`}>
         <Tooltip open={showError} title={meta.error || ''} placement="right-end">
           <FormControl>
             <FormLabel classes={{root: classes.label}} error={showError}>{label}</FormLabel>

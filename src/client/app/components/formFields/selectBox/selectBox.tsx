@@ -8,18 +8,21 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Tooltip from '@material-ui/core/Tooltip';
 import { IDropdownOption } from 'types/generic';
+
 import { styles } from './styles';
 
 export interface ISelectboxProps extends WrappedFieldProps, WithStyles<typeof styles> {
   options: IDropdownOption[];
+  isHidden: boolean;
+  selectedLanguage: string;
 }
 
 const SelectBoxComponent = (props: ISelectboxProps) => {
-  const { classes, meta, input, label, options } = props;
+  const { classes, meta, input, label, options, isHidden } = props;
   const showError = Boolean(meta.touched && meta.invalid && meta.error);
 
   return (
-    <div className={classes.wrapper}>
+    <div className={`${classes.wrapper} ${isHidden ? classes.hidden : ''}`}>
       <Tooltip open={showError} title={meta.error || ''} placement="right-end">
         <FormControl className={classes.formControl} error={showError}>
           <InputLabel htmlFor="select">{label}</InputLabel>

@@ -11,27 +11,10 @@ export const formatAlias = (alias: string): string =>
     .join('-')
     .toLowerCase();
 
-export const extendAliasWithLocale = (values: TranslatableField, locale: string, isNameValue: boolean): string => {
-  const localizedValue = values[locale];
-
-  if (isNameValue && !localizedValue) {
-    return '';
-  }
-
-  const existingValues = Object.keys(values)
-    .filter(key => key !== locale)
-    .map(key => values[key]);
-
-  return existingValues.includes(localizedValue) ? `${localizedValue}-${locale}` : localizedValue;
-};
-
-export const getAlias = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
+export const getAdjustedAliasValue = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
   try {
     return languages.reduce((acc, locale): TranslatableField => {
-      const newAlias = item.alias && item.alias[locale]
-        ? extendAliasWithLocale(item.alias, locale, false)
-        : extendAliasWithLocale(item.name, locale, true);
-
+      const newAlias = item.alias && item.alias[locale] ? item.alias[locale] : item.name[locale];
       acc[locale] = newAlias ? formatAlias(newAlias) : '';
       return acc;
     }, {});

@@ -50,11 +50,11 @@ export class EnhancedTableHead extends React.Component<ITableHead, any> {
                 // sortDirection={orderBy === column.id ? order : false}
               >
                 <TableSortLabel
-                  active={orderBy === column.dataProp}
+                  active={orderBy === column.field}
                   // direction={order}
-                  onClick={this.createSortHandler(column.dataProp, column.sortType)}
+                  onClick={this.createSortHandler(column.field, column.sortType)}
                 >
-                  {column.title}
+                  {column.headerName}
                 </TableSortLabel>
               </TableCell>
             );

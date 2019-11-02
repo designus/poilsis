@@ -13,6 +13,9 @@ export const styles = (theme: Theme) => createStyles({
   wrapper: {
     padding: '20px 0'
   },
+  hidden: {
+    display: 'none'
+  },
   default: {
     height: '30px'
   },

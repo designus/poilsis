@@ -2,13 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, ICitiesMap, ITypesMap } from 'types';
-import { getCitiesList, getCitiesMap, getAdminLocale, getTypesMap } from 'selectors';
+import { IAppState, ICitiesMap, ITypesMap, ToggleEnabledParams } from 'types';
+import { getAllCities, getCitiesMap, getAdminLocale, getTypesMap } from 'selectors';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
-import { deleteCity } from 'actions/cities';
-import { ICity, TranslatableField } from 'global-utils/typings';
+import { deleteCity, toggleCityEnabled } from 'actions/cities';
+import { ICity } from 'global-utils/typings';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -16,18 +16,27 @@ import { ItemActions } from 'components/itemActions';
 import { ItemTypesList } from 'components/itemTypesList';
 import { DeleteModal } from 'components/modals/deleteModal';
 import { AdminHeader } from 'components/adminHeader';
+import { ToggleEnabled } from 'components/toggleEnabled';
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface ICitiesPageParams extends InjectedIntlProps {
+interface IOwnProps extends InjectedIntlProps {}
+
+interface IDispatchProps {
+  deleteCity: (typeId: string) => Promise<void>;
+  toggleCityEnabled: (params: ToggleEnabledParams) => void;
+}
+
+interface IStateProps  {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  deleteCity: (typeId: string) => Promise<void>;
   cities: ICity[];
   locale: string;
 }
 
-class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
+type ICitiesPageProps = IOwnProps & IStateProps & IDispatchProps;
+
+class AdminCitiesPage extends React.Component<ICitiesPageProps, any> {
 
   state = {
     isDeleteModalOpen: false,
@@ -43,35 +52,48 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
     return '';
   }
 
-  get columns(): ITableColumn[] {
+  get columns(): Array<ITableColumn<ICity>> {
     const { formatMessage } = this.props.intl;
     return [
       {
-        title: formatMessage({ id: 'admin.common_fields.id'}),
-        dataProp: 'id'
+        headerName: formatMessage({ id: 'admin.common_fields.id'}),
+        field: 'id'
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.name'}),
-        dataProp: 'name',
-        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale)
+        headerName: formatMessage({ id: 'admin.common_fields.name'}),
+        field: 'name',
+        cellRenderer: (city) => getLocalizedText(city.name, this.props.locale)
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.types'}),
-        dataProp: 'types',
-        format: (types: string[]) => {
+        headerName: formatMessage({ id: 'admin.common_fields.types'}),
+        field: 'types',
+        cellRenderer: (city) => {
           return (
-            <ItemTypesList locale={this.props.locale} typeIds={types} />
+            <ItemTypesList locale={this.props.locale} typeIds={city.types} />
           );
         }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.actions'}),
-        dataProp: 'id',
-        format: (cityId: string) => {
+        headerName: formatMessage({ id: 'admin.common_fields.is_enabled' }),
+        field: 'isEnabled',
+        sortType: 'string',
+        cellRenderer: (city) => {
+          return (
+            <ToggleEnabled
+              item={city}
+              onToggle={this.props.toggleCityEnabled}
+            />
+          );
+        }
+      },
+      {
+        headerName: formatMessage({ id: 'admin.common_fields.actions'}),
+        field: 'id',
+        cellRenderer: (city) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editCity.getLink(cityId)}
-              onDelete={this.openDeleteModal(cityId)}
+              editLink={adminRoutes.editCity.getLink(city.id)}
+              onDelete={this.openDeleteModal(city.id)}
             />
           );
         }
@@ -117,17 +139,18 @@ class AdminCitiesPageComponent extends React.Component<ICitiesPageParams, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   typesMap: getTypesMap(state),
   citiesMap: getCitiesMap(state),
-  cities: getCitiesList(state),
+  cities: getAllCities(state),
   locale: getAdminLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteCity: (cityId: string) => dispatch(deleteCity(cityId))
+  deleteCity: (cityId: string) => dispatch(deleteCity(cityId)),
+  toggleCityEnabled: (params: ToggleEnabledParams) => dispatch(toggleCityEnabled(params))
 });
 
-export const AdminCitiesPage = injectIntl(
-  connect<{}, {}, ICitiesPageParams>(mapStateToProps, mapDispatchToProps)(AdminCitiesPageComponent)
+export default injectIntl(
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(AdminCitiesPage)
 );

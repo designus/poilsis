@@ -8,6 +8,7 @@ import { IAppState, IItemsMap, ICitiesMap } from 'types';
 import { loadRecommendedItems } from 'actions';
 import { ItemCard } from 'components/itemCard';
 import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getClientLocale, getCitiesMap } from 'selectors';
+import { isItemEnabled } from 'client-utils/methods';
 
 import { styles } from './styles';
 
@@ -41,7 +42,7 @@ function RecommendedItems(props: RecommendedItemsProps) {
   const renderItem = (itemId: string) => {
     const item = itemsMap[itemId];
     const city = citiesMap[item.cityId];
-    return (
+    return isItemEnabled(item, locale) && (
       <Grid key={itemId} item xs={6} md={3} lg={2}>
         <ItemCard city={city} item={item} locale={locale} />
       </Grid>

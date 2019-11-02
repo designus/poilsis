@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import { IAppState, IItemsMap, ICitiesMap, IUsersMap } from 'types';
-import { deleteItem, toggleItemEnabled, toggleItemRecommended } from 'actions/items';
+import { IAppState, IItemsMap, ICitiesMap, IUsersMap, ToggleEnabledParams } from 'types';
+import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApproved } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
 import { adminRoutes } from 'client-utils/routes';
@@ -16,7 +16,8 @@ import {
   getAdminLocale,
   getCitiesMap,
   getItemsMap,
-  getUsersMap
+  getUsersMap,
+  getCurrentUserRole
 } from 'selectors';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
@@ -24,10 +25,12 @@ import { ItemTypesList } from 'components/itemTypesList';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { ItemActions } from 'components/itemActions';
 import { DeleteModal } from 'components/modals/deleteModal';
-import { ToggleAction } from 'components/toggleAction';
+import { ToggleEnabled } from 'components/toggleEnabled';
 import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
-import { TranslatableField, IItem } from 'global-utils/typings';
+import { ToggleAction } from 'components/toggleAction';
+import { IItem } from 'global-utils/typings';
+import { isAdmin } from 'global-utils/methods';
 
 const Table = extendWithLoader(EnhancedTable);
 
@@ -37,8 +40,9 @@ interface IDispatchProps {
   deleteItem: (itemId: string) => Promise<void>;
   loadUserItems: () => void;
   endLoading: (loaderId: string) => void;
-  toggleItemEnabled: (itemId: string, isEnabled: boolean) => void;
+  toggleItemEnabled: (params: ToggleEnabledParams) => void;
   toggleItemRecommended: (itemId: string, isRecommended: boolean) => void;
+  toggleItemApproved: (itemId: string, isApproved: boolean) => void;
 }
 
 interface IStateProps {
@@ -47,6 +51,7 @@ interface IStateProps {
   citiesMap: ICitiesMap;
   shouldLoadUserItems: boolean;
   userItems: IItem[];
+  userRole: string;
   locale: string;
 }
 
@@ -80,94 +85,113 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
     }
   }
 
-  get columns(): ITableColumn[] {
+  handleToggleApproved = (itemId: string, isApproved: boolean) => () => {
+    this.props.toggleItemApproved(itemId, isApproved);
+  }
+
+  getColumns(): Array<ITableColumn<IItem>> {
     const { formatMessage, formatDate } = this.props.intl;
-    return [
+    const columns: Array<ITableColumn<IItem>> = [
       {
-        title: formatMessage({ id: 'admin.common_fields.id' }),
-        dataProp: 'id',
+        headerName: formatMessage({ id: 'admin.common_fields.id' }),
+        field: 'id',
         searchable: true
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.name' }),
-        dataProp: 'name',
+        headerName: formatMessage({ id: 'admin.common_fields.name' }),
+        field: 'name',
         sortType: 'string',
-        format: (name: TranslatableField) => getLocalizedText(name, this.props.locale),
+        cellRenderer: item => getLocalizedText(item.name, this.props.locale),
         searchable: true
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.city' }),
-        dataProp: 'cityId',
+        headerName: formatMessage({ id: 'admin.common_fields.city' }),
+        field: 'cityId',
         sortType: 'string',
-        format: (cityId: string) => getLocalizedText(this.props.citiesMap[cityId].name, this.props.locale),
+        cellRenderer: (item) => getLocalizedText(this.props.citiesMap[item.cityId].name, this.props.locale),
         searchable: true
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.types' }),
-        dataProp: 'types',
-        format: (types: string[]) => {
+        headerName: formatMessage({ id: 'admin.common_fields.types' }),
+        field: 'types',
+        cellRenderer: (item) => {
           return (
-            <ItemTypesList locale={this.props.locale} typeIds={types} />
+            <ItemTypesList locale={this.props.locale} typeIds={item.types} />
           );
         }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.created_at' }),
-        dataProp: 'createdAt',
+        headerName: formatMessage({ id: 'admin.common_fields.created_at' }),
+        field: 'createdAt',
         sortType: 'date',
-        format: (date: string) => formatDate(date)
+        cellRenderer: (item) => formatDate(item.createdAt)
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.user' }),
-        dataProp: 'userId',
+        headerName: formatMessage({ id: 'admin.common_fields.user' }),
+        field: 'userId',
         sortType: 'string',
-        format: (userId: string) => {
-          const user = this.props.usersMap[userId];
+        cellRenderer: (item) => {
+          const user = this.props.usersMap[item.userId];
           return user && user.name || null;
         }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.is_enabled' }),
-        dataProp: 'isEnabled',
+        headerName: formatMessage({ id: 'admin.common_fields.is_enabled' }),
+        field: 'isEnabled',
         sortType: 'string',
-        formatProps: ['id', 'isEnabled'],
-        format: (itemId: string, isEnabled: boolean) => (
-          <ToggleAction
-            isEnabled={isEnabled}
-            onToggle={this.toggleItemEnabled(itemId, !isEnabled)}
-          />
-        )
+        cellRenderer: (item) => {
+          return (
+            <ToggleEnabled
+              item={item}
+              onToggle={this.props.toggleItemEnabled}
+            />
+          );
+        }
       },
       {
-        title: formatMessage({ id: 'admin.common_fields.is_recommended' }),
-        dataProp: 'isRecommended',
-        sortType: 'string',
-        formatProps: ['id', 'isRecommended'],
-        format: (itemId: string, isRecommended: boolean) => (
-          <ToggleRecommended
-            isRecommended={isRecommended}
-            onToggle={this.toggleItemRecommended(itemId, !isRecommended)}
-          />
-        )
-      },
-      {
-        title: formatMessage({ id: 'admin.common_fields.actions' }),
-        dataProp: 'id',
-        formatProps: ['userId', 'id'],
-        format: (userId: string, itemId: string) => {
+        headerName: formatMessage({ id: 'admin.common_fields.actions' }),
+        field: 'id',
+        cellRenderer: (item) => {
           return (
             <ItemActions
-              editLink={adminRoutes.editItemMain.getLink(userId, itemId)}
-              onDelete={this.openDeleteModal(itemId)}
+              editLink={adminRoutes.editItemMain.getLink(item.userId, item.id)}
+              onDelete={this.openDeleteModal(item.id)}
             />
           );
         }
       }
     ];
-  }
 
-  toggleItemEnabled = (itemId: string, isEnabled: boolean) => () => {
-    this.props.toggleItemEnabled(itemId, isEnabled);
+    if (isAdmin(this.props.userRole)) {
+      columns.splice(columns.length - 1, 0,
+        {
+          headerName: formatMessage({ id: 'admin.common_fields.approved_by_admin' }),
+          field: 'isApprovedByAdmin',
+          sortType: 'string',
+          cellRenderer: (item) => {
+            return (
+              <ToggleAction
+                isEnabled={item.isApprovedByAdmin}
+                onToggle={this.handleToggleApproved(item.id, !item.isApprovedByAdmin)}
+              />
+            );
+          }
+        },
+        {
+          headerName: formatMessage({ id: 'admin.common_fields.is_recommended' }),
+          field: 'isRecommended',
+          sortType: 'string',
+          cellRenderer: (item) => (
+            <ToggleRecommended
+              isRecommended={item.isRecommended}
+              onToggle={this.toggleItemRecommended(item.id, !item.isRecommended)}
+            />
+          )
+        }
+      );
+    }
+
+    return columns;
   }
 
   toggleItemRecommended = (itemId: string, isRecommended: boolean) => () => {
@@ -216,7 +240,7 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
           loaderId={CONTENT_LOADER_ID}
           items={this.props.userItems}
           search={this.state.search}
-          columns={this.columns}
+          columns={this.getColumns()}
           limit={10}
         />
         <DeleteModal
@@ -236,6 +260,7 @@ const mapStateToProps = (state: IAppState) => ({
   usersMap: getUsersMap(state),
   userItems: getUserItems(state),
   citiesMap: getCitiesMap(state),
+  userRole: getCurrentUserRole(state),
   shouldLoadUserItems: shouldLoadUserItems(state),
   locale: getAdminLocale(state)
 });
@@ -247,7 +272,8 @@ const mapDispatchToProps = dispatch =>
       loadUserItems,
       endLoading,
       toggleItemEnabled,
-      toggleItemRecommended
+      toggleItemRecommended,
+      toggleItemApproved
     },
     dispatch
   );

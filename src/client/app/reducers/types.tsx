@@ -37,8 +37,25 @@ export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = ge
         dataMap: removeByKeys([action.typeId], state.dataMap),
         aliases: removeByKeys(getAliasKeysById(state, action.typeId), state.aliases)
       };
+    case TypesActionTypes.TOGGLE_TYPE_ENABLED:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.id]: {
+            ...state.dataMap[action.id],
+            isEnabled: {
+              ...state.dataMap[action.id].isEnabled,
+              [action.locale]: action.isEnabled
+            }
+          }
+        }
+      };
     case TypesActionTypes.SELECT_TYPE:
-      return {...state, selectedId: action.typeId};
+      return {
+        ...state,
+        selectedId: action.typeId
+      };
     default:
       return state;
   }
