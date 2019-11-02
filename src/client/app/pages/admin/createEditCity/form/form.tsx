@@ -5,7 +5,7 @@ import { FormattedMessage, InjectedIntl } from 'react-intl';
 
 import { Button } from 'components/button';
 import { getDropdownOptions } from 'client-utils/methods';
-import { ICity, DEFAULT_LANGUAGE, RequiredWhenEnabled } from 'global-utils';
+import { ICity, DEFAULT_LANGUAGE, requiredWhenEnabled } from 'global-utils';
 import { ITypesMap } from 'types';
 import { asyncValidateAlias } from 'actions';
 
@@ -35,7 +35,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         name="name"
         type="text"
         component={TextInput}
-        validate={[RequiredWhenEnabled]}
+        validate={[requiredWhenEnabled]}
         label={intl.formatMessage({ id: 'admin.common_fields.name' })}
         hasIntl
         selectedLanguage={selectedLanguage}

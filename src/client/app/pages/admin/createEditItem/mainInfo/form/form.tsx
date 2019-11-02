@@ -9,7 +9,7 @@ import {
   isAdmin,
   itemValidation,
   isRequired,
-  RequiredWhenEnabled,
+  requiredWhenEnabled,
   minCheckedCount,
   maxCheckedCount,
   IItem,
@@ -50,7 +50,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         name="name"
         type="text"
         component={TextInput}
-        validate={[RequiredWhenEnabled]}
+        validate={[requiredWhenEnabled]}
         label={intl.formatMessage({ id: 'admin.common_fields.name'})}
         hasIntl
         selectedLanguage={selectedLanguage}

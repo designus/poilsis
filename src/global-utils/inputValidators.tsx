@@ -22,7 +22,7 @@ export interface IFormProps {
   languages?: string[];
 }
 
-export const RequiredWhenEnabled = (fieldValue: TranslatableField, formState, formProps: IFormProps) => {
+export const requiredWhenEnabled = (fieldValue: TranslatableField, formState, formProps: IFormProps) => {
   const isEnabled = formProps.values.isEnabled as IsEnabled;
 
   if (!fieldValue || !isEnabled) return undefined;
@@ -43,11 +43,11 @@ export const RequiredWhenEnabled = (fieldValue: TranslatableField, formState, fo
 
 };
 
-export const isRequired = (fieldValue, formState, formProps: IFormProps) => {
+export const isRequired = (fieldValue: string | TranslatableField, formState, formProps: IFormProps) => {
   const errorMessage = formProps.intl.formatMessage({ id: errors.REQUIRED });
 
   if (fieldValue) {
-    if (hasLocalizedFields(fieldValue) && !fieldValue[DEFAULT_LANGUAGE]) {
+    if (hasLocalizedFields(fieldValue) && !fieldValue[formProps.defaultLanguage]) {
       return errorMessage;
     }
     return undefined;
