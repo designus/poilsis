@@ -7,7 +7,7 @@ import reduxFormActions from 'redux-form/es/actions';
 
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { IType } from 'global-utils';
+import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { createType, updateType } from 'actions/types';
 import { getAdminType } from 'actions/admin';
 import { getBackendErrors } from 'client-utils/methods';
@@ -83,6 +83,8 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
           loaderId={CONTENT_LOADER_ID}
           showLoadingOverlay={true}
           initialValues={this.props.loadedType}
+          languages={LANGUAGES}
+          defaultLanguage={DEFAULT_LANGUAGE}
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
       </React.Fragment>

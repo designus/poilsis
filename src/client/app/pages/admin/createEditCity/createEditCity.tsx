@@ -6,7 +6,7 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { ICity } from 'global-utils';
+import { ICity, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { createCity, updateCity } from 'actions/cities';
 import { getAdminCity } from 'actions/admin';
 import { getBackendErrors } from 'client-utils/methods';
@@ -89,6 +89,8 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
             typesMap={this.props.typesMap}
             locale={this.props.locale}
             initialValues={this.props.loadedCity}
+            languages={LANGUAGES}
+            defaultLanguage={DEFAULT_LANGUAGE}
           />
           <NavigationPrompt when={this.props.showNavigationPrompt} />
         </div>

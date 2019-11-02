@@ -12,8 +12,10 @@ import { Switcher } from 'components/formFields/switch';
 export const TYPE_FORM_NAME = 'TypeForm';
 
 interface ICustomProps {
-  selectedLanguage?: string;
   intl: InjectedIntl;
+  languages: string[];
+  defaultLanguage: string;
+  selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {

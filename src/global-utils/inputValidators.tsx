@@ -18,6 +18,8 @@ export interface IFormProps {
   intl?: InjectedIntl;
   images?: IImage[];
   values?: any;
+  defaultLanguage?: string;
+  languages?: string[];
 }
 
 export const RequiredWhenEnabled = (fieldValue: TranslatableField, formState, formProps: IFormProps) => {
@@ -28,10 +30,10 @@ export const RequiredWhenEnabled = (fieldValue: TranslatableField, formState, fo
   const requiredError = formProps.intl.formatMessage({ id: errors.REQUIRED });
   const requiredWhenEnabledError = formProps.intl.formatMessage({ id: errors.REQUIRED_WHEN_ENABLED });
 
-  const err = LANGUAGES.reduce((acc, lang) => {
+  const err = formProps.languages.reduce((acc, lang) => {
     // default language input field is always required
-    if (!fieldValue[lang] && (lang === DEFAULT_LANGUAGE || isEnabled[lang])) {
-      acc[lang] = lang === DEFAULT_LANGUAGE ? requiredError : requiredWhenEnabledError;
+    if (!fieldValue[lang] && (lang === formProps.defaultLanguage || isEnabled[lang])) {
+      acc[lang] = lang === formProps.defaultLanguage ? requiredError : requiredWhenEnabledError;
     }
 
     return acc;

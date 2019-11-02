@@ -34,6 +34,8 @@ interface ICustomProps {
   userRole: string;
   locale: string;
   intl: InjectedIntl;
+  languages: string[];
+  defaultLanguage: string;
   selectedLanguage?: string;
 }
 

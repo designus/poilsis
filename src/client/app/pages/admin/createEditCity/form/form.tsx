@@ -18,8 +18,10 @@ export const CITY_FORM_NAME = 'CityForm';
 interface ICustomProps {
   typesMap: ITypesMap;
   locale: string;
-  selectedLanguage?: string;
   intl: InjectedIntl;
+  languages: string[];
+  defaultLanguage: string;
+  selectedLanguage?: string;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {

@@ -7,7 +7,7 @@ import { adminRoutes } from 'client-utils/routes';
 import { deleteType, toggleTypeEnabled } from 'actions/types';
 import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
-import { IType } from 'global-utils/typings';
+import { IType } from 'global-utils';
 import { IAppState, ITypesMap, ToggleEnabledParams } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
