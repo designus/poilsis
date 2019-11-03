@@ -16,26 +16,13 @@ import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
 
-import { ICreateEditItemPageProps } from '../createEditItem';
+import { IOwnProps, IStateProps, IDispatchProps, DescriptionPageProps, TranslatableEditorState, ISubmitDescFields } from './types';
 import { MainInfoForm, ITEM_DESCRIPTION_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
 const { initialize } = reduxFormActions;
 
-type TranslatableEditorState = Record<keyof TranslatableField, EditorState>;
-
-type ISubmitDescFields = {
-  [K in keyof IItemDescFields]: K extends 'description' ? TranslatableEditorState : TranslatableField
-};
-
-interface IDescriptionProps extends ICreateEditItemPageProps, InjectedIntlProps {
-  userRole: string;
-  showNavigationPrompt: boolean;
-  updateItemDescription: (itemId: string, description: IItemDescFields) => Promise<void>;
-  initializeForm: (description: IItemDescFields) => void;
-}
-
-class DescriptionPage extends React.Component<IDescriptionProps, any> {
+class DescriptionPage extends React.Component<DescriptionPageProps, any> {
 
   constructor(props) {
     super(props);
@@ -66,7 +53,7 @@ class DescriptionPage extends React.Component<IDescriptionProps, any> {
 
   render() {
     return this.props.loadedItem ? (
-      <div>
+      <React.Fragment>
         <Typography variant="h5">
           <FormattedMessage id="admin.menu.description" />
         </Typography>
@@ -78,7 +65,7 @@ class DescriptionPage extends React.Component<IDescriptionProps, any> {
           initialValues={getItemDescriptionFields(this.props.loadedItem)}
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
-      </div>
+      </React.Fragment>
     ) : null;
   }
 }
@@ -93,5 +80,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default injectIntl(
-  connect<any, any, IDescriptionProps>(mapStateToProps, mapDispatchToProps)(DescriptionPage)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(DescriptionPage)
 );
