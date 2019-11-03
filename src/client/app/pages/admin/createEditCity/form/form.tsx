@@ -64,6 +64,22 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         selectedLanguage={selectedLanguage}
       />
       <Field
+        name="metaTitle"
+        type="text"
+        component={TextInput}
+        label={intl.formatMessage({ id: 'admin.common_fields.meta_title'})}
+        hasIntl
+        selectedLanguage={selectedLanguage}
+      />
+      <Field
+        name="metaDescription"
+        type="text"
+        component={TextInput}
+        label={intl.formatMessage({ id: 'admin.common_fields.meta_description'})}
+        hasIntl
+        selectedLanguage={selectedLanguage}
+      />
+      <Field
         name="isEnabled"
         component={Switcher}
         selectedLanguage={selectedLanguage}

@@ -73,7 +73,6 @@ class ItemPage extends React.Component<IItemPageParams, any> {
     return isItemEnabled(selectedItem, locale) ? (
       <React.Fragment>
         <Helmet>
-          <meta charSet="utf-8" />
           {this.renderTitle()}
           {this.renderMetaDescription()}
         </Helmet>

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
+import Typography from '@material-ui/core/Typography';
 
 import { IAppState } from 'types';
 import { loadCityItems } from 'actions/cities';
@@ -34,12 +36,39 @@ class CityPage extends React.Component<ICityPageProps, any> {
     this.props.loadCityItems(cityAlias);
   }
 
+  getLocalizedName = () => getLocalizedText(this.props.selectedCity.name, this.props.locale);
+
+  renderTitle = () => {
+    const localizedName = this.getLocalizedName();
+    const localizedTitle = getLocalizedText(this.props.selectedCity.metaTitle, this.props.locale);
+    return (
+      <title>
+        {localizedTitle || localizedName}
+      </title>
+    );
+  }
+
+  renderMetaDescription = () => {
+    const { metaDescription } = this.props.selectedCity;
+    return metaDescription && (
+      <meta name="description" content={metaDescription[this.props.locale]} />
+    );
+  }
+
   render() {
     const { selectedCity, locale } = this.props;
     return isDataEnabled(selectedCity, locale) ? (
       <React.Fragment>
-        <h1>{getLocalizedText(selectedCity.name, locale)}</h1>
-        <p>{getLocalizedText(selectedCity.description, locale)}</p>
+        <Helmet>
+          {this.renderTitle()}
+          {this.renderMetaDescription()}
+        </Helmet>
+        <Typography variant="h1">
+          {this.getLocalizedName()}
+        </Typography>
+        <Typography variant="body1">
+          {getLocalizedText(selectedCity.description, locale)}
+        </Typography>
         <ItemsListWithLoader
           loaderId={CONTENT_LOADER_ID}
           items={this.props.cityItems}
