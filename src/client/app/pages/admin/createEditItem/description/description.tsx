@@ -34,7 +34,7 @@ class DescriptionPage extends React.Component<DescriptionPageProps, any> {
 
   mapEditorStateToHtml = (description: TranslatableEditorState): TranslatableField  => {
     return Object.keys(description).reduce((acc: any, key: string) => {
-      acc[key] = stateToHTML(description[key].getCurrentContent());
+      acc[key] = typeof description[key] === 'string' ? description[key] : stateToHTML(description[key].getCurrentContent());
       return acc;
     }, {});
   }
