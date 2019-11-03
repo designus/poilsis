@@ -88,8 +88,7 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateItemDescription: (itemId: string, description: IItem) =>
-    dispatch(updateItemDescription(itemId, description)),
+  updateItemDescription: (itemId: string, description: IItemDescFields) => dispatch(updateItemDescription(itemId, description)),
   initializeForm: (data: IItem) => dispatch(initialize(ITEM_DESCRIPTION_FORM_NAME, data))
 });
 

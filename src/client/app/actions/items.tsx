@@ -181,14 +181,13 @@ export const updateMainInfo = (item: IItem) => (dispatch) => {
 
 export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-
   return http.put(`/api/items/item/description/${itemId}`, itemDescFields)
-  .then(handleApiResponse)
-  .then((response: IItemDescFields) => {
-    dispatch(receiveItemDescription(itemId, response));
-    dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-  })
-  .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
+    .then(handleApiResponse)
+    .then((response: IItemDescFields) => {
+      dispatch(receiveItemDescription(itemId, response));
+      dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
+    })
+    .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 

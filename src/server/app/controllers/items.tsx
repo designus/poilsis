@@ -159,19 +159,14 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   }
 };
 
-export const updateItemDescription = (req: Request, res: Response, next: NextFunction) => {
-  const fields = getItemDescriptionFields(req.body);
-  ItemsModel.findOneAndUpdate(
-    { id: req.params.itemId },
-    { $set: fields },
-    { new: true, runValidators: true },
-    (err, result) => {
-      if (err) {
-        return next(err);
-      }
-      res.status(200).json(getItemDescriptionFields(result));
-    }
-  );
+export const updateItemDescription = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const fields = getItemDescriptionFields(req.body);
+    const result = await ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: fields }, { new: true, runValidators: true });
+    res.status(200).json(getItemDescriptionFields(result.toJSON() as IItem));
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const updatePhotos = (req: Request, res: Response, next: NextFunction) => {

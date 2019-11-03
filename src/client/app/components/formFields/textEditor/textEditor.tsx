@@ -26,7 +26,7 @@ export interface IEditorInputProps extends WrappedFieldProps, WithStyles<typeof 
 const getEditorState = (html: string): EditorState => {
   const blocksFromHTML = convertFromHTML(html);
   const { contentBlocks, entityMap } = blocksFromHTML;
-  if (contentBlocks) {
+  if (contentBlocks.length > 0) {
     const content = ContentState.createFromBlockArray(contentBlocks, entityMap);
     return EditorState.createWithContent(content);
   }

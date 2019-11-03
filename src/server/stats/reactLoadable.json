@@ -2241,6 +2241,12 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/emptyFunction.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/emptyFunction.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    },
+    {
       "id": "../../node_modules/react-sortable/node_modules/fbjs/lib/emptyFunction.js",
       "name": "../../node_modules/react-sortable/node_modules/fbjs/lib/emptyFunction.js",
       "file": "vendors~photosPage.js",
@@ -2255,6 +2261,12 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/invariant.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/invariant.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    },
+    {
       "id": "../../node_modules/react-sortable/node_modules/fbjs/lib/invariant.js",
       "name": "../../node_modules/react-sortable/node_modules/fbjs/lib/invariant.js",
       "file": "vendors~photosPage.js",
@@ -2267,6 +2279,12 @@
       "name": "../../node_modules/fbjs/lib/warning.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/warning.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/warning.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     },
     {
       "id": "../../node_modules/react-sortable/node_modules/fbjs/lib/warning.js",
@@ -3123,7 +3141,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/upload": [
+  "./upload": [
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",
@@ -8157,88 +8175,88 @@
   ],
   "./helpers/combineOrderedStyles": [
     {
-      "id": "../../node_modules/draft-js-export-html/lib/helpers/combineOrderedStyles.js",
-      "name": "../../node_modules/draft-js-export-html/lib/helpers/combineOrderedStyles.js",
+      "id": "../../node_modules/draft-js-export-html/esm/helpers/combineOrderedStyles.js",
+      "name": "../../node_modules/draft-js-export-html/esm/helpers/combineOrderedStyles.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./helpers/normalizeAttributes": [
     {
-      "id": "../../node_modules/draft-js-export-html/lib/helpers/normalizeAttributes.js",
-      "name": "../../node_modules/draft-js-export-html/lib/helpers/normalizeAttributes.js",
+      "id": "../../node_modules/draft-js-export-html/esm/helpers/normalizeAttributes.js",
+      "name": "../../node_modules/draft-js-export-html/esm/helpers/normalizeAttributes.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./helpers/styleToCSS": [
     {
-      "id": "../../node_modules/draft-js-export-html/lib/helpers/styleToCSS.js",
-      "name": "../../node_modules/draft-js-export-html/lib/helpers/styleToCSS.js",
+      "id": "../../node_modules/draft-js-export-html/esm/helpers/styleToCSS.js",
+      "name": "../../node_modules/draft-js-export-html/esm/helpers/styleToCSS.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "draft-js-export-html": [
     {
-      "id": "../../node_modules/draft-js-export-html/lib/main.js",
-      "name": "../../node_modules/draft-js-export-html/lib/main.js",
+      "id": "../../node_modules/draft-js-export-html/esm/main.js",
+      "name": "../../node_modules/draft-js-export-html/esm/main.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./stateToHTML": [
     {
-      "id": "../../node_modules/draft-js-export-html/lib/stateToHTML.js",
-      "name": "../../node_modules/draft-js-export-html/lib/stateToHTML.js",
+      "id": "../../node_modules/draft-js-export-html/esm/stateToHTML.js",
+      "name": "../../node_modules/draft-js-export-html/esm/stateToHTML.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./Constants": [
     {
-      "id": "../../node_modules/draft-js-utils/lib/Constants.js",
-      "name": "../../node_modules/draft-js-utils/lib/Constants.js",
+      "id": "../../node_modules/draft-js-utils/esm/Constants.js",
+      "name": "../../node_modules/draft-js-utils/esm/Constants.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./callModifierForSelectedBlocks": [
     {
-      "id": "../../node_modules/draft-js-utils/lib/callModifierForSelectedBlocks.js",
-      "name": "../../node_modules/draft-js-utils/lib/callModifierForSelectedBlocks.js",
+      "id": "../../node_modules/draft-js-utils/esm/callModifierForSelectedBlocks.js",
+      "name": "../../node_modules/draft-js-utils/esm/callModifierForSelectedBlocks.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./getEntityRanges": [
     {
-      "id": "../../node_modules/draft-js-utils/lib/getEntityRanges.js",
-      "name": "../../node_modules/draft-js-utils/lib/getEntityRanges.js",
+      "id": "../../node_modules/draft-js-utils/esm/getEntityRanges.js",
+      "name": "../../node_modules/draft-js-utils/esm/getEntityRanges.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./getSelectedBlocks": [
     {
-      "id": "../../node_modules/draft-js-utils/lib/getSelectedBlocks.js",
-      "name": "../../node_modules/draft-js-utils/lib/getSelectedBlocks.js",
+      "id": "../../node_modules/draft-js-utils/esm/getSelectedBlocks.js",
+      "name": "../../node_modules/draft-js-utils/esm/getSelectedBlocks.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "draft-js-utils": [
     {
-      "id": "../../node_modules/draft-js-utils/lib/main.js",
-      "name": "../../node_modules/draft-js-utils/lib/main.js",
+      "id": "../../node_modules/draft-js-utils/esm/main.js",
+      "name": "../../node_modules/draft-js-utils/esm/main.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
   "./selectionContainsEntity": [
     {
-      "id": "../../node_modules/draft-js-utils/lib/selectionContainsEntity.js",
-      "name": "../../node_modules/draft-js-utils/lib/selectionContainsEntity.js",
+      "id": "../../node_modules/draft-js-utils/esm/selectionContainsEntity.js",
+      "name": "../../node_modules/draft-js-utils/esm/selectionContainsEntity.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
@@ -8315,6 +8333,14 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
+  "./DOMObserver": [
+    {
+      "id": "../../node_modules/draft-js/lib/DOMObserver.js",
+      "name": "../../node_modules/draft-js/lib/DOMObserver.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
   "./DefaultDraftBlockRenderMap": [
     {
       "id": "../../node_modules/draft-js/lib/DefaultDraftBlockRenderMap.js",
@@ -8355,6 +8381,14 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
+  "./DraftEditorBlockNode.react": [
+    {
+      "id": "../../node_modules/draft-js/lib/DraftEditorBlockNode.react.js",
+      "name": "../../node_modules/draft-js/lib/DraftEditorBlockNode.react.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
   "./DraftEditorCompositionHandler": [
     {
       "id": "../../node_modules/draft-js/lib/DraftEditorCompositionHandler.js",
@@ -8375,6 +8409,22 @@
     {
       "id": "../../node_modules/draft-js/lib/DraftEditorContents.react.js",
       "name": "../../node_modules/draft-js/lib/DraftEditorContents.react.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./DraftEditorContentsExperimental.react": [
+    {
+      "id": "../../node_modules/draft-js/lib/DraftEditorContentsExperimental.react.js",
+      "name": "../../node_modules/draft-js/lib/DraftEditorContentsExperimental.react.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./DraftEditorDecoratedLeaves.react": [
+    {
+      "id": "../../node_modules/draft-js/lib/DraftEditorDecoratedLeaves.react.js",
+      "name": "../../node_modules/draft-js/lib/DraftEditorDecoratedLeaves.react.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
@@ -8403,6 +8453,14 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
+  "./DraftEditorNode.react": [
+    {
+      "id": "../../node_modules/draft-js/lib/DraftEditorNode.react.js",
+      "name": "../../node_modules/draft-js/lib/DraftEditorNode.react.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
   "./DraftEditorPlaceholder.react": [
     {
       "id": "../../node_modules/draft-js/lib/DraftEditorPlaceholder.react.js",
@@ -8415,6 +8473,14 @@
     {
       "id": "../../node_modules/draft-js/lib/DraftEditorTextNode.react.js",
       "name": "../../node_modules/draft-js/lib/DraftEditorTextNode.react.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./DraftEffects": [
+    {
+      "id": "../../node_modules/draft-js/lib/DraftEffects.js",
+      "name": "../../node_modules/draft-js/lib/DraftEffects.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
@@ -8439,22 +8505,6 @@
     {
       "id": "../../node_modules/draft-js/lib/DraftEntitySegments.js",
       "name": "../../node_modules/draft-js/lib/DraftEntitySegments.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./DraftFeatureFlags-core": [
-    {
-      "id": "../../node_modules/draft-js/lib/DraftFeatureFlags-core.js",
-      "name": "../../node_modules/draft-js/lib/DraftFeatureFlags-core.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./DraftFeatureFlags": [
-    {
-      "id": "../../node_modules/draft-js/lib/DraftFeatureFlags.js",
-      "name": "../../node_modules/draft-js/lib/DraftFeatureFlags.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
@@ -8515,6 +8565,14 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
+  "./DraftTreeInvariants": [
+    {
+      "id": "../../node_modules/draft-js/lib/DraftTreeInvariants.js",
+      "name": "../../node_modules/draft-js/lib/DraftTreeInvariants.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
   "./EditorBidiService": [
     {
       "id": "../../node_modules/draft-js/lib/EditorBidiService.js",
@@ -8535,6 +8593,14 @@
     {
       "id": "../../node_modules/draft-js/lib/KeyBindingUtil.js",
       "name": "../../node_modules/draft-js/lib/KeyBindingUtil.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./RawDraftContentState": [
+    {
+      "id": "../../node_modules/draft-js/lib/RawDraftContentState.js",
+      "name": "../../node_modules/draft-js/lib/RawDraftContentState.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
@@ -8631,6 +8697,14 @@
     {
       "id": "../../node_modules/draft-js/lib/decodeInlineStyleRanges.js",
       "name": "../../node_modules/draft-js/lib/decodeInlineStyleRanges.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./draftKeyUtils": [
+    {
+      "id": "../../node_modules/draft-js/lib/draftKeyUtils.js",
+      "name": "../../node_modules/draft-js/lib/draftKeyUtils.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
@@ -8787,6 +8861,14 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
+  "./getContentEditableContainer": [
+    {
+      "id": "../../node_modules/draft-js/lib/getContentEditableContainer.js",
+      "name": "../../node_modules/draft-js/lib/getContentEditableContainer.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
   "./getContentStateFragment": [
     {
       "id": "../../node_modules/draft-js/lib/getContentStateFragment.js",
@@ -8907,6 +8989,14 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
+  "./gkx": [
+    {
+      "id": "../../node_modules/draft-js/lib/gkx.js",
+      "name": "../../node_modules/draft-js/lib/gkx.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
   "./insertFragmentIntoContentState": [
     {
       "id": "../../node_modules/draft-js/lib/insertFragmentIntoContentState.js",
@@ -8943,6 +9033,14 @@
     {
       "id": "../../node_modules/draft-js/lib/isSelectionAtLeafStart.js",
       "name": "../../node_modules/draft-js/lib/isSelectionAtLeafStart.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./isSoftNewlineEvent": [
+    {
+      "id": "../../node_modules/draft-js/lib/isSoftNewlineEvent.js",
+      "name": "../../node_modules/draft-js/lib/isSoftNewlineEvent.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
@@ -9123,6 +9221,278 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
+  "fbjs/lib/DataTransfer": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/DataTransfer.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/DataTransfer.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/Keys": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/Keys.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/Keys.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./PhotosMimeType": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/PhotosMimeType.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/PhotosMimeType.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/Scroll": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/Scroll.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/Scroll.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/Style": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/Style.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/Style.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/TokenizeUtil": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/TokenizeUtil.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/TokenizeUtil.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/URI": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/URI.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/URI.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/UnicodeBidi": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeBidi.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeBidi.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/UnicodeBidiDirection": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeBidiDirection.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeBidiDirection.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/UnicodeBidiService": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeBidiService.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeBidiService.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/UnicodeUtils": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeUtils.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/UnicodeUtils.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/UserAgent": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/UserAgent.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/UserAgent.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./UserAgentData": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/UserAgentData.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/UserAgentData.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./VersionRange": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/VersionRange.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/VersionRange.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./camelize": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/camelize.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/camelize.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/containsNode": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/containsNode.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/containsNode.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./createArrayFromMixed": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/createArrayFromMixed.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/createArrayFromMixed.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/cx": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/cx.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/cx.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/getActiveElement": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getActiveElement.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getActiveElement.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./getDocumentScrollElement": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getDocumentScrollElement.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getDocumentScrollElement.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/getElementPosition": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getElementPosition.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getElementPosition.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./getElementRect": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getElementRect.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getElementRect.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/getScrollPosition": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getScrollPosition.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getScrollPosition.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./getStyleProperty": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getStyleProperty.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getStyleProperty.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./getUnboundedScrollPosition": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getUnboundedScrollPosition.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getUnboundedScrollPosition.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/getViewportDimensions": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/getViewportDimensions.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/getViewportDimensions.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./hyphenate": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/hyphenate.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/hyphenate.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./isNode": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/isNode.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/isNode.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./isTextNode": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/isTextNode.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/isTextNode.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/joinClasses": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/joinClasses.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/joinClasses.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./mapObject": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/mapObject.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/mapObject.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "./memoizeStringOnly": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/memoizeStringOnly.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/memoizeStringOnly.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/nullthrows": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/nullthrows.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/nullthrows.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
+  "fbjs/lib/setImmediate": [
+    {
+      "id": "../../node_modules/draft-js/node_modules/fbjs/lib/setImmediate.js",
+      "name": "../../node_modules/draft-js/node_modules/fbjs/lib/setImmediate.js",
+      "file": "vendors~descriptionPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
+    }
+  ],
   "immutable": [
     {
       "id": "../../node_modules/draft-js/node_modules/immutable/dist/immutable.js",
@@ -9133,278 +9503,6 @@
     {
       "id": "../../node_modules/immutable/dist/immutable.js",
       "name": "../../node_modules/immutable/dist/immutable.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/DataTransfer": [
-    {
-      "id": "../../node_modules/fbjs/lib/DataTransfer.js",
-      "name": "../../node_modules/fbjs/lib/DataTransfer.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/Keys": [
-    {
-      "id": "../../node_modules/fbjs/lib/Keys.js",
-      "name": "../../node_modules/fbjs/lib/Keys.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./PhotosMimeType": [
-    {
-      "id": "../../node_modules/fbjs/lib/PhotosMimeType.js",
-      "name": "../../node_modules/fbjs/lib/PhotosMimeType.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/Scroll": [
-    {
-      "id": "../../node_modules/fbjs/lib/Scroll.js",
-      "name": "../../node_modules/fbjs/lib/Scroll.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/Style": [
-    {
-      "id": "../../node_modules/fbjs/lib/Style.js",
-      "name": "../../node_modules/fbjs/lib/Style.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/TokenizeUtil": [
-    {
-      "id": "../../node_modules/fbjs/lib/TokenizeUtil.js",
-      "name": "../../node_modules/fbjs/lib/TokenizeUtil.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/URI": [
-    {
-      "id": "../../node_modules/fbjs/lib/URI.js",
-      "name": "../../node_modules/fbjs/lib/URI.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/UnicodeBidi": [
-    {
-      "id": "../../node_modules/fbjs/lib/UnicodeBidi.js",
-      "name": "../../node_modules/fbjs/lib/UnicodeBidi.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/UnicodeBidiDirection": [
-    {
-      "id": "../../node_modules/fbjs/lib/UnicodeBidiDirection.js",
-      "name": "../../node_modules/fbjs/lib/UnicodeBidiDirection.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/UnicodeBidiService": [
-    {
-      "id": "../../node_modules/fbjs/lib/UnicodeBidiService.js",
-      "name": "../../node_modules/fbjs/lib/UnicodeBidiService.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/UnicodeUtils": [
-    {
-      "id": "../../node_modules/fbjs/lib/UnicodeUtils.js",
-      "name": "../../node_modules/fbjs/lib/UnicodeUtils.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/UserAgent": [
-    {
-      "id": "../../node_modules/fbjs/lib/UserAgent.js",
-      "name": "../../node_modules/fbjs/lib/UserAgent.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./UserAgentData": [
-    {
-      "id": "../../node_modules/fbjs/lib/UserAgentData.js",
-      "name": "../../node_modules/fbjs/lib/UserAgentData.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./VersionRange": [
-    {
-      "id": "../../node_modules/fbjs/lib/VersionRange.js",
-      "name": "../../node_modules/fbjs/lib/VersionRange.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./camelize": [
-    {
-      "id": "../../node_modules/fbjs/lib/camelize.js",
-      "name": "../../node_modules/fbjs/lib/camelize.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/containsNode": [
-    {
-      "id": "../../node_modules/fbjs/lib/containsNode.js",
-      "name": "../../node_modules/fbjs/lib/containsNode.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./createArrayFromMixed": [
-    {
-      "id": "../../node_modules/fbjs/lib/createArrayFromMixed.js",
-      "name": "../../node_modules/fbjs/lib/createArrayFromMixed.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/cx": [
-    {
-      "id": "../../node_modules/fbjs/lib/cx.js",
-      "name": "../../node_modules/fbjs/lib/cx.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/getActiveElement": [
-    {
-      "id": "../../node_modules/fbjs/lib/getActiveElement.js",
-      "name": "../../node_modules/fbjs/lib/getActiveElement.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./getDocumentScrollElement": [
-    {
-      "id": "../../node_modules/fbjs/lib/getDocumentScrollElement.js",
-      "name": "../../node_modules/fbjs/lib/getDocumentScrollElement.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/getElementPosition": [
-    {
-      "id": "../../node_modules/fbjs/lib/getElementPosition.js",
-      "name": "../../node_modules/fbjs/lib/getElementPosition.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./getElementRect": [
-    {
-      "id": "../../node_modules/fbjs/lib/getElementRect.js",
-      "name": "../../node_modules/fbjs/lib/getElementRect.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/getScrollPosition": [
-    {
-      "id": "../../node_modules/fbjs/lib/getScrollPosition.js",
-      "name": "../../node_modules/fbjs/lib/getScrollPosition.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./getStyleProperty": [
-    {
-      "id": "../../node_modules/fbjs/lib/getStyleProperty.js",
-      "name": "../../node_modules/fbjs/lib/getStyleProperty.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./getUnboundedScrollPosition": [
-    {
-      "id": "../../node_modules/fbjs/lib/getUnboundedScrollPosition.js",
-      "name": "../../node_modules/fbjs/lib/getUnboundedScrollPosition.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/getViewportDimensions": [
-    {
-      "id": "../../node_modules/fbjs/lib/getViewportDimensions.js",
-      "name": "../../node_modules/fbjs/lib/getViewportDimensions.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./hyphenate": [
-    {
-      "id": "../../node_modules/fbjs/lib/hyphenate.js",
-      "name": "../../node_modules/fbjs/lib/hyphenate.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./isNode": [
-    {
-      "id": "../../node_modules/fbjs/lib/isNode.js",
-      "name": "../../node_modules/fbjs/lib/isNode.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./isTextNode": [
-    {
-      "id": "../../node_modules/fbjs/lib/isTextNode.js",
-      "name": "../../node_modules/fbjs/lib/isTextNode.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/joinClasses": [
-    {
-      "id": "../../node_modules/fbjs/lib/joinClasses.js",
-      "name": "../../node_modules/fbjs/lib/joinClasses.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./mapObject": [
-    {
-      "id": "../../node_modules/fbjs/lib/mapObject.js",
-      "name": "../../node_modules/fbjs/lib/mapObject.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "./memoizeStringOnly": [
-    {
-      "id": "../../node_modules/fbjs/lib/memoizeStringOnly.js",
-      "name": "../../node_modules/fbjs/lib/memoizeStringOnly.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/nullthrows": [
-    {
-      "id": "../../node_modules/fbjs/lib/nullthrows.js",
-      "name": "../../node_modules/fbjs/lib/nullthrows.js",
-      "file": "vendors~descriptionPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
-    }
-  ],
-  "fbjs/lib/setImmediate": [
-    {
-      "id": "../../node_modules/fbjs/lib/setImmediate.js",
-      "name": "../../node_modules/fbjs/lib/setImmediate.js",
       "file": "vendors~descriptionPage.js",
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
