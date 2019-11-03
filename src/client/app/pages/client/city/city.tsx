@@ -55,14 +55,20 @@ class CityPage extends React.Component<ICityPageProps, any> {
     );
   }
 
+  renderDocumentHead = () => {
+    return (
+      <Helmet>
+        {this.renderTitle()}
+        {this.renderMetaDescription()}
+      </Helmet>
+    )
+  }
+
   render() {
     const { selectedCity, locale } = this.props;
     return isDataEnabled(selectedCity, locale) ? (
       <React.Fragment>
-        <Helmet>
-          {this.renderTitle()}
-          {this.renderMetaDescription()}
-        </Helmet>
+        {this.renderDocumentHead()}
         <Typography variant="h1">
           {this.getLocalizedName()}
         </Typography>
