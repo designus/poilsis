@@ -37,7 +37,6 @@ export interface IResponseError {
 export interface IItemDescFields {
   description: TranslatableField;
   metaTitle: TranslatableField;
-  metaKeywords: TranslatableField;
   metaDescription: TranslatableField;
 }
 

@@ -53,14 +53,6 @@ class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomP
             hasIntl
             selectedLanguage={selectedLanguage}
           />
-          <Field
-            name="metaKeywords"
-            type="text"
-            component={TextInput}
-            label={intl.formatMessage({ id: 'admin.common_fields.meta_keywords'})}
-            hasIntl
-            selectedLanguage={selectedLanguage}
-          />
         </div>
         <Button type="submit">
           <FormattedMessage id="common.submit" />

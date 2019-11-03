@@ -33,12 +33,11 @@ export const callFn = (fn, ...args) => {
 export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);
 
 export const getItemDescriptionFields = (item: IItem): IItemDescFields => {
-  const { description, metaTitle, metaDescription, metaKeywords  } = item;
+  const { description, metaTitle, metaDescription  } = item;
   return {
     description,
     metaTitle,
-    metaDescription,
-    metaKeywords
+    metaDescription
   };
 };
 
