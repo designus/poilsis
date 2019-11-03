@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Typography from '@material-ui/core/Typography';
 
 import { IAppState, IItemsState } from 'types';
 import { IItem } from 'global-utils/typings';
@@ -48,14 +49,21 @@ class ItemPage extends React.Component<IItemPageParams, any> {
 
   getLocalizedName = () => getLocalizedText(this.props.selectedItem.name, this.props.match.params.locale);
 
-  getMetaTitle = () => {
+  renderTitle = () => {
     const localizedName = this.getLocalizedName();
     const localizedTitle = getLocalizedText(this.props.selectedItem.metaTitle, this.props.match.params.locale);
-    return localizedTitle || localizedName;
+    return (
+      <title>
+        {localizedTitle || localizedName}
+      </title>
+    );
   }
 
-  getMetaDescription = () => {
-    
+  renderMetaDescription = () => {
+    const { metaDescription } = this.props.selectedItem;
+    return metaDescription && (
+      <meta name="description" content={metaDescription[this.props.match.params.locale]} />
+    );
   }
 
   render() {
@@ -66,14 +74,18 @@ class ItemPage extends React.Component<IItemPageParams, any> {
       <React.Fragment>
         <Helmet>
           <meta charSet="utf-8" />
-          <title>{this.getMetaTitle()}</title>
+          {this.renderTitle()}
+          {this.renderMetaDescription()}
         </Helmet>
-        <div>{this.getLocalizedName()}</div>
+        <Typography variant="h1">
+          {this.getLocalizedName()}
+        </Typography>
         <div>{selectedItem.address}</div>
-        <div dangerouslySetInnerHTML={
-          this.createMarkup(getLocalizedText(selectedItem.description, locale))
-          }
-        />
+        <Typography variant="body1">
+          <div dangerouslySetInnerHTML={
+            this.createMarkup(getLocalizedText(selectedItem.description, locale))
+          } />
+        </Typography>
       </React.Fragment>
     ) : <NotFound /> ;
   }
