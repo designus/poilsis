@@ -8085,6 +8085,54 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
     }
   ],
+  "react-fast-compare": [
+    {
+      "id": "../../node_modules/react-fast-compare/index.js",
+      "name": "../../node_modules/react-fast-compare/index.js",
+      "file": "vendors~clientItem.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientItem.js"
+    }
+  ],
+  "react-helmet": [
+    {
+      "id": "../../node_modules/react-helmet/lib/Helmet.js",
+      "name": "../../node_modules/react-helmet/lib/Helmet.js",
+      "file": "vendors~clientItem.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientItem.js"
+    }
+  ],
+  "./HelmetConstants.js": [
+    {
+      "id": "../../node_modules/react-helmet/lib/HelmetConstants.js",
+      "name": "../../node_modules/react-helmet/lib/HelmetConstants.js",
+      "file": "vendors~clientItem.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientItem.js"
+    }
+  ],
+  "./HelmetUtils.js": [
+    {
+      "id": "../../node_modules/react-helmet/lib/HelmetUtils.js",
+      "name": "../../node_modules/react-helmet/lib/HelmetUtils.js",
+      "file": "vendors~clientItem.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientItem.js"
+    }
+  ],
+  "react-side-effect": [
+    {
+      "id": "../../node_modules/react-side-effect/lib/index.js",
+      "name": "../../node_modules/react-side-effect/lib/index.js",
+      "file": "vendors~clientItem.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientItem.js"
+    }
+  ],
+  "shallowequal": [
+    {
+      "id": "../../node_modules/shallowequal/index.js",
+      "name": "../../node_modules/shallowequal/index.js",
+      "file": "vendors~clientItem.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientItem.js"
+    }
+  ],
   "@fortawesome/react-fontawesome": [
     {
       "id": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",

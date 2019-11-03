@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { IAppState, IItemsState } from 'types';
 import { IItem } from 'global-utils/typings';
@@ -45,13 +46,29 @@ class ItemPage extends React.Component<IItemPageParams, any> {
     };
   }
 
+  getLocalizedName = () => getLocalizedText(this.props.selectedItem.name, this.props.match.params.locale);
+
+  getMetaTitle = () => {
+    const localizedName = this.getLocalizedName();
+    const localizedTitle = getLocalizedText(this.props.selectedItem.metaTitle, this.props.match.params.locale);
+    return localizedTitle || localizedName;
+  }
+
+  getMetaDescription = () => {
+    
+  }
+
   render() {
     const { selectedItem } = this.props;
     const { locale } = this.props.match.params;
 
     return isItemEnabled(selectedItem, locale) ? (
       <React.Fragment>
-        <div>{getLocalizedText(selectedItem.name, locale)}</div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>{this.getMetaTitle()}</title>
+        </Helmet>
+        <div>{this.getLocalizedName()}</div>
         <div>{selectedItem.address}</div>
         <div dangerouslySetInnerHTML={
           this.createMarkup(getLocalizedText(selectedItem.description, locale))
