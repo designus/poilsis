@@ -31,8 +31,8 @@ class FormComponent extends React.Component<FormProps> {
   }
 
   handleLoadedImages = () => {
-    // this.props.onResetUploadState();
-    // this.clearDroppedImages();
+    this.props.onResetUploadState();
+    this.clearDroppedImages();
   }
 
   render() {

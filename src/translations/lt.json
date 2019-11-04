@@ -32,7 +32,7 @@
   "admin.menu.go_to_website": "Grįžti į svetainę",
   "admin.menu.main_info": "Pagrindinė info",
   "admin.menu.description": "Aprašymas",
-  "admin.menu.photo_gallery": "Nuotraukų galerija",
+  "admin.menu.photos": "Nuotraukos",
   "admin.common_fields.id": "Id",
   "admin.common_fields.name": "Pavadinimas",
   "admin.common_fields.alias": "Url pavadinimas",

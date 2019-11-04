@@ -6,8 +6,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { IUploadProgressState } from 'types';
 import { SuccessIcon, ErrorIcon } from 'client-utils/custom-icons';
 import { IImage } from 'global-utils';
+import { config } from 'config';
 import { ImageWrapper } from './imageWrapper';
-import { config } from '../../../../../config';
 
 import { styles, viewbox } from './style';
 

@@ -1,7 +1,17 @@
 import * as React from 'react';
 import { SortableImage } from '../sortableImage';
 
-export const ImageWrapper = (props) => {
+interface IImageWrapperProps {
+  isTemporary: boolean;
+  children: any;
+  classes: any;
+  onSortItems: (items: any[]) => void;
+  items: any[];
+  key: string | number;
+  sortId: string | number;
+}
+
+export const ImageWrapper = (props: IImageWrapperProps) => {
   const { isTemporary, children, classes } = props;
 
   if (isTemporary) {

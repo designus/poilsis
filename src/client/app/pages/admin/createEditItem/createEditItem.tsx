@@ -68,7 +68,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
         id: 3,
         icon: () => (<PhotoIcon />),
         link: adminRoutes.editItemPhotos.getLink(userId, itemId),
-        text: formatMessage({ id: 'admin.menu.photo_gallery' }),
+        text: formatMessage({ id: 'admin.menu.photos' }),
         isDisabled: this.isCreatePage()
       }
     ];

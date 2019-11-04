@@ -2,9 +2,9 @@ import * as React from 'react';
 import { sortable } from 'react-sortable';
 
 const ImageComponent = (props) => {
-  const { classes } = props;
+  const { classes, otherProps } = props;
   return (
-    <div className={classes.image}>
+    <div {...otherProps} draggable={true} className={classes.image}>
       {props.children}
     </div>
   );
