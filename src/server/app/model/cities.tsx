@@ -42,6 +42,14 @@ const schemaMap: GenericSchemaMap<ICity> = {
     trim: true,
     required: [true, requiredMessage],
     set: formatAlias
+  },
+  metaTitle: {
+    type: String,
+    intl: true
+  },
+  metaDescription: {
+    type: String,
+    intl: true
   }
 };
 

@@ -11,7 +11,7 @@ import { updateMainInfo, createItem } from 'actions/items';
 import { getBackendErrors } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { IItem, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { IItem, LANGUAGES, DEFAULT_LANGUAGE, Languages } from 'global-utils';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
@@ -26,7 +26,7 @@ interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   userRole: string;
-  locale: string;
+  locale: Languages;
   showNavigationPrompt: boolean;
   isCreatePage: boolean;
   createItem: (item: IItem) => Promise<any>;

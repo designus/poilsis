@@ -1,4 +1,3 @@
-import { LANGUAGES } from './constants';
 export interface IImage {
   id?: string;
   name?: string;
@@ -34,11 +33,13 @@ export interface IResponseError {
   };
 }
 
-export interface IItemDescFields {
-  description: TranslatableField;
+export interface ISeoFields {
   metaTitle: TranslatableField;
-  metaKeywords: TranslatableField;
   metaDescription: TranslatableField;
+}
+
+export interface IItemDescFields extends ISeoFields {
+  description: TranslatableField;
 }
 
 export interface IItem extends IItemDescFields {
@@ -67,7 +68,7 @@ export interface IType {
   isEnabled: IsEnabled;
 }
 
-export interface ICity {
+export interface ICity extends ISeoFields {
   id: string;
   alias?: TranslatableField;
   types: string[];

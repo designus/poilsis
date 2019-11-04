@@ -16,7 +16,7 @@ import FormatUnderlined from '@material-ui/icons/FormatUnderlined';
 import FormatUnorderedList from '@material-ui/icons/FormatListBulleted';
 import { debounce } from 'lodash';
 
-import { LANGUAGES, DEFAULT_LANGUAGE, TranslatableField } from 'global-utils';
+import { LANGUAGES, DEFAULT_LANGUAGE, TranslatableField, IntlSetting } from 'global-utils';
 import { styles } from './styles';
 
 export interface IEditorInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
@@ -34,7 +34,7 @@ const getEditorState = (html: string): EditorState => {
 };
 
 // TODO: Memoize this fn
-const getInitialValue = (value: TranslatableField) => {
+const getInitialValue = (value: TranslatableField): IntlSetting<EditorState>  => {
   return LANGUAGES.reduce((acc, lang) => {
     acc[lang] = value[lang] ? getEditorState(value[lang]) : EditorState.createEmpty();
     return acc;

@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { getNormalizedData } from 'client-utils/methods';
 import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
-import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, IUser } from 'global-utils';
+import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, IUser, Languages } from 'global-utils';
 import {
   IAppState,
   InitialDataActionTypes,
@@ -14,7 +14,7 @@ import { http } from './utils';
 
 export interface IGetInitialDataParams {
   pathName?: string;
-  locale?: string;
+  locale?: Languages;
 }
 
 export const receiveInitialData = (data: IInitialData): IReceiveInitialData => ({

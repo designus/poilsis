@@ -6,6 +6,7 @@ import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import Loadable from 'react-loadable';
+import { Helmet } from 'react-helmet';
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
 import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
@@ -90,6 +91,7 @@ function sendResponse(res, store, location) {
     </Loadable.Capture>
   );
 
+  const helmet = Helmet.renderStatic();
   const css = sheets.toString();
   const bundles = getBundles(stats, modules);
   const preloadedState = serialize(state, { isJSON: true });
@@ -106,7 +108,8 @@ function sendResponse(res, store, location) {
       html,
       scripts,
       css,
-      preloadedState
+      preloadedState,
+      helmet
     }
 });
 }

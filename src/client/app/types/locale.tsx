@@ -1,6 +1,8 @@
+import { Languages } from 'global-utils/typings';
+
 export interface ILocaleState {
-  client: string;
-  admin: string;
+  client: Languages;
+  admin: Languages;
 }
 
 export enum LocaleActionTypes {
@@ -10,12 +12,12 @@ export enum LocaleActionTypes {
 
 export interface ISetClientLocale {
   type: LocaleActionTypes.SET_CLIENT_LOCALE;
-  locale: string;
+  locale: Languages;
 }
 
 export interface ISetAdminLocale {
   type: LocaleActionTypes.SET_ADMIN_LOCALE;
-  locale: string;
+  locale: Languages;
 }
 
 export type LocaleActions = ISetClientLocale | ISetAdminLocale;

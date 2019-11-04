@@ -1,30 +1,19 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import Typography from '@material-ui/core/Typography';
 
-import { IAppState, IItemsState } from 'types';
-import { IItem } from 'global-utils/typings';
+import { IAppState } from 'types';
 import { loadItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
+import { Languages } from 'global-utils/typings';
 import { getItemByAlias } from 'selectors';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
-
-interface IMatchParams {
-  locale: string;
-  cityAlias: string;
-  itemAlias: string;
-}
-
-interface IItemPageParams extends RouteComponentProps<IMatchParams> {
-  items?: IItemsState;
-  selectedItem?: IItem;
-  loadItem?: (locale: string, alias: string) => void;
-  selectItem?: (itemId: string) => void;
-}
+import { IMatchParams, IOwnProps, IStateProps, IDispatchProps, ItemPageProps } from './types';
 
 export const loadItemData = (store, params: IMatchParams) => store.dispatch(loadItem(params.locale, params.itemAlias));
 
-class ItemPage extends React.Component<IItemPageParams, any> {
+class ItemPage extends React.Component<ItemPageProps, any> {
 
   componentDidMount() {
     const { selectedItem } = this.props;
@@ -45,29 +34,61 @@ class ItemPage extends React.Component<IItemPageParams, any> {
     };
   }
 
+  getLocalizedName = () => getLocalizedText(this.props.selectedItem.name, this.props.match.params.locale);
+
+  renderTitle = () => {
+    const localizedName = this.getLocalizedName();
+    const localizedTitle = getLocalizedText(this.props.selectedItem.metaTitle, this.props.match.params.locale);
+    return (
+      <title>
+        {localizedTitle || localizedName}
+      </title>
+    );
+  }
+
+  renderMetaDescription = () => {
+    const { metaDescription } = this.props.selectedItem;
+    return metaDescription && (
+      <meta name="description" content={metaDescription[this.props.match.params.locale]} />
+    );
+  }
+
+  renderDocumentHead = () => {
+    return (
+      <Helmet>
+        {this.renderTitle()}
+        {this.renderMetaDescription()}
+      </Helmet>
+    );
+  }
+
   render() {
     const { selectedItem } = this.props;
     const { locale } = this.props.match.params;
 
     return isItemEnabled(selectedItem, locale) ? (
       <React.Fragment>
-        <div>{getLocalizedText(selectedItem.name, locale)}</div>
+        {this.renderDocumentHead()}
+        <Typography variant="h1">
+          {this.getLocalizedName()}
+        </Typography>
         <div>{selectedItem.address}</div>
-        <div dangerouslySetInnerHTML={
-          this.createMarkup(getLocalizedText(selectedItem.description, locale))
-          }
-        />
+        <Typography variant="body1">
+          <div dangerouslySetInnerHTML={
+            this.createMarkup(getLocalizedText(selectedItem.description, locale))
+          } />
+        </Typography>
       </React.Fragment>
     ) : <NotFound /> ;
   }
 }
 
-const mapStateToProps = (state: IAppState, props: IItemPageParams) => ({
+const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
   selectedItem: getItemByAlias(state, props.match.params.itemAlias)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadItem: (locale: string, alias: string) => dispatch(loadItem(locale, alias)),
+  loadItem: (locale: Languages, alias: string) => dispatch(loadItem(locale, alias))
 });
 
-export default connect<any, any, IItemPageParams>(mapStateToProps, mapDispatchToProps)(ItemPage);
+export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(ItemPage);

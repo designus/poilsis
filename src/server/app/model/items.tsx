@@ -121,10 +121,6 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   metaDescription: {
     type: String,
     intl: true
-  },
-  metaKeywords: {
-    type: String,
-    intl: true
   }
 };
 

@@ -1,5 +1,5 @@
 import * as JWT from 'jwt-decode';
-import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields } from './typings';
+import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields, TranslatableField, Languages } from './typings';
 import { LANGUAGES } from './constants';
 
 export const mapMimeTypesToTypes = (mimeTypes: string[]) =>
@@ -20,7 +20,8 @@ export const voidFn = f => f;
 
 export const getAccessTokenClaims = (token: string): IAccessTokenClaims => JWT(token);
 
-export const hasLocalizedFields = (field) => field && Object.keys(field).some(field => LANGUAGES.indexOf(field) !== -1);
+export const hasLocalizedFields = (field: TranslatableField | string) =>
+  field && Object.keys(field).some((field: Languages) => LANGUAGES.indexOf(field) !== -1);
 
 export const isFunction = fn => typeof fn === 'function';
 
@@ -33,12 +34,11 @@ export const callFn = (fn, ...args) => {
 export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);
 
 export const getItemDescriptionFields = (item: IItem): IItemDescFields => {
-  const { description, metaTitle, metaDescription, metaKeywords  } = item;
+  const { description, metaTitle, metaDescription  } = item;
   return {
     description,
     metaTitle,
-    metaDescription,
-    metaKeywords
+    metaDescription
   };
 };
 

@@ -4,7 +4,7 @@ import { Field, reduxForm, InjectedFormProps, ConfigProps } from 'redux-form';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 
 import { asyncValidateAlias } from 'actions';
-import { isRequired, IType } from 'global-utils';
+import { isRequired, IType, Languages } from 'global-utils';
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 import { Switcher } from 'components/formFields/switch';
@@ -13,9 +13,9 @@ export const TYPE_FORM_NAME = 'TypeForm';
 
 interface ICustomProps {
   intl: InjectedIntl;
-  languages: string[];
-  defaultLanguage: string;
-  selectedLanguage?: string;
+  languages: Languages[];
+  defaultLanguage: Languages;
+  selectedLanguage?: Languages;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
