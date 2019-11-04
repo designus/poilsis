@@ -6,7 +6,7 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
 
-import { ICity, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { ICity, LANGUAGES, DEFAULT_LANGUAGE, Languages } from 'global-utils';
 import { createCity, updateCity } from 'actions/cities';
 import { getAdminCity } from 'actions/admin';
 import { getBackendErrors } from 'client-utils/methods';
@@ -37,7 +37,7 @@ interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams>, In
   getCity: (cityId: string) => Promise<any>;
   initializeForm: (city: ICity) => void;
   shouldLoadEditCity: boolean;
-  locale: string;
+  locale: Languages;
 }
 
 class CreateEditCityPageComponent extends React.Component<ICreateEditCityPageProps, any> {

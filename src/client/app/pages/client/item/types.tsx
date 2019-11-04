@@ -1,8 +1,8 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { IItem } from 'global-utils/typings';
+import { IItem, Languages } from 'global-utils/typings';
 
 export interface IMatchParams {
-  locale: string;
+  locale: Languages;
   cityAlias: string;
   itemAlias: string;
 }
@@ -14,7 +14,7 @@ export interface IStateProps {
 }
 
 export interface IDispatchProps {
-  loadItem?: (locale: string, alias: string) => void;
+  loadItem?: (locale: Languages, alias: string) => void;
   selectItem?: (itemId: string) => void;
 }
 

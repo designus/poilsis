@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, Link, RouteComponentProps } from 'react-router-dom';
+import { Route, Switch, RouteComponentProps } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
@@ -12,7 +12,6 @@ import Container from '@material-ui/core/Container';
 import { Toast } from 'components/toast';
 import { UserMenu } from 'components/userMenu';
 import { LanguageSelector } from 'components/languageSelector';
-import { Loader } from 'components/loader';
 import { Drawer } from 'components/drawer';
 import { LoginButton } from 'components/loginButton';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
@@ -21,7 +20,7 @@ import { ClientTopMenu as TopMenu } from 'components/menu/clientTopMenu';
 import { clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
 import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
-import { getStaticFileUri } from 'global-utils';
+import { getStaticFileUri, Languages } from 'global-utils';
 
 import { CityPage } from 'pages/client/city';
 import { ItemPage } from 'pages/client/item';
@@ -39,13 +38,13 @@ import { styles } from './styles';
 
 interface IMatchParams {
   cityName: string;
-  locale: string;
+  locale: Languages;
 }
 
 interface ILayoutPageParams extends RouteComponentProps<IMatchParams>, WithStyles<typeof styles> {
   isLoggedIn: boolean;
   getInitialData: (params?: IGetInitialDataParams) => void;
-  locale: string;
+  locale: Languages;
 }
 
 export const loadInitialData = (store, params: IMatchParams) => store.dispatch(getInitialData({ locale: params.locale }));

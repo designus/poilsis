@@ -14,6 +14,7 @@ import {
   maxCheckedCount,
   IItem,
   DEFAULT_LANGUAGE,
+  Languages
 } from 'global-utils';
 
 import { Button } from 'components/button';
@@ -32,11 +33,11 @@ interface ICustomProps {
   typesMap: ITypesMap;
   usersMap: IUsersMap;
   userRole: string;
-  locale: string;
+  locale: Languages;
   intl: InjectedIntl;
-  languages: string[];
-  defaultLanguage: string;
-  selectedLanguage?: string;
+  languages: Languages[];
+  defaultLanguage: Languages;
+  selectedLanguage?: Languages;
 }
 
 const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {

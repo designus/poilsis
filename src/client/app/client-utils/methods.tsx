@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
-import { DataTypes, IUser, IItem } from 'global-utils/typings';
+import { DataTypes, IUser, IItem, Languages } from 'global-utils/typings';
 import { TranslatableField, hasLocalizedFields } from 'global-utils';
 import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap } from 'types';
 
@@ -34,7 +34,7 @@ export function getAliasKeysById<T extends DataTypes>(state: IGenericState<T>, i
   return hasLocalizedFields(alias) ? Object.values(alias) : [alias as string];
 }
 
-export const setAcceptLanguageHeader = (locale = DEFAULT_LANGUAGE) => ({
+export const setAcceptLanguageHeader = (locale: Languages = DEFAULT_LANGUAGE) => ({
   headers: {
     'Accept-Language': locale
   }
@@ -45,7 +45,7 @@ export function getBackendErrors(errors: Record<string, any>) {
     // We only want to display validation errors to the user
     if (errors[key].name === 'ValidatorError') {
       const [field, language] = key.split('.');
-      const errorField = LANGUAGES.includes(language) ? field : key;
+      const errorField = LANGUAGES.includes(language as Languages) ? field : key;
       acc[errorField] = errors[key].message;
     }
     return acc;

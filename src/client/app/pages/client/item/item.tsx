@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAppState } from 'types';
 import { loadItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
+import { Languages } from 'global-utils/typings';
 import { getItemByAlias } from 'selectors';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 import { IMatchParams, IOwnProps, IStateProps, IDispatchProps, ItemPageProps } from './types';
@@ -87,7 +88,7 @@ const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadItem: (locale: string, alias: string) => dispatch(loadItem(locale, alias))
+  loadItem: (locale: Languages, alias: string) => dispatch(loadItem(locale, alias))
 });
 
 export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(ItemPage);

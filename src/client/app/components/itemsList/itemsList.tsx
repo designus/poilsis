@@ -3,7 +3,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { ICity, IItem } from 'global-utils/typings';
+import { ICity, IItem, Languages } from 'global-utils/typings';
 import { IAppState } from 'types';
 import { clientRoutes } from 'client-utils/routes';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
@@ -13,7 +13,7 @@ import { getClientLocale } from 'selectors';
 import { ItemTypesList } from '../itemTypesList';
 
 interface IItemsListProps {
-  locale: string;
+  locale: Languages;
   items: IItem[];
   selectedCity: ICity;
 }

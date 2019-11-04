@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
+import { Languages } from 'global-utils/typings';
 import { IAppState } from 'types';
 import { getAdminLocale } from 'selectors';
 import { LANGUAGES } from 'global-utils';
@@ -11,7 +12,7 @@ import { languageStyles } from './styles';
 
 interface IInjectedProps extends Partial<WithStyles<typeof languageStyles>> {
   selectedLanguage?: string;
-  locale?: string;
+  locale?: Languages;
 }
 
 export function extendWithLanguage<TOriginalProps extends {}>(

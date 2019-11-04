@@ -1,4 +1,3 @@
-import { LANGUAGES } from './constants';
 export interface IImage {
   id?: string;
   name?: string;

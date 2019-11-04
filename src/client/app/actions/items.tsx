@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 import {
   setUploadProgress,
   uploadError,
@@ -23,7 +21,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Omit, IsEnabled } from 'global-utils/typings';
+import { IImage, IItem, IItemDescFields, Omit, IsEnabled, Languages } from 'global-utils/typings';
 import { getItemById } from 'selectors';
 import {
   ItemsActionTypes,
@@ -96,7 +94,7 @@ export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) =
   dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
 };
 
-export const loadItem = (locale: string, alias: string) => (dispatch) => {
+export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return http.get(`/api/items/view-item/${alias}`, setAcceptLanguageHeader(locale))
