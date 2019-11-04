@@ -8089,48 +8089,48 @@
     {
       "id": "../../node_modules/react-fast-compare/index.js",
       "name": "../../node_modules/react-fast-compare/index.js",
-      "file": "vendors~clientCity~clientItem.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem.js"
+      "file": "vendors~clientCity~clientItem~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem~homePage.js"
     }
   ],
   "react-helmet": [
     {
       "id": "../../node_modules/react-helmet/lib/Helmet.js",
       "name": "../../node_modules/react-helmet/lib/Helmet.js",
-      "file": "vendors~clientCity~clientItem.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem.js"
+      "file": "vendors~clientCity~clientItem~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem~homePage.js"
     }
   ],
   "./HelmetConstants.js": [
     {
       "id": "../../node_modules/react-helmet/lib/HelmetConstants.js",
       "name": "../../node_modules/react-helmet/lib/HelmetConstants.js",
-      "file": "vendors~clientCity~clientItem.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem.js"
+      "file": "vendors~clientCity~clientItem~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem~homePage.js"
     }
   ],
   "./HelmetUtils.js": [
     {
       "id": "../../node_modules/react-helmet/lib/HelmetUtils.js",
       "name": "../../node_modules/react-helmet/lib/HelmetUtils.js",
-      "file": "vendors~clientCity~clientItem.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem.js"
+      "file": "vendors~clientCity~clientItem~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem~homePage.js"
     }
   ],
   "react-side-effect": [
     {
       "id": "../../node_modules/react-side-effect/lib/index.js",
       "name": "../../node_modules/react-side-effect/lib/index.js",
-      "file": "vendors~clientCity~clientItem.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem.js"
+      "file": "vendors~clientCity~clientItem~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem~homePage.js"
     }
   ],
   "shallowequal": [
     {
       "id": "../../node_modules/shallowequal/index.js",
       "name": "../../node_modules/shallowequal/index.js",
-      "file": "vendors~clientCity~clientItem.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem.js"
+      "file": "vendors~clientCity~clientItem~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem~homePage.js"
     }
   ],
   "@fortawesome/react-fontawesome": [
