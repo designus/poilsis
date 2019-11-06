@@ -74,7 +74,7 @@ export const handleFileUploadErrors = (err, response) => {
 
 export const getUploadPath = (itemId) =>  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
 
-export const getSourceFiles = (files) => files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
+export const getSourceFiles = (files: string[]) => files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
 
 export function removeFiles(files, next) {
   if (files.length === 0) {
@@ -90,6 +90,12 @@ export function removeFiles(files, next) {
      });
   }
 }
+
+export const getRemovableFiles = (files: string[], images: IImage[], uploadPath: string): string[] => {
+  return files
+    .filter(fileName => !images.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
+    .map(fileName => `${uploadPath}/${fileName}`);
+};
 
 export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   const [loadInitialData, ...loadOtherData] = data;

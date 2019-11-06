@@ -1,7 +1,7 @@
 import multer from 'multer';
 import Jimp from 'jimp';
 
-import { Request, Express, Response } from 'express';
+import { Request, Express, NextFunction, Response } from 'express';
 
 import { readdir } from 'fs';
 import {
@@ -17,17 +17,17 @@ import {
   getUploadPath,
   handleFileUploadErrors,
   getSourceFiles,
-  removeFiles
+  removeFiles,
+  getRemovableFiles
 } from './methods';
 
 import {
   removeDirectory,
   createDirectory,
-  checkIfDirectoryExists
+  checkIfDirectoryExists,
+  readDirectoryContent
 } from './fileSystem';
 
-// const multer = require('multer');
-// const Jimp = require('jimp').default;
 const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
 
 export const createUploadPath = (req, res, next) => {
@@ -53,24 +53,29 @@ export const removeImagesDir = (req, res, next) => {
     .catch(next);
 };
 
-export const removeImagesFromFs = (req, res, next) => {
-  const itemId = req.params.itemId;
-  const images = req.body.images;
-  const uploadPath = getUploadPath(itemId);
-  readdir(getUploadPath(itemId), (err, files: string[]) => {
-    const sourceFiles = getSourceFiles(files);
-    if (err) {
-      return next(err);
-    } else if (images.length !== sourceFiles.length) {
-      const removableFiles = files
-        .filter(fileName => !images.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
-        .map(fileName => `${uploadPath}/${fileName}`);
+export const removeImagesFromFs =  async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const itemId = req.params.itemId;
+    const images: IImage[] = req.body.images;
+    const uploadPath = getUploadPath(itemId);
+    const files: string[] = await readDirectoryContent(getUploadPath(itemId));
 
+    if (!files) {
+      throw new Error('Unable to read directory content');
+    }
+
+    const sourceFiles = getSourceFiles(files);
+
+    if (images.length !== sourceFiles.length) {
+      const removableFiles = getRemovableFiles(files, images, uploadPath);
       removeFiles(removableFiles, next);
     } else {
       next();
     }
-  });
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const fileFilter = (req: MulterRequest, file: MulterFile, cb) => {
@@ -120,7 +125,10 @@ export const resizeImages = (req: MulterRequest, res: Response) => {
               image
                 .resize(280, 220)
                 .quality(80)
-                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => resolve());
+                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
+                  resolve()
+                  // reject('some error');
+                });
               })
             .catch(err => {
               reject(err);

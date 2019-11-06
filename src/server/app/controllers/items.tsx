@@ -159,7 +159,7 @@ export const updatePhotos = async (req: Request, res: Response, next: NextFuncti
     }
 
     item.images = req.body.images;
-    item.mainImage = getImagePath(item.images[0]);
+    item.mainImage = item.images.length > 0 ? getImagePath(item.images[0]) : '';
 
     const newItem = await item.save();
 
@@ -203,6 +203,7 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
 
     } catch (err) {
       // TODO: Remove uploaded files
+      console.log('Files', req.files);
       console.log('Error', err);
       return next(err);
     }
