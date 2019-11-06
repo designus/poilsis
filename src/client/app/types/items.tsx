@@ -49,6 +49,7 @@ export interface IReceiveImages {
   type: ItemsActionTypes.RECEIVE_IMAGES;
   itemId: string;
   images: IImage[];
+  mainImage: string;
 }
 
 export interface IToggleItemRecommended {

@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
   uploadImages: (itemId: string, files: File[]) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
   resetUploadState: () => dispatch(resetUploadState()),
-  sortImages: (id: string) => (images: IImage[]) => dispatch(receiveImages(id, images))
+  sortImages: (id: string) => (images: IImage[]) => dispatch(receiveImages(id, images, null))
 });
 
 export default injectIntl(

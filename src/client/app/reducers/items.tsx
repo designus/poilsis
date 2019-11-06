@@ -99,6 +99,7 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
           ...state.dataMap,
           [action.itemId]: {
             ...state.dataMap[action.itemId],
+            mainImage: action.mainImage ? action.mainImage : state.dataMap[action.itemId].mainImage,
             images: action.images
           }
         }

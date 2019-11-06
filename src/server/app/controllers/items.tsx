@@ -150,24 +150,28 @@ export const updateItemDescription = async (req: Request, res: Response, next: N
   }
 };
 
-export const updatePhotos = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
-    if (err) {
-      // TODO: Rollback deleted files
-      return next(err);
+export const updatePhotos = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const item = await ItemsModel.findOne({ id: req.params.itemId });
+
+    if (!item) {
+      throw new Error('Unable to find item by provided itemId');
     }
 
     item.images = req.body.images;
+    item.mainImage = getImagePath(item.images[0]);
 
-    item.save((err, item) => {
-      if (err) {
-        // TODO: Rollback deleted files
-        return next(err);
-      }
+    const newItem = await item.save();
 
-      res.send(item.images);
-    });
-  });
+    if (!newItem) {
+      throw new Error('Unable to update item images');
+    }
+
+    res.status(200).json(newItem);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFunction) => {
@@ -195,7 +199,7 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
         throw new Error('Unable to update item images');
       }
 
-      res.status(200).json(updatedItem.images);
+      res.status(200).json(item);
 
     } catch (err) {
       // TODO: Remove uploaded files
