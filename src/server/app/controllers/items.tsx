@@ -5,6 +5,7 @@ import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LAN
 import { getImages, sendResponse, getAdjustedIsEnabledValue, isApprovedByAdmin } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
+import { MulterRequest, MulterFile } from 'server-utils/types';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
 
@@ -189,36 +190,36 @@ export const updatePhotos = (req: Request, res: Response, next: NextFunction) =>
   });
 };
 
-export const uploadPhotos = (req, res: Response, next: NextFunction) => {
+export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFunction) => {
   const uploadPhotos = uploadImages.array('files[]', itemValidation.images.maxPhotos);
-  uploadPhotos(req, res, (err) => {
+
+  uploadPhotos(req, res, async (err) => {
     if (err) { return next(err); }
 
-    resizeImages(req, res)
-      .then(() => {
-        const images = getImages(req.files);
+    try {
+      await resizeImages(req, res);
+      const files = req.files as MulterFile[];
+      const newImages = getImages(files);
+      const item = await ItemsModel.findOne({ id: req.params.itemId });
 
-        ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
-          if (err) {
-            // TODO: Remove uploaded files
-            return next(err);
-          }
+      if (!item) {
+        throw new Error('Unable to find item by provided itemId');
+      }
 
-          item.images = [...(item.images || []), ...images];
+      item.images = [...(item.images || []), ...newImages];
 
-          item.save((err, item) => {
-            if (err) {
-              // TODO: Remove uploaded files
-              return next(err);
-            }
+      const updatedItem = await item.save();
 
-            res.send(item.images);
-          });
-        });
-      })
-      .catch(err => {
-        // TODO: Remove uploaded files
-        console.log('Upload photos err: ', err);
-      });
+      if (!updatedItem) {
+        throw new Error('Unable to update item images');
+      }
+
+      res.status(200).json(updatedItem.images);
+
+    } catch (err) {
+      // TODO: Remove uploaded files
+      console.log('Error', err);
+      return next(err);
+    }
   });
 };

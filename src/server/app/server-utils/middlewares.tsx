@@ -1,3 +1,8 @@
+import multer from 'multer';
+import Jimp from 'jimp';
+
+import { Request, Express, Response } from 'express';
+
 import { readdir } from 'fs';
 import {
   ImageSize,
@@ -5,7 +10,7 @@ import {
   itemValidation
 } from 'global-utils';
 
-import { IMulterFile, FileUploadErrors } from './types';
+import { FileUploadErrors, MulterRequest, MulterFile } from './types';
 import {
   getFileExtension,
   getFilePath,
@@ -21,8 +26,8 @@ import {
   checkIfDirectoryExists
 } from './fileSystem';
 
-const multer = require('multer');
-const Jimp = require('jimp').default;
+// const multer = require('multer');
+// const Jimp = require('jimp').default;
 const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
 
 export const createUploadPath = (req, res, next) => {
@@ -68,7 +73,7 @@ export const removeImagesFromFs = (req, res, next) => {
   });
 };
 
-export const fileFilter = (req, file, cb) => {
+export const fileFilter = (req: MulterRequest, file: MulterFile, cb) => {
   const itemId = req.params.itemId;
   readdir(getUploadPath(itemId), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
@@ -83,11 +88,11 @@ export const fileFilter = (req, file, cb) => {
 };
 
 const storage = multer.diskStorage({
-  destination: (req, file: IMulterFile, cb) => {
-    cb(null, getUploadPath(req.params.itemId));
+  destination: (req: MulterRequest, file: MulterFile, callback) => {
+    callback(null, getUploadPath(req.params.itemId));
   },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname.split('.')[0] + Date.now() + getFileExtension(file.mimetype));
+  filename: (req: MulterRequest, file: MulterFile, callback) => {
+    callback(null, file.originalname.split('.')[0] + Date.now() + getFileExtension(file.mimetype));
   }
 });
 
@@ -100,12 +105,12 @@ export const uploadImages = multer({
   }
 });
 
-export const resizeImages = (req, res) => {
+export const resizeImages = (req: MulterRequest, res: Response) => {
 
   const files = req.files;
 
   return new Promise((resolve, reject) => {
-    if (files && files.length && !res.headersSent) {
+    if (Array.isArray(files) && files.length && !res.headersSent) {
       const promises = files.map(file => {
         return new Promise((resolve, reject) => {
           Jimp
@@ -115,18 +120,19 @@ export const resizeImages = (req, res) => {
               image
                 .resize(280, 220)
                 .quality(80)
-                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
-                  resolve();
-                });
+                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => resolve());
               })
-            .catch(err => reject(err));
+            .catch(err => {
+              reject(err);
+            });
         });
       });
-      return Promise.all(promises).then(() => {
-        resolve();
-      });
+
+      return Promise.all(promises)
+        .then(() => resolve(true))
+        .catch(err => reject(new Error('Image resize error')));
     } else {
-      return reject();
+      return reject(new Error('Uploaded files doesn\'t meet type or length criterias to be resized'));
     }
   });
 };

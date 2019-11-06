@@ -57,7 +57,7 @@ export interface IItem extends IItemDescFields {
   createdAt?: string;
   updatedAt?: string;
   isFullyLoaded?: boolean;
-  mainImage?: string;
+  mainImage: string;
 }
 
 export interface IType {

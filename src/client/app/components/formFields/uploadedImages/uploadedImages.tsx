@@ -45,7 +45,6 @@ function UploadedImages(props: IUploadedImagesParams) {
   };
 
   const handleImagesSort = (images: IImage[]) => {
-    console.log('Handle sort', images);
     setImages([...images]);
   };
 

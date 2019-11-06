@@ -1,4 +1,6 @@
+import { Request, Express } from 'express';
 import { SchemaTypeOpts } from 'mongoose';
+
 export interface IMulterFile {
   path: string;
   mimetype: string;
@@ -17,3 +19,6 @@ export enum FileUploadErrors {
 export type GenericSchemaMap<T> = {
   [I in keyof T]: SchemaTypeOpts<any>;
 };
+
+export type MulterRequest = Express.Request & Request;
+export type MulterFile = Express.Multer.File;

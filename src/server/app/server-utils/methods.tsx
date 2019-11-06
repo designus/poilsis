@@ -13,7 +13,7 @@ import {
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
 
-import { IMulterFile, FileUploadErrors } from './types';
+import { IMulterFile, MulterFile, FileUploadErrors } from './types';
 import { getValidationMessage } from './validationMessages';
 
 export const getFileExtension = (mimeType) => {
@@ -32,8 +32,8 @@ export const getFilePath = (destination, name, extension, size: ImageSize) => {
   return `${destination}/${name}_${size}.${extension}`;
 };
 
-export const getImages = (files: IMulterFile[]): IImage[] => {
-  return files.map(({filename, destination}: IMulterFile, index: number): IImage => {
+export const getImages = (files: MulterFile[]): IImage[] => {
+  return files.map(({filename, destination}: MulterFile): IImage => {
     const [name, extension] = filename.split('.');
     return {
       fileName: filename,
@@ -65,7 +65,7 @@ export const handleFileUploadErrors = (err, response) => {
 
     const error: IResponseError = errorMsg ? {errors: {images: {message: errorMsg}}} : err;
 
-    response.send(error);
+    response.status(500).send(error);
 
   }
 };

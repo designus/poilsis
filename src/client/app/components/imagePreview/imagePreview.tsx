@@ -74,6 +74,7 @@ const ImagePreview = (props: IImagePreview) => {
         onSortItems={onSortImages}
         items={array}
         sortId={index}
+        classes={classes}
       >
         {renderImage(image, index)}
         {renderUploadProgress()}

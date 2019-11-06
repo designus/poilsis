@@ -103,6 +103,7 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,
+  mainImage: String,
   images: {
     type: [ImageSchemaMap],
     validate: [
