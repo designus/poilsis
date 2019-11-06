@@ -2,25 +2,12 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
-import { getImages, sendResponse, getAdjustedIsEnabledValue, isApprovedByAdmin } from 'server-utils/methods';
+import { getImages, sendResponse, getAdjustedIsEnabledValue, isApprovedByAdmin, getImagePath } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { MulterRequest, MulterFile } from 'server-utils/types';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
-
-const mainImageProjection = {
-  $let: {
-    vars: {
-      firstImage: {
-        $arrayElemAt: ['$images', 0]
-      }
-    },
-    in: {
-      $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName']
-    }
-  }
-};
 
 const itemProjection =  {
   _id: 0,
@@ -36,19 +23,16 @@ const itemProjection =  {
   createdAt: 1,
   updatedAt: 1,
   isApprovedByAdmin: 1,
-  mainImage: mainImageProjection
+  mainImage: 1
 };
 
-export const getAllItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
-      {
-        $addFields: {
-          mainImage: mainImageProjection
-        }
-      }
-    ])
-    .exec(sendResponse(res, next));
+export const getAllItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const allItems = await ItemsModel.find({});
+    res.status(200).json(allItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const getRecommendedItems = (req: Request, res: Response, next: NextFunction) => {
@@ -69,17 +53,13 @@ export const getCityItems = (req: Request, res: Response, next: NextFunction) =>
     .exec(sendResponse(res, next));
 };
 
-export const getUserItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
-      { $match: req.params.userId },
-      {
-        $addFields: {
-          mainImage: mainImageProjection
-        }
-      }
-    ])
-    .exec(sendResponse(res, next));
+export const getUserItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userItems = await ItemsModel.find({ id: req.params.id });
+    res.status(200).json(userItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const toggleItemRecommended = (req: Request, res: Response, next: NextFunction) => {
@@ -207,6 +187,7 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
       }
 
       item.images = [...(item.images || []), ...newImages];
+      item.mainImage = getImagePath(item.images[0]);
 
       const updatedItem = await item.save();
 

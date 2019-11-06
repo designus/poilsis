@@ -28,7 +28,9 @@ export const getFileExtension = (mimeType) => {
   }
 };
 
-export const getFilePath = (destination, name, extension, size: ImageSize) => {
+export const getImagePath = (image: IImage) => `${image.path}/${image.thumbName}`;
+
+export const getFilePath = (destination: string, name: string, extension: string, size: ImageSize) => {
   return `${destination}/${name}_${size}.${extension}`;
 };
 
