@@ -53,7 +53,7 @@ export const removeImagesDir = (req, res, next) => {
     .catch(next);
 };
 
-export const removeImagesFromFs =  async (req: Request, res: Response, next: NextFunction) => {
+export const removeImagesFromFs = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const itemId = req.params.itemId;
     const images: IImage[] = req.body.images;
@@ -126,8 +126,7 @@ export const resizeImages = (req: MulterRequest, res: Response) => {
                 .resize(280, 220)
                 .quality(80)
                 .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
-                  resolve()
-                  // reject('some error');
+                  resolve();
                 });
               })
             .catch(err => {

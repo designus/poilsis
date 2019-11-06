@@ -6,6 +6,7 @@ import {
   IResponseError,
   mapMimeTypesToTypes,
   itemValidation,
+  IMAGE_EXTENSIONS,
   IItem,
   DataTypes,
   UserRoles
@@ -13,8 +14,9 @@ import {
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
 
-import { IMulterFile, MulterFile, FileUploadErrors } from './types';
+import { MulterFile, FileUploadErrors } from './types';
 import { getValidationMessage } from './validationMessages';
+import { readDirectoryContent } from './fileSystem';
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {
@@ -76,7 +78,7 @@ export const getUploadPath = (itemId) =>  `${process.env.NODE_ENV === 'test' ? '
 
 export const getSourceFiles = (files: string[]) => files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
 
-export function removeFiles(files, next) {
+export function removeFiles(files: string[], next: NextFunction) {
   if (files.length === 0) {
     next();
   } else {
@@ -91,10 +93,35 @@ export function removeFiles(files, next) {
   }
 }
 
-export const getRemovableFiles = (files: string[], images: IImage[], uploadPath: string): string[] => {
-  return files
-    .filter(fileName => !images.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
-    .map(fileName => `${uploadPath}/${fileName}`);
+export const extendWithUploadPath = (uploadPath: string) => (fileName: string) => `${uploadPath}/${fileName}`;
+
+export const getRemovableFiles = (existingFiles: string[], newImages: IImage[], uploadPath: string): string[] => {
+  return existingFiles
+    .filter(fileName => !newImages.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
+    .map(extendWithUploadPath(uploadPath));
+};
+
+export const getFilesToRemove = (existingFiles: string[], newFiles: MulterFile[], uploadPath: string): string[] => {
+  const pattern = `_(${ImageSize.Small})\.(${IMAGE_EXTENSIONS.join('|')})`;
+  return existingFiles
+    .filter(fileName => {
+      const sourceFileName = fileName.replace(new RegExp(pattern), '.$2');
+      return newFiles.find(file => file.filename === sourceFileName);
+    })
+    .map(extendWithUploadPath(uploadPath));
+};
+
+export const removeUploadedFiles = async (files: MulterFile[], itemId: string, next: NextFunction) => {
+  try {
+    const uploadPath = getUploadPath(itemId);
+    const currentFiles: string[] = await readDirectoryContent(uploadPath);
+    const removableFiles = getFilesToRemove(currentFiles, files, uploadPath);
+
+    removeFiles(removableFiles, next);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {

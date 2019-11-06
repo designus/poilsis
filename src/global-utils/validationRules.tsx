@@ -1,4 +1,5 @@
 import { IItem } from './typings';
+import { IMAGE_MIME_TYPES } from './constants';
 
 interface IRules {
   minTextLength?: number;
@@ -29,6 +30,6 @@ export const itemValidation: ValidationRules = {
     maxPhotos: 4,
     maxPhotoSizeMegabytes: 2,
     maxPhotoSizeBytes: 2 * 1024 * 1024,
-    mimeTypes: ['image/jpeg', 'image/jpg', 'image/png']
+    mimeTypes: IMAGE_MIME_TYPES
   }
 };

@@ -2,7 +2,14 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
-import { getImages, sendResponse, getAdjustedIsEnabledValue, isApprovedByAdmin, getImagePath } from 'server-utils/methods';
+import {
+  getImages,
+  sendResponse,
+  getAdjustedIsEnabledValue,
+  isApprovedByAdmin,
+  getImagePath,
+  removeUploadedFiles
+} from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { MulterRequest, MulterFile } from 'server-utils/types';
@@ -180,9 +187,10 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
   uploadPhotos(req, res, async (err) => {
     if (err) { return next(err); }
 
+    const files = req.files as MulterFile[];
+
     try {
       await resizeImages(req, res);
-      const files = req.files as MulterFile[];
       const newImages = getImages(files);
       const item = await ItemsModel.findOne({ id: req.params.itemId });
 
@@ -202,9 +210,7 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
       res.status(200).json(item);
 
     } catch (err) {
-      // TODO: Remove uploaded files
-      console.log('Files', req.files);
-      console.log('Error', err);
+      removeUploadedFiles(files, req.params.itemId, next);
       return next(err);
     }
   });
