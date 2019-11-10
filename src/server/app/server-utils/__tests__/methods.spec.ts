@@ -1,5 +1,5 @@
-import { IItem, IImage, ImageSize } from '../../../../global-utils/typings';
-import { getAdjustedIsEnabledValue, getRemovableFiles, getFilesToRemove } from '../methods';
+import { IItem, IImage } from '../../../../global-utils/typings';
+import { getAdjustedIsEnabledValue, getRemovableFiles, getFilesToRemove, getInfoFromFileName, getSourceFiles } from '../methods';
 import { MulterFile } from '../types';
 
 describe('server-utils/methods', () => {
@@ -51,5 +51,29 @@ describe('server-utils/methods', () => {
       'path/2.png',
       'path/2_S.png'
     ]);
+  });
+
+  it('getInfoFromFileName() should get image image name, size and extension from fileName', () => {
+    expect(getInfoFromFileName('image.jpg')).toEqual({
+      name: 'image',
+      size: null,
+      extension: 'jpg'
+    });
+
+    expect(getInfoFromFileName('im. asfd  age_S.png')).toEqual({
+      name: 'im. asfd  age',
+      size: 'S',
+      extension: 'png'
+    });
+
+    expect(getInfoFromFileName('Imag_S age_L.png')).toEqual({
+      name: 'Imag_S age',
+      size: 'L',
+      extension: 'png'
+    });
+  });
+
+  it('getSourceFiles()', () => {
+    expect(getSourceFiles(['1.jpg', '1_S.jpg', '2.png', '2_S.png'])).toEqual(['1.jpg', '2.png']);
   });
 });

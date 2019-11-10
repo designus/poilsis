@@ -1,7 +1,7 @@
 import multer from 'multer';
 import Jimp from 'jimp';
 
-import { Request, Express, NextFunction, Response } from 'express';
+import { Request, NextFunction, Response } from 'express';
 
 import { readdir } from 'fs';
 import {
@@ -16,6 +16,7 @@ import {
   getFilePath,
   getUploadPath,
   handleFileUploadErrors,
+  getInfoFromFileName,
   getSourceFiles,
   removeFiles,
   getRemovableFiles
@@ -97,7 +98,8 @@ const storage = multer.diskStorage({
     callback(null, getUploadPath(req.params.itemId));
   },
   filename: (req: MulterRequest, file: MulterFile, callback) => {
-    callback(null, file.originalname.split('.')[0] + Date.now() + getFileExtension(file.mimetype));
+    const { name } = getInfoFromFileName(file.originalname);
+    callback(null, name + Date.now() + getFileExtension(file.mimetype));
   }
 });
 
@@ -119,7 +121,7 @@ export const resizeImages = (req: MulterRequest, res: Response) => {
       const promises = files.map(file => {
         return new Promise(async (resolve, reject) => {
           try {
-            const [name, extension] = file.filename.split('.');
+            const { name, extension } = getInfoFromFileName(file.filename);
             const image = await Jimp.read(file.path);
             const width = image.getWidth();
             const height = image.getHeight();

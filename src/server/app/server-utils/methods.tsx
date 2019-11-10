@@ -14,9 +14,26 @@ import {
 
 import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
 
-import { MulterFile, FileUploadErrors } from './types';
+import { MulterFile, FileUploadErrors, IInfoFromFileName } from './types';
 import { getValidationMessage } from './validationMessages';
 import { readDirectoryContent } from './fileSystem';
+
+export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
+  const pattern = `(.+)\.(${IMAGE_EXTENSIONS.join('|')})`;
+  const searchValue = new RegExp(pattern);
+  const nameAndSize = fileName.replace(searchValue, '$1');
+  const extension = fileName.replace(searchValue, '$2');
+  const sizeMatch: any = nameAndSize.match(new RegExp(`_(?<size>${ImageSize.Small}|${ImageSize.Large})$`));
+  const size = sizeMatch ? sizeMatch.groups.size : null;
+  const name = size ? nameAndSize.slice(0, -2) : nameAndSize;
+
+  return { name, size, extension };
+};
+
+export const getSourceFileName = (fileName: string) => {
+  const { name, extension } = getInfoFromFileName(fileName);
+  return `${name}.${extension}`;
+};
 
 export const getFileExtension = (mimeType) => {
   if (mimeType === 'image/jpeg') {
@@ -38,7 +55,7 @@ export const getFilePath = (destination: string, name: string, extension: string
 
 export const getImages = (files: MulterFile[]): IImage[] => {
   return files.map(({filename, destination}: MulterFile): IImage => {
-    const [name, extension] = filename.split('.');
+    const { name, extension } = getInfoFromFileName(filename);
     return {
       fileName: filename,
       path: destination,
@@ -76,7 +93,10 @@ export const handleFileUploadErrors = (err, response) => {
 
 export const getUploadPath = (itemId) =>  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
 
-export const getSourceFiles = (files: string[]) => files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
+export const getSourceFiles = (files: string[]) => {
+  const sourceFiles = files.filter(fileName => fileName === getSourceFileName(fileName));
+  return sourceFiles;
+};
 
 export function removeFiles(files: string[], next: NextFunction) {
   if (files.length === 0) {
@@ -102,10 +122,9 @@ export const getRemovableFiles = (existingFiles: string[], newImages: IImage[], 
 };
 
 export const getFilesToRemove = (existingFiles: string[], newFiles: MulterFile[], uploadPath: string): string[] => {
-  const pattern = `_(${ImageSize.Small})\.(${IMAGE_EXTENSIONS.join('|')})`;
   return existingFiles
     .filter(fileName => {
-      const sourceFileName = fileName.replace(new RegExp(pattern), '.$2');
+      const sourceFileName = getSourceFileName(fileName);
       return newFiles.find(file => file.filename === sourceFileName);
     })
     .map(extendWithUploadPath(uploadPath));
