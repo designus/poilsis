@@ -117,21 +117,30 @@ export const resizeImages = (req: MulterRequest, res: Response) => {
   return new Promise((resolve, reject) => {
     if (Array.isArray(files) && files.length && !res.headersSent) {
       const promises = files.map(file => {
-        return new Promise((resolve, reject) => {
-          Jimp
-            .read(file.path)
-            .then((image) => {
-              const [name, extension] = file.filename.split('.');
-              image
+        return new Promise(async (resolve, reject) => {
+          try {
+            const [name, extension] = file.filename.split('.');
+            const image = await Jimp.read(file.path);
+            const width = image.getWidth();
+            const height = image.getHeight();
+
+            if (height > width) {
+              await image
+                .scaleToFit(280, 220)
+                .quality(80)
+                .write(getFilePath(file.destination, name, extension, ImageSize.Small));
+            } else {
+              await image
                 .resize(280, 220)
                 .quality(80)
-                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
-                  resolve();
-                });
-              })
-            .catch(err => {
-              reject(err);
-            });
+                .write(getFilePath(file.destination, name, extension, ImageSize.Small));
+            }
+
+            resolve();
+
+          } catch (err) {
+            reject(err);
+          }
         });
       });
 
