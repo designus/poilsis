@@ -18,6 +18,16 @@ import { MulterFile, FileUploadErrors, IInfoFromFileName } from './types';
 import { getValidationMessage } from './validationMessages';
 import { readDirectoryContent } from './fileSystem';
 
+const AsciiFolder = require('fold-to-ascii');
+
+export const formatValue = (value: string): string =>
+  AsciiFolder.foldReplacing(value)
+    .replace(/[^a-zA-Z0-9]+/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .join('-')
+    .toLowerCase();
+
 export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
   const pattern = `(.+)\.(${IMAGE_EXTENSIONS.join('|')})`;
   const searchValue = new RegExp(pattern);
@@ -35,7 +45,7 @@ export const getSourceFileName = (fileName: string) => {
   return `${name}.${extension}`;
 };
 
-export const getFileExtension = (mimeType) => {
+export const getFileExtension = (mimeType: string) => {
   if (mimeType === 'image/jpeg') {
     return '.jpeg';
   } else if (mimeType === 'image/png') {
@@ -91,7 +101,8 @@ export const handleFileUploadErrors = (err, response) => {
   }
 };
 
-export const getUploadPath = (itemId) =>  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
+export const getUploadPath = (itemId: string) =>
+  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
 
 export const getSourceFiles = (files: string[]) => {
   const sourceFiles = files.filter(fileName => fileName === getSourceFileName(fileName));

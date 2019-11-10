@@ -1,21 +1,12 @@
 import { NextFunction } from 'express';
 import { TranslatableField, Languages, DataTypes, LANGUAGES } from 'global-utils';
-
-const AsciiFolder = require('fold-to-ascii');
-
-export const formatAlias = (alias: string): string =>
-  AsciiFolder.foldReplacing(alias)
-    .replace(/[^a-zA-Z0-9]+/g, ' ')
-    .trim()
-    .split(/\s+/)
-    .join('-')
-    .toLowerCase();
+import { formatValue } from './methods';
 
 export const getAdjustedAliasValue = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
   try {
     return languages.reduce((acc, locale): TranslatableField => {
       const newAlias = item.alias && item.alias[locale] ? item.alias[locale] : item.name[locale];
-      acc[locale] = newAlias ? formatAlias(newAlias) : '';
+      acc[locale] = newAlias ? formatValue(newAlias) : '';
       return acc;
     }, {});
   } catch (err) {

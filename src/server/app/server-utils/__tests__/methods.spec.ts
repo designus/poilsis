@@ -1,6 +1,13 @@
 import { IItem, IImage } from '../../../../global-utils/typings';
-import { getAdjustedIsEnabledValue, getRemovableFiles, getFilesToRemove, getInfoFromFileName, getSourceFiles } from '../methods';
 import { MulterFile } from '../types';
+import {
+  getAdjustedIsEnabledValue,
+  getRemovableFiles,
+  getFilesToRemove,
+  getInfoFromFileName,
+  getSourceFiles,
+  formatValue
+} from '../methods';
 
 describe('server-utils/methods', () => {
   it('getAdjustedIsEnabledValue() should set isEnabled field to false if name field is empty', () => {
@@ -75,5 +82,10 @@ describe('server-utils/methods', () => {
 
   it('getSourceFiles()', () => {
     expect(getSourceFiles(['1.jpg', '1_S.jpg', '2.png', '2_S.png'])).toEqual(['1.jpg', '2.png']);
+  });
+
+  it('formatValue()', () => {
+    expect(formatValue('kambarių ...,, nuoma Palangoje')).toBe('kambariu-nuoma-palangoje');
+    expect(formatValue('% svečių | namai   ----. nidoje 1')).toBe('sveciu-namai-nidoje-1');
   });
 });

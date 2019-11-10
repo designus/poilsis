@@ -1,8 +1,7 @@
 import multer from 'multer';
 import Jimp from 'jimp';
-
+import shortId from 'shortid';
 import { Request, NextFunction, Response } from 'express';
-
 import { readdir } from 'fs';
 import {
   ImageSize,
@@ -19,7 +18,8 @@ import {
   getInfoFromFileName,
   getSourceFiles,
   removeFiles,
-  getRemovableFiles
+  getRemovableFiles,
+  formatValue
 } from './methods';
 
 import {
@@ -99,7 +99,8 @@ const storage = multer.diskStorage({
   },
   filename: (req: MulterRequest, file: MulterFile, callback) => {
     const { name } = getInfoFromFileName(file.originalname);
-    callback(null, name + Date.now() + getFileExtension(file.mimetype));
+    const fileName = formatValue(name);
+    callback(null, fileName + Date.now() + getFileExtension(file.mimetype));
   }
 });
 
