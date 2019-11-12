@@ -1,6 +1,5 @@
 import multer from 'multer';
 import Jimp from 'jimp';
-import shortId from 'shortid';
 import { Request, NextFunction, Response } from 'express';
 import { readdir } from 'fs';
 import {
@@ -8,6 +7,13 @@ import {
   IImage,
   itemValidation
 } from 'global-utils';
+
+import {
+  LARGE_IMAGE_WIDTH,
+  LARGE_IMAGE_HEIGHT,
+  SMALL_IMAGE_WIDTH,
+  SMALL_IMAGE_HEIGHT
+} from 'global-utils/constants';
 
 import { FileUploadErrors, MulterRequest, MulterFile } from './types';
 import {
@@ -123,20 +129,46 @@ export const resizeImages = (req: MulterRequest, res: Response) => {
         return new Promise(async (resolve, reject) => {
           try {
             const { name, extension } = getInfoFromFileName(file.filename);
-            const image = await Jimp.read(file.path);
-            const width = image.getWidth();
-            const height = image.getHeight();
+            const largeImage = await Jimp.read(file.path);
+            const smallImage = await Jimp.read(file.path);
+            const width = largeImage.getWidth();
+            const height = largeImage.getHeight();
+            const smallImagePath = getFilePath(file.destination, name, extension, ImageSize.Small);
+            const largeImagePath = getFilePath(file.destination, name, extension, ImageSize.Large);
 
             if (height > width) {
-              await image
-                .scaleToFit(280, 220)
+              await smallImage
+                .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
                 .quality(80)
-                .write(getFilePath(file.destination, name, extension, ImageSize.Small));
+                .write(smallImagePath);
+
+              if (height > LARGE_IMAGE_HEIGHT) {
+                await largeImage
+                  .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
+                  .quality(80)
+                  .write(largeImagePath);
+              } else {
+                await largeImage
+                  .quality(80)
+                  .write(largeImagePath);
+              }
+
             } else {
-              await image
-                .resize(280, 220)
+              await smallImage
+                .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
                 .quality(80)
-                .write(getFilePath(file.destination, name, extension, ImageSize.Small));
+                .write(smallImagePath);
+
+              if (width > LARGE_IMAGE_WIDTH) {
+                await largeImage
+                  .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
+                  .quality(80)
+                  .write(largeImagePath);
+              } else {
+                await largeImage
+                  .quality(80)
+                  .write(largeImagePath);
+              }
             }
 
             resolve();

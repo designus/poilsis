@@ -28,8 +28,8 @@ export const itemValidation: ValidationRules = {
   },
   images: {
     maxPhotos: 4,
-    maxPhotoSizeMegabytes: 2,
-    maxPhotoSizeBytes: 2 * 1024 * 1024,
+    maxPhotoSizeMegabytes: 5,
+    maxPhotoSizeBytes: 5 * 1024 * 1024,
     mimeTypes: IMAGE_MIME_TYPES
   }
 };
