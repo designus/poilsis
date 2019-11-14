@@ -35,7 +35,7 @@ import {
   readDirectoryContent
 } from './fileSystem';
 
-const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
+const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes, minPhotoWidth, minPhotoHeight } } = itemValidation;
 
 export const createUploadPath = (req, res, next) => {
   const itemId = req.params.itemId;
@@ -89,7 +89,9 @@ export const fileFilter = (req: MulterRequest, file: MulterFile, cb) => {
   const itemId = req.params.itemId;
   readdir(getUploadPath(itemId), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
-    if (sourceFiles.length >= maxPhotos) {
+    if (!sourceFiles.length) {
+      cb({code: 'No files given'}, false);
+    } else if (sourceFiles.length >= maxPhotos) {
       cb({code: FileUploadErrors.limitFileCount}, false);
     } else if (mimeTypes.indexOf(file.mimetype) === -1) {
       cb({code: FileUploadErrors.wrongFileType}, false);
@@ -119,71 +121,100 @@ export const uploadImages = multer({
   }
 });
 
-export const resizeImages = (req: MulterRequest, res: Response) => {
+async function resizeVerticalImage(
+  smallImage: Jimp,
+  largeImage: Jimp,
+  smallImagePath: string,
+  largeImagePath: string,
+  height: number
+) {
+  if (height < minPhotoHeight) {
+    throw new Error(`Provided image height (${height}px) should be >= ${minPhotoHeight}px`);
+  }
 
+  await smallImage
+    .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
+    .quality(80)
+    .write(smallImagePath);
+
+  if (height > LARGE_IMAGE_HEIGHT) {
+    await largeImage
+      .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
+      .quality(80)
+      .write(largeImagePath);
+  } else {
+    await largeImage
+      .quality(80)
+      .write(largeImagePath);
+  }
+}
+
+async function resizeHorizontalImage(
+  smallImage: Jimp,
+  largeImage: Jimp,
+  smallImagePath: string,
+  largeImagePath: string,
+  width: number
+) {
+  if (width < minPhotoWidth) {
+    throw new Error(`Provided image width (${width}px) should be >= ${minPhotoWidth}px`);
+  }
+
+  await smallImage
+    .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
+    .quality(80)
+    .write(smallImagePath);
+
+  if (width > LARGE_IMAGE_WIDTH) {
+    await largeImage
+      .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
+      .quality(80)
+      .write(largeImagePath);
+  } else {
+    await largeImage
+      .quality(80)
+      .write(largeImagePath);
+  }
+}
+
+const resizeImage = (file: MulterFile) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { name, extension } = getInfoFromFileName(file.filename);
+      const largeImage = await Jimp.read(file.path);
+      const smallImage = await Jimp.read(file.path);
+      const width = largeImage.getWidth();
+      const height = largeImage.getHeight();
+      const smallImagePath = getFilePath(file.destination, name, extension, ImageSize.Small);
+      const largeImagePath = getFilePath(file.destination, name, extension, ImageSize.Large);
+
+      if (height > width) {
+        await resizeVerticalImage(smallImage, largeImage, smallImagePath, largeImagePath, height);
+      } else {
+        await resizeHorizontalImage(smallImage, largeImage, smallImagePath, largeImagePath, width);
+      }
+
+      resolve();
+
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+export const resizeImages = (req: MulterRequest, res: Response) => {
   const files = req.files;
 
-  return new Promise((resolve, reject) => {
-    if (Array.isArray(files) && files.length && !res.headersSent) {
-      const promises = files.map(file => {
-        return new Promise(async (resolve, reject) => {
-          try {
-            const { name, extension } = getInfoFromFileName(file.filename);
-            const largeImage = await Jimp.read(file.path);
-            const smallImage = await Jimp.read(file.path);
-            const width = largeImage.getWidth();
-            const height = largeImage.getHeight();
-            const smallImagePath = getFilePath(file.destination, name, extension, ImageSize.Small);
-            const largeImagePath = getFilePath(file.destination, name, extension, ImageSize.Large);
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(files)) {
+        throw new Error('Uploaded files doesn\'t meet type or length criterias to be resized');
+      }
 
-            if (height > width) {
-              await smallImage
-                .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
-                .quality(80)
-                .write(smallImagePath);
-
-              if (height > LARGE_IMAGE_HEIGHT) {
-                await largeImage
-                  .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
-                  .quality(80)
-                  .write(largeImagePath);
-              } else {
-                await largeImage
-                  .quality(80)
-                  .write(largeImagePath);
-              }
-
-            } else {
-              await smallImage
-                .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
-                .quality(80)
-                .write(smallImagePath);
-
-              if (width > LARGE_IMAGE_WIDTH) {
-                await largeImage
-                  .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
-                  .quality(80)
-                  .write(largeImagePath);
-              } else {
-                await largeImage
-                  .quality(80)
-                  .write(largeImagePath);
-              }
-            }
-
-            resolve();
-
-          } catch (err) {
-            reject(err);
-          }
-        });
-      });
-
-      return Promise.all(promises)
-        .then(() => resolve(true))
-        .catch(err => reject(new Error('Image resize error')));
-    } else {
-      return reject(new Error('Uploaded files doesn\'t meet type or length criterias to be resized'));
+      await Promise.all(files.map(resizeImage));
+      resolve(true);
+    } catch (err) {
+      reject(err);
     }
   });
 };

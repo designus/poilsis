@@ -12,6 +12,8 @@ interface IRules {
   maxPhotoSizeBytes?: number;
   maxPhotoSizeMegabytes?: number;
   mimeTypes?: string[];
+  minPhotoWidth?: number;
+  minPhotoHeight?: number;
 }
 
 type ValidationRules = {
@@ -30,6 +32,8 @@ export const itemValidation: ValidationRules = {
     maxPhotos: 4,
     maxPhotoSizeMegabytes: 5,
     maxPhotoSizeBytes: 5 * 1024 * 1024,
-    mimeTypes: IMAGE_MIME_TYPES
+    mimeTypes: IMAGE_MIME_TYPES,
+    minPhotoWidth: 1000,
+    minPhotoHeight: 800
   }
 };
