@@ -1,6 +1,5 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
-import { languageStyles } from 'components/extendWithLanguage';
 
 export const styles = (theme: Theme) => createStyles({
   root: {

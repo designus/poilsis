@@ -12,15 +12,15 @@ import {
   LARGE_IMAGE_WIDTH,
   LARGE_IMAGE_HEIGHT,
   SMALL_IMAGE_WIDTH,
-  SMALL_IMAGE_HEIGHT
+  SMALL_IMAGE_HEIGHT,
+  IMAGE_EXTENSIONS
 } from 'global-utils/constants';
 
-import { FileUploadErrors, MulterRequest, MulterFile } from './types';
+import { MulterRequest, MulterFile } from './types';
 import {
   getFileExtension,
   getFilePath,
   getUploadPath,
-  handleFileUploadErrors,
   getInfoFromFileName,
   getSourceFiles,
   removeFiles,
@@ -53,7 +53,7 @@ export const createUploadPath = (req, res, next) => {
     .catch(next);
 };
 
-export const removeImagesDir = (req, res, next) => {
+export const removeImagesDir = (req: Request, res: Response, next: NextFunction) => {
   const uploadPath = getUploadPath(req.params.itemId);
   removeDirectory(uploadPath)
     .then(() => next())
@@ -87,14 +87,17 @@ export const removeImagesFromFs = async (req: Request, res: Response, next: Next
 
 export const fileFilter = (req: MulterRequest, file: MulterFile, cb) => {
   const itemId = req.params.itemId;
+
+  if (Array.isArray(req.files) && !req.files.length) {
+    cb({ code: 'No files given'}, false);
+  }
+
   readdir(getUploadPath(itemId), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
-    if (!sourceFiles.length) {
-      cb({code: 'No files given'}, false);
-    } else if (sourceFiles.length >= maxPhotos) {
-      cb({code: FileUploadErrors.limitFileCount}, false);
+    if (sourceFiles.length >= maxPhotos) {
+      cb(new Error(`Please upload no more than ${maxPhotos} photos`), false);
     } else if (mimeTypes.indexOf(file.mimetype) === -1) {
-      cb({code: FileUploadErrors.wrongFileType}, false);
+      cb(new Error(`Please upload a valid image: ${IMAGE_EXTENSIONS.join(',')}`), false);
     } else {
       cb(null, true);
     }
@@ -219,10 +222,6 @@ export const resizeImages = (req: MulterRequest, res: Response) => {
   });
 };
 
-export const handleItemsErrors = (err, req, res, next) => {
-  if (req.route && req.route.path === '/item/upload-photos/:itemId') {
-    handleFileUploadErrors(err, res);
-  } else {
-    res.status(500).send({ message: err.message });
-  }
+export const handleItemsErrors = (err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).send({ message: err.message });
 };

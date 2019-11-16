@@ -1,12 +1,6 @@
-import { Request, Express } from 'express';
+import { Request } from 'express';
 import { SchemaTypeOpts } from 'mongoose';
 import { ImageSize } from 'global-utils/typings';
-
-export enum FileUploadErrors {
-  limitFileSize = 'LIMIT_FILE_SIZE',
-  limitFileCount = 'LIMIT_FILE_COUNT',
-  wrongFileType = 'WRONG_FILE_TYPE'
-}
 
 export type GenericSchemaMap<T> = {
   [I in keyof T]: SchemaTypeOpts<any>;

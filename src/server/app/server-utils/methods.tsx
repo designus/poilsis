@@ -3,19 +3,13 @@ import { unlink } from 'fs';
 import {
   ImageSize,
   IImage,
-  IResponseError,
-  mapMimeTypesToTypes,
-  itemValidation,
   IMAGE_EXTENSIONS,
   IItem,
   DataTypes,
   UserRoles
 } from 'global-utils';
 
-import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
-
-import { MulterFile, FileUploadErrors, IInfoFromFileName } from './types';
-import { getValidationMessage } from './validationMessages';
+import { MulterFile, IInfoFromFileName } from './types';
 import { readDirectoryContent } from './fileSystem';
 
 const AsciiFolder = require('fold-to-ascii');
@@ -72,33 +66,6 @@ export const getImages = (files: MulterFile[]): IImage[] => {
       thumbName: `${name}_${ImageSize.Small}.${extension}`
     };
   });
-};
-
-export const handleFileUploadErrors = (err, response) => {
-  if (err && !response.headersSent) {
-    const { images: { maxPhotos, maxPhotoSizeMegabytes, mimeTypes } } = itemValidation;
-    let errorMsg;
-
-    switch (err.code) {
-      case FileUploadErrors.limitFileSize:
-        errorMsg = getValidationMessage(MAX_PHOTO_SIZE, maxPhotoSizeMegabytes);
-        break;
-      case FileUploadErrors.limitFileCount:
-        errorMsg = getValidationMessage(MAX_PHOTO_COUNT, maxPhotos);
-        break;
-      case FileUploadErrors.wrongFileType:
-        errorMsg = getValidationMessage(WRONG_FILE_TYPE, mapMimeTypesToTypes(mimeTypes));
-        break;
-      default:
-        errorMsg = '';
-        break;
-    }
-
-    const error: IResponseError = errorMsg ? {errors: {images: {message: errorMsg}}} : err;
-
-    response.status(500).send(error);
-
-  }
 };
 
 export const getUploadPath = (itemId: string) =>
