@@ -37,27 +37,35 @@ import {
 
 const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes, minPhotoWidth, minPhotoHeight } } = itemValidation;
 
-export const createUploadPath = (req, res, next) => {
-  const itemId = req.params.itemId;
-  const uploadPath = getUploadPath(itemId);
-  checkIfDirectoryExists(uploadPath)
-    .then(exists => {
-      if (exists) {
-        next();
-      } else {
-        createDirectory(uploadPath)
-          .then(() => next())
-          .catch(next);
-      }
-    })
-    .catch(next);
+export const createUploadPath = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const itemId = req.params.itemId;
+    const uploadPath = getUploadPath(itemId);
+    const exists = await checkIfDirectoryExists(uploadPath);
+    if (exists) {
+      next();
+    } else {
+      await createDirectory(uploadPath);
+      next();
+    }
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const removeImagesDir = (req: Request, res: Response, next: NextFunction) => {
-  const uploadPath = getUploadPath(req.params.itemId);
-  removeDirectory(uploadPath)
-    .then(() => next())
-    .catch(next);
+export const removeImagesDir = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const uploadPath = getUploadPath(req.params.itemId);
+    await removeDirectory(uploadPath);
+    const exists = await checkIfDirectoryExists(uploadPath);
+    if (exists) {
+      throw new Error ('Unable to remove image directory');
+    } else {
+      next();
+    }
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const removeImagesFromFs = async (req: Request, res: Response, next: NextFunction) => {
