@@ -30,8 +30,8 @@ export const itemValidation: ValidationRules = {
   },
   images: {
     maxPhotos: 4,
-    maxPhotoSizeMegabytes: 3,
-    maxPhotoSizeBytes: 3 * 1024 * 1024,
+    maxPhotoSizeMegabytes: 4,
+    maxPhotoSizeBytes: 4 * 1024 * 1024,
     mimeTypes: IMAGE_MIME_TYPES,
     minPhotoWidth: 1000,
     minPhotoHeight: 800

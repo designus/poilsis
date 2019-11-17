@@ -24,6 +24,7 @@
   "common.form_validation.wrong_file_type": "Prašome pasirinkti vieną iš šių {types} tipų",
   "common.form_validation.duplicated_alias": "Šis url pavadinimas jau existuoja. Prašome pasirinkti kitą",
   "common.form_validation.required_when_enabled": "Šį laukelį privaloma užpildyti jei norite skelbti įrašą",
+  "common.form_validation.wrong_file_dimensions": "Viena ar daugiau jūsų pasirinktų nuotraukų neatitinka minimalių nuotraukos dydžio {dimensions} reikalavimų",
   "common.login": "Prisijungti",
   "admin.menu.dashboard": "Skydelis",
   "admin.menu.items": "Įrašai",

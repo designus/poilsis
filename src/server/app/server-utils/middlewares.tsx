@@ -172,7 +172,7 @@ async function resizeHorizontalImage(
   }
 
   await smallImage
-    .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
+    .cover(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
     .quality(80)
     .write(smallImagePath);
 
