@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Dispatch } from 'react-redux';
 import { InjectedIntl } from 'react-intl';
 
-import { maxUploadedPhotos, maxUploadedPhotoSize, IImage } from 'global-utils';
+import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IImage, IPhotoFormState } from 'global-utils';
 
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
 import { UploadedImages } from 'components/formFields/uploadedImages';
@@ -31,8 +32,8 @@ class FormComponent extends React.Component<FormProps> {
   }
 
   handleLoadedImages = () => {
-    // this.props.onResetUploadState();
-    // this.clearDroppedImages();
+    this.props.onResetUploadState();
+    this.clearDroppedImages();
   }
 
   render() {
@@ -58,5 +59,6 @@ class FormComponent extends React.Component<FormProps> {
 
 export default reduxForm<{}, ICustomProps>({
   form: PHOTOS_FORM_NAME,
+  asyncValidate: (item: IPhotoFormState, dispatch: Dispatch<any>, props) => asyncValidateImage(item, props.intl),
   enableReinitialize: true
 })(FormComponent);

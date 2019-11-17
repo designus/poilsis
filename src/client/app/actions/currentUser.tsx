@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
+import { getNormalizedData } from 'client-utils/methods';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveNewItems } from 'actions/items';
+import { receiveItems } from 'actions/items';
 import { IAppState, ICurrentUser, CurrentUserActionTypes, IReceiveUserDetails } from 'types';
 import { isAdmin, IItem } from 'global-utils';
 import { handleApiResponse, http } from './utils';
@@ -29,7 +29,8 @@ export const loadUserItems = () => (dispatch, getState) => {
   return http.get(endpoint)
     .then(handleApiResponse)
     .then((items: IItem[]) => {
-      dispatch(receiveNewItems(items, { userId: user.id, dataType: 'currentUser' }));
+      const { dataMap, aliases } = getNormalizedData(items);
+      dispatch(receiveItems({ dataMap, aliases, userId: user.id, dataType: 'currentUser' }));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(err => {

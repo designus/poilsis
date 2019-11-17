@@ -2,6 +2,7 @@ import * as JWT from 'jwt-decode';
 import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields, TranslatableField, Languages } from './typings';
 import { LANGUAGES } from './constants';
 
+// Memoize this function
 export const mapMimeTypesToTypes = (mimeTypes: string[]) =>
   mimeTypes.map(mimeType => mimeType.split('/')[1]).join(', ');
 

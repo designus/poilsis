@@ -10,9 +10,8 @@ import {
 
 import * as errors from '../data-strings/validation';
 import { IsEnabled } from './typings';
-import { LANGUAGES } from './constants';
 
-const { images: { maxPhotos, maxPhotoSizeBytes } } = itemValidation;
+const { images: { maxPhotos, maxPhotoSizeBytes, minPhotoWidth, minPhotoHeight } } = itemValidation;
 
 export interface IFormProps {
   intl?: InjectedIntl;
@@ -122,4 +121,34 @@ export const maxUploadedPhotoSize = (fieldValue: File[], formState: IPhotoFormSt
   if (doesAnyFileExceedsMaxPhotoSize) {
     return formProps.intl.formatMessage({ id: errors.MAX_PHOTO_SIZE }, { count: maxPhotoSizeBytes });
   }
+};
+
+export const asyncValidateImage = (state: IPhotoFormState, intl: InjectedIntl): Promise<boolean> => {
+  return new Promise((resolve, reject) => {
+    const { files } = state;
+    if (!state.files || !state.files.length) return;
+    const dimensions = `(${minPhotoWidth}x${minPhotoHeight}px)`;
+    files.forEach((file, index) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        const image = new Image();
+        image.src = e.target.result as string;
+        image.onload = (event: any) => {
+          const width = event.target.width;
+          const height = event.target.height;
+
+          if ((width < height && height < minPhotoHeight) || (width > height && width < minPhotoWidth)) {
+            reject({
+              files: intl.formatMessage({ id: errors.WRONG_DIMENSIONS }, { dimensions })
+            });
+          }
+
+          if (index === files.length - 1) {
+            resolve();
+          }
+        };
+      };
+    });
+  });
 };

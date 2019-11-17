@@ -1,5 +1,5 @@
 import { DataTypes } from '../../../../global-utils/typings';
-import { extendAliasWithId, getAdjustedAliasValue, getUniqueAlias, getAliasList, formatAlias } from '../aliases';
+import { extendAliasWithId, getAdjustedAliasValue, getUniqueAlias, getAliasList } from '../aliases';
 
 describe('server-utils/aliases', () => {
   describe('Aliases', () => {
@@ -101,11 +101,6 @@ describe('server-utils/aliases', () => {
         });
       });
 
-    });
-
-    it('formatAlias()', () => {
-      expect(formatAlias('kambarių ...,, nuoma Palangoje')).toBe('kambariu-nuoma-palangoje');
-      expect(formatAlias('% svečių | namai   ----. nidoje 1')).toBe('sveciu-namai-nidoje-1');
     });
 
     it('getAliasList()', () => {

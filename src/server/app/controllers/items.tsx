@@ -2,24 +2,19 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
-import { getImages, sendResponse, getAdjustedIsEnabledValue, isApprovedByAdmin } from 'server-utils/methods';
+import {
+  getImages,
+  sendResponse,
+  getAdjustedIsEnabledValue,
+  isApprovedByAdmin,
+  getImagePath,
+  removeUploadedFiles
+} from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
+import { MulterRequest, MulterFile } from 'server-utils/types';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
-
-const mainImageProjection = {
-  $let: {
-    vars: {
-      firstImage: {
-        $arrayElemAt: ['$images', 0]
-      }
-    },
-    in: {
-      $concat: ['$$firstImage.path', '/', '$$firstImage.thumbName']
-    }
-  }
-};
 
 const itemProjection =  {
   _id: 0,
@@ -35,19 +30,16 @@ const itemProjection =  {
   createdAt: 1,
   updatedAt: 1,
   isApprovedByAdmin: 1,
-  mainImage: mainImageProjection
+  mainImage: 1
 };
 
-export const getAllItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
-      {
-        $addFields: {
-          mainImage: mainImageProjection
-        }
-      }
-    ])
-    .exec(sendResponse(res, next));
+export const getAllItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const allItems = await ItemsModel.find({});
+    res.status(200).json(allItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const getRecommendedItems = (req: Request, res: Response, next: NextFunction) => {
@@ -68,17 +60,13 @@ export const getCityItems = (req: Request, res: Response, next: NextFunction) =>
     .exec(sendResponse(res, next));
 };
 
-export const getUserItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
-      { $match: req.params.userId },
-      {
-        $addFields: {
-          mainImage: mainImageProjection
-        }
-      }
-    ])
-    .exec(sendResponse(res, next));
+export const getUserItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userItems = await ItemsModel.find({ id: req.params.id });
+    res.status(200).json(userItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const toggleItemRecommended = (req: Request, res: Response, next: NextFunction) => {
@@ -169,56 +157,61 @@ export const updateItemDescription = async (req: Request, res: Response, next: N
   }
 };
 
-export const updatePhotos = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
-    if (err) {
-      // TODO: Rollback deleted files
-      return next(err);
+export const updatePhotos = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const item = await ItemsModel.findOne({ id: req.params.itemId });
+
+    if (!item) {
+      throw new Error('Unable to find item by provided itemId');
     }
 
     item.images = req.body.images;
+    item.mainImage = item.images.length > 0 ? getImagePath(item.images[0]) : '';
 
-    item.save((err, item) => {
-      if (err) {
-        // TODO: Rollback deleted files
-        return next(err);
-      }
+    const newItem = await item.save();
 
-      res.send(item.images);
-    });
-  });
+    if (!newItem) {
+      throw new Error('Unable to update item images');
+    }
+
+    res.status(200).json(newItem);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const uploadPhotos = (req, res: Response, next: NextFunction) => {
+export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFunction) => {
   const uploadPhotos = uploadImages.array('files[]', itemValidation.images.maxPhotos);
-  uploadPhotos(req, res, (err) => {
+
+  uploadPhotos(req, res, async (err) => {
     if (err) { return next(err); }
 
-    resizeImages(req, res)
-      .then(() => {
-        const images = getImages(req.files);
+    const files = req.files as MulterFile[];
 
-        ItemsModel.findOne({id: req.params.itemId}, (err, item) => {
-          if (err) {
-            // TODO: Remove uploaded files
-            return next(err);
-          }
+    try {
+      await resizeImages(req, res);
+      const newImages = getImages(files);
+      const item = await ItemsModel.findOne({ id: req.params.itemId });
 
-          item.images = [...(item.images || []), ...images];
+      if (!item) {
+        throw new Error('Unable to find item by provided itemId');
+      }
 
-          item.save((err, item) => {
-            if (err) {
-              // TODO: Remove uploaded files
-              return next(err);
-            }
+      item.images = [...(item.images || []), ...newImages];
+      item.mainImage = getImagePath(item.images[0]);
 
-            res.send(item.images);
-          });
-        });
-      })
-      .catch(err => {
-        // TODO: Remove uploaded files
-        console.log('Upload photos err: ', err);
-      });
+      const updatedItem = await item.save();
+
+      if (!updatedItem) {
+        throw new Error('Unable to update item images');
+      }
+
+      res.status(200).json(item);
+
+    } catch (err) {
+      removeUploadedFiles(files, req.params.itemId, next);
+      return next(err);
+    }
   });
 };

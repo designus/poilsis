@@ -13,7 +13,7 @@ import {
 } from 'global-utils';
 
 import {
-  formatAlias,
+  formatValue,
   GenericSchemaMap,
   getValidationMessage,
   requiredMessage
@@ -89,7 +89,7 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
     type: String,
     lowercase: true,
     trim: true,
-    set: formatAlias,
+    set: formatValue,
     intl: true
   },
   userId: {
@@ -103,6 +103,7 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   isRecommended: Boolean,
   createdAt: Date,
   updatedAt: Date,
+  mainImage: String,
   images: {
     type: [ImageSchemaMap],
     validate: [

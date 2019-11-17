@@ -2,6 +2,7 @@ import { exists, mkdir, readFile, writeFile, readdir, lstat } from 'fs';
 import { promisify } from 'util';
 import * as rimraf from 'rimraf';
 
+// TODO: exists is deprecated - replace it
 export const checkIfDirectoryExists = promisify(exists);
 export const createDirectory = promisify(mkdir);
 export const removeDirectory = promisify(rimraf);

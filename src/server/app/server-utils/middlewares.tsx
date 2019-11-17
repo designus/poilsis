@@ -1,3 +1,6 @@
+import multer from 'multer';
+import Jimp from 'jimp';
+import { Request, NextFunction, Response } from 'express';
 import { readdir } from 'fs';
 import {
   ImageSize,
@@ -5,77 +8,104 @@ import {
   itemValidation
 } from 'global-utils';
 
-import { IMulterFile, FileUploadErrors } from './types';
+import {
+  LARGE_IMAGE_WIDTH,
+  LARGE_IMAGE_HEIGHT,
+  SMALL_IMAGE_WIDTH,
+  SMALL_IMAGE_HEIGHT,
+  IMAGE_EXTENSIONS
+} from 'global-utils/constants';
+
+import { MulterRequest, MulterFile } from './types';
 import {
   getFileExtension,
   getFilePath,
   getUploadPath,
-  handleFileUploadErrors,
+  getInfoFromFileName,
   getSourceFiles,
-  removeFiles
+  removeFiles,
+  getRemovableFiles,
+  formatValue
 } from './methods';
 
 import {
   removeDirectory,
   createDirectory,
-  checkIfDirectoryExists
+  checkIfDirectoryExists,
+  readDirectoryContent
 } from './fileSystem';
 
-const multer = require('multer');
-const Jimp = require('jimp').default;
-const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes } } = itemValidation;
+const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes, minPhotoWidth, minPhotoHeight } } = itemValidation;
 
-export const createUploadPath = (req, res, next) => {
-  const itemId = req.params.itemId;
-  const uploadPath = getUploadPath(itemId);
-  checkIfDirectoryExists(uploadPath)
-    .then(exists => {
-      if (exists) {
-        next();
-      } else {
-        createDirectory(uploadPath)
-          .then(() => next())
-          .catch(next);
-      }
-    })
-    .catch(next);
+export const createUploadPath = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const itemId = req.params.itemId;
+    const uploadPath = getUploadPath(itemId);
+    const exists = await checkIfDirectoryExists(uploadPath);
+    if (exists) {
+      next();
+    } else {
+      await createDirectory(uploadPath);
+      next();
+    }
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const removeImagesDir = (req, res, next) => {
-  const uploadPath = getUploadPath(req.params.itemId);
-  removeDirectory(uploadPath)
-    .then(() => next())
-    .catch(next);
+export const removeImagesDir = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const uploadPath = getUploadPath(req.params.itemId);
+    await removeDirectory(uploadPath);
+    const exists = await checkIfDirectoryExists(uploadPath);
+    if (exists) {
+      throw new Error ('Unable to remove image directory');
+    } else {
+      next();
+    }
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const removeImagesFromFs = (req, res, next) => {
-  const itemId = req.params.itemId;
-  const images = req.body.images;
-  const uploadPath = getUploadPath(itemId);
-  readdir(getUploadPath(itemId), (err, files: string[]) => {
+export const removeImagesFromFs = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const itemId = req.params.itemId;
+    const images: IImage[] = req.body.images;
+    const uploadPath = getUploadPath(itemId);
+    const files: string[] = await readDirectoryContent(getUploadPath(itemId));
+
+    if (!files) {
+      throw new Error('Unable to read directory content');
+    }
+
     const sourceFiles = getSourceFiles(files);
-    if (err) {
-      return next(err);
-    } else if (images.length !== sourceFiles.length) {
-      const removableFiles = files
-        .filter(fileName => !images.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
-        .map(fileName => `${uploadPath}/${fileName}`);
 
+    if (images.length !== sourceFiles.length) {
+      const removableFiles = getRemovableFiles(files, images, uploadPath);
       removeFiles(removableFiles, next);
     } else {
       next();
     }
-  });
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const fileFilter = (req, file, cb) => {
+export const fileFilter = (req: MulterRequest, file: MulterFile, cb) => {
   const itemId = req.params.itemId;
+
+  if (Array.isArray(req.files) && !req.files.length) {
+    cb({ code: 'No files given'}, false);
+  }
+
   readdir(getUploadPath(itemId), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
     if (sourceFiles.length >= maxPhotos) {
-      cb({code: FileUploadErrors.limitFileCount}, false);
+      cb(new Error(`Please upload no more than ${maxPhotos} photos`), false);
     } else if (mimeTypes.indexOf(file.mimetype) === -1) {
-      cb({code: FileUploadErrors.wrongFileType}, false);
+      cb(new Error(`Please upload a valid image: ${IMAGE_EXTENSIONS.join(',')}`), false);
     } else {
       cb(null, true);
     }
@@ -83,11 +113,13 @@ export const fileFilter = (req, file, cb) => {
 };
 
 const storage = multer.diskStorage({
-  destination: (req, file: IMulterFile, cb) => {
-    cb(null, getUploadPath(req.params.itemId));
+  destination: (req: MulterRequest, file: MulterFile, callback) => {
+    callback(null, getUploadPath(req.params.itemId));
   },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname.split('.')[0] + Date.now() + getFileExtension(file.mimetype));
+  filename: (req: MulterRequest, file: MulterFile, callback) => {
+    const { name } = getInfoFromFileName(file.originalname);
+    const fileName = formatValue(name);
+    callback(null, fileName + Date.now() + getFileExtension(file.mimetype));
   }
 });
 
@@ -100,41 +132,104 @@ export const uploadImages = multer({
   }
 });
 
-export const resizeImages = (req, res) => {
+async function resizeVerticalImage(
+  smallImage: Jimp,
+  largeImage: Jimp,
+  smallImagePath: string,
+  largeImagePath: string,
+  height: number
+) {
+  if (height < minPhotoHeight) {
+    throw new Error(`Provided image height (${height}px) should be >= ${minPhotoHeight}px`);
+  }
 
-  const files = req.files;
+  await smallImage
+    .scaleToFit(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
+    .quality(80)
+    .write(smallImagePath);
 
-  return new Promise((resolve, reject) => {
-    if (files && files.length && !res.headersSent) {
-      const promises = files.map(file => {
-        return new Promise((resolve, reject) => {
-          Jimp
-            .read(file.path)
-            .then((image) => {
-              const [name, extension] = file.filename.split('.');
-              image
-                .resize(280, 220)
-                .quality(80)
-                .write(getFilePath(file.destination, name, extension, ImageSize.Small), () => {
-                  resolve();
-                });
-              })
-            .catch(err => reject(err));
-        });
-      });
-      return Promise.all(promises).then(() => {
-        resolve();
-      });
-    } else {
-      return reject();
+  if (height > LARGE_IMAGE_HEIGHT) {
+    await largeImage
+      .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
+      .quality(80)
+      .write(largeImagePath);
+  } else {
+    await largeImage
+      .quality(80)
+      .write(largeImagePath);
+  }
+}
+
+async function resizeHorizontalImage(
+  smallImage: Jimp,
+  largeImage: Jimp,
+  smallImagePath: string,
+  largeImagePath: string,
+  width: number
+) {
+  if (width < minPhotoWidth) {
+    throw new Error(`Provided image width (${width}px) should be >= ${minPhotoWidth}px`);
+  }
+
+  await smallImage
+    .cover(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT)
+    .quality(80)
+    .write(smallImagePath);
+
+  if (width > LARGE_IMAGE_WIDTH) {
+    await largeImage
+      .scaleToFit(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT)
+      .quality(80)
+      .write(largeImagePath);
+  } else {
+    await largeImage
+      .quality(80)
+      .write(largeImagePath);
+  }
+}
+
+const resizeImage = (file: MulterFile) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { name, extension } = getInfoFromFileName(file.filename);
+      const largeImage = await Jimp.read(file.path);
+      const smallImage = await Jimp.read(file.path);
+      const width = largeImage.getWidth();
+      const height = largeImage.getHeight();
+      const smallImagePath = getFilePath(file.destination, name, extension, ImageSize.Small);
+      const largeImagePath = getFilePath(file.destination, name, extension, ImageSize.Large);
+
+      if (height > width) {
+        await resizeVerticalImage(smallImage, largeImage, smallImagePath, largeImagePath, height);
+      } else {
+        await resizeHorizontalImage(smallImage, largeImage, smallImagePath, largeImagePath, width);
+      }
+
+      resolve();
+
+    } catch (err) {
+      reject(err);
     }
   });
 };
 
-export const handleItemsErrors = (err, req, res, next) => {
-  if (req.route && req.route.path === '/item/upload-photos/:itemId') {
-    handleFileUploadErrors(err, res);
-  } else {
-    res.status(500).send({ message: err.message });
-  }
+export const resizeImages = (req: MulterRequest, res: Response) => {
+  const files = req.files;
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!Array.isArray(files)) {
+        throw new Error('Uploaded files doesn\'t meet type or length criterias to be resized');
+      }
+
+      await Promise.all(files.map(resizeImage));
+      resolve(true);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+export const handleItemsErrors = (err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).send({ message: err.message });
 };

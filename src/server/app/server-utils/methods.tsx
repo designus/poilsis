@@ -3,20 +3,43 @@ import { unlink } from 'fs';
 import {
   ImageSize,
   IImage,
-  IResponseError,
-  mapMimeTypesToTypes,
-  itemValidation,
+  IMAGE_EXTENSIONS,
   IItem,
   DataTypes,
   UserRoles
 } from 'global-utils';
 
-import { MAX_PHOTO_COUNT, MAX_PHOTO_SIZE, WRONG_FILE_TYPE } from 'data-strings';
+import { MulterFile, IInfoFromFileName } from './types';
+import { readDirectoryContent } from './fileSystem';
 
-import { IMulterFile, FileUploadErrors } from './types';
-import { getValidationMessage } from './validationMessages';
+const AsciiFolder = require('fold-to-ascii');
 
-export const getFileExtension = (mimeType) => {
+export const formatValue = (value: string): string =>
+  AsciiFolder.foldReplacing(value)
+    .replace(/[^a-zA-Z0-9]+/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .join('-')
+    .toLowerCase();
+
+export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
+  const pattern = `(.+)\.(${IMAGE_EXTENSIONS.join('|')})`;
+  const searchValue = new RegExp(pattern);
+  const nameAndSize = fileName.replace(searchValue, '$1');
+  const extension = fileName.replace(searchValue, '$2');
+  const sizeMatch: any = nameAndSize.match(new RegExp(`_(?<size>${ImageSize.Small}|${ImageSize.Large})$`));
+  const size = sizeMatch ? sizeMatch.groups.size : null;
+  const name = size ? nameAndSize.slice(0, -2) : nameAndSize;
+
+  return { name, size, extension };
+};
+
+export const getSourceFileName = (fileName: string) => {
+  const { name, extension } = getInfoFromFileName(fileName);
+  return `${name}.${extension}`;
+};
+
+export const getFileExtension = (mimeType: string) => {
   if (mimeType === 'image/jpeg') {
     return '.jpeg';
   } else if (mimeType === 'image/png') {
@@ -28,13 +51,15 @@ export const getFileExtension = (mimeType) => {
   }
 };
 
-export const getFilePath = (destination, name, extension, size: ImageSize) => {
+export const getImagePath = (image: IImage) => `${image.path}/${image.thumbName}`;
+
+export const getFilePath = (destination: string, name: string, extension: string, size: ImageSize) => {
   return `${destination}/${name}_${size}.${extension}`;
 };
 
-export const getImages = (files: IMulterFile[]): IImage[] => {
-  return files.map(({filename, destination}: IMulterFile, index: number): IImage => {
-    const [name, extension] = filename.split('.');
+export const getImages = (files: MulterFile[]): IImage[] => {
+  return files.map(({filename, destination}: MulterFile): IImage => {
+    const { name, extension } = getInfoFromFileName(filename);
     return {
       fileName: filename,
       path: destination,
@@ -43,38 +68,15 @@ export const getImages = (files: IMulterFile[]): IImage[] => {
   });
 };
 
-export const handleFileUploadErrors = (err, response) => {
-  if (err && !response.headersSent) {
-    const { images: { maxPhotos, maxPhotoSizeMegabytes, mimeTypes } } = itemValidation;
-    let errorMsg;
+export const getUploadPath = (itemId: string) =>
+  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
 
-    switch (err.code) {
-      case FileUploadErrors.limitFileSize:
-        errorMsg = getValidationMessage(MAX_PHOTO_SIZE, maxPhotoSizeMegabytes);
-        break;
-      case FileUploadErrors.limitFileCount:
-        errorMsg = getValidationMessage(MAX_PHOTO_COUNT, maxPhotos);
-        break;
-      case FileUploadErrors.wrongFileType:
-        errorMsg = getValidationMessage(WRONG_FILE_TYPE, mapMimeTypesToTypes(mimeTypes));
-        break;
-      default:
-        errorMsg = '';
-        break;
-    }
-
-    const error: IResponseError = errorMsg ? {errors: {images: {message: errorMsg}}} : err;
-
-    response.send(error);
-
-  }
+export const getSourceFiles = (files: string[]) => {
+  const sourceFiles = files.filter(fileName => fileName === getSourceFileName(fileName));
+  return sourceFiles;
 };
 
-export const getUploadPath = (itemId) =>  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
-
-export const getSourceFiles = (files) => files.filter(file => file.split('.')[0].substr(-2) !== '_' + ImageSize.Small);
-
-export function removeFiles(files, next) {
+export function removeFiles(files: string[], next: NextFunction) {
   if (files.length === 0) {
     next();
   } else {
@@ -88,6 +90,36 @@ export function removeFiles(files, next) {
      });
   }
 }
+
+export const extendWithUploadPath = (uploadPath: string) => (fileName: string) => `${uploadPath}/${fileName}`;
+
+export const getRemovableFiles = (existingFiles: string[], newImages: IImage[], uploadPath: string): string[] => {
+  return existingFiles
+    .filter(fileName => !newImages.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
+    .map(extendWithUploadPath(uploadPath));
+};
+
+export const getFilesToRemove = (existingFiles: string[], newFiles: MulterFile[], uploadPath: string): string[] => {
+  return existingFiles
+    .filter(fileName => {
+      const sourceFileName = getSourceFileName(fileName);
+      return newFiles.find(file => file.filename === sourceFileName);
+    })
+    .map(extendWithUploadPath(uploadPath));
+};
+
+export const removeUploadedFiles = async (files: MulterFile[], itemId: string, next: NextFunction) => {
+  try {
+    const uploadPath = getUploadPath(itemId);
+    const currentFiles: string[] = await readDirectoryContent(uploadPath);
+    const removableFiles = getFilesToRemove(currentFiles, files, uploadPath);
+
+    removeFiles(removableFiles, next);
+
+  } catch (err) {
+    return next(err);
+  }
+};
 
 export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   const [loadInitialData, ...loadOtherData] = data;

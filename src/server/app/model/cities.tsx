@@ -4,7 +4,7 @@ import { ICity, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { Document, Schema, Model, model} from 'mongoose';
 import shortId from 'shortid';
 
-import { formatAlias, GenericSchemaMap, requiredMessage } from '../server-utils';
+import { formatValue, GenericSchemaMap, requiredMessage } from '../server-utils';
 import { IsEnabledSchemaMap } from './common';
 
 const mongooseIntl = require('mongoose-intl');
@@ -41,7 +41,7 @@ const schemaMap: GenericSchemaMap<ICity> = {
     intl: true,
     trim: true,
     required: [true, requiredMessage],
-    set: formatAlias
+    set: formatValue
   },
   metaTitle: {
     type: String,

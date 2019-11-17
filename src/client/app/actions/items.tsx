@@ -61,10 +61,11 @@ export const removeItem = (itemId: string): IRemoveItem => ({
   itemId
 });
 
-export const receiveImages = (itemId: string, images: IImage[]): IReceiveImages => ({
+export const receiveImages = (itemId: string, images: IImage[], mainImage: string | null): IReceiveImages => ({
   type: ItemsActionTypes.RECEIVE_IMAGES,
   itemId,
-  images
+  images,
+  mainImage
 });
 
 export const toggleItemEnabledField = (params: ToggleEnabledParams): IToggleEnabled => ({
@@ -126,12 +127,12 @@ export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
       onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent)))
     })
     .then(handleApiResponse)
-    .then((images: IImage[]) => {
-      dispatch(receiveImages(itemId, images));
+    .then((item: IItem) => {
+      dispatch(receiveImages(itemId, item.images, item.mainImage));
       dispatch(setUploadProgress(100));
       dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
       dispatch(uploadSuccess());
-      return Promise.resolve(images);
+      return Promise.resolve(item.images);
     })
     .catch(err => {
       console.error(err);
@@ -148,8 +149,8 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
 
   return http.put(`/api/items/item/update-photos/${itemId}`, {images})
     .then(handleApiResponse)
-    .then((images: IImage[]) => {
-      dispatch(receiveImages(itemId, images));
+    .then((item: IItem) => {
+      dispatch(receiveImages(itemId, item.images, item.mainImage));
       dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
       dispatch(endLoading(CONTENT_LOADER_ID));
       return Promise.resolve();

@@ -1,4 +1,5 @@
 import { IItem } from './typings';
+import { IMAGE_MIME_TYPES } from './constants';
 
 interface IRules {
   minTextLength?: number;
@@ -11,6 +12,8 @@ interface IRules {
   maxPhotoSizeBytes?: number;
   maxPhotoSizeMegabytes?: number;
   mimeTypes?: string[];
+  minPhotoWidth?: number;
+  minPhotoHeight?: number;
 }
 
 type ValidationRules = {
@@ -27,8 +30,10 @@ export const itemValidation: ValidationRules = {
   },
   images: {
     maxPhotos: 4,
-    maxPhotoSizeMegabytes: 2,
-    maxPhotoSizeBytes: 2 * 1024 * 1024,
-    mimeTypes: ['image/jpeg', 'image/jpg', 'image/png']
+    maxPhotoSizeMegabytes: 4,
+    maxPhotoSizeBytes: 4 * 1024 * 1024,
+    mimeTypes: IMAGE_MIME_TYPES,
+    minPhotoWidth: 1000,
+    minPhotoHeight: 800
   }
 };

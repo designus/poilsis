@@ -10,3 +10,4 @@ export const WRONG_EMAIL = 'common.form_validation.email';
 export const MAX_PHOTO_COUNT = 'common.form_validation.max_photo_count';
 export const MAX_PHOTO_SIZE = 'common.form_validation.max_photo_size';
 export const WRONG_FILE_TYPE = 'common.form_validation.wrong_file_type';
+export const WRONG_DIMENSIONS = 'common.form_validation.wrong_file_dimensions';

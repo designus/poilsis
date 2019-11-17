@@ -12,7 +12,7 @@ const showUploadedAnimation = (props: IImagePreview) => props.isUploaded || prop
 export const uploadIconSize = 54;
 export const viewbox = `0, 0, ${uploadIconSize}, ${uploadIconSize}`;
 
-const getStyles = (theme: Theme) => ({
+export const styles = (theme: Theme) => createStyles({
   imagePreviewWrapper: (props: IImagePreview) => ({
     padding: props.isTemporary ? '0' : '15px 0',
     '& > label': {
@@ -120,6 +120,4 @@ const getStyles = (theme: Theme) => ({
       fill: 'rgba(255, 255, 255, .8)'
     }
   })
-}) as any;
-
-export const styles = makeStyles(getStyles) as any;
+} as any);
