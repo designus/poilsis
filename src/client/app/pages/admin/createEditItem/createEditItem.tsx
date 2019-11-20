@@ -4,13 +4,15 @@ import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { Switch, RouteComponentProps } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import Typography from '@material-ui/core/Typography';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState } from 'types';
 import { getItem } from 'actions';
-import { IItem } from 'global-utils';
+import { IItem, Languages } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
-import { shouldLoadEditItem, getItemById } from 'selectors';
+import { shouldLoadEditItem, getItemById, getAdminLocale } from 'selectors';
 import { NotFound } from 'components/notFound';
 import { PropsRoute } from 'components/propsRoute';
 import { IMenuItem } from 'components/menu';
@@ -26,10 +28,12 @@ interface IMatchParams {
   itemId: string;
   userId: string;
 }
+
 export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
   loadedItem: IItem;
   shouldLoadEditItem: boolean;
   loadAdminItem: (itemId: string) => Promise<void>;
+  locale: Languages;
 }
 
 class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> {
@@ -80,14 +84,22 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
     }
   }
 
+  renderItemName = (itemName: string) => {
+    return ReactDOM.createPortal(
+      <span> / {itemName}</span>,
+      document.querySelector('.editItemName')
+    );
+  }
+
   render() {
-    const { loadedItem, match } = this.props;
+    const { loadedItem, match, locale } = this.props;
     const isCreatePage = this.isCreatePage();
     const childProps = { loadedItem, isCreatePage };
     const { userId, itemId } = match.params;
 
     return (loadedItem || isCreatePage) && (
       <React.Fragment>
+        {this.renderItemName(loadedItem.name[locale])}
         <TopMenu items={this.getMenuItems(userId, itemId)} />
         <Switch>
           <ProtectedRoute
@@ -120,7 +132,8 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
 const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
   loadedItem: getItemById(state, props.match.params.itemId),
-  shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId)
+  shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId),
+  locale: getAdminLocale(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

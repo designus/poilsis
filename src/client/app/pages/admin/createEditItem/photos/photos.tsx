@@ -33,9 +33,6 @@ class PhotosPage extends React.Component<any, any> {
   render() {
     return this.props.loadedItem ? (
       <React.Fragment>
-        <Typography variant="h5">
-          <FormattedMessage id="admin.menu.photos" />
-        </Typography>
         <PhotosFormWithLoader
           onSubmit={this.handleImagesUpload}
           onSaveImages={this.handleImagesUpdate}

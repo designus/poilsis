@@ -60,10 +60,7 @@ class MainInfoPage extends React.Component<IMainInfoProps, any> {
 
   render() {
     return (this.props.loadedItem || this.props.isCreatePage) ? (
-      <div>
-        <Typography variant="h5">
-          <FormattedMessage id="admin.menu.main_info" />
-        </Typography>
+      <React.Fragment>
         <FormWithLoader
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}
@@ -79,7 +76,7 @@ class MainInfoPage extends React.Component<IMainInfoProps, any> {
           defaultLanguage={DEFAULT_LANGUAGE}
         />
         <NavigationPrompt when={this.props.showNavigationPrompt} />
-      </div>
+      </React.Fragment>
     ) : null;
   }
 }

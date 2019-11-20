@@ -3,19 +3,19 @@ import { createStyles } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => createStyles({
   list: {
-    padding: '20px 0'
+    padding: '0 0 15px 0'
   },
   listItem: {
     display: 'inline-block',
     marginRight: '5px',
     width: 'auto',
-    background: theme.palette.grey['300'],
-    padding: 0,
+    background: theme.palette.grey['200'],
+    border: `1px solid ${theme.palette.grey['300']}`,
     borderRadius: '6px',
-
+    padding: 0,
     '& > a, & > span': {
       display: 'flex',
-      padding: '10px 15px',
+      padding: '10px 25px',
       textDecoration: 'none',
       alignItems: 'center',
       borderRadius: '6px'

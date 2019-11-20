@@ -54,9 +54,6 @@ class DescriptionPage extends React.Component<DescriptionPageProps, any> {
   render() {
     return this.props.loadedItem ? (
       <React.Fragment>
-        <Typography variant="h5">
-          <FormattedMessage id="admin.menu.description" />
-        </Typography>
         <FormWithLoader
           onSubmit={this.onSubmit}
           loaderId={CONTENT_LOADER_ID}

@@ -130,7 +130,9 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
                   </IconButton>
                 </Hidden>
                 <Typography className={classes.appBarTitle} variant="h6" color="inherit" noWrap>
-                  <FormattedMessage id="admin.menu.dashboard" />
+                  <div className="editItemName">
+                    <FormattedMessage id="admin.menu.dashboard" />
+                  </div>
                 </Typography>
                 <UserMenu isInverted isLoggedIn />
                 <LanguageSelector isAdmin={true} locale={adminLocale} />
