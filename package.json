@@ -20,13 +20,13 @@
     "build:prod-client": "cd ./src/client && cross-env NODE_ENV=production webpack --env prod",
     "build-prod": "npm run clean && npm-run-all build:prod-server build:prod-client",
     "lint": "tslint --fix \"src/**/**.ts*\"",
-    "test-node": "jest --env=node --forceExit --runInBand"
+    "test": "jest --env=node --forceExit --runInBand"
   },
   "author": "",
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-push": "npm run test-node"
+      "pre-push": "npm run test"
     }
   },
   "devDependencies": {

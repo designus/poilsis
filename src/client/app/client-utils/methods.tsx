@@ -140,3 +140,27 @@ export const isInputHidden = (languageOption: string, selectedLanguage: string, 
 
   return selectedLanguage !== DEFAULT_LANGUAGE;
 };
+
+export const isAdminItemActive = (pathName: string, paths: string[]) => {
+  const pathNameArr = pathName.split('/');
+  return paths.some(path => {
+    const pathArr = path.split('/');
+
+    if (pathArr.length !== pathNameArr.length) {
+      return false;
+    }
+
+    for (let i = 0; i < pathArr.length; i++) {
+
+      if (pathArr[i][0] === ':') {
+        continue;
+      }
+
+      if (pathArr[i] !== pathNameArr[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}

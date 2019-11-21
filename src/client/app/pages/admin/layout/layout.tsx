@@ -16,7 +16,7 @@ import { Switch, withRouter } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
-import { removeInjectedStyles } from 'client-utils/methods';
+import { removeInjectedStyles, isAdminItemActive } from 'client-utils/methods';
 import { IAppState } from 'types';
 import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
 
@@ -81,7 +81,14 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
         id: 3,
         icon: () => (<ListIcon />),
         link: adminRoutes.items.getLink(),
-        text: formatMessage({ id: 'admin.menu.items' })
+        text: formatMessage({ id: 'admin.menu.items' }),
+        isActive: isAdminItemActive(this.props.location.pathname, [
+          adminRoutes.items.path,
+          adminRoutes.editItem.path,
+          adminRoutes.editItemDescription.path,
+          adminRoutes.editItemMain.path,
+          adminRoutes.editItemPhotos.path
+        ])
       },
       {
         id: 4,
