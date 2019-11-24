@@ -95,14 +95,24 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
         icon: () => (<TypesIcon />),
         link: adminRoutes.types.getLink(),
         text: formatMessage({ id: 'admin.menu.types' }),
-        allowedRoles: adminRoutes.types.allowedRoles
+        allowedRoles: adminRoutes.types.allowedRoles,
+        isActive: isAdminItemActive(this.props.location.pathname, [
+          adminRoutes.types.path,
+          adminRoutes.createType.path,
+          adminRoutes.editType.path
+        ])
       },
       {
         id: 5,
         icon: () => (<CitiesIcon />),
         link: adminRoutes.cities.getLink(),
         text: formatMessage({ id: 'admin.menu.cities' }),
-        allowedRoles: adminRoutes.cities.allowedRoles
+        allowedRoles: adminRoutes.cities.allowedRoles,
+        isActive: isAdminItemActive(this.props.location.pathname, [
+          adminRoutes.cities.path,
+          adminRoutes.editCity.path,
+          adminRoutes.createCity.path
+        ])
       },
       {
         id: 6,

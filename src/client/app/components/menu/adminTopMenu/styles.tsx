@@ -11,14 +11,12 @@ export const styles = (theme: Theme) => createStyles({
     width: 'auto',
     background: theme.palette.grey['200'],
     border: `1px solid ${theme.palette.grey['300']}`,
-    borderRadius: '6px',
     padding: 0,
     '& > a, & > span': {
       display: 'flex',
       padding: '10px 25px',
       textDecoration: 'none',
-      alignItems: 'center',
-      borderRadius: '6px'
+      alignItems: 'center'
     }
   },
   activeItem: {},

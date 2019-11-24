@@ -10,7 +10,6 @@ export const languageStyles = (theme: Theme) => createStyles({
     textAlign: 'center',
     border: `1px solid ${theme.palette.grey[300]}`,
     cursor: 'pointer',
-    borderRadius: '6px',
     background: theme.palette.grey[200]
   },
   typography: {
