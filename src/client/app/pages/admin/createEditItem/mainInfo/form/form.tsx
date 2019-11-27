@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { Dispatch } from 'react-redux';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
 import { getDropdownOptions } from 'client-utils/methods';
+import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
 import {
   isAdmin,
@@ -23,12 +25,14 @@ import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';
 import { Switcher } from 'components/formFields/switch';
 
+import { ItemPageMatchParams } from '../../createEditItem';
+
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
 export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
 
-interface ICustomProps {
+interface ICustomProps extends RouteComponentProps<ItemPageMatchParams> {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   usersMap: IUsersMap;
@@ -44,6 +48,8 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   const { handleSubmit, submitting, pristine, selectedLanguage, intl, locale } = props;
 
   const isHidden = () => selectedLanguage !== DEFAULT_LANGUAGE;
+
+  const handleBackClick = () => props.history.push(adminRoutes.items.getLink());
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
@@ -115,7 +121,10 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
         />
       }
       <div>
-        <Button type="submit" disabled={submitting || pristine}>
+        <Button onClick={handleBackClick} type="button" variant="outlined" color="default">
+          <FormattedMessage id="common.cancel" />
+        </Button>
+        <Button type="submit" variant="contained" disabled={submitting || pristine}>
           <FormattedMessage id="common.submit" />
         </Button>
       </div>
@@ -123,10 +132,12 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
   );
 };
 
-export const MainInfoForm = reduxForm<IItem, ICustomProps>({
-  asyncValidate: (item: IItem, dispatch: Dispatch<any>, props) => {
-    return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
-  },
-  asyncBlurFields: ['alias'],
-  form: MAIN_INFO_FORM_NAME
-})(Form);
+export const MainInfoForm = withRouter(
+  reduxForm<IItem, ICustomProps>({
+    asyncValidate: (item: IItem, dispatch: Dispatch<any>, props) => {
+      return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
+    },
+    asyncBlurFields: ['alias'],
+    form: MAIN_INFO_FORM_NAME
+  })(Form)
+);

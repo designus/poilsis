@@ -24,12 +24,12 @@ import { PhotosPage } from './photos';
 import { DescriptionPage } from './description';
 import { AdminTopMenu as TopMenu } from 'components/menu/adminTopMenu';
 
-interface IMatchParams {
+export type ItemPageMatchParams = {
   itemId: string;
   userId: string;
 }
 
-export interface ICreateEditItemPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
+export interface ICreateEditItemPageProps extends RouteComponentProps<ItemPageMatchParams>, InjectedIntlProps {
   loadedItem: IItem;
   shouldLoadEditItem: boolean;
   loadAdminItem: (itemId: string) => Promise<void>;
@@ -42,7 +42,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
     super(props);
   }
 
-  static fetchData(store, params: IMatchParams) {
+  static fetchData(store, params: ItemPageMatchParams) {
     if (params.itemId) {
       return store.dispatch(getItem(params.itemId));
     } else {
@@ -84,11 +84,12 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
     }
   }
 
-  renderItemName = (itemName: string) => {
-    return ReactDOM.createPortal(
-      <span> / {itemName}</span>,
-      document.querySelector('.editItemName')
-    );
+  renderItemName = (loadedItem: IItem) => {
+    return loadedItem ?
+      ReactDOM.createPortal(
+        <span> / {loadedItem.name[this.props.locale]}</span>,
+        document.querySelector('.editItemName')
+      ) : null;
   }
 
   render() {
@@ -99,7 +100,7 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
 
     return (loadedItem || isCreatePage) && (
       <React.Fragment>
-        {this.renderItemName(loadedItem.name[locale])}
+        {this.renderItemName(loadedItem)}
         <TopMenu items={this.getMenuItems(userId, itemId)} />
         <Switch>
           <ProtectedRoute

@@ -1,23 +1,29 @@
 import * as React from 'react';
+import { compose } from 'redux';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
+import { adminRoutes } from 'client-utils/routes';
 import { Button } from 'components/button';
 import { TextEditor } from 'components/formFields/textEditor';
 import { TextInput } from 'components/formFields/textInput';
+import { ItemPageMatchParams } from '../../createEditItem';
 
 import { styles } from './styles';
 
 export const ITEM_DESCRIPTION_FORM_NAME = 'ItemDescriptionForm';
 
-interface ICustomProps extends WithStyles<typeof styles> {
+interface ICustomProps extends WithStyles<typeof styles>, RouteComponentProps<ItemPageMatchParams> {
   intl: InjectedIntl;
   selectedLanguage?: string;
 }
 
 class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomProps>> {
+
+  handleBackClick = () => this.props.history.push(adminRoutes.items.getLink());
 
   render() {
     const { handleSubmit, selectedLanguage, intl, classes } = this.props;
@@ -54,9 +60,14 @@ class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomP
             selectedLanguage={selectedLanguage}
           />
         </div>
-        <Button type="submit">
-          <FormattedMessage id="common.submit" />
-        </Button>
+        <div>
+          <Button onClick={this.handleBackClick} type="button" variant="outlined" color="default">
+            <FormattedMessage id="common.cancel" />
+          </Button>
+          <Button type="submit" variant="contained">
+            <FormattedMessage id="common.submit" />
+          </Button>
+        </div>
       </form>
     );
   }
@@ -64,4 +75,6 @@ class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomP
 
 const FormComponent = reduxForm<{}, ICustomProps>({ form: ITEM_DESCRIPTION_FORM_NAME  })(Form);
 
-export const MainInfoForm = withStyles(styles)(FormComponent);
+export const MainInfoForm = withStyles(styles)(
+  withRouter(FormComponent)
+);
