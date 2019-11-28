@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { compose } from 'redux';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { FormattedMessage, InjectedIntl } from 'react-intl';
 import { withRouter, RouteComponentProps } from 'react-router-dom';

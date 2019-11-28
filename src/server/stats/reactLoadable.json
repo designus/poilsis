@@ -247,12 +247,6 @@
       "name": "./app/components/formFields/dropzoneInput/styles.tsx",
       "file": "photosPage.js",
       "publicPath": "http://localhost:8080/public/photosPage.js"
-    },
-    {
-      "id": "./app/components/formFields/uploadedImages/styles.tsx",
-      "name": "./app/components/formFields/uploadedImages/styles.tsx",
-      "file": "photosPage.js",
-      "publicPath": "http://localhost:8080/public/photosPage.js"
     }
   ],
   "./toggleRecommended": [
@@ -5481,22 +5475,6 @@
     {
       "id": "./app/components/formFields/dropzoneInput/index.tsx",
       "name": "./app/components/formFields/dropzoneInput/index.tsx",
-      "file": "photosPage.js",
-      "publicPath": "http://localhost:8080/public/photosPage.js"
-    }
-  ],
-  "components/formFields/uploadedImages": [
-    {
-      "id": "./app/components/formFields/uploadedImages/index.tsx",
-      "name": "./app/components/formFields/uploadedImages/index.tsx",
-      "file": "photosPage.js",
-      "publicPath": "http://localhost:8080/public/photosPage.js"
-    }
-  ],
-  "./uploadedImages": [
-    {
-      "id": "./app/components/formFields/uploadedImages/uploadedImages.tsx",
-      "name": "./app/components/formFields/uploadedImages/uploadedImages.tsx",
       "file": "photosPage.js",
       "publicPath": "http://localhost:8080/public/photosPage.js"
     }
