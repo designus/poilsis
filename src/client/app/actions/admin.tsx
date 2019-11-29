@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import { Dispatch } from 'redux';
 import { ICity, IType } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { startLoading, endLoading } from 'actions/loader';
@@ -7,7 +6,7 @@ import { receiveCity } from './cities';
 import { receiveType } from './types';
 import { handleApiErrors, handleApiResponse, http } from './utils';
 
-export const getAdminCity = (cityId: string) => dispatch => {
+export const getAdminCity = (cityId: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
   return http.get(`/api/cities/city/${cityId}`)
     .then(handleApiResponse)

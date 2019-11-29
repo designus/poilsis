@@ -5,7 +5,6 @@ import PhotoIcon from '@material-ui/icons/Photo';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { Switch, RouteComponentProps } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import Typography from '@material-ui/core/Typography';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 
 import { IAppState } from 'types';

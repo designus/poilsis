@@ -57,7 +57,7 @@ export const loadCityItems = (alias: string) => {
   };
 };
 
-export const createCity = (city: ICity) => (dispatch) => {
+export const createCity = (city: ICity) => (dispatch): Promise<ICity> => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return http.post('/api/cities', city)
