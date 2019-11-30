@@ -1,16 +1,17 @@
-import { Dispatch } from 'redux';
 import { ICity, IType } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
+
+import { ThunkDispatch, ThunkResult } from 'types';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveCity } from './cities';
 import { receiveType } from './types';
 import { handleApiErrors, handleApiResponse, http } from './utils';
 
-export const getAdminCity = (cityId: string) => (dispatch) => {
+export const getAdminCity = (cityId: string): ThunkResult<Promise<void>> => (dispatch: ThunkDispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return http.get(`/api/cities/city/${cityId}`)
-    .then(handleApiResponse)
-    .then((response: ICity) => {
+  return http.get<ICity>(`/api/cities/city/${cityId}`)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveCity(response));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })

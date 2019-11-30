@@ -11,7 +11,7 @@ import { getAdminCity } from 'actions/admin';
 import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
-import { IAppState } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { shouldLoadEditCity, getTypesMap, getCityById, getAdminLocale } from 'selectors';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
@@ -101,11 +101,11 @@ const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  getCity: (id: string) => dispatch(getAdminCity(id)),
-  createCity: (city: ICity) => dispatch(createCity(city)),
-  updateCity: (city: ICity) => dispatch(updateCity(city)),
-  initializeForm: (city: ICity) => dispatch(initialize(CITY_FORM_NAME, city))
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  getCity: cityId => dispatch(getAdminCity(cityId)),
+  createCity: city => dispatch(createCity(city)),
+  updateCity: city => dispatch(updateCity(city)),
+  initializeForm: city => dispatch(initialize(CITY_FORM_NAME, city))
 });
 
 export const CreateEditCityPage = injectIntl(

@@ -1,18 +1,20 @@
 import { InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { ICity, Languages } from 'global-utils/typings';
-import { ITypesMap } from 'types';
+import { ITypesMap, ThunkReturn } from 'types';
+import { getAdminCity } from 'actions/admin';
+import { createCity, updateCity } from 'actions/cities';
 
-interface IMatchParams {
+export interface IMatchParams {
   cityId: string;
 }
 
 export interface IOwnProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {}
 
 export interface IDispatchProps {
-  createCity: (city: ICity) => Promise<any>;
-  updateCity: (city: ICity) => Promise<any>;
-  getCity: (cityId: string) => Promise<any>;
+  createCity: ThunkReturn<typeof createCity>;
+  updateCity: ThunkReturn<typeof updateCity>;
+  getCity: ThunkReturn<typeof getAdminCity>;
   initializeForm: (city: ICity) => void;
 }
 
