@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { AnyAction, Dispatch, Action } from 'redux';
+import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
+import { Action } from 'redux';
 import { Omit } from 'global-utils/typings';
 import { ItemsActionTypes } from './items';
 import { CitiesActionTypes } from './cities';
@@ -47,7 +47,7 @@ export interface IToggleEnabled {
 
 export type ToggleEnabledParams = Omit<IToggleEnabled, 'type'>;
 
-export type ThunkDispatch = ThunkDispatch<IAppState, {}, Action>;
+export type ThunkDispatch = Dispatch<IAppState, {}, Action>;
 
 export type ThunkResult<T> = ThunkAction<T, IAppState, {}, Action>;
 

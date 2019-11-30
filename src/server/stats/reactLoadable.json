@@ -265,12 +265,6 @@
       "publicPath": "http://localhost:8080/public/adminItemsPage.js"
     },
     {
-      "id": "./app/types/items.tsx",
-      "name": "./app/types/items.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
       "id": "../data-strings/items.tsx",
       "name": "../data-strings/items.tsx",
       "file": "main.js",
@@ -3051,6 +3045,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "types/items": [
+    {
+      "id": "./app/types/items.tsx",
+      "name": "./app/types/items.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "./uploadProgress": [
     {
       "id": "./app/types/uploadProgress.tsx",
@@ -4429,6 +4431,12 @@
       "name": "../../node_modules/axios/lib/utils.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
     {
       "id": "../../node_modules/intl-messageformat/lib/utils.js",
@@ -6805,7 +6813,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./FormControlContext": [
+  "../FormControl/FormControlContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
@@ -6829,7 +6837,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./useFormControl": [
+  "../FormControl/useFormControl": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
@@ -6909,7 +6917,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Input": [
+  "@material-ui/core/Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -6929,14 +6937,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
       "name": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "../InputBase/utils": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -7149,7 +7149,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/Select": [
+  "../Select": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Select/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Select/index.js",
