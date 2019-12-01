@@ -1,7 +1,8 @@
 import { InjectedIntlProps } from 'react-intl';
 import { EditorState } from 'draft-js';
 import { IItemDescFields, TranslatableField } from 'global-utils';
-
+import { updateItemDescription } from 'actions/items';
+import { ThunkReturn } from 'types';
 import { CreateEditItemProps } from '../types';
 
 export type TranslatableEditorState = Record<keyof TranslatableField, EditorState>;
@@ -17,8 +18,8 @@ export interface IStateProps {
 }
 
 export interface IDispatchProps {
-  updateItemDescription: (itemId: string, description: IItemDescFields) => Promise<void>;
+  updateItemDescription: ThunkReturn<typeof updateItemDescription>;
   initializeForm: (description: IItemDescFields) => void;
 }
 
-export type DescriptionPageProps = IOwnProps & IStateProps & IDispatchProps;
+export type Props = IOwnProps & IStateProps & IDispatchProps;

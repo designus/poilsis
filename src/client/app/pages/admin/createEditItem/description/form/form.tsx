@@ -1,26 +1,21 @@
 import * as React from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import { adminRoutes } from 'client-utils/routes';
 import { Button } from 'components/button';
 import { TextEditor } from 'components/formFields/textEditor';
 import { TextInput } from 'components/formFields/textInput';
-import { ItemPageMatchParams } from '../../types';
+import { Props, ICustomProps } from './types';
 
 import { styles } from './styles';
 
 export const ITEM_DESCRIPTION_FORM_NAME = 'ItemDescriptionForm';
 
-interface ICustomProps extends WithStyles<typeof styles>, RouteComponentProps<ItemPageMatchParams> {
-  intl: InjectedIntl;
-  selectedLanguage?: string;
-}
-
-class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomProps>> {
+class Form extends React.Component<Props> {
 
   handleBackClick = () => this.props.history.push(adminRoutes.items.getLink());
 

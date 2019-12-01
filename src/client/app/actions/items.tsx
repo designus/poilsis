@@ -182,11 +182,11 @@ export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => disp
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => dispatch => {
+export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return http.put(`/api/items/item/description/${itemId}`, itemDescFields)
-    .then(handleApiResponse)
-    .then((response: IItemDescFields) => {
+  return http.put<IItemDescFields>(`/api/items/item/description/${itemId}`, itemDescFields)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItemDescription(itemId, response));
       dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
     })
