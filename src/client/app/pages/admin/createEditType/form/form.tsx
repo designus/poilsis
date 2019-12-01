@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Dispatch } from 'react-redux';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
+import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
 import { isRequired, IType } from 'global-utils';
 import { Button } from 'components/button';
@@ -15,6 +17,9 @@ export const TYPE_FORM_NAME = 'TypeForm';
 
 const Form = (props: Props) => {
   const { handleSubmit, selectedLanguage, intl } = props;
+
+  const handleBackClick = () => props.history.push(adminRoutes.types.getLink());
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -50,7 +55,10 @@ const Form = (props: Props) => {
         label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
       <div>
-        <Button type="submit">
+        <Button onClick={handleBackClick} type="button" variant="outlined" color="default">
+          <FormattedMessage id="common.cancel" />
+        </Button>
+        <Button type="submit" variant="contained">
           <FormattedMessage id="common.submit" />
         </Button>
       </div>
@@ -58,10 +66,12 @@ const Form = (props: Props) => {
   );
 };
 
-export const TypeForm = reduxForm<IType, ICustomProps>({
-  asyncValidate: (values: IType, dispatch: Dispatch<any>, props) => {
-    return asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl);
-  },
-  asyncBlurFields: ['alias'],
-  form: TYPE_FORM_NAME
-})(Form);
+export const TypeForm = withRouter(
+  reduxForm<IType, ICustomProps>({
+    asyncValidate: (values: IType, dispatch: Dispatch<any>, props) => {
+      return asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl);
+    },
+    asyncBlurFields: ['alias'],
+    form: TYPE_FORM_NAME
+  })(Form)
+);

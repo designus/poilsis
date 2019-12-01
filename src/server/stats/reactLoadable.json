@@ -129,12 +129,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
       "id": "./app/components/toast/styles.tsx",
       "name": "./app/components/toast/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
@@ -375,10 +369,16 @@
       "publicPath": "http://localhost:8080/public/homePage.js"
     }
   ],
-  "actions/types": [
+  "./types": [
     {
       "id": "./app/actions/types.tsx",
       "name": "./app/actions/types.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/pages/admin/types/types.tsx",
+      "name": "./app/pages/admin/types/types.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
@@ -387,6 +387,30 @@
       "name": "./app/actions/types.tsx",
       "file": "homePage.js",
       "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/types/types.tsx",
+      "name": "./app/types/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../data-strings/types.tsx",
+      "name": "../data-strings/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/types.tsx",
+      "name": "./app/selectors/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/types.tsx",
+      "name": "./app/reducers/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "client-utils/customHooks": [
@@ -903,38 +927,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "./types": [
-    {
-      "id": "./app/pages/admin/types/types.tsx",
-      "name": "./app/pages/admin/types/types.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/types/types.tsx",
-      "name": "./app/types/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../data-strings/types.tsx",
-      "name": "../data-strings/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/types.tsx",
-      "name": "./app/selectors/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/types.tsx",
-      "name": "./app/reducers/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "actions/cities": [
     {
       "id": "./app/actions/cities.tsx",
@@ -1071,6 +1063,14 @@
       "name": "../../config sync recursive ^\\.\\/.*$",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "components/menu/adminLeftMenu/styles": [
+    {
+      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
   "components/toast": [
@@ -1665,7 +1665,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../../webpack/buildin/global.js": [
+  "./../webpack/buildin/global.js": [
     {
       "id": "../../node_modules/webpack/buildin/global.js",
       "name": "../../node_modules/webpack/buildin/global.js",
@@ -2839,7 +2839,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./warning": [
+  "../utils/warning": [
     {
       "id": "../../node_modules/react-redux/es/utils/warning.js",
       "name": "../../node_modules/react-redux/es/utils/warning.js",
@@ -2911,7 +2911,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../process/browser.js": [
+  "./../node_modules/process/browser.js": [
     {
       "id": "../../node_modules/process/browser.js",
       "name": "../../node_modules/process/browser.js",
@@ -3533,7 +3533,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./validation": [
+  "../data-strings/validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -4645,7 +4645,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./development": [
+  "./development.tsx": [
     {
       "id": "../../config/development.tsx",
       "name": "../../config/development.tsx",
@@ -4653,7 +4653,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./production": [
+  "./production.tsx": [
     {
       "id": "../../config/production.tsx",
       "name": "../../config/production.tsx",
@@ -4661,7 +4661,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./test": [
+  "./test.tsx": [
     {
       "id": "../../config/test.tsx",
       "name": "../../config/test.tsx",
@@ -5669,7 +5669,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./TableContext": [
+  "../Table/TableContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
       "name": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
@@ -6989,7 +6989,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../ListItem": [
+  "@material-ui/core/ListItem": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
@@ -7229,7 +7229,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/Toolbar": [
+  "../Toolbar": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Toolbar/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Toolbar/index.js",
@@ -7701,7 +7701,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./setRef": [
+  "../utils/setRef": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/setRef.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/setRef.js",
@@ -9333,7 +9333,7 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
-  "fbjs/lib/containsNode": [
+  "./containsNode": [
     {
       "id": "../../node_modules/draft-js/node_modules/fbjs/lib/containsNode.js",
       "name": "../../node_modules/draft-js/node_modules/fbjs/lib/containsNode.js",

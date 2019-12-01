@@ -64,7 +64,7 @@ class CreateEditCityPageComponent extends React.Component<Props> {
       .catch(this.handleErrors);
   }
 
-  renderCityName = () => {
+  renderTitle = () => {
     return ReactDOM.createPortal(
       <span> / {this.props.intl.formatMessage(this.isCreatePage() ? messages.createCity : messages.editCity)}</span>,
       document.querySelector('.editItemName')
@@ -75,7 +75,7 @@ class CreateEditCityPageComponent extends React.Component<Props> {
     return (this.props.loadedCity || this.isCreatePage()) &&
       (
         <React.Fragment>
-          {this.renderCityName()}
+          {this.renderTitle()}
           <FormWithLoader
             onSubmit={this.onSubmit}
             loaderId={CONTENT_LOADER_ID}

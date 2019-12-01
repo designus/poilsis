@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
+import ReactDOM from 'react-dom';
 import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl, defineMessages } from 'react-intl';
 
 import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { createType, updateType } from 'actions/types';
@@ -25,6 +25,17 @@ import { IOwnProps, IStateProps, IDispatchProps, Props } from './types';
 
 const { initialize } = reduxFormActions;
 const FormWithLoader = extendWithLoader(extendWithLanguage(TypeForm));
+
+const messages = defineMessages({
+  createType: {
+    id: 'admin.type.create_title',
+    defaultMessage: 'Create type'
+  },
+  editType: {
+    id: 'admin.type.edit_title',
+    defaultMessage: 'Edit type'
+  }
+});
 
 class CreateEditTypePageComponent extends React.Component<Props> {
 
@@ -54,12 +65,17 @@ class CreateEditTypePageComponent extends React.Component<Props> {
       .catch(this.handleErrors);
   }
 
+  renderTitle = () => {
+    return ReactDOM.createPortal(
+      <span> / {this.props.intl.formatMessage(this.isCreatePage() ? messages.createType : messages.editType)}</span>,
+      document.querySelector('.editItemName')
+    );
+  }
+
   render() {
     return (this.props.loadedType || this.isCreatePage()) && (
       <React.Fragment>
-        <Typography variant="h5">
-          <FormattedMessage id={`admin.type.${this.isCreatePage() ? 'create' : 'edit'}_title`} />
-        </Typography>
+        {this.renderTitle()}
         <FormWithLoader
           onSubmit={this.onSubmit}
           intl={this.props.intl}
