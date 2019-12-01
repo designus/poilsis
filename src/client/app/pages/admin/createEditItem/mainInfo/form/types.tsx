@@ -1,11 +1,9 @@
 import { InjectedFormProps } from 'redux-form';
-import { RouteComponentProps } from 'react-router-dom';
 import { InjectedIntl } from 'react-intl';
 import { Languages } from 'global-utils/typings';
 import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
-import { ItemPageMatchParams } from '../../types';
 
-export interface ICustomProps extends RouteComponentProps<ItemPageMatchParams> {
+export interface ICustomProps {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   usersMap: IUsersMap;

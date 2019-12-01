@@ -1,11 +1,9 @@
 import { InjectedFormProps } from 'redux-form';
-import { RouteComponentProps } from 'react-router-dom';
 import { InjectedIntl } from 'react-intl';
 import { ITypesMap } from 'types';
 import { Languages } from 'global-utils/typings';
-import { IMatchParams } from '../types';
 
-export interface ICustomProps extends RouteComponentProps<IMatchParams> {
+export interface ICustomProps {
   typesMap: ITypesMap;
   locale: Languages;
   intl: InjectedIntl;

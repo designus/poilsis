@@ -7,12 +7,13 @@ import { withRouter } from 'react-router-dom';
 import { Button } from 'components/button';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
-import { ICity, DEFAULT_LANGUAGE, requiredWhenEnabled, Languages } from 'global-utils';
+import { ICity, DEFAULT_LANGUAGE, requiredWhenEnabled } from 'global-utils';
 import { asyncValidateAlias } from 'actions';
 
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { Switcher } from 'components/formFields/switch';
+import { AdminFormActions } from 'components/adminFormActions';
 
 import { ICustomProps, Props } from './types';
 
@@ -22,8 +23,6 @@ const Form = (props: Props) => {
   const { handleSubmit, selectedLanguage, intl, locale } = props;
 
   const isHidden = () => selectedLanguage !== DEFAULT_LANGUAGE;
-
-  const handleBackClick = () => props.history.push(adminRoutes.cities.getLink());
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
@@ -82,24 +81,15 @@ const Form = (props: Props) => {
         hasIntl
         label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
-      <div>
-        <Button onClick={handleBackClick} type="button" variant="outlined" color="default">
-          <FormattedMessage id="common.cancel" />
-        </Button>
-        <Button type="submit" variant="contained">
-          <FormattedMessage id="common.submit" />
-        </Button>
-      </div>
+      <AdminFormActions backLink={adminRoutes.cities.getLink()} />
     </form>
   );
 };
 
-export const CityForm = withRouter(
-  reduxForm<ICity, ICustomProps>({
-    asyncValidate: (values: ICity, dispatch: Dispatch<any>, props) => {
-      return asyncValidateAlias(values, '/api/cities/city/alias-exist', props.intl);
-    },
-    asyncBlurFields: ['alias'],
-    form: CITY_FORM_NAME
-  })(Form)
-);
+export const CityForm = reduxForm<ICity, ICustomProps>({
+  asyncValidate: (values: ICity, dispatch: Dispatch<any>, props) => {
+    return asyncValidateAlias(values, '/api/cities/city/alias-exist', props.intl);
+  },
+  asyncBlurFields: ['alias'],
+  form: CITY_FORM_NAME
+})(Form);

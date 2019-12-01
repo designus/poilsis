@@ -11,6 +11,7 @@ import { adminRoutes } from 'client-utils/routes';
 import { Button } from 'components/button';
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
 import { ImagePreview } from 'components/imagePreview';
+import { AdminFormActions } from 'components/adminFormActions';
 import { ICustomProps, Props } from './types';
 
 export const PHOTOS_FORM_NAME = 'PhotosForm';
@@ -72,8 +73,6 @@ function FormComponent(props: Props) {
     return isEqual(imagesIds, initialImagesIds);
   };
 
-  const handleBackClick = () => props.history.push(adminRoutes.items.getLink());
-
   return (
     <form autoComplete="off">
       <Field
@@ -94,25 +93,13 @@ function FormComponent(props: Props) {
         isUploading={false}
         isTemporary={false}
       />
-      <div>
-        <Button onClick={handleBackClick} type="button" variant="outlined" color="default">
-          <FormattedMessage id="common.cancel" />
-        </Button>
-        <Button
-          onClick={handleImagesSave}
-          disabled={isSubmitDisabled()}
-        >
-          <FormattedMessage id="common.save" />
-        </Button>
-      </div>
+      <AdminFormActions backLink={adminRoutes.items.getLink()} isSubmitDisabled={isSubmitDisabled()} />
     </form>
   );
 }
 
-export default withRouter(
-  reduxForm<{}, ICustomProps>({
-    form: PHOTOS_FORM_NAME,
-    asyncValidate: (item: IPhotoFormState, dispatch: Dispatch<any>, props) => asyncValidateImage(item, props.intl),
-    enableReinitialize: true
-  })(FormComponent)
-);
+export default reduxForm<{}, ICustomProps>({
+  form: PHOTOS_FORM_NAME,
+  asyncValidate: (item: IPhotoFormState, dispatch: Dispatch<any>, props) => asyncValidateImage(item, props.intl),
+  enableReinitialize: true
+})(FormComponent);

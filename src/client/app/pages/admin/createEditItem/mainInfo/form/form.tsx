@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Dispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
@@ -17,11 +15,11 @@ import {
   DEFAULT_LANGUAGE
 } from 'global-utils';
 
-import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';
 import { Switcher } from 'components/formFields/switch';
+import { AdminFormActions } from 'components/adminFormActions';
 
 import { Props, ICustomProps } from './types';
 
@@ -34,8 +32,6 @@ const Form = (props: Props)  => {
   const { handleSubmit, submitting, pristine, selectedLanguage, intl, locale } = props;
 
   const isHidden = () => selectedLanguage !== DEFAULT_LANGUAGE;
-
-  const handleBackClick = () => props.history.push(adminRoutes.items.getLink());
 
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
@@ -106,24 +102,15 @@ const Form = (props: Props)  => {
           label={intl.formatMessage({ id: 'admin.common_fields.approved_by_admin'})}
         />
       }
-      <div>
-        <Button onClick={handleBackClick} type="button" variant="outlined" color="default">
-          <FormattedMessage id="common.cancel" />
-        </Button>
-        <Button type="submit" variant="contained" disabled={submitting || pristine}>
-          <FormattedMessage id="common.submit" />
-        </Button>
-      </div>
+      <AdminFormActions backLink={adminRoutes.items.getLink()} isSubmitDisabled={submitting || pristine} />
     </form>
   );
 };
 
-export const MainInfoForm = withRouter(
-  reduxForm<IItem, ICustomProps>({
-    asyncValidate: (item: IItem, dispatch: Dispatch<any>, props) => {
-      return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
-    },
-    asyncBlurFields: ['alias'],
-    form: MAIN_INFO_FORM_NAME
-  })(Form)
-);
+export const MainInfoForm = reduxForm<IItem, ICustomProps>({
+  asyncValidate: (item: IItem, dispatch: Dispatch<any>, props) => {
+    return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
+  },
+  asyncBlurFields: ['alias'],
+  form: MAIN_INFO_FORM_NAME
+})(Form);

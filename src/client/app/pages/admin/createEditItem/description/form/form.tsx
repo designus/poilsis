@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import { adminRoutes } from 'client-utils/routes';
-import { Button } from 'components/button';
+import { AdminFormActions } from 'components/adminFormActions';
 import { TextEditor } from 'components/formFields/textEditor';
 import { TextInput } from 'components/formFields/textInput';
 import { Props, ICustomProps } from './types';
@@ -16,8 +16,6 @@ import { styles } from './styles';
 export const ITEM_DESCRIPTION_FORM_NAME = 'ItemDescriptionForm';
 
 class Form extends React.Component<Props> {
-
-  handleBackClick = () => this.props.history.push(adminRoutes.items.getLink());
 
   render() {
     const { handleSubmit, selectedLanguage, intl, classes } = this.props;
@@ -54,14 +52,7 @@ class Form extends React.Component<Props> {
             selectedLanguage={selectedLanguage}
           />
         </div>
-        <div>
-          <Button onClick={this.handleBackClick} type="button" variant="outlined" color="default">
-            <FormattedMessage id="common.cancel" />
-          </Button>
-          <Button type="submit" variant="contained">
-            <FormattedMessage id="common.submit" />
-          </Button>
-        </div>
+        <AdminFormActions backLink={adminRoutes.items.getLink()} />
       </form>
     );
   }
@@ -69,6 +60,4 @@ class Form extends React.Component<Props> {
 
 const FormComponent = reduxForm<{}, ICustomProps>({ form: ITEM_DESCRIPTION_FORM_NAME  })(Form);
 
-export const MainInfoForm = withStyles(styles)(
-  withRouter(FormComponent)
-);
+export const MainInfoForm = withStyles(styles)(FormComponent);
