@@ -14,13 +14,13 @@ import { config } from 'config';
 
 import { styles } from './styles';
 
-interface ItemCardProps extends WithStyles<typeof styles>, RouteComponentProps<any> {
+interface IItemCardProps extends WithStyles<typeof styles>, RouteComponentProps<any> {
   item: IItem;
   city: ICity;
   locale: string;
 }
 
-function ItemCard(props: ItemCardProps) {
+function ItemCard(props: IItemCardProps) {
   const { item, city, locale, classes } = props;
 
   const handleClick = () => {

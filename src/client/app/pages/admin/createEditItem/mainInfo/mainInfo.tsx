@@ -15,13 +15,13 @@ import { IItem, LANGUAGES, DEFAULT_LANGUAGE, Languages } from 'global-utils';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
-import { ICreateEditItemPageProps } from '../createEditItem';
+import { CreateEditItemProps } from '../types';
 import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
 const { initialize } = reduxFormActions;
 
-interface IMainInfoProps extends ICreateEditItemPageProps, InjectedIntlProps {
+interface IMainInfoProps extends CreateEditItemProps, InjectedIntlProps {
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;

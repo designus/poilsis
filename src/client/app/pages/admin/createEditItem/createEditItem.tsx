@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import HomeIcon from '@material-ui/icons/Home';
 import PhotoIcon from '@material-ui/icons/Photo';
 import DescriptionIcon from '@material-ui/icons/Description';
-import { Switch, RouteComponentProps } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
-import { IAppState } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { getItem } from 'actions';
-import { IItem, Languages } from 'global-utils';
+import { IItem } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem, getItemById, getAdminLocale } from 'selectors';
 import { NotFound } from 'components/notFound';
@@ -23,23 +23,9 @@ import { PhotosPage } from './photos';
 import { DescriptionPage } from './description';
 import { AdminTopMenu as TopMenu } from 'components/menu/adminTopMenu';
 
-export type ItemPageMatchParams = {
-  itemId: string;
-  userId: string;
-}
+import { IStateProps, IOwnProps, IDispatchProps, CreateEditItemProps, ItemPageMatchParams } from './types';
 
-export interface ICreateEditItemPageProps extends RouteComponentProps<ItemPageMatchParams>, InjectedIntlProps {
-  loadedItem: IItem;
-  shouldLoadEditItem: boolean;
-  loadAdminItem: (itemId: string) => Promise<void>;
-  locale: Languages;
-}
-
-class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> {
-
-  constructor(props) {
-    super(props);
-  }
+class CreateEditItemPage extends React.Component<CreateEditItemProps> {
 
   static fetchData(store, params: ItemPageMatchParams) {
     if (params.itemId) {
@@ -130,16 +116,16 @@ class CreateEditItemPage extends React.Component<ICreateEditItemPageProps, any> 
   }
 }
 
-const mapStateToProps = (state: IAppState, props: ICreateEditItemPageProps) => ({
+const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
   loadedItem: getItemById(state, props.match.params.itemId),
   shouldLoadEditItem: shouldLoadEditItem(state, props.match.params.itemId),
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadAdminItem: (itemId: string) => dispatch(getItem(itemId))
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  loadAdminItem: itemId => dispatch(getItem(itemId))
 });
 
 export default injectIntl(
-  connect<{}, {}, ICreateEditItemPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditItemPage)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CreateEditItemPage)
 );

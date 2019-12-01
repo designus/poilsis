@@ -25,7 +25,7 @@ import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';
 import { Switcher } from 'components/formFields/switch';
 
-import { ItemPageMatchParams } from '../../createEditItem';
+import { ItemPageMatchParams } from '../../types';
 
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);

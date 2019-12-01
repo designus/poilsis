@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { WithStyles } from '@material-ui/core/styles';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
-import { withStyles } from '@material-ui/core/styles';
 
 export interface IValidationErrors extends WithStyles<typeof styles> {
   error: string;

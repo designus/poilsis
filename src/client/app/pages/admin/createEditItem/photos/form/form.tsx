@@ -11,7 +11,7 @@ import { adminRoutes } from 'client-utils/routes';
 import { Button } from 'components/button';
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
 import { ImagePreview } from 'components/imagePreview';
-import { ItemPageMatchParams } from '../../createEditItem';
+import { ItemPageMatchParams } from '../../types';
 
 interface ICustomProps extends RouteComponentProps<ItemPageMatchParams> {
   images: IImage[];

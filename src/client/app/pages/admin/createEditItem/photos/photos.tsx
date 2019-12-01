@@ -15,11 +15,6 @@ const PhotosFormWithLoader = extendWithLoader(PhotosForm);
 interface IPhotosFormFields extends IPhotoFormState, InjectedIntlProps {}
 
 class PhotosPage extends React.Component<any, any> {
-
-  constructor(props) {
-    super(props);
-  }
-
   getItemId = () => this.props.loadedItem.id;
 
   handleImagesUpload = (state: IPhotoFormState) => {

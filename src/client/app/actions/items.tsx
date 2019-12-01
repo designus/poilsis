@@ -7,7 +7,6 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { Toast, IAppState, ToggleEnabledParams, IToggleEnabled, IToggleItemApprovedByAdmin } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -31,8 +30,15 @@ import {
   IReceiveItemDescription,
   IRemoveItem,
   IToggleItemRecommended,
-  IUniqueItemProps
-} from 'types/items';
+  IUniqueItemProps,
+  Toast,
+  IAppState,
+  ToggleEnabledParams,
+  IToggleEnabled,
+  IToggleItemApprovedByAdmin,
+  ThunkDispatch,
+  ThunkResult
+} from 'types';
 
 import { stopLoading, handleApiResponse, handleApiErrors, http } from './utils';
 
@@ -110,11 +116,11 @@ export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
     });
 };
 
-export const getItem = (itemId: string) => dispatch => {
+export const getItem = (itemId: string): ThunkResult<Promise<void>> => (dispatch: ThunkDispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return http.get(`/api/items/item/${itemId}`)
-    .then(handleApiResponse)
-    .then((response: IItem) => {
+  return http.get<IItem>(`/api/items/item/${itemId}`)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItem(response));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })

@@ -9,7 +9,7 @@ import { adminRoutes } from 'client-utils/routes';
 import { Button } from 'components/button';
 import { TextEditor } from 'components/formFields/textEditor';
 import { TextInput } from 'components/formFields/textInput';
-import { ItemPageMatchParams } from '../../createEditItem';
+import { ItemPageMatchParams } from '../../types';
 
 import { styles } from './styles';
 

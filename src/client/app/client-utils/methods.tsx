@@ -163,4 +163,4 @@ export const isAdminItemActive = (pathName: string, paths: string[]) => {
 
     return true;
   });
-}
+};
