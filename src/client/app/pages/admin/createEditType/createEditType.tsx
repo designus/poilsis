@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { createType, updateType } from 'actions/types';
@@ -17,33 +16,17 @@ import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
 import { Loader } from 'components/loader';
-import { IAppState } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { shouldLoadType, getTypeById } from 'selectors';
 
 import { TypeForm, TYPE_FORM_NAME } from './form';
 
+import { IOwnProps, IStateProps, IDispatchProps, Props } from './types';
+
 const { initialize } = reduxFormActions;
 const FormWithLoader = extendWithLoader(extendWithLanguage(TypeForm));
 
-interface IMatchParams {
-  typeId: string;
-}
-
-interface ICreateEditTypePageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
-  loadedType: IType;
-  showNavigationPrompt: boolean;
-  getType: (typeId: string) => Promise<any>;
-  createType: (type: IType) => Promise<any>;
-  updateType: (type: IType) => Promise<any>;
-  initializeForm: (type: IType) => void;
-  shouldLoadType: boolean;
-}
-
-class CreateEditTypePageComponent extends React.Component<ICreateEditTypePageProps, any> {
-
-  constructor(props) {
-    super(props);
-  }
+class CreateEditTypePageComponent extends React.Component<Props> {
 
   componentDidMount() {
     if (!this.isCreatePage() && this.props.shouldLoadType) {
@@ -92,19 +75,19 @@ class CreateEditTypePageComponent extends React.Component<ICreateEditTypePagePro
   }
 }
 
-const mapStateToProps = (state: IAppState, props: ICreateEditTypePageProps) => ({
+const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
   loadedType: getTypeById(state, props.match.params.typeId),
   showNavigationPrompt: isDirty(TYPE_FORM_NAME)(state) && !isSubmitting(TYPE_FORM_NAME)(state),
   shouldLoadType: shouldLoadType(state, props.match.params.typeId)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getType: (typeId: string) => dispatch(getAdminType(typeId)),
-  createType: (type: IType) => dispatch(createType(type)),
-  updateType: (type: IType) => dispatch(updateType(type)),
-  initializeForm: (type: IType) => dispatch(initialize(TYPE_FORM_NAME, type))
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  getType: typeId => dispatch(getAdminType(typeId)),
+  createType: type => dispatch(createType(type)),
+  updateType: type => dispatch(updateType(type)),
+  initializeForm: type => dispatch(initialize(TYPE_FORM_NAME, type))
 });
 
 export const CreateEditTypePage = injectIntl(
-  connect<{}, {}, ICreateEditTypePageProps>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CreateEditTypePageComponent)
 );

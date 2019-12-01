@@ -1,24 +1,19 @@
 import * as React from 'react';
 import { Dispatch } from 'react-redux';
-import { Field, reduxForm, InjectedFormProps, ConfigProps } from 'redux-form';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 
 import { asyncValidateAlias } from 'actions';
-import { isRequired, IType, Languages } from 'global-utils';
+import { isRequired, IType } from 'global-utils';
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
 import { Switcher } from 'components/formFields/switch';
 
+import { Props, ICustomProps } from './types';
+
 export const TYPE_FORM_NAME = 'TypeForm';
 
-interface ICustomProps {
-  intl: InjectedIntl;
-  languages: Languages[];
-  defaultLanguage: Languages;
-  selectedLanguage?: Languages;
-}
-
-const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
+const Form = (props: Props) => {
   const { handleSubmit, selectedLanguage, intl } = props;
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
