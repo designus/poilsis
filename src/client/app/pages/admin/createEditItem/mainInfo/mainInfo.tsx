@@ -1,44 +1,27 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
 import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import { getTypesMap, getUsersMap, getCitiesMap, getCurrentUserRole, getAdminLocale } from 'selectors';
-import { IAppState, ICitiesMap, ITypesMap, IUsersMap } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { updateMainInfo, createItem } from 'actions/items';
 import { getBackendErrors } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { IItem, LANGUAGES, DEFAULT_LANGUAGE, Languages } from 'global-utils';
+import { IItem, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
-import { CreateEditItemProps } from '../types';
 import { MainInfoForm, MAIN_INFO_FORM_NAME } from './form';
+
+import { Props, IOwnProps, IStateProps, IDispatchProps } from './types';
 
 const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
 const { initialize } = reduxFormActions;
 
-interface IMainInfoProps extends CreateEditItemProps, InjectedIntlProps {
-  usersMap: IUsersMap;
-  citiesMap: ICitiesMap;
-  typesMap: ITypesMap;
-  userRole: string;
-  locale: Languages;
-  showNavigationPrompt: boolean;
-  isCreatePage: boolean;
-  createItem: (item: IItem) => Promise<any>;
-  updateItem: (item: IItem) => Promise<any>;
-  initializeForm: (item: IItem) => void;
-}
-
-class MainInfoPage extends React.Component<IMainInfoProps, any> {
-
-  constructor(props) {
-    super(props);
-  }
+class MainInfoPage extends React.Component<Props> {
 
   handleErrors(errors) {
     throw new SubmissionError(getBackendErrors(errors));
@@ -48,7 +31,7 @@ class MainInfoPage extends React.Component<IMainInfoProps, any> {
     const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
     const submitFn = isCreatePage ? createItem : updateItem;
     return submitFn(item)
-      .then((newItem: IItem) => {
+      .then(newItem => {
         if (isCreatePage) {
           history.push(adminRoutes.editItemMain.getLink(newItem.userId, newItem.id));
         } else {
@@ -81,7 +64,7 @@ class MainInfoPage extends React.Component<IMainInfoProps, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   usersMap: getUsersMap(state),
   citiesMap: getCitiesMap(state),
   typesMap: getTypesMap(state),
@@ -90,12 +73,12 @@ const mapStateToProps = (state: IAppState) => ({
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  updateItem: (item: IItem) => dispatch(updateMainInfo(item)),
-  createItem: (item: IItem) => dispatch(createItem(item)),
-  initializeForm: (data: IItem) => dispatch(initialize(MAIN_INFO_FORM_NAME, data))
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  updateItem: item => dispatch(updateMainInfo(item)),
+  createItem: item => dispatch(createItem(item)),
+  initializeForm: item => dispatch(initialize(MAIN_INFO_FORM_NAME, item))
 });
 
 export default injectIntl(
-  connect<any, any, IMainInfoProps>(mapStateToProps, mapDispatchToProps)(MainInfoPage)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(MainInfoPage)
 );

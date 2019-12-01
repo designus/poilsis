@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Dispatch } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
-import { ICitiesMap, ITypesMap, IUsersMap } from 'types';
+import { withRouter } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
@@ -15,8 +14,7 @@ import {
   minCheckedCount,
   maxCheckedCount,
   IItem,
-  DEFAULT_LANGUAGE,
-  Languages
+  DEFAULT_LANGUAGE
 } from 'global-utils';
 
 import { Button } from 'components/button';
@@ -25,26 +23,14 @@ import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';
 import { Switcher } from 'components/formFields/switch';
 
-import { ItemPageMatchParams } from '../../types';
+import { Props, ICustomProps } from './types';
 
 const minTypesCount = minCheckedCount(itemValidation.types.minCheckedCount);
 const maxTypesCount = maxCheckedCount(itemValidation.types.maxCheckedCount);
 
 export const MAIN_INFO_FORM_NAME = 'MainInfoForm';
 
-interface ICustomProps extends RouteComponentProps<ItemPageMatchParams> {
-  citiesMap: ICitiesMap;
-  typesMap: ITypesMap;
-  usersMap: IUsersMap;
-  userRole: string;
-  locale: Languages;
-  intl: InjectedIntl;
-  languages: Languages[];
-  defaultLanguage: Languages;
-  selectedLanguage?: Languages;
-}
-
-const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>)  => {
+const Form = (props: Props)  => {
   const { handleSubmit, submitting, pristine, selectedLanguage, intl, locale } = props;
 
   const isHidden = () => selectedLanguage !== DEFAULT_LANGUAGE;

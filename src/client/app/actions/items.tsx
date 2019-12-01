@@ -171,15 +171,15 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
     });
 };
 
-export const updateMainInfo = (item: IItem) => (dispatch) => {
+export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => (dispatch: ThunkDispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.put(`/api/items/item/main-info/${item.id}`, item)
-    .then(handleApiResponse)
-    .then((response: IItem) => {
+  return http.put<IItem>(`/api/items/item/main-info/${item.id}`, item)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
@@ -196,16 +196,16 @@ export const updateItemDescription = (itemId: string, itemDescFields: IItemDescF
 
 };
 
-export const createItem = (item: IItem) => (dispatch) => {
+export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => (dispatch: ThunkDispatch) => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.post(`/api/items`, item)
-    .then(handleApiResponse)
-    .then((response: IItem) => {
+  return http.post<IItem>(`/api/items`, item)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
