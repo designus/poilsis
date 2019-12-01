@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Dispatch } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { isEqual } from 'lodash';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IImage, IPhotoFormState, itemValidation } from 'global-utils';
 
@@ -11,17 +11,7 @@ import { adminRoutes } from 'client-utils/routes';
 import { Button } from 'components/button';
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
 import { ImagePreview } from 'components/imagePreview';
-import { ItemPageMatchParams } from '../../types';
-
-interface ICustomProps extends RouteComponentProps<ItemPageMatchParams> {
-  images: IImage[];
-  onResetUploadState: () => void;
-  onSaveImages: (images: IImage[]) => void;
-  onSortImages: (images: IImage[]) => void;
-  intl: InjectedIntl;
-}
-
-type FormProps = ICustomProps & InjectedFormProps<{}, ICustomProps>;
+import { ICustomProps, Props } from './types';
 
 export const PHOTOS_FORM_NAME = 'PhotosForm';
 
@@ -34,7 +24,7 @@ const validators = [
 
 let loadedImages = 0;
 
-function FormComponent(props: FormProps) {
+function FormComponent(props: Props) {
   const { useState, useEffect } = React;
   const { images: initialImages, onSaveImages, intl: { formatMessage } } = props;
   const [images, setImages] = useState([...initialImages]);

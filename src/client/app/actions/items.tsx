@@ -116,7 +116,7 @@ export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
     });
 };
 
-export const getItem = (itemId: string): ThunkResult<Promise<void>> => (dispatch: ThunkDispatch) => {
+export const getItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
   return http.get<IItem>(`/api/items/item/${itemId}`)
     .then(response => handleApiResponse(response))
@@ -127,18 +127,18 @@ export const getItem = (itemId: string): ThunkResult<Promise<void>> => (dispatch
     .catch(handleApiErrors('Unable to load Item', CONTENT_LOADER_ID, dispatch));
 };
 
-export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
+export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<IImage[]>> => dispatch => {
   return http
-    .put(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
+    .put<IItem>(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
       onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent)))
     })
-    .then(handleApiResponse)
-    .then((item: IItem) => {
+    .then(response => handleApiResponse(response))
+    .then(item => {
       dispatch(receiveImages(itemId, item.images, item.mainImage));
       dispatch(setUploadProgress(100));
       dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
       dispatch(uploadSuccess());
-      return Promise.resolve(item.images);
+      return item.images;
     })
     .catch(err => {
       console.error(err);
@@ -150,16 +150,14 @@ export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
     });
 };
 
-export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {
+export const updatePhotos = (itemId: string, images: IImage[]): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-
-  return http.put(`/api/items/item/update-photos/${itemId}`, {images})
-    .then(handleApiResponse)
-    .then((item: IItem) => {
+  return http.put<IItem>(`/api/items/item/update-photos/${itemId}`, {images})
+    .then(response => handleApiResponse(response))
+    .then(item => {
       dispatch(receiveImages(itemId, item.images, item.mainImage));
       dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
       dispatch(endLoading(CONTENT_LOADER_ID));
-      return Promise.resolve();
     })
     .catch(err => {
       console.error(err);
@@ -171,7 +169,7 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
     });
 };
 
-export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => (dispatch: ThunkDispatch) => {
+export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return http.put<IItem>(`/api/items/item/main-info/${item.id}`, item)
@@ -184,7 +182,7 @@ export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => (dis
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => (dispatch) => {
+export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
   return http.put(`/api/items/item/description/${itemId}`, itemDescFields)
     .then(handleApiResponse)
@@ -196,7 +194,7 @@ export const updateItemDescription = (itemId: string, itemDescFields: IItemDescF
 
 };
 
-export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => (dispatch: ThunkDispatch) => {
+export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
