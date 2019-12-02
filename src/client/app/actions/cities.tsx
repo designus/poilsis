@@ -80,7 +80,7 @@ export const createCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatc
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatch: ThunkDispatch) => {
+export const updateCity = (city: ICity): ThunkResult<Promise<ICity>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return http.put<ICity>(`/api/cities/city/${city.id}`, city)
@@ -88,27 +88,26 @@ export const updateCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatc
     .then(response => {
       dispatch(receiveCity(response));
       dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
-export const deleteCity = (cityId: string) => dispatch => {
+export const deleteCity = (cityId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   return http.delete(`/api/cities/city/${cityId}`)
-    .then(handleApiResponse)
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(removeCity(cityId));
       dispatch(stopLoading(false, CITY_DELETE_SUCCESS, DIALOG_LOADER_ID));
-      return Promise.resolve();
     })
     .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleCityEnabled = (params: ToggleEnabledParams) => (dispatch) => {
-  return http.patch(`/api/cities/city/toggle-enabled`, params)
-    .then(handleApiResponse)
+export const toggleCityEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/cities/city/toggle-enabled`, params)
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleCityEnabledField(params));
     })

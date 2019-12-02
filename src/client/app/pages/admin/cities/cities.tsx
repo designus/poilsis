@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
-import { IAppState, ICitiesMap, ITypesMap, ToggleEnabledParams } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { getAllCities, getCitiesMap, getAdminLocale, getTypesMap } from 'selectors';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
@@ -20,23 +20,9 @@ import { ToggleEnabled } from 'components/toggleEnabled';
 
 const Table = extendWithLoader(EnhancedTable);
 
-interface IOwnProps extends InjectedIntlProps {}
+import { State, Props, IOwnProps, IDispatchProps, IStateProps } from './types';
 
-interface IDispatchProps {
-  deleteCity: (typeId: string) => Promise<void>;
-  toggleCityEnabled: (params: ToggleEnabledParams) => void;
-}
-
-interface IStateProps  {
-  citiesMap: ICitiesMap;
-  typesMap: ITypesMap;
-  cities: ICity[];
-  locale: string;
-}
-
-type ICitiesPageProps = IOwnProps & IStateProps & IDispatchProps;
-
-class AdminCitiesPage extends React.Component<ICitiesPageProps, any> {
+class AdminCitiesPage extends React.Component<Props, State> {
 
   state = {
     isDeleteModalOpen: false,
@@ -146,9 +132,9 @@ const mapStateToProps = (state: IAppState): IStateProps => ({
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteCity: (cityId: string) => dispatch(deleteCity(cityId)),
-  toggleCityEnabled: (params: ToggleEnabledParams) => dispatch(toggleCityEnabled(params))
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  deleteCity: cityId => dispatch(deleteCity(cityId)),
+  toggleCityEnabled: params => dispatch(toggleCityEnabled(params))
 });
 
 export default injectIntl(
