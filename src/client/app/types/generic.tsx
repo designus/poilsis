@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
-import { Action } from 'redux';
+import { Action, Store } from 'redux';
 import { Omit } from 'global-utils/typings';
 import { ItemsActionTypes } from './items';
 import { CitiesActionTypes } from './cities';
@@ -56,3 +56,9 @@ export type ThunkReturn<A> = A extends (...args: infer B) => infer C
     ? (...args: B) => ReturnType<C>
     : never
   : never;
+
+export type ActionReturn<A> = A extends (...args: infer B) => any
+  ? (...args: B) => void
+  : never;
+
+export type ReduxStore = Store<IAppState, any>;

@@ -85,6 +85,7 @@
   "admin.item.delete_error": "Deja, įrašo ištrinti nepavyko",
   "admin.item.enable_error": "Deja nepavyko įjungti įrašo",
   "admin.item.approve_error": "Nepavyko patvirtinti įrašo",
+  "admin.item.recommend_error": "Nepavyko rekomenduoti įrašo",
   "admin.item.seo_info": "Tam, kad jūsų skelbimas Google paieškoje būtų matomas aukščiau, prašome kaip įmanoma išsamiau užpildyti sekančius laukelius",
   "admin.type.create_success": "New type was created succesfully",
   "admin.type.create_error": "Failed to create new type",

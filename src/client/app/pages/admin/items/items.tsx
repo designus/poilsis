@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
-import { IAppState, IItemsMap, ICitiesMap, IUsersMap, ToggleEnabledParams } from 'types';
+import { IAppState, ThunkDispatch, ReduxStore } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApproved } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
@@ -32,39 +32,13 @@ import { ToggleAction } from 'components/toggleAction';
 import { IItem } from 'global-utils/typings';
 import { isAdmin } from 'global-utils/methods';
 
+import { Props, IOwnProps, IStateProps, IDispatchProps, State } from './types';
+
 const Table = extendWithLoader(EnhancedTable);
 
-interface IOwnProps extends InjectedIntlProps {}
+export const loadUserItemsData = (store: ReduxStore) => store.dispatch(loadUserItems());
 
-interface IDispatchProps {
-  deleteItem: (itemId: string) => Promise<void>;
-  loadUserItems: () => void;
-  endLoading: (loaderId: string) => void;
-  toggleItemEnabled: (params: ToggleEnabledParams) => void;
-  toggleItemRecommended: (itemId: string, isRecommended: boolean) => void;
-  toggleItemApproved: (itemId: string, isApproved: boolean) => void;
-}
-
-interface IStateProps {
-  itemsMap: IItemsMap;
-  usersMap: IUsersMap;
-  citiesMap: ICitiesMap;
-  shouldLoadUserItems: boolean;
-  userItems: IItem[];
-  userRole: string;
-  locale: string;
-}
-
-type IItemsPageProps = IOwnProps & IStateProps & IDispatchProps;
-
-export const loadUserItemsData = (store) => store.dispatch(loadUserItems());
-
-class AdminItemsPage extends React.Component<IItemsPageProps, any> {
-
-  static fetchData(store) {
-    return store.dispatch(loadUserItems());
-  }
-
+class AdminItemsPage extends React.Component<Props, State> {
   state = {
     isDeleteModalOpen: false,
     deleteId: '',
@@ -255,7 +229,7 @@ class AdminItemsPage extends React.Component<IItemsPageProps, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   itemsMap: getItemsMap(state),
   usersMap: getUsersMap(state),
   userItems: getUserItems(state),
@@ -265,8 +239,8 @@ const mapStateToProps = (state: IAppState) => ({
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
+const mapDispatchToProps = (dispatch: ThunkDispatch) =>
+  bindActionCreators<any, IDispatchProps>(
     {
       deleteItem,
       loadUserItems,
@@ -279,5 +253,5 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default injectIntl(
-  connect<IStateProps, {}, IOwnProps>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
 );

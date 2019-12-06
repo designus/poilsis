@@ -1,5 +1,5 @@
 
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, response } from 'express';
 import shortId from 'shortid';
 import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
 import {
@@ -69,18 +69,38 @@ export const getUserItems = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const toggleItemRecommended = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.findOneAndUpdate(
-    { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
-    sendResponse(res, next)
-  );
+export const toggleItemRecommended = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const item = await ItemsModel.findOneAndUpdate(
+      { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
+    );
+
+    if (!item) {
+      throw new Error('Unable to update item state');
+    }
+
+    response.status(200).json(true);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const toggleItemApproved = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel.findOneAndUpdate(
-    { id: req.body.itemId }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true },
-    sendResponse(res, next)
-  );
+export const toggleItemApproved = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const item = await ItemsModel.findOneAndUpdate(
+      { id: req.body.itemId2 }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true }
+    );
+
+    if (!item) {
+      throw new Error('Unable to update item state');
+    }
+
+    res.status(200).json(true);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {

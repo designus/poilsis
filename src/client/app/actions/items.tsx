@@ -208,7 +208,7 @@ export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => dispatch
     .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const deleteItem = (itemId: string) => (dispatch) => {
+export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispatch) => {
 
   dispatch(startLoading(DIALOG_LOADER_ID));
 
@@ -221,9 +221,9 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (params: ToggleEnabledParams) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-enabled`, params)
-    .then(handleApiResponse)
+export const toggleItemEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/items/item/toggle-enabled`, params)
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleItemEnabledField(params));
     })
@@ -233,9 +233,9 @@ export const toggleItemEnabled = (params: ToggleEnabledParams) => (dispatch) => 
     });
 };
 
-export const toggleItemApproved = (itemId: string, isApproved: boolean) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-approved`, { itemId, isApproved })
-    .then(handleApiResponse)
+export const toggleItemApproved = (itemId: string, isApproved: boolean): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/items/item/toggle-approved`, { itemId, isApproved })
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleItemApprovedField(itemId, isApproved));
     })
@@ -245,11 +245,14 @@ export const toggleItemApproved = (itemId: string, isApproved: boolean) => (disp
     });
 };
 
-export const toggleItemRecommended = (itemId: string, isRecommended: boolean) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
-    .then(handleApiResponse)
+export const toggleItemRecommended = (itemId: string, isRecommended: boolean): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleItemRecommendedField(itemId, isRecommended));
     })
-    .catch(err => console.error('Err', err));
+    .catch(err => {
+      console.error('Err', err);
+      dispatch(showToast(Toast.error, 'admin.item.recommend_error'));
+    });
 };
