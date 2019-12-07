@@ -4,6 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import SuccesIcon from '@material-ui/icons/SentimentVerySatisfied';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ErrorIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import WarningIcon from '@material-ui/icons/Warning';
 import { connect } from 'react-redux';
@@ -19,8 +20,8 @@ import { styles } from './styles';
 class ToastComponent extends React.Component<Props> {
 
   icon = {
-    [Toast.success]: () => <SuccesIcon />,
-    [Toast.error]: () => <ErrorIcon />,
+    [Toast.success]: () => <FontAwesomeIcon size="2x" icon={['far', 'check-circle']} />,
+    [Toast.error]: () => <FontAwesomeIcon size="2x" icon={['far', 'times-circle']} />,
     [Toast.warning]: () => <WarningIcon />
   };
 

@@ -23,7 +23,6 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     '& > svg': {
       paddingRight: '10px',
-      fontSize: '30px'
     }
   },
   error: {
