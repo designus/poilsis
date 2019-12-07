@@ -1,12 +1,4 @@
 {
-  "@material-ui/core/colors/yellow": [
-    {
-      "id": "../../node_modules/@material-ui/core/colors/yellow.js",
-      "name": "../../node_modules/@material-ui/core/colors/yellow.js",
-      "file": "adminItemsPage.js",
-      "publicPath": "http://localhost:8080/public/adminItemsPage.js"
-    }
-  ],
   "@material-ui/icons/Star": [
     {
       "id": "../../node_modules/@material-ui/icons/Star.js",
@@ -707,7 +699,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "../toggleAction": [
+  "components/toggleAction": [
     {
       "id": "./app/components/toggleAction/index.tsx",
       "name": "./app/components/toggleAction/index.tsx",
@@ -1229,7 +1221,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -5565,22 +5557,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "@material-ui/core/colors/green": [
-    {
-      "id": "../../node_modules/@material-ui/core/colors/green.js",
-      "name": "../../node_modules/@material-ui/core/colors/green.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/colors/red": [
-    {
-      "id": "../../node_modules/@material-ui/core/colors/red.js",
-      "name": "../../node_modules/@material-ui/core/colors/red.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "./Checkbox": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Checkbox/Checkbox.js",
@@ -6701,6 +6677,14 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
+  "@material-ui/core/colors/green": [
+    {
+      "id": "../../node_modules/@material-ui/core/colors/green.js",
+      "name": "../../node_modules/@material-ui/core/colors/green.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "@material-ui/core/colors/grey": [
     {
       "id": "../../node_modules/@material-ui/core/colors/grey.js",
@@ -6713,6 +6697,22 @@
     {
       "id": "../../node_modules/@material-ui/core/colors/indigo.js",
       "name": "../../node_modules/@material-ui/core/colors/indigo.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/colors/red": [
+    {
+      "id": "../../node_modules/@material-ui/core/colors/red.js",
+      "name": "../../node_modules/@material-ui/core/colors/red.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/colors/yellow": [
+    {
+      "id": "../../node_modules/@material-ui/core/colors/yellow.js",
+      "name": "../../node_modules/@material-ui/core/colors/yellow.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }

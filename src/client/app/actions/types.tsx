@@ -61,19 +61,18 @@ export const updateType = (adminType: IType): ThunkResult<Promise<IType>> => dis
 
 };
 
-export const deleteType = (typeId: string) => dispatch => {
+export const deleteType = (typeId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   return http.delete(`/api/types/type/${typeId}`)
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeType(typeId));
       dispatch(stopLoading(false, TYPE_DELETE_SUCCESS, DIALOG_LOADER_ID));
-      return Promise.resolve();
     })
     .catch(handleApiErrors(TYPE_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleTypeEnabled = (params: ToggleEnabledParams) => (dispatch) => {
+export const toggleTypeEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
   return http.patch(`/api/types/type/toggle-enabled`, params)
     .then(handleApiResponse)
     .then(() => {
