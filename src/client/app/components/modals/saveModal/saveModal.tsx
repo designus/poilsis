@@ -3,10 +3,10 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import { FormattedMessage } from 'react-intl';
 
-import { modalStyles } from '../styles';
-import { DialogHeader, DialogContent, DialogFooter } from '../shared';
+import { styles } from '../styles';
+import { Header, Content, Footer } from '../shared';
 
-export interface ISaveModalProps extends WithStyles<typeof modalStyles> {
+export interface ISaveModalProps extends WithStyles<typeof styles> {
   isModalOpen: boolean;
   onConfirm?: () => void;
   onCancel?: () => void;
@@ -23,17 +23,13 @@ class SaveModalComponent extends React.PureComponent<ISaveModalProps, any> {
           paper: classes.paper
         }}
       >
-        <DialogHeader
-          className={classes.close}
-          closeModal={onCancel}
-        >
+        <Header onClose={onCancel}>
           <FormattedMessage id="admin.save_modal.title" />
-        </DialogHeader>
-        <DialogContent contentClass={classes.dialogContent}>
+        </Header>
+        <Content>
           <FormattedMessage id="admin.save_modal.description" />
-        </DialogContent>
-        <DialogFooter
-          classes={classes}
+        </Content>
+        <Footer
           onClose={onCancel}
           onSubmit={onConfirm}
         />
@@ -42,4 +38,4 @@ class SaveModalComponent extends React.PureComponent<ISaveModalProps, any> {
   }
 }
 
-export const SaveModal = withStyles(modalStyles)(SaveModalComponent);
+export const SaveModal = withStyles(styles)(SaveModalComponent);

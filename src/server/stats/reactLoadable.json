@@ -443,6 +443,12 @@
       "name": "./app/components/button/button.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/button/button.tsx",
+      "name": "./app/components/button/button.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
   "components/button": [
@@ -451,6 +457,12 @@
       "name": "./app/components/button/index.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/button/index.tsx",
+      "name": "./app/components/button/index.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
   "./extendWithLanguage": [
@@ -609,16 +621,94 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "../shared": [
+  "./content": [
     {
-      "id": "./app/components/modals/shared.tsx",
-      "name": "./app/components/modals/shared.tsx",
+      "id": "./app/components/modals/shared/content/content.tsx",
+      "name": "./app/components/modals/shared/content/content.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/components/modals/shared.tsx",
-      "name": "./app/components/modals/shared.tsx",
+      "id": "./app/components/modals/shared/content/index.tsx",
+      "name": "./app/components/modals/shared/content/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/modals/shared/content/content.tsx",
+      "name": "./app/components/modals/shared/content/content.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    },
+    {
+      "id": "./app/components/modals/shared/content/index.tsx",
+      "name": "./app/components/modals/shared/content/index.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    }
+  ],
+  "./footer": [
+    {
+      "id": "./app/components/modals/shared/footer/footer.tsx",
+      "name": "./app/components/modals/shared/footer/footer.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/modals/shared/footer/index.tsx",
+      "name": "./app/components/modals/shared/footer/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/modals/shared/footer/footer.tsx",
+      "name": "./app/components/modals/shared/footer/footer.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    },
+    {
+      "id": "./app/components/modals/shared/footer/index.tsx",
+      "name": "./app/components/modals/shared/footer/index.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    }
+  ],
+  "./header": [
+    {
+      "id": "./app/components/modals/shared/header/header.tsx",
+      "name": "./app/components/modals/shared/header/header.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/modals/shared/header/index.tsx",
+      "name": "./app/components/modals/shared/header/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/modals/shared/header/header.tsx",
+      "name": "./app/components/modals/shared/header/header.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    },
+    {
+      "id": "./app/components/modals/shared/header/index.tsx",
+      "name": "./app/components/modals/shared/header/index.tsx",
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    }
+  ],
+  "../shared": [
+    {
+      "id": "./app/components/modals/shared/index.tsx",
+      "name": "./app/components/modals/shared/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/components/modals/shared/index.tsx",
+      "name": "./app/components/modals/shared/index.tsx",
       "file": "keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
@@ -1039,13 +1129,13 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": 2,
+      "id": 3,
       "name": null,
       "file": "keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     },
     {
-      "id": 3,
+      "id": 2,
       "name": null,
       "file": "keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
@@ -1701,7 +1791,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../../webpack/buildin/global.js": [
+  "./../webpack/buildin/global.js": [
     {
       "id": "../../node_modules/webpack/buildin/global.js",
       "name": "../../node_modules/webpack/buildin/global.js",
@@ -6877,7 +6967,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../FormControl/useFormControl": [
+  "./useFormControl": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
@@ -7013,7 +7103,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./ListContext": [
+  "../List/ListContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
       "name": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
@@ -7037,7 +7127,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/ListItem": [
+  "../ListItem": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
@@ -7197,7 +7287,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Select": [
+  "@material-ui/core/Select": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Select/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Select/index.js",
@@ -7405,7 +7495,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "lodash/debounce": [
+  "./debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
       "name": "../../node_modules/lodash/debounce.js",

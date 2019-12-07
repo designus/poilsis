@@ -61,7 +61,7 @@ class ToastComponent extends React.Component<Props> {
           horizontal: 'center'
         }}
         open={show}
-        // autoHideDuration={4000}
+        autoHideDuration={4000}
         onClose={this.handleRequestClose}
         message={this.renderToastMessage()}
         action={this.renderCloseButton()}
