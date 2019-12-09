@@ -39,6 +39,7 @@ import { CreateEditTypePage } from 'pages/admin/createEditType';
 import { CreateEditCityPage } from 'pages/admin/createEditCity';
 import { AdminTypesPage } from 'pages/admin/types';
 import { AdminCitiesPage } from 'pages/admin/cities';
+import { AdminHomePage } from 'pages/admin/home';
 
 import { IOwnProps, IStateProps, IDispatchProps, AdminLayoutProps } from './types';
 
@@ -157,6 +158,11 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
             </AppBar>
               <main className={classes.main}>
                 <Switch>
+                  <ProtectedRoute
+                    exact
+                    path={adminRoutes.landing.path}
+                    component={AdminHomePage}
+                  />
                   <ProtectedRoute
                     exact
                     path={adminRoutes.items.path}

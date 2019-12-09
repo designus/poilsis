@@ -1,4 +1,48 @@
 {
+  "./home": [
+    {
+      "id": "./app/pages/admin/home/home.tsx",
+      "name": "./app/pages/admin/home/home.tsx",
+      "file": "adminHomePage.js",
+      "publicPath": "http://localhost:8080/public/adminHomePage.js"
+    },
+    {
+      "id": "./app/actions/home.tsx",
+      "name": "./app/actions/home.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/actions/home.tsx",
+      "name": "./app/actions/home.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/pages/client/home/home.tsx",
+      "name": "./app/pages/client/home/home.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/types/home.tsx",
+      "name": "./app/types/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/home.tsx",
+      "name": "./app/selectors/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/home.tsx",
+      "name": "./app/reducers/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "@material-ui/icons/Star": [
     {
       "id": "../../node_modules/@material-ui/icons/Star.js",
@@ -281,7 +325,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "actions/admin": [
+  "./admin": [
     {
       "id": "./app/actions/admin.tsx",
       "name": "./app/actions/admin.tsx",
@@ -315,44 +359,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./home": [
-    {
-      "id": "./app/actions/home.tsx",
-      "name": "./app/actions/home.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/actions/home.tsx",
-      "name": "./app/actions/home.tsx",
-      "file": "homePage.js",
-      "publicPath": "http://localhost:8080/public/homePage.js"
-    },
-    {
-      "id": "./app/pages/client/home/home.tsx",
-      "name": "./app/pages/client/home/home.tsx",
-      "file": "homePage.js",
-      "publicPath": "http://localhost:8080/public/homePage.js"
-    },
-    {
-      "id": "./app/types/home.tsx",
-      "name": "./app/types/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/home.tsx",
-      "name": "./app/selectors/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/home.tsx",
-      "name": "./app/reducers/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "actions": [
     {
       "id": "./app/actions/index.tsx",
@@ -367,10 +373,16 @@
       "publicPath": "http://localhost:8080/public/homePage.js"
     }
   ],
-  "actions/types": [
+  "./types": [
     {
       "id": "./app/actions/types.tsx",
       "name": "./app/actions/types.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/pages/admin/types/types.tsx",
+      "name": "./app/pages/admin/types/types.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
@@ -379,6 +391,30 @@
       "name": "./app/actions/types.tsx",
       "file": "homePage.js",
       "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/types/types.tsx",
+      "name": "./app/types/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../data-strings/types.tsx",
+      "name": "../data-strings/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/types.tsx",
+      "name": "./app/selectors/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/types.tsx",
+      "name": "./app/reducers/types.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "client-utils/customHooks": [
@@ -545,7 +581,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/itemTypesList": [
+  "../itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -963,6 +999,14 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
+  "pages/admin/home": [
+    {
+      "id": "./app/pages/admin/home/index.tsx",
+      "name": "./app/pages/admin/home/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
   "pages/admin/items": [
     {
       "id": "./app/pages/admin/items/index.tsx",
@@ -999,38 +1043,6 @@
       "name": "./app/pages/admin/types/index.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "./types": [
-    {
-      "id": "./app/pages/admin/types/types.tsx",
-      "name": "./app/pages/admin/types/types.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/types/types.tsx",
-      "name": "./app/types/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../data-strings/types.tsx",
-      "name": "../data-strings/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/types.tsx",
-      "name": "./app/selectors/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/types.tsx",
-      "name": "./app/reducers/types.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "actions/cities": [
@@ -1311,7 +1323,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -3503,7 +3515,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "global-utils/methods": [
+  "./methods": [
     {
       "id": "../global-utils/methods.tsx",
       "name": "../global-utils/methods.tsx",
@@ -3575,7 +3587,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../data-strings/validation": [
+  "./validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -4437,7 +4449,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./upload": [
+  "actions/upload": [
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",
@@ -4719,7 +4731,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../../../../../config": [
+  "config": [
     {
       "id": "../../config/index.tsx",
       "name": "../../config/index.tsx",
@@ -7111,7 +7123,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/List": [
+  "../List": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/index.js",
       "name": "../../node_modules/@material-ui/core/esm/List/index.js",
@@ -7575,7 +7587,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "@material-ui/core/Button": [
+  "../Button": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Button/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Button/index.js",
