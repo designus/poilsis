@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
+import ReactDOM from 'react-dom';
 import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl, defineMessages } from 'react-intl';
 
-import { ICity, LANGUAGES, DEFAULT_LANGUAGE, Languages } from 'global-utils';
+import { ICity, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { createCity, updateCity } from 'actions/cities';
 import { getAdminCity } from 'actions/admin';
 import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
-import { IAppState, ITypesMap } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { shouldLoadEditCity, getTypesMap, getCityById, getAdminLocale } from 'selectors';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
@@ -20,32 +19,23 @@ import { NavigationPrompt } from 'components/navigationPrompt';
 import { Loader } from 'components/loader';
 
 import { CityForm, CITY_FORM_NAME } from './form';
+import { IOwnProps, IStateProps, IDispatchProps, Props } from './types';
 
 const { initialize } = reduxFormActions;
 const FormWithLoader = extendWithLoader(extendWithLanguage(CityForm));
 
-interface IMatchParams {
-  cityId: string;
-}
-
-interface ICreateEditCityPageProps extends RouteComponentProps<IMatchParams>, InjectedIntlProps {
-  loadedCity: ICity;
-  showNavigationPrompt: boolean;
-  typesMap: ITypesMap;
-  createCity: (city: ICity) => Promise<any>;
-  updateCity: (city: ICity) => Promise<any>;
-  getCity: (cityId: string) => Promise<any>;
-  initializeForm: (city: ICity) => void;
-  shouldLoadEditCity: boolean;
-  locale: Languages;
-}
-
-class CreateEditCityPageComponent extends React.Component<ICreateEditCityPageProps, any> {
-
-  constructor(props) {
-    super(props);
+const messages = defineMessages({
+  createCity: {
+    id: 'admin.city.create_title',
+    defaultMessage: 'Create city'
+  },
+  editCity: {
+    id: 'admin.city.edit_title',
+    defaultMessage: 'Edit city'
   }
+});
 
+class CreateEditCityPageComponent extends React.Component<Props> {
   componentDidMount() {
     if (!this.isCreatePage() && this.props.shouldLoadEditCity) {
       this.props.getCity(this.props.match.params.cityId);
@@ -74,13 +64,18 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
       .catch(this.handleErrors);
   }
 
+  renderTitle = () => {
+    return ReactDOM.createPortal(
+      <span> / {this.props.intl.formatMessage(this.isCreatePage() ? messages.createCity : messages.editCity)}</span>,
+      document.querySelector('.editItemName')
+    );
+  }
+
   render() {
     return (this.props.loadedCity || this.isCreatePage()) &&
       (
-        <div>
-          <Typography variant="h5">
-            <FormattedMessage id={`admin.city.${this.isCreatePage() ? 'create' : 'edit'}_title`} />
-          </Typography>
+        <React.Fragment>
+          {this.renderTitle()}
           <FormWithLoader
             onSubmit={this.onSubmit}
             loaderId={CONTENT_LOADER_ID}
@@ -93,12 +88,12 @@ class CreateEditCityPageComponent extends React.Component<ICreateEditCityPagePro
             defaultLanguage={DEFAULT_LANGUAGE}
           />
           <NavigationPrompt when={this.props.showNavigationPrompt} />
-        </div>
+        </React.Fragment>
       ) || <Loader isLoading />;
   }
 }
 
-const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => ({
+const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
   typesMap: getTypesMap(state),
   loadedCity: getCityById(state, props.match.params.cityId),
   showNavigationPrompt: isDirty(CITY_FORM_NAME)(state) && !isSubmitting(CITY_FORM_NAME)(state),
@@ -106,13 +101,13 @@ const mapStateToProps = (state: IAppState, props: ICreateEditCityPageProps) => (
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getCity: (id: string) => dispatch(getAdminCity(id)),
-  createCity: (city: ICity) => dispatch(createCity(city)),
-  updateCity: (city: ICity) => dispatch(updateCity(city)),
-  initializeForm: (city: ICity) => dispatch(initialize(CITY_FORM_NAME, city))
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  getCity: cityId => dispatch(getAdminCity(cityId)),
+  createCity: city => dispatch(createCity(city)),
+  updateCity: city => dispatch(updateCity(city)),
+  initializeForm: city => dispatch(initialize(CITY_FORM_NAME, city))
 });
 
 export const CreateEditCityPage = injectIntl(
-  connect<{}, {}, ICreateEditCityPageProps>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent)
 );

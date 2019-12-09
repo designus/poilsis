@@ -1,60 +1,101 @@
 import * as React from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Dispatch } from 'react-redux';
-import { InjectedIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
+import { isEqual } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
-import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IImage, IPhotoFormState } from 'global-utils';
+import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IImage, IPhotoFormState, itemValidation } from 'global-utils';
 
+import { adminRoutes } from 'client-utils/routes';
+import { Button } from 'components/button';
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
-import { UploadedImages } from 'components/formFields/uploadedImages';
+import { ImagePreview } from 'components/imagePreview';
+import { AdminFormActions } from 'components/adminFormActions';
+import { ICustomProps, Props } from './types';
 
 export const PHOTOS_FORM_NAME = 'PhotosForm';
+
+const { images: { maxPhotos } } = itemValidation;
 
 const validators = [
   maxUploadedPhotos,
   maxUploadedPhotoSize
 ];
 
-interface ICustomProps {
-  images: IImage[];
-  onResetUploadState: () => void;
-  onSaveImages: (images: IImage[]) => void;
-  onSortImages: (images: IImage[]) => void;
-  intl: InjectedIntl;
-}
+let loadedImages = 0;
 
-type FormProps = ICustomProps & InjectedFormProps<{}, ICustomProps>;
+function FormComponent(props: Props) {
+  const { useState, useEffect } = React;
+  const { images: initialImages, onSaveImages, intl: { formatMessage } } = props;
+  const [images, setImages] = useState([...initialImages]);
 
-class FormComponent extends React.Component<FormProps> {
+  useEffect(() => {
+    setImages([...initialImages]);
+  }, [initialImages]);
 
-  clearDroppedImages = () => {
-    this.props.change('files', []);
-  }
+  const handleImageDelete = (index: number) => (e: React.FormEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    images.splice(index, 1);
+    setImages([...images]);
+    loadedImages--;
+  };
 
-  handleLoadedImages = () => {
-    this.props.onResetUploadState();
-    this.clearDroppedImages();
-  }
+  const handleImagesSave = () => {
+    onSaveImages(images);
+  };
 
-  render() {
-    return (
-      <form autoComplete="off">
-        <Field
-          name="files"
-          component={DropzoneInput}
-          validate={validators}
-          clearDroppedImages={this.clearDroppedImages}
-          formName="PhotosForm"
-        />
-        <UploadedImages
-          images={this.props.images}
-          onSaveImages={this.props.onSaveImages}
-          onSortImages={this.props.onSortImages}
-          onLoadedImages={this.handleLoadedImages}
-        />
-      </form>
-    );
-  }
+  const handleImagesSort = (images: IImage[]) => {
+    setImages([...images]);
+  };
+
+  const clearDroppedImages = () => {
+    props.change('files', []);
+  };
+
+  const handleImageLoad = () => {
+    loadedImages++;
+    if (loadedImages === images.length) {
+      props.onResetUploadState();
+      clearDroppedImages();
+    }
+  };
+
+  const getImagePreviewLabel = () =>
+    formatMessage({id: 'admin.file_upload.image_preview_label'}, {
+      uploadedCount: images.length,
+      totalCount: maxPhotos
+    });
+
+  const isSubmitDisabled = () => {
+    const imagesIds = images.map((image: IImage) => image.id);
+    const initialImagesIds = initialImages.map((image: IImage) => image.id);
+    return isEqual(imagesIds, initialImagesIds);
+  };
+
+  return (
+    <form autoComplete="off">
+      <Field
+        name="files"
+        component={DropzoneInput}
+        validate={validators}
+        clearDroppedImages={clearDroppedImages}
+        formName="PhotosForm"
+      />
+      <ImagePreview
+        label={getImagePreviewLabel()}
+        images={images}
+        onLoadImage={handleImageLoad}
+        onDeleteImage={handleImageDelete}
+        onSortImages={handleImagesSort}
+        hasError={false}
+        isUploaded={true}
+        isUploading={false}
+        isTemporary={false}
+      />
+      <AdminFormActions backLink={adminRoutes.items.getLink()} isSubmitDisabled={isSubmitDisabled()} />
+    </form>
+  );
 }
 
 export default reduxForm<{}, ICustomProps>({

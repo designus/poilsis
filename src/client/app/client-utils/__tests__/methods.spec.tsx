@@ -1,5 +1,5 @@
 import { IItem } from 'global-utils/typings';
-import { getNormalizedData } from '../methods';
+import { getNormalizedData, isAdminItemActive } from '../methods';
 
 describe('client-utils/methods', () => {
   it('getNormalizedData()', () => {
@@ -24,5 +24,18 @@ describe('client-utils/methods', () => {
         'ru-almuka': '123'
       }
     });
+  });
+
+  it('isAdminItemActive()', () => {
+    const activePaths = [
+      '/admin/item/edit/:itemId/:userId/main',
+      '/admin/item/edit/:itemId/:userId/description',
+      '/admin/items'
+    ];
+
+    expect(isAdminItemActive('/admin/item/edit/1234/567/main', activePaths)).toBe(true);
+    expect(isAdminItemActive('/admin/item/edit/afasf/sl4px/description', activePaths)).toBe(true);
+    expect(isAdminItemActive('/admin/items', activePaths)).toBe(true);
+    expect(isAdminItemActive('/admin/some-other-path/items', activePaths)).toBe(false);
   });
 });

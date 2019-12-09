@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import { Toast } from 'components/toast';
 import { UserMenu } from 'components/userMenu';
 import { LanguageSelector } from 'components/languageSelector';
+import { NotFound } from 'components/notFound';
 import { Drawer } from 'components/drawer';
 import { LoginButton } from 'components/loginButton';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
@@ -124,7 +125,8 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
               <Route path={clientRoutes.login.path} component={LoginPage} />
               <Route exact path={clientRoutes.items.path} component={CityPage} />
               <Route exact path={clientRoutes.item.path} component={ItemPage} />
-              <Route path={clientRoutes.landing.path} component={HomePage} />
+              <Route exact path={clientRoutes.landing.path} component={HomePage} />
+              <Route component={NotFound}/>
             </Switch>
           </Container>
           <Toast />

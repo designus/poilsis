@@ -1,4 +1,5 @@
 import { UserRoles, TranslatableField } from 'global-utils/typings';
+import { LANGUAGES } from 'global-utils/constants';
 
 export interface IRoute {
   path: string;
@@ -47,21 +48,23 @@ interface IRoutesConfig {
   };
 }
 
+const locales = LANGUAGES.join('|');
+
 export const clientRoutes: IRoutesConfig = {
   login: {
-    path: '/:locale(lt|en|ru)?/login',
+    path: `/:locale(${locales})?/login`,
     getLink: (locale: string) => `/${locale}/login`
   },
   landing: {
-    path: '/:locale(lt|en|ru)?',
+    path: `/:locale(${locales})?`,
     getLink: (locale: string) => `/${locale}`
   },
   items: {
-    path: '/:locale(lt|en|ru)/:cityAlias',
+    path: `/:locale(${locales})/:cityAlias`,
     getLink: (locale: string, cityAlias: TranslatableField) => `/${locale}/${cityAlias[locale]}`
   },
   item: {
-    path: '/:locale(lt|en|ru)/:cityAlias/:itemAlias',
+    path: `/:locale(${locales})/:cityAlias/:itemAlias`,
     getLink: (locale: string, cityAlias: TranslatableField, itemAlias: TranslatableField) =>
       `/${locale}/${cityAlias[locale]}/${itemAlias[locale]}`
   }

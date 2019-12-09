@@ -1,8 +1,11 @@
 import { FormattedMessage } from 'react-intl';
+import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
+import { Action, Store } from 'redux';
 import { Omit } from 'global-utils/typings';
 import { ItemsActionTypes } from './items';
 import { CitiesActionTypes } from './cities';
 import { TypesActionTypes } from './types';
+import { IAppState } from './appState';
 
 export interface IAliasMap {
   [key: string]: string;
@@ -43,3 +46,19 @@ export interface IToggleEnabled {
 }
 
 export type ToggleEnabledParams = Omit<IToggleEnabled, 'type'>;
+
+export type ThunkDispatch = Dispatch<IAppState, {}, Action>;
+
+export type ThunkResult<T> = ThunkAction<T, IAppState, {}, Action>;
+
+export type ThunkReturn<A> = A extends (...args: infer B) => infer C
+  ? C extends (...args: any[]) => any
+    ? (...args: B) => ReturnType<C>
+    : never
+  : never;
+
+export type ActionReturn<A> = A extends (...args: infer B) => any
+  ? (...args: B) => void
+  : never;
+
+export type ReduxStore = Store<IAppState, any>;

@@ -1,25 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Typography from '@material-ui/core/Typography';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
-import { IImage, IPhotoFormState } from 'global-utils';
+import { IImage, IPhotoFormState } from 'global-utils/typings';
+import { IAppState, ThunkDispatch } from 'types';
+
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { updatePhotos, uploadPhotos, receiveImages } from 'actions/items';
 import { resetUploadState } from 'actions/upload';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { PhotosForm } from './form';
 
+import { IOwnProps, IDispatchProps, Props } from './types';
+
 const PhotosFormWithLoader = extendWithLoader(PhotosForm);
 
-interface IPhotosFormFields extends IPhotoFormState, InjectedIntlProps {}
-
-class PhotosPage extends React.Component<any, any> {
-
-  constructor(props) {
-    super(props);
-  }
-
+class PhotosPage extends React.Component<Props> {
   getItemId = () => this.props.loadedItem.id;
 
   handleImagesUpload = (state: IPhotoFormState) => {
@@ -33,9 +29,6 @@ class PhotosPage extends React.Component<any, any> {
   render() {
     return this.props.loadedItem ? (
       <React.Fragment>
-        <Typography variant="h5">
-          <FormattedMessage id="admin.menu.photos" />
-        </Typography>
         <PhotosFormWithLoader
           onSubmit={this.handleImagesUpload}
           onSaveImages={this.handleImagesUpdate}
@@ -52,13 +45,13 @@ class PhotosPage extends React.Component<any, any> {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  uploadImages: (itemId: string, files: File[]) => dispatch(uploadPhotos(itemId, files)),
-  updateImages: (itemId: string, images: IImage[]) => dispatch(updatePhotos(itemId, images)),
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
+  updateImages: (itemId, images) => dispatch(updatePhotos(itemId, images)),
   resetUploadState: () => dispatch(resetUploadState()),
-  sortImages: (id: string) => (images: IImage[]) => dispatch(receiveImages(id, images, null))
+  sortImages: id => (images: IImage[]) => dispatch(receiveImages(id, images, null))
 });
 
 export default injectIntl(
-  connect<any, any, IPhotosFormFields>(undefined, mapDispatchToProps)(PhotosPage)
+  connect<{}, IDispatchProps, IOwnProps, IAppState>(undefined, mapDispatchToProps)(PhotosPage)
 );

@@ -1,4 +1,4 @@
-import axios, { AxiosResponse as IResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { config } from 'config';
 import { Toast } from 'types';
 
@@ -21,14 +21,9 @@ export const handleApiErrors = (message, loaderId, dispatch) => err => {
   return Promise.reject(err);
 };
 
-export const handleApiResponse = (response: IResponse) => {
-  if (response.data.errors) {
-    throw response.data.errors;
-  }
-
-  if (response.data.errmsg) {
-    throw response.data.errmsg;
-  }
-
+export function handleApiResponse<T>(response: AxiosResponse<T>): T {
+  // if (response.data.errors) {
+  //   throw response.data.errors;
+  // }
   return response.data;
-};
+}

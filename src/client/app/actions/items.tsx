@@ -7,7 +7,6 @@ import {
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { Toast, IAppState, ToggleEnabledParams, IToggleEnabled, IToggleItemApprovedByAdmin } from 'types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -31,8 +30,15 @@ import {
   IReceiveItemDescription,
   IRemoveItem,
   IToggleItemRecommended,
-  IUniqueItemProps
-} from 'types/items';
+  IUniqueItemProps,
+  Toast,
+  IAppState,
+  ToggleEnabledParams,
+  IToggleEnabled,
+  IToggleItemApprovedByAdmin,
+  ThunkDispatch,
+  ThunkResult
+} from 'types';
 
 import { stopLoading, handleApiResponse, handleApiErrors, http } from './utils';
 
@@ -110,29 +116,29 @@ export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
     });
 };
 
-export const getItem = (itemId: string) => dispatch => {
+export const getItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return http.get(`/api/items/item/${itemId}`)
-    .then(handleApiResponse)
-    .then((response: IItem) => {
+  return http.get<IItem>(`/api/items/item/${itemId}`)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItem(response));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(handleApiErrors('Unable to load Item', CONTENT_LOADER_ID, dispatch));
 };
 
-export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
+export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<IImage[]>> => dispatch => {
   return http
-    .put(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
+    .put<IItem>(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
       onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent)))
     })
-    .then(handleApiResponse)
-    .then((item: IItem) => {
+    .then(response => handleApiResponse(response))
+    .then(item => {
       dispatch(receiveImages(itemId, item.images, item.mainImage));
       dispatch(setUploadProgress(100));
       dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
       dispatch(uploadSuccess());
-      return Promise.resolve(item.images);
+      return item.images;
     })
     .catch(err => {
       console.error(err);
@@ -144,16 +150,14 @@ export const uploadPhotos = (itemId: string, files: File[]) => (dispatch) => {
     });
 };
 
-export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => {
+export const updatePhotos = (itemId: string, images: IImage[]): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-
-  return http.put(`/api/items/item/update-photos/${itemId}`, {images})
-    .then(handleApiResponse)
-    .then((item: IItem) => {
+  return http.put<IItem>(`/api/items/item/update-photos/${itemId}`, {images})
+    .then(response => handleApiResponse(response))
+    .then(item => {
       dispatch(receiveImages(itemId, item.images, item.mainImage));
       dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
       dispatch(endLoading(CONTENT_LOADER_ID));
-      return Promise.resolve();
     })
     .catch(err => {
       console.error(err);
@@ -165,24 +169,24 @@ export const updatePhotos = (itemId: string, images: IImage[]) => (dispatch) => 
     });
 };
 
-export const updateMainInfo = (item: IItem) => (dispatch) => {
+export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.put(`/api/items/item/main-info/${item.id}`, item)
-    .then(handleApiResponse)
-    .then((response: IItem) => {
+  return http.put<IItem>(`/api/items/item/main-info/${item.id}`, item)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields) => (dispatch) => {
+export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
-  return http.put(`/api/items/item/description/${itemId}`, itemDescFields)
-    .then(handleApiResponse)
-    .then((response: IItemDescFields) => {
+  return http.put<IItemDescFields>(`/api/items/item/description/${itemId}`, itemDescFields)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItemDescription(itemId, response));
       dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
     })
@@ -190,21 +194,21 @@ export const updateItemDescription = (itemId: string, itemDescFields: IItemDescF
 
 };
 
-export const createItem = (item: IItem) => (dispatch) => {
+export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.post(`/api/items`, item)
-    .then(handleApiResponse)
-    .then((response: IItem) => {
+  return http.post<IItem>(`/api/items`, item)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveItem(response));
       dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const deleteItem = (itemId: string) => (dispatch) => {
+export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispatch) => {
 
   dispatch(startLoading(DIALOG_LOADER_ID));
 
@@ -217,9 +221,9 @@ export const deleteItem = (itemId: string) => (dispatch) => {
     .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (params: ToggleEnabledParams) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-enabled`, params)
-    .then(handleApiResponse)
+export const toggleItemEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/items/item/toggle-enabled`, params)
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleItemEnabledField(params));
     })
@@ -229,9 +233,9 @@ export const toggleItemEnabled = (params: ToggleEnabledParams) => (dispatch) => 
     });
 };
 
-export const toggleItemApproved = (itemId: string, isApproved: boolean) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-approved`, { itemId, isApproved })
-    .then(handleApiResponse)
+export const toggleItemApproved = (itemId: string, isApproved: boolean): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/items/item/toggle-approved`, { itemId, isApproved })
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleItemApprovedField(itemId, isApproved));
     })
@@ -241,11 +245,14 @@ export const toggleItemApproved = (itemId: string, isApproved: boolean) => (disp
     });
 };
 
-export const toggleItemRecommended = (itemId: string, isRecommended: boolean) => (dispatch) => {
-  return http.patch(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
-    .then(handleApiResponse)
+export const toggleItemRecommended = (itemId: string, isRecommended: boolean): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleItemRecommendedField(itemId, isRecommended));
     })
-    .catch(err => console.error('Err', err));
+    .catch(err => {
+      console.error('Err', err);
+      dispatch(showToast(Toast.error, 'admin.item.recommend_error'));
+    });
 };

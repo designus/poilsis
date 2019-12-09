@@ -12,7 +12,17 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { IAppState, CitiesActionTypes, IReceiveCity, IRemoveCity, ToggleEnabledParams, IToggleEnabled, Toast } from 'types';
+import {
+  IAppState,
+  CitiesActionTypes,
+  IReceiveCity,
+  IRemoveCity,
+  ToggleEnabledParams,
+  IToggleEnabled,
+  Toast,
+  ThunkDispatch,
+  ThunkResult
+} from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 
@@ -57,12 +67,12 @@ export const loadCityItems = (alias: string) => {
   };
 };
 
-export const createCity = (city: ICity) => (dispatch) => {
+export const createCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatch: ThunkDispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.post('/api/cities', city)
-    .then(handleApiResponse)
-    .then((response: ICity) => {
+  return http.post<ICity>('/api/cities', city)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveCity(response));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
       return Promise.resolve(response);
@@ -70,35 +80,34 @@ export const createCity = (city: ICity) => (dispatch) => {
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (city: ICity) => (dispatch) => {
+export const updateCity = (city: ICity): ThunkResult<Promise<ICity>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.put(`/api/cities/city/${city.id}`, city)
-    .then(handleApiResponse)
-    .then((response: ICity) => {
+  return http.put<ICity>(`/api/cities/city/${city.id}`, city)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveCity(response));
       dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
-export const deleteCity = (cityId: string) => dispatch => {
+export const deleteCity = (cityId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   return http.delete(`/api/cities/city/${cityId}`)
-    .then(handleApiResponse)
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(removeCity(cityId));
       dispatch(stopLoading(false, CITY_DELETE_SUCCESS, DIALOG_LOADER_ID));
-      return Promise.resolve();
     })
     .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleCityEnabled = (params: ToggleEnabledParams) => (dispatch) => {
-  return http.patch(`/api/cities/city/toggle-enabled`, params)
-    .then(handleApiResponse)
+export const toggleCityEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
+  return http.patch<boolean>(`/api/cities/city/toggle-enabled`, params)
+    .then(response => handleApiResponse(response))
     .then(() => {
       dispatch(toggleCityEnabledField(params));
     })

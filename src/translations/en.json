@@ -85,6 +85,7 @@
   "admin.item.delete_error": "Item was not deleted",
   "admin.item.enable_error": "Unable to enable item",
   "admin.item.approve_error": "Unable to approve item",
+  "admin.item.recommend_error": "Unable to recommend item",
   "admin.item.seo_info": "To get your ad indexed by search engines better please fill the following fields",
   "admin.type.create_success": "New type was created succesfully",
   "admin.type.create_error": "Failed to create new type",

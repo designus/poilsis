@@ -58,6 +58,9 @@ export const theme = createMuiTheme({
     MuiButton: {
       root: {
         borderRadius: 0
+      },
+      outlined: {
+        borderColor: '#dbdbdb'
       }
     },
     MuiSnackbar: {

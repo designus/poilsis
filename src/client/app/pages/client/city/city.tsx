@@ -61,7 +61,7 @@ class CityPage extends React.Component<ICityPageProps, any> {
         {this.renderTitle()}
         {this.renderMetaDescription()}
       </Helmet>
-    )
+    );
   }
 
   render() {

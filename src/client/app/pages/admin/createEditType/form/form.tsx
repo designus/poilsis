@@ -1,25 +1,23 @@
 import * as React from 'react';
 import { Dispatch } from 'react-redux';
-import { Field, reduxForm, InjectedFormProps, ConfigProps } from 'redux-form';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
+import { Field, reduxForm } from 'redux-form';
+import { withRouter } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
+import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
-import { isRequired, IType, Languages } from 'global-utils';
-import { Button } from 'components/button';
+import { isRequired, IType } from 'global-utils';
 import { TextInput } from 'components/formFields/textInput';
 import { Switcher } from 'components/formFields/switch';
+import { AdminFormActions } from 'components/adminFormActions';
+
+import { Props, ICustomProps } from './types';
 
 export const TYPE_FORM_NAME = 'TypeForm';
 
-interface ICustomProps {
-  intl: InjectedIntl;
-  languages: Languages[];
-  defaultLanguage: Languages;
-  selectedLanguage?: Languages;
-}
-
-const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
+const Form = (props: Props) => {
   const { handleSubmit, selectedLanguage, intl } = props;
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <Field
@@ -54,11 +52,7 @@ const Form = (props: ICustomProps & InjectedFormProps<{}, ICustomProps>) => {
         hasIntl
         label={intl.formatMessage({ id: 'admin.common_fields.is_enabled'})}
       />
-      <div>
-        <Button type="submit">
-          <FormattedMessage id="common.submit" />
-        </Button>
-      </div>
+      <AdminFormActions backLink={adminRoutes.types.getLink()} />
     </form>
   );
 };

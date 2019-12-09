@@ -4,10 +4,10 @@ import Dialog from '@material-ui/core/Dialog';
 import { FormattedMessage } from 'react-intl';
 
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
-import { modalStyles } from '../styles';
-import { DialogHeader, DialogContent, DialogFooter } from '../shared';
+import { styles } from '../styles';
+import { Header, Content, Footer } from '../shared';
 
-export interface IDeleteModalProps extends Partial<WithStyles<typeof modalStyles>> {
+export interface IDeleteModalProps extends Partial<WithStyles<typeof styles>> {
   isModalOpen: boolean;
   itemId: string;
   itemName: string;
@@ -24,36 +24,29 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
   render() {
     const { classes, itemName, onClose, isModalOpen } = this.props;
     return (
-      <div>
-        <Dialog
-          open={isModalOpen}
-          onClose={onClose}
-          classes={{
-            paper: classes.paper
-          }}
+      <Dialog
+        open={isModalOpen}
+        onClose={onClose}
+        classes={{
+          paper: classes.paper
+        }}
+      >
+        <Header onClose={onClose}>
+          <FormattedMessage id="admin.delete_modal.title" values={{ item: itemName }}/>
+        </Header>
+        <Content
+          showLoadingOverlay={true}
+          loaderId={DIALOG_LOADER_ID}
         >
-          <DialogHeader
-            className={classes.close}
-            closeModal={onClose}
-          >
-            <FormattedMessage id="admin.delete_modal.title" values={{ item: itemName }}/>
-          </DialogHeader>
-          <DialogContent
-            showLoadingOverlay={true}
-            loaderId={DIALOG_LOADER_ID}
-            contentClass={classes.dialogContent}
-          >
-            <FormattedMessage id="admin.delete_modal.description" />
-          </DialogContent>
-          <DialogFooter
-            classes={classes}
-            onClose={onClose}
-            onSubmit={this.deleteItem}
-          />
-        </Dialog>
-      </div>
+          <FormattedMessage id="admin.delete_modal.description" />
+        </Content>
+        <Footer
+          onClose={onClose}
+          onSubmit={this.deleteItem}
+        />
+      </Dialog>
     );
   }
 }
 
-export const DeleteModal = withStyles(modalStyles)(DeleteModalComponent);
+export const DeleteModal = withStyles(styles)(DeleteModalComponent);

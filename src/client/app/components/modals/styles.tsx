@@ -1,25 +1,25 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
 
-export const modalStyles = (theme: Theme) => createStyles({
+export const styles = (theme: Theme) => createStyles({
   paper: {
     borderRadius: '0',
-    minWidth: '300px'
+    width: '600px'
   },
-  actionWrapper: {
-    margin: '8px 0 0 0'
+  closeButton: {
+    color: '#fff'
   },
-  buttonWrapper: {
-    width: '50%',
-    textAlign: 'center',
-    margin: '0'
+  content: {
+    paddingTop: '20px',
+    paddingBottom: '10px'
   },
-  dialogContent: {
-    paddingTop: '6px'
-  },
-  close: {
-    position: 'absolute',
-    top: '0',
-    right: '0'
+  header: {
+    background: theme.palette.primary.main,
+    paddingTop: '8px',
+    paddingBottom: '8px',
+    color: '#fff',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 });

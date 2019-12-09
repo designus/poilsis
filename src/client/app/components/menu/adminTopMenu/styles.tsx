@@ -1,46 +1,44 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
 
-const commonStyles = {
-  textDecoration: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  padding: '10px 15px',
-  cursor: 'pointer',
-  justifyContent: 'space-between'
-};
-
 export const styles = (theme: Theme) => createStyles({
+  list: {
+    padding: '0 0 15px 0'
+  },
   listItem: {
     display: 'inline-block',
     marginRight: '5px',
     width: 'auto',
-    background: theme.palette.grey['300'],
-    padding: 0
+    background: theme.palette.grey['200'],
+    border: `1px solid ${theme.palette.grey['300']}`,
+    padding: 0,
+    '& > a, & > span': {
+      display: 'flex',
+      padding: '10px 25px',
+      textDecoration: 'none',
+      alignItems: 'center'
+    }
   },
   activeItem: {},
-  dropdownItem: {
-    ...commonStyles
-  },
+  dropdownItem: {},
   dropdownMenu: {
     '& li': {
       display: 'block'
     }
   },
   text: {
-    paddingLeft: '0'
+    padding: 0,
+    margin: 0
   },
   disabled: {
     background: theme.palette.grey['300'],
     pointerEvents: 'none',
-    opacity: .5,
-    ...commonStyles
+    opacity: .5
   },
   link: {
-    ...commonStyles,
     color: '#1c1c1c',
     '&:hover, &.active': {
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: theme.palette.primary.main,
       color: '#fff',
       '& svg, span': {
         color: '#fff'
@@ -49,7 +47,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   icon: {
     marginRight: '5px',
-    marginLeft: '5px',
     minWidth: '25px'
   }
 });

@@ -9,17 +9,17 @@ import { IAppState } from 'types';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { logout, reauthenticateUser } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
-import { modalStyles } from '../styles';
-import { DialogHeader, DialogContent, DialogFooter } from '../shared';
+import { styles } from '../styles';
+import { Header, Content, Footer } from '../shared';
 
-export interface IKeepMeLoggedModalProps extends WithStyles<typeof modalStyles> {
+export interface IKeepMeLoggedModalProps extends WithStyles<typeof styles> {
   isModalOpen?: boolean;
   sessionExpiryTime?: number;
   onCloseModal?: () => void;
   reauthenticateUser?: () => void;
 }
 
-class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps, any> {
+class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps> {
 
   onCloseModal = () => {
     this.props.onCloseModal();
@@ -45,16 +45,12 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
             paper: classes.paper
           }}
         >
-          <DialogHeader
-            className={classes.close}
-            closeModal={this.onCloseModal}
-          >
+          <Header onClose={this.onCloseModal}>
             <FormattedMessage id="admin.reauthenticate_modal.title" />
-          </DialogHeader>
-          <DialogContent
+          </Header>
+          <Content
             showLoadingOverlay={true}
             loaderId={DIALOG_LOADER_ID}
-            contentClass={classes.dialogContent}
           >
             {sessionExpiryTime &&
               <Countdown
@@ -64,9 +60,8 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
                 renderer={this.renderCountdown}
               />
             }
-          </DialogContent>
-          <DialogFooter
-            classes={classes}
+          </Content>
+          <Footer
             closeLabelId="common.no"
             submitLabelId="common.yes"
             onClose={this.onCloseModal}
@@ -90,4 +85,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);
 
-export default withStyles(modalStyles)(connectedComponent);
+export default withStyles(styles)(connectedComponent);

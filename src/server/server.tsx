@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
+import { dom } from '@fortawesome/fontawesome-svg-core';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
 import { IntlProvider } from 'react-intl';
@@ -12,6 +13,7 @@ import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
+import 'global-utils/icons';
 import { rootReducer  } from 'reducers';
 import { IAuthState } from 'types';
 
@@ -109,7 +111,8 @@ function sendResponse(res, store, location) {
       scripts,
       css,
       preloadedState,
-      helmet
+      helmet,
+      fontAwesomeCSS: dom.css()
     }
 });
 }

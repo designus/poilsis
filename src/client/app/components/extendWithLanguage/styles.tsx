@@ -8,16 +8,17 @@ export const languageStyles = (theme: Theme) => createStyles({
     padding: '5px',
     width: '30px',
     textAlign: 'center',
-    border: '1px solid #ccc',
-    cursor: 'pointer'
+    border: `1px solid ${theme.palette.grey[300]}`,
+    cursor: 'pointer',
+    background: theme.palette.grey[200]
   },
   typography: {
-    textTransform: 'capitalize'
+    textTransform: 'uppercase'
   },
   active: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: theme.palette.primary.main,
     color: '#fff',
-    borderColor: '#3f51b5',
+    borderColor: theme.palette.primary.main,
     '& > span': {
       color: '#fff'
     }

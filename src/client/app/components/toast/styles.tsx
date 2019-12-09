@@ -1,29 +1,20 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { createStyles } from '@material-ui/core/styles';
-
-const green = '#00c133';
-const yellow = '#fcc205';
-const red = '#ff3030';
-
-const dimensions = {
-  width: '100%',
-  padding: '10px 20px'
-};
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
+import yellow from '@material-ui/core/colors/yellow';
 
 export const styles = (theme: Theme) => createStyles({
-  close: {
-    width: theme.spacing(4),
-    height: theme.spacing(4)
-  },
   success: {
     '& > div': {
-      ...dimensions,
-      backgroundColor: green
+      width: '100%',
+      padding: '10px 20px',
+      backgroundColor: green[500]
     }
   },
   warning: {
     '& > div': {
-      backgroundColor: yellow
+      backgroundColor: yellow[500]
     }
   },
   message: {
@@ -32,12 +23,11 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     '& > svg': {
       paddingRight: '10px',
-      fontSize: '30px'
     }
   },
   error: {
     '& > div': {
-      backgroundColor: red
+      backgroundColor: red[500]
     }
   }
 });

@@ -9,7 +9,7 @@ import {
   TYPE_UPDATE_ERROR,
   TYPE_DELETE_ERROR
 } from 'data-strings';
-import { TypesActionTypes, ISelectType, IReceiveType, IRemoveType, ToggleEnabledParams, Toast, IToggleEnabled } from 'types';
+import { TypesActionTypes, ISelectType, IReceiveType, IRemoveType, ToggleEnabledParams, Toast, IToggleEnabled, ThunkResult } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 import { startLoading } from './loader';
@@ -34,46 +34,45 @@ export const toggleTypeEnabledField = (params: ToggleEnabledParams): IToggleEnab
   ...params
 });
 
-export const createType = (type: IType) => (dispatch) => {
+export const createType = (type: IType): ThunkResult<Promise<IType>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.post('/api/types', type)
-    .then(handleApiResponse)
-    .then((response: IType) => {
+  return http.post<IType>('/api/types', type)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveType(response));
       dispatch(stopLoading(false, TYPE_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(TYPE_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateType = (adminType: IType) => dispatch => {
+export const updateType = (adminType: IType): ThunkResult<Promise<IType>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.put(`/api/types/type/${adminType.id}`, adminType)
-    .then(handleApiResponse)
-    .then((response: IType) => {
+  return http.put<IType>(`/api/types/type/${adminType.id}`, adminType)
+    .then(response => handleApiResponse(response))
+    .then(response => {
       dispatch(receiveType(response));
       dispatch(stopLoading(false, TYPE_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return response;
     })
     .catch(handleApiErrors(TYPE_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
-export const deleteType = (typeId: string) => dispatch => {
+export const deleteType = (typeId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   return http.delete(`/api/types/type/${typeId}`)
     .then(handleApiResponse)
     .then(() => {
       dispatch(removeType(typeId));
       dispatch(stopLoading(false, TYPE_DELETE_SUCCESS, DIALOG_LOADER_ID));
-      return Promise.resolve();
     })
     .catch(handleApiErrors(TYPE_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleTypeEnabled = (params: ToggleEnabledParams) => (dispatch) => {
+export const toggleTypeEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
   return http.patch(`/api/types/type/toggle-enabled`, params)
     .then(handleApiResponse)
     .then(() => {

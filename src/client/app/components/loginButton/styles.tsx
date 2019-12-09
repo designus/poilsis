@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => {
       }
     },
     dropdownMenu: {
-      top: '59px !important',
+      top: '54px !important',
       padding: 0,
       minWidth: '150px',
       borderRadius: `0px ${borderRadius} ${borderRadius} ${borderRadius}`,

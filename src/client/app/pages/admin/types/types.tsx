@@ -8,7 +8,7 @@ import { deleteType, toggleTypeEnabled } from 'actions/types';
 import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 import { IType } from 'global-utils';
-import { IAppState, ITypesMap, ToggleEnabledParams } from 'types';
+import { IAppState, ITypesMap, ToggleEnabledParams, ThunkDispatch, ThunkReturn } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -22,8 +22,8 @@ const Table = extendWithLoader(EnhancedTable);
 interface IOwnProps extends InjectedIntlProps {}
 
 interface IDispatchProps {
-  deleteType: (typeId: string) => Promise<void>;
-  toggleTypeEnabled: (params: ToggleEnabledParams) => void;
+  deleteType: ThunkReturn<typeof deleteType>;
+  toggleTypeEnabled: ThunkReturn<typeof toggleTypeEnabled>;
 }
 
 interface IStateProps {
@@ -32,9 +32,14 @@ interface IStateProps {
   locale: string;
 }
 
-type ITypesPageProps = IOwnProps & IStateProps & IDispatchProps;
+type Props = IOwnProps & IStateProps & IDispatchProps;
 
-class AdminTypesPage extends React.Component<ITypesPageProps, any> {
+type State = {
+  isDeleteModalOpen: boolean;
+  deleteId: string;
+};
+
+class AdminTypesPage extends React.Component<Props, State> {
 
   state = {
     isDeleteModalOpen: false,
@@ -133,13 +138,13 @@ class AdminTypesPage extends React.Component<ITypesPageProps, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   typesMap: getTypesMap(state),
   types: getTypes(state),
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   deleteType: (typeId: string) => dispatch(deleteType(typeId)),
   toggleTypeEnabled: (params: ToggleEnabledParams) => dispatch(toggleTypeEnabled(params))
 });

@@ -74,7 +74,7 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
             isApprovedByAdmin: action.isApproved
           }
         }
-      }
+      };
     case ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED:
       return {
         ...state,

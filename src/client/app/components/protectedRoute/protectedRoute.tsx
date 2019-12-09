@@ -23,7 +23,6 @@ interface IProtectedRouteProps {
   match?: match<IMatchParams>;
 }
 
-// type TProtectedRouteProps = IProtectedRouteProps & RouteComponentProps<IMatchParams>;
 type TProtectedRouteProps = IProtectedRouteProps;
 
 class Protected extends React.Component<TProtectedRouteProps, any> {

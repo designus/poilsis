@@ -1,23 +1,21 @@
 import * as React from 'react';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
-import { FormattedMessage, InjectedIntl } from 'react-intl';
+import { Field, reduxForm } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-import { Button } from 'components/button';
+import { adminRoutes } from 'client-utils/routes';
+import { AdminFormActions } from 'components/adminFormActions';
 import { TextEditor } from 'components/formFields/textEditor';
 import { TextInput } from 'components/formFields/textInput';
+import { Props, ICustomProps } from './types';
 
 import { styles } from './styles';
 
 export const ITEM_DESCRIPTION_FORM_NAME = 'ItemDescriptionForm';
 
-interface ICustomProps extends WithStyles<typeof styles> {
-  intl: InjectedIntl;
-  selectedLanguage?: string;
-}
-
-class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomProps>> {
+class Form extends React.Component<Props> {
 
   render() {
     const { handleSubmit, selectedLanguage, intl, classes } = this.props;
@@ -54,9 +52,7 @@ class Form extends React.Component<ICustomProps & InjectedFormProps<{}, ICustomP
             selectedLanguage={selectedLanguage}
           />
         </div>
-        <Button type="submit">
-          <FormattedMessage id="common.submit" />
-        </Button>
+        <AdminFormActions backLink={adminRoutes.items.getLink()} />
       </form>
     );
   }
