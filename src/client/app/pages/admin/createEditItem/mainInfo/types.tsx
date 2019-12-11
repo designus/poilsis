@@ -1,4 +1,4 @@
-import { Languages, IItem } from 'global-utils/typings';
+import { Languages, IItem, UserRoles } from 'global-utils/typings';
 import { InjectedIntlProps } from 'react-intl';
 
 import { updateMainInfo, createItem } from 'actions/items';
@@ -13,7 +13,7 @@ export interface IStateProps {
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  userRole: string;
+  userRole: UserRoles;
   locale: Languages;
   showNavigationPrompt: boolean;
 }

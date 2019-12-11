@@ -7,8 +7,9 @@ import { styles } from './styles';
 
 export interface IAdminHeaderProps extends WithStyles<typeof styles> {
   translationId: string;
-  createLink: string;
+  createLink?: string;
   search?: (searchTerm: string) => void;
+  showActions?: boolean;
 }
 
 const AdminHeader = React.memo<IAdminHeaderProps>(
@@ -18,10 +19,12 @@ const AdminHeader = React.memo<IAdminHeaderProps>(
         <Typography variant="h5">
           <FormattedMessage id={props.translationId} />
         </Typography>
-        <AdminPageActions
-          createLink={props.createLink}
-          search={props.search}
-        />
+        {props.showActions && (
+          <AdminPageActions
+            createLink={props.createLink}
+            search={props.search}
+          />
+        )}
       </div>
     );
   }

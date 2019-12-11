@@ -11,12 +11,12 @@ import { throttle } from 'lodash';
 import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
 import { logout, showKeepMeLoggedModal } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
-import { IAppState, ICurrentUser } from 'types';
+import { IAppState, UserDetails } from 'types';
 import { DropdownMenu } from 'components/dropdownMenu';
 import { styles } from './styles';
 
 interface IMenuComponentProps extends WithStyles<typeof styles> {
-  currentUser?: ICurrentUser;
+  currentUser?: UserDetails;
   isLoggedIn?: boolean;
   isInverted?: boolean;
   sessionExpiryTime?: number;

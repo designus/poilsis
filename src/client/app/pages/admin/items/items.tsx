@@ -206,6 +206,7 @@ class AdminItemsPage extends React.Component<Props, State> {
       <React.Fragment>
         <AdminHeader
           translationId="admin.menu.items"
+          showActions
           search={this.setSearch}
           createLink={adminRoutes.createItemMain.getLink()}
         />

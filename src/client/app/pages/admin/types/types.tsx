@@ -117,6 +117,7 @@ class AdminTypesPage extends React.Component<Props, State> {
       <React.Fragment>
         <AdminHeader
           translationId="admin.menu.types"
+          showActions
           createLink={adminRoutes.createType.getLink()}
         />
         <Table

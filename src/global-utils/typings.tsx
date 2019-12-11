@@ -87,7 +87,7 @@ export interface IAccessTokenClaims {
   exp: number;
   userName: string;
   userId: string;
-  userRole: string;
+  userRole: UserRoles;
   userItems: string[];
 }
 
@@ -98,7 +98,7 @@ export interface IPhotoFormState {
 export interface IUser {
   id: string;
   name: string;
-  role: string;
+  role: UserRoles;
   alias: string;
   isEnabled: boolean;
 }

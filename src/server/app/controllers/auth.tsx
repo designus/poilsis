@@ -4,7 +4,7 @@ import * as day from 'dayjs';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles, IItem, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
+import { UserRoles, IItem, IUser, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
 import { USER_NOT_FOUND, INVALID_CREDENTIALS, AUTHORIZATION_FAILED } from 'data-strings';
 
 import { UsersModel as User } from '../model/users';
@@ -90,7 +90,8 @@ class Auth {
         throw new Error(USER_NOT_FOUND);
       }
 
-      const { id: userId, role: userRole, name: userName } = user;
+      const { id: userId, role, name: userName } = user;
+      const userRole = role as UserRoles;
       const success = await user.comparePassword(req.body.password);
 
       if (success === false) {

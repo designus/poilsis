@@ -1,0 +1,106 @@
+import { IItem, TranslatableField, Languages } from 'global-utils/typings';
+import { LANGUAGES } from 'global-utils';
+import shortId from 'shortid';
+import { getItemsAliases } from 'selectors';
+import { formatValue } from 'server-utils';
+
+const userId = 'asd2234zl';
+const names = [
+  'Pušų paunksmė',
+  'Almuka',
+  'Pas Juozapą',
+  'Po kaštonu',
+  'Poilsis Palangoje pas Antaną',
+  'Roberto vila',
+  'Gintarinė kopa',
+  'Pajūrio apartamentai Palangoje',
+  'Poilsio namai Palangoje Saulė',
+  'Vila Elena',
+  'Apartamentai saulės krantas',
+  'Viešbutis Palangoje - Tauras Center Hotel',
+  '2 ir 3 kambarių būtai',
+  'Vila krantas',
+  'Birutės Vila',
+  'Kotedžas Palangoje',
+  'Namelio nuoma palangoje',
+  'Šeimos atostogoms namelio nuoma',
+  'Kopų namai',
+  'Kontininkų nameliai',
+  'Vila veneda',
+  'Sodyba Palangoje',
+  'Ramios bitės poilsio namai',
+  'Romo sodyba',
+  'Svečių namai vėjo burė',
+  'Vilos ir namelių nuoma Palangoje',
+  'Vila Z Palanga',
+  'Smėlio kopos apartamentai',
+  'Ritos apartamentai',
+  'Alanga ****',
+  'Alvika - kambarių ir būtų nuoma',
+  'Vila bangomūša',
+  'Kerpė ****',
+  'Apartamentai Palangoje - Obelynė'
+];
+
+const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
+
+const getItemName = (names: string[], index: number): TranslatableField => {
+  return LANGUAGES.reduce((acc, lang) => {
+    acc[lang] = `${lang} - ${names[index]}`;
+    return acc;
+  }, {});
+};
+
+const getItemAlias = (name: TranslatableField): TranslatableField => {
+  return Object.keys(name).reduce((acc, lang) => {
+    acc[lang] = formatValue(name[lang]);
+    return acc;
+  }, {});
+};
+
+const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {
+  const items: IItem[] = [];
+  let nameIndex = 0;
+  for (let i = 0; i < count; i++) {
+    const name = getItemName(names, nameIndex);
+    const alias = getItemAlias(name);
+    items.push({
+      id: shortId.generate(),
+      name,
+      alias,
+      address: `address ${i}`,
+      cityId: cityIds[getRandomNumber(0, cityIds.length - 1)],
+      images: [],
+      types: typeIds,
+      userId,
+      isApprovedByAdmin: true,
+      isEnabled: {
+        en: true,
+        lt: true,
+        ru: true
+      },
+      isRecommended: Boolean(getRandomNumber(0, 1)),
+      mainImage: '',
+      description: {
+        en: 'This is en description',
+        lt: 'This is lt description',
+        ru: 'This is ru description'
+      },
+      metaTitle: {
+        en: '',
+        lt: '',
+        ru: ''
+      },
+      metaDescription: {
+        en: '',
+        lt: '',
+        ru: ''
+      }
+    });
+
+    nameIndex = nameIndex < names.length ? nameIndex + 1 : 0;
+
+  }
+
+  return items;
+}

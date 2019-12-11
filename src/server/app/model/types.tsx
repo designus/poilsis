@@ -1,6 +1,6 @@
 'use strict';
 
-import { Document, Schema, Model, model} from 'mongoose';
+import { Document, Schema, Model, model } from 'mongoose';
 import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import shortId from 'shortid';
 import { formatValue, GenericSchemaMap, requiredMessage } from '../server-utils';

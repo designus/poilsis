@@ -1,11 +1,9 @@
-export interface ICurrentUser {
-  name?: string;
-  role?: string;
-  id?: string;
-}
+import { IUser } from 'global-utils/typings';
+
+export type UserDetails = Partial<Pick<IUser, 'name' | 'role' | 'id'>>;
 
 export interface ICurrentUserState {
-  details: ICurrentUser;
+  details: UserDetails;
   hasItems?: boolean;
 }
 
@@ -15,7 +13,7 @@ export enum CurrentUserActionTypes {
 
 export interface IReceiveUserDetails {
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS;
-  userDetails: ICurrentUser;
+  userDetails: UserDetails;
 }
 
 export type CurrentUserActions = IReceiveUserDetails;
