@@ -21,6 +21,7 @@ import {
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
 import { IImage, IItem, IItemDescFields, Omit, IsEnabled, Languages } from 'global-utils/typings';
+import { generateMockedData } from 'global-utils/mockedData';
 import { getItemById } from 'selectors';
 import {
   ItemsActionTypes,
@@ -254,5 +255,25 @@ export const toggleItemRecommended = (itemId: string, isRecommended: boolean): T
     .catch(err => {
       console.error('Err', err);
       dispatch(showToast(Toast.error, 'admin.item.recommend_error'));
+    });
+};
+
+export const addTestData = (count: number): ThunkResult<Promise<void>> => (dispatch, getState) => {
+  const state = getState();
+  const cityIds = Object.keys(state.cities);
+  const typeIds = Object.keys(state.types);
+  const userId = state.currentUser.details.id;
+  const data = generateMockedData(count, cityIds, typeIds);
+  return http.post<IItem[]>('/api/items/test-data', { data })
+    .then(response => handleApiResponse(response))
+    .then(items => {
+      dispatch(receiveNewItems(items, { userId, dataType: 'currentUser' }));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
+    })
+    .catch(err => {
+      console.error('Err', err);
+      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
     });
 };

@@ -1,7 +1,6 @@
-import { IItem, TranslatableField, Languages } from 'global-utils/typings';
+import { IItem, TranslatableField } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils';
 import shortId from 'shortid';
-import { getItemsAliases } from 'selectors';
 import { formatValue } from 'server-utils';
 
 const userId = 'asd2234zl';
@@ -58,7 +57,7 @@ const getItemAlias = (name: TranslatableField): TranslatableField => {
   }, {});
 };
 
-const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {
+export const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {
   const items: IItem[] = [];
   let nameIndex = 0;
   for (let i = 0; i < count; i++) {
@@ -103,4 +102,5 @@ const generateMockedData = (count: number, cityIds: string[], typeIds: string[])
   }
 
   return items;
-}
+};
+
