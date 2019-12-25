@@ -1,7 +1,7 @@
 import { IItem, TranslatableField } from 'global-utils/typings';
-import { LANGUAGES } from 'global-utils';
+import { LANGUAGES } from 'global-utils/constants';
 import shortId from 'shortid';
-import { formatValue } from 'server-utils';
+import { formatValue } from './methods';
 
 const userId = 'asd2234zl';
 const names = [

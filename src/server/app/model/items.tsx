@@ -8,12 +8,12 @@ import {
   IItem,
   LANGUAGES,
   DEFAULT_LANGUAGE,
-  itemValidation,
-  IsEnabled
+  itemValidation
 } from 'global-utils';
 
+import { formatValue } from 'global-utils/methods';
+
 import {
-  formatValue,
   GenericSchemaMap,
   getValidationMessage,
   requiredMessage

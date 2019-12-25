@@ -8,6 +8,8 @@ import {
   itemValidation
 } from 'global-utils';
 
+import { formatValue } from 'global-utils/methods';
+
 import {
   LARGE_IMAGE_WIDTH,
   LARGE_IMAGE_HEIGHT,
@@ -24,8 +26,7 @@ import {
   getInfoFromFileName,
   getSourceFiles,
   removeFiles,
-  getRemovableFiles,
-  formatValue
+  getRemovableFiles
 } from './methods';
 
 import {

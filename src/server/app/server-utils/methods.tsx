@@ -12,16 +12,6 @@ import {
 import { MulterFile, IInfoFromFileName } from './types';
 import { readDirectoryContent } from './fileSystem';
 
-const AsciiFolder = require('fold-to-ascii');
-
-export const formatValue = (value: string): string =>
-  AsciiFolder.foldReplacing(value)
-    .replace(/[^a-zA-Z0-9]+/g, ' ')
-    .trim()
-    .split(/\s+/)
-    .join('-')
-    .toLowerCase();
-
 export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
   const pattern = `(.+)\.(${IMAGE_EXTENSIONS.join('|')})`;
   const searchValue = new RegExp(pattern);

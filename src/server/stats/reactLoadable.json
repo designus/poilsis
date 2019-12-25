@@ -31,14 +31,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/reducers/home.tsx",
-      "name": "./app/reducers/home.tsx",
+      "id": "./app/selectors/home.tsx",
+      "name": "./app/selectors/home.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/home.tsx",
-      "name": "./app/selectors/home.tsx",
+      "id": "./app/reducers/home.tsx",
+      "name": "./app/reducers/home.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -345,12 +345,6 @@
       "name": "./app/actions/common.tsx",
       "file": "homePage.js",
       "publicPath": "http://localhost:8080/public/homePage.js"
-    },
-    {
-      "id": "../../node_modules/hash.js/lib/hash/sha/common.js",
-      "name": "../../node_modules/hash.js/lib/hash/sha/common.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     },
     {
       "id": "./app/selectors/common.tsx",
@@ -1123,25 +1117,37 @@
   ],
   "undefined": [
     {
-      "id": 7,
+      "id": 1,
       "name": null,
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": 8,
+      "id": 2,
       "name": null,
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": 8,
+      "id": 3,
+      "name": null,
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": 3,
       "name": null,
       "file": "keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     },
     {
-      "id": 7,
+      "id": 2,
+      "name": null,
+      "file": "keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
+    },
+    {
+      "id": 1,
       "name": null,
       "file": "keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
@@ -1169,42 +1175,14 @@
       "name": "../../config sync recursive ^\\.\\/.*$",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
+    }
+  ],
+  "components/menu/adminLeftMenu/styles": [
     {
-      "id": 1,
-      "name": null,
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": 2,
-      "name": null,
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": 3,
-      "name": null,
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": 4,
-      "name": null,
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": 5,
-      "name": null,
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": 6,
-      "name": null,
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
+      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
   "components/toast": [
@@ -1299,10 +1277,10 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "components/menu/adminLeftMenu/styles": [
+  "components/menu/menu": [
     {
-      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "id": "./app/components/menu/menu.tsx",
+      "name": "./app/components/menu/menu.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
@@ -1383,14 +1361,6 @@
     {
       "id": "./app/components/connectedIntlProvider/connectedIntlProvider.tsx",
       "name": "./app/components/connectedIntlProvider/connectedIntlProvider.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "components/menu/menu": [
-    {
-      "id": "./app/components/menu/menu.tsx",
-      "name": "./app/components/menu/menu.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
@@ -1743,12 +1713,42 @@
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
-  "setimmediate": [
+  "@babel/runtime/helpers/esm/createClass": [
     {
-      "id": "../../node_modules/setimmediate/setImmediate.js",
-      "name": "../../node_modules/setimmediate/setImmediate.js",
+      "id": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
   "querystring": [
@@ -2707,24 +2707,6 @@
       "name": "../../node_modules/react-router/node_modules/isarray/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/isarray/index.js",
-      "name": "../../node_modules/isarray/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/busboy/node_modules/isarray/index.js",
-      "name": "../../node_modules/busboy/node_modules/isarray/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/dicer/node_modules/isarray/index.js",
-      "name": "../../node_modules/dicer/node_modules/isarray/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "@babel/runtime/helpers/esm/objectWithoutPropertiesLoose": [
@@ -3141,14 +3123,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/reducers/currentUser.tsx",
-      "name": "./app/reducers/currentUser.tsx",
+      "id": "./app/selectors/currentUser.tsx",
+      "name": "./app/selectors/currentUser.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/currentUser.tsx",
-      "name": "./app/selectors/currentUser.tsx",
+      "id": "./app/reducers/currentUser.tsx",
+      "name": "./app/reducers/currentUser.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3197,14 +3179,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/reducers/locale.tsx",
-      "name": "./app/reducers/locale.tsx",
+      "id": "./app/selectors/locale.tsx",
+      "name": "./app/selectors/locale.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/locale.tsx",
-      "name": "./app/selectors/locale.tsx",
+      "id": "./app/reducers/locale.tsx",
+      "name": "./app/reducers/locale.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3613,6 +3595,14 @@
     {
       "id": "../../node_modules/jwt-decode/lib/atob.js",
       "name": "../../node_modules/jwt-decode/lib/atob.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "fold-to-ascii": [
+    {
+      "id": "../../node_modules/fold-to-ascii/lib/ascii-folder.js",
+      "name": "../../node_modules/fold-to-ascii/lib/ascii-folder.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4069,48 +4059,18 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "@babel/runtime/helpers/esm/createClass": [
-    {
-      "id": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
   "jss-plugin-global": [
     {
       "id": "../../node_modules/jss-plugin-global/dist/jss-plugin-global.esm.js",
       "name": "../../node_modules/jss-plugin-global/dist/jss-plugin-global.esm.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
+    {
+      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
+      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4607,459 +4567,37 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "server-utils": [
+  "selectors": [
     {
-      "id": "../server/app/server-utils/index.tsx",
-      "name": "../server/app/server-utils/index.tsx",
+      "id": "./app/selectors/index.tsx",
+      "name": "./app/selectors/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./middlewares": [
+  "./users": [
     {
-      "id": "../server/app/server-utils/middlewares.tsx",
-      "name": "../server/app/server-utils/middlewares.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "multer": [
-    {
-      "id": "../../node_modules/multer/index.js",
-      "name": "../../node_modules/multer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/make-middleware": [
-    {
-      "id": "../../node_modules/multer/lib/make-middleware.js",
-      "name": "../../node_modules/multer/lib/make-middleware.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "type-is": [
-    {
-      "id": "../../node_modules/type-is/index.js",
-      "name": "../../node_modules/type-is/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "media-typer": [
-    {
-      "id": "../../node_modules/media-typer/index.js",
-      "name": "../../node_modules/media-typer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "mime-types": [
-    {
-      "id": "../../node_modules/type-is/node_modules/mime-types/index.js",
-      "name": "../../node_modules/type-is/node_modules/mime-types/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "mime-db": [
-    {
-      "id": "../../node_modules/type-is/node_modules/mime-db/index.js",
-      "name": "../../node_modules/type-is/node_modules/mime-db/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./db.json": [
-    {
-      "id": "../../node_modules/type-is/node_modules/mime-db/db.json",
-      "name": "../../node_modules/type-is/node_modules/mime-db/db.json",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "path": [
-    {
-      "id": "../../node_modules/path-browserify/index.js",
-      "name": "../../node_modules/path-browserify/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../node_modules/process/browser.js": [
-    {
-      "id": "../../node_modules/process/browser.js",
-      "name": "../../node_modules/process/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "busboy": [
-    {
-      "id": "../../node_modules/busboy/lib/main.js",
-      "name": "../../node_modules/busboy/lib/main.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "stream": [
-    {
-      "id": "../../node_modules/stream-browserify/index.js",
-      "name": "../../node_modules/stream-browserify/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "inherits": [
-    {
-      "id": "../../node_modules/inherits/inherits_browser.js",
-      "name": "../../node_modules/inherits/inherits_browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "readable-stream": [
-    {
-      "id": "../../node_modules/readable-stream/readable-browser.js",
-      "name": "../../node_modules/readable-stream/readable-browser.js",
+      "id": "./app/selectors/users.tsx",
+      "name": "./app/selectors/users.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/busboy/node_modules/readable-stream/readable.js",
-      "name": "../../node_modules/busboy/node_modules/readable-stream/readable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/dicer/node_modules/readable-stream/readable.js",
-      "name": "../../node_modules/dicer/node_modules/readable-stream/readable.js",
+      "id": "./app/reducers/users.tsx",
+      "name": "./app/reducers/users.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./lib/_stream_readable.js": [
+  "reselect": [
     {
-      "id": "../../node_modules/readable-stream/lib/_stream_readable.js",
-      "name": "../../node_modules/readable-stream/lib/_stream_readable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_readable.js",
-      "name": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_readable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_readable.js",
-      "name": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_readable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "process-nextick-args": [
-    {
-      "id": "../../node_modules/process-nextick-args/index.js",
-      "name": "../../node_modules/process-nextick-args/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../node-libs-browser/node_modules/buffer/index.js": [
-    {
-      "id": "../../node_modules/node-libs-browser/node_modules/buffer/index.js",
-      "name": "../../node_modules/node-libs-browser/node_modules/buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "base64-js": [
-    {
-      "id": "../../node_modules/base64-js/index.js",
-      "name": "../../node_modules/base64-js/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "ieee754": [
-    {
-      "id": "../../node_modules/ieee754/index.js",
-      "name": "../../node_modules/ieee754/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "buffer-shims": [
-    {
-      "id": "../../node_modules/buffer-shims/index.js",
-      "name": "../../node_modules/buffer-shims/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "core-util-is": [
-    {
-      "id": "../../node_modules/core-util-is/lib/util.js",
-      "name": "../../node_modules/core-util-is/lib/util.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "@fortawesome/fontawesome-svg-core": [
-    {
-      "id": "../../node_modules/@fortawesome/fontawesome-svg-core/index.es.js",
-      "name": "../../node_modules/@fortawesome/fontawesome-svg-core/index.es.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./internal/streams/BufferList": [
-    {
-      "id": "../../node_modules/readable-stream/lib/internal/streams/BufferList.js",
-      "name": "../../node_modules/readable-stream/lib/internal/streams/BufferList.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/_stream_duplex.js": [
-    {
-      "id": "../../node_modules/readable-stream/lib/_stream_duplex.js",
-      "name": "../../node_modules/readable-stream/lib/_stream_duplex.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_duplex.js",
-      "name": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_duplex.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_duplex.js",
-      "name": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_duplex.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/_stream_writable.js": [
-    {
-      "id": "../../node_modules/readable-stream/lib/_stream_writable.js",
-      "name": "../../node_modules/readable-stream/lib/_stream_writable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_writable.js",
-      "name": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_writable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_writable.js",
-      "name": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_writable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./../../timers-browserify/main.js": [
-    {
-      "id": "../../node_modules/timers-browserify/main.js",
-      "name": "../../node_modules/timers-browserify/main.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
-    {
-      "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
-      "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "util-deprecate": [
-    {
-      "id": "../../node_modules/util-deprecate/browser.js",
-      "name": "../../node_modules/util-deprecate/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "string_decoder/": [
-    {
-      "id": "../../node_modules/string_decoder/lib/string_decoder.js",
-      "name": "../../node_modules/string_decoder/lib/string_decoder.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "safe-buffer": [
-    {
-      "id": "../../node_modules/string_decoder/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/string_decoder/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/randombytes/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/randombytes/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/safe-buffer/browser.js",
-      "name": "../../node_modules/safe-buffer/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/md5.js/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/md5.js/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/browserify-des/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/browserify-des/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/evp_bytestokey/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/evp_bytestokey/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/parse-asn1/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/parse-asn1/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/public-encrypt/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/public-encrypt/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/randomfill/node_modules/safe-buffer/index.js",
-      "name": "../../node_modules/randomfill/node_modules/safe-buffer/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/_stream_transform.js": [
-    {
-      "id": "../../node_modules/readable-stream/lib/_stream_transform.js",
-      "name": "../../node_modules/readable-stream/lib/_stream_transform.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_transform.js",
-      "name": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_transform.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_transform.js",
-      "name": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_transform.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/_stream_passthrough.js": [
-    {
-      "id": "../../node_modules/readable-stream/lib/_stream_passthrough.js",
-      "name": "../../node_modules/readable-stream/lib/_stream_passthrough.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_passthrough.js",
-      "name": "../../node_modules/busboy/node_modules/readable-stream/lib/_stream_passthrough.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_passthrough.js",
-      "name": "../../node_modules/dicer/node_modules/readable-stream/lib/_stream_passthrough.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "readable-stream/writable.js": [
-    {
-      "id": "../../node_modules/readable-stream/writable-browser.js",
-      "name": "../../node_modules/readable-stream/writable-browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "readable-stream/duplex.js": [
-    {
-      "id": "../../node_modules/readable-stream/duplex-browser.js",
-      "name": "../../node_modules/readable-stream/duplex-browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "readable-stream/transform.js": [
-    {
-      "id": "../../node_modules/readable-stream/transform.js",
-      "name": "../../node_modules/readable-stream/transform.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "readable-stream/passthrough.js": [
-    {
-      "id": "../../node_modules/readable-stream/passthrough.js",
-      "name": "../../node_modules/readable-stream/passthrough.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "global-utils/icons": [
-    {
-      "id": "../global-utils/icons.tsx",
-      "name": "../global-utils/icons.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "util": [
-    {
-      "id": "../../node_modules/util/util.js",
-      "name": "../../node_modules/util/util.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./support/isBuffer": [
-    {
-      "id": "../../node_modules/util/support/isBufferBrowser.js",
-      "name": "../../node_modules/util/support/isBufferBrowser.js",
+      "id": "../../node_modules/reselect/es/index.js",
+      "name": "../../node_modules/reselect/es/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "./utils": [
-    {
-      "id": "../../node_modules/busboy/lib/utils.js",
-      "name": "../../node_modules/busboy/lib/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/intl-messageformat/lib/utils.js",
-      "name": "../../node_modules/intl-messageformat/lib/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
     {
       "id": "./app/actions/utils.tsx",
       "name": "./app/actions/utils.tsx",
@@ -5071,1466 +4609,12 @@
       "name": "../../node_modules/axios/lib/utils.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "../deps/encoding/encoding": [
-    {
-      "id": "../../node_modules/busboy/deps/encoding/encoding.js",
-      "name": "../../node_modules/busboy/deps/encoding/encoding.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./encoding-indexes": [
-    {
-      "id": "../../node_modules/busboy/deps/encoding/encoding-indexes.js",
-      "name": "../../node_modules/busboy/deps/encoding/encoding-indexes.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./types/multipart": [
-    {
-      "id": "../../node_modules/busboy/lib/types/multipart.js",
-      "name": "../../node_modules/busboy/lib/types/multipart.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "dicer": [
-    {
-      "id": "../../node_modules/dicer/lib/Dicer.js",
-      "name": "../../node_modules/dicer/lib/Dicer.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "streamsearch": [
-    {
-      "id": "../../node_modules/streamsearch/lib/sbmh.js",
-      "name": "../../node_modules/streamsearch/lib/sbmh.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./PartStream": [
-    {
-      "id": "../../node_modules/dicer/lib/PartStream.js",
-      "name": "../../node_modules/dicer/lib/PartStream.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./HeaderParser": [
-    {
-      "id": "../../node_modules/dicer/lib/HeaderParser.js",
-      "name": "../../node_modules/dicer/lib/HeaderParser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./types/urlencoded": [
-    {
-      "id": "../../node_modules/busboy/lib/types/urlencoded.js",
-      "name": "../../node_modules/busboy/lib/types/urlencoded.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "xtend": [
-    {
-      "id": "../../node_modules/xtend/immutable.js",
-      "name": "../../node_modules/xtend/immutable.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "on-finished": [
-    {
-      "id": "../../node_modules/on-finished/index.js",
-      "name": "../../node_modules/on-finished/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "ee-first": [
-    {
-      "id": "../../node_modules/ee-first/index.js",
-      "name": "../../node_modules/ee-first/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "append-field": [
-    {
-      "id": "../../node_modules/append-field/index.js",
-      "name": "../../node_modules/append-field/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/parse-path": [
-    {
-      "id": "../../node_modules/append-field/lib/parse-path.js",
-      "name": "../../node_modules/append-field/lib/parse-path.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/set-value": [
-    {
-      "id": "../../node_modules/append-field/lib/set-value.js",
-      "name": "../../node_modules/append-field/lib/set-value.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./counter": [
-    {
-      "id": "../../node_modules/multer/lib/counter.js",
-      "name": "../../node_modules/multer/lib/counter.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/multer-error": [
-    {
-      "id": "../../node_modules/multer/lib/multer-error.js",
-      "name": "../../node_modules/multer/lib/multer-error.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./file-appender": [
-    {
-      "id": "../../node_modules/multer/lib/file-appender.js",
-      "name": "../../node_modules/multer/lib/file-appender.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./remove-uploaded-files": [
-    {
-      "id": "../../node_modules/multer/lib/remove-uploaded-files.js",
-      "name": "../../node_modules/multer/lib/remove-uploaded-files.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./storage/disk": [
-    {
-      "id": "../../node_modules/multer/storage/disk.js",
-      "name": "../../node_modules/multer/storage/disk.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "os": [
-    {
-      "id": "../../node_modules/os-browserify/browser.js",
-      "name": "../../node_modules/os-browserify/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "crypto": [
-    {
-      "id": "../../node_modules/crypto-browserify/index.js",
-      "name": "../../node_modules/crypto-browserify/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "randombytes": [
-    {
-      "id": "../../node_modules/randombytes/browser.js",
-      "name": "../../node_modules/randombytes/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "create-hash": [
-    {
-      "id": "../../node_modules/create-hash/browser.js",
-      "name": "../../node_modules/create-hash/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "md5.js": [
-    {
-      "id": "../../node_modules/md5.js/index.js",
-      "name": "../../node_modules/md5.js/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "hash-base": [
-    {
-      "id": "../../node_modules/hash-base/index.js",
-      "name": "../../node_modules/hash-base/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "ripemd160": [
-    {
-      "id": "../../node_modules/ripemd160/index.js",
-      "name": "../../node_modules/ripemd160/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "sha.js": [
-    {
-      "id": "../../node_modules/sha.js/index.js",
-      "name": "../../node_modules/sha.js/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha": [
-    {
-      "id": "../../node_modules/sha.js/sha.js",
-      "name": "../../node_modules/sha.js/sha.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./hash": [
-    {
-      "id": "../../node_modules/sha.js/hash.js",
-      "name": "../../node_modules/sha.js/hash.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha1": [
-    {
-      "id": "../../node_modules/sha.js/sha1.js",
-      "name": "../../node_modules/sha.js/sha1.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha224": [
-    {
-      "id": "../../node_modules/sha.js/sha224.js",
-      "name": "../../node_modules/sha.js/sha224.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha256": [
-    {
-      "id": "../../node_modules/sha.js/sha256.js",
-      "name": "../../node_modules/sha.js/sha256.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha384": [
-    {
-      "id": "../../node_modules/sha.js/sha384.js",
-      "name": "../../node_modules/sha.js/sha384.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha512": [
-    {
-      "id": "../../node_modules/sha.js/sha512.js",
-      "name": "../../node_modules/sha.js/sha512.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "cipher-base": [
-    {
-      "id": "../../node_modules/cipher-base/index.js",
-      "name": "../../node_modules/cipher-base/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "create-hmac": [
-    {
-      "id": "../../node_modules/create-hmac/browser.js",
-      "name": "../../node_modules/create-hmac/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./legacy": [
-    {
-      "id": "../../node_modules/create-hmac/legacy.js",
-      "name": "../../node_modules/create-hmac/legacy.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "create-hash/md5": [
-    {
-      "id": "../../node_modules/create-hash/md5.js",
-      "name": "../../node_modules/create-hash/md5.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-sign/algos": [
-    {
-      "id": "../../node_modules/browserify-sign/algos.js",
-      "name": "../../node_modules/browserify-sign/algos.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./browser/algorithms.json": [
-    {
-      "id": "../../node_modules/browserify-sign/browser/algorithms.json",
-      "name": "../../node_modules/browserify-sign/browser/algorithms.json",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "pbkdf2": [
-    {
-      "id": "../../node_modules/pbkdf2/browser.js",
-      "name": "../../node_modules/pbkdf2/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/async": [
-    {
-      "id": "../../node_modules/pbkdf2/lib/async.js",
-      "name": "../../node_modules/pbkdf2/lib/async.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./precondition": [
-    {
-      "id": "../../node_modules/pbkdf2/lib/precondition.js",
-      "name": "../../node_modules/pbkdf2/lib/precondition.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./default-encoding": [
-    {
-      "id": "../../node_modules/pbkdf2/lib/default-encoding.js",
-      "name": "../../node_modules/pbkdf2/lib/default-encoding.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sync": [
-    {
-      "id": "../../node_modules/pbkdf2/lib/sync-browser.js",
-      "name": "../../node_modules/pbkdf2/lib/sync-browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-cipher": [
-    {
-      "id": "../../node_modules/browserify-cipher/browser.js",
-      "name": "../../node_modules/browserify-cipher/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-des": [
-    {
-      "id": "../../node_modules/browserify-des/index.js",
-      "name": "../../node_modules/browserify-des/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "des.js": [
-    {
-      "id": "../../node_modules/des.js/lib/des.js",
-      "name": "../../node_modules/des.js/lib/des.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./des/utils": [
-    {
-      "id": "../../node_modules/des.js/lib/des/utils.js",
-      "name": "../../node_modules/des.js/lib/des/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./des/cipher": [
-    {
-      "id": "../../node_modules/des.js/lib/des/cipher.js",
-      "name": "../../node_modules/des.js/lib/des/cipher.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "minimalistic-assert": [
-    {
-      "id": "../../node_modules/minimalistic-assert/index.js",
-      "name": "../../node_modules/minimalistic-assert/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./des/des": [
-    {
-      "id": "../../node_modules/des.js/lib/des/des.js",
-      "name": "../../node_modules/des.js/lib/des/des.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./des/cbc": [
-    {
-      "id": "../../node_modules/des.js/lib/des/cbc.js",
-      "name": "../../node_modules/des.js/lib/des/cbc.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./des/ede": [
-    {
-      "id": "../../node_modules/des.js/lib/des/ede.js",
-      "name": "../../node_modules/des.js/lib/des/ede.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-aes/browser": [
-    {
-      "id": "../../node_modules/browserify-aes/browser.js",
-      "name": "../../node_modules/browserify-aes/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./encrypter": [
-    {
-      "id": "../../node_modules/browserify-aes/encrypter.js",
-      "name": "../../node_modules/browserify-aes/encrypter.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-aes/modes": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/index.js",
-      "name": "../../node_modules/browserify-aes/modes/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./ecb": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/ecb.js",
-      "name": "../../node_modules/browserify-aes/modes/ecb.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./cbc": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/cbc.js",
-      "name": "../../node_modules/browserify-aes/modes/cbc.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "buffer-xor": [
-    {
-      "id": "../../node_modules/buffer-xor/index.js",
-      "name": "../../node_modules/buffer-xor/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./cfb": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/cfb.js",
-      "name": "../../node_modules/browserify-aes/modes/cfb.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./cfb8": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/cfb8.js",
-      "name": "../../node_modules/browserify-aes/modes/cfb8.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./cfb1": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/cfb1.js",
-      "name": "../../node_modules/browserify-aes/modes/cfb1.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./ofb": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/ofb.js",
-      "name": "../../node_modules/browserify-aes/modes/ofb.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./ctr": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/ctr.js",
-      "name": "../../node_modules/browserify-aes/modes/ctr.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "../incr32": [
-    {
-      "id": "../../node_modules/browserify-aes/incr32.js",
-      "name": "../../node_modules/browserify-aes/incr32.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./modes/list.json": [
-    {
-      "id": "../../node_modules/browserify-aes/modes/list.json",
-      "name": "../../node_modules/browserify-aes/modes/list.json",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./authCipher": [
-    {
-      "id": "../../node_modules/browserify-aes/authCipher.js",
-      "name": "../../node_modules/browserify-aes/authCipher.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./aes": [
-    {
-      "id": "../../node_modules/browserify-aes/aes.js",
-      "name": "../../node_modules/browserify-aes/aes.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./ghash": [
-    {
-      "id": "../../node_modules/browserify-aes/ghash.js",
-      "name": "../../node_modules/browserify-aes/ghash.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./streamCipher": [
-    {
-      "id": "../../node_modules/browserify-aes/streamCipher.js",
-      "name": "../../node_modules/browserify-aes/streamCipher.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "evp_bytestokey": [
-    {
-      "id": "../../node_modules/evp_bytestokey/index.js",
-      "name": "../../node_modules/evp_bytestokey/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./decrypter": [
-    {
-      "id": "../../node_modules/browserify-aes/decrypter.js",
-      "name": "../../node_modules/browserify-aes/decrypter.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-des/modes": [
-    {
-      "id": "../../node_modules/browserify-des/modes.js",
-      "name": "../../node_modules/browserify-des/modes.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "diffie-hellman": [
-    {
-      "id": "../../node_modules/diffie-hellman/browser.js",
-      "name": "../../node_modules/diffie-hellman/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/generatePrime": [
-    {
-      "id": "../../node_modules/diffie-hellman/lib/generatePrime.js",
-      "name": "../../node_modules/diffie-hellman/lib/generatePrime.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "bn.js": [
-    {
-      "id": "../../node_modules/bn.js/lib/bn.js",
-      "name": "../../node_modules/bn.js/lib/bn.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "miller-rabin": [
-    {
-      "id": "../../node_modules/miller-rabin/lib/mr.js",
-      "name": "../../node_modules/miller-rabin/lib/mr.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "brorand": [
-    {
-      "id": "../../node_modules/brorand/index.js",
-      "name": "../../node_modules/brorand/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./users": [
-    {
-      "id": "./app/reducers/users.tsx",
-      "name": "./app/reducers/users.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/users.tsx",
-      "name": "./app/selectors/users.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/primes.json": [
-    {
-      "id": "../../node_modules/diffie-hellman/lib/primes.json",
-      "name": "../../node_modules/diffie-hellman/lib/primes.json",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/dh": [
-    {
-      "id": "../../node_modules/diffie-hellman/lib/dh.js",
-      "name": "../../node_modules/diffie-hellman/lib/dh.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-sign": [
-    {
-      "id": "../../node_modules/browserify-sign/browser/index.js",
-      "name": "../../node_modules/browserify-sign/browser/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sign": [
-    {
-      "id": "../../node_modules/browserify-sign/browser/sign.js",
-      "name": "../../node_modules/browserify-sign/browser/sign.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "browserify-rsa": [
-    {
-      "id": "../../node_modules/browserify-rsa/index.js",
-      "name": "../../node_modules/browserify-rsa/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "elliptic": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic.js",
-      "name": "../../node_modules/elliptic/lib/elliptic.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "../package.json": [
-    {
-      "id": "../../node_modules/elliptic/package.json",
-      "name": "../../node_modules/elliptic/package.json",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./elliptic/utils": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/utils.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "minimalistic-crypto-utils": [
-    {
-      "id": "../../node_modules/minimalistic-crypto-utils/lib/utils.js",
-      "name": "../../node_modules/minimalistic-crypto-utils/lib/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./elliptic/curve": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/curve/index.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/curve/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./base": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/curve/base.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/curve/base.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./short": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/curve/short.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/curve/short.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./mont": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/curve/mont.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/curve/mont.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./edwards": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/curve/edwards.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/curve/edwards.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./elliptic/curves": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/curves.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/curves.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "hash.js": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash.js",
-      "name": "../../node_modules/hash.js/lib/hash.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./hash/utils": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/utils.js",
-      "name": "../../node_modules/hash.js/lib/hash/utils.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./hash/common": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/common.js",
-      "name": "../../node_modules/hash.js/lib/hash/common.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./hash/sha": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/sha.js",
-      "name": "../../node_modules/hash.js/lib/hash/sha.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha/1": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/sha/1.js",
-      "name": "../../node_modules/hash.js/lib/hash/sha/1.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha/224": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/sha/224.js",
-      "name": "../../node_modules/hash.js/lib/hash/sha/224.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha/256": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/sha/256.js",
-      "name": "../../node_modules/hash.js/lib/hash/sha/256.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha/384": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/sha/384.js",
-      "name": "../../node_modules/hash.js/lib/hash/sha/384.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sha/512": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/sha/512.js",
-      "name": "../../node_modules/hash.js/lib/hash/sha/512.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./hash/ripemd": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/ripemd.js",
-      "name": "../../node_modules/hash.js/lib/hash/ripemd.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./hash/hmac": [
-    {
-      "id": "../../node_modules/hash.js/lib/hash/hmac.js",
-      "name": "../../node_modules/hash.js/lib/hash/hmac.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./precomputed/secp256k1": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/precomputed/secp256k1.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./elliptic/ec": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/ec/index.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/ec/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "hmac-drbg": [
-    {
-      "id": "../../node_modules/hmac-drbg/lib/hmac-drbg.js",
-      "name": "../../node_modules/hmac-drbg/lib/hmac-drbg.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./key": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/ec/key.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/ec/key.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/eddsa/key.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/eddsa/key.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./signature": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/ec/signature.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/ec/signature.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/eddsa/signature.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/eddsa/signature.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./elliptic/eddsa": [
-    {
-      "id": "../../node_modules/elliptic/lib/elliptic/eddsa/index.js",
-      "name": "../../node_modules/elliptic/lib/elliptic/eddsa/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "parse-asn1": [
-    {
-      "id": "../../node_modules/parse-asn1/index.js",
-      "name": "../../node_modules/parse-asn1/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./asn1": [
-    {
-      "id": "../../node_modules/parse-asn1/asn1.js",
-      "name": "../../node_modules/parse-asn1/asn1.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "asn1.js": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1.js",
-      "name": "../../node_modules/asn1.js/lib/asn1.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./asn1/api": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/api.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/api.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "vm": [
-    {
-      "id": "../../node_modules/vm-browserify/index.js",
-      "name": "../../node_modules/vm-browserify/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "indexof": [
-    {
-      "id": "../../node_modules/indexof/index.js",
-      "name": "../../node_modules/indexof/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./asn1/base": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/base/index.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/base/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./reporter": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/base/reporter.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/base/reporter.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./buffer": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/base/buffer.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/base/buffer.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./node": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/base/node.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/base/node.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./asn1/constants": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/constants/index.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/constants/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./der": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/constants/der.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/constants/der.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/decoders/der.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/decoders/der.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/encoders/der.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/encoders/der.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./asn1/decoders": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/decoders/index.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/decoders/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./pem": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/decoders/pem.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/decoders/pem.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/encoders/pem.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/encoders/pem.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./asn1/encoders": [
-    {
-      "id": "../../node_modules/asn1.js/lib/asn1/encoders/index.js",
-      "name": "../../node_modules/asn1.js/lib/asn1/encoders/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./certificate": [
-    {
-      "id": "../../node_modules/parse-asn1/certificate.js",
-      "name": "../../node_modules/parse-asn1/certificate.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./aesid.json": [
-    {
-      "id": "../../node_modules/parse-asn1/aesid.json",
-      "name": "../../node_modules/parse-asn1/aesid.json",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./fixProc": [
-    {
-      "id": "../../node_modules/parse-asn1/fixProc.js",
-      "name": "../../node_modules/parse-asn1/fixProc.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./curves.json": [
-    {
-      "id": "../../node_modules/browserify-sign/browser/curves.json",
-      "name": "../../node_modules/browserify-sign/browser/curves.json",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./verify": [
-    {
-      "id": "../../node_modules/browserify-sign/browser/verify.js",
-      "name": "../../node_modules/browserify-sign/browser/verify.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "create-ecdh": [
-    {
-      "id": "../../node_modules/create-ecdh/browser.js",
-      "name": "../../node_modules/create-ecdh/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "public-encrypt": [
-    {
-      "id": "../../node_modules/public-encrypt/browser.js",
-      "name": "../../node_modules/public-encrypt/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./publicEncrypt": [
-    {
-      "id": "../../node_modules/public-encrypt/publicEncrypt.js",
-      "name": "../../node_modules/public-encrypt/publicEncrypt.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./mgf": [
-    {
-      "id": "../../node_modules/public-encrypt/mgf.js",
-      "name": "../../node_modules/public-encrypt/mgf.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./xor": [
-    {
-      "id": "../../node_modules/public-encrypt/xor.js",
-      "name": "../../node_modules/public-encrypt/xor.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./withPublic": [
-    {
-      "id": "../../node_modules/public-encrypt/withPublic.js",
-      "name": "../../node_modules/public-encrypt/withPublic.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./privateDecrypt": [
-    {
-      "id": "../../node_modules/public-encrypt/privateDecrypt.js",
-      "name": "../../node_modules/public-encrypt/privateDecrypt.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "randomfill": [
-    {
-      "id": "../../node_modules/randomfill/browser.js",
-      "name": "../../node_modules/randomfill/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "mkdirp": [
-    {
-      "id": "../../node_modules/mkdirp/index.js",
-      "name": "../../node_modules/mkdirp/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./storage/memory": [
-    {
-      "id": "../../node_modules/multer/storage/memory.js",
-      "name": "../../node_modules/multer/storage/memory.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "concat-stream": [
-    {
-      "id": "../../node_modules/concat-stream/index.js",
-      "name": "../../node_modules/concat-stream/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "typedarray": [
-    {
-      "id": "../../node_modules/typedarray/index.js",
-      "name": "../../node_modules/typedarray/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "jimp": [
-    {
-      "id": "../../node_modules/jimp/browser/lib/jimp.js",
-      "name": "../../node_modules/jimp/browser/lib/jimp.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./methods": [
-    {
-      "id": "../server/app/server-utils/methods.tsx",
-      "name": "../server/app/server-utils/methods.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./fileSystem": [
-    {
-      "id": "../server/app/server-utils/fileSystem.tsx",
-      "name": "../server/app/server-utils/fileSystem.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "rimraf": [
-    {
-      "id": "../../node_modules/rimraf/rimraf.js",
-      "name": "../../node_modules/rimraf/rimraf.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "assert": [
-    {
-      "id": "../../node_modules/assert/assert.js",
-      "name": "../../node_modules/assert/assert.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "glob": [
-    {
-      "id": "../../node_modules/glob/glob.js",
-      "name": "../../node_modules/glob/glob.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "fs.realpath": [
-    {
-      "id": "../../node_modules/fs.realpath/index.js",
-      "name": "../../node_modules/fs.realpath/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./old.js": [
-    {
-      "id": "../../node_modules/fs.realpath/old.js",
-      "name": "../../node_modules/fs.realpath/old.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "minimatch": [
-    {
-      "id": "../../node_modules/glob/node_modules/minimatch/minimatch.js",
-      "name": "../../node_modules/glob/node_modules/minimatch/minimatch.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "brace-expansion": [
-    {
-      "id": "../../node_modules/brace-expansion/index.js",
-      "name": "../../node_modules/brace-expansion/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "concat-map": [
-    {
-      "id": "../../node_modules/concat-map/index.js",
-      "name": "../../node_modules/concat-map/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "balanced-match": [
-    {
-      "id": "../../node_modules/balanced-match/index.js",
-      "name": "../../node_modules/balanced-match/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "path-is-absolute": [
-    {
-      "id": "../../node_modules/path-is-absolute/index.js",
-      "name": "../../node_modules/path-is-absolute/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./sync.js": [
-    {
-      "id": "../../node_modules/glob/sync.js",
-      "name": "../../node_modules/glob/sync.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./common.js": [
-    {
-      "id": "../../node_modules/glob/common.js",
-      "name": "../../node_modules/glob/common.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "inflight": [
-    {
-      "id": "../../node_modules/inflight/inflight.js",
-      "name": "../../node_modules/inflight/inflight.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "wrappy": [
-    {
-      "id": "../../node_modules/wrappy/wrappy.js",
-      "name": "../../node_modules/wrappy/wrappy.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "once": [
-    {
-      "id": "../../node_modules/once/once.js",
-      "name": "../../node_modules/once/once.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "fold-to-ascii": [
-    {
-      "id": "../../node_modules/fold-to-ascii/lib/ascii-folder.js",
-      "name": "../../node_modules/fold-to-ascii/lib/ascii-folder.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./validationMessages": [
-    {
-      "id": "../server/app/server-utils/validationMessages.tsx",
-      "name": "../server/app/server-utils/validationMessages.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "intl-messageformat": [
-    {
-      "id": "../../node_modules/intl-messageformat/index.js",
-      "name": "../../node_modules/intl-messageformat/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/main": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/main.js",
-      "name": "../../node_modules/intl-messageformat/lib/main.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/main.js",
-      "name": "../../node_modules/intl-relativeformat/lib/main.js",
+      "id": "../../node_modules/intl-messageformat/lib/utils.js",
+      "name": "../../node_modules/intl-messageformat/lib/utils.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./core": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/core.js",
-      "name": "../../node_modules/intl-messageformat/lib/core.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/core.js",
-      "name": "../../node_modules/intl-relativeformat/lib/core.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./es5": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/es5.js",
-      "name": "../../node_modules/intl-messageformat/lib/es5.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/es5.js",
-      "name": "../../node_modules/intl-relativeformat/lib/es5.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./compiler": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/compiler.js",
-      "name": "../../node_modules/intl-messageformat/lib/compiler.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "intl-messageformat-parser": [
-    {
-      "id": "../../node_modules/intl-messageformat-parser/index.js",
-      "name": "../../node_modules/intl-messageformat-parser/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./lib/parser": [
-    {
-      "id": "../../node_modules/intl-messageformat-parser/lib/parser.js",
-      "name": "../../node_modules/intl-messageformat-parser/lib/parser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./en": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/en.js",
-      "name": "../../node_modules/intl-messageformat/lib/en.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/en.js",
-      "name": "../../node_modules/intl-relativeformat/lib/en.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./aliases": [
-    {
-      "id": "../server/app/server-utils/aliases.tsx",
-      "name": "../server/app/server-utils/aliases.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "selectors": [
-    {
-      "id": "./app/selectors/index.tsx",
-      "name": "./app/selectors/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "reselect": [
-    {
-      "id": "../../node_modules/reselect/es/index.js",
-      "name": "../../node_modules/reselect/es/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "axios": [
@@ -6577,6 +4661,14 @@
     {
       "id": "../../node_modules/axios/lib/defaults.js",
       "name": "../../node_modules/axios/lib/defaults.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../node_modules/process/browser.js": [
+    {
+      "id": "../../node_modules/process/browser.js",
+      "name": "../../node_modules/process/browser.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -7505,6 +5597,38 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "global-utils/icons": [
+    {
+      "id": "../global-utils/icons.tsx",
+      "name": "../global-utils/icons.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "@fortawesome/fontawesome-svg-core": [
+    {
+      "id": "../../node_modules/@fortawesome/fontawesome-svg-core/index.es.js",
+      "name": "../../node_modules/@fortawesome/fontawesome-svg-core/index.es.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./../../timers-browserify/main.js": [
+    {
+      "id": "../../node_modules/timers-browserify/main.js",
+      "name": "../../node_modules/timers-browserify/main.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "setimmediate": [
+    {
+      "id": "../../node_modules/setimmediate/setImmediate.js",
+      "name": "../../node_modules/setimmediate/setImmediate.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "@fortawesome/free-regular-svg-icons": [
     {
       "id": "../../node_modules/@fortawesome/free-regular-svg-icons/index.es.js",
@@ -7757,7 +5881,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./TableContext": [
+  "../Table/TableContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
       "name": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
@@ -9873,6 +7997,94 @@
     {
       "id": "../../node_modules/intl-format-cache/lib/index.js",
       "name": "../../node_modules/intl-format-cache/lib/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "intl-messageformat-parser": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/index.js",
+      "name": "../../node_modules/intl-messageformat-parser/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./lib/parser": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/parser.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/parser.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "intl-messageformat": [
+    {
+      "id": "../../node_modules/intl-messageformat/index.js",
+      "name": "../../node_modules/intl-messageformat/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./compiler": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/compiler.js",
+      "name": "../../node_modules/intl-messageformat/lib/compiler.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./core": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/core.js",
+      "name": "../../node_modules/intl-messageformat/lib/core.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/intl-relativeformat/lib/core.js",
+      "name": "../../node_modules/intl-relativeformat/lib/core.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./en": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/en.js",
+      "name": "../../node_modules/intl-messageformat/lib/en.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/intl-relativeformat/lib/en.js",
+      "name": "../../node_modules/intl-relativeformat/lib/en.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./es5": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/es5.js",
+      "name": "../../node_modules/intl-messageformat/lib/es5.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/intl-relativeformat/lib/es5.js",
+      "name": "../../node_modules/intl-relativeformat/lib/es5.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./lib/main": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/main.js",
+      "name": "../../node_modules/intl-messageformat/lib/main.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/intl-relativeformat/lib/main.js",
+      "name": "../../node_modules/intl-relativeformat/lib/main.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
