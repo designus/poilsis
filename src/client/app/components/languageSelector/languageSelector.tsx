@@ -7,6 +7,7 @@ import { clientRoutes } from 'client-utils/routes';
 import { Dropdown } from 'components/dropdown';
 import { LANGUAGES, Languages } from 'global-utils';
 import { IDropdownOption } from 'types/generic';
+import { IAppState } from 'types';
 import { capitalize } from 'client-utils/methods';
 
 import { switchLanguage } from 'actions/locale';
@@ -46,7 +47,7 @@ const mapDispatchToProps = dispatch => ({
 
 export default withStyles(styles)(
   withRouter(
-    connect<{}, IDispatchProps, IOwnProps>(undefined, mapDispatchToProps)(
+    connect<{}, IDispatchProps, IOwnProps, IAppState>(undefined, mapDispatchToProps)(
       LanguageSelector
     )
   )

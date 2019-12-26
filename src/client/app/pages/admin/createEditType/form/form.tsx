@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
@@ -58,7 +58,7 @@ const Form = (props: Props) => {
 };
 
 export const TypeForm = reduxForm<IType, ICustomProps>({
-  asyncValidate: (values: IType, dispatch: Dispatch<any>, props) => {
+  asyncValidate: (values: IType, dispatch, props) => {
     return asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl);
   },
   asyncBlurFields: ['alias'],

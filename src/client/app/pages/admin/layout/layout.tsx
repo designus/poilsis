@@ -14,6 +14,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { Switch, withRouter } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import LoadingBar from 'react-redux-loading-bar';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles, isAdminItemActive } from 'client-utils/methods';
@@ -29,7 +30,6 @@ import { NotAuthorized } from 'components/notAuthorized';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
 import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
-import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 import { getAdminLocale, getClientLocale } from 'selectors';
 
@@ -127,7 +127,8 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
   render() {
     const { classes, adminLocale } = this.props;
     return (
-      <ConnectedIntlProvider locale={adminLocale}>
+      <React.Fragment>
+        <LoadingBar />
         <div className={classes.wrapper}>
           <Drawer
             onClose={this.handleDrawerClose}
@@ -215,7 +216,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
           <Toast />
           <KeepMeLoggedModal />
         </div>
-      </ConnectedIntlProvider>
+      </React.Fragment>
     );
   }
 }

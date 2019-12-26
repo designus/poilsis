@@ -1,5 +1,5 @@
 import { Languages, IItem, UserRoles } from 'global-utils/typings';
-import { InjectedIntlProps } from 'react-intl';
+import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { updateMainInfo, createItem } from 'actions/items';
 import { ICitiesMap, ITypesMap, IUsersMap, ThunkReturn } from 'types';

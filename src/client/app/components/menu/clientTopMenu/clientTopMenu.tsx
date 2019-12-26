@@ -79,7 +79,7 @@ function ClientTopMenu(props: ITopMenuProps) {
   );
 }
 
-const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
+const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
   locale: getClientLocale(state),
   cities: getEnabledCities(state),
   activeItem: getActiveItem(state, props.location.pathname)
@@ -88,7 +88,7 @@ const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
 export default withStyles(styles)(
   withRouter(
     injectIntl(
-      connect<IStateProps, {}, IOwnProps>(mapStateToProps)(ClientTopMenu)
+      connect<IStateProps, {}, IOwnProps, IAppState>(mapStateToProps)(ClientTopMenu)
     )
   )
 );

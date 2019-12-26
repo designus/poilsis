@@ -1,5 +1,5 @@
 import { ActionCreatorsMapObject } from 'redux';
-import { InjectedIntlProps } from 'react-intl';
+import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { IItemsMap, ICitiesMap, IUsersMap, ThunkReturn, ActionReturn } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApproved } from 'actions/items';

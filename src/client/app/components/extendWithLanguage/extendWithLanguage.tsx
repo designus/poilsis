@@ -65,8 +65,8 @@ export function extendWithLanguage<TOriginalProps extends {}>(
       locale: getAdminLocale(state)
     });
 
-    // @ts-ignore
     return withStyles(languageStyles)(
+      // @ts-ignore
       connect<{}, {}, any>(mapStateToProps)(FormLanguageComponent)
     );
 }

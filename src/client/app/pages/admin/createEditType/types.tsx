@@ -1,4 +1,4 @@
-import { InjectedIntlProps } from 'react-intl';
+import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { IType } from 'global-utils/typings';
 import { ThunkReturn } from 'types';

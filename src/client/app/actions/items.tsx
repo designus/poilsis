@@ -1,3 +1,5 @@
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { batch } from 'react-redux';
 import {
   setUploadProgress,
   uploadError,
@@ -259,6 +261,7 @@ export const toggleItemRecommended = (itemId: string, isRecommended: boolean): T
 };
 
 export const addTestData = (count: number): ThunkResult<Promise<void>> => (dispatch, getState) => {
+  dispatch(showLoading());
   const state = getState();
   const cityIds = Object.keys(state.cities.dataMap);
   const typeIds = Object.keys(state.types.dataMap);
@@ -267,13 +270,17 @@ export const addTestData = (count: number): ThunkResult<Promise<void>> => (dispa
   return http.post<IItem[]>('/api/items/test-data', { data })
     .then(response => handleApiResponse(response))
     .then(items => {
-      dispatch(receiveNewItems(items, { userId, dataType: 'currentUser' }));
-      dispatch(endLoading(CONTENT_LOADER_ID));
-      dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
+      batch(() => {
+        dispatch(receiveNewItems(items, { userId, dataType: 'currentUser' }));
+        dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
+        dispatch(hideLoading());
+      });
     })
     .catch(err => {
       console.error('Err', err);
-      dispatch(endLoading(CONTENT_LOADER_ID));
-      dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+      batch(() => {
+        dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+        dispatch(hideLoading());
+      });
     });
 };

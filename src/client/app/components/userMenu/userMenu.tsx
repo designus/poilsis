@@ -103,5 +103,5 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withStyles(styles)(
-  connect<any, any, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu)
+  connect<{}, {}, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu)
 );

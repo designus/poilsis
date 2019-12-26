@@ -1,5 +1,5 @@
 import { InjectedFormProps } from 'redux-form';
-import { InjectedIntl } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import { IImage } from 'global-utils/typings';
 
 export interface ICustomProps {
@@ -7,7 +7,7 @@ export interface ICustomProps {
   onResetUploadState: () => void;
   onSaveImages: (images: IImage[]) => void;
   onSortImages: (images: IImage[]) => void;
-  intl: InjectedIntl;
+  intl: IntlShape;
 }
 
 export type Props = ICustomProps & InjectedFormProps<{}, ICustomProps>;

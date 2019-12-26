@@ -1,6 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { WithStyles } from '@material-ui/core/styles';
-import { InjectedIntlProps } from 'react-intl';
+import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { ICity } from 'global-utils/typings';
 import { ActiveItem } from 'types';
 import { styles } from './styles';

@@ -1,4 +1,4 @@
-import { InjectedIntlProps } from 'react-intl';
+import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { EditorState } from 'draft-js';
 import { IItemDescFields, TranslatableField } from 'global-utils';
 import { updateItemDescription } from 'actions/items';

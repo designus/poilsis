@@ -65,7 +65,6 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
     const cityId = cityIds[getRandomNumber(0, cityIds.length - 1)];
     const types = [typeIds[getRandomNumber(0, typeIds.length - 1)]];
     const name = getItemName(names, nameIndex);
-    console.log('Name', name);
     const alias = getItemAlias(name);
     items.push({
       id: shortId.generate(),
