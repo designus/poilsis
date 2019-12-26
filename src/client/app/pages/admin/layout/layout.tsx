@@ -14,7 +14,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { Switch, withRouter } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import LoadingBar from 'react-redux-loading-bar';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles, isAdminItemActive } from 'client-utils/methods';
@@ -31,6 +30,7 @@ import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
 import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
+import { LoadingBar } from 'components/loadingBar';
 import { getAdminLocale, getClientLocale } from 'selectors';
 
 import { AdminItemsPage } from 'pages/admin/items';
@@ -128,7 +128,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
     const { classes, adminLocale } = this.props;
     return (
       <React.Fragment>
-        <LoadingBar />
+        <LoadingBar isAdmin />
         <div className={classes.wrapper}>
           <Drawer
             onClose={this.handleDrawerClose}

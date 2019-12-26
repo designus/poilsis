@@ -81,7 +81,7 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
         lt: true,
         ru: true
       },
-      isRecommended: Boolean(getRandomNumber(0, 1)),
+      isRecommended: i < 5,
       mainImage: '',
       description: {
         en: 'This is en description',

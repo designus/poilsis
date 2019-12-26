@@ -6,12 +6,18 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     customButton?: {
       borderRadius: string
     };
+    loadingBar?: {
+      height: string;
+    };
   }
   // allow configuration using `createMuiTheme`
   // tslint:disable-next-line
   interface ThemeOptions {
     customButton?: {
       borderRadius: string
+    };
+    loadingBar?: {
+      height: string
     };
   }
 }
@@ -53,6 +59,9 @@ export const theme = createMuiTheme({
   },
   customButton: {
     borderRadius: '16px'
+  },
+  loadingBar: {
+    height: '4px'
   },
   overrides: {
     MuiButton: {

@@ -62,7 +62,7 @@ const LoginButton: React.FunctionComponent<Props> = props => {
       <MenuItem onClick={signIn({username: 'tomas', password: 'tomas'})}>User</MenuItem>
     </DropdownMenu>
   );
-}
+};
 
 const mapStateToProps = (state: IAppState) => ({
   isLoggedIn: isLoggedIn(state)
