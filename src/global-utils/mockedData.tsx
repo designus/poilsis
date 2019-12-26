@@ -1,5 +1,5 @@
 import { IItem, TranslatableField } from 'global-utils/typings';
-import { LANGUAGES } from 'global-utils/constants';
+import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils/constants';
 import shortId from 'shortid';
 import { formatValue } from './methods';
 
@@ -45,7 +45,7 @@ const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() *
 
 const getItemName = (names: string[], index: number): TranslatableField => {
   return LANGUAGES.reduce((acc, lang) => {
-    acc[lang] = `${lang} - ${names[index]}`;
+    acc[lang] = lang === DEFAULT_LANGUAGE ? names[index] : `${lang} - ${names[index]}`;
     return acc;
   }, {});
 };
@@ -59,18 +59,22 @@ const getItemAlias = (name: TranslatableField): TranslatableField => {
 
 export const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {
   const items: IItem[] = [];
+
   let nameIndex = 0;
   for (let i = 0; i < count; i++) {
+    const cityId = cityIds[getRandomNumber(0, cityIds.length - 1)];
+    const types = [typeIds[getRandomNumber(0, typeIds.length - 1)]];
     const name = getItemName(names, nameIndex);
+    console.log('Name', name);
     const alias = getItemAlias(name);
     items.push({
       id: shortId.generate(),
       name,
       alias,
       address: `address ${i}`,
-      cityId: cityIds[getRandomNumber(0, cityIds.length - 1)],
+      cityId,
       images: [],
-      types: typeIds,
+      types,
       userId,
       isApprovedByAdmin: true,
       isEnabled: {
@@ -97,10 +101,9 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
       }
     });
 
-    nameIndex = nameIndex < names.length ? nameIndex + 1 : 0;
+    nameIndex = nameIndex < names.length - 1 ? nameIndex + 1 : 0;
 
   }
 
   return items;
 };
-

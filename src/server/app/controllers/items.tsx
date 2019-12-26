@@ -235,3 +235,19 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
     }
   });
 };
+
+export const addTestData = async (req: MulterRequest, res: Response, next: NextFunction) => {
+  try {
+    const data = req.body.data as IItem[];
+    const items = await ItemsModel.insertMany(data);
+
+    if (!items) {
+      throw new Error('Unable to add test data');
+    }
+
+    res.status(200).json(items);
+
+  } catch (err) {
+    return next(err);
+  }
+};

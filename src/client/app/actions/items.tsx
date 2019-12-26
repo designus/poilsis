@@ -260,8 +260,8 @@ export const toggleItemRecommended = (itemId: string, isRecommended: boolean): T
 
 export const addTestData = (count: number): ThunkResult<Promise<void>> => (dispatch, getState) => {
   const state = getState();
-  const cityIds = Object.keys(state.cities);
-  const typeIds = Object.keys(state.types);
+  const cityIds = Object.keys(state.cities.dataMap);
+  const typeIds = Object.keys(state.types.dataMap);
   const userId = state.currentUser.details.id;
   const data = generateMockedData(count, cityIds, typeIds);
   return http.post<IItem[]>('/api/items/test-data', { data })
