@@ -2,7 +2,7 @@ import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { UserRoles } from 'global-utils/typings';
 import { ThunkReturn } from 'types';
-import { addTestDataAsync, removeTestDataAsync } from 'actions';
+import { addMockedDataAsync, removeMockedDataAsync } from 'actions';
 
 export interface IOwnProps extends InjectedIntlProps, RouteComponentProps<any> {}
 
@@ -11,8 +11,8 @@ export interface IStateProps {
 }
 
 export interface IDispatchProps {
-  addTestData: ThunkReturn<typeof addTestDataAsync>;
-  removeTestData: ThunkReturn<typeof removeTestDataAsync>;
+  addMockedData: ThunkReturn<typeof addMockedDataAsync>;
+  removeMockedData: ThunkReturn<typeof removeMockedDataAsync>;
 }
 
 export type Props = IOwnProps & IStateProps & IDispatchProps;

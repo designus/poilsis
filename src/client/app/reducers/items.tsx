@@ -64,8 +64,14 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
           }
         }
       };
-    case ItemsActionTypes.REMOVE_TEST_DATA:
+    case ItemsActionTypes.REMOVE_MOCKED_DATA:
       return getInitialState();
+    case ItemsActionTypes.RECEIVE_MOCKED_DATA:
+      return {
+        ...state,
+        dataMap: action.dataMap,
+        aliases: action.aliases
+      };
     case ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN:
       return {
         ...state,

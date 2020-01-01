@@ -5,18 +5,18 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { IAppState } from 'types';
 import { AdminHeader } from 'components/adminHeader';
 import { getCurrentUserRole } from 'selectors';
-import { addTestDataAsync, removeTestDataAsync } from 'actions';
+import { addMockedDataAsync, removeMockedDataAsync } from 'actions';
 
 import { Props, IStateProps, IDispatchProps, IOwnProps } from './types';
 import { UserRoles } from 'global-utils';
 
 const AdminHomePage: React.FunctionComponent<Props> = (props) => {
-  const renderTestDataButtons = () => (
+  const renderMockedDataControls = () => (
     <React.Fragment>
-      <Button onClick={props.addTestData} type="button" variant="contained" color="primary">
+      <Button onClick={props.addMockedData} type="button" variant="contained" color="primary">
         <FormattedMessage id="admin.home.add_test_data" />
       </Button>
-      <Button onClick={props.removeTestData} type="button" variant="contained" color="primary">
+      <Button onClick={props.removeMockedData} type="button" variant="contained" color="primary">
         <FormattedMessage id="admin.home.remove_test_data" />
       </Button>
     </React.Fragment>
@@ -28,7 +28,7 @@ const AdminHomePage: React.FunctionComponent<Props> = (props) => {
         translationId="admin.menu.dashboard"
         showActions={false}
       />
-      {props.userRole === UserRoles.admin && renderTestDataButtons()}
+      {props.userRole === UserRoles.admin && renderMockedDataControls()}
     </React.Fragment>
   );
 };
@@ -38,8 +38,8 @@ const mapStateToProps = (state: IAppState): IStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch): IDispatchProps => ({
-  addTestData: () => dispatch(addTestDataAsync()),
-  removeTestData: () => dispatch(removeTestDataAsync())
+  addMockedData: () => dispatch(addMockedDataAsync()),
+  removeMockedData: () => dispatch(removeMockedDataAsync())
 });
 
 export default injectIntl(

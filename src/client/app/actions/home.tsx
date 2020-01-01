@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { startLoading, endLoading } from 'actions/loader';
 import { IItem } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';

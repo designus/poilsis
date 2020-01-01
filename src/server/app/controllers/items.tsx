@@ -236,7 +236,7 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
   });
 };
 
-export const addTestData = async (req: Request, res: Response, next: NextFunction) => {
+export const addMockedData = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body.data as IItem[];
     const items = await ItemsModel.insertMany(data);
@@ -252,10 +252,10 @@ export const addTestData = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const removeTestData = async (req: Request, res: Response, next: NextFunction) => {
+export const removeMockedData = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const removed = await ItemsModel.remove({});
 
+    await ItemsModel.remove({});
     res.status(200).json(true);
 
   } catch (err) {

@@ -17,7 +17,8 @@ export enum ItemsActionTypes {
   RECEIVE_ITEM = 'RECEIVE_ITEM',
   RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION',
   REMOVE_ITEM = 'REMOVE_ITEM',
-  REMOVE_TEST_DATA = 'REMOVE_TEST_DATA',
+  REMOVE_MOCKED_DATA = 'REMOVE_MOCKED_DATA',
+  RECEIVE_MOCKED_DATA = 'RECEIVE_MOCKED_DATA',
   RECEIVE_IMAGES = 'RECEIVE_IMAGES',
   TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
   TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED',
@@ -46,8 +47,14 @@ export interface IRemoveItem {
   itemId: string;
 }
 
-export interface IRemoveTestData {
-  type: ItemsActionTypes.REMOVE_TEST_DATA;
+export interface IRemoveMockedData {
+  type: ItemsActionTypes.REMOVE_MOCKED_DATA;
+}
+
+export interface IReceiveMockedData {
+  type: ItemsActionTypes.RECEIVE_MOCKED_DATA;
+  dataMap: IItemsMap;
+  aliases: IAliasMap;
 }
 
 export interface IReceiveImages {
@@ -77,4 +84,5 @@ export type ItemsActions = IReceiveItems
   | IToggleEnabled
   | IToggleItemRecommended
   | IToggleItemApprovedByAdmin
-  | IRemoveTestData;
+  | IRemoveMockedData
+  | IReceiveMockedData;

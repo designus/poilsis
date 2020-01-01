@@ -32,7 +32,10 @@ import {
   IReceiveImages,
   IReceiveItemDescription,
   IRemoveItem,
-  IRemoveTestData,
+  IRemoveMockedData,
+  IReceiveMockedData,
+  IItemsMap,
+  IAliasMap,
   IToggleItemRecommended,
   IUniqueItemProps,
   Toast,
@@ -71,8 +74,14 @@ export const removeItem = (itemId: string): IRemoveItem => ({
   itemId
 });
 
-export const removeTestData = (): IRemoveTestData => ({
-  type: ItemsActionTypes.REMOVE_TEST_DATA
+export const removeMockedData = (): IRemoveMockedData => ({
+  type: ItemsActionTypes.REMOVE_MOCKED_DATA
+});
+
+export const receiveMockedData = (dataMap: IItemsMap, aliases: IAliasMap): IReceiveMockedData => ({
+  type: ItemsActionTypes.RECEIVE_MOCKED_DATA,
+  dataMap,
+  aliases
 });
 
 export const receiveImages = (itemId: string, images: IImage[], mainImage: string | null): IReceiveImages => ({
@@ -265,24 +274,26 @@ export const toggleItemRecommended = (itemId: string, isRecommended: boolean): T
     });
 };
 
-export const addTestDataAsync = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
   dispatch(showLoading());
   const state = getState();
   const cityIds = Object.keys(state.cities.dataMap);
   const typeIds = Object.keys(state.types.dataMap);
-  const userId = state.currentUser.details.id;
   const data = generateMockedData(1000, cityIds, typeIds);
-  return http.post<IItem[]>('/api/items/test-data', { data })
+
+  return http.post<IItem[]>('/api/items/mocked-data', { data })
     .then(response => handleApiResponse(response))
     .then(items => {
+      const newItems = getNewItems(items, state);
+      const { dataMap, aliases } = getNormalizedData(newItems);
       batch(() => {
-        dispatch(receiveNewItems(items, { userId, dataType: 'currentUser' }));
+        dispatch(receiveMockedData(dataMap, aliases));
         dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
         dispatch(hideLoading());
       });
     })
     .catch(err => {
-      console.error('Unable to add test data', err);
+      console.error('Unable to add mocked data', err);
       batch(() => {
         dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
         dispatch(hideLoading());
@@ -290,19 +301,19 @@ export const addTestDataAsync = (): ThunkResult<Promise<void>> => (dispatch, get
     });
 };
 
-export const removeTestDataAsync = (): ThunkResult<Promise<void>> => dispatch => {
+export const removeMockedDataAsync = (): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoading());
-  return http.delete('/api/items/test-data')
+  return http.delete('/api/items/mocked-data')
     .then(response => handleApiResponse(response))
     .then(() => {
       batch(() => {
         dispatch(showToast(Toast.success, ITEM_DELETE_SUCCESS));
-        dispatch(removeTestData());
+        dispatch(removeMockedData());
         dispatch(hideLoading());
       });
     })
     .catch(err => {
-      console.error('Unable to remove test data', err);
+      console.error('Unable to remove mocked data', err);
       batch(() => {
         dispatch(showToast(Toast.error, ITEM_DELETE_ERROR));
         dispatch(hideLoading());
