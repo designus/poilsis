@@ -5,16 +5,22 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { IAppState } from 'types';
 import { AdminHeader } from 'components/adminHeader';
 import { getCurrentUserRole } from 'selectors';
-import { addTestData } from 'actions';
+import { addTestDataAsync, removeTestDataAsync } from 'actions';
 
 import { Props, IStateProps, IDispatchProps, IOwnProps } from './types';
 import { UserRoles } from 'global-utils';
 
 const AdminHomePage: React.FunctionComponent<Props> = (props) => {
-
-  const addTestData = (count: number) => () => {
-    props.addTestData(count);
-  };
+  const renderTestDataButtons = () => (
+    <React.Fragment>
+      <Button onClick={props.addTestData} type="button" variant="contained" color="primary">
+        <FormattedMessage id="admin.home.add_test_data" />
+      </Button>
+      <Button onClick={props.removeTestData} type="button" variant="contained" color="primary">
+        <FormattedMessage id="admin.home.remove_test_data" />
+      </Button>
+    </React.Fragment>
+  );
 
   return (
     <React.Fragment>
@@ -22,11 +28,7 @@ const AdminHomePage: React.FunctionComponent<Props> = (props) => {
         translationId="admin.menu.dashboard"
         showActions={false}
       />
-      {props.userRole === UserRoles.admin && (
-        <Button onClick={addTestData(1000)} type="button" variant="contained" color="primary">
-          <FormattedMessage id="admin.home.add_test_data" />
-        </Button>
-      )}
+      {props.userRole === UserRoles.admin && renderTestDataButtons()}
     </React.Fragment>
   );
 };
@@ -36,7 +38,8 @@ const mapStateToProps = (state: IAppState): IStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch): IDispatchProps => ({
-  addTestData: count => dispatch(addTestData(count))
+  addTestData: () => dispatch(addTestDataAsync()),
+  removeTestData: () => dispatch(removeTestDataAsync())
 });
 
 export default injectIntl(

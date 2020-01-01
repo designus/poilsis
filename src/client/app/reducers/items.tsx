@@ -64,6 +64,8 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
           }
         }
       };
+    case ItemsActionTypes.REMOVE_TEST_DATA:
+      return getInitialState();
     case ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN:
       return {
         ...state,

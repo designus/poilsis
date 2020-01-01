@@ -18,7 +18,8 @@ import {
   updatePhotos,
   uploadPhotos,
   doesAliasExist,
-  addTestData
+  addTestData,
+  removeTestData
 } from '../controllers';
 import {
   createUploadPath,
@@ -75,6 +76,7 @@ router.route('/item/toggle-approved')
   .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemApproved);
 
 router.route('/test-data')
-  .post(auth.authenticate(), auth.authorize(['admin']), addTestData);
+  .post(auth.authenticate(), auth.authorize(['admin']), addTestData)
+  .delete(auth.authenticate(), auth.authorize(['admin']), removeTestData);
 
 export default router;

@@ -32,6 +32,7 @@ import {
   IReceiveImages,
   IReceiveItemDescription,
   IRemoveItem,
+  IRemoveTestData,
   IToggleItemRecommended,
   IUniqueItemProps,
   Toast,
@@ -68,6 +69,10 @@ export const receiveItemDescription = (itemId: string, descFields: IItemDescFiel
 export const removeItem = (itemId: string): IRemoveItem => ({
   type: ItemsActionTypes.REMOVE_ITEM,
   itemId
+});
+
+export const removeTestData = (): IRemoveTestData => ({
+  type: ItemsActionTypes.REMOVE_TEST_DATA
 });
 
 export const receiveImages = (itemId: string, images: IImage[], mainImage: string | null): IReceiveImages => ({
@@ -260,13 +265,13 @@ export const toggleItemRecommended = (itemId: string, isRecommended: boolean): T
     });
 };
 
-export const addTestData = (count: number): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const addTestDataAsync = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
   dispatch(showLoading());
   const state = getState();
   const cityIds = Object.keys(state.cities.dataMap);
   const typeIds = Object.keys(state.types.dataMap);
   const userId = state.currentUser.details.id;
-  const data = generateMockedData(count, cityIds, typeIds);
+  const data = generateMockedData(1000, cityIds, typeIds);
   return http.post<IItem[]>('/api/items/test-data', { data })
     .then(response => handleApiResponse(response))
     .then(items => {
@@ -277,9 +282,29 @@ export const addTestData = (count: number): ThunkResult<Promise<void>> => (dispa
       });
     })
     .catch(err => {
-      console.error('Err', err);
+      console.error('Unable to add test data', err);
       batch(() => {
         dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+        dispatch(hideLoading());
+      });
+    });
+};
+
+export const removeTestDataAsync = (): ThunkResult<Promise<void>> => dispatch => {
+  dispatch(showLoading());
+  return http.delete('/api/items/test-data')
+    .then(response => handleApiResponse(response))
+    .then(() => {
+      batch(() => {
+        dispatch(showToast(Toast.success, ITEM_DELETE_SUCCESS));
+        dispatch(removeTestData());
+        dispatch(hideLoading());
+      });
+    })
+    .catch(err => {
+      console.error('Unable to remove test data', err);
+      batch(() => {
+        dispatch(showToast(Toast.error, ITEM_DELETE_ERROR));
         dispatch(hideLoading());
       });
     });
