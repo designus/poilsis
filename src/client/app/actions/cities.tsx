@@ -1,7 +1,8 @@
+import { batch } from 'react-redux';
 import { ICity, IItem } from 'global-utils';
 import { startLoading, endLoading } from 'actions/loader';
-import { receiveNewItems } from 'actions/items';
 import { showToast } from 'actions/toast';
+import { receiveItems } from 'actions/items';
 import {
   CITY_CREATE_SUCCESS,
   CITY_CREATE_ERROR,
@@ -12,6 +13,7 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
+import { getNewItems, getNormalizedData } from 'client-utils/methods';
 import {
   IAppState,
   CitiesActionTypes,
@@ -21,7 +23,8 @@ import {
   IToggleEnabled,
   Toast,
   ThunkDispatch,
-  ThunkResult
+  ThunkResult,
+  IReceiveCityItems
 } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
@@ -41,30 +44,36 @@ export const toggleCityEnabledField = (params: ToggleEnabledParams): IToggleEnab
   ...params
 });
 
-export const loadCityItems = (alias: string) => {
-  return (dispatch, getState) => {
-    const state: IAppState = getState();
-    const city = getCityByAlias(state, alias);
+export const receiveCityItems = (cityId: string): IReceiveCityItems => ({
+  type: CitiesActionTypes.RECEIVE_CITY_ITEMS,
+  cityId
+});
 
-    if (!city) {
-      return null;
-    }
+export const loadCityItems = (alias: string): ThunkResult<Promise<void>> => (dispatch, getState) => {
+  const state = getState();
+  const city = getCityByAlias(state, alias);
 
-    const cityId = city.id;
+  if (!city) {
+    return null;
+  }
 
-    dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(startLoading(CONTENT_LOADER_ID));
 
-    return http.get(`/api/items/city/${cityId}`)
-      .then(handleApiResponse)
-      .then((data: IItem[]) => {
-        dispatch(receiveNewItems(data, { cityId, dataType: 'cities' }));
-        dispatch(endLoading(CONTENT_LOADER_ID));
-      })
-      .catch(err => {
-        console.error(err);
+  return http.get<IItem[]>(`/api/items/city/${city.id}`)
+    .then(response => handleApiResponse(response))
+    .then((items) => {
+      const newItems = getNewItems(items, state);
+      const data = getNormalizedData(newItems);
+      batch(() => {
+        dispatch(receiveItems(data));
+        dispatch(receiveCityItems(city.id));
         dispatch(endLoading(CONTENT_LOADER_ID));
       });
-  };
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    });
 };
 
 export const createCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatch: ThunkDispatch) => {

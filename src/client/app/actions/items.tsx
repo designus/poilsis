@@ -8,7 +8,7 @@ import {
 
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
-import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -22,9 +22,8 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Omit, IsEnabled, Languages } from 'global-utils/typings';
+import { IImage, IItem, IItemDescFields, Omit, Languages } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
-import { getItemById } from 'selectors';
 import {
   ItemsActionTypes,
   IReceiveItems,
@@ -37,13 +36,11 @@ import {
   IItemsMap,
   IAliasMap,
   IToggleItemRecommended,
-  IUniqueItemProps,
   Toast,
   IAppState,
   ToggleEnabledParams,
   IToggleEnabled,
   IToggleItemApprovedByAdmin,
-  ThunkDispatch,
   ThunkResult
 } from 'types';
 
@@ -52,10 +49,7 @@ import { stopLoading, handleApiResponse, handleApiErrors, http } from './utils';
 export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems => ({
   type: ItemsActionTypes.RECEIVE_ITEMS,
   dataMap: props.dataMap,
-  aliases: props.aliases,
-  cityId: props.cityId,
-  userId: props.userId,
-  dataType: props.dataType
+  aliases: props.aliases
 });
 
 export const receiveItem = (item: IItem): IReceiveItem => ({
@@ -107,16 +101,6 @@ export const toggleItemRecommendedField = (itemId: string, isRecommended: boolea
   itemId,
   isRecommended
 });
-
-export const getNewItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
-
-export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) => (dispatch, getState) => {
-  const { userId, cityId, dataType } = params;
-  const state: IAppState = getState();
-  const newItems = getNewItems(items, state);
-  const { dataMap, aliases } = getNormalizedData(newItems);
-  dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
-};
 
 export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));

@@ -5,12 +5,6 @@ export type IItemsMap = IGenericDataMap<IItem>;
 
 export interface IItemsState extends IGenericState<IItem> {}
 
-export interface IUniqueItemProps {
-  cityId?: string;
-  userId?: string;
-  dataType?: 'cities' | 'currentUser' | 'recommendedItems';
-}
-
 export enum ItemsActionTypes {
   RECEIVE_ITEMS = 'RECEIVE_ITEMS',
   RECEIVE_RECOMMENDED_ITEMS = 'RECEIVE_RECOMMENDED_ITEMS',
@@ -25,7 +19,7 @@ export enum ItemsActionTypes {
   TOGGLE_ITEM_APPROVED_BY_ADMIN = 'TOGGLE_ITEM_APPROVED_BY_ADMIN'
 }
 
-export interface IReceiveItems extends IUniqueItemProps {
+export interface IReceiveItems {
   type: ItemsActionTypes.RECEIVE_ITEMS;
   dataMap: IItemsMap;
   aliases: IAliasMap;
