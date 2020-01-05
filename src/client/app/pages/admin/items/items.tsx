@@ -206,6 +206,7 @@ class AdminItemsPage extends React.Component<Props, State> {
       <React.Fragment>
         <AdminHeader
           translationId="admin.menu.items"
+          showActions
           search={this.setSearch}
           createLink={adminRoutes.createItemMain.getLink()}
         />
@@ -252,6 +253,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) =>
     dispatch
   );
 
-export default injectIntl(
-  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(AdminItemsPage)
+export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(
+  injectIntl(AdminItemsPage)
 );

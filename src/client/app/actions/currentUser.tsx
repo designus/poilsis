@@ -1,14 +1,19 @@
+import { batch } from 'react-redux';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNormalizedData } from 'client-utils/methods';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveItems } from 'actions/items';
-import { ICurrentUser, CurrentUserActionTypes, IReceiveUserDetails, ThunkResult } from 'types';
+import { UserDetails, CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, IReceiveUserItems } from 'types';
 import { isAdmin, IItem } from 'global-utils';
 import { handleApiResponse, http } from './utils';
 
-export const receiveUserDetails = (userDetails: ICurrentUser): IReceiveUserDetails => ({
+export const receiveUserDetails = (userDetails: UserDetails): IReceiveUserDetails => ({
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
   userDetails
+});
+
+export const receiveUserItems = (): IReceiveUserItems => ({
+  type: CurrentUserActionTypes.RECEIVE_USER_ITEMS
 });
 
 export const loadUserItems = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
@@ -29,9 +34,11 @@ export const loadUserItems = (): ThunkResult<Promise<void>> => (dispatch, getSta
   return http.get<IItem[]>(endpoint)
     .then(response => handleApiResponse(response))
     .then(items => {
-      const { dataMap, aliases } = getNormalizedData(items);
-      dispatch(receiveItems({ dataMap, aliases, userId: user.id, dataType: 'currentUser' }));
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      batch(() => {
+        dispatch(receiveItems(getNormalizedData(items)));
+        dispatch(receiveUserItems());
+        dispatch(endLoading(CONTENT_LOADER_ID));
+      });
     })
     .catch(err => {
       console.error(err);

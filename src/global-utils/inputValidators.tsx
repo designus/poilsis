@@ -1,4 +1,4 @@
-import { InjectedIntl } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import {
   DEFAULT_LANGUAGE,
   hasLocalizedFields,
@@ -14,7 +14,7 @@ import { IsEnabled } from './typings';
 const { images: { maxPhotos, maxPhotoSizeBytes, minPhotoWidth, minPhotoHeight } } = itemValidation;
 
 export interface IFormProps {
-  intl?: InjectedIntl;
+  intl?: IntlShape;
   images?: IImage[];
   values?: any;
   defaultLanguage?: string;
@@ -123,7 +123,7 @@ export const maxUploadedPhotoSize = (fieldValue: File[], formState: IPhotoFormSt
   }
 };
 
-export const asyncValidateImage = (state: IPhotoFormState, intl: InjectedIntl): Promise<boolean> => {
+export const asyncValidateImage = (state: IPhotoFormState, intl: IntlShape): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     const { files } = state;
     if (!state.files || !state.files.length) return;

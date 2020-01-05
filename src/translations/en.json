@@ -94,6 +94,8 @@
   "admin.type.delete_error": "Failed to delete type",
   "admin.type.delete_success": "Type was deleted successfully",
   "admin.type.enable_error": "Failed to enable type.",
+  "admin.home.add_test_data": "Upload test data",
+  "admin.home.remove_test_data": "Remove test data",
   "admin.authenticate.login_success": "You have logged in in successfully.",
   "admin.authenticate.login_error": "Login failed",
   "admin.authenticate.logout_success": "Logout success",

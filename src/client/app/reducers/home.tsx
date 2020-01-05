@@ -29,6 +29,17 @@ export const home: Reducer<IHomeState, ActionTypes> = (state = getInitialState()
         ...state,
         recommendedItems: toggleItemInArray(state.recommendedItems, action.itemId, action.isRecommended)
       };
+    case ItemsActionTypes.REMOVE_MOCKED_DATA:
+      return {
+        ...state,
+        recommendedItems: []
+      };
+    case ItemsActionTypes.RECEIVE_MOCKED_DATA:
+      return {
+        ...state,
+        isLoaded: true,
+        recommendedItems: Object.values(action.aliases)
+      };
     case ItemsActionTypes.REMOVE_ITEM:
       return {
         ...state,

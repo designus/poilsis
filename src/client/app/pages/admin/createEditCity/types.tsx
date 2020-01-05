@@ -1,4 +1,4 @@
-import { InjectedIntlProps } from 'react-intl';
+import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { ICity, Languages } from 'global-utils/typings';
 import { ITypesMap, ThunkReturn } from 'types';

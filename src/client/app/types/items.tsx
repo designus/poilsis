@@ -5,25 +5,21 @@ export type IItemsMap = IGenericDataMap<IItem>;
 
 export interface IItemsState extends IGenericState<IItem> {}
 
-export interface IUniqueItemProps {
-  cityId?: string;
-  userId?: string;
-  dataType?: 'cities' | 'currentUser' | 'recommendedItems';
-}
-
 export enum ItemsActionTypes {
   RECEIVE_ITEMS = 'RECEIVE_ITEMS',
   RECEIVE_RECOMMENDED_ITEMS = 'RECEIVE_RECOMMENDED_ITEMS',
   RECEIVE_ITEM = 'RECEIVE_ITEM',
   RECEIVE_ITEM_DESCRIPTION = 'RECEIVE_ITEM_DESCRIPTION',
   REMOVE_ITEM = 'REMOVE_ITEM',
+  REMOVE_MOCKED_DATA = 'REMOVE_MOCKED_DATA',
+  RECEIVE_MOCKED_DATA = 'RECEIVE_MOCKED_DATA',
   RECEIVE_IMAGES = 'RECEIVE_IMAGES',
   TOGGLE_ITEM_ENABLED = 'TOGGLE_ITEM_ENABLED',
   TOGGLE_ITEM_RECOMMENDED = 'TOGGLE_ITEM_RECOMMENDED',
   TOGGLE_ITEM_APPROVED_BY_ADMIN = 'TOGGLE_ITEM_APPROVED_BY_ADMIN'
 }
 
-export interface IReceiveItems extends IUniqueItemProps {
+export interface IReceiveItems {
   type: ItemsActionTypes.RECEIVE_ITEMS;
   dataMap: IItemsMap;
   aliases: IAliasMap;
@@ -43,6 +39,16 @@ export interface IReceiveItemDescription {
 export interface IRemoveItem {
   type: ItemsActionTypes.REMOVE_ITEM;
   itemId: string;
+}
+
+export interface IRemoveMockedData {
+  type: ItemsActionTypes.REMOVE_MOCKED_DATA;
+}
+
+export interface IReceiveMockedData {
+  type: ItemsActionTypes.RECEIVE_MOCKED_DATA;
+  dataMap: IItemsMap;
+  aliases: IAliasMap;
 }
 
 export interface IReceiveImages {
@@ -71,4 +77,6 @@ export type ItemsActions = IReceiveItems
   | IReceiveImages
   | IToggleEnabled
   | IToggleItemRecommended
-  | IToggleItemApprovedByAdmin;
+  | IToggleItemApprovedByAdmin
+  | IRemoveMockedData
+  | IReceiveMockedData;

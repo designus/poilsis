@@ -1,9 +1,10 @@
 'use strict';
 
-import { Document, Schema, Model, model} from 'mongoose';
-import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { Document, Schema, Model, model } from 'mongoose';
 import shortId from 'shortid';
-import { formatValue, GenericSchemaMap, requiredMessage } from '../server-utils';
+import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { formatValue } from 'global-utils/methods';
+import { GenericSchemaMap, requiredMessage } from '../server-utils';
 import { IsEnabledSchemaMap } from './common';
 
 const mongooseIntl = require('mongoose-intl');

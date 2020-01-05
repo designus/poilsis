@@ -17,7 +17,9 @@ import {
   updateMainInfo,
   updatePhotos,
   uploadPhotos,
-  doesAliasExist
+  doesAliasExist,
+  addMockedData,
+  removeMockedData
 } from '../controllers';
 import {
   createUploadPath,
@@ -72,5 +74,9 @@ router.route('/item/toggle-recommended')
 
 router.route('/item/toggle-approved')
   .patch(auth.authenticate(), auth.authorize(['admin']), toggleItemApproved);
+
+router.route('/mocked-data')
+  .post(auth.authenticate(), auth.authorize(['admin']), addMockedData)
+  .delete(auth.authenticate(), auth.authorize(['admin']), removeMockedData);
 
 export default router;

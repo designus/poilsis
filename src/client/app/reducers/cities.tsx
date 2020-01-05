@@ -19,19 +19,17 @@ const getInitialState = (): ICityState => ({
 
 export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
-    case ItemsActionTypes.RECEIVE_ITEMS:
-      return action.cityId ?
-        {
-          ...state,
-          dataMap: {
-            ...state.dataMap,
-            [action.cityId]: {
-              ...state.dataMap[action.cityId],
-              hasItems: true
-            }
+    case CitiesActionTypes.RECEIVE_CITY_ITEMS:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.cityId]: {
+            ...state.dataMap[action.cityId],
+            hasItems: true
           }
         }
-      : state;
+      };
     case CitiesActionTypes.RECEIVE_CITY:
       return {
         ...state,

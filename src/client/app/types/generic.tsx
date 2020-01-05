@@ -1,4 +1,4 @@
-import { FormattedMessage } from 'react-intl';
+import { MessageDescriptor } from 'react-intl';
 import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
 import { Action, Store } from 'redux';
 import { Omit } from 'global-utils/typings';
@@ -35,7 +35,7 @@ export enum ActiveItem {
 }
 
 export type TranslatedMessages = {
-  [key: string]: FormattedMessage.MessageDescriptor;
+  [key: string]: MessageDescriptor;
 };
 
 export interface IToggleEnabled {

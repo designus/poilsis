@@ -1,11 +1,11 @@
 import { InjectedFormProps } from 'redux-form';
-import { InjectedIntl } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import { WithStyles } from '@material-ui/core/styles';
 
 import { styles } from './styles';
 
 export interface ICustomProps extends WithStyles<typeof styles> {
-  intl: InjectedIntl;
+  intl: IntlShape;
   selectedLanguage?: string;
 }
 

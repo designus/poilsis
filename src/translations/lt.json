@@ -94,6 +94,8 @@
   "admin.type.delete_error": "Failed to delete type",
   "admin.type.delete_success": "Type was deleted successfully",
   "admin.type.enable_error": "Failed to enable type.",
+  "admin.home.add_test_data": "Įkelti test duomenis",
+  "admin.home.remove_test_data": "Ištrinti test duomenis",
   "admin.authenticate.login_success": "Jūs prisijungėte sėkmingai",
   "admin.authenticate.login_error": "Nepavyko prisijungti",
   "admin.authenticate.logout_success": "Jūs sėkmingai atsijungėte",

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
@@ -108,7 +108,7 @@ const Form = (props: Props)  => {
 };
 
 export const MainInfoForm = reduxForm<IItem, ICustomProps>({
-  asyncValidate: (item: IItem, dispatch: Dispatch<any>, props) => {
+  asyncValidate: (item: IItem, dispatch, props) => {
     return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
   },
   asyncBlurFields: ['alias'],

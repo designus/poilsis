@@ -1,9 +1,9 @@
 import { InjectedFormProps } from 'redux-form';
-import { InjectedIntl } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import { Languages } from 'global-utils/typings';
 
 export interface ICustomProps {
-  intl: InjectedIntl;
+  intl: IntlShape;
   languages: Languages[];
   defaultLanguage: Languages;
   selectedLanguage?: Languages;

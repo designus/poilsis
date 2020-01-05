@@ -12,7 +12,7 @@ import { WithStyles } from '@material-ui/core/styles';
 
 import { DropdownMenu } from 'components/dropdownMenu';
 import { getCurrentUser } from 'selectors';
-import { ICurrentUser, IAppState } from 'types';
+import { UserDetails, IAppState } from 'types';
 import { styles } from './styles';
 
 export interface IMenuItem {
@@ -31,7 +31,7 @@ export interface IMenuItem {
 export interface IMenuProps extends Partial<RouteComponentProps<any>>, Partial<WithStyles<typeof styles>> {
   items: IMenuItem[];
   isVertical?: boolean;
-  currentUser?: ICurrentUser;
+  currentUser?: UserDetails;
 }
 
 const { useState, useEffect } = React;

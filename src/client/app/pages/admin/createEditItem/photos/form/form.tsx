@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Dispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
 import { isEqual } from 'lodash';
-import { FormattedMessage } from 'react-intl';
 
 import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IImage, IPhotoFormState, itemValidation } from 'global-utils';
 
 import { adminRoutes } from 'client-utils/routes';
-import { Button } from 'components/button';
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
 import { ImagePreview } from 'components/imagePreview';
 import { AdminFormActions } from 'components/adminFormActions';
@@ -100,6 +97,6 @@ function FormComponent(props: Props) {
 
 export default reduxForm<{}, ICustomProps>({
   form: PHOTOS_FORM_NAME,
-  asyncValidate: (item: IPhotoFormState, dispatch: Dispatch<any>, props) => asyncValidateImage(item, props.intl),
+  asyncValidate: (item: IPhotoFormState, dispatch, props) => asyncValidateImage(item, props.intl),
   enableReinitialize: true
 })(FormComponent);

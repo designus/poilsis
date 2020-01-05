@@ -1,11 +1,7 @@
 import * as React from 'react';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import * as en from 'react-intl/locale-data/en';
-import * as lt from 'react-intl/locale-data/lt';
-import * as ru from 'react-intl/locale-data/ru';
-import { getTranslationMessages } from 'global-utils/methods';
+import { IntlProvider } from 'react-intl';
 
-addLocaleData([...en, ...lt, ...ru]);
+import { getTranslationMessages } from 'global-utils/methods';
 
 interface IConnectedIntlProps {
   locale?: string;

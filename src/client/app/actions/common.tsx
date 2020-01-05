@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { InjectedIntl } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import { http } from 'actions/utils';
 import { TranslatedMessages } from 'types';
 import { DataTypes } from 'global-utils/typings';
@@ -11,7 +11,7 @@ const messages: TranslatedMessages = {
   }
 };
 
-export const asyncValidateAlias = (item: DataTypes, url: string, intl: InjectedIntl): Promise<boolean> => {
+export const asyncValidateAlias = (item: DataTypes, url: string, intl: IntlShape): Promise<boolean> => {
   const { id, name, alias } = item;
   return http.post(url, { id, name, alias })
     .then((response: AxiosResponse<boolean>) => response.data)

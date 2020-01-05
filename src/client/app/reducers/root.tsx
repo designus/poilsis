@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import { loadingBarReducer } from 'react-redux-loading-bar';
 
 import {
   cities,
@@ -30,5 +31,6 @@ export const rootReducer = combineReducers({
   currentUser,
   locale,
   users,
-  form: formReducer
+  form: formReducer,
+  loadingBar: loadingBarReducer
 });

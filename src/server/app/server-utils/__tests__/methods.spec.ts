@@ -5,8 +5,7 @@ import {
   getRemovableFiles,
   getFilesToRemove,
   getInfoFromFileName,
-  getSourceFiles,
-  formatValue
+  getSourceFiles
 } from '../methods';
 
 describe('server-utils/methods', () => {
@@ -82,10 +81,5 @@ describe('server-utils/methods', () => {
 
   it('getSourceFiles()', () => {
     expect(getSourceFiles(['1.jpg', '1_S.jpg', '2.png', '2_S.png'])).toEqual(['1.jpg', '2.png']);
-  });
-
-  it('formatValue()', () => {
-    expect(formatValue('kambarių ...,, nuoma Palangoje')).toBe('kambariu-nuoma-palangoje');
-    expect(formatValue('% svečių | namai   ----. nidoje 1')).toBe('sveciu-namai-nidoje-1');
   });
 });

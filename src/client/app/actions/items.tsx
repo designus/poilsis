@@ -1,3 +1,5 @@
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { batch } from 'react-redux';
 import {
   setUploadProgress,
   uploadError,
@@ -6,7 +8,7 @@ import {
 
 import { showToast } from 'actions/toast';
 import { startLoading, endLoading } from 'actions/loader';
-import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -20,8 +22,8 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Omit, IsEnabled, Languages } from 'global-utils/typings';
-import { getItemById } from 'selectors';
+import { IImage, IItem, IItemDescFields, Omit, Languages } from 'global-utils/typings';
+import { generateMockedData } from 'global-utils/mockedData';
 import {
   ItemsActionTypes,
   IReceiveItems,
@@ -29,14 +31,16 @@ import {
   IReceiveImages,
   IReceiveItemDescription,
   IRemoveItem,
+  IRemoveMockedData,
+  IReceiveMockedData,
+  IItemsMap,
+  IAliasMap,
   IToggleItemRecommended,
-  IUniqueItemProps,
   Toast,
   IAppState,
   ToggleEnabledParams,
   IToggleEnabled,
   IToggleItemApprovedByAdmin,
-  ThunkDispatch,
   ThunkResult
 } from 'types';
 
@@ -45,10 +49,7 @@ import { stopLoading, handleApiResponse, handleApiErrors, http } from './utils';
 export const receiveItems = (props: Omit<IReceiveItems, 'type'>): IReceiveItems => ({
   type: ItemsActionTypes.RECEIVE_ITEMS,
   dataMap: props.dataMap,
-  aliases: props.aliases,
-  cityId: props.cityId,
-  userId: props.userId,
-  dataType: props.dataType
+  aliases: props.aliases
 });
 
 export const receiveItem = (item: IItem): IReceiveItem => ({
@@ -65,6 +66,16 @@ export const receiveItemDescription = (itemId: string, descFields: IItemDescFiel
 export const removeItem = (itemId: string): IRemoveItem => ({
   type: ItemsActionTypes.REMOVE_ITEM,
   itemId
+});
+
+export const removeMockedData = (): IRemoveMockedData => ({
+  type: ItemsActionTypes.REMOVE_MOCKED_DATA
+});
+
+export const receiveMockedData = (dataMap: IItemsMap, aliases: IAliasMap): IReceiveMockedData => ({
+  type: ItemsActionTypes.RECEIVE_MOCKED_DATA,
+  dataMap,
+  aliases
 });
 
 export const receiveImages = (itemId: string, images: IImage[], mainImage: string | null): IReceiveImages => ({
@@ -90,16 +101,6 @@ export const toggleItemRecommendedField = (itemId: string, isRecommended: boolea
   itemId,
   isRecommended
 });
-
-export const getNewItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
-
-export const receiveNewItems = (items: IItem[], params: IUniqueItemProps = {}) => (dispatch, getState) => {
-  const { userId, cityId, dataType } = params;
-  const state: IAppState = getState();
-  const newItems = getNewItems(items, state);
-  const { dataMap, aliases } = getNormalizedData(newItems);
-  dispatch(receiveItems({ dataMap, aliases, userId, cityId, dataType }));
-};
 
 export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
@@ -254,5 +255,52 @@ export const toggleItemRecommended = (itemId: string, isRecommended: boolean): T
     .catch(err => {
       console.error('Err', err);
       dispatch(showToast(Toast.error, 'admin.item.recommend_error'));
+    });
+};
+
+export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
+  dispatch(showLoading());
+  const state = getState();
+  const cityIds = Object.keys(state.cities.dataMap);
+  const typeIds = Object.keys(state.types.dataMap);
+  const data = generateMockedData(1000, cityIds, typeIds);
+
+  return http.post<IItem[]>('/api/items/mocked-data', { data })
+    .then(response => handleApiResponse(response))
+    .then(items => {
+      const newItems = getNewItems(items, state);
+      const { dataMap, aliases } = getNormalizedData(newItems);
+      batch(() => {
+        dispatch(receiveMockedData(dataMap, aliases));
+        dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
+        dispatch(hideLoading());
+      });
+    })
+    .catch(err => {
+      console.error('Unable to add mocked data', err);
+      batch(() => {
+        dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
+        dispatch(hideLoading());
+      });
+    });
+};
+
+export const removeMockedDataAsync = (): ThunkResult<Promise<void>> => dispatch => {
+  dispatch(showLoading());
+  return http.delete('/api/items/mocked-data')
+    .then(response => handleApiResponse(response))
+    .then(() => {
+      batch(() => {
+        dispatch(showToast(Toast.success, ITEM_DELETE_SUCCESS));
+        dispatch(removeMockedData());
+        dispatch(hideLoading());
+      });
+    })
+    .catch(err => {
+      console.error('Unable to remove mocked data', err);
+      batch(() => {
+        dispatch(showToast(Toast.error, ITEM_DELETE_ERROR));
+        dispatch(hideLoading());
+      });
     });
 };

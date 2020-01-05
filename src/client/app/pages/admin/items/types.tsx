@@ -1,10 +1,11 @@
 import { ActionCreatorsMapObject } from 'redux';
-import { InjectedIntlProps } from 'react-intl';
+import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
+
 import { IItemsMap, ICitiesMap, IUsersMap, ThunkReturn, ActionReturn } from 'types';
 import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApproved } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
-import { IItem } from 'global-utils/typings';
+import { IItem, UserRoles } from 'global-utils/typings';
 
 export interface IOwnProps extends InjectedIntlProps {}
 
@@ -23,7 +24,7 @@ export interface IStateProps {
   citiesMap: ICitiesMap;
   shouldLoadUserItems: boolean;
   userItems: IItem[];
-  userRole: string;
+  userRole: UserRoles;
   locale: string;
 }
 

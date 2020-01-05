@@ -1,13 +1,16 @@
-import { IntlProvider } from 'react-intl';
+import { createIntl, createIntlCache } from 'react-intl';
 import { getTranslationMessages, IsEnabled, TranslatableField } from '../../global-utils';
 import * as errors from '../../data-strings/validation';
 import { requiredWhenEnabled, isRequired, IFormProps } from '../inputValidators';
 import { LANGUAGES } from '../constants';
 
 const locale = 'en';
+const cache = createIntlCache();
 const messages = getTranslationMessages(locale);
-const intlProvider = new IntlProvider({ locale, messages });
-const { intl } = intlProvider.getChildContext();
+const intl = createIntl({
+  locale,
+  messages
+}, cache);
 
 describe('inputValidators', () => {
   const getFormProps = (isEnabled?: IsEnabled): IFormProps => ({

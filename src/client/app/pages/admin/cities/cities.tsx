@@ -105,6 +105,7 @@ class AdminCitiesPage extends React.Component<Props, State> {
         <AdminHeader
           createLink={adminRoutes.createCity.getLink()}
           translationId="admin.menu.cities"
+          showActions
         />
         <Table
           showLoadingOverlay={true}

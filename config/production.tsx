@@ -1,7 +1,12 @@
-const prodPort  = process.env.PORT || 3000;
-module.exports = {
+import { IConfig } from '../src/global-utils/typings';
+
+const port  = process.env.PORT || 3000;
+
+const production: IConfig = {
   env: 'production',
   db: 'mongodb://localhost:27017/poilsis',
-  port: prodPort,
-  host: `http://localhost:${prodPort}`
+  port,
+  host: `http://localhost:${port}`
 };
+
+export default production;

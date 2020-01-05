@@ -29,8 +29,8 @@ import { NotAuthorized } from 'components/notAuthorized';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { LanguageSelector } from 'components/languageSelector';
 import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
-import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
+import { LoadingBar } from 'components/loadingBar';
 import { getAdminLocale, getClientLocale } from 'selectors';
 
 import { AdminItemsPage } from 'pages/admin/items';
@@ -39,6 +39,7 @@ import { CreateEditTypePage } from 'pages/admin/createEditType';
 import { CreateEditCityPage } from 'pages/admin/createEditCity';
 import { AdminTypesPage } from 'pages/admin/types';
 import { AdminCitiesPage } from 'pages/admin/cities';
+import { AdminHomePage } from 'pages/admin/home';
 
 import { IOwnProps, IStateProps, IDispatchProps, AdminLayoutProps } from './types';
 
@@ -126,7 +127,8 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
   render() {
     const { classes, adminLocale } = this.props;
     return (
-      <ConnectedIntlProvider locale={adminLocale}>
+      <React.Fragment>
+        <LoadingBar isAdmin />
         <div className={classes.wrapper}>
           <Drawer
             onClose={this.handleDrawerClose}
@@ -157,6 +159,11 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
             </AppBar>
               <main className={classes.main}>
                 <Switch>
+                  <ProtectedRoute
+                    exact
+                    path={adminRoutes.landing.path}
+                    component={AdminHomePage}
+                  />
                   <ProtectedRoute
                     exact
                     path={adminRoutes.items.path}
@@ -209,7 +216,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
           <Toast />
           <KeepMeLoggedModal />
         </div>
-      </ConnectedIntlProvider>
+      </React.Fragment>
     );
   }
 }

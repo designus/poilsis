@@ -2,12 +2,10 @@ import { Reducer } from 'redux';
 import {
   AuthActionTypes,
   AuthActions,
-  ItemsActionTypes,
   CurrentUserActions,
   CurrentUserActionTypes,
   ItemsActions,
   ICurrentUserState,
-  InitialDataActionTypes,
   InitialDataActions
 } from 'types';
 
@@ -21,8 +19,11 @@ type ActionTypes = CurrentUserActions | ItemsActions | InitialDataActions | Auth
 export const currentUser: Reducer<ICurrentUserState, ActionTypes> =
 (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
   switch (action.type) {
-    case ItemsActionTypes.RECEIVE_ITEMS:
-      return action.userId ? { ...state, hasItems: true } : state;
+    case CurrentUserActionTypes.RECEIVE_USER_ITEMS:
+      return {
+        ...state,
+        hasItems: true
+      };
     case CurrentUserActionTypes.RECEIVE_USER_DETAILS: {
       return {
         ...state,

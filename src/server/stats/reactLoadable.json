@@ -1,4 +1,48 @@
 {
+  "./home": [
+    {
+      "id": "./app/pages/admin/home/home.tsx",
+      "name": "./app/pages/admin/home/home.tsx",
+      "file": "adminHomePage.js",
+      "publicPath": "http://localhost:8080/public/adminHomePage.js"
+    },
+    {
+      "id": "./app/actions/home.tsx",
+      "name": "./app/actions/home.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/actions/home.tsx",
+      "name": "./app/actions/home.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/pages/client/home/home.tsx",
+      "name": "./app/pages/client/home/home.tsx",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    },
+    {
+      "id": "./app/types/home.tsx",
+      "name": "./app/types/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/selectors/home.tsx",
+      "name": "./app/selectors/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/home.tsx",
+      "name": "./app/reducers/home.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "@material-ui/icons/Star": [
     {
       "id": "../../node_modules/@material-ui/icons/Star.js",
@@ -73,6 +117,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/components/loadingBar/styles.tsx",
+      "name": "./app/components/loadingBar/styles.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
       "id": "./app/components/search/styles.tsx",
       "name": "./app/components/search/styles.tsx",
       "file": "adminLayoutPage.js",
@@ -115,8 +165,26 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientCity~homePage.js"
     },
     {
+      "id": "./app/components/drawer/styles.tsx",
+      "name": "./app/components/drawer/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    },
+    {
       "id": "./app/components/dropdown/styles.tsx",
       "name": "./app/components/dropdown/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "./app/components/dropdownMenu/styles.tsx",
+      "name": "./app/components/dropdownMenu/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "./app/components/languageSelector/styles.tsx",
+      "name": "./app/components/languageSelector/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
@@ -133,26 +201,8 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": "./app/components/dropdownMenu/styles.tsx",
-      "name": "./app/components/dropdownMenu/styles.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
       "id": "./app/components/userMenu/styles.tsx",
       "name": "./app/components/userMenu/styles.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "./app/components/languageSelector/styles.tsx",
-      "name": "./app/components/languageSelector/styles.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "./app/components/drawer/styles.tsx",
-      "name": "./app/components/drawer/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
@@ -263,14 +313,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../data-strings/items.tsx",
-      "name": "../data-strings/items.tsx",
+      "id": "./app/selectors/items.tsx",
+      "name": "./app/selectors/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/items.tsx",
-      "name": "./app/selectors/items.tsx",
+      "id": "../data-strings/items.tsx",
+      "name": "../data-strings/items.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -311,44 +361,6 @@
     {
       "id": "./app/selectors/common.tsx",
       "name": "./app/selectors/common.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./home": [
-    {
-      "id": "./app/actions/home.tsx",
-      "name": "./app/actions/home.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/actions/home.tsx",
-      "name": "./app/actions/home.tsx",
-      "file": "homePage.js",
-      "publicPath": "http://localhost:8080/public/homePage.js"
-    },
-    {
-      "id": "./app/pages/client/home/home.tsx",
-      "name": "./app/pages/client/home/home.tsx",
-      "file": "homePage.js",
-      "publicPath": "http://localhost:8080/public/homePage.js"
-    },
-    {
-      "id": "./app/types/home.tsx",
-      "name": "./app/types/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/selectors/home.tsx",
-      "name": "./app/selectors/home.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/home.tsx",
-      "name": "./app/reducers/home.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -571,6 +583,22 @@
       "name": "./app/components/itemTypesList/itemTypesList.tsx",
       "file": "clientCity.js",
       "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "components/loadingBar": [
+    {
+      "id": "./app/components/loadingBar/index.tsx",
+      "name": "./app/components/loadingBar/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
+  "./loadingBar": [
+    {
+      "id": "./app/components/loadingBar/loadingBar.tsx",
+      "name": "./app/components/loadingBar/loadingBar.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
   "./adminLeftMenu": [
@@ -835,14 +863,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../data-strings/cities.tsx",
-      "name": "../data-strings/cities.tsx",
+      "id": "./app/selectors/cities.tsx",
+      "name": "./app/selectors/cities.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/cities.tsx",
-      "name": "./app/selectors/cities.tsx",
+      "id": "../data-strings/cities.tsx",
+      "name": "../data-strings/cities.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -963,6 +991,14 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
+  "pages/admin/home": [
+    {
+      "id": "./app/pages/admin/home/index.tsx",
+      "name": "./app/pages/admin/home/index.tsx",
+      "file": "adminLayoutPage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    }
+  ],
   "pages/admin/items": [
     {
       "id": "./app/pages/admin/items/index.tsx",
@@ -1015,14 +1051,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../data-strings/types.tsx",
-      "name": "../data-strings/types.tsx",
+      "id": "./app/selectors/types.tsx",
+      "name": "./app/selectors/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/types.tsx",
-      "name": "./app/selectors/types.tsx",
+      "id": "../data-strings/types.tsx",
+      "name": "../data-strings/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -1031,6 +1067,12 @@
       "name": "./app/reducers/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/types.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/types.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
   "actions/cities": [
@@ -1109,66 +1151,124 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "undefined": [
+  "actions/initialData": [
     {
-      "id": 1,
-      "name": null,
+      "id": "./app/actions/initialData.tsx",
+      "name": "./app/actions/initialData.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
+    }
+  ],
+  "actions/locale": [
     {
-      "id": 2,
-      "name": null,
+      "id": "./app/actions/locale.tsx",
+      "name": "./app/actions/locale.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
+    }
+  ],
+  "./connectedIntlProvider": [
     {
-      "id": 3,
-      "name": null,
+      "id": "./app/components/connectedIntlProvider/connectedIntlProvider.tsx",
+      "name": "./app/components/connectedIntlProvider/connectedIntlProvider.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
+    }
+  ],
+  "components/connectedIntlProvider": [
     {
-      "id": 3,
-      "name": null,
-      "file": "keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
-    },
+      "id": "./app/components/connectedIntlProvider/index.tsx",
+      "name": "./app/components/connectedIntlProvider/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./drawer": [
     {
-      "id": 2,
-      "name": null,
-      "file": "keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
-    },
+      "id": "./app/components/drawer/drawer.tsx",
+      "name": "./app/components/drawer/drawer.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/drawer": [
     {
-      "id": 1,
-      "name": null,
-      "file": "keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
-    },
+      "id": "./app/components/drawer/index.tsx",
+      "name": "./app/components/drawer/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./dropdown": [
     {
-      "id": 0,
-      "name": null,
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
+      "id": "./app/components/dropdown/dropdown.tsx",
+      "name": "./app/components/dropdown/dropdown.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/dropdown": [
     {
-      "id": "../../node_modules/webpack/hot sync ^\\.\\/log$",
-      "name": "../../node_modules/webpack/hot sync ^\\.\\/log$",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
+      "id": "./app/components/dropdown/index.tsx",
+      "name": "./app/components/dropdown/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./dropdownMenu": [
     {
-      "id": "../translations sync recursive ^\\.\\/.*\\.json$",
-      "name": "../translations sync recursive ^\\.\\/.*\\.json$",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
+      "id": "./app/components/dropdownMenu/dropdownMenu.tsx",
+      "name": "./app/components/dropdownMenu/dropdownMenu.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/dropdownMenu": [
     {
-      "id": "../../config sync recursive ^\\.\\/.*$",
-      "name": "../../config sync recursive ^\\.\\/.*$",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
+      "id": "./app/components/dropdownMenu/index.tsx",
+      "name": "./app/components/dropdownMenu/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/languageSelector": [
+    {
+      "id": "./app/components/languageSelector/index.tsx",
+      "name": "./app/components/languageSelector/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./languageSelector": [
+    {
+      "id": "./app/components/languageSelector/languageSelector.tsx",
+      "name": "./app/components/languageSelector/languageSelector.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/menu/menu": [
+    {
+      "id": "./app/components/menu/menu.tsx",
+      "name": "./app/components/menu/menu.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/notFound": [
+    {
+      "id": "./app/components/notFound/index.tsx",
+      "name": "./app/components/notFound/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./notFound": [
+    {
+      "id": "./app/components/notFound/notFound.tsx",
+      "name": "./app/components/notFound/notFound.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
   "components/toast": [
@@ -1215,98 +1315,10 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "components/dropdownMenu": [
+  "./colors": [
     {
-      "id": "./app/components/dropdownMenu/index.tsx",
-      "name": "./app/components/dropdownMenu/index.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./dropdownMenu": [
-    {
-      "id": "./app/components/dropdownMenu/dropdownMenu.tsx",
-      "name": "./app/components/dropdownMenu/dropdownMenu.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "components/languageSelector": [
-    {
-      "id": "./app/components/languageSelector/index.tsx",
-      "name": "./app/components/languageSelector/index.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./languageSelector": [
-    {
-      "id": "./app/components/languageSelector/languageSelector.tsx",
-      "name": "./app/components/languageSelector/languageSelector.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "components/dropdown": [
-    {
-      "id": "./app/components/dropdown/index.tsx",
-      "name": "./app/components/dropdown/index.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./dropdown": [
-    {
-      "id": "./app/components/dropdown/dropdown.tsx",
-      "name": "./app/components/dropdown/dropdown.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "components/menu/menu": [
-    {
-      "id": "./app/components/menu/menu.tsx",
-      "name": "./app/components/menu/menu.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "actions/locale": [
-    {
-      "id": "./app/actions/locale.tsx",
-      "name": "./app/actions/locale.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "components/notFound": [
-    {
-      "id": "./app/components/notFound/index.tsx",
-      "name": "./app/components/notFound/index.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./notFound": [
-    {
-      "id": "./app/components/notFound/notFound.tsx",
-      "name": "./app/components/notFound/notFound.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "components/drawer": [
-    {
-      "id": "./app/components/drawer/index.tsx",
-      "name": "./app/components/drawer/index.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./drawer": [
-    {
-      "id": "./app/components/drawer/drawer.tsx",
-      "name": "./app/components/drawer/drawer.tsx",
+      "id": "./app/global-styles/colors.tsx",
+      "name": "./app/global-styles/colors.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
@@ -1323,38 +1335,6 @@
     {
       "id": "./app/global-styles/settings.tsx",
       "name": "./app/global-styles/settings.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./colors": [
-    {
-      "id": "./app/global-styles/colors.tsx",
-      "name": "./app/global-styles/colors.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "components/connectedIntlProvider": [
-    {
-      "id": "./app/components/connectedIntlProvider/index.tsx",
-      "name": "./app/components/connectedIntlProvider/index.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./connectedIntlProvider": [
-    {
-      "id": "./app/components/connectedIntlProvider/connectedIntlProvider.tsx",
-      "name": "./app/components/connectedIntlProvider/connectedIntlProvider.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "actions/initialData": [
-    {
-      "id": "./app/actions/initialData.tsx",
-      "name": "./app/actions/initialData.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
@@ -1699,48 +1679,68 @@
       "publicPath": "http://localhost:8080/public/keepMeLoggedModal.js"
     }
   ],
-  "@babel/runtime/helpers/esm/assertThisInitialized": [
+  "@babel/runtime/helpers/esm/createClass": [
     {
-      "id": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "name": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "id": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/react-redux/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "name": "../../node_modules/react-redux/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "id": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "name": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "id": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "name": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "id": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "name": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "id": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "name": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/react-transition-group/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
-      "name": "../../node_modules/react-transition-group/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "id": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
+      "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "undefined": [
+    {
+      "id": 0,
+      "name": null,
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/webpack/hot sync ^\\.\\/log$",
+      "name": "../../node_modules/webpack/hot sync ^\\.\\/log$",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../translations sync recursive ^\\.\\/.*\\.json$",
+      "name": "../translations sync recursive ^\\.\\/.*\\.json$",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../config sync recursive ^\\.\\/.*$",
+      "name": "../../config sync recursive ^\\.\\/.*$",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "querystring": [
@@ -1757,12 +1757,24 @@
       "name": "../../node_modules/querystring-es3/decode.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/shortid/lib/decode.js",
+      "name": "../../node_modules/shortid/lib/decode.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "./encode": [
     {
       "id": "../../node_modules/querystring-es3/encode.js",
       "name": "../../node_modules/querystring-es3/encode.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/shortid/lib/encode.js",
+      "name": "../../node_modules/shortid/lib/encode.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -2033,6 +2045,12 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
+      "id": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "name": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
       "id": "../../node_modules/redux-form/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "name": "../../node_modules/redux-form/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "file": "vendors~adminLayoutPage.js",
@@ -2129,12 +2147,6 @@
     {
       "id": "../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js",
       "name": "../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/react-redux/node_modules/@babel/runtime/helpers/esm/inheritsLoose.js",
-      "name": "../../node_modules/react-redux/node_modules/@babel/runtime/helpers/esm/inheritsLoose.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -2237,6 +2249,12 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
+      "id": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/index.js",
+      "name": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
       "id": "../../node_modules/redux-form/node_modules/prop-types/index.js",
       "name": "../../node_modules/redux-form/node_modules/prop-types/index.js",
       "file": "vendors~adminLayoutPage.js",
@@ -2307,6 +2325,12 @@
     {
       "id": "../../node_modules/@material-ui/styles/node_modules/prop-types/factoryWithTypeCheckers.js",
       "name": "../../node_modules/@material-ui/styles/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "name": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/factoryWithTypeCheckers.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -2441,6 +2465,12 @@
     {
       "id": "../../node_modules/@material-ui/styles/node_modules/prop-types/checkPropTypes.js",
       "name": "../../node_modules/@material-ui/styles/node_modules/prop-types/checkPropTypes.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/checkPropTypes.js",
+      "name": "../../node_modules/react-redux-loading-bar/node_modules/prop-types/checkPropTypes.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -2835,6 +2865,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "../utils/useIsomorphicLayoutEffect": [
+    {
+      "id": "../../node_modules/react-redux/es/utils/useIsomorphicLayoutEffect.js",
+      "name": "../../node_modules/react-redux/es/utils/useIsomorphicLayoutEffect.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "./connect/connect": [
     {
       "id": "../../node_modules/react-redux/es/connect/connect.js",
@@ -2843,7 +2881,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../utils/shallowEqual": [
+  "./utils/shallowEqual": [
     {
       "id": "../../node_modules/react-redux/es/utils/shallowEqual.js",
       "name": "../../node_modules/react-redux/es/utils/shallowEqual.js",
@@ -2961,6 +2999,38 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "./hooks/useDispatch": [
+    {
+      "id": "../../node_modules/react-redux/es/hooks/useDispatch.js",
+      "name": "../../node_modules/react-redux/es/hooks/useDispatch.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./hooks/useStore": [
+    {
+      "id": "../../node_modules/react-redux/es/hooks/useStore.js",
+      "name": "../../node_modules/react-redux/es/hooks/useStore.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./useReduxContext": [
+    {
+      "id": "../../node_modules/react-redux/es/hooks/useReduxContext.js",
+      "name": "../../node_modules/react-redux/es/hooks/useReduxContext.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./hooks/useSelector": [
+    {
+      "id": "../../node_modules/react-redux/es/hooks/useSelector.js",
+      "name": "../../node_modules/react-redux/es/hooks/useSelector.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "./utils/reactBatchedUpdates": [
     {
       "id": "../../node_modules/react-redux/es/utils/reactBatchedUpdates.js",
@@ -3033,14 +3103,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../data-strings/auth.tsx",
-      "name": "../data-strings/auth.tsx",
+      "id": "./app/selectors/auth.tsx",
+      "name": "./app/selectors/auth.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/selectors/auth.tsx",
-      "name": "./app/selectors/auth.tsx",
+      "id": "../data-strings/auth.tsx",
+      "name": "../data-strings/auth.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
@@ -3159,7 +3229,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "lodash/memoize": [
+  "./memoize": [
     {
       "id": "../../node_modules/lodash/memoize.js",
       "name": "../../node_modules/lodash/memoize.js",
@@ -3479,26 +3549,10 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "global-utils/constants": [
+  "selectors": [
     {
-      "id": "../global-utils/constants.tsx",
-      "name": "../global-utils/constants.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "global-utils": [
-    {
-      "id": "../global-utils/index.tsx",
-      "name": "../global-utils/index.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "global-utils/typings": [
-    {
-      "id": "../global-utils/typings.tsx",
-      "name": "../global-utils/typings.tsx",
+      "id": "./app/selectors/index.tsx",
+      "name": "./app/selectors/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3535,6 +3589,30 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "global-utils/typings": [
+    {
+      "id": "../global-utils/typings.tsx",
+      "name": "../global-utils/typings.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "global-utils/constants": [
+    {
+      "id": "../global-utils/constants.tsx",
+      "name": "../global-utils/constants.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "fold-to-ascii": [
+    {
+      "id": "../../node_modules/fold-to-ascii/lib/ascii-folder.js",
+      "name": "../../node_modules/fold-to-ascii/lib/ascii-folder.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "./en.json": [
     {
       "id": "../translations/en.json",
@@ -3559,6 +3637,36 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "./users": [
+    {
+      "id": "./app/selectors/users.tsx",
+      "name": "./app/selectors/users.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "./app/reducers/users.tsx",
+      "name": "./app/reducers/users.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "reselect": [
+    {
+      "id": "../../node_modules/reselect/es/index.js",
+      "name": "../../node_modules/reselect/es/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "global-utils": [
+    {
+      "id": "../global-utils/index.tsx",
+      "name": "../global-utils/index.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "./validationRules": [
     {
       "id": "../global-utils/validationRules.tsx",
@@ -3575,7 +3683,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../data-strings/validation": [
+  "./validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -3987,50 +4095,50 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "@babel/runtime/helpers/esm/createClass": [
-    {
-      "id": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/createClass.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
   "/home/martynas/Desktop/poilsis/node_modules/webpack-dev-server/client/index.js?http://localhost:8080": [
     {
       "id": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "name": "../../node_modules/webpack-dev-server/client/index.js?http://localhost:8080",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "@babel/runtime/helpers/esm/assertThisInitialized": [
+    {
+      "id": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "name": "../../node_modules/jss-plugin-rule-value-function/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "name": "../../node_modules/jss-plugin-global/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "name": "../../node_modules/jss-plugin-default-unit/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "name": "../../node_modules/jss-plugin-vendor-prefixer/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "name": "../../node_modules/@material-ui/styles/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/react-transition-group/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "name": "../../node_modules/react-transition-group/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
   "jss-plugin-global": [
@@ -4437,6 +4545,54 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "react-redux-loading-bar": [
+    {
+      "id": "../../node_modules/react-redux-loading-bar/build/index.js",
+      "name": "../../node_modules/react-redux-loading-bar/build/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./loading_bar": [
+    {
+      "id": "../../node_modules/react-redux-loading-bar/build/loading_bar.js",
+      "name": "../../node_modules/react-redux-loading-bar/build/loading_bar.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "react-lifecycles-compat": [
+    {
+      "id": "../../node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js",
+      "name": "../../node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./loading_bar_ducks": [
+    {
+      "id": "../../node_modules/react-redux-loading-bar/build/loading_bar_ducks.js",
+      "name": "../../node_modules/react-redux-loading-bar/build/loading_bar_ducks.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./loading_bar_middleware": [
+    {
+      "id": "../../node_modules/react-redux-loading-bar/build/loading_bar_middleware.js",
+      "name": "../../node_modules/react-redux-loading-bar/build/loading_bar_middleware.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./immutable": [
+    {
+      "id": "../../node_modules/react-redux-loading-bar/build/immutable.js",
+      "name": "../../node_modules/react-redux-loading-bar/build/immutable.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "./upload": [
     {
       "id": "./app/actions/upload.tsx",
@@ -4461,32 +4617,74 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "selectors": [
+  "global-utils/mockedData": [
     {
-      "id": "./app/selectors/index.tsx",
-      "name": "./app/selectors/index.tsx",
+      "id": "../global-utils/mockedData.tsx",
+      "name": "../global-utils/mockedData.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./users": [
+  "shortid": [
     {
-      "id": "./app/selectors/users.tsx",
-      "name": "./app/selectors/users.tsx",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "./app/reducers/users.tsx",
-      "name": "./app/reducers/users.tsx",
+      "id": "../../node_modules/shortid/index.js",
+      "name": "../../node_modules/shortid/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "reselect": [
+  "./lib/index": [
     {
-      "id": "../../node_modules/reselect/es/index.js",
-      "name": "../../node_modules/reselect/es/index.js",
+      "id": "../../node_modules/shortid/lib/index.js",
+      "name": "../../node_modules/shortid/lib/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./alphabet": [
+    {
+      "id": "../../node_modules/shortid/lib/alphabet.js",
+      "name": "../../node_modules/shortid/lib/alphabet.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./random/random-from-seed": [
+    {
+      "id": "../../node_modules/shortid/lib/random/random-from-seed.js",
+      "name": "../../node_modules/shortid/lib/random/random-from-seed.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./random/random-byte": [
+    {
+      "id": "../../node_modules/shortid/lib/random/random-byte-browser.js",
+      "name": "../../node_modules/shortid/lib/random/random-byte-browser.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./build": [
+    {
+      "id": "../../node_modules/shortid/lib/build.js",
+      "name": "../../node_modules/shortid/lib/build.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./is-valid": [
+    {
+      "id": "../../node_modules/shortid/lib/is-valid.js",
+      "name": "../../node_modules/shortid/lib/is-valid.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./util/cluster-worker-id": [
+    {
+      "id": "../../node_modules/shortid/lib/util/cluster-worker-id-browser.js",
+      "name": "../../node_modules/shortid/lib/util/cluster-worker-id-browser.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4505,8 +4703,8 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/intl-messageformat/lib/utils.js",
-      "name": "../../node_modules/intl-messageformat/lib/utils.js",
+      "id": "../../node_modules/react-intl/lib/utils.js",
+      "name": "../../node_modules/react-intl/lib/utils.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
@@ -4719,7 +4917,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../../../../../config": [
+  "config": [
     {
       "id": "../../config/index.tsx",
       "name": "../../config/index.tsx",
@@ -6503,14 +6701,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "react-lifecycles-compat": [
-    {
-      "id": "../../node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js",
-      "name": "../../node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "./ConnectedField": [
     {
       "id": "../../node_modules/redux-form/es/ConnectedField.js",
@@ -7527,28 +7717,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "react-intl/locale-data/en": [
+  "@formatjs/macro": [
     {
-      "id": "../../node_modules/react-intl/locale-data/en.js",
-      "name": "../../node_modules/react-intl/locale-data/en.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "react-intl/locale-data/lt": [
-    {
-      "id": "../../node_modules/react-intl/locale-data/lt.js",
-      "name": "../../node_modules/react-intl/locale-data/lt.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "react-intl/locale-data/ru": [
-    {
-      "id": "../../node_modules/react-intl/locale-data/ru.js",
-      "name": "../../node_modules/react-intl/locale-data/ru.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+      "id": "../../node_modules/@formatjs/macro/dist/index.js",
+      "name": "../../node_modules/@formatjs/macro/dist/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
   "./Backdrop": [
@@ -7895,15 +8069,31 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "intl-messageformat-parser": [
+  "intl-locales-supported": [
     {
-      "id": "../../node_modules/intl-messageformat-parser/index.js",
-      "name": "../../node_modules/intl-messageformat-parser/index.js",
+      "id": "../../node_modules/intl-locales-supported/lib/index.js",
+      "name": "../../node_modules/intl-locales-supported/lib/index.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./lib/parser": [
+  "intl-messageformat-parser": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/index.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./normalize": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/normalize.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/normalize.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./parser": [
     {
       "id": "../../node_modules/intl-messageformat-parser/lib/parser.js",
       "name": "../../node_modules/intl-messageformat-parser/lib/parser.js",
@@ -7911,18 +8101,10 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "intl-messageformat": [
+  "./skeleton": [
     {
-      "id": "../../node_modules/intl-messageformat/index.js",
-      "name": "../../node_modules/intl-messageformat/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./compiler": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/compiler.js",
-      "name": "../../node_modules/intl-messageformat/lib/compiler.js",
+      "id": "../../node_modules/intl-messageformat-parser/lib/skeleton.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/skeleton.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
@@ -7933,68 +8115,20 @@
       "name": "../../node_modules/intl-messageformat/lib/core.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
+    }
+  ],
+  "./formatters": [
     {
-      "id": "../../node_modules/intl-relativeformat/lib/core.js",
-      "name": "../../node_modules/intl-relativeformat/lib/core.js",
+      "id": "../../node_modules/intl-messageformat/lib/formatters.js",
+      "name": "../../node_modules/intl-messageformat/lib/formatters.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./en": [
+  "intl-messageformat": [
     {
-      "id": "../../node_modules/intl-messageformat/lib/en.js",
-      "name": "../../node_modules/intl-messageformat/lib/en.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/en.js",
-      "name": "../../node_modules/intl-relativeformat/lib/en.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./es5": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/es5.js",
-      "name": "../../node_modules/intl-messageformat/lib/es5.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/es5.js",
-      "name": "../../node_modules/intl-relativeformat/lib/es5.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./lib/main": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/main.js",
-      "name": "../../node_modules/intl-messageformat/lib/main.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/main.js",
-      "name": "../../node_modules/intl-relativeformat/lib/main.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "intl-relativeformat": [
-    {
-      "id": "../../node_modules/intl-relativeformat/index.js",
-      "name": "../../node_modules/intl-relativeformat/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./diff": [
-    {
-      "id": "../../node_modules/intl-relativeformat/lib/diff.js",
-      "name": "../../node_modules/intl-relativeformat/lib/diff.js",
+      "id": "../../node_modules/intl-messageformat/lib/index.js",
+      "name": "../../node_modules/intl-messageformat/lib/index.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
@@ -8007,10 +8141,122 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
+  "./components/createFormattedComponent": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/createFormattedComponent.js",
+      "name": "../../node_modules/react-intl/lib/components/createFormattedComponent.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./components/html-message": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/html-message.js",
+      "name": "../../node_modules/react-intl/lib/components/html-message.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./components/injectIntl": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/injectIntl.js",
+      "name": "../../node_modules/react-intl/lib/components/injectIntl.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./components/message": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/message.js",
+      "name": "../../node_modules/react-intl/lib/components/message.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./components/plural": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/plural.js",
+      "name": "../../node_modules/react-intl/lib/components/plural.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./components/provider": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/provider.js",
+      "name": "../../node_modules/react-intl/lib/components/provider.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./components/relative": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/relative.js",
+      "name": "../../node_modules/react-intl/lib/components/relative.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "./components/useIntl": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/useIntl.js",
+      "name": "../../node_modules/react-intl/lib/components/useIntl.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../formatters/dateTime": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/dateTime.js",
+      "name": "../../node_modules/react-intl/lib/formatters/dateTime.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../formatters/list": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/list.js",
+      "name": "../../node_modules/react-intl/lib/formatters/list.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../formatters/message": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/message.js",
+      "name": "../../node_modules/react-intl/lib/formatters/message.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../formatters/number": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/number.js",
+      "name": "../../node_modules/react-intl/lib/formatters/number.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../formatters/plural": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/plural.js",
+      "name": "../../node_modules/react-intl/lib/formatters/plural.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "../formatters/relativeTime": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/relativeTime.js",
+      "name": "../../node_modules/react-intl/lib/formatters/relativeTime.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
   "react-intl": [
     {
-      "id": "../../node_modules/react-intl/lib/index.es.js",
-      "name": "../../node_modules/react-intl/lib/index.es.js",
+      "id": "../../node_modules/react-intl/lib/index.js",
+      "name": "../../node_modules/react-intl/lib/index.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
@@ -8091,6 +8337,14 @@
     {
       "id": "../../node_modules/react-transition-group/esm/utils/PropTypes.js",
       "name": "../../node_modules/react-transition-group/esm/utils/PropTypes.js",
+      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    }
+  ],
+  "shallow-equal/objects": [
+    {
+      "id": "../../node_modules/shallow-equal/objects/index.js",
+      "name": "../../node_modules/shallow-equal/objects/index.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
