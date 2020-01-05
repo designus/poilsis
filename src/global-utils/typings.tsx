@@ -104,3 +104,10 @@ export interface IUser {
 }
 
 export type DataTypes = IItem | IType | ICity;
+
+export interface IConfig {
+  env: 'development' | 'production' | 'test';
+  db: string;
+  port: string | number;
+  host?: string;
+}

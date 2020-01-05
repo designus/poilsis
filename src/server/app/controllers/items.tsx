@@ -13,6 +13,7 @@ import {
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { MulterRequest, MulterFile } from 'server-utils/types';
+import { config } from 'config';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
 
@@ -238,15 +239,18 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
 
 export const addMockedData = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = req.body.data as IItem[];
-    const items = await ItemsModel.insertMany(data);
+    if (config.env !== 'development') {
+      res.status(401).send({ message: `Unauthorized action is ${config.env} environment` });
+    } else {
+      const data = req.body.data as IItem[];
+      const items = await ItemsModel.insertMany(data);
 
-    if (!items) {
-      throw new Error('Unable to add test data');
+      if (!items) {
+        throw new Error('Unable to add test data');
+      }
+
+      res.status(200).json(items);
     }
-
-    res.status(200).json(items);
-
   } catch (err) {
     return next(err);
   }
@@ -255,9 +259,12 @@ export const addMockedData = async (req: Request, res: Response, next: NextFunct
 export const removeMockedData = async (req: Request, res: Response, next: NextFunction) => {
   try {
 
-    await ItemsModel.remove({});
-    res.status(200).json(true);
-
+    if (config.env !== 'development') {
+      res.status(401).send({ message: `Unauthorized action is ${config.env} environment` });
+    } else {
+      await ItemsModel.remove({});
+      res.status(200).json(true);
+    }
   } catch (err) {
     return next(err);
   }

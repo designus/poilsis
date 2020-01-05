@@ -119,7 +119,7 @@ function sendResponse(res, store, location) {
 
 Loadable.preloadAll()
   .then(() => {
-    app.listen(config.port, (error) => {
+    app.listen(config.port, (error: any) => {
       if (error) {
         console.error(error);
       } else {

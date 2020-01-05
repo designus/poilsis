@@ -1,8 +1,12 @@
-const devPort = process.env.PORT || 3000;
+import { IConfig } from '../src/global-utils/typings';
 
-module.exports = {
+const port = process.env.PORT || 3000;
+
+const development: IConfig = {
   env: 'development',
   db: 'mongodb://localhost:27017/poilsis',
-  port: devPort,
-  host: `http://localhost:${devPort}`
+  port,
+  host: `http://localhost:${port}`
 };
+
+export default development;
