@@ -6,10 +6,13 @@ import {
   IMAGE_EXTENSIONS,
   IItem,
   DataTypes,
-  UserRoles
+  UserRoles,
+  Languages,
+  LANGUAGES,
+  TranslatableFields
 } from 'global-utils';
 
-import { MulterFile, IInfoFromFileName } from './types';
+import { MulterFile, IInfoFromFileName, FieldsToSet } from './types';
 import { readDirectoryContent } from './fileSystem';
 
 export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
@@ -134,3 +137,19 @@ export const getAdjustedIsEnabledValue = (item: DataTypes) => {
 
 export const isApprovedByAdmin = (userRole: UserRoles, item: IItem) =>
   userRole === UserRoles.admin ? item.isApprovedByAdmin : false;
+
+export function getFieldsToUnset<T>(languages: Languages[], skipLocale: Languages, fields: Array<TranslatableFields<T>>): string[] {
+  const languagesToUnset = languages.filter(lang => lang !== skipLocale);
+  return fields
+    .map(field => languagesToUnset.map(lang => `${field}.${lang}`))
+    .reduce((acc: string[], val) => acc.concat(val), []);
+}
+
+export function getFieldsToSet<T>(locale: Languages, fields: Array<TranslatableFields<T>>): FieldsToSet {
+  return fields.reduce((acc, field) => {
+    const key = `${field}.${locale}`;
+    const value = `$${key}`;
+    acc[key] = value;
+    return acc;
+  }, {});
+}

@@ -8,7 +8,9 @@ import {
   getAdjustedIsEnabledValue,
   isApprovedByAdmin,
   getImagePath,
-  removeUploadedFiles
+  removeUploadedFiles,
+  getFieldsToSet,
+  getFieldsToUnset
 } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
@@ -17,7 +19,7 @@ import { config } from 'config';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
 
-const itemProjection =  {
+const clientItemsProjection =  {
   _id: 0,
   id: 1,
   name: 1,
@@ -43,22 +45,39 @@ export const getAllItems = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const getRecommendedItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
+export const getRecommendedItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = 'lt';
+    const recommendedItems = await ItemsModel.aggregate([
       { $match: { isRecommended: true } },
-      { $project: itemProjection }
+      { $project: clientItemsProjection },
+      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, ['name', 'alias']) },
+      { $set: getFieldsToSet(locale, ['name', 'alias'])}
     ])
-    .exec(sendResponse(res, next));
+    .exec();
+
+    res.status(200).json(recommendedItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const getCityItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
-      { $match: { cityId: req.params.cityId } },
-      { $project: itemProjection }
-    ])
-    .exec(sendResponse(res, next));
+export const getCityItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = 'lt';
+    const cityItems = await ItemsModel
+      .aggregate([
+        { $match: { cityId: req.params.cityId } },
+        { $project: clientItemsProjection },
+        { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, ['name', 'alias']) },
+        { $set: getFieldsToSet(locale, ['name', 'alias'])}
+      ])
+      .exec();
+
+    res.status(200).json(cityItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const getUserItems = async (req: Request, res: Response, next: NextFunction) => {
@@ -73,7 +92,7 @@ export const getUserItems = async (req: Request, res: Response, next: NextFuncti
 export const toggleItemRecommended = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item = await ItemsModel.findOneAndUpdate(
-      { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
+      { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true }
     );
 
     if (!item) {

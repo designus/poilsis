@@ -14,3 +14,7 @@ export interface IInfoFromFileName {
   size: ImageSize;
   extension: string;
 }
+
+export type FieldsToSet = {
+  [key: string]: string;
+};

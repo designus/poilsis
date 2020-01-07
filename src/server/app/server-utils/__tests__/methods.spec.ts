@@ -5,7 +5,9 @@ import {
   getRemovableFiles,
   getFilesToRemove,
   getInfoFromFileName,
-  getSourceFiles
+  getSourceFiles,
+  getFieldsToSet,
+  getFieldsToUnset
 } from '../methods';
 
 describe('server-utils/methods', () => {
@@ -81,5 +83,16 @@ describe('server-utils/methods', () => {
 
   it('getSourceFiles()', () => {
     expect(getSourceFiles(['1.jpg', '1_S.jpg', '2.png', '2_S.png'])).toEqual(['1.jpg', '2.png']);
+  });
+
+  it('getFieldsToUnset()', () => {
+    expect(getFieldsToUnset(['lt', 'en', 'ru'], 'en', ['alias', 'name'])).toEqual(['alias.lt', 'alias.ru', 'name.lt', 'name.ru']);
+  });
+
+  it('getFieldsToSet()', () => {
+    expect(getFieldsToSet('en', ['alias', 'name'])).toEqual({
+      'alias.en': '$alias.en',
+      'name.en': '$name.en'
+    });
   });
 });

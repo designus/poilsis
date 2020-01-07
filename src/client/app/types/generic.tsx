@@ -1,7 +1,7 @@
 import { MessageDescriptor } from 'react-intl';
 import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
 import { Action, Store } from 'redux';
-import { Omit } from 'global-utils/typings';
+import { Omit, DataTypes, TranslatableField } from 'global-utils/typings';
 import { ItemsActionTypes } from './items';
 import { CitiesActionTypes } from './cities';
 import { TypesActionTypes } from './types';

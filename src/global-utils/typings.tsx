@@ -111,3 +111,9 @@ export interface IConfig {
   port: string | number;
   host?: string;
 }
+
+export type TranslatableFields<O, K = keyof O> = K extends keyof O
+  ? O[K] extends TranslatableField
+    ? K
+    : never
+  : never;

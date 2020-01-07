@@ -119,12 +119,8 @@ function sendResponse(res, store, location) {
 
 Loadable.preloadAll()
   .then(() => {
-    app.listen(config.port, (error: any) => {
-      if (error) {
-        console.error(error);
-      } else {
-        console.info(`==> 🌎  Listening on ports ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
-      }
+    app.listen(config.port, () => {
+      console.info(`==> 🌎  Listening on ports ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
     });
   })
   .catch(err => console.log(err));
