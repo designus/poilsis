@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { batch } from 'react-redux';
 import * as Cookies from 'js-cookie';
 import * as day from 'dayjs';
 
@@ -66,11 +66,15 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
     .then(data => {
       const { accessToken, refreshToken } = data;
       const { userId: id, exp, userName: name, userRole: role } = getAccessTokenClaims(accessToken);
+      const userDetails = { id, name, role };
       const expiryDate = day(exp * 1000).toDate();
-      dispatch(loginSuccess(accessToken));
-      dispatch(receiveUserDetails({ id, name, role }));
-      dispatch(endLoading(DIALOG_LOADER_ID));
-      dispatch(showToast(Toast.success, USER_LOGIN_SUCCESS));
+      batch(() => {
+        dispatch(loginSuccess(accessToken));
+        dispatch(receiveUserDetails({ userDetails }));
+        dispatch(endLoading(DIALOG_LOADER_ID));
+        dispatch(showToast(Toast.success, USER_LOGIN_SUCCESS));
+      });
+
       Cookies.set('jwt', accessToken, {expires: expiryDate});
       localStorage.setItem('refreshToken', refreshToken);
       return Promise.resolve();

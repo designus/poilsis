@@ -11,8 +11,8 @@ export const getAdminCity = (cityId: string): ThunkResult<Promise<void>> => disp
   dispatch(startLoading(CONTENT_LOADER_ID));
   return http.get<ICity>(`/api/cities/city/${cityId}`)
     .then(response => handleApiResponse(response))
-    .then(response => {
-      dispatch(receiveCity(response));
+    .then(city => {
+      dispatch(receiveCity({ city }));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })
     .catch(handleApiErrors('Unable to load city', CONTENT_LOADER_ID, dispatch));

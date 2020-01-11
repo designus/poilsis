@@ -1,10 +1,28 @@
 
 import { Request, Response, NextFunction } from 'express';
+import { getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
+import { IUser, ToggleFields, Languages } from 'global-utils/typings';
 import { UsersModel } from '../model/users';
-import { sendResponse } from '../server-utils';
+import { LANGUAGES } from 'global-utils';
 
-export const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
-  UsersModel.find({}, 'id name role', sendResponse(res, next));
+export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<IUser> = ['isEnabled'];
+    const users = await UsersModel.aggregate([
+      { $project: { _id: 0, id: 1, name: 1 } },
+      { $unset: getFieldsToUnset(LANGUAGES, locale, toggleFields)},
+      { $set: getFieldsToSet(locale, toggleFields)}
+    ])
+    .exec();
+
+    if (!users) throw new Error('Unable to load users');
+
+    res.status(200).json(users);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 // TODO: Remove if unused

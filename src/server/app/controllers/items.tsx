@@ -21,7 +21,6 @@ import { ItemsModel } from '../model';
 
 const clientItemsProjection =  {
   _id: 0,
-  __v: 0,
   id: 1,
   name: 1,
   alias: 1,

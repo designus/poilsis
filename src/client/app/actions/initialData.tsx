@@ -50,7 +50,7 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
 
         if (accessTokenClaims) {
           const { userId: id, userName: name, userRole: role } = accessTokenClaims;
-          dispatch(receiveUserDetails({ id, name, role }));
+          dispatch(receiveUserDetails({ userDetails: { id, name, role } }));
         }
       })
       .catch(console.error);

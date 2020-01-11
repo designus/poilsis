@@ -3,16 +3,16 @@ import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNormalizedData } from 'client-utils/methods';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveItems } from 'actions/items';
-import { UserDetails, CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, IReceiveUserItems } from 'types';
+import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, IReceiveUserItems, ActionCreator } from 'types';
 import { isAdmin, IItem } from 'global-utils';
 import { handleApiResponse, http } from './utils';
 
-export const receiveUserDetails = (userDetails: UserDetails): IReceiveUserDetails => ({
+export const receiveUserDetails: ActionCreator<IReceiveUserDetails> = props => ({
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
-  userDetails
+  ...props
 });
 
-export const receiveUserItems = (): IReceiveUserItems => ({
+export const receiveUserItems: ActionCreator<IReceiveUserItems> = () => ({
   type: CurrentUserActionTypes.RECEIVE_USER_ITEMS
 });
 

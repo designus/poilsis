@@ -3,13 +3,13 @@ import { startLoading, endLoading } from 'actions/loader';
 import { IItem } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { IReceiveRecommendedItems, HomeActionTypes, ThunkResult } from 'types';
+import { IReceiveRecommendedItems, HomeActionTypes, ThunkResult, ActionCreator } from 'types';
 import { handleApiResponse, http } from './utils';
 import { receiveItems } from './items';
 
-export const receiveRecommendedItems = (items: string[]): IReceiveRecommendedItems => ({
+export const receiveRecommendedItems: ActionCreator<IReceiveRecommendedItems> = props => ({
   type: HomeActionTypes.RECEIVE_RECOMMENDED_ITEMS,
-  items
+  ...props
 });
 
 export const loadRecommendedItems = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
@@ -22,7 +22,7 @@ export const loadRecommendedItems = (): ThunkResult<Promise<void>> => (dispatch,
       const data = getNormalizedData(newItems);
       batch(() => {
         dispatch(receiveItems(data));
-        dispatch(receiveRecommendedItems(Object.keys(data.dataMap)));
+        dispatch(receiveRecommendedItems({ items: Object.keys(data.dataMap) }));
         dispatch(endLoading(CONTENT_LOADER_ID));
       });
     })

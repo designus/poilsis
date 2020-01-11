@@ -15,7 +15,6 @@ import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import {
-  IAppState,
   CitiesActionTypes,
   IReceiveCity,
   IRemoveCity,
@@ -24,29 +23,30 @@ import {
   Toast,
   ThunkDispatch,
   ThunkResult,
-  IReceiveCityItems
+  IReceiveCityItems,
+  ActionCreator
 } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 
-export const receiveCity = (city: ICity): IReceiveCity => ({
+export const receiveCity: ActionCreator<IReceiveCity> = params => ({
   type: CitiesActionTypes.RECEIVE_CITY,
-  city
+  ...params
 });
 
-export const removeCity = (cityId: string): IRemoveCity => ({
+export const removeCity: ActionCreator<IRemoveCity> = params => ({
   type: CitiesActionTypes.REMOVE_CITY,
-  cityId
+  ...params
 });
 
-export const toggleCityEnabledField = (params: ToggleEnabledParams): IToggleEnabled => ({
+export const toggleCityEnabledField: ActionCreator<IToggleEnabled> = params => ({
   type: CitiesActionTypes.TOGGLE_CITY_ENABLED,
   ...params
 });
 
-export const receiveCityItems = (cityId: string): IReceiveCityItems => ({
+export const receiveCityItems: ActionCreator<IReceiveCityItems> = params => ({
   type: CitiesActionTypes.RECEIVE_CITY_ITEMS,
-  cityId
+  ...params
 });
 
 export const loadCityItems = (alias: string): ThunkResult<Promise<void>> => (dispatch, getState) => {
@@ -66,7 +66,7 @@ export const loadCityItems = (alias: string): ThunkResult<Promise<void>> => (dis
       const data = getNormalizedData(newItems);
       batch(() => {
         dispatch(receiveItems(data));
-        dispatch(receiveCityItems(city.id));
+        dispatch(receiveCityItems({ cityId: city.id }));
         dispatch(endLoading(CONTENT_LOADER_ID));
       });
     })
@@ -81,10 +81,10 @@ export const createCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatc
 
   return http.post<ICity>('/api/cities', city)
     .then(response => handleApiResponse(response))
-    .then(response => {
-      dispatch(receiveCity(response));
+    .then(city => {
+      dispatch(receiveCity({ city }));
       dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return Promise.resolve(response);
+      return city;
     })
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
@@ -94,10 +94,10 @@ export const updateCity = (city: ICity): ThunkResult<Promise<ICity>> => dispatch
 
   return http.put<ICity>(`/api/cities/city/${city.id}`, city)
     .then(response => handleApiResponse(response))
-    .then(response => {
-      dispatch(receiveCity(response));
+    .then(city => {
+      dispatch(receiveCity({ city }));
       dispatch(stopLoading(false, CITY_UPDATE_SUCCESS, CONTENT_LOADER_ID));
-      return response;
+      return city;
     })
     .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
@@ -108,7 +108,7 @@ export const deleteCity = (cityId: string): ThunkResult<Promise<void>> => dispat
   return http.delete(`/api/cities/city/${cityId}`)
     .then(response => handleApiResponse(response))
     .then(() => {
-      dispatch(removeCity(cityId));
+      dispatch(removeCity({ cityId }));
       dispatch(stopLoading(false, CITY_DELETE_SUCCESS, DIALOG_LOADER_ID));
     })
     .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
