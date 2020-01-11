@@ -115,5 +115,7 @@ export interface IConfig {
 export type TranslatableFields<O, K = keyof O> = K extends keyof O
   ? O[K] extends TranslatableField
     ? K
-    : never
+    : K extends 'isEnabled' ? K : never
   : never;
+
+export type ToggleFields<T> = Array<TranslatableFields<T>>;

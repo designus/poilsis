@@ -1,7 +1,7 @@
 
 import { Request, Response, NextFunction, response } from 'express';
 import shortId from 'shortid';
-import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
+import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, ToggleFields, Languages } from 'global-utils';
 import {
   getImages,
   sendResponse,
@@ -21,6 +21,7 @@ import { ItemsModel } from '../model';
 
 const clientItemsProjection =  {
   _id: 0,
+  __v: 0,
   id: 1,
   name: 1,
   alias: 1,
@@ -47,12 +48,13 @@ export const getAllItems = async (req: Request, res: Response, next: NextFunctio
 
 export const getRecommendedItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = 'lt';
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
     const recommendedItems = await ItemsModel.aggregate([
       { $match: { isRecommended: true } },
       { $project: clientItemsProjection },
-      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, ['name', 'alias']) },
-      { $set: getFieldsToSet(locale, ['name', 'alias'])}
+      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<IItem>(locale, toggleFields)}
     ])
     .exec();
 
@@ -64,13 +66,14 @@ export const getRecommendedItems = async (req: Request, res: Response, next: Nex
 
 export const getCityItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = 'lt';
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
     const cityItems = await ItemsModel
       .aggregate([
         { $match: { cityId: req.params.cityId } },
         { $project: clientItemsProjection },
-        { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, ['name', 'alias']) },
-        { $set: getFieldsToSet(locale, ['name', 'alias'])}
+        { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
+        { $set: getFieldsToSet<IItem>(locale, toggleFields)}
       ])
       .exec();
 
@@ -109,7 +112,7 @@ export const toggleItemRecommended = async (req: Request, res: Response, next: N
 export const toggleItemApproved = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item = await ItemsModel.findOneAndUpdate(
-      { id: req.body.itemId2 }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true }
+      { id: req.body.itemId }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true }
     );
 
     if (!item) {

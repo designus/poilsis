@@ -1,13 +1,29 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
-import { ICity, LANGUAGES, TranslatableField } from 'global-utils';
-import { sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
+import { ICity, LANGUAGES, TranslatableField, ToggleFields, Languages } from 'global-utils';
+import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
 import { getAdjustedAliasValue, getUniqueAlias, getAliasList } from 'server-utils/aliases';
 import { getDataByAlias } from './common';
 import { CitiesModel } from '../model';
 
-export const getAllCities = (req: Request, res: Response, next: NextFunction) => {
-  CitiesModel.find(sendResponse(res, next));
+export const getAllCities = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<ICity> = ['isEnabled', 'alias', 'description', 'metaTitle', 'metaDescription'];
+    const cities = await CitiesModel.aggregate([
+      { $project: { _id: 0, __v: 0 } },
+      { $unset: getFieldsToUnset<ICity>(LANGUAGES, locale, toggleFields)},
+      { $set: getFieldsToSet<ICity>(locale, toggleFields) }
+    ])
+    .exec();
+
+    if (!cities) throw new Error('Unable to load cities');
+
+    res.status(200).json(cities);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const getCity = (req: Request, res: Response, next: NextFunction) => {

@@ -13,7 +13,7 @@ import {
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { getNewItems, getNormalizedData } from 'client-utils/methods';
+import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import {
   IAppState,
   CitiesActionTypes,
@@ -59,7 +59,7 @@ export const loadCityItems = (alias: string): ThunkResult<Promise<void>> => (dis
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.get<IItem[]>(`/api/items/city/${city.id}`)
+  return http.get<IItem[]>(`/api/items/city/${city.id}`, setAcceptLanguageHeader(state.locale.client))
     .then(response => handleApiResponse(response))
     .then((items) => {
       const newItems = getNewItems(items, state);

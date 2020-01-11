@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { getNormalizedData } from 'client-utils/methods';
+import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, IUser, Languages } from 'global-utils';
@@ -34,9 +34,9 @@ export const getInitialData = (params: IGetInitialDataParams = {}) => {
     dispatch(setClientLocale(locale));
 
     const promises = [
-      http.get('/api/cities'),
-      http.get('/api/types'),
-      http.get('/api/users')
+      http.get('/api/cities', setAcceptLanguageHeader(locale)),
+      http.get('/api/types', setAcceptLanguageHeader(locale)),
+      http.get('/api/users', setAcceptLanguageHeader(locale))
     ];
 
     return Promise.all(promises)

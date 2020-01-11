@@ -1,14 +1,30 @@
 import { Request, Response, NextFunction } from 'express';
-import { IType, LANGUAGES, TranslatableField } from 'global-utils';
+import { IType, LANGUAGES, TranslatableField, Languages, ToggleFields } from 'global-utils';
 import shortId from 'shortid';
 
 import { getUniqueAlias, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
-import { sendResponse, getAdjustedIsEnabledValue } from 'server-utils/methods';
+import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
 import { TypesModel } from '../model';
 import { getDataByAlias } from './common';
 
-export const getAllTypes = (req: Request, res: Response, next: NextFunction) => {
-  TypesModel.find(sendResponse(res, next));
+export const getAllTypes = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<IType> = ['name', 'isEnabled', 'alias', 'description'];
+    const types = await TypesModel.aggregate([
+      { $project: { _id: 0, __v: 0 } },
+      { $unset: getFieldsToUnset<IType>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<IType>(locale, toggleFields)}
+    ])
+    .exec();
+
+    if (!types) throw new Error('Unable to load types');
+
+    res.status(200).json(types);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const getType = (req: Request, res: Response, next: NextFunction) => {
