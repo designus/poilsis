@@ -1,20 +1,23 @@
 import { Languages } from 'global-utils/typings';
-import { LocaleActionTypes, ISetClientLocale, ISetAdminLocale } from 'types';
+import { LocaleActionTypes, ISetClientLocale, ISetAdminLocale, ActionCreator } from 'types';
+import { clearAllData } from './initialData';
 
-export const setClientLocale = (locale: Languages): ISetClientLocale => ({
+export const setClientLocale: ActionCreator<ISetClientLocale> = params => ({
   type: LocaleActionTypes.SET_CLIENT_LOCALE,
-  locale
+  ...params
 });
 
-export const setAdminLocale = (locale: Languages): ISetAdminLocale => ({
+export const setAdminLocale: ActionCreator<ISetAdminLocale> = params => ({
   type: LocaleActionTypes.SET_ADMIN_LOCALE,
-  locale
+  ...params
 });
 
 export const switchLanguage = (locale: Languages, isAdmin: boolean) => dispatch => {
   if (isAdmin) {
-    dispatch(setAdminLocale(locale));
+    dispatch(setAdminLocale({ locale }));
   } else {
-    dispatch(setClientLocale(locale));
+    dispatch(setClientLocale({ locale }));
   }
+
+  dispatch(clearAllData());
 };

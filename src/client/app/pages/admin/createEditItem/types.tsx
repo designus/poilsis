@@ -2,7 +2,7 @@ import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { IItem, Languages } from 'global-utils/typings';
 import { ThunkReturn } from 'types';
-import { getItem } from 'actions/items';
+import { getAdminItem } from 'actions/items';
 
 export type ItemPageMatchParams = {
   itemId: string;
@@ -18,7 +18,7 @@ export interface IStateProps {
 }
 
 export interface IDispatchProps {
-  loadAdminItem: ThunkReturn<typeof getItem>;
+  loadAdminItem: ThunkReturn<typeof getAdminItem>;
 }
 
 export type CreateEditItemProps = IOwnProps & IStateProps & IDispatchProps;

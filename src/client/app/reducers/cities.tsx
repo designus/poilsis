@@ -41,7 +41,8 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
           ...state.dataMap,
           [action.city.id]: {
             ...(state.dataMap[action.city.id] || {}),
-            ...action.city
+            ...action.city,
+            isFullyLoaded: true
           }
         }
       };

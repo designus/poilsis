@@ -1,5 +1,6 @@
-import { UserRoles, TranslatableField } from 'global-utils/typings';
+import { UserRoles, TranslatableField, Languages } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
+import { getLocalizedText } from 'client-utils/methods';
 
 export interface IRoute {
   path: string;
@@ -32,19 +33,19 @@ export type RoutesConfig = {
 interface IRoutesConfig {
   login: {
     path: string,
-    getLink: (locale: string) => string
+    getLink: (locale: Languages) => string
   };
   landing: {
     path: string,
-    getLink: (locale: string) => string
+    getLink: (locale: Languages) => string
   };
   items: {
     path: string,
-    getLink: (locale: string, cityAlias: TranslatableField) => string
+    getLink: (locale: Languages, cityAlias: TranslatableField | string) => string
   };
   item: {
     path: string,
-    getLink: (locale: string, cityAlias: TranslatableField, itemAlias: TranslatableField) => string
+    getLink: (locale: Languages, cityAlias: TranslatableField | string, itemAlias: TranslatableField | string) => string
   };
 }
 
@@ -61,12 +62,11 @@ export const clientRoutes: IRoutesConfig = {
   },
   items: {
     path: `/:locale(${locales})/:cityAlias`,
-    getLink: (locale: string, cityAlias: TranslatableField) => `/${locale}/${cityAlias[locale]}`
+    getLink: (locale, cityAlias) => `/${locale}/${getLocalizedText(cityAlias, locale)}`
   },
   item: {
     path: `/:locale(${locales})/:cityAlias/:itemAlias`,
-    getLink: (locale: string, cityAlias: TranslatableField, itemAlias: TranslatableField) =>
-      `/${locale}/${cityAlias[locale]}/${itemAlias[locale]}`
+    getLink: (locale, cityAlias, itemAlias) => `/${locale}/${getLocalizedText(cityAlias, locale)}/${getLocalizedText(itemAlias, locale)}`
   }
 };
 

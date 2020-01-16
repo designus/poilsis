@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { IAppState } from 'types';
-import { ICity } from 'global-utils/typings';
+import { ICity, Languages } from 'global-utils/typings';
 import { getEnabledCities, getTypesMap, getClientLocale } from 'selectors';
 
 import { styles } from './styles';
@@ -15,7 +15,7 @@ interface IMainMenu extends Partial<RouteComponentProps<any>>, Partial<WithStyle
   showSubmenu: boolean;
   useWrapper: boolean;
   citiesList?: ICity[];
-  locale?: string;
+  locale?: Languages;
 }
 
 const MainMenu = (props: IMainMenu) => {

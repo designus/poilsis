@@ -9,7 +9,8 @@ export const getTypesAliases = (state: IAppState) => state.types.aliases;
 export const getTypeById = (state: IAppState, typeId: string): IType => getTypesMap(state)[typeId];
 
 export const shouldLoadType = (state: IAppState, typeId: string) => {
-  return typeId && !state.loader.content && !getTypeById(state, typeId);
+  const type = getTypeById(state, typeId);
+  return typeId && !state.loader.content && (!type || !type.isFullyLoaded);
 };
 
 export const getTypes = createSelector(

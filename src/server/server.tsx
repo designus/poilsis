@@ -15,7 +15,7 @@ import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
 import 'global-utils/icons';
 import { rootReducer  } from 'reducers';
-import { IAuthState } from 'types';
+import { IAuthState, IAppState } from 'types';
 
 import app, { staticFilesPort } from './app';
 import { config } from 'config';
@@ -26,13 +26,11 @@ import { auth, preloadData } from './app/index';
 
 const stats = require('./stats/reactLoadable.json');
 
-interface IInitialAuthState {
-  auth: IAuthState;
-}
-
-const getInitialState = (req, user): IInitialAuthState => {
+const getInitialState = (req, user): IAppState => {
+  const state = {} as IAppState;
   if (user) {
     return {
+      ...state,
       auth: {
         accessToken: req.cookies.jwt,
         isLoggedIn: true,

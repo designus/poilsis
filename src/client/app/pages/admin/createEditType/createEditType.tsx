@@ -6,9 +6,8 @@ import reduxFormActions from 'redux-form/es/actions';
 
 import { injectIntl, defineMessages } from 'react-intl';
 
-import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
-import { createType, updateType } from 'actions/types';
-import { getAdminType } from 'actions/admin';
+import { IType, LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
+import { createType, updateType, getAdminType } from 'actions/types';
 import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
@@ -66,7 +65,7 @@ class CreateEditTypePageComponent extends React.Component<Props> {
   }
 
   renderTitle = () => {
-    return ReactDOM.createPortal(
+    return isClient() && ReactDOM.createPortal(
       <span> / {this.props.intl.formatMessage(this.isCreatePage() ? messages.createType : messages.editType)}</span>,
       document.querySelector('.editItemName')
     );

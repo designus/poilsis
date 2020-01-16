@@ -2,8 +2,7 @@ import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { ICity, Languages } from 'global-utils/typings';
 import { ITypesMap, ThunkReturn } from 'types';
-import { getAdminCity } from 'actions/admin';
-import { createCity, updateCity } from 'actions/cities';
+import { createCity, updateCity, getAdminCity } from 'actions/cities';
 
 export interface IMatchParams {
   cityId: string;

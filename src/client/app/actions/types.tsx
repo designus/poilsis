@@ -12,7 +12,7 @@ import {
 import { TypesActionTypes, ISelectType, IReceiveType, IRemoveType, ToggleEnabledParams, Toast, IToggleEnabled, ThunkResult } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
-import { startLoading } from './loader';
+import { startLoading, endLoading } from './loader';
 
 export const selectType = (typeId: string): ISelectType => ({
   type: TypesActionTypes.SELECT_TYPE,
@@ -33,6 +33,17 @@ export const toggleTypeEnabledField = (params: ToggleEnabledParams): IToggleEnab
   type: TypesActionTypes.TOGGLE_TYPE_ENABLED,
   ...params
 });
+
+export const getAdminType = (typeId: string): ThunkResult<Promise<void>> => dispatch => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
+  return http.get<IType>(`/api/types/type/${typeId}`)
+    .then(response => handleApiResponse(response))
+    .then(response => {
+      dispatch(receiveType(response));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+    })
+    .catch(handleApiErrors('Unable to load type', CONTENT_LOADER_ID, dispatch));
+};
 
 export const createType = (type: IType): ThunkResult<Promise<IType>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));

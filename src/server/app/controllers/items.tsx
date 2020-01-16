@@ -38,7 +38,12 @@ const clientItemsProjection =  {
 
 export const getAllItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const allItems = await ItemsModel.find({});
+    const allItems = await ItemsModel.aggregate([
+      { $project: clientItemsProjection }
+    ]);
+
+    if (!allItems) throw new Error('Unable to load all items');
+
     res.status(200).json(allItems);
   } catch (err) {
     return next(err);

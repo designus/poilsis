@@ -4,14 +4,13 @@ import { Helmet } from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 
 import { IAppState } from 'types';
-import { loadItem } from 'actions/items';
+import { getClientItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
-import { Languages } from 'global-utils/typings';
 import { getItemByAlias } from 'selectors';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
-import { IMatchParams, IOwnProps, IStateProps, IDispatchProps, ItemPageProps } from './types';
+import { MatchParams, OwnProps, StateProps, DispatchProps, ItemPageProps } from './types';
 
-export const loadItemData = (store, params: IMatchParams) => store.dispatch(loadItem(params.locale, params.itemAlias));
+export const loadItemData = (store, params: MatchParams) => store.dispatch(getClientItem(params.locale, params.itemAlias));
 
 class ItemPage extends React.Component<ItemPageProps, any> {
 
@@ -19,13 +18,13 @@ class ItemPage extends React.Component<ItemPageProps, any> {
     const { selectedItem } = this.props;
 
     if (selectedItem && !selectedItem.isFullyLoaded) {
-      this.loadItem();
+      this.getClientItem();
     }
   }
 
-  loadItem = () => {
+  getClientItem = () => {
     const { locale, itemAlias } = this.props.match.params;
-    this.props.loadItem(locale, itemAlias);
+    this.props.getClientItem(locale, itemAlias);
   }
 
   createMarkup = (text: string) => {
@@ -83,12 +82,12 @@ class ItemPage extends React.Component<ItemPageProps, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
+const mapStateToProps = (state: IAppState, props: OwnProps): StateProps => ({
   selectedItem: getItemByAlias(state, props.match.params.itemAlias)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadItem: (locale: Languages, alias: string) => dispatch(loadItem(locale, alias))
+const mapDispatchToProps = (dispatch): DispatchProps => ({
+  getClientItem: (locale, alias) => dispatch(getClientItem(locale, alias))
 });
 
-export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(ItemPage);
+export default connect<StateProps, DispatchProps, OwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(ItemPage);

@@ -10,7 +10,7 @@ import { getDataByAlias } from './common';
 export const getAllTypes = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const locale = req.headers['accept-language'] as Languages;
-    const toggleFields: ToggleFields<IType> = ['name', 'isEnabled', 'alias', 'description'];
+    const toggleFields: ToggleFields<IType> = ['isEnabled', 'alias', 'description'];
     const types = await TypesModel.aggregate([
       { $project: { _id: 0, __v: 0 } },
       { $unset: getFieldsToUnset<IType>(LANGUAGES, locale, toggleFields) },

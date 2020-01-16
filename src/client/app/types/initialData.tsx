@@ -1,11 +1,9 @@
 import { ICityState } from './cities';
 import { ITypesState } from './types';
-import { IUsersState } from './users';
 
 export interface IInitialData {
   cities: ICityState;
   types: ITypesState;
-  users: IUsersState;
 }
 
 export interface IInitialDataState {
@@ -13,7 +11,8 @@ export interface IInitialDataState {
 }
 
 export enum InitialDataActionTypes {
-  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA'
+  RECEIVE_INITIAL_DATA = 'RECEIVE_INITIAL_DATA',
+  CLEAR_ALL_DATA = 'CLEAR_ALL_DATA'
 }
 
 export interface IReceiveInitialData {
@@ -21,4 +20,8 @@ export interface IReceiveInitialData {
   data: IInitialData;
 }
 
-export type InitialDataActions = IReceiveInitialData;
+export interface IClearAllData {
+  type: InitialDataActionTypes.CLEAR_ALL_DATA;
+}
+
+export type InitialDataActions = IReceiveInitialData | IClearAllData;

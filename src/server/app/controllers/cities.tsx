@@ -9,7 +9,7 @@ import { CitiesModel } from '../model';
 export const getAllCities = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const locale = req.headers['accept-language'] as Languages;
-    const toggleFields: ToggleFields<ICity> = ['isEnabled', 'alias', 'description', 'metaTitle', 'metaDescription'];
+    const toggleFields: ToggleFields<ICity> = ['alias', 'description', 'metaTitle', 'metaDescription'];
     const cities = await CitiesModel.aggregate([
       { $project: { _id: 0, __v: 0 } },
       { $unset: getFieldsToUnset<ICity>(LANGUAGES, locale, toggleFields)},

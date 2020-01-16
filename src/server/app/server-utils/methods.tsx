@@ -147,9 +147,10 @@ export function getFieldsToUnset<T>(languages: Languages[], skipLocale: Language
 
 export function getFieldsToSet<T>(locale: Languages, fields: Array<TranslatableFields<T>>): FieldsToSet {
   return fields.reduce((acc, field) => {
-    const key = `${field}.${locale}`;
-    const value = `$${key}`;
-    acc[key] = value;
+    // const key = `${field}.${locale}`;
+    // const key = field as string;
+    const value = `$${field}.${locale}`;
+    acc[field as string] = value;
     return acc;
   }, {});
 }

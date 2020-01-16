@@ -100,7 +100,7 @@ export function removeByKeys<T>(keys: string[], dataMap: IGenericDataMap<T>): IG
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
 
 export const getLocalizedText = (text: string | TranslatableField, locale: string): string => {
-  if (!text) return '';
+  if (!text || !Object.keys(text).length) return '';
 
   if (hasLocalizedFields(text)) {
     return text[locale] || text[DEFAULT_LANGUAGE];
@@ -126,10 +126,10 @@ export const toggleItemInArray = (items: string[], item: string, shouldAddItem: 
   return items.filter(current => current !== item);
 };
 
-export const isDataEnabled = (item: DataTypes, locale: string) =>
-  item &&
-  item.isEnabled &&
-  item.isEnabled[locale];
+export const isDataEnabled = (item: DataTypes, locale: string) => {
+  const isEnabled = typeof item.isEnabled === 'boolean' ? item.isEnabled : item.isEnabled[locale];
+  return item && isEnabled;
+};
 
 export const isItemEnabled = (item: IItem, locale: string) =>
   isDataEnabled(item, locale) && item.isApprovedByAdmin;

@@ -17,8 +17,8 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles, isAdminItemActive } from 'client-utils/methods';
-import { IAppState } from 'types';
-import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
+import { IAppState, ThunkDispatch } from 'types';
+import { getInitialData } from 'actions/initialData';
 
 import { Toast } from 'components/toast';
 import { IMenuItem } from 'components/menu';
@@ -226,8 +226,8 @@ const mapStateToProps = (state: IAppState) => ({
   clientLocale: getClientLocale(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params))
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  getInitialData: params => dispatch(getInitialData(params))
 });
 
 export default withStyles(styles)(

@@ -18,13 +18,14 @@ import { ItemPage } from 'pages/client/item';
 import { MainInfoPage } from 'pages/admin/createEditItem/mainInfo';
 import { DescriptionPage } from 'pages/admin/createEditItem/description';
 import { PhotosPage } from 'pages/admin/createEditItem/photos';
+import { adminRoutes, clientRoutes } from 'client-utils/routes';
+import { getInitialData } from 'actions/initialData';
 
-import { loadInitialData } from './pages/client/layout/layout';
 import { loadCityData } from './pages/client/city/city';
 import { loadItemData } from './pages/client/item/item';
 import { loadRecommendedItemsData } from './pages/client/home/recommendedItems/recommendedItems';
 
-import { adminRoutes, clientRoutes } from 'client-utils/routes';
+const loadInitialData = (store, params) => store.dispatch(getInitialData({ locale: params.locale }));
 
 export interface IRoute extends RouteConfig {
   fetchData?: () => ThunkAction<Promise<void>, IAppState, void, Action>;

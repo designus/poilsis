@@ -49,6 +49,18 @@ export const receiveCityItems: ActionCreator<IReceiveCityItems> = params => ({
   ...params
 });
 
+export const getAdminCity = (cityId: string): ThunkResult<Promise<ICity>> => dispatch => {
+  dispatch(startLoading(CONTENT_LOADER_ID));
+  return http.get<ICity>(`/api/cities/city/${cityId}`)
+    .then(response => handleApiResponse(response))
+    .then(city => {
+      dispatch(receiveCity({ city }));
+      dispatch(endLoading(CONTENT_LOADER_ID));
+      return city;
+    })
+    .catch(handleApiErrors('Unable to load city', CONTENT_LOADER_ID, dispatch));
+};
+
 export const loadCityItems = (alias: string): ThunkResult<Promise<void>> => (dispatch, getState) => {
   const state = getState();
   const city = getCityByAlias(state, alias);

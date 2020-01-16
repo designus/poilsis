@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import { removeByKeys, getAliasState, getAliasKeysById } from 'client-utils/methods';
 import { ItemsActionTypes, ItemsActions, IItemsState, InitialDataActions } from 'types';
+import { IsEnabled } from 'global-utils/typings';
 
 type ActionTypes = ItemsActions | InitialDataActions;
 
@@ -51,19 +52,19 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
         }
       };
     case ItemsActionTypes.TOGGLE_ITEM_ENABLED:
-      return {
+      return typeof state.dataMap[action.id].isEnabled !== 'boolean' ? {
         ...state,
         dataMap: {
           ...state.dataMap,
           [action.id]: {
             ...state.dataMap[action.id],
             isEnabled: {
-              ...state.dataMap[action.id].isEnabled,
+              ...state.dataMap[action.id].isEnabled as IsEnabled,
               [action.locale]: action.isEnabled
             }
           }
         }
-      };
+      } : state;
     case ItemsActionTypes.REMOVE_MOCKED_DATA:
       return getInitialState();
     case ItemsActionTypes.RECEIVE_MOCKED_DATA:

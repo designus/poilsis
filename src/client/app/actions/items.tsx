@@ -93,7 +93,7 @@ export const toggleItemRecommendedField: ActionCreator<IToggleItemRecommended> =
   ...params
 });
 
-export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
+export const getClientItem = (locale: Languages, alias: string): ThunkResult<Promise<void>> => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return http.get(`/api/items/view-item/${alias}`, setAcceptLanguageHeader(locale))
@@ -108,7 +108,7 @@ export const loadItem = (locale: Languages, alias: string) => (dispatch) => {
     });
 };
 
-export const getItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {
+export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(CONTENT_LOADER_ID));
   return http.get<IItem>(`/api/items/item/${itemId}`)
     .then(response => handleApiResponse(response))

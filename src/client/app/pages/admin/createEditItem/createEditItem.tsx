@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import { injectIntl } from 'react-intl';
 
 import { IAppState, ThunkDispatch } from 'types';
-import { getItem } from 'actions';
+import { getAdminItem } from 'actions';
 import { IItem } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem, getItemById, getAdminLocale } from 'selectors';
@@ -29,7 +29,7 @@ class CreateEditItemPage extends React.Component<CreateEditItemProps> {
 
   static fetchData(store, params: ItemPageMatchParams) {
     if (params.itemId) {
-      return store.dispatch(getItem(params.itemId));
+      return store.dispatch(getAdminItem(params.itemId));
     } else {
       return Promise.resolve(null);
     }
@@ -123,7 +123,7 @@ const mapStateToProps = (state: IAppState, props: IOwnProps) => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
-  loadAdminItem: itemId => dispatch(getItem(itemId))
+  loadAdminItem: itemId => dispatch(getAdminItem(itemId))
 });
 
 export default injectIntl(

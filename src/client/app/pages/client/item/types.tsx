@@ -1,21 +1,22 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { IItem, Languages } from 'global-utils/typings';
+import { ThunkReturn } from 'types';
+import { getClientItem } from 'actions/items';
 
-export interface IMatchParams {
+export type MatchParams = {
   locale: Languages;
   cityAlias: string;
   itemAlias: string;
-}
+};
 
-export interface IOwnProps extends RouteComponentProps<IMatchParams> {}
+export type OwnProps = RouteComponentProps<MatchParams> & {};
 
-export interface IStateProps {
-  selectedItem?: IItem;
-}
+export type StateProps = {
+  selectedItem: IItem;
+};
 
-export interface IDispatchProps {
-  loadItem?: (locale: Languages, alias: string) => void;
-  selectItem?: (itemId: string) => void;
-}
+export type DispatchProps = {
+  getClientItem: ThunkReturn<typeof getClientItem>;
+};
 
-export type ItemPageProps = IOwnProps & IStateProps & IDispatchProps;
+export type ItemPageProps = OwnProps & StateProps & DispatchProps;
