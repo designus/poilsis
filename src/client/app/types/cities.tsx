@@ -8,7 +8,7 @@ export interface ICityState extends IGenericState<ICity> {}
 export enum CitiesActionTypes {
   RECEIVE_CITY = 'RECEIVE_CITY',
   REMOVE_CITY = 'REMOVE_CITY',
-  RECEIVE_CITY_ITEMS = 'RECEIVE_CITY_ITEMS',
+  SET_CITY_ITEMS = 'SET_CITY_ITEMS',
   TOGGLE_CITY_ENABLED = 'TOGGLE_CITY_ENABLED'
 }
 
@@ -22,8 +22,8 @@ export interface IRemoveCity {
   cityId: string;
 }
 
-export interface IReceiveCityItems {
-  type: CitiesActionTypes.RECEIVE_CITY_ITEMS;
+export interface ISetCityItems {
+  type: CitiesActionTypes.SET_CITY_ITEMS;
   cityId: string;
 }
 
@@ -31,4 +31,4 @@ export type CitiesActions =
   | IReceiveCity
   | IRemoveCity
   | IToggleEnabled
-  | IReceiveCityItems;
+  | ISetCityItems;

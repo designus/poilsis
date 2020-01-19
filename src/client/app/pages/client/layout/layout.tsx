@@ -34,56 +34,56 @@ import { HomePage } from 'pages/client/home';
 import logoUrl from 'static/images/logo.gif';
 
 import { IAppState, ThunkDispatch } from 'types';
-import { State, Props, StateProps, OwnProps, DispatchProps } from './types';
+import { Props, StateProps, OwnProps, DispatchProps } from './types';
 
 import { styles } from './styles';
 
-class ClientLayoutPage extends React.Component<Props, State> {
-  state = {
-    mobileDrawerOpen: false
+const { useState, useEffect } = React;
+
+const ClientLayoutPage: React.FunctionComponent<Props> = (props) => {
+  const { isInitialDataLoaded, locale, getInitialData, history, classes, isLoggedIn } = props;
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    removeInjectedStyles();
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialDataLoaded) {
+      getInitialData({ locale });
+    }
+  }, [isInitialDataLoaded, getInitialData]);
+
+  const handleDrawerClose = () => {
+    setMobileDrawerOpen(false);
   };
 
-  componentDidMount() {
-    removeInjectedStyles();
-  }
+  const handleDrawerToggle = () => {
+    setMobileDrawerOpen(!mobileDrawerOpen);
+  };
 
-  componentDidUpdate() {
-    if (!this.props.isInitialDataLoaded) {
-      this.props.getInitialData({ locale: this.props.locale });
-    }
-  }
+  const handleLogoClick = () => {
+    history.push(clientRoutes.landing.getLink(locale));
+  };
 
-  handleDrawerClose = () => {
-    this.setState({ mobileDrawerOpen: false });
-  }
-
-  handleDrawerToggle = () => {
-    this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
-  }
-
-  handleLogoClick = () => {
-    this.props.history.push(clientRoutes.landing.getLink(this.props.locale));
-  }
-
-  renderLogo = () => {
+  const renderLogo = () => {
     return (
-      <div onClick={this.handleLogoClick} className={this.props.classes.logo}>
+      <div onClick={handleLogoClick} className={classes.logo}>
         <img src={getStaticFileUri(logoUrl)} />
       </div>
     );
-  }
+  };
 
-  renderContent = () => {
-    const { classes, isLoggedIn, locale } = this.props;
+  const renderContent = () => {
     return (
       <React.Fragment>
         <Hidden mdUp>
           <Drawer
-            onClose={this.handleDrawerClose}
-            mobileDrawerOpen={this.state.mobileDrawerOpen}
+            onClose={handleDrawerClose}
+            mobileDrawerOpen={mobileDrawerOpen}
           >
             <TopMenu
-              onRouteChange={this.handleDrawerClose}
+              onRouteChange={handleDrawerClose}
               isVertical={true}
               isLoggedIn={isLoggedIn}
             />
@@ -96,12 +96,12 @@ class ClientLayoutPage extends React.Component<Props, State> {
                 <IconButton
                   color="inherit"
                   aria-label="Open Drawer"
-                  onClick={this.handleDrawerToggle}
+                  onClick={handleDrawerToggle}
                 >
                   <MenuIcon />
                 </IconButton>
               </Hidden>
-              {this.renderLogo()}
+              {renderLogo()}
               <div className={classes.topMenu}>
                 <Hidden smDown implementation="css">
                   <TopMenu isLoggedIn={isLoggedIn} />
@@ -109,41 +109,40 @@ class ClientLayoutPage extends React.Component<Props, State> {
               </div>
               <LoginButton />
               <UserMenu isLoggedIn={isLoggedIn} />
-              <LanguageSelector isAdmin={false} locale={this.props.locale} />
+              <LanguageSelector isAdmin={false} locale={locale} />
             </Toolbar>
           </Container>
         </AppBar>
         <Container maxWidth="xl">
-          <Switch>
-            <Route path={clientRoutes.login.path} component={LoginPage} />
-            <Route exact path={clientRoutes.items.path} component={CityPage} />
-            <Route exact path={clientRoutes.item.path} component={ItemPage} />
-            <Route exact path={clientRoutes.landing.path} component={HomePage} />
-            <Route component={NotFound}/>
-          </Switch>
+          {isInitialDataLoaded ? (
+            <Switch>
+              <Route path={clientRoutes.login.path} component={LoginPage} />
+              <Route exact path={clientRoutes.items.path} component={CityPage} />
+              <Route exact path={clientRoutes.item.path} component={ItemPage} />
+              <Route exact path={clientRoutes.landing.path} component={HomePage} />
+              <Route component={NotFound}/>
+            </Switch>
+          ) : <Loader isLoading />}
         </Container>
         <Toast />
-        {this.props.isLoggedIn && <KeepMeLoggedModal />}
+        {isLoggedIn && <KeepMeLoggedModal />}
       </React.Fragment>
     );
-  }
+  };
 
-  render() {
-    const { classes, locale, isInitialDataLoaded } = this.props;
-    return (
-      <ConnectedIntlProvider locale={locale}>
-        <div className={classes.wrapper}>
-          {isInitialDataLoaded ? this.renderContent() : <Loader isLoading />}
-        </div>
-      </ConnectedIntlProvider>
-    );
-  }
-}
+  return (
+    <ConnectedIntlProvider locale={locale}>
+      <div className={classes.wrapper}>
+        {renderContent()}
+      </div>
+    </ConnectedIntlProvider>
+  );
+};
 
 const mapStateToProps = (state: IAppState): StateProps => ({
   isLoggedIn: isLoggedIn(state),
   locale: getClientLocale(state),
-  isInitialDataLoaded: isInitialDataLoaded(state)
+  isInitialDataLoaded: isInitialDataLoaded(state, false)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch): DispatchProps => ({

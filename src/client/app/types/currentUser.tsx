@@ -9,7 +9,7 @@ export interface ICurrentUserState {
 
 export enum CurrentUserActionTypes {
   RECEIVE_USER_DETAILS = 'RECEIVE_USER_DETAILS',
-  RECEIVE_USER_ITEMS = 'RECEIVE_USER_ITEMS'
+  SET_USER_ITEMS = 'SET_USER_ITEMS'
 }
 
 export interface IReceiveUserDetails {
@@ -17,8 +17,8 @@ export interface IReceiveUserDetails {
   userDetails: UserDetails;
 }
 
-export interface IReceiveUserItems {
-  type: CurrentUserActionTypes.RECEIVE_USER_ITEMS;
+export interface ISetUserItems {
+  type: CurrentUserActionTypes.SET_USER_ITEMS;
 }
 
-export type CurrentUserActions = IReceiveUserDetails | IReceiveUserItems;
+export type CurrentUserActions = IReceiveUserDetails | ISetUserItems;

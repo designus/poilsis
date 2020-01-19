@@ -1,6 +1,6 @@
 import { batch } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { getNormalizedData, setAcceptLanguageHeader, getUserDetails } from 'client-utils/methods';
 import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, Languages, isAdmin as isUserAdmin, IUser } from 'global-utils';
@@ -49,11 +49,10 @@ export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<
       const cities = getNormalizedData(citiesResponse.data);
       const types = getNormalizedData(typesResponse.data);
       const users = getNormalizedData(usersResponse.data);
-      const { userId, userName, userRole } = accessTokenClaims;
 
       batch(() => {
         dispatch(receiveInitialData({ cities, types, users, isLoggedIn: true }));
-        dispatch(receiveUserDetails({ userDetails: { id: userId, name: userName, role: userRole } }));
+        dispatch(receiveUserDetails({ userDetails: getUserDetails(accessTokenClaims) }));
       });
     })
     .catch(console.error);
@@ -64,6 +63,8 @@ export const getClientInitialData = (params: IGetInitialDataParams): ThunkResult
   return (dispatch, getState) => {
     const state = getState();
     const locale = params.locale || getClientLocale(state) || DEFAULT_LANGUAGE;
+    const token = getAccessToken(state);
+    const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
 
     if (locale !== getClientLocale(state)) {
       dispatch(setClientLocale({ locale }));
@@ -79,7 +80,13 @@ export const getClientInitialData = (params: IGetInitialDataParams): ThunkResult
         const [citiesResponse, typesResponse] = response;
         const cities = getNormalizedData(citiesResponse.data);
         const types = getNormalizedData(typesResponse.data);
-        dispatch(receiveInitialData({ cities, types, users: {}, isLoggedIn: false }));
+
+        batch(() => {
+          dispatch(receiveInitialData({ cities, types, users: {}, isLoggedIn: false }));
+          if (accessTokenClaims) {
+            dispatch(receiveUserDetails({ userDetails: getUserDetails(accessTokenClaims) }));
+          }
+        });
       })
       .catch(console.error);
   };

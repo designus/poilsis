@@ -1,7 +1,10 @@
 import { IAppState } from 'types';
-import { isLoggedIn } from 'selectors';
 
-export const isInitialDataLoaded = (state: IAppState) => {
+export const isInitialDataLoaded = (state: IAppState, isAdminArea: boolean) => {
   const { isLoaded, isMultiLang } = state.initialData;
-  return isLoggedIn(state) ? isLoaded && isMultiLang : isLoaded;
+  if (isAdminArea) {
+    return isLoaded && isMultiLang;
+  }
+
+  return isLoaded;
 };

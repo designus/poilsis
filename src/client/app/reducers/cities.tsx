@@ -18,7 +18,7 @@ const getInitialState = (): ICityState => ({
 
 export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
-    case CitiesActionTypes.RECEIVE_CITY_ITEMS:
+    case CitiesActionTypes.SET_CITY_ITEMS:
       return {
         ...state,
         dataMap: {

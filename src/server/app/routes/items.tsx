@@ -2,8 +2,8 @@ import { Router } from 'express';
 
 import {
   auth,
-  getEditItem,
-  getViewItem,
+  getClientItem,
+  getAdminItem,
   getAllItems,
   getCityItems,
   getRecommendedItems,
@@ -39,11 +39,13 @@ router.route('/recommended')
   .get(getRecommendedItems);
 
 router.route('/item/:itemId')
-  .get(getEditItem)
   .delete(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesDir, deleteItem);
 
-router.route('/view-item/:alias')
-  .get(getViewItem);
+router.route('/admin-item/:itemId')
+  .get(getAdminItem);
+
+router.route('/client-item/:alias')
+  .get(getClientItem);
 
 router.route('/item/alias-exist')
   .post(doesAliasExist(ItemsModel));

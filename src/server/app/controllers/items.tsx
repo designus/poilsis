@@ -59,6 +59,9 @@ export const getAllItems = async (req: Request, res: Response, next: NextFunctio
 export const getRecommendedItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const locale = req.headers['accept-language'] as Languages;
+
+    if (!locale) throw new Error('Locale is not set');
+
     const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
     const recommendedItems = await ItemsModel.aggregate([
       { $match: { isRecommended: true } },
@@ -158,13 +161,30 @@ export const addNewItem = async (req: Request, res: Response, next: NextFunction
   new ItemsModel(newItem).save(sendResponse(res, next));
 };
 
-export const getEditItem = (req: Request, res: Response, next: NextFunction) => {
+export const getAdminItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOne({ id: req.params.itemId }, sendResponse(res, next));
 };
 
-export const getViewItem = (req: Request, res: Response, next: NextFunction) => {
-  const locale = req.headers['accept-language'] as string;
-  ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
+export const getClientItem = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled', 'metaTitle', 'metaDescription', 'description'];
+
+    if (!locale) throw new Error('Locale is not set');
+
+    const item = await ItemsModel.aggregate([
+      { $match: { [`alias.${locale}`]: req.params.alias } },
+      { $project: {_id: 0, __v: 0 } },
+      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<IItem>(locale, toggleFields)}
+    ])
+    .exec();
+
+    res.status(200).json(item);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {

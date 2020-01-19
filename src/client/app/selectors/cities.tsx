@@ -10,10 +10,9 @@ export const getAllCities = (state: IAppState) => Object.values(getCitiesMap(sta
 export const getEnabledCities = (state: IAppState) => {
   const allCities = getAllCities(state);
   const locale = getClientLocale(state);
-  const loggedIn = isLoggedIn(state);
   return allCities.filter(city => {
     if (!city.isEnabled) return false;
-    return loggedIn ? city.isEnabled[locale] : city.isEnabled;
+    return typeof city.isEnabled === 'boolean' ? city.isEnabled : city.isEnabled[locale];
   });
 };
 

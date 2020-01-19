@@ -70,6 +70,7 @@ class CreateEditItemPage extends React.Component<CreateEditItemProps> {
   }
 
   renderItemName = (loadedItem: IItem) => {
+    console.log('Loaded item', loadedItem);
     return loadedItem ?
       ReactDOM.createPortal(
         <span> / {loadedItem.name[this.props.locale]}</span>,

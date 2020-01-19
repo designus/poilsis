@@ -6,10 +6,6 @@ import { ThunkReturn } from 'types';
 
 import { styles } from './styles';
 
-export type State = {
-  mobileDrawerOpen: boolean;
-};
-
 export interface IMatchParams {
   locale: Languages;
 }

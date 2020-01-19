@@ -3,9 +3,9 @@ import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
-import { DataTypes, IUser, IItem, Languages } from 'global-utils/typings';
+import { DataTypes, IUser, IItem, Languages, IAccessTokenClaims } from 'global-utils/typings';
 import { TranslatableField, hasLocalizedFields, ICity } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState } from 'types';
+import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails } from 'types';
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
@@ -167,3 +167,12 @@ export const isAdminItemActive = (pathName: string, paths: string[]) => {
 };
 
 export const getNewItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
+
+export const getUserDetails = (accessTokenClaims: IAccessTokenClaims): UserDetails => {
+  const { userId, userName, userRole } = accessTokenClaims;
+  return {
+    id: userId,
+    name: userName,
+    role: userRole
+  };
+};

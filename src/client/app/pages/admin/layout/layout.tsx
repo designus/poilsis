@@ -58,13 +58,16 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
     }
 
     if (!this.props.isInitialDataLoaded) {
-      console.log('Loading admin initial data');
       this.props.getInitialData({ locale: this.props.clientLocale });
     }
   }
 
   componentDidMount() {
     removeInjectedStyles();
+
+    if (!this.props.isInitialDataLoaded) {
+      this.props.getInitialData({ locale: this.props.clientLocale });
+    }
   }
 
   handleDrawerClose = () => {
@@ -162,59 +165,61 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
               </Toolbar>
             </AppBar>
               <main className={classes.main}>
-                <Switch>
-                  <ProtectedRoute
-                    exact
-                    path={adminRoutes.landing.path}
-                    component={AdminHomePage}
-                  />
-                  <ProtectedRoute
-                    exact
-                    path={adminRoutes.items.path}
-                    component={AdminItemsPage}
-                  />
-                  <ProtectedRoute
-                    exact
-                    path={adminRoutes.types.path}
-                    component={AdminTypesPage}
-                    allowedRoles={adminRoutes.types.allowedRoles}
-                  />
-                  <ProtectedRoute
-                    exact
-                    path={adminRoutes.cities.path}
-                    component={AdminCitiesPage}
-                    allowedRoles={adminRoutes.cities.allowedRoles}
-                  />
-                  <ProtectedRoute
-                    path={adminRoutes.editItem.path}
-                    component={CreateEditItemPage}
-                  />
-                  <ProtectedRoute
-                    path={adminRoutes.createItem.path}
-                    component={CreateEditItemPage}
-                  />
-                  <ProtectedRoute
-                    path={adminRoutes.createType.path}
-                    component={CreateEditTypePage}
-                  />
-                  <ProtectedRoute
-                    path={adminRoutes.editType.path}
-                    component={CreateEditTypePage}
-                  />
-                  <ProtectedRoute
-                    path={adminRoutes.createCity.path}
-                    component={CreateEditCityPage}
-                  />
-                  <ProtectedRoute
-                    path={adminRoutes.editCity.path}
-                    component={CreateEditCityPage}
-                  />
-                  <ProtectedRoute
-                    path={'/admin/not-authorized'}
-                    component={NotAuthorized}
-                  />
-                  <ProtectedRoute component={NotFound}/>
-                </Switch>
+                {this.props.isInitialDataLoaded ? (
+                  <Switch>
+                    <ProtectedRoute
+                      exact
+                      path={adminRoutes.landing.path}
+                      component={AdminHomePage}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path={adminRoutes.items.path}
+                      component={AdminItemsPage}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path={adminRoutes.types.path}
+                      component={AdminTypesPage}
+                      allowedRoles={adminRoutes.types.allowedRoles}
+                    />
+                    <ProtectedRoute
+                      exact
+                      path={adminRoutes.cities.path}
+                      component={AdminCitiesPage}
+                      allowedRoles={adminRoutes.cities.allowedRoles}
+                    />
+                    <ProtectedRoute
+                      path={adminRoutes.editItem.path}
+                      component={CreateEditItemPage}
+                    />
+                    <ProtectedRoute
+                      path={adminRoutes.createItem.path}
+                      component={CreateEditItemPage}
+                    />
+                    <ProtectedRoute
+                      path={adminRoutes.createType.path}
+                      component={CreateEditTypePage}
+                    />
+                    <ProtectedRoute
+                      path={adminRoutes.editType.path}
+                      component={CreateEditTypePage}
+                    />
+                    <ProtectedRoute
+                      path={adminRoutes.createCity.path}
+                      component={CreateEditCityPage}
+                    />
+                    <ProtectedRoute
+                      path={adminRoutes.editCity.path}
+                      component={CreateEditCityPage}
+                    />
+                    <ProtectedRoute
+                      path={'/admin/not-authorized'}
+                      component={NotAuthorized}
+                    />
+                    <ProtectedRoute component={NotFound}/>
+                  </Switch>
+                ) : <Loader isLoading />}
               </main>
           </div>
           <Toast />
@@ -224,12 +229,12 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
   }
 
   render() {
-    const { classes, isInitialDataLoaded } = this.props;
+    const { classes } = this.props;
     return (
       <React.Fragment>
         <LoadingBar isAdmin />
         <div className={classes.wrapper}>
-          {isInitialDataLoaded ? this.renderContent() : <Loader isLoading />}
+          {this.renderContent()}
         </div>
       </React.Fragment>
     );
@@ -239,7 +244,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
 const mapStateToProps = (state: IAppState): IStateProps => ({
   adminLocale: getAdminLocale(state),
   clientLocale: getClientLocale(state),
-  isInitialDataLoaded: isInitialDataLoaded(state)
+  isInitialDataLoaded: isInitialDataLoaded(state, true)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({

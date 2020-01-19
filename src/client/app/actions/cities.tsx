@@ -23,7 +23,7 @@ import {
   Toast,
   ThunkDispatch,
   ThunkResult,
-  IReceiveCityItems,
+  ISetCityItems,
   ActionCreator
 } from 'types';
 
@@ -44,8 +44,8 @@ export const toggleCityEnabledField: ActionCreator<IToggleEnabled> = params => (
   ...params
 });
 
-export const receiveCityItems: ActionCreator<IReceiveCityItems> = params => ({
-  type: CitiesActionTypes.RECEIVE_CITY_ITEMS,
+export const setCityItems: ActionCreator<ISetCityItems> = params => ({
+  type: CitiesActionTypes.SET_CITY_ITEMS,
   ...params
 });
 
@@ -78,7 +78,7 @@ export const loadCityItems = (alias: string): ThunkResult<Promise<void>> => (dis
       const data = getNormalizedData(newItems);
       batch(() => {
         dispatch(receiveItems(data));
-        dispatch(receiveCityItems({ cityId: city.id }));
+        dispatch(setCityItems({ cityId: city.id }));
         dispatch(endLoading(CONTENT_LOADER_ID));
       });
     })
