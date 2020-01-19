@@ -19,13 +19,16 @@ import { MainInfoPage } from 'pages/admin/createEditItem/mainInfo';
 import { DescriptionPage } from 'pages/admin/createEditItem/description';
 import { PhotosPage } from 'pages/admin/createEditItem/photos';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
-import { getInitialData } from 'actions/initialData';
+import { getClientInitialData, getAdminInitialData } from 'actions/initialData';
 
 import { loadCityData } from './pages/client/city/city';
 import { loadItemData } from './pages/client/item/item';
 import { loadRecommendedItemsData } from './pages/client/home/recommendedItems/recommendedItems';
 
-const loadInitialData = (store, params) => store.dispatch(getInitialData({ locale: params.locale }));
+const loadInitialData = (isAdmin: boolean) => (store, params) => {
+  const action = isAdmin ? getAdminInitialData({ locale: params.locale }) : getClientInitialData({ locale: params.locale });
+  return store.dispatch(action);
+};
 
 export interface IRoute extends RouteConfig {
   fetchData?: () => ThunkAction<Promise<void>, IAppState, void, Action>;
@@ -38,7 +41,7 @@ export const routes = [
       {
         path: adminRoutes.landing.path,
         component: AdminLayoutPage,
-        fetchData: loadInitialData,
+        fetchData: loadInitialData(true),
         exact: false,
         routes: [
           {
@@ -86,7 +89,7 @@ export const routes = [
       {
         path: clientRoutes.landing.path,
         component: ClientLayoutPage,
-        fetchData: [loadInitialData, loadRecommendedItemsData],
+        fetchData: [loadInitialData(false), loadRecommendedItemsData],
         exact: false,
         routes: [
           {

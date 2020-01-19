@@ -177,12 +177,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
       "id": "./app/components/toast/styles.tsx",
       "name": "./app/components/toast/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
@@ -495,7 +489,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/itemTypesList": [
+  "../itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -983,6 +977,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/actions/types.tsx",
+      "name": "./app/actions/types.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    },
+    {
       "id": "./app/types/types.tsx",
       "name": "./app/types/types.tsx",
       "file": "main.js",
@@ -1149,6 +1149,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "components/menu/adminLeftMenu/styles": [
+    {
+      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
   "components/menu/menu": [
     {
       "id": "./app/components/menu/menu.tsx",
@@ -1225,7 +1233,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1273,14 +1281,6 @@
     {
       "id": "./app/actions/index.tsx",
       "name": "./app/actions/index.tsx",
-      "file": "adminLayoutPage~homePage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
-    }
-  ],
-  "actions/types": [
-    {
-      "id": "./app/actions/types.tsx",
-      "name": "./app/actions/types.tsx",
       "file": "adminLayoutPage~homePage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
     }
@@ -7701,7 +7701,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "@material-ui/core/Button": [
+  "../Button": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Button/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Button/index.js",

@@ -58,6 +58,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
     }
 
     if (!this.props.isInitialDataLoaded) {
+      console.log('Loading admin initial data');
       this.props.getInitialData({ locale: this.props.clientLocale });
     }
   }

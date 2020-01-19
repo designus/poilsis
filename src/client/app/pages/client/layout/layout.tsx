@@ -23,7 +23,7 @@ import { clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
 import { getInitialData } from 'actions/initialData';
 import { getStaticFileUri } from 'global-utils';
-import { getEnabledCities, isLoggedIn, getClientLocale, isInitialDataLoaded } from 'selectors';
+import { isLoggedIn, getClientLocale, isInitialDataLoaded } from 'selectors';
 
 import { CityPage } from 'pages/client/city';
 import { ItemPage } from 'pages/client/item';
