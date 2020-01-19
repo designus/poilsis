@@ -1,6 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { IItem, Languages } from 'global-utils/typings';
-import { ThunkReturn } from 'types';
+import { ThunkReturn, ICitiesMap } from 'types';
 import { getClientItem } from 'actions/items';
 
 export type MatchParams = {
@@ -13,6 +13,7 @@ export type OwnProps = RouteComponentProps<MatchParams> & {};
 
 export type StateProps = {
   selectedItem: IItem;
+  citiesMap: ICitiesMap;
 };
 
 export type DispatchProps = {

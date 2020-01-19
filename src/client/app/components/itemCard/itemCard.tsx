@@ -24,7 +24,6 @@ function ItemCard(props: IItemCardProps) {
   const { item, city, locale, classes } = props;
 
   const handleClick = () => {
-    console.log('Link', clientRoutes.item.getLink(locale, city.alias, item.alias));
     props.history.push(clientRoutes.item.getLink(locale, city.alias, item.alias));
   };
 

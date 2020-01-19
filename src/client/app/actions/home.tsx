@@ -22,7 +22,7 @@ export const loadRecommendedItems = (): ThunkResult<Promise<void>> => (dispatch,
       const data = getNormalizedData(newItems);
       batch(() => {
         dispatch(receiveItems(data));
-        dispatch(receiveRecommendedItems({ items: Object.keys(data.dataMap) }));
+        dispatch(receiveRecommendedItems({ items: items.map(item => item.id) }));
         dispatch(endLoading(CONTENT_LOADER_ID));
       });
     })

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAppState } from 'types';
 import { getClientItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
-import { getItemByAlias } from 'selectors';
+import { getItemByAlias, getCitiesMap } from 'selectors';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 import { MatchParams, OwnProps, StateProps, DispatchProps, ItemPageProps } from './types';
 
@@ -62,10 +62,10 @@ class ItemPage extends React.Component<ItemPageProps, any> {
   }
 
   render() {
-    const { selectedItem } = this.props;
+    const { selectedItem, citiesMap } = this.props;
     const { locale } = this.props.match.params;
 
-    return isItemEnabled(selectedItem, locale) ? (
+    return isItemEnabled(selectedItem, citiesMap[selectedItem.cityId], locale) ? (
       <React.Fragment>
         {this.renderDocumentHead()}
         <Typography variant="h1">
@@ -83,7 +83,8 @@ class ItemPage extends React.Component<ItemPageProps, any> {
 }
 
 const mapStateToProps = (state: IAppState, props: OwnProps): StateProps => ({
-  selectedItem: getItemByAlias(state, props.match.params.itemAlias)
+  selectedItem: getItemByAlias(state, props.match.params.itemAlias),
+  citiesMap: getCitiesMap(state)
 });
 
 const mapDispatchToProps = (dispatch): DispatchProps => ({

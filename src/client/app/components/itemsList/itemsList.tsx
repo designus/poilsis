@@ -21,7 +21,7 @@ interface IItemsListProps {
 export class ItemsList extends React.Component<IItemsListProps> {
 
   renderItem = (item: IItem) => {
-    return isItemEnabled(item, this.props.locale) && (
+    return isItemEnabled(item, this.props.selectedCity, this.props.locale) && (
       <NavLink
         key={item.id}
         activeStyle={{ color: 'red' }}

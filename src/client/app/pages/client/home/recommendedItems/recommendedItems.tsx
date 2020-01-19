@@ -43,7 +43,7 @@ function RecommendedItems(props: RecommendedItemsProps) {
   const renderItem = (itemId: string) => {
     const item = itemsMap[itemId];
     const city = citiesMap[item.cityId];
-    return isItemEnabled(item, locale) && (
+    return isItemEnabled(item, city, locale) && (
       <Grid key={itemId} item xs={6} md={3} lg={2}>
         <ItemCard city={city} item={item} locale={locale} />
       </Grid>

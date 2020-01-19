@@ -4,7 +4,7 @@ import { memoize } from 'lodash';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { DataTypes, IUser, IItem, Languages } from 'global-utils/typings';
-import { TranslatableField, hasLocalizedFields } from 'global-utils';
+import { TranslatableField, hasLocalizedFields, ICity } from 'global-utils';
 import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState } from 'types';
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
@@ -131,8 +131,8 @@ export const isDataEnabled = (item: DataTypes, locale: string) => {
   return item && isEnabled;
 };
 
-export const isItemEnabled = (item: IItem, locale: string) =>
-  isDataEnabled(item, locale) && item.isApprovedByAdmin;
+export const isItemEnabled = (item: IItem, city: ICity, locale: string) =>
+  isDataEnabled(item, locale) && isDataEnabled(city, locale) && item.isApprovedByAdmin;
 
 export const isInputHidden = (languageOption: string, selectedLanguage: string, hasIntl: boolean) => {
   if (hasIntl) {
