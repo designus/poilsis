@@ -20,6 +20,7 @@ import { removeInjectedStyles, isAdminItemActive } from 'client-utils/methods';
 import { IAppState, ThunkDispatch } from 'types';
 import { getInitialData } from 'actions/initialData';
 
+import { Loader } from 'components/loader';
 import { Toast } from 'components/toast';
 import { IMenuItem } from 'components/menu';
 import { Drawer } from 'components/drawer';
@@ -31,7 +32,7 @@ import { LanguageSelector } from 'components/languageSelector';
 import { AdminLeftMenu as LeftMenu } from 'components/menu/adminLeftMenu';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 import { LoadingBar } from 'components/loadingBar';
-import { getAdminLocale, getClientLocale } from 'selectors';
+import { getAdminLocale, getClientLocale, isInitialDataLoaded } from 'selectors';
 
 import { AdminItemsPage } from 'pages/admin/items';
 import { CreateEditItemPage } from 'pages/admin/createEditItem';
@@ -54,6 +55,10 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
   componentDidUpdate(prevProps: AdminLayoutProps) {
     if (this.props.location !== prevProps.location) {
       this.handleDrawerClose();
+    }
+
+    if (!this.props.isInitialDataLoaded) {
+      this.props.getInitialData({ locale: this.props.clientLocale });
     }
   }
 
@@ -124,13 +129,11 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
     ];
   }
 
-  render() {
-    const { classes, adminLocale } = this.props;
+  renderContent = () => {
+    const { classes } = this.props;
     return (
       <React.Fragment>
-        <LoadingBar isAdmin />
-        <div className={classes.wrapper}>
-          <Drawer
+        <Drawer
             onClose={this.handleDrawerClose}
             mobileDrawerOpen={this.state.mobileDrawerOpen}
           >
@@ -154,7 +157,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
                   </div>
                 </Typography>
                 <UserMenu isInverted isLoggedIn />
-                <LanguageSelector isAdmin={true} locale={adminLocale} />
+                <LanguageSelector isAdmin={true} locale={this.props.adminLocale} />
               </Toolbar>
             </AppBar>
               <main className={classes.main}>
@@ -215,15 +218,27 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
           </div>
           <Toast />
           <KeepMeLoggedModal />
+      </React.Fragment>
+    );
+  }
+
+  render() {
+    const { classes, isInitialDataLoaded } = this.props;
+    return (
+      <React.Fragment>
+        <LoadingBar isAdmin />
+        <div className={classes.wrapper}>
+          {isInitialDataLoaded ? this.renderContent() : <Loader isLoading />}
         </div>
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   adminLocale: getAdminLocale(state),
-  clientLocale: getClientLocale(state)
+  clientLocale: getClientLocale(state),
+  isInitialDataLoaded: isInitialDataLoaded(state)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({

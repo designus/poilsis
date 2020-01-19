@@ -1,13 +1,18 @@
 import { Router } from 'express';
-import { auth, getAllCities, addNewCity, updateCity, deleteCity, getCity, doesAliasExist, toggleEnabled } from '../controllers';
+import { auth, getClientCities, getAdminCities, addNewCity, updateCity, deleteCity, getCity, doesAliasExist, toggleEnabled } from '../controllers';
 
 import { CitiesModel } from '../model';
 
 const router = Router();
 
 router.route('/')
-  .get(getAllCities)
   .post(auth.authenticate(), auth.authorize(['admin']), addNewCity);
+
+router.route('/admin-cities')
+  .get(getAdminCities);
+
+router.route('/client-cities')
+  .get(getClientCities);
 
 router.route('/city/alias-exist')
   .post(doesAliasExist(CitiesModel));

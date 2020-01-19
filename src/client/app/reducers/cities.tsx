@@ -1,7 +1,6 @@
 import { Reducer } from 'redux';
 import { removeByKeys, getAliasKeysById, getAliasState } from 'client-utils/methods';
 import {
-  ItemsActionTypes,
   ItemsActions,
   ICityState,
   CitiesActionTypes,
@@ -69,7 +68,7 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {
         ...state,
-        ...action.data.cities
+        ...action.cities
       };
     default:
       return state;

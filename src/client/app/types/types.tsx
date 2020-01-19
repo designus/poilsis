@@ -2,6 +2,7 @@ import { IType } from 'global-utils/typings';
 import { IGenericDataMap, IGenericState, IToggleEnabled } from './generic';
 
 export type ITypesMap = IGenericDataMap<IType>;
+
 export interface ITypesState extends IGenericState<IType> {
   selectedId?: string;
 }

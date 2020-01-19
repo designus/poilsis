@@ -19,7 +19,7 @@ import { config } from 'config';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
 
-const clientItemsProjection =  {
+const clientItemsProjection = {
   _id: 0,
   id: 1,
   name: 1,
@@ -34,6 +34,12 @@ const clientItemsProjection =  {
   updatedAt: 1,
   isApprovedByAdmin: 1,
   mainImage: 1
+};
+
+const adminItemsProjection = {
+  ...clientItemsProjection,
+  createdAt: 1,
+  updatedAt: 1
 };
 
 export const getAllItems = async (req: Request, res: Response, next: NextFunction) => {
@@ -89,7 +95,10 @@ export const getCityItems = async (req: Request, res: Response, next: NextFuncti
 
 export const getUserItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userItems = await ItemsModel.find({ id: req.params.id });
+    const userItems = await ItemsModel.aggregate([
+      { $project: adminItemsProjection }
+    ]);
+
     res.status(200).json(userItems);
   } catch (err) {
     return next(err);

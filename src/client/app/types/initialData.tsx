@@ -1,13 +1,10 @@
 import { ICityState } from './cities';
 import { ITypesState } from './types';
-
-export interface IInitialData {
-  cities: ICityState;
-  types: ITypesState;
-}
+import { IUsersState } from './users';
 
 export interface IInitialDataState {
   isLoaded: boolean;
+  isMultiLang: boolean;
 }
 
 export enum InitialDataActionTypes {
@@ -17,7 +14,10 @@ export enum InitialDataActionTypes {
 
 export interface IReceiveInitialData {
   type: InitialDataActionTypes.RECEIVE_INITIAL_DATA;
-  data: IInitialData;
+  cities: ICityState;
+  types: ITypesState;
+  users: Partial<IUsersState>;
+  isLoggedIn: boolean;
 }
 
 export interface IClearAllData {

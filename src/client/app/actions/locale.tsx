@@ -17,7 +17,7 @@ export const switchLanguage = (locale: Languages, isAdmin: boolean) => dispatch 
     dispatch(setAdminLocale({ locale }));
   } else {
     dispatch(setClientLocale({ locale }));
+    dispatch(clearAllData());
   }
 
-  dispatch(clearAllData());
 };

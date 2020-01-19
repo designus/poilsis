@@ -12,6 +12,7 @@ export interface IOwnProps extends WithStyles<typeof styles>, InjectedIntlProps,
 export interface IStateProps {
   adminLocale: Languages;
   clientLocale: Languages;
+  isInitialDataLoaded: boolean;
 }
 
 export interface IDispatchProps {

@@ -5,7 +5,7 @@ export const users = (state: IUsersState = null, action): IUsersState => {
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA: {
       return {
         ...state,
-        ...action.data.users
+        ...action.users
       };
     }
     default:

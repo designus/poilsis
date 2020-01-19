@@ -6,14 +6,33 @@ import { getAdjustedAliasValue, getUniqueAlias, getAliasList } from 'server-util
 import { getDataByAlias } from './common';
 import { CitiesModel } from '../model';
 
-export const getAllCities = async (req: Request, res: Response, next: NextFunction) => {
+export const getClientCities = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const locale = req.headers['accept-language'] as Languages;
-    const toggleFields: ToggleFields<ICity> = ['alias', 'description', 'metaTitle', 'metaDescription'];
+
+    if (!locale) throw new Error('Locale is not set');
+
+    const toggleFields: ToggleFields<ICity> = ['name', 'alias', 'description', 'metaTitle', 'metaDescription', 'isEnabled'];
     const cities = await CitiesModel.aggregate([
       { $project: { _id: 0, __v: 0 } },
       { $unset: getFieldsToUnset<ICity>(LANGUAGES, locale, toggleFields)},
       { $set: getFieldsToSet<ICity>(locale, toggleFields) }
+    ])
+    .exec();
+
+    if (!cities) throw new Error('Unable to load cities');
+
+    res.status(200).json(cities);
+
+  } catch (err) {
+    return next(err);
+  }
+};
+
+export const getAdminCities = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const cities = await CitiesModel.aggregate([
+      { $project: { _id: 0, __v: 0 } }
     ])
     .exec();
 

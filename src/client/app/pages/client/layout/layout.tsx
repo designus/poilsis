@@ -78,7 +78,7 @@ class ClientLayoutPage extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <Hidden mdUp>
-            <Drawer
+          <Drawer
             onClose={this.handleDrawerClose}
             mobileDrawerOpen={this.state.mobileDrawerOpen}
           >

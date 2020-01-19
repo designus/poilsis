@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { ICity, IItem } from 'global-utils/typings';
-import { getItemsMap, getClientLocale } from 'selectors';
+import { getItemsMap, getClientLocale, isLoggedIn } from 'selectors';
 import { IAppState, IItemsMap, ICitiesMap } from 'types';
 
 export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
@@ -10,7 +10,11 @@ export const getAllCities = (state: IAppState) => Object.values(getCitiesMap(sta
 export const getEnabledCities = (state: IAppState) => {
   const allCities = getAllCities(state);
   const locale = getClientLocale(state);
-  return allCities.filter(city => city.isEnabled && city.isEnabled[locale]);
+  const loggedIn = isLoggedIn(state);
+  return allCities.filter(city => {
+    if (!city.isEnabled) return false;
+    return loggedIn ? city.isEnabled[locale] : city.isEnabled;
+  });
 };
 
 export const getCitiesAliases = (state: IAppState) => state.cities.aliases;
