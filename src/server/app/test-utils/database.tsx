@@ -26,7 +26,7 @@ class Database {
         return Promise.resolve();
       })
       .catch((err) => {
-        console.log('Unable to connect', err);
+        console.error('Unable to connect', err);
         done();
       });
   }

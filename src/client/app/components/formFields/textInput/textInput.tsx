@@ -123,7 +123,7 @@ function TextInput(props: ITextInputProps) {
               {label}
             </InputLabel>
             <Input
-              id={label}
+              id={`${label}-${languageOption}`}
               value={value}
               multiline={multiline}
               rows={4}

@@ -1,23 +1,25 @@
 import { batch } from 'react-redux';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { getNormalizedData } from 'client-utils/methods';
+import { getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
 import { startLoading, endLoading } from 'actions/loader';
 import { receiveItems } from 'actions/items';
-import { UserDetails, CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, IReceiveUserItems } from 'types';
+import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, ActionCreator } from 'types';
 import { isAdmin, IItem } from 'global-utils';
+import { getAdminLocale } from 'selectors';
 import { handleApiResponse, http } from './utils';
 
-export const receiveUserDetails = (userDetails: UserDetails): IReceiveUserDetails => ({
+export const receiveUserDetails: ActionCreator<IReceiveUserDetails> = props => ({
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
-  userDetails
+  ...props
 });
 
-export const receiveUserItems = (): IReceiveUserItems => ({
-  type: CurrentUserActionTypes.RECEIVE_USER_ITEMS
+export const setUserItems: ActionCreator<ISetUserItems> = () => ({
+  type: CurrentUserActionTypes.SET_USER_ITEMS
 });
 
 export const loadUserItems = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
   const state = getState();
+  const locale = getAdminLocale(state);
   const { currentUser } = state;
   const user = currentUser.details;
   const isAdministrator = isAdmin(user.role);
@@ -31,12 +33,13 @@ export const loadUserItems = (): ThunkResult<Promise<void>> => (dispatch, getSta
 
   dispatch(startLoading(CONTENT_LOADER_ID));
 
-  return http.get<IItem[]>(endpoint)
+  return http.get<IItem[]>(endpoint, setAcceptLanguageHeader(locale))
     .then(response => handleApiResponse(response))
     .then(items => {
+      const data = getNormalizedData(items);
       batch(() => {
-        dispatch(receiveItems(getNormalizedData(items)));
-        dispatch(receiveUserItems());
+        dispatch(receiveItems(data));
+        dispatch(setUserItems());
         dispatch(endLoading(CONTENT_LOADER_ID));
       });
     })

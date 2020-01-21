@@ -2,7 +2,8 @@
 import { Router } from 'express';
 import {
   auth,
-  getAllTypes,
+  getAdminTypes,
+  getClientTypes,
   addNewType,
   updateType,
   deleteType,
@@ -16,8 +17,13 @@ import { TypesModel } from '../model';
 const router = Router();
 
 router.route('/')
-  .get(getAllTypes)
   .post(auth.authenticate(), auth.authorize(['admin']), addNewType);
+
+router.route('/admin-types')
+  .get(getAdminTypes);
+
+router.route('/client-types')
+  .get(getClientTypes);
 
 router.route('/type/alias-exist')
   .post(doesAliasExist(TypesModel));

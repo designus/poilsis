@@ -1,14 +1,16 @@
 
 import { Request, Response, NextFunction, response } from 'express';
 import shortId from 'shortid';
-import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES } from 'global-utils';
+import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, ToggleFields, Languages } from 'global-utils';
 import {
   getImages,
   sendResponse,
   getAdjustedIsEnabledValue,
   isApprovedByAdmin,
   getImagePath,
-  removeUploadedFiles
+  removeUploadedFiles,
+  getFieldsToSet,
+  getFieldsToUnset
 } from 'server-utils/methods';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
@@ -17,7 +19,7 @@ import { config } from 'config';
 import { getDataByAlias } from './common';
 import { ItemsModel } from '../model';
 
-const itemProjection =  {
+const clientItemsProjection = {
   _id: 0,
   id: 1,
   name: 1,
@@ -34,36 +36,72 @@ const itemProjection =  {
   mainImage: 1
 };
 
+const adminItemsProjection = {
+  ...clientItemsProjection,
+  createdAt: 1,
+  updatedAt: 1
+};
+
 export const getAllItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const allItems = await ItemsModel.find({});
+    const allItems = await ItemsModel.aggregate([
+      { $project: clientItemsProjection }
+    ]);
+
+    if (!allItems) throw new Error('Unable to load all items');
+
     res.status(200).json(allItems);
   } catch (err) {
     return next(err);
   }
 };
 
-export const getRecommendedItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
+export const getRecommendedItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = req.headers['accept-language'] as Languages;
+
+    if (!locale) throw new Error('Locale is not set');
+
+    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
+    const recommendedItems = await ItemsModel.aggregate([
       { $match: { isRecommended: true } },
-      { $project: itemProjection }
+      { $project: clientItemsProjection },
+      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<IItem>(locale, toggleFields)}
     ])
-    .exec(sendResponse(res, next));
+    .exec();
+
+    res.status(200).json(recommendedItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const getCityItems = (req: Request, res: Response, next: NextFunction) => {
-  ItemsModel
-    .aggregate([
-      { $match: { cityId: req.params.cityId } },
-      { $project: itemProjection }
-    ])
-    .exec(sendResponse(res, next));
+export const getCityItems = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
+    const cityItems = await ItemsModel
+      .aggregate([
+        { $match: { cityId: req.params.cityId } },
+        { $project: clientItemsProjection },
+        { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
+        { $set: getFieldsToSet<IItem>(locale, toggleFields)}
+      ])
+      .exec();
+
+    res.status(200).json(cityItems);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const getUserItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userItems = await ItemsModel.find({ id: req.params.id });
+    const userItems = await ItemsModel.aggregate([
+      { $project: adminItemsProjection }
+    ]);
+
     res.status(200).json(userItems);
   } catch (err) {
     return next(err);
@@ -73,7 +111,7 @@ export const getUserItems = async (req: Request, res: Response, next: NextFuncti
 export const toggleItemRecommended = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item = await ItemsModel.findOneAndUpdate(
-      { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true },
+      { id: req.body.itemId }, { $set: { isRecommended: req.body.isRecommended } }, { new: true, runValidators: true }
     );
 
     if (!item) {
@@ -90,7 +128,7 @@ export const toggleItemRecommended = async (req: Request, res: Response, next: N
 export const toggleItemApproved = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const item = await ItemsModel.findOneAndUpdate(
-      { id: req.body.itemId2 }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true }
+      { id: req.body.itemId }, { $set: { isApprovedByAdmin: req.body.isApproved } }, { new: true, runValidators: true }
     );
 
     if (!item) {
@@ -123,13 +161,30 @@ export const addNewItem = async (req: Request, res: Response, next: NextFunction
   new ItemsModel(newItem).save(sendResponse(res, next));
 };
 
-export const getEditItem = (req: Request, res: Response, next: NextFunction) => {
+export const getAdminItem = (req: Request, res: Response, next: NextFunction) => {
   ItemsModel.findOne({ id: req.params.itemId }, sendResponse(res, next));
 };
 
-export const getViewItem = (req: Request, res: Response, next: NextFunction) => {
-  const locale = req.headers['accept-language'] as string;
-  ItemsModel.findOne({ [`alias.${locale}`]: req.params.alias }, sendResponse(res, next));
+export const getClientItem = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const locale = req.headers['accept-language'] as Languages;
+    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled', 'metaTitle', 'metaDescription', 'description'];
+
+    if (!locale) throw new Error('Locale is not set');
+
+    const item = await ItemsModel.aggregate([
+      { $match: { [`alias.${locale}`]: req.params.alias } },
+      { $project: {_id: 0, __v: 0 } },
+      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<IItem>(locale, toggleFields)}
+    ])
+    .then(items => items[0]);
+
+    res.status(200).json(item);
+
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const deleteItem = (req: Request, res: Response, next: NextFunction) => {

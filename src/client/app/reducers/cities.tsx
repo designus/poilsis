@@ -1,7 +1,6 @@
 import { Reducer } from 'redux';
 import { removeByKeys, getAliasKeysById, getAliasState } from 'client-utils/methods';
 import {
-  ItemsActionTypes,
   ItemsActions,
   ICityState,
   CitiesActionTypes,
@@ -19,7 +18,7 @@ const getInitialState = (): ICityState => ({
 
 export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialState(), action): ICityState => {
   switch (action.type) {
-    case CitiesActionTypes.RECEIVE_CITY_ITEMS:
+    case CitiesActionTypes.SET_CITY_ITEMS:
       return {
         ...state,
         dataMap: {
@@ -41,7 +40,8 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
           ...state.dataMap,
           [action.city.id]: {
             ...(state.dataMap[action.city.id] || {}),
-            ...action.city
+            ...action.city,
+            isFullyLoaded: true
           }
         }
       };
@@ -68,7 +68,7 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {
         ...state,
-        ...action.data.cities
+        ...action.cities
       };
     default:
       return state;

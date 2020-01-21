@@ -34,30 +34,30 @@ export interface IResponseError {
 }
 
 export interface ISeoFields {
-  metaTitle: TranslatableField;
-  metaDescription: TranslatableField;
+  metaTitle: TranslatableField | string;
+  metaDescription: TranslatableField | string;
 }
 
 export interface IItemDescFields extends ISeoFields {
-  description: TranslatableField;
+  description: TranslatableField | string;
 }
 
 export interface IItem extends IItemDescFields {
   id: string;
-  alias: TranslatableField;
-  name: TranslatableField;
+  alias: TranslatableField | string;
+  name: TranslatableField | string;
   address: string;
   cityId: string;
   types: string[];
   images: IImage[];
   userId: string;
   isRecommended: boolean;
-  isEnabled: IsEnabled;
+  isEnabled: IsEnabled | boolean;
   isApprovedByAdmin: boolean;
   createdAt?: string;
   updatedAt?: string;
-  isFullyLoaded?: boolean;
   mainImage: string;
+  isFullyLoaded?: boolean;
 }
 
 export interface IType {
@@ -66,6 +66,7 @@ export interface IType {
   name: TranslatableField;
   description: TranslatableField;
   isEnabled: IsEnabled;
+  isFullyLoaded?: boolean;
 }
 
 export interface ICity extends ISeoFields {
@@ -74,8 +75,9 @@ export interface ICity extends ISeoFields {
   types: string[];
   name: TranslatableField;
   description: TranslatableField;
-  hasItems?: boolean;
   isEnabled: IsEnabled;
+  hasItems?: boolean;
+  isFullyLoaded?: boolean;
 }
 
 export enum UserRoles {
@@ -111,3 +113,11 @@ export interface IConfig {
   port: string | number;
   host?: string;
 }
+
+export type TranslatableFields<O, K = keyof O> = K extends keyof O
+  ? O[K] extends (TranslatableField | string)
+    ? K
+    : K extends 'isEnabled' ? K : never
+  : never;
+
+export type ToggleFields<T> = Array<TranslatableFields<T>>;

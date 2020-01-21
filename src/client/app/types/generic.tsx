@@ -1,7 +1,7 @@
 import { MessageDescriptor } from 'react-intl';
 import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
 import { Action, Store } from 'redux';
-import { Omit } from 'global-utils/typings';
+import { Omit, DataTypes, TranslatableField } from 'global-utils/typings';
 import { ItemsActionTypes } from './items';
 import { CitiesActionTypes } from './cities';
 import { TypesActionTypes } from './types';
@@ -62,3 +62,5 @@ export type ActionReturn<A> = A extends (...args: infer B) => any
   : never;
 
 export type ReduxStore = Store<IAppState, any>;
+
+export type ActionCreator<T extends { type: string }> = (props?: Omit<T, 'type'>) => T;

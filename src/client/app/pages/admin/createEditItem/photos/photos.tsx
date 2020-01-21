@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId, images) => dispatch(updatePhotos(itemId, images)),
   resetUploadState: () => dispatch(resetUploadState()),
-  sortImages: id => (images: IImage[]) => dispatch(receiveImages(id, images, null))
+  sortImages: id => (images: IImage[]) => dispatch(receiveImages({ itemId: id, images, mainImage: null }))
 });
 
 export default injectIntl(

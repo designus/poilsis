@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { IAppState, IItemsMap, ICitiesMap } from 'types';
+import { Languages } from 'global-utils/typings';
 import { loadRecommendedItems } from 'actions';
 import { ItemCard } from 'components/itemCard';
 import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getClientLocale, getCitiesMap } from 'selectors';
@@ -23,7 +24,7 @@ interface IStateProps {
   hasLoaded: boolean;
   itemsMap: IItemsMap;
   citiesMap: ICitiesMap;
-  locale: string;
+  locale: Languages;
 }
 
 type RecommendedItemsProps = IOwnProps & IStateProps & IDispatchProps;
@@ -42,7 +43,7 @@ function RecommendedItems(props: RecommendedItemsProps) {
   const renderItem = (itemId: string) => {
     const item = itemsMap[itemId];
     const city = citiesMap[item.cityId];
-    return isItemEnabled(item, locale) && (
+    return isItemEnabled(item, city, locale) && (
       <Grid key={itemId} item xs={6} md={3} lg={2}>
         <ItemCard city={city} item={item} locale={locale} />
       </Grid>

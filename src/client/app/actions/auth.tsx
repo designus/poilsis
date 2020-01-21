@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { batch } from 'react-redux';
 import * as Cookies from 'js-cookie';
 import * as day from 'dayjs';
 
@@ -6,6 +6,7 @@ import { startLoading, endLoading } from 'actions/loader';
 import { showToast } from 'actions/toast';
 import { receiveUserDetails } from 'actions/currentUser';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
+import { getUserDetails } from 'client-utils/methods';
 import { getAccessTokenClaims } from 'global-utils/methods';
 import {
   IAppState,
@@ -65,12 +66,15 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
     .then(response => response.data)
     .then(data => {
       const { accessToken, refreshToken } = data;
-      const { userId: id, exp, userName: name, userRole: role } = getAccessTokenClaims(accessToken);
-      const expiryDate = day(exp * 1000).toDate();
-      dispatch(loginSuccess(accessToken));
-      dispatch(receiveUserDetails({ id, name, role }));
-      dispatch(endLoading(DIALOG_LOADER_ID));
-      dispatch(showToast(Toast.success, USER_LOGIN_SUCCESS));
+      const accessTokenClaims = getAccessTokenClaims(accessToken);
+      const expiryDate = day(accessTokenClaims.exp * 1000).toDate();
+      batch(() => {
+        dispatch(loginSuccess(accessToken));
+        dispatch(receiveUserDetails({ userDetails: getUserDetails(accessTokenClaims) }));
+        dispatch(endLoading(DIALOG_LOADER_ID));
+        dispatch(showToast(Toast.success, USER_LOGIN_SUCCESS));
+      });
+
       Cookies.set('jwt', accessToken, {expires: expiryDate});
       localStorage.setItem('refreshToken', refreshToken);
       return Promise.resolve();

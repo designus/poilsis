@@ -5,9 +5,8 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, defineMessages } from 'react-intl';
 
-import { ICity, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
-import { createCity, updateCity } from 'actions/cities';
-import { getAdminCity } from 'actions/admin';
+import { ICity, LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
+import { createCity, updateCity, getAdminCity } from 'actions/cities';
 import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
@@ -35,10 +34,12 @@ const messages = defineMessages({
   }
 });
 
-class CreateEditCityPageComponent extends React.Component<Props> {
+class CreateEditCity extends React.Component<Props> {
   componentDidMount() {
     if (!this.isCreatePage() && this.props.shouldLoadEditCity) {
-      this.props.getCity(this.props.match.params.cityId);
+      this.props.getCity(this.props.match.params.cityId).then(city => {
+        this.props.initializeForm(city);
+      });
     }
   }
 
@@ -65,7 +66,7 @@ class CreateEditCityPageComponent extends React.Component<Props> {
   }
 
   renderTitle = () => {
-    return ReactDOM.createPortal(
+    return isClient() && ReactDOM.createPortal(
       <span> / {this.props.intl.formatMessage(this.isCreatePage() ? messages.createCity : messages.editCity)}</span>,
       document.querySelector('.editItemName')
     );
@@ -108,6 +109,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   initializeForm: city => dispatch(initialize(CITY_FORM_NAME, city))
 });
 
-export const CreateEditCityPage = injectIntl(
-  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CreateEditCityPageComponent)
+export default injectIntl(
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CreateEditCity)
 );

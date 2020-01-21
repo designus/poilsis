@@ -54,3 +54,7 @@ export const formatValue = (value: string): string =>
     .split(/\s+/)
     .join('-')
     .toLowerCase();
+
+export const isServer = () => !(typeof window !== 'undefined' && window.document);
+
+export const isClient = () => !isServer();

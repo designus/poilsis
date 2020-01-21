@@ -17,7 +17,7 @@ const ItemsListWithLoader = extendWithLoader(ItemsList);
 
 export const loadCityData = (store, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
 
-class CityPage extends React.Component<ICityPageProps, any> {
+class CityPage extends React.Component<ICityPageProps> {
 
   componentDidUpdate(prevProps: ICityPageProps) {
     if (this.props.location !== prevProps.location && this.props.shouldLoadCityItems) {

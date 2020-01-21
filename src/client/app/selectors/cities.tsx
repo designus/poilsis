@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { ICity, IItem } from 'global-utils/typings';
-import { getItemsMap, getClientLocale } from 'selectors';
+import { getItemsMap, getClientLocale, isLoggedIn } from 'selectors';
 import { IAppState, IItemsMap, ICitiesMap } from 'types';
 
 export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
@@ -10,7 +10,10 @@ export const getAllCities = (state: IAppState) => Object.values(getCitiesMap(sta
 export const getEnabledCities = (state: IAppState) => {
   const allCities = getAllCities(state);
   const locale = getClientLocale(state);
-  return allCities.filter(city => city.isEnabled && city.isEnabled[locale]);
+  return allCities.filter(city => {
+    if (!city.isEnabled) return false;
+    return typeof city.isEnabled === 'boolean' ? city.isEnabled : city.isEnabled[locale];
+  });
 };
 
 export const getCitiesAliases = (state: IAppState) => state.cities.aliases;
@@ -24,8 +27,9 @@ export const getCityByAlias = (state: IAppState, alias: string): ICity => {
   return getCitiesMap(state)[cityId];
 };
 
-export const shouldLoadEditCity = (state: IAppState, cityId: string) => {
-  return cityId && !state.loader.content && !getCityById(state, cityId);
+export const shouldLoadEditCity = (state: IAppState, cityId?: string): boolean => {
+  const city = getCityById(state, cityId);
+  return cityId && !state.loader.content && (!city || !city.isFullyLoaded);
 };
 
 export const shouldLoadCityItems = (state: IAppState, alias: string) => {

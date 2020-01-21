@@ -3,9 +3,9 @@ import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
-import { DataTypes, IUser, IItem, Languages } from 'global-utils/typings';
-import { TranslatableField, hasLocalizedFields } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState } from 'types';
+import { DataTypes, IUser, IItem, Languages, IAccessTokenClaims } from 'global-utils/typings';
+import { TranslatableField, hasLocalizedFields, ICity } from 'global-utils';
+import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails } from 'types';
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
@@ -100,7 +100,7 @@ export function removeByKeys<T>(keys: string[], dataMap: IGenericDataMap<T>): IG
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
 
 export const getLocalizedText = (text: string | TranslatableField, locale: string): string => {
-  if (!text) return '';
+  if (!text || !Object.keys(text).length) return '';
 
   if (hasLocalizedFields(text)) {
     return text[locale] || text[DEFAULT_LANGUAGE];
@@ -126,13 +126,13 @@ export const toggleItemInArray = (items: string[], item: string, shouldAddItem: 
   return items.filter(current => current !== item);
 };
 
-export const isDataEnabled = (item: DataTypes, locale: string) =>
-  item &&
-  item.isEnabled &&
-  item.isEnabled[locale];
+export const isDataEnabled = (item: DataTypes, locale: string) => {
+  const isEnabled = typeof item.isEnabled === 'boolean' ? item.isEnabled : item.isEnabled[locale];
+  return item && isEnabled;
+};
 
-export const isItemEnabled = (item: IItem, locale: string) =>
-  isDataEnabled(item, locale) && item.isApprovedByAdmin;
+export const isItemEnabled = (item: IItem, city: ICity, locale: string) =>
+  isDataEnabled(item, locale) && isDataEnabled(city, locale) && item.isApprovedByAdmin;
 
 export const isInputHidden = (languageOption: string, selectedLanguage: string, hasIntl: boolean) => {
   if (hasIntl) {
@@ -167,3 +167,12 @@ export const isAdminItemActive = (pathName: string, paths: string[]) => {
 };
 
 export const getNewItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
+
+export const getUserDetails = (accessTokenClaims: IAccessTokenClaims): UserDetails => {
+  const { userId, userName, userRole } = accessTokenClaims;
+  return {
+    id: userId,
+    name: userName,
+    role: userRole
+  };
+};

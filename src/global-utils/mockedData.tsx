@@ -50,9 +50,9 @@ const getItemName = (names: string[], index: number): TranslatableField => {
   }, {});
 };
 
-const getItemAlias = (name: TranslatableField): TranslatableField => {
+const getItemAlias = (name: TranslatableField, index: number): TranslatableField => {
   return Object.keys(name).reduce((acc, lang) => {
-    acc[lang] = formatValue(name[lang]);
+    acc[lang] = `${formatValue(name[lang])}-${index}`;
     return acc;
   }, {});
 };
@@ -65,7 +65,7 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
     const cityId = cityIds[getRandomNumber(0, cityIds.length - 1)];
     const types = [typeIds[getRandomNumber(0, typeIds.length - 1)]];
     const name = getItemName(names, nameIndex);
-    const alias = getItemAlias(name);
+    const alias = getItemAlias(name, i);
     items.push({
       id: shortId.generate(),
       name,

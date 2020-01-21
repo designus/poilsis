@@ -19,7 +19,7 @@ type ActionTypes = CurrentUserActions | ItemsActions | InitialDataActions | Auth
 export const currentUser: Reducer<ICurrentUserState, ActionTypes> =
 (state: ICurrentUserState = getInitialState(), action): ICurrentUserState => {
   switch (action.type) {
-    case CurrentUserActionTypes.RECEIVE_USER_ITEMS:
+    case CurrentUserActionTypes.SET_USER_ITEMS:
       return {
         ...state,
         hasItems: true

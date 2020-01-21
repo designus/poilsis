@@ -24,4 +24,6 @@ export interface IAppState {
   loader: ILoadingState;
   toast: IToastState;
   uploadProgress: IUploadProgressState;
+  form: any;
+  loadingBar: any;
 }

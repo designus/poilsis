@@ -1,1 +1,1 @@
-export * from './createEditCity';
+export { default as CreateEditCityPage } from './createEditCity';

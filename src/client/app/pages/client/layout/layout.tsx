@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, RouteComponentProps } from 'react-router-dom';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { Route, Switch } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -14,113 +14,107 @@ import { UserMenu } from 'components/userMenu';
 import { LanguageSelector } from 'components/languageSelector';
 import { NotFound } from 'components/notFound';
 import { Drawer } from 'components/drawer';
+import { Loader } from 'components/loader';
 import { LoginButton } from 'components/loginButton';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 import { ClientTopMenu as TopMenu } from 'components/menu/clientTopMenu';
 import { clientRoutes } from 'client-utils/routes';
 import { removeInjectedStyles } from 'client-utils/methods';
-import { getInitialData, IGetInitialDataParams } from 'actions/initialData';
-import { getStaticFileUri, Languages } from 'global-utils';
+import { getInitialData } from 'actions/initialData';
+import { getStaticFileUri } from 'global-utils';
+import { isLoggedIn, getClientLocale, isInitialDataLoaded } from 'selectors';
 
 import { CityPage } from 'pages/client/city';
 import { ItemPage } from 'pages/client/item';
 import { LoginPage } from 'pages/client/login';
 import { HomePage } from 'pages/client/home';
 
-import { IAppState } from 'types';
-
-import { getEnabledCities, isLoggedIn, getClientLocale } from 'selectors';
-
 // @ts-ignore
 import logoUrl from 'static/images/logo.gif';
 
+import { IAppState, ThunkDispatch } from 'types';
+import { Props, StateProps, OwnProps, DispatchProps } from './types';
+
 import { styles } from './styles';
 
-interface IMatchParams {
-  cityName: string;
-  locale: Languages;
-}
+const { useState, useEffect } = React;
 
-interface ILayoutPageParams extends RouteComponentProps<IMatchParams>, WithStyles<typeof styles> {
-  isLoggedIn: boolean;
-  getInitialData: (params?: IGetInitialDataParams) => void;
-  locale: Languages;
-}
+const ClientLayoutPage: React.FunctionComponent<Props> = (props) => {
+  const { isInitialDataLoaded, locale, getInitialData, history, classes, isLoggedIn } = props;
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
 
-export const loadInitialData = (store, params: IMatchParams) => store.dispatch(getInitialData({ locale: params.locale }));
+  useEffect(() => {
+    removeInjectedStyles();
+  }, []);
 
-class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
-  state = {
-    mobileDrawerOpen: false
+  useEffect(() => {
+    if (!isInitialDataLoaded) {
+      getInitialData({ locale });
+    }
+  }, [isInitialDataLoaded, getInitialData]);
+
+  const handleDrawerClose = () => {
+    setMobileDrawerOpen(false);
   };
 
-  componentDidMount() {
-    removeInjectedStyles();
-  }
+  const handleDrawerToggle = () => {
+    setMobileDrawerOpen(!mobileDrawerOpen);
+  };
 
-  handleDrawerClose = () => {
-    this.setState({ mobileDrawerOpen: false });
-  }
+  const handleLogoClick = () => {
+    history.push(clientRoutes.landing.getLink(locale));
+  };
 
-  handleDrawerToggle = () => {
-    this.setState({ mobileDrawerOpen: !this.state.mobileDrawerOpen });
-  }
-
-  handleLogoClick = () => {
-    this.props.history.push(clientRoutes.landing.getLink(this.props.locale));
-  }
-
-  renderLogo = () => {
+  const renderLogo = () => {
     return (
-      <div onClick={this.handleLogoClick} className={this.props.classes.logo}>
+      <div onClick={handleLogoClick} className={classes.logo}>
         <img src={getStaticFileUri(logoUrl)} />
       </div>
     );
-  }
+  };
 
-  render() {
-    const { classes, isLoggedIn, locale } = this.props;
+  const renderContent = () => {
     return (
-      <ConnectedIntlProvider locale={locale}>
-        <div className={classes.wrapper}>
-          <Hidden mdUp>
-            <Drawer
-              onClose={this.handleDrawerClose}
-              mobileDrawerOpen={this.state.mobileDrawerOpen}
-            >
-              <TopMenu
-                onRouteChange={this.handleDrawerClose}
-                isVertical={true}
-                isLoggedIn={isLoggedIn}
-              />
-            </Drawer>
-          </Hidden>
-          <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
-            <Container maxWidth="xl">
-              <Toolbar disableGutters className={classes.toolbar}>
-                <Hidden mdUp implementation="css">
-                  <IconButton
-                    color="inherit"
-                    aria-label="Open Drawer"
-                    onClick={this.handleDrawerToggle}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                </Hidden>
-                {this.renderLogo()}
-                <div className={classes.topMenu}>
-                  <Hidden smDown implementation="css">
-                    <TopMenu isLoggedIn={isLoggedIn} />
-                  </Hidden>
-                </div>
-                <LoginButton />
-                <UserMenu isLoggedIn={isLoggedIn} />
-                <LanguageSelector isAdmin={false} locale={this.props.locale} />
-              </Toolbar>
-            </Container>
-          </AppBar>
+      <React.Fragment>
+        <Hidden mdUp>
+          <Drawer
+            onClose={handleDrawerClose}
+            mobileDrawerOpen={mobileDrawerOpen}
+          >
+            <TopMenu
+              onRouteChange={handleDrawerClose}
+              isVertical={true}
+              isLoggedIn={isLoggedIn}
+            />
+          </Drawer>
+        </Hidden>
+        <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
           <Container maxWidth="xl">
+            <Toolbar disableGutters className={classes.toolbar}>
+              <Hidden mdUp implementation="css">
+                <IconButton
+                  color="inherit"
+                  aria-label="Open Drawer"
+                  onClick={handleDrawerToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Hidden>
+              {renderLogo()}
+              <div className={classes.topMenu}>
+                <Hidden smDown implementation="css">
+                  <TopMenu isLoggedIn={isLoggedIn} />
+                </Hidden>
+              </div>
+              <LoginButton />
+              <UserMenu isLoggedIn={isLoggedIn} />
+              <LanguageSelector isAdmin={false} locale={locale} />
+            </Toolbar>
+          </Container>
+        </AppBar>
+        <Container maxWidth="xl">
+          {isInitialDataLoaded ? (
             <Switch>
               <Route path={clientRoutes.login.path} component={LoginPage} />
               <Route exact path={clientRoutes.items.path} component={CityPage} />
@@ -128,25 +122,33 @@ class ClientLayoutPage extends React.Component<ILayoutPageParams, any> {
               <Route exact path={clientRoutes.landing.path} component={HomePage} />
               <Route component={NotFound}/>
             </Switch>
-          </Container>
-          <Toast />
-          {this.props.isLoggedIn && <KeepMeLoggedModal />}
-        </div>
-      </ConnectedIntlProvider>
+          ) : <Loader isLoading />}
+        </Container>
+        <Toast />
+        {isLoggedIn && <KeepMeLoggedModal />}
+      </React.Fragment>
     );
-  }
-}
+  };
 
-const mapStateToProps = (state: IAppState) => ({
+  return (
+    <ConnectedIntlProvider locale={locale}>
+      <div className={classes.wrapper}>
+        {renderContent()}
+      </div>
+    </ConnectedIntlProvider>
+  );
+};
+
+const mapStateToProps = (state: IAppState): StateProps => ({
   isLoggedIn: isLoggedIn(state),
-  cities: getEnabledCities(state),
-  locale: getClientLocale(state)
+  locale: getClientLocale(state),
+  isInitialDataLoaded: isInitialDataLoaded(state, false)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getInitialData: (params: IGetInitialDataParams) => dispatch(getInitialData(params))
+const mapDispatchToProps = (dispatch: ThunkDispatch): DispatchProps => ({
+  getInitialData: params => dispatch(getInitialData(params))
 });
 
 export default withStyles(styles)(
-  connect<any, any, {}>(mapStateToProps, mapDispatchToProps)(ClientLayoutPage)
+  connect<StateProps, DispatchProps, OwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(ClientLayoutPage)
 );

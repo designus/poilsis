@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { IItem, ICity } from 'global-utils/typings';
+import { IItem, ICity, Languages } from 'global-utils/typings';
 import { getLocalizedText } from 'client-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { config } from 'config';
@@ -17,7 +17,7 @@ import { styles } from './styles';
 interface IItemCardProps extends WithStyles<typeof styles>, RouteComponentProps<any> {
   item: IItem;
   city: ICity;
-  locale: string;
+  locale: Languages;
 }
 
 function ItemCard(props: IItemCardProps) {

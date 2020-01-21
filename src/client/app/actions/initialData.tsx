@@ -1,58 +1,102 @@
+import { batch } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import { getNormalizedData } from 'client-utils/methods';
+import { getNormalizedData, setAcceptLanguageHeader, getUserDetails } from 'client-utils/methods';
 import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
-import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, IUser, Languages } from 'global-utils';
+import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, Languages, isAdmin as isUserAdmin, IUser } from 'global-utils';
 import {
-  IAppState,
   InitialDataActionTypes,
-  IInitialData,
-  IReceiveInitialData
+  IClearAllData,
+  IReceiveInitialData,
+  ThunkResult,
+  ActionCreator
 } from 'types';
-import { getClientLocale } from 'selectors';
+import { getClientLocale, isLoggedIn as loggedIn, getAccessToken } from 'selectors';
 import { http } from './utils';
 
 export interface IGetInitialDataParams {
-  pathName?: string;
   locale?: Languages;
 }
 
-export const receiveInitialData = (data: IInitialData): IReceiveInitialData => ({
+export const receiveInitialData: ActionCreator<IReceiveInitialData> = params => ({
   type: InitialDataActionTypes.RECEIVE_INITIAL_DATA,
-  data
+  ...params
 });
 
-type InitialDataResponse = [AxiosResponse<ICity[]>, AxiosResponse<IType[]>, AxiosResponse<IUser[]>];
+export const clearAllData: ActionCreator<IClearAllData> = () => ({
+  type: InitialDataActionTypes.CLEAR_ALL_DATA
+});
 
-export const getInitialData = (params: IGetInitialDataParams = {}) => {
+export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void>> => (dispatch, getState) => {
+  const state = getState();
+  const locale = params.locale || getClientLocale(state) || DEFAULT_LANGUAGE;
+  const token = getAccessToken(state);
+  const accessTokenClaims = getAccessTokenClaims(token);
+
+  if (locale !== getClientLocale(state)) {
+    dispatch(setClientLocale({ locale }));
+  }
+
+  const promises = [
+    http.get('/api/cities/admin-cities'),
+    http.get('/api/types/admin-types'),
+    http.get('/api/users')
+  ];
+
+  return Promise.all(promises)
+    .then((response: [AxiosResponse<ICity[]>, AxiosResponse<IType[]>, AxiosResponse<IUser[]>]) => {
+      const [citiesResponse, typesResponse, usersResponse] = response;
+      const cities = getNormalizedData(citiesResponse.data);
+      const types = getNormalizedData(typesResponse.data);
+      const users = getNormalizedData(usersResponse.data);
+
+      batch(() => {
+        dispatch(receiveInitialData({ cities, types, users, isLoggedIn: true }));
+        dispatch(receiveUserDetails({ userDetails: getUserDetails(accessTokenClaims) }));
+      });
+    })
+    .catch(console.error);
+
+};
+
+export const getClientInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void>> => {
   return (dispatch, getState) => {
-    const state: IAppState = getState();
+    const state = getState();
     const locale = params.locale || getClientLocale(state) || DEFAULT_LANGUAGE;
-    const token = state.auth.accessToken;
+    const token = getAccessToken(state);
     const accessTokenClaims = token ? getAccessTokenClaims(token) : null;
 
-    dispatch(setClientLocale(locale));
+    if (locale !== getClientLocale(state)) {
+      dispatch(setClientLocale({ locale }));
+    }
 
     const promises = [
-      http.get('/api/cities'),
-      http.get('/api/types'),
-      http.get('/api/users')
+      http.get('/api/cities/client-cities', setAcceptLanguageHeader(locale)),
+      http.get('/api/types/client-types', setAcceptLanguageHeader(locale))
     ];
 
     return Promise.all(promises)
-      .then((response: InitialDataResponse) => {
-        const [citiesResponse, typesResponse, usersResponse] = response;
+      .then((response: [AxiosResponse<ICity[]>, AxiosResponse<IType[]>]) => {
+        const [citiesResponse, typesResponse] = response;
         const cities = getNormalizedData(citiesResponse.data);
         const types = getNormalizedData(typesResponse.data);
-        const users = getNormalizedData(usersResponse.data);
 
-        dispatch(receiveInitialData({cities, types, users}));
-
-        if (accessTokenClaims) {
-          const { userId: id, userName: name, userRole: role } = accessTokenClaims;
-          dispatch(receiveUserDetails({ id, name, role }));
-        }
+        batch(() => {
+          dispatch(receiveInitialData({ cities, types, users: {}, isLoggedIn: false }));
+          if (accessTokenClaims) {
+            dispatch(receiveUserDetails({ userDetails: getUserDetails(accessTokenClaims) }));
+          }
+        });
       })
       .catch(console.error);
   };
+};
+
+export const getInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void>> => (dispatch, getState) => {
+  const isLoggedIn = loggedIn(getState());
+  if (isLoggedIn) {
+    return dispatch(getAdminInitialData(params));
+  } else {
+    return dispatch(getClientInitialData(params));
+  }
 };
