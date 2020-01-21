@@ -495,7 +495,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "../itemTypesList": [
+  "components/itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -983,12 +983,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/actions/types.tsx",
-      "name": "./app/actions/types.tsx",
-      "file": "adminLayoutPage~homePage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
-    },
-    {
       "id": "./app/types/types.tsx",
       "name": "./app/types/types.tsx",
       "file": "main.js",
@@ -1279,6 +1273,14 @@
     {
       "id": "./app/actions/index.tsx",
       "name": "./app/actions/index.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    }
+  ],
+  "actions/types": [
+    {
+      "id": "./app/actions/types.tsx",
+      "name": "./app/actions/types.tsx",
       "file": "adminLayoutPage~homePage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
     }

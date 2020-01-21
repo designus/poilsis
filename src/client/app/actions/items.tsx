@@ -99,6 +99,7 @@ export const getClientItem = (locale: Languages, alias: string): ThunkResult<Pro
   return http.get(`/api/items/client-item/${alias}`, setAcceptLanguageHeader(locale))
     .then(handleApiResponse)
     .then((item: IItem) => {
+      console.log('Client item', item);
       dispatch(receiveItem({ item }));
       dispatch(endLoading(CONTENT_LOADER_ID));
     })

@@ -27,7 +27,8 @@ export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = ge
           ...state.dataMap,
           [action.newType.id]: {
             ...(state.dataMap[action.newType.id] || {}),
-            ...action.newType
+            ...action.newType,
+            isFullyLoaded: true
           }
         }
       };

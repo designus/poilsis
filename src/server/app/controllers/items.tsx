@@ -178,7 +178,7 @@ export const getClientItem = async (req: Request, res: Response, next: NextFunct
       { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
       { $set: getFieldsToSet<IItem>(locale, toggleFields)}
     ])
-    .exec();
+    .then(items => items[0]);
 
     res.status(200).json(item);
 
