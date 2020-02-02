@@ -133,12 +133,11 @@ export const getAdjustedIsEnabledValue = (item: DataTypes) => {
   const isEnabled = item.isEnabled as IsEnabled;
   const name = item.name as TranslatableField;
 
-  return Object.keys(isEnabled).reduce((acc: IsEnabled, k) => {
-    const key = k as Locale;
-    const oldValue = isEnabled[key];
-    acc[key] = name[key] ? oldValue : false;
+  return LANGUAGES.reduce<IsEnabled>((acc, locale) => {
+    const oldValue = isEnabled[locale];
+    acc[locale] = name[locale] ? oldValue : false;
     return acc;
-  }, {});
+  }, {} as IsEnabled);
 };
 
 export const isApprovedByAdmin = (userRole: UserRoles, item: IItem) =>

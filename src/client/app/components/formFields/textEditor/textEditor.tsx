@@ -35,10 +35,10 @@ const getEditorState = (html: string): EditorState => {
 
 // TODO: Memoize this fn
 const getInitialValue = (value: TranslatableField): IntlSetting<EditorState>  => {
-  return LANGUAGES.reduce((acc: IntlSetting<EditorState>, lang) => {
+  return LANGUAGES.reduce<IntlSetting<EditorState>>((acc, lang) => {
     acc[lang] = value[lang] ? getEditorState(value[lang]) : EditorState.createEmpty();
     return acc;
-  }, {});
+  }, {} as IntlSetting<EditorState>);
 };
 
 class TextEditorComponent extends React.Component<IEditorInputProps, any> {

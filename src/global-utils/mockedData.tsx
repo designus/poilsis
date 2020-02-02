@@ -44,18 +44,17 @@ const names = [
 const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const getItemName = (names: string[], index: number): TranslatableField => {
-  return LANGUAGES.reduce((acc: TranslatableField, lang: Locale) => {
-    acc[lang] = lang === DEFAULT_LANGUAGE ? names[index] : `${lang} - ${names[index]}`;
+  return LANGUAGES.reduce<TranslatableField>((acc, locale) => {
+    acc[locale] = locale === DEFAULT_LANGUAGE ? names[index] : `${locale} - ${names[index]}`;
     return acc;
-  }, {});
+  }, {} as TranslatableField);
 };
 
 const getItemAlias = (name: TranslatableField, index: number): TranslatableField => {
-  const keys = Object.keys(name) as ObjectKeys<typeof name>;
-  return keys.reduce((acc: TranslatableField, lang) => {
-    acc[lang] = `${formatValue(name[lang])}-${index}`;
+  return LANGUAGES.reduce<TranslatableField>((acc, locale) => {
+    acc[locale] = `${formatValue(name[locale])}-${index}`;
     return acc;
-  }, {});
+  }, {} as TranslatableField);
 };
 
 export const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {

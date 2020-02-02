@@ -116,7 +116,7 @@ export const logout = (): ThunkResult<Promise<void>> => (dispatch, getState) => 
       localStorage.removeItem('refreshToken');
       dispatch(logoutSuccess());
       dispatch(showToast(Toast.success, USER_LOGOUT_SUCCESS));
-      dispatch(receiveUserDetails(null));
+      dispatch(receiveUserDetails({ userDetails: null }));
     })
     .catch(handleAuthError(dispatch, false));
 };

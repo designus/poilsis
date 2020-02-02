@@ -41,7 +41,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictFunctionTypes": true
-    // "strictPropertyInitialization": true
+    // "strictPropertyInitialization": true,
     // "strictNullChecks": true
   },
   "include": [

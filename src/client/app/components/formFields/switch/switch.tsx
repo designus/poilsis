@@ -16,12 +16,10 @@ export interface ISwitchProps extends WrappedFieldProps, WithStyles<typeof style
 class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
 
   getIntlValue = (value: boolean): IsEnabled => {
-    return LANGUAGES.reduce((acc: IsEnabled, lang: Locale) => {
-      acc[lang] = lang === this.props.selectedLanguage
-        ? value
-        : this.props.input.value[lang] || false;
+    return LANGUAGES.reduce<IsEnabled>((acc, lang) => {
+      acc[lang] = lang === this.props.selectedLanguage ? value : this.props.input.value[lang] || false;
       return acc;
-    }, {});
+    }, {} as IsEnabled);
   }
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

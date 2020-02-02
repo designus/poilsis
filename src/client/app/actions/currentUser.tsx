@@ -13,11 +13,11 @@ export const receiveUserDetails: ActionCreator<IReceiveUserDetails> = props => (
   ...props
 });
 
-export const setUserItems: ActionCreator<ISetUserItems> = () => ({
+export const setUserItems = (): ISetUserItems => ({
   type: CurrentUserActionTypes.SET_USER_ITEMS
 });
 
-export const loadUserItems = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const state = getState();
   const locale = getAdminLocale(state);
   const { currentUser } = state;

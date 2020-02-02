@@ -22,17 +22,16 @@ export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof st
   multiline: boolean;
 }
 
-function getInitialValue(value: string | TranslatableField, isIntl: boolean) {
+const getInitialValue = (value: string | TranslatableField, isIntl: boolean) => {
   if (isIntl) {
-    return LANGUAGES.reduce((acc: TranslatableField, lang) => {
-      // tslint:disable-next-line
+    return LANGUAGES.reduce<TranslatableField>((acc, locale) => {
       if (hasLocalizedFields(value)) {
-        acc[lang] = value[lang] || '';
+        acc[locale] = value[locale] || '';
       } else {
-        acc[lang] = DEFAULT_LANGUAGE === lang ? value : '';
+        acc[locale] = DEFAULT_LANGUAGE === locale ? value : '';
       }
       return acc;
-    }, {});
+    }, {} as TranslatableField);
   }
 
   return value;

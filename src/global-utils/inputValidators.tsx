@@ -31,14 +31,16 @@ export const requiredWhenEnabled = (fieldValue: TranslatableField, formState: an
   const requiredError = formProps.intl.formatMessage({ id: errors.REQUIRED });
   const requiredWhenEnabledError = formProps.intl.formatMessage({ id: errors.REQUIRED_WHEN_ENABLED });
 
-  const err = formProps.languages.reduce((acc: IntlSetting<string>, lang) => {
+  const err = formProps.languages.reduce<TranslatableField>((acc, lang) => {
     // default language input field is always required
     if (!fieldValue[lang] && (lang === formProps.defaultLanguage || isEnabled[lang])) {
       acc[lang] = lang === formProps.defaultLanguage ? requiredError : requiredWhenEnabledError;
+    } else {
+      acc[lang] = '';
     }
 
     return acc;
-  }, {});
+  }, {} as TranslatableField);
 
   return Object.keys(err).length > 0 ? err : undefined;
 

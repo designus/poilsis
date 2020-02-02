@@ -61,7 +61,7 @@ export const getAdminCity = (cityId: string): ThunkResult<Promise<ICity>> => dis
     .catch(handleApiErrors('Unable to load city', CONTENT_LOADER_ID, dispatch));
 };
 
-export const loadCityItems = (alias: string): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const loadCityItems = (alias: string): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const state = getState();
   const city = getCityByAlias(state, alias);
 

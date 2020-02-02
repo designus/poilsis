@@ -23,7 +23,7 @@ export const receiveInitialData: ActionCreator<IReceiveInitialData> = params => 
   ...params
 });
 
-export const clearAllData: ActionCreator<IClearAllData> = () => ({
+export const clearAllData = (): IClearAllData => ({
   type: InitialDataActionTypes.CLEAR_ALL_DATA
 });
 

@@ -27,7 +27,6 @@ export function hasLocalizedFields(field: TranslatableField | string): field is 
   if (field && typeof field === 'string') return false;
 
   return field ? Object.keys(field).some((field => LANGUAGES.indexOf(field as Locale) !== -1)) : false;
-
 }
 
 export const isFunction = (fn: any) => typeof fn === 'function';

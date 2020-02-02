@@ -14,7 +14,7 @@ export enum CurrentUserActionTypes {
 
 export interface IReceiveUserDetails {
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS;
-  userDetails: UserDetails;
+  userDetails: UserDetails | null;
 }
 
 export interface ISetUserItems {

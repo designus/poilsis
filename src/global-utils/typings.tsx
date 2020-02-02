@@ -19,7 +19,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type Value<T, K extends keyof T> = T[K];
 
-export type IntlSetting<T> = Partial<Record<Locale, T>>;
+export type IntlSetting<T> = Record<Locale, T>;
 
 export type TranslatableField = IntlSetting<string>;
 

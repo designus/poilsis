@@ -11,7 +11,7 @@ const messages: TranslatedMessages = {
   }
 };
 
-export const asyncValidateAlias = (item: DataTypes, url: string, intl: IntlShape): Promise<boolean> => {
+export const asyncValidateAlias = (item: DataTypes, url: string, intl: IntlShape): Promise<boolean | undefined> => {
   const { id, name, alias } = item;
   return http.post(url, { id, name, alias })
     .then((response: AxiosResponse<boolean>) => response.data)
