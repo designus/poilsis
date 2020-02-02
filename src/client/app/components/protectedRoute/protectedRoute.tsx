@@ -50,7 +50,7 @@ class ProtectedRoute extends React.Component<Props> {
 
   renderComponent = (routeProps: any, restProps: any) => {
     const { component, allowedRoles = [UserRoles.admin, UserRoles.user], userRole, userId } = this.props;
-    return this.isUserAllowedToEnter(allowedRoles, userRole, userId) ?
+    return userRole && userId && this.isUserAllowedToEnter(allowedRoles, userRole, userId) ?
       renderMergedProps(component, routeProps, restProps) :
       <NotAuthorized />;
   }

@@ -20,7 +20,7 @@ export interface ITableColumn<T = any> {
   field: Partial<keyof T>;
   sortType?: SortType;
   searchable?: boolean;
-  cellRenderer?: (data: T) => JSX.Element | string | number;
+  cellRenderer?: (data: T) => JSX.Element | string | number | null;
 }
 
 export interface ITableProps extends Partial<WithStyles<typeof styles>> {

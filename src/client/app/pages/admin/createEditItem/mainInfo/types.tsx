@@ -13,7 +13,7 @@ export interface IStateProps {
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  userRole: UserRoles;
+  userRole?: UserRoles;
   locale: Locale;
   showNavigationPrompt: boolean;
 }

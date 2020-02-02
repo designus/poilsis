@@ -1,5 +1,5 @@
 'use strict';
-import { Document, Schema, Model, model } from 'mongoose';
+import { Document, Schema, Model, model, SchemaDefinition } from 'mongoose';
 import shortId from 'shortid';
 
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
@@ -126,11 +126,11 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   }
 };
 
-const ItemsSchema = new Schema(ItemsSchemaMap);
+const ItemsSchema = new Schema(ItemsSchemaMap as SchemaDefinition);
 
 ItemsSchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
 
-ItemsSchema.pre('save', function(this: any, next) {
+ItemsSchema.pre('save', function(this: any, next: any) {
   const now = new Date();
   if (!this.createdAt) {
     this.createdAt = now;

@@ -52,7 +52,7 @@ const LoginButton: React.FunctionComponent<Props> = props => {
     </Fab>
   );
 
-  return !isLoggedIn && (
+  return !isLoggedIn ? (
     <DropdownMenu
       className={props.classes.dropdownMenu}
       parentItem={getButton()}
@@ -61,7 +61,7 @@ const LoginButton: React.FunctionComponent<Props> = props => {
       <MenuItem onClick={signIn({username: 'admin', password: 'admin'})}>Admin</MenuItem>
       <MenuItem onClick={signIn({username: 'tomas', password: 'tomas'})}>User</MenuItem>
     </DropdownMenu>
-  );
+  ) : null;
 };
 
 const mapStateToProps = (state: IAppState): IStateProps => ({

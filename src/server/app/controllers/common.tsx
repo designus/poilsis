@@ -15,6 +15,10 @@ export const toggleEnabled = (DocumentModel: DocumentModelType) =>
       const { isEnabled, locale, id } = params;
       const document = await DocumentModel.findOne({ id });
 
+      if (!document) {
+        throw new Error('Item not found');
+      }
+
       const item = document.toJSON() as DataTypes;
 
       if (!(item.name as TranslatableField)[locale]) {

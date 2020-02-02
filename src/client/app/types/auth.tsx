@@ -1,7 +1,7 @@
 export interface IAuthState {
   isLoggedIn: boolean;
-  accessToken: string;
-  showKeepMeLoggedModal?: boolean;
+  accessToken: string | null;
+  showKeepMeLoggedModal: boolean;
 }
 
 export enum AuthActionTypes {

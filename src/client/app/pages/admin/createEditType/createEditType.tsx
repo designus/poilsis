@@ -69,7 +69,7 @@ class CreateEditTypePageComponent extends React.Component<Props> {
   renderTitle = () => {
     return isClient() && ReactDOM.createPortal(
       <span> / {this.props.intl.formatMessage(this.isCreatePage() ? messages.createType : messages.editType)}</span>,
-      document.querySelector('.editItemName')
+      document.querySelector('.editItemName') as Element
     );
   }
 

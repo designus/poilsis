@@ -2,13 +2,13 @@ import * as React from 'react';
 import * as day from 'dayjs';
 import { withRouter, Switch, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { reauthenticateUser } from 'actions/auth';
+import { reauthenticateUser, showKeepMeLoggedModal } from 'actions/auth';
 import { PropsRoute } from 'components/propsRoute';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 
 import { IAppState, ThunkDispatch } from 'types';
-import { isLoggedIn, getSessionExpiryTime } from 'selectors';
+import { isLoggedIn, getSessionExpiryTime, isKeepMeeLoggedModalVisible } from 'selectors';
 
 import { ClientLayoutPage } from 'pages/client/layout';
 import { AdminLayoutPage } from 'pages/admin/layout';
@@ -17,13 +17,13 @@ import { adminRoutes, clientRoutes } from 'client-utils/routes';
 interface IOwnProps extends RouteComponentProps<any> {}
 
 interface IStateProps  {
-  isLoggedIn?: boolean;
-  showKeepMeLoggedModal?: boolean;
-  sessionExpiryTime?: number;
+  isLoggedIn: boolean;
+  showKeepMeLoggedModal: boolean;
+  sessionExpiryTime: number | null;
 }
 
 interface IDispatchProps {
-  reauthenticateUser?: () => void;
+  reauthenticateUser: () => void;
 }
 
 type Props = IOwnProps & IStateProps & IDispatchProps;
@@ -35,6 +35,8 @@ class App extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
+    if (!this.props.sessionExpiryTime) return;
+
     const date1 = day(Date.now());
     const date2 = day(this.props.sessionExpiryTime * 1000);
     const isLessThanMinuteLeft = date2.diff(date1, 'second') < 60;
@@ -59,7 +61,7 @@ class App extends React.Component<Props> {
 const mapStateToProps = (state: IAppState): IStateProps => ({
   isLoggedIn: isLoggedIn(state),
   sessionExpiryTime: getSessionExpiryTime(state),
-  showKeepMeLoggedModal: state.auth.showKeepMeLoggedModal
+  showKeepMeLoggedModal: isKeepMeeLoggedModalVisible(state)
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({

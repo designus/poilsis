@@ -1,6 +1,6 @@
 import { IUser } from 'global-utils/typings';
 
-export type UserDetails = Partial<Pick<IUser, 'name' | 'role' | 'id'>>;
+export type UserDetails = Partial<Pick<IUser, 'name' | 'role' | 'id'>> | null;
 
 export interface ICurrentUserState {
   details: UserDetails;

@@ -11,7 +11,7 @@ import { throttle } from 'lodash';
 
 import { REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
 import { logout, showKeepMeLoggedModal } from 'actions/auth';
-import { getSessionExpiryTime } from 'selectors';
+import { getSessionExpiryTime, isKeepMeeLoggedModalVisible, getCurrentUser } from 'selectors';
 import { IAppState, ThunkDispatch } from 'types';
 import { DropdownMenu } from 'components/dropdownMenu';
 import { IOwnProps, IStateProps, IDispatchProps, Props } from './types';
@@ -62,14 +62,14 @@ export class UserMenu extends React.Component<Props> {
     return (
       <div className={this.props.classes.wrapper}>
         <Countdown
-          date={this.props.sessionExpiryTime * 1000}
+          date={Number(this.props.sessionExpiryTime) * 1000}
           intervalDelay={0}
           precision={3}
           renderer={this.renderCountdown}
           onTick={this.onTick}
         />
         <Typography color="inherit" variant="body1" align="right">
-          Hello, {this.props.currentUser.name}
+          Hello, {this.props.currentUser?.name}
         </Typography>
         <DropdownMenu
           id="menuRight"
@@ -84,8 +84,8 @@ export class UserMenu extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: IAppState): IStateProps => ({
-  isKeepMeLoggedModalVisible: state.auth.showKeepMeLoggedModal,
-  currentUser: state.currentUser.details,
+  isKeepMeLoggedModalVisible: isKeepMeeLoggedModalVisible(state),
+  currentUser: getCurrentUser(state),
   sessionExpiryTime: getSessionExpiryTime(state)
 });
 

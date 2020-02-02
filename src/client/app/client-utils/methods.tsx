@@ -99,7 +99,7 @@ export function removeByKeys<T>(keys: string[], dataMap: IGenericDataMap<T>): IG
 
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
 
-export const getLocalizedText = (text: string | TranslatableField, locale: Locale): string => {
+export const getLocalizedText = (text: string | TranslatableField | null, locale: Locale): string => {
   if (!text || !Object.keys(text).length) return '';
 
   if (hasLocalizedFields(text)) {

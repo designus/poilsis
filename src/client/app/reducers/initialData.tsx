@@ -1,13 +1,13 @@
 import { Reducer } from 'redux';
 import { InitialDataActionTypes, InitialDataActions, IInitialDataState } from 'types';
 
-const getInitialState = (): IInitialDataState => ({
+export const getInitialDataState = (): IInitialDataState => ({
   isLoaded: false,
   isMultiLang: false
 });
 
 export const initialData: Reducer<IInitialDataState, InitialDataActions> =
-(state = getInitialState(), action): IInitialDataState => {
+(state = getInitialDataState(), action): IInitialDataState => {
   switch (action.type) {
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {

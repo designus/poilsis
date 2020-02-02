@@ -17,7 +17,7 @@ export const getStaticFileUri = (file: string): string => {
   return `${isDevelopment ? 'http://localhost:8080' : ''}/public/${file}`;
 };
 
-export const isAdmin = (userRole: UserRoles) => userRole === UserRoles.admin;
+export const isAdmin = (userRole?: UserRoles) => userRole === UserRoles.admin;
 
 export const voidFn = (f: any) => f;
 

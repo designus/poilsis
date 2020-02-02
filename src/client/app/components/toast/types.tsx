@@ -7,7 +7,7 @@ import { styles } from './styles';
 export interface IOwnProps extends WithStyles<typeof styles>, InjectedIntlProps  {}
 
 export interface IDispatchProps {
-  hideToast?: () => void;
+  hideToast: () => void;
 }
 
 export interface IStateProps {

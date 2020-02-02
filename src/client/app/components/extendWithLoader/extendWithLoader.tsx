@@ -25,11 +25,12 @@ export function extendWithLoader<TOriginalProps extends {}>(
       render() {
         const { loadingState, showLoadingOverlay, classes } = this.props;
         const loaderId = this.props.loaderId || 'content';
-        const isLoading = loadingState[loaderId] && !loadingState[GLOBAL_LOADER_ID];
+        // @ts-ignore
+        const isLoading = loadingState && loadingState[loaderId] && !loadingState[GLOBAL_LOADER_ID];
 
         return (
-          <div className={classes.wrapper}>
-            <Loader isLoading={isLoading} showLoadingOverlay={showLoadingOverlay} />
+          <div className={classes?.wrapper}>
+            <Loader isLoading={Boolean(isLoading)} showLoadingOverlay={showLoadingOverlay} />
             <WrappedComponent {...this.props} />
           </div>
         );

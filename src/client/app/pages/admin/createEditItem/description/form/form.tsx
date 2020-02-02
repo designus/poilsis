@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
+import { IItemDescFields } from 'global-utils/typings';
 import { adminRoutes } from 'client-utils/routes';
 import { AdminFormActions } from 'components/adminFormActions';
 import { TextEditor } from 'components/formFields/textEditor';
@@ -58,6 +58,6 @@ class Form extends React.Component<Props> {
   }
 }
 
-const FormComponent = reduxForm<{}, ICustomProps>({ form: ITEM_DESCRIPTION_FORM_NAME  })(Form);
+const FormComponent = reduxForm<IItemDescFields, ICustomProps>({ form: ITEM_DESCRIPTION_FORM_NAME  })(Form);
 
 export const MainInfoForm = withStyles(styles)(FormComponent);

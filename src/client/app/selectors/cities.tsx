@@ -27,9 +27,9 @@ export const getCityByAlias = (state: IAppState, alias: string): ICity => {
   return getCitiesMap(state)[cityId];
 };
 
-export const shouldLoadEditCity = (state: IAppState, cityId?: string): boolean => {
+export const shouldLoadEditCity = (state: IAppState, cityId: string): boolean => {
   const city = getCityById(state, cityId);
-  return cityId && !state.loader.content && (!city || !city.isFullyLoaded);
+  return Boolean(cityId && !state.loader.content && (!city || !city.isFullyLoaded));
 };
 
 export const shouldLoadCityItems = (state: IAppState, alias: string) => {

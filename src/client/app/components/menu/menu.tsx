@@ -32,7 +32,7 @@ export interface IMenuItem {
 export interface IMenuProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
   items: IMenuItem[];
   isVertical?: boolean;
-  currentUser?: UserDetails;
+  currentUser: UserDetails;
 }
 
 const { useState, useEffect } = React;

@@ -10,16 +10,16 @@ import { LANGUAGES } from 'global-utils';
 
 import { languageStyles } from './styles';
 
-interface IInjectedProps extends Partial<WithStyles<typeof languageStyles>> {
-  selectedLanguage?: string;
+type InjectedProps = {
+  selectedLanguage?: Locale;
   locale?: Locale;
-}
+};
 
 export function extendWithLanguage<TOriginalProps extends {}>(
-    WrappedComponent: React.ComponentType<TOriginalProps & IInjectedProps>
-  ): React.ComponentType<TOriginalProps & IInjectedProps> {
+    WrappedComponent: React.ComponentType<TOriginalProps & InjectedProps>
+  ): React.ComponentType<TOriginalProps & InjectedProps> {
 
-    type ResultProps = TOriginalProps & IInjectedProps;
+    type ResultProps = TOriginalProps & InjectedProps & WithStyles<typeof languageStyles>;
     class FormLanguageComponent extends React.Component<ResultProps> {
       state = {
         selectedLanguage: this.props.locale
@@ -65,8 +65,9 @@ export function extendWithLanguage<TOriginalProps extends {}>(
       locale: getAdminLocale(state)
     });
 
+    // @ts-ignore
     return withStyles(languageStyles)(
       // @ts-ignore
-      connect<{}, {}, any>(mapStateToProps)(FormLanguageComponent)
+      connect<{}, {}, {}, IAppState>(mapStateToProps)(FormLanguageComponent)
     );
 }

@@ -27,10 +27,13 @@ export const clearAllData = (): IClearAllData => ({
   type: InitialDataActionTypes.CLEAR_ALL_DATA
 });
 
-export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const state = getState();
   const locale = params.locale || getClientLocale(state) || DEFAULT_LANGUAGE;
   const token = getAccessToken(state);
+
+  if (!token) return null;
+
   const accessTokenClaims = getAccessTokenClaims(token);
 
   if (locale !== getClientLocale(state)) {
@@ -92,7 +95,7 @@ export const getClientInitialData = (params: IGetInitialDataParams): ThunkResult
   };
 };
 
-export const getInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const getInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const isLoggedIn = loggedIn(getState());
   if (isLoggedIn) {
     return dispatch(getAdminInitialData(params));

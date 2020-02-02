@@ -7,7 +7,7 @@ export interface ICustomProps {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   usersMap: IUsersMap;
-  userRole: UserRoles;
+  userRole?: UserRoles;
   locale: Locale;
   intl: IntlShape;
   languages: Locale[];

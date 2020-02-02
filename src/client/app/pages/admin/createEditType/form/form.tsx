@@ -15,7 +15,7 @@ import { Props, ICustomProps } from './types';
 
 export const TYPE_FORM_NAME = 'TypeForm';
 
-const Form = (props: Props) => {
+const Form: React.FunctionComponent<Props> = props => {
   const { handleSubmit, selectedLanguage, intl } = props;
 
   return (
@@ -58,9 +58,7 @@ const Form = (props: Props) => {
 };
 
 export const TypeForm = reduxForm<IType, ICustomProps>({
-  asyncValidate: (values: IType, dispatch, props) => {
-    return asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl);
-  },
+  asyncValidate: (values: IType, dispatch, props) => asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl),
   asyncBlurFields: ['alias'],
   form: TYPE_FORM_NAME
 })(Form);

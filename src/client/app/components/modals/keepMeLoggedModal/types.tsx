@@ -4,13 +4,13 @@ import { styles } from '../styles';
 export interface IOwnProps extends WithStyles<typeof styles> {}
 
 export interface IStateProps {
-  isModalOpen?: boolean;
-  sessionExpiryTime?: number;
+  isModalOpen: boolean;
+  sessionExpiryTime: number | null;
 }
 
 export interface IDispatchProps {
-  onCloseModal?: () => void;
-  reauthenticateUser?: () => void;
+  onCloseModal: () => void;
+  reauthenticateUser: () => void;
 }
 
 export type Props = IOwnProps & IStateProps & IDispatchProps;

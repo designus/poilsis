@@ -13,8 +13,8 @@ export interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof s
 }
 
 export interface IStateProps {
-  locale?: Locale;
-  cities?: ICity[];
+  locale: Locale;
+  cities: ICity[];
   selectedCityId?: string;
   activeItem: ActiveItem;
 }

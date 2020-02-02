@@ -5,12 +5,12 @@ import { IsEnabled } from 'global-utils/typings';
 
 type ActionTypes = ItemsActions | InitialDataActions;
 
-const getInitialState = (): IItemsState => ({
+export const getInitialItemsState = (): IItemsState => ({
   dataMap: {},
   aliases: {}
 });
 
-export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState(), action): IItemsState => {
+export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialItemsState(), action): IItemsState => {
   switch (action.type) {
     case ItemsActionTypes.RECEIVE_ITEMS:
       return {
@@ -66,7 +66,7 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialState
         }
       } : state;
     case ItemsActionTypes.REMOVE_MOCKED_DATA:
-      return getInitialState();
+      return getInitialItemsState();
     case ItemsActionTypes.RECEIVE_MOCKED_DATA:
       return {
         ...state,

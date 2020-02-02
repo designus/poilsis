@@ -12,7 +12,7 @@ export type MatchParams = {
 export type OwnProps = RouteComponentProps<MatchParams> & {};
 
 export type StateProps = {
-  selectedItem: IItem;
+  selectedItem: IItem | null;
   citiesMap: ICitiesMap;
 };
 

@@ -2,12 +2,13 @@ import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { getTranslationMessages } from 'global-utils/methods';
+import { Locale } from 'global-utils/typings';
 
 interface IConnectedIntlProps {
-  locale?: string;
+  locale: Locale;
 }
 
-export class ConnectedIntlProvider extends React.Component<IConnectedIntlProps, any> {
+export class ConnectedIntlProvider extends React.Component<IConnectedIntlProps> {
   render() {
     return (
       <IntlProvider

@@ -9,14 +9,14 @@ export interface IOwnProps extends WithStyles<typeof styles> {
 }
 
 export interface IStateProps {
-  currentUser?: UserDetails;
-  sessionExpiryTime?: number;
-  isKeepMeLoggedModalVisible?: boolean;
+  currentUser: UserDetails | null;
+  sessionExpiryTime: number | null;
+  isKeepMeLoggedModalVisible: boolean;
 }
 
 export interface IDispatchProps {
-  logout?: () => void;
-  showKeepMeLoggedModal?: () => void;
+  logout: () => void;
+  showKeepMeLoggedModal: () => void;
 }
 
 export type Props = IOwnProps & IStateProps & IDispatchProps;

@@ -12,75 +12,72 @@ import { MatchParams, OwnProps, StateProps, DispatchProps, ItemPageProps } from 
 
 export const loadItemData = (store: any, params: MatchParams) => store.dispatch(getClientItem(params.locale, params.itemAlias));
 
-class ItemPage extends React.Component<ItemPageProps, any> {
+const { useEffect } = React;
 
-  componentDidMount() {
-    const { selectedItem } = this.props;
+const ItemPage: React.FunctionComponent<ItemPageProps> = props => {
+  const { selectedItem, match, getClientItem, citiesMap } = props;
+  const { locale, itemAlias } = match.params;
 
+  useEffect(() => {
     if (selectedItem && !selectedItem.isFullyLoaded) {
-      this.getClientItem();
+      getClientItem(locale, itemAlias);
     }
+  }, [selectedItem, getClientItem]);
+
+  if (!selectedItem) {
+    return (
+      <NotFound />
+    );
   }
 
-  getClientItem = () => {
-    const { locale, itemAlias } = this.props.match.params;
-    this.props.getClientItem(locale, itemAlias);
-  }
-
-  createMarkup = (text: string) => {
+  const createMarkup = (text: string) => {
     return {
       __html: text
     };
-  }
+  };
 
-  getLocalizedName = () => getLocalizedText(this.props.selectedItem.name, this.props.match.params.locale);
+  const getLocalizedName = () => getLocalizedText(selectedItem.name, locale);
 
-  renderTitle = () => {
-    const localizedName = this.getLocalizedName();
-    const localizedTitle = getLocalizedText(this.props.selectedItem.metaTitle, this.props.match.params.locale);
+  const renderTitle = () => {
+    const localizedName = getLocalizedName();
+    const localizedTitle = getLocalizedText(selectedItem.metaTitle, locale);
     return (
       <title>
         {localizedTitle || localizedName}
       </title>
     );
-  }
+  };
 
-  renderMetaDescription = () => {
-    const { metaDescription } = this.props.selectedItem;
-    return metaDescription && (
-      <meta name="description" content={getLocalizedText(metaDescription, this.props.match.params.locale)} />
+  const renderMetaDescription = () => {
+    return selectedItem.metaDescription && (
+      <meta name="description" content={getLocalizedText(selectedItem.metaDescription, locale)} />
     );
-  }
+  };
 
-  renderDocumentHead = () => {
+  const renderDocumentHead = () => {
     return (
       <Helmet>
-        {this.renderTitle()}
-        {this.renderMetaDescription()}
+        {renderTitle()}
+        {renderMetaDescription()}
       </Helmet>
     );
-  }
+  };
 
-  render() {
-    const { selectedItem, citiesMap } = this.props;
-    const { locale } = this.props.match.params;
-
-    return isItemEnabled(selectedItem, citiesMap[selectedItem.cityId], locale) ? (
-      <React.Fragment>
-        {this.renderDocumentHead()}
-        <Typography variant="h1">
-          {this.getLocalizedName()}
-        </Typography>
-        <div>{selectedItem.address}</div>
-        <Typography variant="body1">
-          <div dangerouslySetInnerHTML={
-            this.createMarkup(getLocalizedText(selectedItem.description, locale))
-          } />
-        </Typography>
-      </React.Fragment>
-    ) : <NotFound /> ;
-  }
-}
+  return isItemEnabled(selectedItem, citiesMap[selectedItem.cityId], locale) ? (
+    <React.Fragment>
+      {renderDocumentHead()}
+      <Typography variant="h1">
+        {getLocalizedName()}
+      </Typography>
+      <div>{selectedItem.address}</div>
+      <Typography variant="body1">
+        <div dangerouslySetInnerHTML={
+          createMarkup(getLocalizedText(selectedItem.description, locale))
+        } />
+      </Typography>
+    </React.Fragment>
+  ) : <NotFound /> ;
+};
 
 const mapStateToProps = (state: IAppState, props: OwnProps): StateProps => ({
   selectedItem: getItemByAlias(state, props.match.params.itemAlias),

@@ -11,12 +11,12 @@ import {
 
 type ActionTypes = HomeActions | ItemsActions | InitialDataActions;
 
-const getInitialState = (): IHomeState => ({
+export const getInitialHomeState = (): IHomeState => ({
   isLoaded: false,
   recommendedItems: []
 });
 
-export const home: Reducer<IHomeState, ActionTypes> = (state = getInitialState(), action): IHomeState => {
+export const home: Reducer<IHomeState, ActionTypes> = (state = getInitialHomeState(), action): IHomeState => {
   switch (action.type) {
     case HomeActionTypes.RECEIVE_RECOMMENDED_ITEMS:
       return {

@@ -64,7 +64,7 @@ export const removeItem: ActionCreator<IRemoveItem> = props => ({
   ...props
 });
 
-export const removeMockedData: ActionCreator<IRemoveMockedData> = () => ({
+export const removeMockedData = (): IRemoveMockedData => ({
   type: ItemsActionTypes.REMOVE_MOCKED_DATA
 });
 

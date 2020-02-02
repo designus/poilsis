@@ -24,7 +24,7 @@ export interface IStateProps {
   citiesMap: ICitiesMap;
   shouldLoadUserItems: boolean;
   userItems: IItem[];
-  userRole: UserRoles;
+  userRole?: UserRoles;
   locale: Locale;
 }
 

@@ -40,7 +40,7 @@ class Auth {
   private genToken = (params: TokenParams) => {
     const exp = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
     const claims: IAccessTokenClaims = { ...params, exp };
-    const token = jwt.encode(claims, process.env.JWT_SECRET);
+    const token = jwt.encode(claims, process.env.JWT_SECRET as string);
 
     return token;
   }
@@ -86,7 +86,7 @@ class Auth {
 
       const user = await User.findOne({ username: req.body.username }).exec();
 
-      if (user === null) {
+      if (user === null || !user.id) {
         throw new Error(USER_NOT_FOUND);
       }
 

@@ -5,12 +5,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { styles } from '../../styles';
 
-type Props = Partial<WithStyles<typeof styles>> & {
-  children: JSX.Element | JSX.Element[];
+type Props = WithStyles<typeof styles> & {
   error?: string;
 };
 
-const Content = (props: Props) => (
+const Content: React.FunctionComponent<Props> = (props) => (
   <DialogContentBox className={props.classes.content}>
     <DialogContentText>
       {props.error ? props.error : props.children}

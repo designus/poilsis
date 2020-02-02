@@ -5,7 +5,7 @@ import { startLoading, endLoading } from 'actions/loader';
 import { receiveItems } from 'actions/items';
 import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, ActionCreator } from 'types';
 import { isAdmin, IItem } from 'global-utils';
-import { getAdminLocale } from 'selectors';
+import { getAdminLocale, getCurrentUser } from 'selectors';
 import { handleApiResponse, http } from './utils';
 
 export const receiveUserDetails: ActionCreator<IReceiveUserDetails> = props => ({
@@ -22,8 +22,8 @@ export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch,
   const locale = getAdminLocale(state);
   const { currentUser } = state;
   const user = currentUser.details;
-  const isAdministrator = isAdmin(user.role);
-  const endpoint = isAdministrator ?
+  const isAdministrator = isAdmin(user?.role);
+  const endpoint = isAdministrator || !user ?
     '/api/items' :
     `/api/items/user/${user.id}`;
 

@@ -19,16 +19,16 @@ import {
 
 import { auth } from './auth';
 import { toast } from './toast';
-import { initialData } from './initialData';
-import { items } from './items';
-import { cities } from './cities';
+import { initialData, getInitialDataState } from './initialData';
+import { items, getInitialItemsState } from './items';
+import { cities, getInitialCitiesState } from './cities';
 import { loader } from './loader';
-import { types } from './types';
+import { types, getInitialTypesState } from './types';
 import { uploadProgress } from './uploadProgress';
 import { currentUser } from './currentUser';
 import { users } from './users';
 import { locale } from './locale';
-import { home } from './home';
+import { home, getInitialHomeState } from './home';
 
 type ActionTypes = ItemsActions
   | InitialDataActions
@@ -58,15 +58,16 @@ const appReducer = combineReducers<IAppState>({
   loadingBar: loadingBarReducer
 });
 
+// @ts-ignore
 export const rootReducer: Reducer<IAppState, ActionTypes> = (state: IAppState, action) => {
   if (action.type === InitialDataActionTypes.CLEAR_ALL_DATA) {
     state = {
       ...state,
-      cities: undefined,
-      types: undefined,
-      items: undefined,
-      initialData: undefined,
-      home: undefined
+      cities: getInitialCitiesState(),
+      types: getInitialTypesState(),
+      items: getInitialItemsState(),
+      initialData: getInitialDataState(),
+      home: getInitialHomeState()
     };
   }
 

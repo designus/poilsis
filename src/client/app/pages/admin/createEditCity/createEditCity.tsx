@@ -69,7 +69,7 @@ class CreateEditCity extends React.Component<Props> {
   renderTitle = () => {
     return isClient() && ReactDOM.createPortal(
       <span> / {this.props.intl.formatMessage(this.isCreatePage() ? messages.createCity : messages.editCity)}</span>,
-      document.querySelector('.editItemName')
+      document.querySelector('.editItemName') as Element
     );
   }
 

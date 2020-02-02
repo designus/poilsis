@@ -57,7 +57,7 @@ describe.skip('Integration tests: Cities', () => {
 
   describe('User: admin', () => {
 
-    let accessToken: string = '';
+    let accessToken: string | null = '';
 
     beforeAll((done) => {
       login(adminUser)
@@ -107,7 +107,7 @@ describe.skip('Integration tests: Cities', () => {
 
   describe('User: regular', () => {
 
-    let accessToken: string;
+    let accessToken: string | null;
 
     beforeAll((done) => {
       login(regularUser)

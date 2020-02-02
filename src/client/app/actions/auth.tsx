@@ -8,6 +8,7 @@ import { receiveUserDetails } from 'actions/currentUser';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { getUserDetails } from 'client-utils/methods';
 import { getAccessTokenClaims } from 'global-utils/methods';
+import { getAccessToken } from 'selectors';
 import {
   IAppState,
   AuthActionTypes,
@@ -83,11 +84,14 @@ export const login = (credentials = {username: 'admin', password: 'admin'}): Thu
     .catch(handleAuthError(dispatch, true));
 };
 
-export const reauthenticateUser = (displayToast = false): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const reauthenticateUser = (displayToast = false): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   dispatch(startLoading(DIALOG_LOADER_ID));
-  const state: IAppState = getState();
-  const oldAccessToken = state.auth.accessToken;
+  const state = getState();
+  const oldAccessToken = getAccessToken(state);
   const refreshToken = localStorage.getItem('refreshToken');
+
+  if (!oldAccessToken) return null;
+
   const dataToSend = {...getAccessTokenClaims(oldAccessToken), refreshToken };
   return http.post('/api/users/reauthenticate', dataToSend)
     .then(response => response.data)
@@ -105,9 +109,12 @@ export const reauthenticateUser = (displayToast = false): ThunkResult<Promise<vo
     .catch(handleAuthError(dispatch, true));
 };
 
-export const logout = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
-  const state: IAppState = getState();
-  const accessToken = state.auth.accessToken;
+export const logout = (): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
+  const state = getState();
+  const accessToken = getAccessToken(state);
+
+  if (!accessToken) return null;
+
   const { userId } = getAccessTokenClaims(accessToken);
   return http.delete(`/api/users/logout/${userId}`)
     .then(response => response.data)
