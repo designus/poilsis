@@ -16,9 +16,9 @@ import {
 import { testData } from './testData';
 
 class Database {
-  db: Db = null;
+  db: Db | null = null;
 
-  connect = (done) => {
+  connect = (done: any) => {
     return MongoClient
       .connect(config.db)
       .then((db: Db) => {
@@ -31,19 +31,19 @@ class Database {
       });
   }
 
-  disconnect = (done) => {
-    this.db.close()
+  disconnect = (done: any) => {
+    this.db?.close()
       .then(() => done());
   }
 
-  initialize = (done) => {
+  initialize = (done: any) => {
     this.connect(done)
       .then(() => this.removeTestData(done))
       .then(() => this.addTestData(done));
   }
 
   swapTestData = () => {
-    return this.removeTestData(voidFn).then(() => this.addTestData(voidFn));
+    return this.removeTestData(voidFn)!.then(() => this.addTestData(voidFn));
   }
 
   dropCollection = (collection: Collection) => {
@@ -61,8 +61,8 @@ class Database {
     });
   }
 
-  removeTestData = done => {
-    return this.db.collections()
+  removeTestData = (done: any) => {
+    return this.db?.collections()
       .then((collections: Collection[]) => {
         return Promise.all(collections.map(this.dropCollection));
       })
@@ -95,7 +95,7 @@ class Database {
     return readFileFromDisk('testUploads/src.jpeg');
   }
 
-  pasteFile = (filePath: string, fileName: string) => (data) => {
+  pasteFile = (filePath: string, fileName: string) => (data: any) => {
     return writeFileToDisk(join(filePath, fileName), data)
       .then(() => Promise.resolve(data));
   }
@@ -106,11 +106,11 @@ class Database {
       .then(this.pasteFile(image.path, image.thumbName));
   }
 
-  getImagePaths = (items) => {
+  getImagePaths = (items: any) => {
     return flatMap(items, (item: IItem) => item.images[0].path);
   }
 
-  addImages = (items) => {
+  addImages = (items: any) => {
     const paths = this.getImagePaths(items);
     const createDirectories = paths.map(path => this.createDirectory(path));
     return Promise.all(createDirectories)
@@ -121,8 +121,8 @@ class Database {
       });
   }
 
-  createCollection = (data, done) => name => {
-    return this.db.createCollection(name)
+  createCollection = (data: any, done: any) => (name: string) => {
+    return this.db?.createCollection(name)
       .then((collectionInstance: Collection<any>) => {
         const collectionItems = data.collections[name];
         return collectionInstance.insert(collectionItems)
@@ -137,7 +137,7 @@ class Database {
       .catch(() => done());
   }
 
-  addTestData = (done) => {
+  addTestData = (done: any) => {
     const createCollections = Object.keys(testData.collections).map(this.createCollection(testData, done));
     return Promise.all(createCollections).then(() => done());
   }

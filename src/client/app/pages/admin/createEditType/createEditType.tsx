@@ -2,6 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
+
+// @ts-ignore
 import reduxFormActions from 'redux-form/es/actions';
 
 import { injectIntl, defineMessages } from 'react-intl';

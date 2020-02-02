@@ -7,11 +7,11 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { isLoggedIn } from 'selectors';
+import { ThunkDispatch, IAppState } from 'types';
 import { DropdownMenu } from 'components/dropdownMenu';
 import { login } from 'actions/auth';
 
 import { styles } from './styles';
-import { IAppState } from 'types';
 
 interface IOwnProps extends WithStyles<typeof styles> {}
 
@@ -64,14 +64,14 @@ const LoginButton: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   isLoggedIn: isLoggedIn(state)
 });
 
-const mapDispatchToProps = (dispatch): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   login: (credentials) => dispatch(login(credentials))
 });
 
 export default withStyles(styles)(
-  connect<IStateProps, IDispatchProps, IOwnProps>(mapStateToProps, mapDispatchToProps)(LoginButton)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(LoginButton)
 );

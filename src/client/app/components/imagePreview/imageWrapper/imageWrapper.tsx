@@ -5,7 +5,7 @@ interface IImageWrapperProps {
   isTemporary: boolean;
   children: any;
   classes: any;
-  onSortItems: (items: any[]) => void;
+  onSortItems?: (items: any[]) => void;
   items: any[];
   key: string | number;
   sortId: string | number;

@@ -9,7 +9,7 @@ import { injectIntl } from 'react-intl';
 
 import { IAppState, ThunkDispatch } from 'types';
 import { getAdminItem } from 'actions';
-import { IItem } from 'global-utils';
+import { IItem, hasLocalizedFields } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem, getItemById, getAdminLocale } from 'selectors';
 import { NotFound } from 'components/notFound';
@@ -27,7 +27,7 @@ import { IStateProps, IOwnProps, IDispatchProps, CreateEditItemProps, ItemPageMa
 
 class CreateEditItemPage extends React.Component<CreateEditItemProps> {
 
-  static fetchData(store, params: ItemPageMatchParams) {
+  static fetchData(store: any, params: ItemPageMatchParams) {
     if (params.itemId) {
       return store.dispatch(getAdminItem(params.itemId));
     } else {
@@ -70,8 +70,7 @@ class CreateEditItemPage extends React.Component<CreateEditItemProps> {
   }
 
   renderItemName = (loadedItem: IItem) => {
-    console.log('Loaded item', loadedItem);
-    return loadedItem ?
+    return loadedItem && hasLocalizedFields(loadedItem.name) ?
       ReactDOM.createPortal(
         <span> / {loadedItem.name[this.props.locale]}</span>,
         document.querySelector('.editItemName')

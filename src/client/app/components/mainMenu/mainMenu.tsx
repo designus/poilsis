@@ -6,22 +6,25 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { IAppState } from 'types';
-import { ICity, Languages } from 'global-utils/typings';
-import { getEnabledCities, getTypesMap, getClientLocale } from 'selectors';
+import { ICity, Locale } from 'global-utils/typings';
+import { getEnabledCities, getClientLocale } from 'selectors';
 
 import { styles } from './styles';
 
-interface IMainMenu extends Partial<RouteComponentProps<any>>, Partial<WithStyles<typeof styles>> {
+interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
   showSubmenu: boolean;
   useWrapper: boolean;
-  citiesList?: ICity[];
-  locale?: Languages;
 }
 
-const MainMenu = (props: IMainMenu) => {
-  const { useWrapper, citiesList, showSubmenu, locale } = props;
-  // const isSubmenuVisible = (cityId: string, types: string[]) =>
-  //   showSubmenu && types.length > 0 && selectedCity.id === cityId;
+interface IStateProps {
+  citiesList: ICity[];
+  locale: Locale;
+}
+
+type Props = IOwnProps & IStateProps;
+
+const MainMenu: React.FunctionComponent<Props> = props => {
+  const { useWrapper, citiesList, locale } = props;
 
   const renderCity = (city: ICity) => (
     <MenuItem key={city.id}>
@@ -33,7 +36,6 @@ const MainMenu = (props: IMainMenu) => {
       >
         {city.name}
       </NavLink>
-      {/* {isSubmenuVisible(city.id, city.types) ? getSubmenu(city.alias, city.types, typesMap) : ''} */}
     </MenuItem>
   );
 
@@ -52,18 +54,17 @@ const MainMenu = (props: IMainMenu) => {
   );
 };
 
-const mapStateToProps = (state: IAppState, props) => ({
-  typesMap: getTypesMap(state),
+const mapStateToProps = (state: IAppState): IStateProps => ({
   citiesList: getEnabledCities(state),
   locale: getClientLocale(state)
 });
 
 const ConnectedComponent = withRouter(
-  connect(mapStateToProps)(
+  connect<IStateProps, {}, IOwnProps, IAppState>(mapStateToProps)(
     withStyles(styles)(MainMenu)
   )
 );
 
-export default React.forwardRef<any, IMainMenu>((props: IMainMenu, ref) =>
+export default React.forwardRef<any, any>((props: Props, ref) =>
   <ConnectedComponent {...props} />
 );

@@ -28,7 +28,7 @@ export const loadUserItems = (): ThunkResult<Promise<void>> => (dispatch, getSta
     `/api/items/user/${user.id}`;
 
   if (currentUser.hasItems) {
-    return;
+    return null;
   }
 
   dispatch(startLoading(CONTENT_LOADER_ID));

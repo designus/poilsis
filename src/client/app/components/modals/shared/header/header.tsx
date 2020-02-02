@@ -6,7 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { styles } from '../../styles';
 
-type Props = Partial<WithStyles<typeof styles>> & {
+type Props = WithStyles<typeof styles> & {
   children: JSX.Element | JSX.Element[];
   onClose: () => void;
 };

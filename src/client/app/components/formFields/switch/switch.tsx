@@ -2,21 +2,21 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { LANGUAGES, IsEnabled, Locale } from 'global-utils';
 import Switch from '@material-ui/core/Switch';
 import { isInputHidden } from 'client-utils/methods';
 
 import { styles } from './styles';
 
 export interface ISwitchProps extends WrappedFieldProps, WithStyles<typeof styles> {
-  selectedLanguage: string;
+  selectedLanguage: Locale;
   hasIntl: boolean;
 }
 
 class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
 
-  getIntlValue = (value: boolean) => {
-    return LANGUAGES.reduce((acc, lang) => {
+  getIntlValue = (value: boolean): IsEnabled => {
+    return LANGUAGES.reduce((acc: IsEnabled, lang: Locale) => {
       acc[lang] = lang === this.props.selectedLanguage
         ? value
         : this.props.input.value[lang] || false;
@@ -33,13 +33,13 @@ class SwitcherComponent extends React.PureComponent<ISwitchProps, any> {
     }
   }
 
-  renderInput = (value: boolean, languageOption?: string) => {
+  renderInput = (value: boolean, languageOption?: Locale) => {
     const { classes, label, selectedLanguage } = this.props;
     return (
       <div
         className={`
           ${classes.wrapper}
-          ${isInputHidden(languageOption, this.props.selectedLanguage, this.props.hasIntl) ? classes.hidden : ''}
+          ${isInputHidden(this.props.selectedLanguage, this.props.hasIntl, languageOption) ? classes.hidden : ''}
         `}
         key={languageOption}
       >

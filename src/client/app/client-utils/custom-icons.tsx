@@ -2,7 +2,7 @@ import * as React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 /* tslint:disable */
-export const SuccessIcon = props => (
+export const SuccessIcon = (props: any) => (
   <SvgIcon {...props}>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <path 
@@ -16,7 +16,7 @@ export const SuccessIcon = props => (
   </SvgIcon>
 );
 
-export const ErrorIcon = props => (
+export const ErrorIcon = (props: any) => (
   <SvgIcon {...props}>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <path 

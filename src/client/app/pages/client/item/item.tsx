@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
 
-import { IAppState } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { getClientItem } from 'actions/items';
 import { NotFound } from 'components/notFound';
 import { getItemByAlias, getCitiesMap } from 'selectors';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 import { MatchParams, OwnProps, StateProps, DispatchProps, ItemPageProps } from './types';
 
-export const loadItemData = (store, params: MatchParams) => store.dispatch(getClientItem(params.locale, params.itemAlias));
+export const loadItemData = (store: any, params: MatchParams) => store.dispatch(getClientItem(params.locale, params.itemAlias));
 
 class ItemPage extends React.Component<ItemPageProps, any> {
 
@@ -48,7 +48,7 @@ class ItemPage extends React.Component<ItemPageProps, any> {
   renderMetaDescription = () => {
     const { metaDescription } = this.props.selectedItem;
     return metaDescription && (
-      <meta name="description" content={metaDescription[this.props.match.params.locale]} />
+      <meta name="description" content={getLocalizedText(metaDescription, this.props.match.params.locale)} />
     );
   }
 
@@ -87,7 +87,7 @@ const mapStateToProps = (state: IAppState, props: OwnProps): StateProps => ({
   citiesMap: getCitiesMap(state)
 });
 
-const mapDispatchToProps = (dispatch): DispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch): DispatchProps => ({
   getClientItem: (locale, alias) => dispatch(getClientItem(locale, alias))
 });
 

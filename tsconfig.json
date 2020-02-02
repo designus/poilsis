@@ -33,15 +33,15 @@
     // Allow import X from "x"
     "allowSyntheticDefaultImports": true,
     // Find dependencies in node_modules
-     "moduleResolution": "node"
+     "moduleResolution": "node",
 
     // Full power of TypeScript with strict options enabled
-    // "alwaysStrict": true,
-    // "noImplicitAny": true,
-    // "noImplicitReturns": true,
-    // "noImplicitThis": true,
-    // "strictFunctionTypes": true,
-    // "strictPropertyInitialization": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictFunctionTypes": true
+    // "strictPropertyInitialization": true
     // "strictNullChecks": true
   },
   "include": [

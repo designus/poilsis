@@ -1,7 +1,7 @@
 import { MessageDescriptor } from 'react-intl';
 import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
 import { Action, Store } from 'redux';
-import { Omit, DataTypes, TranslatableField } from 'global-utils/typings';
+import { Omit, DataTypes, TranslatableField, Locale } from 'global-utils/typings';
 import { ItemsActionTypes } from './items';
 import { CitiesActionTypes } from './cities';
 import { TypesActionTypes } from './types';
@@ -20,7 +20,7 @@ export interface IGenericState<T> {
   dataMap: IGenericDataMap<T>;
 }
 
-export type DropdownItemValue = string | number;
+export type DropdownItemValue = string | number | Locale;
 
 export interface IDropdownOption {
   label: string;
@@ -42,7 +42,7 @@ export interface IToggleEnabled {
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED | CitiesActionTypes.TOGGLE_CITY_ENABLED | TypesActionTypes.TOGGLE_TYPE_ENABLED;
   id: string;
   isEnabled: boolean;
-  locale: string;
+  locale: Locale;
 }
 
 export type ToggleEnabledParams = Omit<IToggleEnabled, 'type'>;

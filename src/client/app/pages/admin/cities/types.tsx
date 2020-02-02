@@ -1,7 +1,7 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { ICitiesMap, ITypesMap, ThunkReturn } from 'types';
-import { ICity } from 'global-utils/typings';
+import { ICity, Locale } from 'global-utils/typings';
 import { deleteCity, toggleCityEnabled } from 'actions/cities';
 
 export interface IOwnProps extends InjectedIntlProps {}
@@ -15,7 +15,7 @@ export interface IStateProps  {
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
   cities: ICity[];
-  locale: string;
+  locale: Locale;
 }
 
 export type Props = IOwnProps & IStateProps & IDispatchProps;

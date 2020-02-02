@@ -11,6 +11,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { WithStyles } from '@material-ui/core/styles';
 
 import { DropdownMenu } from 'components/dropdownMenu';
+import { UserRoles } from 'global-utils/typings';
 import { getCurrentUser } from 'selectors';
 import { UserDetails, IAppState } from 'types';
 import { styles } from './styles';
@@ -20,7 +21,7 @@ export interface IMenuItem {
   text: string;
   link?: string;
   isDisabled?: boolean;
-  allowedRoles?: string[];
+  allowedRoles?: UserRoles[];
   state?: { [key: string]: string };
   items?: IMenuItem[];
   isActive?: boolean;
@@ -28,7 +29,7 @@ export interface IMenuItem {
   icon?: () => React.ReactElement<any>;
 }
 
-export interface IMenuProps extends Partial<RouteComponentProps<any>>, Partial<WithStyles<typeof styles>> {
+export interface IMenuProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
   items: IMenuItem[];
   isVertical?: boolean;
   currentUser?: UserDetails;
@@ -36,9 +37,9 @@ export interface IMenuProps extends Partial<RouteComponentProps<any>>, Partial<W
 
 const { useState, useEffect } = React;
 
-function Menu(props: IMenuProps) {
+const Menu: React.FunctionComponent<IMenuProps> = props => {
   const { classes, currentUser, items, isVertical } = props;
-  const [dropdownOpen, setDropdownOpen] = useState({});
+  const [dropdownOpen, setDropdownOpen] = useState<{[key: string]: boolean}>({});
 
   useEffect(() => {
     const activeItem = items.find(item => item.isActive);
@@ -48,7 +49,7 @@ function Menu(props: IMenuProps) {
   }, [items]);
 
   const isItemVisible = (item: IMenuItem) => {
-    if (!currentUser || !item.allowedRoles) {
+    if (!currentUser || !item.allowedRoles || !currentUser.role) {
       return true;
     }
 
@@ -63,10 +64,9 @@ function Menu(props: IMenuProps) {
   };
 
   const renderItemContent = (item: IMenuItem) => {
-    const doesIconExist = typeof item.icon === 'function';
     return (
       <React.Fragment>
-        {doesIconExist && (
+        {typeof item.icon === 'function' && (
           <ListItemIcon className={classes.icon}>
             {item.icon()}
           </ListItemIcon>
@@ -88,14 +88,16 @@ function Menu(props: IMenuProps) {
         </ListItemIcon>
       </div>
       <Collapse className={classes.collapsableMenu} in={isDropdownOpen(item)} timeout="auto" unmountOnExit>
-        <List>
-          {item.items.map(renderItem)}
-        </List>
+        {item.items && (
+          <List>
+            {item.items.map(renderItem)}
+          </List>
+        )}
       </Collapse>
     </React.Fragment>
   );
 
-  const renderDropdownMenu = (item: IMenuItem) => (
+  const renderDropdownMenu = (item: IMenuItem) => item.items && (
     <DropdownMenu
       className={classes.dropdownMenu}
       parentItem={<div className={classes.dropdownItem}>{renderItemContent(item)}</div>}
@@ -167,13 +169,12 @@ function Menu(props: IMenuProps) {
       {items.map(renderItem)}
     </List>
   );
-}
+};
 
 const mapStateToProps = (state: IAppState) => ({
   currentUser: getCurrentUser(state)
 });
 
 export default withRouter(
-  // @ts-ignore
   connect(mapStateToProps)(Menu)
 );

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
+// @ts-ignore
 import reduxFormActions from 'redux-form/es/actions';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
-import { IUploadProgressState, IAppState } from 'types';
+import { IUploadProgressState, IAppState, ThunkDispatch } from 'types';
 
 import { FileUpload } from 'components/fileUpload';
 import { ImagePreview } from 'components/imagePreview';
@@ -13,17 +14,24 @@ import { styles } from './styles';
 
 const { submit } = reduxFormActions;
 
-export interface IUploadedPhotosParams extends WrappedFieldProps, WithStyles<typeof styles>, IUploadProgressState {
+interface IOwnProps extends WrappedFieldProps, WithStyles<typeof styles> {
   formName: string;
-  uploadImages: () => void;
   clearDroppedImages: () => void;
 }
+
+interface IStateProps extends IUploadProgressState {}
+
+interface IDispatchProps {
+  uploadImages: () => void;
+}
+
+type Props = IOwnProps & IStateProps & IDispatchProps;
 
 interface IFile extends File {
   preview: string;
 }
 
-function DropzoneInput(props: IUploadedPhotosParams) {
+const DropzoneInput: React.FunctionComponent<Props> = props => {
   const { useState, useEffect } = React;
   const { meta, input, clearDroppedImages, uploadImages, hasError, progress, isUploaded, isUploading } = props;
   const [files, setFiles] = useState(input.value);
@@ -78,17 +86,17 @@ function DropzoneInput(props: IUploadedPhotosParams) {
   );
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   progress: state.uploadProgress.progress,
   isUploaded: state.uploadProgress.isUploaded,
   isUploading: state.uploadProgress.isUploading,
   hasError: state.uploadProgress.hasError
 });
 
-const mapDispatchToProps = (dispatch, props: IUploadedPhotosParams) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch, props: IOwnProps): IDispatchProps => ({
   uploadImages: () => dispatch(submit(props.formName))
 });
 
 export default withStyles(styles)(
-  connect<any, any, IUploadedPhotosParams>(mapStateToProps, mapDispatchToProps)(DropzoneInput)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(DropzoneInput)
 ) as any;

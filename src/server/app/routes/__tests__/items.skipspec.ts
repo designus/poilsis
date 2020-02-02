@@ -7,7 +7,7 @@ import app from '../../../app';
 
 const adminItem  = testData.collections.items[0];
 const userItem = testData.collections.items[1];
-const newItem = {
+const newItem: any = {
   name: 'New item',
   description: '',
   types: ['sYrnfYEv', 'dogPzIz8', 'a4vhAoFG'],
@@ -98,7 +98,7 @@ describe.skip('Integration tests: Items', () => {
   });
 
   describe('User: admin', () => {
-    let accessToken;
+    let accessToken: any;
 
     beforeAll((done) => {
       testDB.swapTestData()
@@ -188,7 +188,7 @@ describe.skip('Integration tests: Items', () => {
   });
 
   describe('User: regular', () => {
-    let accessToken;
+    let accessToken: string | null = null;
 
     beforeAll((done) => {
       testDB.swapTestData()

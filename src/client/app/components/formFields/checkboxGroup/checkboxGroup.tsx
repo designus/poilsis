@@ -17,7 +17,7 @@ export interface ICheckboxGroupParams extends WrappedFieldProps, WithStyles<type
 
 class CheckboxGroupComponent extends React.Component<ICheckboxGroupParams> {
 
-  onChange = (value) => (event) => {
+  onChange = (value: any) => (event: any) => {
     const newValue = this.props.input.value ? [...this.props.input.value] : [];
     if (event.target.checked) {
       newValue.push(value);

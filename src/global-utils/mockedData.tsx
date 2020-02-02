@@ -1,4 +1,4 @@
-import { IItem, TranslatableField } from 'global-utils/typings';
+import { IItem, TranslatableField, Locale, ObjectKeys } from 'global-utils/typings';
 import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils/constants';
 import shortId from 'shortid';
 import { formatValue } from './methods';
@@ -44,14 +44,15 @@ const names = [
 const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const getItemName = (names: string[], index: number): TranslatableField => {
-  return LANGUAGES.reduce((acc, lang) => {
+  return LANGUAGES.reduce((acc: TranslatableField, lang: Locale) => {
     acc[lang] = lang === DEFAULT_LANGUAGE ? names[index] : `${lang} - ${names[index]}`;
     return acc;
   }, {});
 };
 
 const getItemAlias = (name: TranslatableField, index: number): TranslatableField => {
-  return Object.keys(name).reduce((acc, lang) => {
+  const keys = Object.keys(name) as ObjectKeys<typeof name>;
+  return keys.reduce((acc: TranslatableField, lang) => {
     acc[lang] = `${formatValue(name[lang])}-${index}`;
     return acc;
   }, {});

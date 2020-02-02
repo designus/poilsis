@@ -1,10 +1,10 @@
 export interface IImage {
-  id?: string;
-  name?: string;
-  fileName?: string;
-  path?: string;
-  thumbName?: string;
-  preview?: string;
+  id: string;
+  name: string;
+  fileName: string;
+  path: string;
+  thumbName: string;
+  preview: string;
 }
 
 export enum ImageSize {
@@ -13,13 +13,13 @@ export enum ImageSize {
   Large = 'L'
 }
 
-export type Languages = 'en' | 'lt' | 'ru';
+export type Locale = 'en' | 'lt' | 'ru';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export type Value<T, K extends keyof T> = T[K];
 
-export type IntlSetting<T> = Partial<Record<Languages, T>>;
+export type IntlSetting<T> = Partial<Record<Locale, T>>;
 
 export type TranslatableField = IntlSetting<string>;
 
@@ -62,7 +62,7 @@ export interface IItem extends IItemDescFields {
 
 export interface IType {
   id: string;
-  alias?: TranslatableField;
+  alias: TranslatableField;
   name: TranslatableField;
   description: TranslatableField;
   isEnabled: IsEnabled;
@@ -71,7 +71,7 @@ export interface IType {
 
 export interface ICity extends ISeoFields {
   id: string;
-  alias?: TranslatableField;
+  alias: TranslatableField;
   types: string[];
   name: TranslatableField;
   description: TranslatableField;
@@ -121,3 +121,5 @@ export type TranslatableFields<O, K = keyof O> = K extends keyof O
   : never;
 
 export type ToggleFields<T> = Array<TranslatableFields<T>>;
+
+export type ObjectKeys<T> = Array<keyof T>;

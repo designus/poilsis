@@ -25,7 +25,7 @@ import { loadCityData } from './pages/client/city/city';
 import { loadItemData } from './pages/client/item/item';
 import { loadRecommendedItemsData } from './pages/client/home/recommendedItems/recommendedItems';
 
-const loadInitialData = (isAdmin: boolean) => (store, params) => {
+const loadInitialData = (isAdmin: boolean) => (store: any, params: any) => {
   const action = isAdmin ? getAdminInitialData({ locale: params.locale }) : getClientInitialData({ locale: params.locale });
   return store.dispatch(action);
 };
@@ -108,4 +108,4 @@ export const routes = [
       }
     ]
   }
-];
+] as RouteConfig[];

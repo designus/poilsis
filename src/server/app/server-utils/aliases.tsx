@@ -1,11 +1,14 @@
 import { NextFunction } from 'express';
-import { TranslatableField, Languages, DataTypes, LANGUAGES } from 'global-utils';
+import { TranslatableField, Locale, DataTypes, LANGUAGES, IntlSetting } from 'global-utils';
 import { formatValue } from 'global-utils/methods';
 
-export const getAdjustedAliasValue = (item: DataTypes, languages: string[], next?: NextFunction): TranslatableField | void => {
+export const getAdjustedAliasValue = (item: DataTypes, languages: Locale[], next: NextFunction): TranslatableField | void => {
   try {
-    return languages.reduce((acc, locale): TranslatableField => {
-      const newAlias = item.alias && item.alias[locale] ? item.alias[locale] : item.name[locale];
+    return languages.reduce((acc: IntlSetting<string>, locale) => {
+      const alias = item.alias as TranslatableField;
+      const name = item.name as TranslatableField;
+
+      const newAlias = alias && alias[locale] ? alias[locale] : name[locale];
       acc[locale] = newAlias ? formatValue(newAlias) : '';
       return acc;
     }, {});
@@ -15,7 +18,8 @@ export const getAdjustedAliasValue = (item: DataTypes, languages: string[], next
 };
 
 export const extendAliasWithId = (newAlias: TranslatableField, id: string, existingAliases: string[]): TranslatableField => {
-  return Object.entries(newAlias).reduce((acc, [locale, value]: [Languages, string]) => {
+  return Object.entries(newAlias).reduce((acc: IntlSetting<string>, item) => {
+    const [locale, value] = item as [Locale, string];
     acc[locale] = value && existingAliases.includes(value) ? `${value}-${id}` : value;
     return acc;
   }, {});
@@ -36,7 +40,7 @@ export function getAliasList<T extends DataTypes[]>(items: T, ownItemId?: string
     // we remove own item
     .filter(item => item.id !== ownItemId)
     .map(item => Object.values(item.alias))
-    .reduce((acc: string[], val: string[]) => acc.concat(val), []);
+    .reduce((acc: string[], val: any[]) => acc.concat(val), []);
 }
 
 export function getUniqueAlias<T extends DataTypes[]>(items: T, ownItemId: string, alias: TranslatableField): TranslatableField {

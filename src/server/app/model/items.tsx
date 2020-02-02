@@ -23,9 +23,9 @@ import { IsEnabledSchemaMap } from './common';
 
 const mongooseIntl = require('mongoose-intl');
 
-const maxLength = maxLength => value => value.length <= maxLength;
-const minLength = minLength => value => value.length >= minLength;
-const minMaxLength = (min, max) => value => minLength(min)(value) && maxLength(max)(value);
+const maxLength = (maxLength: number) => (value: string) => value.length <= maxLength;
+const minLength = (minLength: number) => (value: string) => value.length >= minLength;
+const minMaxLength = (min: number, max: number) => (value: string) => minLength(min)(value) && maxLength(max)(value);
 
 // @ts-ignore
 export interface IItemDocument extends IItem, Document {}
@@ -36,6 +36,7 @@ const {
   images: { maxPhotos }
 } = itemValidation;
 
+// @ts-ignore
 const ImageSchemaMap: GenericSchemaMap<IImage> = {
   id: {
     type: String,
@@ -129,7 +130,7 @@ const ItemsSchema = new Schema(ItemsSchemaMap);
 
 ItemsSchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
 
-ItemsSchema.pre('save', function(next) {
+ItemsSchema.pre('save', function(this: any, next) {
   const now = new Date();
   if (!this.createdAt) {
     this.createdAt = now;

@@ -3,20 +3,20 @@ import { createMuiTheme } from '@material-ui/core/styles';
 declare module '@material-ui/core/styles/createMuiTheme' {
   // tslint:disable-next-line
   interface Theme {
-    customButton?: {
+    customButton: {
       borderRadius: string
     };
-    loadingBar?: {
+    loadingBar: {
       height: string;
     };
   }
   // allow configuration using `createMuiTheme`
   // tslint:disable-next-line
   interface ThemeOptions {
-    customButton?: {
+    customButton: {
       borderRadius: string
     };
-    loadingBar?: {
+    loadingBar: {
       height: string
     };
   }

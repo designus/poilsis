@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'components/button';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { IAppState } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { AdminHeader } from 'components/adminHeader';
 import { getCurrentUserRole } from 'selectors';
 import { addMockedDataAsync, removeMockedDataAsync } from 'actions';
@@ -37,7 +37,7 @@ const mapStateToProps = (state: IAppState): IStateProps => ({
   userRole: getCurrentUserRole(state)
 });
 
-const mapDispatchToProps = (dispatch): IDispatchProps => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   addMockedData: () => dispatch(addMockedDataAsync()),
   removeMockedData: () => dispatch(removeMockedDataAsync())
 });

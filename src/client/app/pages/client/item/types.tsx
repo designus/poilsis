@@ -1,10 +1,10 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { IItem, Languages } from 'global-utils/typings';
+import { IItem, Locale } from 'global-utils/typings';
 import { ThunkReturn, ICitiesMap } from 'types';
 import { getClientItem } from 'actions/items';
 
 export type MatchParams = {
-  locale: Languages;
+  locale: Locale;
   cityAlias: string;
   itemAlias: string;
 };

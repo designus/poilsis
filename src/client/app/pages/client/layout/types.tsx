@@ -1,20 +1,20 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { WithStyles } from '@material-ui/core/styles';
-import { Languages } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
 import { getInitialData } from 'actions/initialData';
 import { ThunkReturn } from 'types';
 
 import { styles } from './styles';
 
 export interface IMatchParams {
-  locale: Languages;
+  locale: Locale;
 }
 
 export type OwnProps = RouteComponentProps<IMatchParams> & WithStyles<typeof styles>;
 
 export type StateProps = {
   isLoggedIn: boolean;
-  locale: Languages;
+  locale: Locale;
   isInitialDataLoaded: boolean;
 };
 

@@ -38,14 +38,14 @@ const usersSchema = new mongoose.Schema({
   }
 });
 
-usersSchema.pre('save', (next) => {
+usersSchema.pre('save', function(this: any, next)  {
   bcrypt.hash(this.password, 10, (err, hash) => {
     this.password = hash;
     next();
   });
 });
 
-usersSchema.pre('update', (next) => {
+usersSchema.pre('update', function(this: any, next) {
   bcrypt.hash(this.password, 10, (err, hash) => {
     this.password = hash;
     next();

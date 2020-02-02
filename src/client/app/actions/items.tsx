@@ -22,7 +22,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Languages } from 'global-utils/typings';
+import { IImage, IItem, IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
 import {
   ItemsActionTypes,
@@ -93,7 +93,7 @@ export const toggleItemRecommendedField: ActionCreator<IToggleItemRecommended> =
   ...params
 });
 
-export const getClientItem = (locale: Languages, alias: string): ThunkResult<Promise<void>> => (dispatch) => {
+export const getClientItem = (locale: Locale, alias: string): ThunkResult<Promise<void>> => (dispatch) => {
   dispatch(startLoading(CONTENT_LOADER_ID));
 
   return http.get(`/api/items/client-item/${alias}`, setAcceptLanguageHeader(locale))
@@ -123,7 +123,7 @@ export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => disp
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<IImage[]>> => dispatch => {
   return http
     .put<IItem>(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
-      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent) => dispatch(setUploadProgress(loadedPercent)))
+      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent)))
     })
     .then(response => handleApiResponse(response))
     .then(item => {

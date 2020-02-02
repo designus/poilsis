@@ -36,7 +36,7 @@ import {
   readDirectoryContent
 } from './fileSystem';
 
-const { images: { maxPhotos, maxPhotoSizeBytes, mimeTypes, minPhotoWidth, minPhotoHeight } } = itemValidation;
+const { maxPhotos, mimeTypes, minPhotoHeight, maxPhotoSizeBytes, minPhotoWidth } = itemValidation.images;
 
 export const createUploadPath = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -94,7 +94,7 @@ export const removeImagesFromFs = async (req: Request, res: Response, next: Next
   }
 };
 
-export const fileFilter = (req: MulterRequest, file: MulterFile, cb) => {
+export const fileFilter = (req: MulterRequest, file: MulterFile, cb: any) => {
   const itemId = req.params.itemId;
 
   if (Array.isArray(req.files) && !req.files.length) {
@@ -114,6 +114,7 @@ export const fileFilter = (req: MulterRequest, file: MulterFile, cb) => {
 };
 
 const storage = multer.diskStorage({
+  // @ts-ignore
   destination: (req: MulterRequest, file: MulterFile, callback) => {
     callback(null, getUploadPath(req.params.itemId));
   },

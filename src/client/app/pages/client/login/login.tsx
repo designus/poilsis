@@ -5,7 +5,7 @@ import { voidFn } from 'global-utils';
 
 class Login extends React.PureComponent<any, any> {
 
-  redirectTo;
+  redirectTo: any;
 
   login = async () => {
     await this.props.login();
@@ -32,8 +32,8 @@ class Login extends React.PureComponent<any, any> {
   }
 }
 
-export const mapDispatchToProps = (dispatch) => ({
-  login: () => dispatch(login())
-});
+export const mapDispatchToProps = {
+  login
+};
 
 export const LoginPage = connect(voidFn, mapDispatchToProps)(Login);

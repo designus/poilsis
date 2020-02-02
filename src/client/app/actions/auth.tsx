@@ -16,7 +16,8 @@ import {
   IShowKeepMeLoggedModal,
   IReauthenticateSuccess,
   ISetAccessToken,
-  Toast
+  Toast,
+  ThunkResult
 } from 'types';
 
 import {
@@ -51,7 +52,7 @@ export const setAccessToken = (accessToken: string): ISetAccessToken => ({
   accessToken
 });
 
-export const handleAuthError = (dispatch, isLogin: boolean) => (error) => {
+export const handleAuthError = (dispatch: any, isLogin: boolean) => (error: any) => {
   const genericMessage = isLogin ? USER_LOGIN_ERROR : USER_LOGOUT_ERROR;
   const errorMessage = error.response.data.message;
   console.error(error);
@@ -60,7 +61,7 @@ export const handleAuthError = (dispatch, isLogin: boolean) => (error) => {
   dispatch(logout());
 };
 
-export const login = (credentials = {username: 'admin', password: 'admin'}) => dispatch => {
+export const login = (credentials = {username: 'admin', password: 'admin'}): ThunkResult<Promise<void>> => dispatch => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   return http.post('/api/users/login', credentials)
     .then(response => response.data)
@@ -82,7 +83,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}) => d
     .catch(handleAuthError(dispatch, true));
 };
 
-export const reauthenticateUser = (displayToast = false) => (dispatch, getState) => {
+export const reauthenticateUser = (displayToast = false): ThunkResult<Promise<void>> => (dispatch, getState) => {
   dispatch(startLoading(DIALOG_LOADER_ID));
   const state: IAppState = getState();
   const oldAccessToken = state.auth.accessToken;
@@ -104,7 +105,7 @@ export const reauthenticateUser = (displayToast = false) => (dispatch, getState)
     .catch(handleAuthError(dispatch, true));
 };
 
-export const logout = () => (dispatch, getState) => {
+export const logout = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
   const state: IAppState = getState();
   const accessToken = state.auth.accessToken;
   const { userId } = getAccessTokenClaims(accessToken);

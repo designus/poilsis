@@ -7,7 +7,7 @@ import { adminRoutes } from 'client-utils/routes';
 import { deleteType, toggleTypeEnabled } from 'actions/types';
 import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
-import { IType } from 'global-utils';
+import { IType, Locale } from 'global-utils';
 import { IAppState, ITypesMap, ToggleEnabledParams, ThunkDispatch, ThunkReturn } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
@@ -29,7 +29,7 @@ interface IDispatchProps {
 interface IStateProps {
   typesMap: ITypesMap;
   types: IType[];
-  locale: string;
+  locale: Locale;
 }
 
 type Props = IOwnProps & IStateProps & IDispatchProps;
@@ -100,7 +100,7 @@ class AdminTypesPage extends React.Component<Props, State> {
     ];
   }
 
-  openDeleteModal = (typeId) => () => {
+  openDeleteModal = (typeId: string) => () => {
     this.setState({ isDeleteModalOpen: true, deleteId: typeId });
   }
 
@@ -108,7 +108,7 @@ class AdminTypesPage extends React.Component<Props, State> {
     this.setState({ isDeleteModalOpen: false });
   }
 
-  handleTypeDelete = (typeId) => {
+  handleTypeDelete = (typeId: string) => {
     return this.props.deleteType(typeId);
   }
 

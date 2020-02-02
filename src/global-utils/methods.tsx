@@ -1,5 +1,5 @@
 import * as JWT from 'jwt-decode';
-import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields, TranslatableField, Languages } from './typings';
+import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields, TranslatableField, Locale } from './typings';
 import { LANGUAGES } from './constants';
 
 const AsciiFolder = require('fold-to-ascii');
@@ -19,16 +19,20 @@ export const getStaticFileUri = (file: string): string => {
 
 export const isAdmin = (userRole: UserRoles) => userRole === UserRoles.admin;
 
-export const voidFn = f => f;
+export const voidFn = (f: any) => f;
 
 export const getAccessTokenClaims = (token: string): IAccessTokenClaims => JWT(token);
 
-export const hasLocalizedFields = (field: TranslatableField | string) =>
-  field && Object.keys(field).some((field: Languages) => LANGUAGES.indexOf(field) !== -1);
+export function hasLocalizedFields(field: TranslatableField | string): field is TranslatableField {
+  if (field && typeof field === 'string') return false;
 
-export const isFunction = fn => typeof fn === 'function';
+  return field ? Object.keys(field).some((field => LANGUAGES.indexOf(field as Locale) !== -1)) : false;
 
-export const callFn = (fn, ...args) => {
+}
+
+export const isFunction = (fn: any) => typeof fn === 'function';
+
+export const callFn = (fn: any, ...args: any[]) => {
   if (isFunction(fn)) {
     fn.apply(null, args);
   }
@@ -45,7 +49,7 @@ export const getItemDescriptionFields = (item: IItem): IItemDescFields => {
   };
 };
 
-export const removeDuplicates = (item, i, arr) => arr.indexOf(item) === i;
+export const removeDuplicates = (item: any, i: number, arr: any[]) => arr.indexOf(item) === i;
 
 export const formatValue = (value: string): string =>
   AsciiFolder.foldReplacing(value)

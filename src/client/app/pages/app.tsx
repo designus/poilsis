@@ -7,27 +7,34 @@ import { PropsRoute } from 'components/propsRoute';
 import { ProtectedRoute } from 'components/protectedRoute';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 
-import { IAppState } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { isLoggedIn, getSessionExpiryTime } from 'selectors';
 
 import { ClientLayoutPage } from 'pages/client/layout';
 import { AdminLayoutPage } from 'pages/admin/layout';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 
-interface IAppProps extends RouteComponentProps<any> {
+interface IOwnProps extends RouteComponentProps<any> {}
+
+interface IStateProps  {
   isLoggedIn?: boolean;
   showKeepMeLoggedModal?: boolean;
   sessionExpiryTime?: number;
+}
+
+interface IDispatchProps {
   reauthenticateUser?: () => void;
 }
 
-class App extends React.Component<IAppProps, any> {
+type Props = IOwnProps & IStateProps & IDispatchProps;
+
+class App extends React.Component<Props> {
 
   componentDidMount() {
     KeepMeLoggedModal.preload();
   }
 
-  componentDidUpdate(prevProps: IAppProps) {
+  componentDidUpdate(prevProps: Props) {
     const date1 = day(Date.now());
     const date2 = day(this.props.sessionExpiryTime * 1000);
     const isLessThanMinuteLeft = date2.diff(date1, 'second') < 60;
@@ -49,16 +56,16 @@ class App extends React.Component<IAppProps, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   isLoggedIn: isLoggedIn(state),
   sessionExpiryTime: getSessionExpiryTime(state),
   showKeepMeLoggedModal: state.auth.showKeepMeLoggedModal
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   reauthenticateUser: () => dispatch(reauthenticateUser())
 });
 
 export default withRouter(
-  connect<any, any, IAppProps>(mapStateToProps, mapDispatchToProps)(App)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(App)
 );

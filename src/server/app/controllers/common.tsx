@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import { ToggleEnabledParams } from 'types';
-import { DataTypes, TranslatableField } from 'global-utils/typings';
+import { DataTypes, TranslatableField, IsEnabled } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 import { getItemsByAliasesQuery, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
 import { IItemDocument, ICityDocument, ITypeDocument } from '../model';
@@ -17,11 +17,11 @@ export const toggleEnabled = (DocumentModel: DocumentModelType) =>
 
       const item = document.toJSON() as DataTypes;
 
-      if (!item.name[locale]) {
+      if (!(item.name as TranslatableField)[locale]) {
         throw new Error('Name field is empty');
       }
 
-      document.isEnabled[locale] = isEnabled;
+      (document.isEnabled as IsEnabled)[locale] = isEnabled;
       document.markModified('isEnabled');
 
       // @ts-ignore

@@ -36,14 +36,14 @@ export function extendWithLoader<TOriginalProps extends {}>(
       }
     }
 
-    function mapStateToProps(state: IAppState) {
+    const mapStateToProps = (state: IAppState) => {
       return {
         loadingState: state.loader
       };
-    }
+    };
 
     // @ts-ignore
     const styledComponent = withStyles(styles)(LoaderComponent);
 
-    return connect<{}, {}, ResultProps>(mapStateToProps)(styledComponent);
+    return connect<{}, {}, ResultProps, IAppState>(mapStateToProps)(styledComponent);
 }

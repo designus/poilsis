@@ -17,7 +17,7 @@ export interface IImagePreview extends IUploadProgressState, WithStyles<typeof s
   images: IImage[];
   label?: string;
   onLoadImage?: () => void;
-  onDeleteImage?: (index: number) => (e: any) => void;
+  onDeleteImage: (index: number) => (e: any) => void;
   onSortImages?: (images: IImage[]) => void;
   showLoader?: boolean;
 }

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 import { clientRoutes } from 'client-utils/routes';
 import { Dropdown } from 'components/dropdown';
-import { LANGUAGES, Languages } from 'global-utils';
+import { LANGUAGES, Locale } from 'global-utils';
 import { IDropdownOption } from 'types/generic';
 import { IAppState } from 'types';
 import { capitalize } from 'client-utils/methods';
@@ -23,7 +23,7 @@ export function LanguageSelector(props: LanguageSelectorProps)  {
     []
   );
 
-  const onChange = (locale: Languages) => {
+  const onChange = (locale: any) => {
     onSelectLanguage(locale, isAdmin);
     if (!isAdmin) {
       props.history.push(clientRoutes.landing.getLink(locale));
@@ -41,8 +41,8 @@ export function LanguageSelector(props: LanguageSelectorProps)  {
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  onSelectLanguage: (language: Languages, isAdmin: boolean) => dispatch(switchLanguage(language, isAdmin))
+const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
+  onSelectLanguage: (language: Locale, isAdmin: boolean) => dispatch(switchLanguage(language, isAdmin))
 });
 
 export default withStyles(styles)(
