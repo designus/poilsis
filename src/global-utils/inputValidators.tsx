@@ -35,8 +35,6 @@ export const requiredWhenEnabled = (fieldValue: TranslatableField, formState: an
     // default language input field is always required
     if (!fieldValue[lang] && (lang === formProps.defaultLanguage || isEnabled[lang])) {
       acc[lang] = lang === formProps.defaultLanguage ? requiredError : requiredWhenEnabledError;
-    } else {
-      acc[lang] = '';
     }
 
     return acc;
