@@ -1,6 +1,6 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
-import { IItem, Languages } from 'global-utils/typings';
+import { IItem, Locale } from 'global-utils/typings';
 import { ThunkReturn } from 'types';
 import { getAdminItem } from 'actions/items';
 
@@ -14,7 +14,7 @@ export interface IOwnProps extends RouteComponentProps<ItemPageMatchParams>, Inj
 export interface IStateProps {
   loadedItem: IItem;
   shouldLoadEditItem: boolean;
-  locale: Languages;
+  locale: Locale;
 }
 
 export interface IDispatchProps {

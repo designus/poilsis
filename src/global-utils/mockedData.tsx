@@ -1,4 +1,4 @@
-import { IItem, TranslatableField } from 'global-utils/typings';
+import { IItem, TranslatableField, Locale, ObjectKeys } from 'global-utils/typings';
 import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils/constants';
 import shortId from 'shortid';
 import { formatValue } from './methods';
@@ -44,17 +44,17 @@ const names = [
 const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const getItemName = (names: string[], index: number): TranslatableField => {
-  return LANGUAGES.reduce((acc, lang) => {
-    acc[lang] = lang === DEFAULT_LANGUAGE ? names[index] : `${lang} - ${names[index]}`;
+  return LANGUAGES.reduce<TranslatableField>((acc, locale) => {
+    acc[locale] = locale === DEFAULT_LANGUAGE ? names[index] : `${locale} - ${names[index]}`;
     return acc;
-  }, {});
+  }, {} as TranslatableField);
 };
 
 const getItemAlias = (name: TranslatableField, index: number): TranslatableField => {
-  return Object.keys(name).reduce((acc, lang) => {
-    acc[lang] = `${formatValue(name[lang])}-${index}`;
+  return LANGUAGES.reduce<TranslatableField>((acc, locale) => {
+    acc[locale] = `${formatValue(name[locale])}-${index}`;
     return acc;
-  }, {});
+  }, {} as TranslatableField);
 };
 
 export const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {

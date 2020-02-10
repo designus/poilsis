@@ -84,7 +84,7 @@ class AdminLayoutPage extends React.PureComponent<AdminLayoutProps, any> {
       {
         id: 1,
         icon: () => (<DashboardIcon />),
-        link: adminRoutes.landing.getLink(),
+        link: adminRoutes.landing.getLink(this.props.adminLocale),
         text: formatMessage({ id: 'admin.menu.dashboard' })
       },
       {
@@ -254,7 +254,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
 export default withStyles(styles)(
   withRouter(
     injectIntl(
-      connect<IStateProps, IDispatchProps, IOwnProps>(mapStateToProps, mapDispatchToProps)(
+      connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(
         AdminLayoutPage
       )
     )

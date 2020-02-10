@@ -12,7 +12,7 @@ export interface ISearchBoxProps extends WithStyles<typeof styles> {
 
 class SearchComponent extends React.Component<ISearchBoxProps, any> {
 
-  constructor(props) {
+  constructor(props: ISearchBoxProps) {
     super(props);
     this.state = {
       value: ''
@@ -25,7 +25,7 @@ class SearchComponent extends React.Component<ISearchBoxProps, any> {
     this.props.search(this.state.value);
   }
 
-  onChange = (e) => {
+  onChange = (e: any) => {
     this.setState({value: e.target.value});
     this.search();
   }

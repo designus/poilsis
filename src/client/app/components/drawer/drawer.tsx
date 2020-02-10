@@ -14,39 +14,38 @@ const AppDrawer = MaterialDrawer as any;
 export interface IDrawerProps extends WithStyles<typeof styles> {
   mobileDrawerOpen: boolean;
   onClose: () => void;
-  children: any;
 }
 
-const DrawerContent = ({ classes, onClose, children }) => {
+const DrawerContent: React.FunctionComponent<IDrawerProps> = (props) => {
   return (
-    <div className={classes.drawerContentWrapper}>
-      <div className={classes.drawerContent}>
-          <div className={classes.drawerHeader}>
+    <div className={props.classes.drawerContentWrapper}>
+      <div className={props.classes.drawerContent}>
+          <div className={props.classes.drawerHeader}>
             <Typography variant="h6">
               Menu
             </Typography>
             <Hidden mdUp implementation="css">
               <Button
-                onClick={onClose}
-                className={classes.closeButton}
+                onClick={props.onClose}
+                className={props.classes.closeButton}
                 variant="text"
                 size="small"
               >
                 <ChevronLeftIcon />
-                <Typography className={classes.closeButtonText} variant="body1">
+                <Typography className={props.classes.closeButtonText} variant="body1">
                   Close
                 </Typography>
               </Button>
             </Hidden>
           </div>
-        {children}
+        {props.children}
       </div>
-      <div className={classes.bgImage} />
+      <div className={props.classes.bgImage} />
     </div>
   );
 };
 
-const Drawer = (props: IDrawerProps) => {
+const Drawer: React.FunctionComponent<IDrawerProps> = props => {
   const { classes, mobileDrawerOpen, onClose, children } = props;
 
   return (
@@ -66,11 +65,7 @@ const Drawer = (props: IDrawerProps) => {
             keepMounted: true
           }}
         >
-          <DrawerContent
-            classes={classes}
-            children={children}
-            onClose={onClose}
-          />
+          <DrawerContent {...props} />
         </AppDrawer>
       </Hidden>
 
@@ -84,11 +79,7 @@ const Drawer = (props: IDrawerProps) => {
           variant="permanent"
           open
         >
-          <DrawerContent
-            classes={classes}
-            children={children}
-            onClose={onClose}
-          />
+          <DrawerContent {...props} />
         </AppDrawer>
       </Hidden>
     </div>

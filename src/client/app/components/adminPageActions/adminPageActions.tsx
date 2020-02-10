@@ -9,7 +9,7 @@ import { styles } from './styles';
 
 interface IAdminPageActions extends WithStyles<typeof styles> {
   createLink: string;
-  search?: (value) => void;
+  search?: (value: string) => void;
 }
 
 const AdminPageActions = ({classes, createLink, search}: IAdminPageActions) => {

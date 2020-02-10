@@ -5,11 +5,11 @@ import { IItemsMap, ICitiesMap, IUsersMap, ThunkReturn, ActionReturn } from 'typ
 import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApproved } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
-import { IItem, UserRoles } from 'global-utils/typings';
+import { IItem, UserRoles, Locale } from 'global-utils/typings';
 
 export interface IOwnProps extends InjectedIntlProps {}
 
-export interface IDispatchProps extends ActionCreatorsMapObject {
+export interface IDispatchProps {
   deleteItem: ThunkReturn<typeof deleteItem>;
   loadUserItems: ThunkReturn<typeof loadUserItems>;
   endLoading: ActionReturn<typeof endLoading>;
@@ -24,8 +24,8 @@ export interface IStateProps {
   citiesMap: ICitiesMap;
   shouldLoadUserItems: boolean;
   userItems: IItem[];
-  userRole: UserRoles;
-  locale: string;
+  userRole?: UserRoles;
+  locale: Locale;
 }
 
 export type Props = IOwnProps & IStateProps & IDispatchProps;

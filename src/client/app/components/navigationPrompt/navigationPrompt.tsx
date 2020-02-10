@@ -3,17 +3,17 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { TransitionPromptHook } from 'history';
 import { SaveModal } from '../modals/saveModal';
 
-interface INavigationPromptProps extends RouteComponentProps<any> {
+interface IProps extends RouteComponentProps<any> {
   when: boolean;
 }
 
-class NavigationPromptComponent extends React.Component<INavigationPromptProps, any> {
-  constructor(props) {
+class NavigationPromptComponent extends React.Component<IProps, any> {
+  constructor(props: IProps) {
     super(props);
     this.state = { nextLocation: null, openModal: false };
   }
 
-  unblock = null;
+  unblock: any = null;
 
   componentDidMount() {
     this.unblock = this.props.history.block(this.shouldTransitionBeBlocked as TransitionPromptHook);
@@ -23,7 +23,7 @@ class NavigationPromptComponent extends React.Component<INavigationPromptProps, 
     this.unblock();
   }
 
-  shouldTransitionBeBlocked = (nextLocation) => {
+  shouldTransitionBeBlocked = (nextLocation: any) => {
     if (this.props.when) {
       this.setState({
         openModal: true,

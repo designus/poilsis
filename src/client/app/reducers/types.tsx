@@ -4,12 +4,12 @@ import { getAliasState, removeByKeys, getAliasKeysById } from 'client-utils/meth
 
 type ActionTypes = TypesActions | InitialDataActions;
 
-const getInitialState = (): ITypesState => ({
+export const getInitialTypesState = (): ITypesState => ({
   dataMap: {},
   aliases: {}
 });
 
-export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = getInitialState(), action): ITypesState => {
+export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = getInitialTypesState(), action): ITypesState => {
   switch (action.type) {
     case InitialDataActionTypes.RECEIVE_INITIAL_DATA:
       return {

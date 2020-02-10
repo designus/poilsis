@@ -21,7 +21,7 @@ class Auth {
     return passport.initialize();
   }
 
-  public authenticate = (callback?) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
+  public authenticate = (callback?: any) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
   public authorize = (roles: string[]) => (req: Request, res: Response, next: NextFunction) => {
     const accessToken = this.getAccessTokenClaims(req);
@@ -40,7 +40,7 @@ class Auth {
   private genToken = (params: TokenParams) => {
     const exp = day().add(SESSION_DURATION_MINUTES, 'minute').unix();
     const claims: IAccessTokenClaims = { ...params, exp };
-    const token = jwt.encode(claims, process.env.JWT_SECRET);
+    const token = jwt.encode(claims, process.env.JWT_SECRET as string);
 
     return token;
   }
@@ -50,7 +50,7 @@ class Auth {
     return itemDocs.length ? itemDocs.map((item: IItem) => item.id) : [];
   }
 
-  public reauthenticate = async (req, res) => {
+  public reauthenticate = async (req: Request, res: Response) => {
     try {
 
       // TODO: Remove refresh token after session expires
@@ -77,7 +77,7 @@ class Auth {
     }
   }
 
-  public login = async (req, res) => {
+  public login = async (req: Request, res: Response) => {
     try {
 
       if (!req.body.username || !req.body.password) {
@@ -86,7 +86,7 @@ class Auth {
 
       const user = await User.findOne({ username: req.body.username }).exec();
 
-      if (user === null) {
+      if (user === null || !user.id) {
         throw new Error(USER_NOT_FOUND);
       }
 
@@ -118,7 +118,7 @@ class Auth {
     }
   }
 
-  public logout = async (req, res) => {
+  public logout = async (req: Request, res: Response) => {
     try {
       const token = await TokensModel.findOneAndRemove({ userId: req.params.userId }).exec();
 
@@ -133,11 +133,11 @@ class Auth {
     }
   }
 
-  private extractFromCookie(req) {
+  private extractFromCookie(req: Request) {
     return req && req.cookies ? req.cookies.jwt : null;
   }
 
-  private getAccessTokenClaims(req): IAccessTokenClaims {
+  private getAccessTokenClaims(req: Request): IAccessTokenClaims {
     const accessToken = this.extractFromCookie(req);
     return JWT(accessToken);
   }
@@ -149,7 +149,7 @@ class Auth {
       passReqToCallback: true
     };
 
-    return new Strategy(params, (req, payload: any, done) => {
+    return new Strategy(params, (req: Request, payload: any, done: any) => {
       User.findOne({ id: payload.userId }, (err, user) => {
         if (err) { return done(err); }
         if (user === null) {

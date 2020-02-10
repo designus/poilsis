@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect, match } from 'react-router-dom';
 import { renderMergedProps } from 'client-utils/methods';
 import { IAppState } from 'types';
-import { isLoggedIn } from 'selectors';
+import { isLoggedIn, getCurrentUserRole } from 'selectors';
 import { NotAuthorized } from 'components/notAuthorized';
 import { UserRoles } from 'global-utils';
 
@@ -13,25 +13,28 @@ interface IMatchParams {
 
 interface IProtectedRouteProps {
   component?: any;
-  isAuthenticated?: boolean;
-  userId?: string;
-  userRole?: string;
-  allowedRoles?: string[];
+  allowedRoles?: UserRoles[];
   path?: string;
   exact?: boolean;
   strict?: boolean;
   match?: match<IMatchParams>;
 }
 
-type TProtectedRouteProps = IProtectedRouteProps;
+interface IStateProps {
+  isAuthenticated?: boolean;
+  userId?: string;
+  userRole?: UserRoles;
+}
 
-class Protected extends React.Component<TProtectedRouteProps, any> {
+type Props = IProtectedRouteProps & IStateProps;
 
-  isContentNotRestricted = (userRole, allowedRoles) => {
+class ProtectedRoute extends React.Component<Props> {
+
+  isContentNotRestricted = (userRole: UserRoles, allowedRoles: UserRoles[]) => {
     return allowedRoles.indexOf(userRole) !== -1;
   }
 
-  isUserTryingToAccessOwnContent = (userId, userRole) => {
+  isUserTryingToAccessOwnContent = (userId: string, userRole: UserRoles) => {
     const match = this.props.match;
     if (match && userRole !== UserRoles.admin) {
       return !match.params.userId || match.params.userId === userId;
@@ -40,19 +43,19 @@ class Protected extends React.Component<TProtectedRouteProps, any> {
     return true;
   }
 
-  isUserAllowedToEnter = (allowedRoles, userRole, userId) => {
+  isUserAllowedToEnter = (allowedRoles: UserRoles[], userRole: UserRoles, userId: string) => {
     return this.isContentNotRestricted(userRole, allowedRoles) &&
       this.isUserTryingToAccessOwnContent(userId, userRole);
   }
 
-  renderComponent = (routeProps, restProps) => {
+  renderComponent = (routeProps: any, restProps: any) => {
     const { component, allowedRoles = [UserRoles.admin, UserRoles.user], userRole, userId } = this.props;
-    return this.isUserAllowedToEnter(allowedRoles, userRole, userId) ?
+    return userRole && userId && this.isUserAllowedToEnter(allowedRoles, userRole, userId) ?
       renderMergedProps(component, routeProps, restProps) :
       <NotAuthorized />;
   }
 
-  redirectToLogin = (routeProps) => {
+  redirectToLogin = (routeProps: any) => {
     return (
       <Redirect to={{
         pathname: '/login',
@@ -72,13 +75,10 @@ class Protected extends React.Component<TProtectedRouteProps, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  const { details: currentUser } = state.currentUser;
-  return {
-    userRole: currentUser ? currentUser.role : null,
-    userId: currentUser ? currentUser.id : null,
-    isAuthenticated: isLoggedIn(state)
-  };
-};
+const mapStateToProps = (state: IAppState): IStateProps => ({
+  userRole: getCurrentUserRole(state),
+  userId: getCurrentUserRole(state),
+  isAuthenticated: isLoggedIn(state)
+});
 
-export const ProtectedRoute = connect<any, any, IProtectedRouteProps>(mapStateToProps)(Protected);
+export default connect<IStateProps, {}, IProtectedRouteProps, IAppState>(mapStateToProps)(ProtectedRoute);

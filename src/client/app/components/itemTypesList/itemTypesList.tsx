@@ -1,21 +1,23 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ITypesMap, IAppState } from 'types';
+import { Locale } from 'global-utils/typings';
 import { getTypesMap } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 
 interface IOwnProps {
   typeIds: string[];
-  locale: string;
+  locale: Locale;
 }
 
 interface IStateProps {
   typesMap: ITypesMap;
 }
 
-type ItemsTypesListProps = IOwnProps & IStateProps;
+type Props = IOwnProps & IStateProps;
 
-const ItemTypesList = ({typeIds, typesMap, locale}: ItemsTypesListProps) => {
+const ItemTypesList: React.FunctionComponent<Props> = (props) => {
+  const { typeIds, locale, typesMap } = props;
   return (
     <React.Fragment>
       {
@@ -36,8 +38,8 @@ const ItemTypesList = ({typeIds, typesMap, locale}: ItemsTypesListProps) => {
   );
 };
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   typesMap: getTypesMap(state)
 });
 
-export default connect<IStateProps, {}, IOwnProps>(mapStateToProps)(ItemTypesList);
+export default connect<IStateProps, {}, IOwnProps, IAppState>(mapStateToProps)(ItemTypesList);

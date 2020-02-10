@@ -5,19 +5,18 @@ import Menu from '@material-ui/core/Menu';
 import { styles } from './styles';
 
 interface IDropdownMenu extends WithStyles<typeof styles> {
-  children: JSX.Element[] | JSX.Element;
   parentItem: React.ReactElement<any>;
   id: string;
   className?: any;
 }
 
-const DropdownMenu = (props: IDropdownMenu) => {
+const DropdownMenu: React.FunctionComponent<IDropdownMenu> = props => {
   const { useState } = React;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { children, parentItem, id, classes, className } = props;
 
-  const handleMenuOpen = event => {
+  const handleMenuOpen = (event: any) => {
     setIsDropdownOpen(true);
     setAnchorEl(event.currentTarget);
   };

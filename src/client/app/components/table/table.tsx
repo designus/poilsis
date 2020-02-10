@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,7 +20,7 @@ export interface ITableColumn<T = any> {
   field: Partial<keyof T>;
   sortType?: SortType;
   searchable?: boolean;
-  cellRenderer?: (data: T) => JSX.Element | string | number;
+  cellRenderer?: (data: T) => JSX.Element | string | number | null;
 }
 
 export interface ITableProps extends Partial<WithStyles<typeof styles>> {

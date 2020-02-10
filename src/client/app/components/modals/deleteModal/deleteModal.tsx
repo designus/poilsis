@@ -7,7 +7,7 @@ import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { styles } from '../styles';
 import { Header, Content, Footer } from '../shared';
 
-export interface IDeleteModalProps extends Partial<WithStyles<typeof styles>> {
+export interface IDeleteModalProps extends WithStyles<typeof styles> {
   isModalOpen: boolean;
   itemId: string;
   itemName: string;

@@ -19,12 +19,12 @@ const AdminHeader = React.memo<IAdminHeaderProps>(
         <Typography variant="h5">
           <FormattedMessage id={props.translationId} />
         </Typography>
-        {props.showActions && (
+        {props.showActions && props.createLink ? (
           <AdminPageActions
             createLink={props.createLink}
             search={props.search}
           />
-        )}
+        ) : null}
       </div>
     );
   }

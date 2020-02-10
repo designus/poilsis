@@ -1,4 +1,4 @@
-import { Languages, IItem, UserRoles } from 'global-utils/typings';
+import { Locale, IItem, UserRoles } from 'global-utils/typings';
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { updateMainInfo, createItem } from 'actions/items';
@@ -13,8 +13,8 @@ export interface IStateProps {
   usersMap: IUsersMap;
   citiesMap: ICitiesMap;
   typesMap: ITypesMap;
-  userRole: UserRoles;
-  locale: Languages;
+  userRole?: UserRoles;
+  locale: Locale;
   showNavigationPrompt: boolean;
 }
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import { Document, Schema, Model, model } from 'mongoose';
+import { Document, Schema, Model, model, SchemaDefinition } from 'mongoose';
 import shortId from 'shortid';
 import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { formatValue } from 'global-utils/methods';
@@ -42,7 +42,7 @@ const schemaMap: GenericSchemaMap<IType> = {
   }
 };
 
-const TypesSchema: Schema = new Schema(schemaMap);
+const TypesSchema = new Schema(schemaMap as SchemaDefinition);
 
 TypesSchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
 

@@ -1,7 +1,7 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { WithStyles } from '@material-ui/core/styles';
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
-import { ICity, Languages } from 'global-utils/typings';
+import { ICity, Locale } from 'global-utils/typings';
 import { ActiveItem } from 'types';
 import { styles } from './styles';
 
@@ -13,8 +13,8 @@ export interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof s
 }
 
 export interface IStateProps {
-  locale?: Languages;
-  cities?: ICity[];
+  locale: Locale;
+  cities: ICity[];
   selectedCityId?: string;
   activeItem: ActiveItem;
 }

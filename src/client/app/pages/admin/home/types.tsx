@@ -7,7 +7,7 @@ import { addMockedDataAsync, removeMockedDataAsync } from 'actions';
 export interface IOwnProps extends InjectedIntlProps, RouteComponentProps<any> {}
 
 export interface IStateProps {
-  userRole: UserRoles;
+  userRole?: UserRoles;
 }
 
 export interface IDispatchProps {

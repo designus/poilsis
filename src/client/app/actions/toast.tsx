@@ -4,7 +4,7 @@ export const showToast = (toastType: ToastType, message: string, error?: string)
   type: ToastActionTypes.SHOW_TOAST,
   toastType,
   message,
-  error
+  error: error || null
 });
 
 export const hideToast = (): IHideToast => ({

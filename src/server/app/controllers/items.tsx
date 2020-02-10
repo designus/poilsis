@@ -1,7 +1,7 @@
 
 import { Request, Response, NextFunction, response } from 'express';
 import shortId from 'shortid';
-import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, ToggleFields, Languages } from 'global-utils';
+import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, ToggleFields, Locale } from 'global-utils';
 import {
   getImages,
   sendResponse,
@@ -58,7 +58,7 @@ export const getAllItems = async (req: Request, res: Response, next: NextFunctio
 
 export const getRecommendedItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = req.headers['accept-language'] as Languages;
+    const locale = req.headers['accept-language'] as Locale;
 
     if (!locale) throw new Error('Locale is not set');
 
@@ -79,7 +79,7 @@ export const getRecommendedItems = async (req: Request, res: Response, next: Nex
 
 export const getCityItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = req.headers['accept-language'] as Languages;
+    const locale = req.headers['accept-language'] as Locale;
     const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
     const cityItems = await ItemsModel
       .aggregate([
@@ -145,10 +145,10 @@ export const toggleItemApproved = async (req: Request, res: Response, next: Next
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: IItem = req.body;
-  const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
+  const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
   const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
   const alias = getUniqueAlias(itemsByAlias, id, adjustedAlias);
-  const isEnabled = getAdjustedIsEnabledValue(item);
+  const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);
 
   const newItem: IItem = {
     ...item,
@@ -167,7 +167,7 @@ export const getAdminItem = (req: Request, res: Response, next: NextFunction) =>
 
 export const getClientItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = req.headers['accept-language'] as Languages;
+    const locale = req.headers['accept-language'] as Locale;
     const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled', 'metaTitle', 'metaDescription', 'description'];
 
     if (!locale) throw new Error('Locale is not set');
@@ -195,10 +195,10 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   try {
     const item: IItem = req.body;
     const updatedAt = new Date().toUTCString();
-    const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES) as TranslatableField;
+    const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
     const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
     const alias = getUniqueAlias(itemsByAlias, item.id, adjustedAlias);
-    const isEnabled = getAdjustedIsEnabledValue(item);
+    const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);
 
     const updatedItem: IItem = {
       ...item,
@@ -227,6 +227,9 @@ export const updateItemDescription = async (req: Request, res: Response, next: N
   try {
     const fields = getItemDescriptionFields(req.body);
     const result = await ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: fields }, { new: true, runValidators: true });
+
+    if (!result) throw new Error('Unable to update description');
+
     res.status(200).json(getItemDescriptionFields(result.toJSON() as IItem));
   } catch (err) {
     return next(err);

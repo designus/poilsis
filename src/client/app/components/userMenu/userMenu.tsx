@@ -1,33 +1,25 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
+// @ts-ignore
 import Countdown from 'react-countdown-now';
 import { throttle } from 'lodash';
 
-import { getAccessTokenClaims, REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
+import { REAUTHENTICATE_DURATION_SECONDS } from 'global-utils';
 import { logout, showKeepMeLoggedModal } from 'actions/auth';
-import { getSessionExpiryTime } from 'selectors';
-import { IAppState, UserDetails } from 'types';
+import { getSessionExpiryTime, isKeepMeeLoggedModalVisible, getCurrentUser } from 'selectors';
+import { IAppState, ThunkDispatch } from 'types';
 import { DropdownMenu } from 'components/dropdownMenu';
+import { IOwnProps, IStateProps, IDispatchProps, Props } from './types';
 import { styles } from './styles';
 
-interface IMenuComponentProps extends WithStyles<typeof styles> {
-  currentUser?: UserDetails;
-  isLoggedIn?: boolean;
-  isInverted?: boolean;
-  sessionExpiryTime?: number;
-  isKeepMeLoggedModalVisible?: boolean;
-  logout?: () => void;
-  showKeepMeLoggedModal?: () => void;
-}
+export class UserMenu extends React.Component<Props> {
 
-export class UserMenu extends React.Component<IMenuComponentProps, any> {
-
-  handleTick = (props) => {
+  handleTick = (props: any) => {
     if (props.minutes === 0 && props.seconds <= REAUTHENTICATE_DURATION_SECONDS && !this.props.isKeepMeLoggedModalVisible) {
       this.props.showKeepMeLoggedModal();
     } else if (props.minutes === 0 && props.seconds === 0) {
@@ -41,7 +33,7 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
     this.props.logout();
   }
 
-  renderCountdown = ({ minutes, seconds }) => {
+  renderCountdown = ({ minutes, seconds }: any) => {
     return (
       <Typography color="inherit" variant="body1" className={this.props.classes.sessionTimer}>
         {minutes}:{seconds}
@@ -70,14 +62,14 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
     return (
       <div className={this.props.classes.wrapper}>
         <Countdown
-          date={this.props.sessionExpiryTime * 1000}
+          date={Number(this.props.sessionExpiryTime) * 1000}
           intervalDelay={0}
           precision={3}
           renderer={this.renderCountdown}
           onTick={this.onTick}
         />
         <Typography color="inherit" variant="body1" align="right">
-          Hello, {this.props.currentUser.name}
+          Hello, {this.props.currentUser?.name}
         </Typography>
         <DropdownMenu
           id="menuRight"
@@ -91,17 +83,17 @@ export class UserMenu extends React.Component<IMenuComponentProps, any> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
-  isKeepMeLoggedModalVisible: state.auth.showKeepMeLoggedModal,
-  currentUser: state.currentUser.details,
+const mapStateToProps = (state: IAppState): IStateProps => ({
+  isKeepMeLoggedModalVisible: isKeepMeeLoggedModalVisible(state),
+  currentUser: getCurrentUser(state),
   sessionExpiryTime: getSessionExpiryTime(state)
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   logout: () => dispatch(logout()),
   showKeepMeLoggedModal: () => dispatch(showKeepMeLoggedModal())
 });
 
 export default withStyles(styles)(
-  connect<{}, {}, IMenuComponentProps>(mapStateToProps, mapDispatchToProps)(UserMenu)
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(UserMenu)
 );

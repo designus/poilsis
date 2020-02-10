@@ -10,15 +10,15 @@ interface ITableHead {
   numSelected: number;
   order: OrderType;
   orderBy: string;
-  onSelectAllClick: (event, checked: boolean) => void;
-  onRequestSort: (event, property: string, sortType: SortType) => void;
+  onSelectAllClick: (event: any, checked: boolean) => void;
+  onRequestSort: (event: any, property: string, sortType: SortType) => void;
   rowCount: number;
-  columns?: ITableColumn[];
+  columns: ITableColumn[];
 }
 
 export class EnhancedTableHead extends React.Component<ITableHead, any> {
 
-  createSortHandler = (property, sortType) => event => {
+  createSortHandler = (property: any, sortType: any) => (event: any) => {
     this.props.onRequestSort(event, property, sortType);
   }
 

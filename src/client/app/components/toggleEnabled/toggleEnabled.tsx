@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { injectIntl, WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { DataTypes } from 'global-utils/typings';
+import { DataTypes, TranslatableField, IsEnabled, Locale } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 import { ToggleEnabledParams } from 'types';
 
@@ -15,14 +15,16 @@ interface IToggleEnabledProps extends WithStyles<typeof styles>, InjectedIntlPro
 }
 
 function ToggleEnabled(props: IToggleEnabledProps) {
-  const handleToggle = (id: string, isEnabled: boolean, locale: string) => () => {
+  const handleToggle = (id: string, isEnabled: boolean, locale: Locale) => () => {
     props.onToggle({ id, isEnabled, locale });
   };
 
   return (
     <div className={props.classes.isEnabledWrapper}>
       {LANGUAGES.map(lang => {
-        const isDisabled = !props.item.name[lang];
+        const itemName = props.item.name as TranslatableField;
+        const isEnabled = props.item.isEnabled as IsEnabled;
+        const isDisabled = !itemName[lang];
         return props.item.isEnabled && (
           <ToggleAction
             isDisabled={isDisabled}
@@ -30,8 +32,8 @@ function ToggleEnabled(props: IToggleEnabledProps) {
             tooltipText={props.intl.formatMessage({ id: 'admin.items.toggle_tooltip_message'}, { language: lang })}
             label={lang}
             key={lang}
-            isEnabled={props.item.isEnabled[lang]}
-            onToggle={handleToggle(props.item.id, !props.item.isEnabled[lang], lang)}
+            isEnabled={isEnabled[lang]}
+            onToggle={handleToggle(props.item.id, !isEnabled[lang], lang)}
           />
         );
       })}

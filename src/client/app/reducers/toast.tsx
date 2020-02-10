@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { Toast, IToastState, ToastActionTypes, ToastActions, InitialDataActionTypes, InitialDataActions } from 'types';
+import { Toast, IToastState, ToastActionTypes, ToastActions, InitialDataActions } from 'types';
 
 type ActionTypes = ToastActions | InitialDataActions;
 

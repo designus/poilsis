@@ -1,9 +1,8 @@
 import * as React from 'react';
 import MaterialButton, { ButtonProps } from '@material-ui/core/Button';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const defaultStyles = (theme: Theme) => createStyles({
+const useStyles = makeStyles({
   root: {
     borderRadius: (props: IButtonProps) => `${props.borderRadius ? props.borderRadius : 20}px`,
     minWidth: '120px',
@@ -23,12 +22,14 @@ export interface IButtonProps extends ButtonProps {
   borderRadius?: number;
 }
 
-export const ButtonComponent = (props: IButtonProps) => {
+export const Button: React.FunctionComponent<IButtonProps> = props => {
+  const classes = useStyles(props);
+
   return (
     <MaterialButton
       classes={{
-        root: props.classes.root,
-        label: props.classes.label
+        root: classes.root,
+        label: classes.label
       }}
       disabled={props.disabled}
       onClick={props.onClick}
@@ -40,5 +41,3 @@ export const ButtonComponent = (props: IButtonProps) => {
     </MaterialButton>
   );
 };
-
-export const Button = withStyles(defaultStyles)(ButtonComponent);

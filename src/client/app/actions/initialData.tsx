@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios';
 import { getNormalizedData, setAcceptLanguageHeader, getUserDetails } from 'client-utils/methods';
 import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
-import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, Languages, isAdmin as isUserAdmin, IUser } from 'global-utils';
+import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, Locale, isAdmin as isUserAdmin, IUser } from 'global-utils';
 import {
   InitialDataActionTypes,
   IClearAllData,
@@ -15,7 +15,7 @@ import { getClientLocale, isLoggedIn as loggedIn, getAccessToken } from 'selecto
 import { http } from './utils';
 
 export interface IGetInitialDataParams {
-  locale?: Languages;
+  locale?: Locale;
 }
 
 export const receiveInitialData: ActionCreator<IReceiveInitialData> = params => ({
@@ -23,14 +23,17 @@ export const receiveInitialData: ActionCreator<IReceiveInitialData> = params => 
   ...params
 });
 
-export const clearAllData: ActionCreator<IClearAllData> = () => ({
+export const clearAllData = (): IClearAllData => ({
   type: InitialDataActionTypes.CLEAR_ALL_DATA
 });
 
-export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const state = getState();
   const locale = params.locale || getClientLocale(state) || DEFAULT_LANGUAGE;
   const token = getAccessToken(state);
+
+  if (!token) return null;
+
   const accessTokenClaims = getAccessTokenClaims(token);
 
   if (locale !== getClientLocale(state)) {
@@ -44,11 +47,11 @@ export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<
   ];
 
   return Promise.all(promises)
-    .then((response: [AxiosResponse<ICity[]>, AxiosResponse<IType[]>, AxiosResponse<IUser[]>]) => {
+    .then(response => {
       const [citiesResponse, typesResponse, usersResponse] = response;
-      const cities = getNormalizedData(citiesResponse.data);
-      const types = getNormalizedData(typesResponse.data);
-      const users = getNormalizedData(usersResponse.data);
+      const cities = getNormalizedData(citiesResponse.data as ICity[]);
+      const types = getNormalizedData(typesResponse.data as IType[]);
+      const users = getNormalizedData(usersResponse.data as IUser[]);
 
       batch(() => {
         dispatch(receiveInitialData({ cities, types, users, isLoggedIn: true }));
@@ -76,10 +79,10 @@ export const getClientInitialData = (params: IGetInitialDataParams): ThunkResult
     ];
 
     return Promise.all(promises)
-      .then((response: [AxiosResponse<ICity[]>, AxiosResponse<IType[]>]) => {
+      .then((response) => {
         const [citiesResponse, typesResponse] = response;
-        const cities = getNormalizedData(citiesResponse.data);
-        const types = getNormalizedData(typesResponse.data);
+        const cities = getNormalizedData(citiesResponse.data as ICity[]);
+        const types = getNormalizedData(typesResponse.data as IType[]);
 
         batch(() => {
           dispatch(receiveInitialData({ cities, types, users: {}, isLoggedIn: false }));
@@ -92,7 +95,7 @@ export const getClientInitialData = (params: IGetInitialDataParams): ThunkResult
   };
 };
 
-export const getInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void>> => (dispatch, getState) => {
+export const getInitialData = (params: IGetInitialDataParams): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const isLoggedIn = loggedIn(getState());
   if (isLoggedIn) {
     return dispatch(getAdminInitialData(params));

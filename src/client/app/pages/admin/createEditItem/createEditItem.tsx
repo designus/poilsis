@@ -9,7 +9,7 @@ import { injectIntl } from 'react-intl';
 
 import { IAppState, ThunkDispatch } from 'types';
 import { getAdminItem } from 'actions';
-import { IItem } from 'global-utils';
+import { IItem, hasLocalizedFields } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem, getItemById, getAdminLocale } from 'selectors';
 import { NotFound } from 'components/notFound';
@@ -27,7 +27,7 @@ import { IStateProps, IOwnProps, IDispatchProps, CreateEditItemProps, ItemPageMa
 
 class CreateEditItemPage extends React.Component<CreateEditItemProps> {
 
-  static fetchData(store, params: ItemPageMatchParams) {
+  static fetchData(store: any, params: ItemPageMatchParams) {
     if (params.itemId) {
       return store.dispatch(getAdminItem(params.itemId));
     } else {
@@ -43,20 +43,20 @@ class CreateEditItemPage extends React.Component<CreateEditItemProps> {
       {
         id: 1,
         icon: () => (<HomeIcon />),
-        link: userId ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
+        link: (userId && itemId) ? adminRoutes.editItemMain.getLink(userId, itemId) : adminRoutes.createItemMain.getLink(),
         text: formatMessage({ id: 'admin.menu.main_info' })
       },
       {
         id: 2,
         icon: () => (<DescriptionIcon />),
-        link: adminRoutes.editItemDescription.getLink(userId, itemId),
+        link: (userId && itemId) ? adminRoutes.editItemDescription.getLink(userId, itemId) : '',
         text: formatMessage({ id: 'admin.menu.description' }),
         isDisabled: this.isCreatePage()
       },
       {
         id: 3,
         icon: () => (<PhotoIcon />),
-        link: adminRoutes.editItemPhotos.getLink(userId, itemId),
+        link: (userId && itemId) ? adminRoutes.editItemPhotos.getLink(userId, itemId) : '',
         text: formatMessage({ id: 'admin.menu.photos' }),
         isDisabled: this.isCreatePage()
       }
@@ -70,16 +70,15 @@ class CreateEditItemPage extends React.Component<CreateEditItemProps> {
   }
 
   renderItemName = (loadedItem: IItem) => {
-    console.log('Loaded item', loadedItem);
-    return loadedItem ?
+    return loadedItem && hasLocalizedFields(loadedItem.name) ?
       ReactDOM.createPortal(
         <span> / {loadedItem.name[this.props.locale]}</span>,
-        document.querySelector('.editItemName')
+        document.querySelector('.editItemName') as Element
       ) : null;
   }
 
   render() {
-    const { loadedItem, match, locale } = this.props;
+    const { loadedItem, match } = this.props;
     const isCreatePage = this.isCreatePage();
     const childProps = { loadedItem, isCreatePage };
     const { userId, itemId } = match.params;

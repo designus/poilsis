@@ -1,6 +1,6 @@
 import { IUser } from 'global-utils/typings';
 
-export type UserDetails = Partial<Pick<IUser, 'name' | 'role' | 'id'>>;
+export type UserDetails = Partial<Pick<IUser, 'name' | 'role' | 'id'>> | null;
 
 export interface ICurrentUserState {
   details: UserDetails;
@@ -14,7 +14,7 @@ export enum CurrentUserActionTypes {
 
 export interface IReceiveUserDetails {
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS;
-  userDetails: UserDetails;
+  userDetails: UserDetails | null;
 }
 
 export interface ISetUserItems {

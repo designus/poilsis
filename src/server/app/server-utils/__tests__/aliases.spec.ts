@@ -1,13 +1,15 @@
-import { DataTypes } from '../../../../global-utils/typings';
+import { DataTypes, TranslatableField, Locale } from '../../../../global-utils/typings';
 import { extendAliasWithId, getAdjustedAliasValue, getUniqueAlias, getAliasList } from '../aliases';
 
 describe('server-utils/aliases', () => {
   describe('Aliases', () => {
+    const voidFn = () => null;
+
     it('extendAliasWithId() should add id to the end of the alias if alias already exists in other items', () => {
       const alias = {
         en: 'name',
         lt: 'pavadinimas'
-      };
+      } as TranslatableField;
 
       expect(extendAliasWithId(alias, 'id123', ['name'])).toEqual({
         en: 'name-id123',
@@ -33,11 +35,11 @@ describe('server-utils/aliases', () => {
 
       const existingAlias = {
         en: 'hotel-xxx'
-      };
+      } as TranslatableField;
 
       const uniqueAlias = {
         en: 'apartments-in-paris'
-      };
+      } as TranslatableField;
 
       expect(getUniqueAlias(items, '789', existingAlias)).toEqual({ en: 'hotel-xxx-789' });
       expect(getUniqueAlias(items, '789', uniqueAlias)).toEqual(uniqueAlias);
@@ -45,7 +47,7 @@ describe('server-utils/aliases', () => {
 
     describe('getAdjustedAliasValue()', () => {
       it('should handle all cases when name and alias are unique', () => {
-        const languages = ['en'];
+        const languages = ['en'] as Locale[];
         const itemWithEmptyAlias = {
           id: '123',
           name: {
@@ -73,13 +75,13 @@ describe('server-utils/aliases', () => {
           }
         } as DataTypes;
 
-        expect(getAdjustedAliasValue(itemWithEmptyAlias, languages)).toEqual({ en: 'custom-name' });
-        expect(getAdjustedAliasValue(itemWithFilledAlias, languages)).toEqual({ en: 'custom-alias' });
-        expect(getAdjustedAliasValue(itemWithoutAlias, languages)).toEqual({ en: 'custom-name' });
+        expect(getAdjustedAliasValue(itemWithEmptyAlias, languages, voidFn)).toEqual({ en: 'custom-name' });
+        expect(getAdjustedAliasValue(itemWithFilledAlias, languages, voidFn)).toEqual({ en: 'custom-alias' });
+        expect(getAdjustedAliasValue(itemWithoutAlias, languages, voidFn)).toEqual({ en: 'custom-name' });
       });
 
       it('should not add alias if name field is empty', () => {
-        const languages = ['en', 'lt', 'ru'];
+        const languages = ['en', 'lt', 'ru'] as Locale[];
         const itemWithEmptyName = {
           id: '123',
           name: {
@@ -94,7 +96,7 @@ describe('server-utils/aliases', () => {
           }
         } as DataTypes;
 
-        expect(getAdjustedAliasValue(itemWithEmptyName, languages)).toEqual({
+        expect(getAdjustedAliasValue(itemWithEmptyName, languages, voidFn)).toEqual({
           en: 'custom-name',
           lt: '',
           ru: ''

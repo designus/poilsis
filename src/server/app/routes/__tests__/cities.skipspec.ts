@@ -57,7 +57,7 @@ describe.skip('Integration tests: Cities', () => {
 
   describe('User: admin', () => {
 
-    let accessToken;
+    let accessToken: string | null = '';
 
     beforeAll((done) => {
       login(adminUser)
@@ -81,7 +81,7 @@ describe.skip('Integration tests: Cities', () => {
         .send(newCity)
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
-        .then(response => {
+        .then((response: any) => {
           expect(response.body.name[DEFAULT_LANGUAGE]).toBe(newCity.name);
         });
     });
@@ -92,7 +92,7 @@ describe.skip('Integration tests: Cities', () => {
         .send({ ...newCity,  name: 'Klaipeda' })
         .set('Cookie', `jwt=${accessToken}`)
         .expect(200)
-        .then(response => {
+        .then((response: any) => {
           expect(response.body.name).toBe('Klaipeda');
         });
     });
@@ -107,7 +107,7 @@ describe.skip('Integration tests: Cities', () => {
 
   describe('User: regular', () => {
 
-    let accessToken;
+    let accessToken: string | null;
 
     beforeAll((done) => {
       login(regularUser)

@@ -1,57 +1,94 @@
-import { UserRoles, TranslatableField, Languages } from 'global-utils/typings';
+import { UserRoles, TranslatableField, Locale } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 
-export interface IRoute {
-  path: string;
-  getLink?: (arg1?, arg2?, arg3?) => string;
-  allowedRoles?: string[];
-}
-
-export type RouteKeys =
-  | 'login'
-  | 'landing'
-  | 'items'
-  | 'item'
-  | 'createItem'
-  | 'createItemMain'
-  | 'editItem'
-  | 'editItemMain'
-  | 'editItemDescription'
-  | 'editItemPhotos'
-  | 'types'
-  | 'createType'
-  | 'editType'
-  | 'cities'
-  | 'createCity'
-  | 'editCity' ;
-
-export type RoutesConfig = {
-  [P in RouteKeys]?: IRoute;
-};
-
-interface IRoutesConfig {
+interface IClientRoutesConfig {
   login: {
     path: string,
-    getLink: (locale: Languages) => string
+    getLink: (locale: Locale) => string
   };
   landing: {
     path: string,
-    getLink: (locale: Languages) => string
+    getLink: (locale: Locale) => string
   };
   items: {
     path: string,
-    getLink: (locale: Languages, cityAlias: TranslatableField | string) => string
+    getLink: (locale: Locale, cityAlias: TranslatableField | string) => string
   };
   item: {
     path: string,
-    getLink: (locale: Languages, cityAlias: TranslatableField | string, itemAlias: TranslatableField | string) => string
+    getLink: (locale: Locale, cityAlias: TranslatableField | string, itemAlias: TranslatableField | string) => string
   };
+}
+
+interface IAdminRoutesConfig {
+  createItem: {
+    path: string;
+    getLink: () => string;
+  };
+  landing: {
+    path: string;
+    getLink: (locale: Locale) => string;
+  };
+  items: {
+    path: string;
+    getLink: () => string;
+  };
+  createItemMain: {
+    path: string;
+    getLink: () => string;
+  };
+  editItem: {
+    path: string;
+    getLink: (userId: string, itemId: string) => string;
+  };
+  editItemMain: {
+    path: string;
+    getLink: (userId: string, itemId: string) => string;
+  };
+  editItemDescription: {
+    path: string;
+    getLink: (userId: string, itemId: string) => string;
+  };
+  editItemPhotos: {
+    path: string;
+    getLink: (userId: string, itemId: string) => string;
+  };
+  types: {
+    path: string;
+    getLink: () => string;
+    allowedRoles: UserRoles[]
+  };
+  createType: {
+    path: string;
+    getLink: () => string;
+    allowedRoles: UserRoles[];
+  };
+  editType: {
+    path: string;
+    getLink: (typeId: string) => string;
+    allowedRoles: UserRoles[];
+  };
+  cities: {
+    path: string;
+    getLink: () => string;
+    allowedRoles: UserRoles[];
+  };
+  createCity: {
+    path: string;
+    getLink: () => string;
+    allowedRoles: UserRoles[];
+  };
+  editCity: {
+    path: string;
+    getLink: (cityId: string) => string;
+    allowedRoles: UserRoles[];
+  }
 }
 
 const locales = LANGUAGES.join('|');
 
-export const clientRoutes: IRoutesConfig = {
+export const clientRoutes: IClientRoutesConfig = {
   login: {
     path: `/:locale(${locales})?/login`,
     getLink: (locale: string) => `/${locale}/login`
@@ -70,7 +107,7 @@ export const clientRoutes: IRoutesConfig = {
   }
 };
 
-export const adminRoutes: RoutesConfig = {
+export const adminRoutes: IAdminRoutesConfig = {
   landing: {
     path: '/admin',
     getLink: () => '/admin'

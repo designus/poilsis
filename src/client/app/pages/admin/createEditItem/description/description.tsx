@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
+// @ts-ignore
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl } from 'react-intl';
 
@@ -8,7 +9,7 @@ import { IAppState, ThunkDispatch } from 'types';
 import { updateItemDescription } from 'actions/items';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getBackendErrors } from 'client-utils/methods';
-import { IItemDescFields, getItemDescriptionFields, TranslatableField } from 'global-utils';
+import { IItemDescFields, getItemDescriptionFields, TranslatableField, Locale, ObjectKeys } from 'global-utils';
 import { stateToHTML } from 'draft-js-export-html';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
@@ -21,12 +22,13 @@ const FormWithLoader = extendWithLoader(extendWithLanguage(MainInfoForm));
 const { initialize } = reduxFormActions;
 
 class DescriptionPage extends React.Component<Props> {
-  handleErrors(errors) {
+  handleErrors(errors: any) {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
   mapEditorStateToHtml = (description: TranslatableEditorState): TranslatableField  => {
-    return Object.keys(description).reduce((acc: any, key: string) => {
+    const keys = Object.keys(description) as ObjectKeys<typeof description>;
+    return keys.reduce((acc: any, key) => {
       acc[key] = typeof description[key] === 'string' ? description[key] : stateToHTML(description[key].getCurrentContent());
       return acc;
     }, {});
@@ -37,7 +39,8 @@ class DescriptionPage extends React.Component<Props> {
     description: this.mapEditorStateToHtml(fields.description)
   })
 
-  onSubmit = (descFields: ISubmitDescFields) => {
+  onSubmit = (fields: any) => {
+    const descFields = fields as ISubmitDescFields;
     const updatedDescription = this.getUpdatedDescription(descFields);
     return this.props.updateItemDescription(this.props.loadedItem.id, updatedDescription)
       .then(() => this.props.initializeForm(updatedDescription))

@@ -7,9 +7,11 @@ import {
   IItem,
   DataTypes,
   UserRoles,
-  Languages,
+  Locale,
   LANGUAGES,
-  TranslatableFields
+  TranslatableFields,
+  IsEnabled,
+  TranslatableField
 } from 'global-utils';
 
 import { MulterFile, IInfoFromFileName, FieldsToSet } from './types';
@@ -51,13 +53,13 @@ export const getFilePath = (destination: string, name: string, extension: string
 };
 
 export const getImages = (files: MulterFile[]): IImage[] => {
-  return files.map(({filename, destination}: MulterFile): IImage => {
+  return files.map(({filename, destination}: MulterFile) => {
     const { name, extension } = getInfoFromFileName(filename);
     return {
       fileName: filename,
       path: destination,
       thumbName: `${name}_${ImageSize.Small}.${extension}`
-    };
+    } as IImage;
   });
 };
 
@@ -73,8 +75,8 @@ export function removeFiles(files: string[], next: NextFunction) {
   if (files.length === 0) {
     next();
   } else {
-     const file = files.pop();
-     unlink(file, (err) => {
+     const file = files.pop() as string;
+     unlink(file, (err: any) => {
         if (err) {
           return next(err);
         } else {
@@ -119,7 +121,7 @@ export const preloadData = (data: Array<() => Promise<void>>): Promise<any> => {
   return loadInitialData().then(() => Promise.all(loadOtherData.map(fn => fn())));
 };
 
-export const sendResponse = (res: Response, next: NextFunction) => (err, result) => {
+export const sendResponse = (res: Response, next: NextFunction) => (err: any, result: any) => {
   if (err) {
     return next(err);
   }
@@ -127,28 +129,29 @@ export const sendResponse = (res: Response, next: NextFunction) => (err, result)
   res.status(200).json(result);
 };
 
-export const getAdjustedIsEnabledValue = (item: DataTypes) => {
-  return Object.keys(item.isEnabled).reduce((acc, key) => {
-    const oldValue = item.isEnabled[key];
-    acc[key] = item.name[key] ? oldValue : false;
+export const getAdjustedIsEnabledValue = (item: DataTypes, languages: Locale[]) => {
+  const isEnabled = item.isEnabled as IsEnabled;
+  const name = item.name as TranslatableField;
+
+  return languages.reduce<IsEnabled>((acc, locale) => {
+    const oldValue = isEnabled[locale];
+    acc[locale] = name[locale] ? oldValue : false;
     return acc;
-  }, {});
+  }, {} as IsEnabled);
 };
 
 export const isApprovedByAdmin = (userRole: UserRoles, item: IItem) =>
   userRole === UserRoles.admin ? item.isApprovedByAdmin : false;
 
-export function getFieldsToUnset<T>(languages: Languages[], skipLocale: Languages, fields: Array<TranslatableFields<T>>): string[] {
+export function getFieldsToUnset<T>(languages: Locale[], skipLocale: Locale, fields: Array<TranslatableFields<T>>): string[] {
   const languagesToUnset = languages.filter(lang => lang !== skipLocale);
   return fields
     .map(field => languagesToUnset.map(lang => `${field}.${lang}`))
     .reduce((acc: string[], val) => acc.concat(val), []);
 }
 
-export function getFieldsToSet<T>(locale: Languages, fields: Array<TranslatableFields<T>>): FieldsToSet {
-  return fields.reduce((acc, field) => {
-    // const key = `${field}.${locale}`;
-    // const key = field as string;
+export function getFieldsToSet<T>(locale: Locale, fields: Array<TranslatableFields<T>>): FieldsToSet {
+  return fields.reduce((acc: any, field) => {
     const value = `$${field}.${locale}`;
     acc[field as string] = value;
     return acc;

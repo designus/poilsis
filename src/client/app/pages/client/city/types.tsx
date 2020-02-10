@@ -1,22 +1,22 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { ICity, IItem } from 'global-utils/typings';
+import { ICity, IItem, Locale } from 'global-utils/typings';
 
 export interface IMatchParams {
   cityAlias: string;
-  locale: string;
+  locale: Locale;
 }
 
-export interface ICityOwnProps extends RouteComponentProps<IMatchParams> {}
+export interface IOwnProps extends RouteComponentProps<IMatchParams> {}
 
-export interface ICityStateProps {
+export interface IStateProps {
   cityItems: IItem[];
   selectedCity: ICity;
   shouldLoadCityItems: boolean;
-  locale: string;
+  locale: Locale;
 }
 
-export interface ICityDispatchProps {
+export interface IDispatchProps {
   loadCityItems: (cityAlias: string) => void;
 }
 
-export type ICityPageProps = ICityOwnProps & ICityStateProps & ICityDispatchProps;
+export type ICityPageProps = IOwnProps & IStateProps & IDispatchProps;

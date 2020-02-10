@@ -11,12 +11,12 @@ import {
 
 type ActionTypes = CitiesActions | ItemsActions | InitialDataActions;
 
-const getInitialState = (): ICityState => ({
+export const getInitialCitiesState = (): ICityState => ({
   dataMap: {},
   aliases: {}
 });
 
-export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialState(), action): ICityState => {
+export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialCitiesState(), action): ICityState => {
   switch (action.type) {
     case CitiesActionTypes.SET_CITY_ITEMS:
       return {

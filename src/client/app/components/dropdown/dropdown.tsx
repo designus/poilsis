@@ -2,6 +2,7 @@ import * as React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
+import { SelectInputProps } from '@material-ui/core/Select/SelectInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
@@ -12,7 +13,7 @@ import { DropdownItemValue, IDropdownOption } from 'types/generic';
 
 import { styles } from './styles';
 
-interface IDropdownProps extends Partial<WithStyles<typeof styles>> {
+interface IDropdownProps extends WithStyles<typeof styles> {
   options: IDropdownOption[];
   onChange: (value: DropdownItemValue) => void;
   selectedValue?: DropdownItemValue;
@@ -22,8 +23,8 @@ interface IDropdownProps extends Partial<WithStyles<typeof styles>> {
 function Dropdown(props: IDropdownProps) {
   const { classes, label, onChange, options, selectedValue } = props;
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(event.target.value);
+  const handleChange: SelectInputProps['onChange'] = (event) => {
+    onChange(event.target.value as DropdownItemValue);
   };
 
   const renderOption = (option: IDropdownOption) => (

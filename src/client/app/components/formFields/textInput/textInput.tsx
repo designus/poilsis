@@ -12,28 +12,26 @@ import { debounce } from 'lodash';
 import { usePrevious } from 'client-utils/customHooks';
 import { isInputHidden } from 'client-utils/methods';
 
-import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields, TranslatableField } from 'global-utils';
+import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields, TranslatableField, Locale } from 'global-utils';
 import { styles } from './styles';
 
 export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
   hasIntl: boolean;
-  selectedLanguage: string;
+  selectedLanguage: Locale;
   isHidden: string;
   multiline: boolean;
 }
 
-const getInitialValue = (value, isIntl: boolean) => {
+const getInitialValue = (value: string | TranslatableField, isIntl: boolean) => {
   if (isIntl) {
-    const isLocalized = hasLocalizedFields(value);
-    return LANGUAGES.reduce((acc, lang) => {
-      // tslint:disable-next-line
-      if (isLocalized) {
-        acc[lang] = value[lang] || '';
+    return LANGUAGES.reduce<TranslatableField>((acc, locale) => {
+      if (hasLocalizedFields(value)) {
+        acc[locale] = value[locale] || '';
       } else {
-        acc[lang] = DEFAULT_LANGUAGE === lang ? value : '';
+        acc[locale] = DEFAULT_LANGUAGE === locale ? value : '';
       }
       return acc;
-    }, {});
+    }, {} as TranslatableField);
   }
 
   return value;
@@ -58,27 +56,32 @@ function TextInput(props: ITextInputProps) {
     debounce(input.onChange, 600), [input.onChange]
   );
 
-  const getNewState = (locale: string, newValue: string) => {
+  const getNewState = (newValue: string, locale?: Locale) => {
     const oldValue = inputValue;
-    return hasIntl ? { ...oldValue, [locale]: newValue } : newValue;
+
+    if (locale && hasIntl && hasLocalizedFields(oldValue)) {
+      return { ...oldValue, [locale]: newValue };
+    }
+
+    return newValue;
   };
 
-  const handleOnChange = (locale: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newState = getNewState(locale, event.target.value);
+  const handleOnChange = (locale?: Locale) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newState = getNewState(event.target.value, locale);
     setInputValue(newState);
     onChange(newState);
   };
 
-  const handleOnBlur = (locale: string) => (event) => {
-    const newState = getNewState(locale, event.target.value);
-    if (newState[locale] && newState[locale] !== initialState[locale]) {
+  const handleOnBlur = (locale?: Locale) => (event: any) => {
+    const newState = getNewState(event.target.value, locale);
+    if (hasIntl && locale && (newState as TranslatableField)[locale] !== (initialState as TranslatableField)[locale]) {
       input.onBlur(newState);
     }
   };
 
-  const showError = (error: string | TranslatableField, language: string) => {
+  const showError = (error: string | TranslatableField, language?: Locale) => {
     if (typeof error === 'string') {
-      const hasError = Boolean(meta.touched && meta.invalid && meta.error);
+      const hasError = Boolean(meta.touched && meta.invalid && error);
       if (language) {
         // Show error only on main language tab
         return hasError && selectedLanguage === DEFAULT_LANGUAGE && language === DEFAULT_LANGUAGE;
@@ -86,7 +89,7 @@ function TextInput(props: ITextInputProps) {
       return hasError;
     }
 
-    return Boolean(meta.touched && meta.invalid && meta.error[language] && language === selectedLanguage);
+    return Boolean(meta.touched && meta.invalid && error[language as Locale] && language === selectedLanguage);
   };
 
   const renderLoader = () => meta.asyncValidating && (
@@ -105,13 +108,13 @@ function TextInput(props: ITextInputProps) {
     return '';
   };
 
-  const renderInput = (value: string, languageOption?: string) => {
+  const renderInput = (value?: string, languageOption?: Locale) => {
     const hasError = showError(meta.error, languageOption);
     const tooltipText = getError(meta.error);
 
     return (
       <div
-        className={`${classes.wrapper} ${isInputHidden(languageOption, selectedLanguage, hasIntl) ? classes.hidden : ''}`}
+        className={`${classes.wrapper} ${isInputHidden(selectedLanguage, hasIntl, languageOption) ? classes.hidden : ''}`}
         key={languageOption}
       >
         <Tooltip open={hasError} title={tooltipText} placement="right-end">
@@ -142,11 +145,14 @@ function TextInput(props: ITextInputProps) {
     );
   };
 
-  const renderIntlInputs = () => LANGUAGES.map(lang => renderInput(inputValue[lang], lang));
+  const renderIntlInputs = () => LANGUAGES.map(lang => {
+    const value = inputValue as TranslatableField;
+    return renderInput(value[lang], lang);
+  });
 
   return (
     <React.Fragment>
-      {hasIntl ? renderIntlInputs() : renderInput(inputValue)}
+      {hasIntl ? renderIntlInputs() : renderInput(inputValue as string)}
     </React.Fragment>
   );
 }

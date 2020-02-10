@@ -5,23 +5,25 @@ import {
   itemValidation,
   IImage,
   IPhotoFormState,
-  TranslatableField
+  TranslatableField,
+  Locale,
+  IntlSetting
 } from 'global-utils';
 
 import * as errors from '../data-strings/validation';
-import { IsEnabled } from './typings';
+import { IsEnabled, TranslatableFields } from './typings';
 
 const { images: { maxPhotos, maxPhotoSizeBytes, minPhotoWidth, minPhotoHeight } } = itemValidation;
 
 export interface IFormProps {
-  intl?: IntlShape;
+  intl: IntlShape;
   images?: IImage[];
   values?: any;
-  defaultLanguage?: string;
-  languages?: string[];
+  defaultLanguage: Locale;
+  languages: Locale[];
 }
 
-export const requiredWhenEnabled = (fieldValue: TranslatableField, formState, formProps: IFormProps) => {
+export const requiredWhenEnabled = (fieldValue: TranslatableField, formState: any, formProps: IFormProps) => {
   const isEnabled = formProps.values.isEnabled as IsEnabled;
 
   if (!fieldValue || !isEnabled) return undefined;
@@ -29,24 +31,24 @@ export const requiredWhenEnabled = (fieldValue: TranslatableField, formState, fo
   const requiredError = formProps.intl.formatMessage({ id: errors.REQUIRED });
   const requiredWhenEnabledError = formProps.intl.formatMessage({ id: errors.REQUIRED_WHEN_ENABLED });
 
-  const err = formProps.languages.reduce((acc, lang) => {
+  const err = formProps.languages.reduce<TranslatableField>((acc, lang) => {
     // default language input field is always required
     if (!fieldValue[lang] && (lang === formProps.defaultLanguage || isEnabled[lang])) {
       acc[lang] = lang === formProps.defaultLanguage ? requiredError : requiredWhenEnabledError;
     }
 
     return acc;
-  }, {});
+  }, {} as TranslatableField);
 
   return Object.keys(err).length > 0 ? err : undefined;
 
 };
 
-export const isRequired = (fieldValue: string | TranslatableField, formState, formProps: IFormProps) => {
+export const isRequired = (fieldValue: string | TranslatableField, formState: any, formProps: IFormProps) => {
   const errorMessage = formProps.intl.formatMessage({ id: errors.REQUIRED });
 
   if (fieldValue) {
-    if (hasLocalizedFields(fieldValue) && !fieldValue[formProps.defaultLanguage]) {
+    if (hasLocalizedFields(fieldValue) && !(fieldValue as TranslatableField)[formProps.defaultLanguage]) {
       return errorMessage;
     }
     return undefined;
@@ -54,26 +56,30 @@ export const isRequired = (fieldValue: string | TranslatableField, formState, fo
   return errorMessage;
 };
 
-export const maxTextLength = max => (fieldValue, formState, formProps: IFormProps) => {
-  if (fieldValue && fieldValue.length > max) {
+export const maxTextLength = (max: number) => (fieldValue: string | TranslatableField, formState: any, formProps: IFormProps) => {
+  if (!fieldValue) return undefined;
+
+  if (typeof fieldValue === 'string' && fieldValue.length > max) {
     return formProps.intl.formatMessage({ id: errors.MAX_TEXT_LENGTH }, { count: max });
   }
+  // TODO: Add case for Translatable field
 
   return undefined;
 };
 
-export const minTextLength = min => (fieldValue, formState, formProps: IFormProps) => {
-  if (fieldValue && fieldValue.length < min) {
-    if (hasLocalizedFields(fieldValue) && !fieldValue[DEFAULT_LANGUAGE]) {
-      return undefined;
-    }
+export const minTextLength = (min: number) => (fieldValue: string | TranslatableField, formState: any, formProps: IFormProps) => {
+  if (!fieldValue) return undefined;
+
+  if (typeof fieldValue === 'string' && fieldValue.length < min) {
     return formProps.intl.formatMessage({ id: errors.MIN_TEXT_LENGTH }, { count: min });
   }
 
+  // TODO: Add case for Translatable field
+
   return undefined;
 };
 
-export const minCheckedCount = min => (fieldValue, formState, formProps: IFormProps) => {
+export const minCheckedCount = (min: number) => (fieldValue: any[], formState: any, formProps: IFormProps) => {
   if (!fieldValue || fieldValue.length < min) {
     return formProps.intl.formatMessage({ id: errors.MIN_CHECKED_LENGTH }, { count: min });
   }
@@ -81,7 +87,7 @@ export const minCheckedCount = min => (fieldValue, formState, formProps: IFormPr
   return undefined;
 };
 
-export const maxCheckedCount = max => (fieldValue, formState, formProps: IFormProps) => {
+export const maxCheckedCount = (max: number) => (fieldValue: any[], formState: any, formProps: IFormProps) => {
   if (!fieldValue || fieldValue.length > max) {
     return formProps.intl.formatMessage({ id: errors.MAX_CHECKED_LENGTH }, { count: max });
   }
@@ -89,7 +95,7 @@ export const maxCheckedCount = max => (fieldValue, formState, formProps: IFormPr
   return undefined;
 };
 
-export const isNumber = (fieldValue, formState, formProps: IFormProps) => {
+export const isNumber = (fieldValue: any, formState: any, formProps: IFormProps) => {
   if (fieldValue && isNaN(Number(fieldValue))) {
     return formProps.intl.formatMessage({ id: errors.WRONG_NUMBER });
   }
@@ -97,7 +103,7 @@ export const isNumber = (fieldValue, formState, formProps: IFormProps) => {
   return undefined;
 };
 
-export const isEmail = (fieldValue, formState, formProps: IFormProps) => {
+export const isEmail = (fieldValue: string, formState: any, formProps: IFormProps) => {
   if (fieldValue && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(fieldValue)) {
     return formProps.intl.formatMessage({ id: errors.WRONG_EMAIL });
   }
@@ -106,6 +112,8 @@ export const isEmail = (fieldValue, formState, formProps: IFormProps) => {
 };
 
 export const maxUploadedPhotos = (fieldValue: File[], formState: IPhotoFormState, formProps: IFormProps) => {
+  if (!formProps.images || !formState.files) return undefined;
+
   if (fieldValue && (formProps.images.length + formState.files.length) > maxPhotos) {
     return formProps.intl.formatMessage({ id: errors.MAX_PHOTO_COUNT }, { count: maxPhotos });
   }
@@ -115,23 +123,26 @@ export const maxUploadedPhotos = (fieldValue: File[], formState: IPhotoFormState
 
 export const maxUploadedPhotoSize = (fieldValue: File[], formState: IPhotoFormState, formProps: IFormProps) => {
 
-  if (!fieldValue) return;
+  if (!fieldValue) return undefined;
 
   const doesAnyFileExceedsMaxPhotoSize = fieldValue.some((file: File) => file.size > maxPhotoSizeBytes);
+
   if (doesAnyFileExceedsMaxPhotoSize) {
     return formProps.intl.formatMessage({ id: errors.MAX_PHOTO_SIZE }, { count: maxPhotoSizeBytes });
   }
+
+  return undefined;
 };
 
 export const asyncValidateImage = (state: IPhotoFormState, intl: IntlShape): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     const { files } = state;
-    if (!state.files || !state.files.length) return;
+    if (!files || !files.length) return;
     const dimensions = `(${minPhotoWidth}x${minPhotoHeight}px)`;
     files.forEach((file, index) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = (e) => {
+      reader.onload = (e: any) => {
         const image = new Image();
         image.src = e.target.result as string;
         image.onload = (event: any) => {

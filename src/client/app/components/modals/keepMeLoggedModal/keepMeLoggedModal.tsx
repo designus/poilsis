@@ -2,30 +2,25 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
+// @ts-ignore
 import Countdown from 'react-countdown-now';
 import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 
-import { IAppState } from 'types';
+import { IAppState, ThunkDispatch } from 'types';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { logout, reauthenticateUser } from 'actions/auth';
 import { getSessionExpiryTime } from 'selectors';
 import { styles } from '../styles';
 import { Header, Content, Footer } from '../shared';
+import { IOwnProps, IStateProps, IDispatchProps, Props } from './types';
 
-export interface IKeepMeLoggedModalProps extends WithStyles<typeof styles> {
-  isModalOpen?: boolean;
-  sessionExpiryTime?: number;
-  onCloseModal?: () => void;
-  reauthenticateUser?: () => void;
-}
-
-class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalProps> {
+class KeepMeLoggedModalComponent extends React.PureComponent<Props> {
 
   onCloseModal = () => {
     this.props.onCloseModal();
   }
 
-  renderCountdown = ({ seconds }) => {
+  renderCountdown = ({ seconds }: any) => {
     return (
       <FormattedHTMLMessage id="admin.reauthenticate_modal.description" values={{ seconds }} />
     );
@@ -73,16 +68,16 @@ class KeepMeLoggedModalComponent extends React.PureComponent<IKeepMeLoggedModalP
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   sessionExpiryTime: getSessionExpiryTime(state),
   isModalOpen: state.auth.showKeepMeLoggedModal
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   onCloseModal: () => dispatch(logout()),
   reauthenticateUser: () => dispatch(reauthenticateUser(true))
 });
 
-const connectedComponent = connect<{}, {}, IKeepMeLoggedModalProps>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent);
-
-export default withStyles(styles)(connectedComponent);
+export default withStyles(styles)(
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(KeepMeLoggedModalComponent)
+);

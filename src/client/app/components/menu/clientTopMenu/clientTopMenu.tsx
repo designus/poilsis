@@ -37,7 +37,7 @@ const messages = defineMessages({
 function ClientTopMenu(props: ITopMenuProps) {
   const { classes, activeItem, cities, isLoggedIn, locale, isVertical, onRouteChange, intl } = props;
 
-  const StyledTopMenu = isVertical ? VerticalMenu : HorizontalMenu;
+  const StyledTopMenu: any = isVertical ? VerticalMenu : HorizontalMenu;
 
   const getMenuItems = (): IMenuItem[] => {
     const menuItems: IMenuItem[] = [

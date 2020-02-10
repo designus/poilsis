@@ -176,7 +176,7 @@ class AdminItemsPage extends React.Component<Props, State> {
     this.setState({search});
   }
 
-  openDeleteModal = (itemId) => () => {
+  openDeleteModal = (itemId: string) => () => {
     this.setState({ isDeleteModalOpen: true, deleteId: itemId });
   }
 
@@ -240,19 +240,17 @@ const mapStateToProps = (state: IAppState): IStateProps => ({
   locale: getAdminLocale(state)
 });
 
-const mapDispatchToProps = (dispatch: ThunkDispatch) =>
-  bindActionCreators<any, IDispatchProps>(
-    {
-      deleteItem,
-      loadUserItems,
-      endLoading,
-      toggleItemEnabled,
-      toggleItemRecommended,
-      toggleItemApproved
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
+  deleteItem: itemId => dispatch(deleteItem(itemId)),
+  loadUserItems: () => dispatch(loadUserItems()),
+  endLoading: loaderId => dispatch(endLoading(loaderId)),
+  toggleItemEnabled: params => dispatch(toggleItemEnabled(params)),
+  toggleItemRecommended: (itemId, isRecommended) => dispatch(toggleItemRecommended(itemId, isRecommended)),
+  toggleItemApproved: (itemId, isApproved) => dispatch(toggleItemApproved(itemId, isApproved))
+});
 
-export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(
-  injectIntl(AdminItemsPage)
+export default injectIntl(
+  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(
+    AdminItemsPage
+  )
 );

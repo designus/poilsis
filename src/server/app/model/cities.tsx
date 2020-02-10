@@ -1,7 +1,7 @@
 'use strict';
 
 import { ICity, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
-import { Document, Schema, Model, model} from 'mongoose';
+import { Document, Schema, Model, model, SchemaDefinition} from 'mongoose';
 import shortId from 'shortid';
 
 import { formatValue } from 'global-utils/methods';
@@ -54,7 +54,7 @@ const schemaMap: GenericSchemaMap<ICity> = {
   }
 };
 
-const CitySchema = new Schema(schemaMap);
+const CitySchema = new Schema(schemaMap as SchemaDefinition);
 
 CitySchema.plugin(mongooseIntl, {
   languages: LANGUAGES,

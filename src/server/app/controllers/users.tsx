@@ -1,13 +1,13 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
-import { IUser, ToggleFields, Languages } from 'global-utils/typings';
+import { IUser, ToggleFields, Locale } from 'global-utils/typings';
 import { UsersModel } from '../model/users';
 import { LANGUAGES } from 'global-utils';
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = req.headers['accept-language'] as Languages;
+    const locale = req.headers['accept-language'] as Locale;
     const toggleFields: ToggleFields<IUser> = ['isEnabled'];
     const users = await UsersModel.aggregate([
       { $project: { _id: 0, id: 1, name: 1 } },

@@ -19,7 +19,9 @@ class PhotosPage extends React.Component<Props> {
   getItemId = () => this.props.loadedItem.id;
 
   handleImagesUpload = (state: IPhotoFormState) => {
-    this.props.uploadImages(this.getItemId(), state.files);
+    if (state.files) {
+      this.props.uploadImages(this.getItemId(), state.files);
+    }
   }
 
   handleImagesUpdate = (images: IImage[]) => {

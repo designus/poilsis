@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Dispatch } from "redux";
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { ICity, DEFAULT_LANGUAGE, requiredWhenEnabled } from 'global-utils';

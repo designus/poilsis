@@ -37,6 +37,7 @@
     "no-submodule-imports": false,
     "no-implicit-dependencies": false,
     "prefer-object-spread": false,
+    "prefer-conditional-expression": false,
     "no-console": [
       false
     ],

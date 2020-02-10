@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
+// @ts-ignore
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl } from 'react-intl';
 
@@ -23,7 +24,7 @@ const { initialize } = reduxFormActions;
 
 class MainInfoPage extends React.Component<Props> {
 
-  handleErrors(errors) {
+  handleErrors(errors: any) {
     throw new SubmissionError(getBackendErrors(errors));
   }
 

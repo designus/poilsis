@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { IAppState, IItemsMap, ICitiesMap } from 'types';
-import { Languages } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
 import { loadRecommendedItems } from 'actions';
 import { ItemCard } from 'components/itemCard';
 import { getRecommendedItems, hasRecommendedItemsLoaded, getItemsMap, getClientLocale, getCitiesMap } from 'selectors';
@@ -24,12 +24,12 @@ interface IStateProps {
   hasLoaded: boolean;
   itemsMap: IItemsMap;
   citiesMap: ICitiesMap;
-  locale: Languages;
+  locale: Locale;
 }
 
 type RecommendedItemsProps = IOwnProps & IStateProps & IDispatchProps;
 
-export const loadRecommendedItemsData = store => store.dispatch(loadRecommendedItems());
+export const loadRecommendedItemsData = (store: any) => store.dispatch(loadRecommendedItems());
 
 function RecommendedItems(props: RecommendedItemsProps) {
   const { recommendedItems, hasLoaded, loadRecommendedItems, classes, itemsMap, citiesMap, locale } = props;
@@ -68,7 +68,7 @@ function RecommendedItems(props: RecommendedItemsProps) {
   );
 }
 
-const mapStateToProps = (state: IAppState) => ({
+const mapStateToProps = (state: IAppState): IStateProps => ({
   recommendedItems: getRecommendedItems(state),
   hasLoaded: hasRecommendedItemsLoaded(state),
   itemsMap: getItemsMap(state),
@@ -76,10 +76,10 @@ const mapStateToProps = (state: IAppState) => ({
   locale: getClientLocale(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadRecommendedItems: () => dispatch(loadRecommendedItems())
-});
+const mapDispatchToProps: IDispatchProps = {
+  loadRecommendedItems
+};
 
-export default connect<IStateProps, IDispatchProps, {}>(mapStateToProps, mapDispatchToProps)(
+export default connect<IStateProps, IDispatchProps, {}, IAppState>(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(RecommendedItems)
 );

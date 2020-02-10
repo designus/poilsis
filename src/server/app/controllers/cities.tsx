@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
-import { ICity, LANGUAGES, TranslatableField, ToggleFields, Languages } from 'global-utils';
+import { ICity, LANGUAGES, TranslatableField, ToggleFields, Locale } from 'global-utils';
 import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
 import { getAdjustedAliasValue, getUniqueAlias, getAliasList } from 'server-utils/aliases';
 import { getDataByAlias } from './common';
@@ -8,7 +8,7 @@ import { CitiesModel } from '../model';
 
 export const getClientCities = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = req.headers['accept-language'] as Languages;
+    const locale = req.headers['accept-language'] as Locale;
 
     if (!locale) throw new Error('Locale is not set');
 
@@ -52,8 +52,8 @@ export const getCity = (req: Request, res: Response, next: NextFunction) => {
 export const addNewCity = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const city: ICity = req.body;
-  const alias = getAdjustedAliasValue(city, LANGUAGES) as TranslatableField;
-  const isEnabled = getAdjustedIsEnabledValue(city);
+  const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
+  const isEnabled = getAdjustedIsEnabledValue(city, LANGUAGES);
   const citiesByAlias = await getDataByAlias(CitiesModel, alias);
   const newCity = {
     id,
@@ -69,8 +69,8 @@ export const updateCity = async (req: Request, res: Response, next: NextFunction
   try {
     const city: ICity = req.body;
     const cityId = req.params.cityId;
-    const alias = getAdjustedAliasValue(city, LANGUAGES) as TranslatableField;
-    const isEnabled = getAdjustedIsEnabledValue(city);
+    const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
+    const isEnabled = getAdjustedIsEnabledValue(city, LANGUAGES);
     const citiesByAlias = await getDataByAlias(CitiesModel, alias);
 
     const updatedCity = {

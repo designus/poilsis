@@ -12,7 +12,7 @@ import { styles } from './style';
 
 const { images: { maxPhotos, maxPhotoSizeMegabytes, mimeTypes } } = itemValidation;
 
-export interface IFileUploadProps extends  Partial<WithStyles<typeof styles>> {
+export interface IFileUploadProps extends WithStyles<typeof styles> {
   onDrop: (acceptedImages: File[], rejectedImages?: File[]) => void;
   showUploadButtons: boolean;
   hasValidationError: boolean;

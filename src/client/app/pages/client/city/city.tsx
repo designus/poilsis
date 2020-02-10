@@ -11,11 +11,11 @@ import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { getCityByAlias, shouldLoadCityItems, getCityItems, getClientLocale } from 'selectors';
-import { IMatchParams, ICityPageProps, ICityOwnProps, ICityStateProps, ICityDispatchProps } from './types';
+import { IMatchParams, ICityPageProps, IOwnProps, IStateProps, IDispatchProps } from './types';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
-export const loadCityData = (store, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
+export const loadCityData = (store: any, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
 
 class CityPage extends React.Component<ICityPageProps> {
 
@@ -51,7 +51,7 @@ class CityPage extends React.Component<ICityPageProps> {
   renderMetaDescription = () => {
     const { metaDescription } = this.props.selectedCity;
     return metaDescription && (
-      <meta name="description" content={metaDescription[this.props.locale]} />
+      <meta name="description" content={getLocalizedText(metaDescription, this.props.locale)} />
     );
   }
 
@@ -85,15 +85,15 @@ class CityPage extends React.Component<ICityPageProps> {
   }
 }
 
-const mapStateToProps = (state: IAppState, props: ICityOwnProps) => ({
+const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
   selectedCity: getCityByAlias(state, props.match.params.cityAlias),
   cityItems: getCityItems(state, props.match.params.cityAlias),
   shouldLoadCityItems: shouldLoadCityItems(state, props.match.params.cityAlias),
   locale: getClientLocale(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadCityItems: (cityAlias: string) => dispatch(loadCityItems(cityAlias))
-});
+const mapDispatchToProps = {
+  loadCityItems
+};
 
-export default connect<ICityStateProps, ICityDispatchProps, ICityOwnProps>(mapStateToProps, mapDispatchToProps)(CityPage);
+export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CityPage);

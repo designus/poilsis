@@ -3,15 +3,15 @@ import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { getInitialData } from 'actions/initialData';
 import { ThunkReturn } from 'types';
-import { Languages } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
 
 import { styles } from './styles';
 
 export interface IOwnProps extends WithStyles<typeof styles>, InjectedIntlProps, RouteComponentProps<any> {}
 
 export interface IStateProps {
-  adminLocale: Languages;
-  clientLocale: Languages;
+  adminLocale: Locale;
+  clientLocale: Locale;
   isInitialDataLoaded: boolean;
 }
 

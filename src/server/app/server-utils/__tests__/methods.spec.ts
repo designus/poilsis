@@ -1,4 +1,4 @@
-import { IItem, IImage } from '../../../../global-utils/typings';
+import { IItem, IImage, Locale } from '../../../../global-utils/typings';
 import { MulterFile } from '../types';
 import {
   getAdjustedIsEnabledValue,
@@ -23,7 +23,9 @@ describe('server-utils/methods', () => {
       }
     } as IItem;
 
-    expect(getAdjustedIsEnabledValue(item)).toEqual({
+    const languages = ['lt', 'en'] as Locale[];
+
+    expect(getAdjustedIsEnabledValue(item, languages)).toEqual({
       lt: false,
       en: true
     });
@@ -31,13 +33,13 @@ describe('server-utils/methods', () => {
 
   it('getRemovableFiles() should get a list of files that does not exist in the list of images', () => {
     const existingFiles = ['1.jpg', `1_S.jpg`, '2.jpg', '2_S.jpg', '3.jpg'];
-    const newImages: IImage[] = [
+    const newImages = [
       {
         id: '2',
         fileName: '2.jpg',
         thumbName: '2_S.jpg'
       }
-    ];
+    ] as IImage[];
 
     expect(getRemovableFiles(existingFiles, newImages, 'path')).toEqual(['path/1.jpg', 'path/1_S.jpg', 'path/3.jpg']);
   });
@@ -91,8 +93,8 @@ describe('server-utils/methods', () => {
 
   it('getFieldsToSet()', () => {
     expect(getFieldsToSet('en', ['alias', 'name'])).toEqual({
-      'alias.en': '$alias.en',
-      'name.en': '$name.en'
+      alias: '$alias.en',
+      name: '$name.en'
     });
   });
 });

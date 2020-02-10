@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { IType, LANGUAGES, TranslatableField, Languages, ToggleFields } from 'global-utils';
+import { IType, LANGUAGES, TranslatableField, Locale, ToggleFields } from 'global-utils';
 import shortId from 'shortid';
 
 import { getUniqueAlias, getAdjustedAliasValue } from 'server-utils/aliases';
@@ -9,7 +9,7 @@ import { getDataByAlias } from './common';
 
 export const getClientTypes = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const locale = req.headers['accept-language'] as Languages;
+    const locale = req.headers['accept-language'] as Locale;
 
     if (!locale) throw new Error('Locale is not set');
 
@@ -53,9 +53,9 @@ export const getType = (req: Request, res: Response, next: NextFunction) => {
 export const addNewType = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const data: IType = req.body;
-  const alias = getAdjustedAliasValue(data, LANGUAGES) as TranslatableField;
+  const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
   const typesByAlias = await getDataByAlias(TypesModel, alias);
-  const isEnabled = getAdjustedIsEnabledValue(data);
+  const isEnabled = getAdjustedIsEnabledValue(data, LANGUAGES);
   const newType = {
     ...data,
     alias: getUniqueAlias(typesByAlias, id, alias),
@@ -70,9 +70,9 @@ export const updateType = async (req: Request, res: Response, next: NextFunction
   try {
     const data: IType = req.body;
     const typeId = req.params.typeId;
-    const alias = getAdjustedAliasValue(data, LANGUAGES) as TranslatableField;
+    const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
     const typesByAlias = await getDataByAlias(TypesModel, alias);
-    const isEnabled = getAdjustedIsEnabledValue(data);
+    const isEnabled = getAdjustedIsEnabledValue(data, LANGUAGES);
     const type = {
       ...data,
       alias: getUniqueAlias(typesByAlias, data.id, alias),

@@ -1,6 +1,6 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
-import { ICity, Languages } from 'global-utils/typings';
+import { ICity, Locale } from 'global-utils/typings';
 import { ITypesMap, ThunkReturn } from 'types';
 import { createCity, updateCity, getAdminCity } from 'actions/cities';
 
@@ -22,7 +22,7 @@ export interface IStateProps {
   showNavigationPrompt: boolean;
   typesMap: ITypesMap;
   shouldLoadEditCity: boolean;
-  locale: Languages;
+  locale: Locale;
 }
 
 export type Props = IOwnProps & IStateProps & IDispatchProps;

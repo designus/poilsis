@@ -8,10 +8,10 @@ export enum Toast {
 export type ToastType = Toast.warning | Toast.error | Toast.success;
 
 export interface IToastState {
-  toastType?: ToastType;
-  message?: string;
-  show?: boolean;
-  error?: string;
+  toastType: ToastType;
+  message: string;
+  show: boolean;
+  error: string | null;
 }
 
 export enum ToastActionTypes {
@@ -23,7 +23,7 @@ export interface IShowToast {
   type: ToastActionTypes.SHOW_TOAST;
   toastType: ToastType;
   message: string;
-  error?: string;
+  error: string | null;
 }
 
 export interface IHideToast {

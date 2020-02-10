@@ -8,8 +8,8 @@ import { Header, Content, Footer } from '../shared';
 
 export interface ISaveModalProps extends WithStyles<typeof styles> {
   isModalOpen: boolean;
-  onConfirm?: () => void;
-  onCancel?: () => void;
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
 class SaveModalComponent extends React.PureComponent<ISaveModalProps, any> {

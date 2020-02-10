@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
+import { Response } from 'express';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -26,7 +27,7 @@ import { auth, preloadData } from './app/index';
 
 const stats = require('./stats/reactLoadable.json');
 
-const getInitialState = (req, user): IAppState => {
+const getInitialState = (req: any, user: any): IAppState => {
   const state = {} as IAppState;
   if (user) {
     return {
@@ -38,10 +39,12 @@ const getInitialState = (req, user): IAppState => {
       }
     };
   }
+
+  return state;
 };
 
 app.get('*', (req, res, next) => {
-  return auth.authenticate((err, user) => {
+  return auth.authenticate((err: any, user: any) => {
     const location = req.url;
     const initialState = getInitialState(req, user);
     const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
@@ -69,7 +72,7 @@ app.get('*', (req, res, next) => {
   })(req, res, next);
 });
 
-function sendResponse(res, store, location) {
+function sendResponse(res: Response, store: any, location: any) {
   const modules: string[] = [];
   const state = store.getState();
   const sheets = new ServerStyleSheets();

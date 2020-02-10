@@ -2,22 +2,24 @@ import { IItem } from './typings';
 import { IMAGE_MIME_TYPES } from './constants';
 
 interface IRules {
-  minTextLength?: number;
-  maxTextLength?: number;
-  minCheckedCount?: number;
-  maxCheckedCount?: number;
-  isRequired?: boolean;
-  isEmail?: boolean;
-  maxPhotos?: number;
-  maxPhotoSizeBytes?: number;
-  maxPhotoSizeMegabytes?: number;
-  mimeTypes?: string[];
-  minPhotoWidth?: number;
-  minPhotoHeight?: number;
+  minTextLength: number;
+  maxTextLength: number;
+  minCheckedCount: number;
+  maxCheckedCount: number;
+  isRequired: boolean;
+  isEmail: boolean;
+  maxPhotos: number;
+  maxPhotoSizeBytes: number;
+  maxPhotoSizeMegabytes: number;
+  mimeTypes: string[];
+  minPhotoWidth: number;
+  minPhotoHeight: number;
 }
 
 type ValidationRules = {
-  [P in keyof IItem]?: IRules;
+  name: Pick<IRules, 'minTextLength'>;
+  types: Pick<IRules, 'minCheckedCount' | 'maxCheckedCount'>;
+  images: Pick<IRules, 'maxPhotos' | 'maxPhotoSizeMegabytes' | 'maxPhotoSizeBytes' | 'mimeTypes' | 'minPhotoWidth' | 'minPhotoHeight'>
 };
 
 export const itemValidation: ValidationRules = {
