@@ -1,7 +1,7 @@
 'use strict';
-import * as React from 'react';
+import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 import { ICity, IItem, Locale } from 'global-utils/typings';
 import { IAppState } from 'types';
@@ -12,44 +12,37 @@ import { getClientLocale } from 'selectors';
 
 import { ItemTypesList } from '../itemTypesList';
 
-interface IItemsListProps {
-  locale: Locale;
+type Props = {
   items: IItem[];
   selectedCity: ICity;
-}
+};
 
-export class ItemsList extends React.Component<IItemsListProps> {
+const ItemsList: React.FunctionComponent<Props> = (props) => {
 
-  renderItem = (item: IItem) => {
-    return isItemEnabled(item, this.props.selectedCity, this.props.locale) && (
+  const locale = useSelector(getClientLocale);
+  const items = props.items || [];
+
+  const renderItem = (item: IItem) => {
+    return isItemEnabled(item, props.selectedCity, locale) && (
       <NavLink
         key={item.id}
         activeStyle={{ color: 'red' }}
         to={{
-          pathname: clientRoutes.item.getLink(this.props.locale, this.props.selectedCity.alias, item.alias)
+          pathname: clientRoutes.item.getLink(locale, props.selectedCity.alias, item.alias)
         }}
       >
-        {getLocalizedText(item.name, this.props.locale)}<br />
-        <ItemTypesList locale={this.props.locale} typeIds={item.types} />
+        {getLocalizedText(item.name, locale)}<br />
+        <ItemTypesList locale={locale} typeIds={item.types} />
         <hr />
       </NavLink>
     );
-  }
+  };
 
-  render() {
+  return (
+    <div className="itemsList">
+      {items.map(renderItem)}
+    </div>
+  );
+};
 
-    const items = this.props.items || [];
-
-    return (
-      <div className="itemsList">
-        {items.map(this.renderItem)}
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state: IAppState) => ({
-  locale: getClientLocale(state)
-});
-
-export default connect(mapStateToProps)(ItemsList);
+export default memo(ItemsList);
