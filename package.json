@@ -151,7 +151,7 @@
     "jss": "8.1.0",
     "jss-preset-default": "3.0.0",
     "jwt-decode": "2.2.0",
-    "jwt-simple": "0.5.1",
+    "jwt-simple": "0.5.3",
     "lodash": "4.17.15",
     "mongo-sanitize": "1.0.0",
     "mongoose": "5.7.5",
