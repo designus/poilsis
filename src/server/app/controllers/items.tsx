@@ -148,7 +148,7 @@ export const addNewItem = async (req: Request, res: Response, next: NextFunction
   const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
   const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
   const alias = getUniqueAlias(itemsByAlias, id, adjustedAlias);
-  const isEnabled = getAdjustedIsEnabledValue(item);
+  const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);
 
   const newItem: IItem = {
     ...item,
@@ -198,7 +198,7 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
     const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
     const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
     const alias = getUniqueAlias(itemsByAlias, item.id, adjustedAlias);
-    const isEnabled = getAdjustedIsEnabledValue(item);
+    const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);
 
     const updatedItem: IItem = {
       ...item,

@@ -129,11 +129,11 @@ export const sendResponse = (res: Response, next: NextFunction) => (err: any, re
   res.status(200).json(result);
 };
 
-export const getAdjustedIsEnabledValue = (item: DataTypes) => {
+export const getAdjustedIsEnabledValue = (item: DataTypes, languages: Locale[]) => {
   const isEnabled = item.isEnabled as IsEnabled;
   const name = item.name as TranslatableField;
 
-  return LANGUAGES.reduce<IsEnabled>((acc, locale) => {
+  return languages.reduce<IsEnabled>((acc, locale) => {
     const oldValue = isEnabled[locale];
     acc[locale] = name[locale] ? oldValue : false;
     return acc;

@@ -55,7 +55,7 @@ export const addNewType = async (req: Request, res: Response, next: NextFunction
   const data: IType = req.body;
   const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
   const typesByAlias = await getDataByAlias(TypesModel, alias);
-  const isEnabled = getAdjustedIsEnabledValue(data);
+  const isEnabled = getAdjustedIsEnabledValue(data, LANGUAGES);
   const newType = {
     ...data,
     alias: getUniqueAlias(typesByAlias, id, alias),
@@ -72,7 +72,7 @@ export const updateType = async (req: Request, res: Response, next: NextFunction
     const typeId = req.params.typeId;
     const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
     const typesByAlias = await getDataByAlias(TypesModel, alias);
-    const isEnabled = getAdjustedIsEnabledValue(data);
+    const isEnabled = getAdjustedIsEnabledValue(data, LANGUAGES);
     const type = {
       ...data,
       alias: getUniqueAlias(typesByAlias, data.id, alias),
