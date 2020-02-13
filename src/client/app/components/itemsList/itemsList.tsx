@@ -1,10 +1,12 @@
 'use strict';
 import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { List, WindowScroller, AutoSizer } from 'react-virtualized';
+import 'react-virtualized/styles.css';
 
-import { ICity, IItem, Locale } from 'global-utils/typings';
-import { IAppState } from 'types';
+import { ICity, IItem } from 'global-utils/typings';
+import { isClient } from 'global-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 
@@ -23,7 +25,7 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
   const items = props.items || [];
 
   const renderItem = (item: IItem) => {
-    return isItemEnabled(item, props.selectedCity, locale) && (
+    return (
       <NavLink
         key={item.id}
         activeStyle={{ color: 'red' }}
@@ -38,10 +40,45 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
     );
   };
 
+  const renderRow = ({ index, style }: any) => {
+    const item = items[index];
+    return isItemEnabled(item, props.selectedCity, locale) ? (
+      <div key={item.id} style={style} >
+        {renderItem(item)}
+      </div>
+    ) : null;
+  };
+
+  const renderClientList = () => (
+    <WindowScroller>
+      {({ height, isScrolling, onChildScroll, scrollTop }) => (
+        <div>
+          <AutoSizer disableHeight>
+            {({width}) => (
+              <List
+                autoHeight
+                height={height}
+                isScrolling={isScrolling}
+                onScroll={onChildScroll}
+                rowCount={items.length}
+                rowHeight={50}
+                rowRenderer={renderRow}
+                scrollTop={scrollTop}
+                width={width}
+              />
+            )}
+          </AutoSizer>
+        </div>
+      )}
+    </WindowScroller>
+  );
+
+  const renderServerList = () => items.map((item, index) => renderRow({ index, style: {} }));
+
   return (
-    <div className="itemsList">
-      {items.map(renderItem)}
-    </div>
+    <React.Fragment>
+      {isClient() ? renderClientList() : renderServerList()}
+    </React.Fragment>
   );
 };
 

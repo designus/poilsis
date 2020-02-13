@@ -1011,6 +1011,42 @@
       "name": "../../node_modules/intl-messageformat-parser/lib/types.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/ArrowKeyStepper/types.js",
+      "name": "../../node_modules/react-virtualized/dist/es/ArrowKeyStepper/types.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/CellMeasurer/types.js",
+      "name": "../../node_modules/react-virtualized/dist/es/CellMeasurer/types.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Collection/types.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Collection/types.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/types.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/types.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/List/types.js",
+      "name": "../../node_modules/react-virtualized/dist/es/List/types.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/types.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/types.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
   "actions/initialData": [
@@ -1991,6 +2027,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     },
     {
+      "id": "../../node_modules/react-virtualized/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "name": "../../node_modules/react-virtualized/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "name": "../../node_modules/react-dropzone/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "file": "vendors~photosPage.js",
@@ -2195,6 +2237,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     },
     {
+      "id": "../../node_modules/react-virtualized/node_modules/prop-types/index.js",
+      "name": "../../node_modules/react-virtualized/node_modules/prop-types/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/index.js",
       "name": "../../node_modules/react-dropzone/node_modules/prop-types/index.js",
       "file": "vendors~photosPage.js",
@@ -2273,6 +2321,12 @@
       "name": "../../node_modules/react-transition-group/node_modules/prop-types/factoryWithTypeCheckers.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "name": "../../node_modules/react-virtualized/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/factoryWithTypeCheckers.js",
@@ -2413,6 +2467,12 @@
       "name": "../../node_modules/react-transition-group/node_modules/prop-types/checkPropTypes.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/node_modules/prop-types/checkPropTypes.js",
+      "name": "../../node_modules/react-virtualized/node_modules/prop-types/checkPropTypes.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/checkPropTypes.js",
@@ -5923,6 +5983,18 @@
       "name": "../../node_modules/@material-ui/core/esm/Table/Table.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/Table.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/Table.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
   "./TableContext": [
@@ -6765,7 +6837,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./events/isEvent": [
+  "./isEvent": [
     {
       "id": "../../node_modules/redux-form/es/events/isEvent.js",
       "name": "../../node_modules/redux-form/es/events/isEvent.js",
@@ -7243,6 +7315,18 @@
       "name": "../../node_modules/@material-ui/core/esm/List/List.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/List/List.js",
+      "name": "../../node_modules/react-virtualized/dist/es/List/List.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/List/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/List/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
   "../List/ListContext": [
@@ -8403,6 +8487,1550 @@
       "name": "../../node_modules/@material-ui/icons/Clear.js",
       "file": "vendors~adminLayoutPage~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
+    }
+  ],
+  "../core-js/array/from": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/array/from.js",
+      "name": "../../node_modules/babel-runtime/core-js/array/from.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/get-iterator": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/get-iterator.js",
+      "name": "../../node_modules/babel-runtime/core-js/get-iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/is-iterable": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/is-iterable.js",
+      "name": "../../node_modules/babel-runtime/core-js/is-iterable.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/object/assign": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/object/assign.js",
+      "name": "../../node_modules/babel-runtime/core-js/object/assign.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/object/create": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/object/create.js",
+      "name": "../../node_modules/babel-runtime/core-js/object/create.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/object/define-property": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/object/define-property.js",
+      "name": "../../node_modules/babel-runtime/core-js/object/define-property.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/core-js/object/get-own-property-descriptor": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/object/get-own-property-descriptor.js",
+      "name": "../../node_modules/babel-runtime/core-js/object/get-own-property-descriptor.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/core-js/object/get-prototype-of": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/object/get-prototype-of.js",
+      "name": "../../node_modules/babel-runtime/core-js/object/get-prototype-of.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/core-js/object/keys": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/object/keys.js",
+      "name": "../../node_modules/babel-runtime/core-js/object/keys.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/object/set-prototype-of": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/object/set-prototype-of.js",
+      "name": "../../node_modules/babel-runtime/core-js/object/set-prototype-of.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/core-js/promise": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/promise.js",
+      "name": "../../node_modules/babel-runtime/core-js/promise.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/symbol": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/symbol.js",
+      "name": "../../node_modules/babel-runtime/core-js/symbol.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../core-js/symbol/iterator": [
+    {
+      "id": "../../node_modules/babel-runtime/core-js/symbol/iterator.js",
+      "name": "../../node_modules/babel-runtime/core-js/symbol/iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/classCallCheck": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/classCallCheck.js",
+      "name": "../../node_modules/babel-runtime/helpers/classCallCheck.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/createClass": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/createClass.js",
+      "name": "../../node_modules/babel-runtime/helpers/createClass.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/defineProperty": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/defineProperty.js",
+      "name": "../../node_modules/babel-runtime/helpers/defineProperty.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/extends": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/extends.js",
+      "name": "../../node_modules/babel-runtime/helpers/extends.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/inherits": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/inherits.js",
+      "name": "../../node_modules/babel-runtime/helpers/inherits.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/objectWithoutProperties": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/objectWithoutProperties.js",
+      "name": "../../node_modules/babel-runtime/helpers/objectWithoutProperties.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/possibleConstructorReturn": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/possibleConstructorReturn.js",
+      "name": "../../node_modules/babel-runtime/helpers/possibleConstructorReturn.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/slicedToArray": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/slicedToArray.js",
+      "name": "../../node_modules/babel-runtime/helpers/slicedToArray.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "babel-runtime/helpers/toConsumableArray": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/toConsumableArray.js",
+      "name": "../../node_modules/babel-runtime/helpers/toConsumableArray.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../helpers/typeof": [
+    {
+      "id": "../../node_modules/babel-runtime/helpers/typeof.js",
+      "name": "../../node_modules/babel-runtime/helpers/typeof.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/array/from": [
+    {
+      "id": "../../node_modules/core-js/library/fn/array/from.js",
+      "name": "../../node_modules/core-js/library/fn/array/from.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/get-iterator": [
+    {
+      "id": "../../node_modules/core-js/library/fn/get-iterator.js",
+      "name": "../../node_modules/core-js/library/fn/get-iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/is-iterable": [
+    {
+      "id": "../../node_modules/core-js/library/fn/is-iterable.js",
+      "name": "../../node_modules/core-js/library/fn/is-iterable.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/object/assign": [
+    {
+      "id": "../../node_modules/core-js/library/fn/object/assign.js",
+      "name": "../../node_modules/core-js/library/fn/object/assign.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/object/create": [
+    {
+      "id": "../../node_modules/core-js/library/fn/object/create.js",
+      "name": "../../node_modules/core-js/library/fn/object/create.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/object/define-property": [
+    {
+      "id": "../../node_modules/core-js/library/fn/object/define-property.js",
+      "name": "../../node_modules/core-js/library/fn/object/define-property.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/object/get-own-property-descriptor": [
+    {
+      "id": "../../node_modules/core-js/library/fn/object/get-own-property-descriptor.js",
+      "name": "../../node_modules/core-js/library/fn/object/get-own-property-descriptor.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/object/get-prototype-of": [
+    {
+      "id": "../../node_modules/core-js/library/fn/object/get-prototype-of.js",
+      "name": "../../node_modules/core-js/library/fn/object/get-prototype-of.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/object/keys": [
+    {
+      "id": "../../node_modules/core-js/library/fn/object/keys.js",
+      "name": "../../node_modules/core-js/library/fn/object/keys.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/object/set-prototype-of": [
+    {
+      "id": "../../node_modules/core-js/library/fn/object/set-prototype-of.js",
+      "name": "../../node_modules/core-js/library/fn/object/set-prototype-of.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/promise": [
+    {
+      "id": "../../node_modules/core-js/library/fn/promise.js",
+      "name": "../../node_modules/core-js/library/fn/promise.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/symbol": [
+    {
+      "id": "../../node_modules/core-js/library/fn/symbol/index.js",
+      "name": "../../node_modules/core-js/library/fn/symbol/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "core-js/library/fn/symbol/iterator": [
+    {
+      "id": "../../node_modules/core-js/library/fn/symbol/iterator.js",
+      "name": "../../node_modules/core-js/library/fn/symbol/iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_a-function": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_a-function.js",
+      "name": "../../node_modules/core-js/library/modules/_a-function.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_add-to-unscopables": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_add-to-unscopables.js",
+      "name": "../../node_modules/core-js/library/modules/_add-to-unscopables.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_an-instance": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_an-instance.js",
+      "name": "../../node_modules/core-js/library/modules/_an-instance.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_an-object": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_an-object.js",
+      "name": "../../node_modules/core-js/library/modules/_an-object.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_array-includes": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_array-includes.js",
+      "name": "../../node_modules/core-js/library/modules/_array-includes.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_classof": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_classof.js",
+      "name": "../../node_modules/core-js/library/modules/_classof.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_cof": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_cof.js",
+      "name": "../../node_modules/core-js/library/modules/_cof.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/_core": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_core.js",
+      "name": "../../node_modules/core-js/library/modules/_core.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_create-property": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_create-property.js",
+      "name": "../../node_modules/core-js/library/modules/_create-property.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_ctx": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_ctx.js",
+      "name": "../../node_modules/core-js/library/modules/_ctx.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_defined": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_defined.js",
+      "name": "../../node_modules/core-js/library/modules/_defined.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_descriptors": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_descriptors.js",
+      "name": "../../node_modules/core-js/library/modules/_descriptors.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_dom-create": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_dom-create.js",
+      "name": "../../node_modules/core-js/library/modules/_dom-create.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_enum-bug-keys": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_enum-bug-keys.js",
+      "name": "../../node_modules/core-js/library/modules/_enum-bug-keys.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_enum-keys": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_enum-keys.js",
+      "name": "../../node_modules/core-js/library/modules/_enum-keys.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_export": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_export.js",
+      "name": "../../node_modules/core-js/library/modules/_export.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_fails": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_fails.js",
+      "name": "../../node_modules/core-js/library/modules/_fails.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_for-of": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_for-of.js",
+      "name": "../../node_modules/core-js/library/modules/_for-of.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_global": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_global.js",
+      "name": "../../node_modules/core-js/library/modules/_global.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_has": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_has.js",
+      "name": "../../node_modules/core-js/library/modules/_has.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_hide": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_hide.js",
+      "name": "../../node_modules/core-js/library/modules/_hide.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_html": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_html.js",
+      "name": "../../node_modules/core-js/library/modules/_html.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_ie8-dom-define": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_ie8-dom-define.js",
+      "name": "../../node_modules/core-js/library/modules/_ie8-dom-define.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_invoke": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_invoke.js",
+      "name": "../../node_modules/core-js/library/modules/_invoke.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_iobject": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_iobject.js",
+      "name": "../../node_modules/core-js/library/modules/_iobject.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_is-array-iter": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_is-array-iter.js",
+      "name": "../../node_modules/core-js/library/modules/_is-array-iter.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_is-array": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_is-array.js",
+      "name": "../../node_modules/core-js/library/modules/_is-array.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_is-object": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_is-object.js",
+      "name": "../../node_modules/core-js/library/modules/_is-object.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_iter-call": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_iter-call.js",
+      "name": "../../node_modules/core-js/library/modules/_iter-call.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_iter-create": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_iter-create.js",
+      "name": "../../node_modules/core-js/library/modules/_iter-create.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_iter-define": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_iter-define.js",
+      "name": "../../node_modules/core-js/library/modules/_iter-define.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_iter-detect": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_iter-detect.js",
+      "name": "../../node_modules/core-js/library/modules/_iter-detect.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_iter-step": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_iter-step.js",
+      "name": "../../node_modules/core-js/library/modules/_iter-step.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_iterators": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_iterators.js",
+      "name": "../../node_modules/core-js/library/modules/_iterators.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_library": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_library.js",
+      "name": "../../node_modules/core-js/library/modules/_library.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_meta": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_meta.js",
+      "name": "../../node_modules/core-js/library/modules/_meta.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_microtask": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_microtask.js",
+      "name": "../../node_modules/core-js/library/modules/_microtask.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_new-promise-capability": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_new-promise-capability.js",
+      "name": "../../node_modules/core-js/library/modules/_new-promise-capability.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-assign": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-assign.js",
+      "name": "../../node_modules/core-js/library/modules/_object-assign.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-create": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-create.js",
+      "name": "../../node_modules/core-js/library/modules/_object-create.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-dp": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-dp.js",
+      "name": "../../node_modules/core-js/library/modules/_object-dp.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-dps": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-dps.js",
+      "name": "../../node_modules/core-js/library/modules/_object-dps.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-gopd": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-gopd.js",
+      "name": "../../node_modules/core-js/library/modules/_object-gopd.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-gopn-ext": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-gopn-ext.js",
+      "name": "../../node_modules/core-js/library/modules/_object-gopn-ext.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-gopn": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-gopn.js",
+      "name": "../../node_modules/core-js/library/modules/_object-gopn.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-gops": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-gops.js",
+      "name": "../../node_modules/core-js/library/modules/_object-gops.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-gpo": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-gpo.js",
+      "name": "../../node_modules/core-js/library/modules/_object-gpo.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-keys-internal": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-keys-internal.js",
+      "name": "../../node_modules/core-js/library/modules/_object-keys-internal.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-keys": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-keys.js",
+      "name": "../../node_modules/core-js/library/modules/_object-keys.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-pie": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-pie.js",
+      "name": "../../node_modules/core-js/library/modules/_object-pie.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_object-sap": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_object-sap.js",
+      "name": "../../node_modules/core-js/library/modules/_object-sap.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_perform": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_perform.js",
+      "name": "../../node_modules/core-js/library/modules/_perform.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_promise-resolve": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_promise-resolve.js",
+      "name": "../../node_modules/core-js/library/modules/_promise-resolve.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_property-desc": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_property-desc.js",
+      "name": "../../node_modules/core-js/library/modules/_property-desc.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_redefine-all": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_redefine-all.js",
+      "name": "../../node_modules/core-js/library/modules/_redefine-all.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_redefine": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_redefine.js",
+      "name": "../../node_modules/core-js/library/modules/_redefine.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_set-proto": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_set-proto.js",
+      "name": "../../node_modules/core-js/library/modules/_set-proto.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_set-species": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_set-species.js",
+      "name": "../../node_modules/core-js/library/modules/_set-species.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_set-to-string-tag": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_set-to-string-tag.js",
+      "name": "../../node_modules/core-js/library/modules/_set-to-string-tag.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_shared-key": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_shared-key.js",
+      "name": "../../node_modules/core-js/library/modules/_shared-key.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_shared": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_shared.js",
+      "name": "../../node_modules/core-js/library/modules/_shared.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_species-constructor": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_species-constructor.js",
+      "name": "../../node_modules/core-js/library/modules/_species-constructor.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_string-at": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_string-at.js",
+      "name": "../../node_modules/core-js/library/modules/_string-at.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_task": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_task.js",
+      "name": "../../node_modules/core-js/library/modules/_task.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_to-absolute-index": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_to-absolute-index.js",
+      "name": "../../node_modules/core-js/library/modules/_to-absolute-index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_to-integer": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_to-integer.js",
+      "name": "../../node_modules/core-js/library/modules/_to-integer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_to-iobject": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_to-iobject.js",
+      "name": "../../node_modules/core-js/library/modules/_to-iobject.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_to-length": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_to-length.js",
+      "name": "../../node_modules/core-js/library/modules/_to-length.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_to-object": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_to-object.js",
+      "name": "../../node_modules/core-js/library/modules/_to-object.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_to-primitive": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_to-primitive.js",
+      "name": "../../node_modules/core-js/library/modules/_to-primitive.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_uid": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_uid.js",
+      "name": "../../node_modules/core-js/library/modules/_uid.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_user-agent": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_user-agent.js",
+      "name": "../../node_modules/core-js/library/modules/_user-agent.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_wks-define": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_wks-define.js",
+      "name": "../../node_modules/core-js/library/modules/_wks-define.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/_wks-ext": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_wks-ext.js",
+      "name": "../../node_modules/core-js/library/modules/_wks-ext.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./_wks": [
+    {
+      "id": "../../node_modules/core-js/library/modules/_wks.js",
+      "name": "../../node_modules/core-js/library/modules/_wks.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./core.get-iterator-method": [
+    {
+      "id": "../../node_modules/core-js/library/modules/core.get-iterator-method.js",
+      "name": "../../node_modules/core-js/library/modules/core.get-iterator-method.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../modules/core.get-iterator": [
+    {
+      "id": "../../node_modules/core-js/library/modules/core.get-iterator.js",
+      "name": "../../node_modules/core-js/library/modules/core.get-iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../modules/core.is-iterable": [
+    {
+      "id": "../../node_modules/core-js/library/modules/core.is-iterable.js",
+      "name": "../../node_modules/core-js/library/modules/core.is-iterable.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.array.from": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.array.from.js",
+      "name": "../../node_modules/core-js/library/modules/es6.array.from.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./es6.array.iterator": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.array.iterator.js",
+      "name": "../../node_modules/core-js/library/modules/es6.array.iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.object.assign": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.assign.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.assign.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.object.create": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.create.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.create.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.object.define-property": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.define-property.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.define-property.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.object.get-own-property-descriptor": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.get-own-property-descriptor.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.get-own-property-descriptor.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.object.get-prototype-of": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.get-prototype-of.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.get-prototype-of.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.object.keys": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.keys.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.keys.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.object.set-prototype-of": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.set-prototype-of.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.set-prototype-of.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../modules/es6.object.to-string": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.object.to-string.js",
+      "name": "../../node_modules/core-js/library/modules/es6.object.to-string.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../modules/es6.promise": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.promise.js",
+      "name": "../../node_modules/core-js/library/modules/es6.promise.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.string.iterator": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.string.iterator.js",
+      "name": "../../node_modules/core-js/library/modules/es6.string.iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es6.symbol": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es6.symbol.js",
+      "name": "../../node_modules/core-js/library/modules/es6.symbol.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../modules/es7.promise.finally": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es7.promise.finally.js",
+      "name": "../../node_modules/core-js/library/modules/es7.promise.finally.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../modules/es7.promise.try": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es7.promise.try.js",
+      "name": "../../node_modules/core-js/library/modules/es7.promise.try.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es7.symbol.async-iterator": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es7.symbol.async-iterator.js",
+      "name": "../../node_modules/core-js/library/modules/es7.symbol.async-iterator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../../modules/es7.symbol.observable": [
+    {
+      "id": "../../node_modules/core-js/library/modules/es7.symbol.observable.js",
+      "name": "../../node_modules/core-js/library/modules/es7.symbol.observable.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../modules/web.dom.iterable": [
+    {
+      "id": "../../node_modules/core-js/library/modules/web.dom.iterable.js",
+      "name": "../../node_modules/core-js/library/modules/web.dom.iterable.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "!!../css-loader/dist/cjs.js??ref--8-1!./styles.css": [
+    {
+      "id": "../../node_modules/css-loader/dist/cjs.js?!../../node_modules/react-virtualized/styles.css",
+      "name": "../../node_modules/css-loader/dist/cjs.js?!../../node_modules/react-virtualized/styles.css",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../css-loader/dist/runtime/api.js": [
+    {
+      "id": "../../node_modules/css-loader/dist/runtime/api.js",
+      "name": "../../node_modules/css-loader/dist/runtime/api.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./canUseDOM": [
+    {
+      "id": "../../node_modules/dom-helpers/esm/canUseDOM.js",
+      "name": "../../node_modules/dom-helpers/esm/canUseDOM.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "dom-helpers/scrollbarSize": [
+    {
+      "id": "../../node_modules/dom-helpers/esm/scrollbarSize.js",
+      "name": "../../node_modules/dom-helpers/esm/scrollbarSize.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "!../isomorphic-style-loader/insertCss.js": [
+    {
+      "id": "../../node_modules/isomorphic-style-loader/insertCss.js",
+      "name": "../../node_modules/isomorphic-style-loader/insertCss.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./ArrowKeyStepper": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/ArrowKeyStepper/ArrowKeyStepper.js",
+      "name": "../../node_modules/react-virtualized/dist/es/ArrowKeyStepper/ArrowKeyStepper.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/ArrowKeyStepper/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/ArrowKeyStepper/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./AutoSizer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/AutoSizer/AutoSizer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/AutoSizer/AutoSizer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/AutoSizer/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/AutoSizer/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./CellMeasurer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/CellMeasurer/CellMeasurer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/CellMeasurer/CellMeasurer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/CellMeasurer/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/CellMeasurer/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./CellMeasurerCache": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/CellMeasurer/CellMeasurerCache.js",
+      "name": "../../node_modules/react-virtualized/dist/es/CellMeasurer/CellMeasurerCache.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./Collection": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Collection/Collection.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Collection/Collection.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Collection/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Collection/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./CollectionView": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Collection/CollectionView.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Collection/CollectionView.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./Section": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Collection/Section.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Collection/Section.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../SectionManager": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Collection/SectionManager.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Collection/SectionManager.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./utils/calculateSizeAndPositionData": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Collection/utils/calculateSizeAndPositionData.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Collection/utils/calculateSizeAndPositionData.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./ColumnSizer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/ColumnSizer/ColumnSizer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/ColumnSizer/ColumnSizer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/ColumnSizer/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/ColumnSizer/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./Grid": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/Grid.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/Grid.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
+      "name": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
+      "file": "vendors~homePage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+    }
+  ],
+  "./accessibilityOverscanIndicesGetter": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/accessibilityOverscanIndicesGetter.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/accessibilityOverscanIndicesGetter.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./defaultCellRangeRenderer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/defaultCellRangeRenderer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/defaultCellRangeRenderer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./defaultOverscanIndicesGetter": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/defaultOverscanIndicesGetter.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/defaultOverscanIndicesGetter.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./CellSizeAndPositionManager": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/utils/CellSizeAndPositionManager.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/utils/CellSizeAndPositionManager.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./utils/ScalingCellSizeAndPositionManager": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/utils/ScalingCellSizeAndPositionManager.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/utils/ScalingCellSizeAndPositionManager.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./utils/calculateSizeAndPositionDataAndUpdateScrollOffset": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/utils/calculateSizeAndPositionDataAndUpdateScrollOffset.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/utils/calculateSizeAndPositionDataAndUpdateScrollOffset.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./maxElementSize.js": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/utils/maxElementSize.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/utils/maxElementSize.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./utils/updateScrollIndexHelper": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Grid/utils/updateScrollIndexHelper.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Grid/utils/updateScrollIndexHelper.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./InfiniteLoader": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/InfiniteLoader/InfiniteLoader.js",
+      "name": "../../node_modules/react-virtualized/dist/es/InfiniteLoader/InfiniteLoader.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/InfiniteLoader/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/InfiniteLoader/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./Masonry": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Masonry/Masonry.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Masonry/Masonry.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Masonry/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Masonry/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./PositionCache": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Masonry/PositionCache.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Masonry/PositionCache.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./createCellPositioner": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Masonry/createCellPositioner.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Masonry/createCellPositioner.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./CellMeasurerCacheDecorator": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/MultiGrid/CellMeasurerCacheDecorator.js",
+      "name": "../../node_modules/react-virtualized/dist/es/MultiGrid/CellMeasurerCacheDecorator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./MultiGrid": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/MultiGrid/MultiGrid.js",
+      "name": "../../node_modules/react-virtualized/dist/es/MultiGrid/MultiGrid.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/MultiGrid/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/MultiGrid/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./ScrollSync": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/ScrollSync/ScrollSync.js",
+      "name": "../../node_modules/react-virtualized/dist/es/ScrollSync/ScrollSync.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/ScrollSync/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/ScrollSync/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./Column": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/Column.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/Column.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./SortDirection": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/SortDirection.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/SortDirection.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./SortIndicator": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/SortIndicator.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/SortIndicator.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./createMultiSort": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/createMultiSort.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/createMultiSort.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./defaultCellDataGetter": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/defaultCellDataGetter.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/defaultCellDataGetter.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./defaultCellRenderer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/defaultCellRenderer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/defaultCellRenderer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./defaultHeaderRenderer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/defaultHeaderRenderer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/defaultHeaderRenderer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./defaultHeaderRowRenderer.js": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/defaultHeaderRowRenderer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/defaultHeaderRowRenderer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./defaultRowRenderer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/Table/defaultRowRenderer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/Table/defaultRowRenderer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./WindowScroller": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js",
+      "name": "../../node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    },
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/WindowScroller/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/WindowScroller/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./utils/dimensions": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/WindowScroller/utils/dimensions.js",
+      "name": "../../node_modules/react-virtualized/dist/es/WindowScroller/utils/dimensions.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./utils/onScroll": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js",
+      "name": "../../node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "react-virtualized": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/index.js",
+      "name": "../../node_modules/react-virtualized/dist/es/index.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./animationFrame": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/utils/animationFrame.js",
+      "name": "../../node_modules/react-virtualized/dist/es/utils/animationFrame.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../utils/createCallbackMemoizer": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/utils/createCallbackMemoizer.js",
+      "name": "../../node_modules/react-virtualized/dist/es/utils/createCallbackMemoizer.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../utils/getUpdatedOffsetForIndex": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/utils/getUpdatedOffsetForIndex.js",
+      "name": "../../node_modules/react-virtualized/dist/es/utils/getUpdatedOffsetForIndex.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../utils/requestAnimationTimeout": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/utils/requestAnimationTimeout.js",
+      "name": "../../node_modules/react-virtualized/dist/es/utils/requestAnimationTimeout.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "./binarySearchBounds": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/vendor/binarySearchBounds.js",
+      "name": "../../node_modules/react-virtualized/dist/es/vendor/binarySearchBounds.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../vendor/detectElementResize": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/vendor/detectElementResize.js",
+      "name": "../../node_modules/react-virtualized/dist/es/vendor/detectElementResize.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "../vendor/intervalTree": [
+    {
+      "id": "../../node_modules/react-virtualized/dist/es/vendor/intervalTree.js",
+      "name": "../../node_modules/react-virtualized/dist/es/vendor/intervalTree.js",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
+    }
+  ],
+  "react-virtualized/styles.css": [
+    {
+      "id": "../../node_modules/react-virtualized/styles.css",
+      "name": "../../node_modules/react-virtualized/styles.css",
+      "file": "vendors~clientCity.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
   "react-fast-compare": [
@@ -9895,14 +11523,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
       "name": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "./Grid": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
-      "name": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
       "file": "vendors~homePage.js",
       "publicPath": "http://localhost:8080/public/vendors~homePage.js"
     }

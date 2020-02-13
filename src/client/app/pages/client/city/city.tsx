@@ -67,7 +67,7 @@ class CityPage extends React.Component<ICityPageProps> {
   render() {
     const { selectedCity, locale } = this.props;
     return isDataEnabled(selectedCity, locale) ? (
-      <React.Fragment>
+      <div style={{ height: '100%', width: '100%' }}>
         {this.renderDocumentHead()}
         <Typography variant="h1">
           {this.getLocalizedName()}
@@ -80,7 +80,7 @@ class CityPage extends React.Component<ICityPageProps> {
           items={this.props.cityItems}
           selectedCity={this.props.selectedCity}
         />
-      </React.Fragment>
+      </div>
     ) : <NotFound/>;
   }
 }
