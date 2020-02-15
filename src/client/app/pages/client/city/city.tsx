@@ -14,6 +14,7 @@ import { getCityByAlias, shouldLoadCityItems, getCityItems, getClientLocale } fr
 import { IMatchParams, ICityPageProps, IOwnProps, IStateProps, IDispatchProps } from './types';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
+// const ItemsListWithLoader = ItemsList;
 
 export const loadCityData = (store: any, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
 

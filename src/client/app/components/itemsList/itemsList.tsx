@@ -1,18 +1,20 @@
 'use strict';
-import React, { memo } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { memo, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { List, WindowScroller, AutoSizer } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 
+import { config } from 'config';
 import { ICity, IItem } from 'global-utils/typings';
-import { isClient } from 'global-utils/methods';
+import { isClient, isServer } from 'global-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
 
 import { getClientLocale } from 'selectors';
 
 import { ItemTypesList } from '../itemTypesList';
+import { useStyles } from './styles';
 
 type Props = {
   items: IItem[];
@@ -23,28 +25,37 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
 
   const locale = useSelector(getClientLocale);
   const items = props.items || [];
+  const classes = useStyles(props);
+  const history = useHistory();
+  const [isMounted, setIsMounted] = useState(false);
 
-  const renderItem = (item: IItem) => {
-    return (
-      <NavLink
-        key={item.id}
-        activeStyle={{ color: 'red' }}
-        to={{
-          pathname: clientRoutes.item.getLink(locale, props.selectedCity.alias, item.alias)
-        }}
-      >
-        {getLocalizedText(item.name, locale)}<br />
-        <ItemTypesList locale={locale} typeIds={item.types} />
-        <hr />
-      </NavLink>
-    );
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleClick = (item: IItem) => () => {
+    history.push(clientRoutes.item.getLink(locale, props.selectedCity.alias, item.alias));
   };
+
+  const getImageUrl = (item: IItem) => item.mainImage
+    ? `${config.host}/${item.mainImage}`
+    : `${config.host}/images/no-image.png`;
 
   const renderRow = ({ index, style }: any) => {
     const item = items[index];
     return isItemEnabled(item, props.selectedCity, locale) ? (
-      <div key={item.id} style={style} >
-        {renderItem(item)}
+      <div className={classes.row} key={item.id} style={style} onClick={handleClick(item)}>
+        <div className={classes.item}>
+          <div className={classes.image}>
+            <img src={getImageUrl(item)} />
+          </div>
+          <div>
+            <div className={classes.name}>
+              {getLocalizedText(item.name, locale)}
+            </div>
+            <ItemTypesList locale={locale} typeIds={item.types} />
+          </div>
+        </div>
       </div>
     ) : null;
   };
@@ -52,23 +63,21 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
   const renderClientList = () => (
     <WindowScroller>
       {({ height, isScrolling, onChildScroll, scrollTop }) => (
-        <div>
-          <AutoSizer disableHeight>
-            {({width}) => (
-              <List
-                autoHeight
-                height={height}
-                isScrolling={isScrolling}
-                onScroll={onChildScroll}
-                rowCount={items.length}
-                rowHeight={50}
-                rowRenderer={renderRow}
-                scrollTop={scrollTop}
-                width={width}
-              />
-            )}
-          </AutoSizer>
-        </div>
+        <AutoSizer disableHeight>
+          {({width}) => (
+            <List
+              autoHeight
+              height={height}
+              isScrolling={isScrolling}
+              onScroll={onChildScroll}
+              rowCount={items.length}
+              rowHeight={100}
+              rowRenderer={renderRow}
+              scrollTop={scrollTop}
+              width={width}
+            />
+          )}
+        </AutoSizer>
       )}
     </WindowScroller>
   );
@@ -76,9 +85,10 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
   const renderServerList = () => items.map((item, index) => renderRow({ index, style: {} }));
 
   return (
-    <React.Fragment>
-      {isClient() ? renderClientList() : renderServerList()}
-    </React.Fragment>
+    <div className={classes.wrapper}>
+      {isServer() && renderServerList()}
+      {isClient() && isMounted ? renderClientList() : null}
+    </div>
   );
 };
 
