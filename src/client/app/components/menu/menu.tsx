@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Collapse from '@material-ui/core/Collapse';
@@ -8,13 +8,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import { WithStyles } from '@material-ui/core/styles';
 
 import { DropdownMenu } from 'components/dropdownMenu';
 import { UserRoles } from 'global-utils/typings';
 import { getCurrentUser } from 'selectors';
-import { UserDetails, IAppState } from 'types';
-import { styles } from './styles';
+import { UserDetails } from 'types';
+import { useStyles } from './styles';
 
 export interface IMenuItem {
   id: string | number;
@@ -29,22 +28,23 @@ export interface IMenuItem {
   icon?: () => React.ReactElement<any>;
 }
 
-export interface IMenuProps extends RouteComponentProps<any>, WithStyles<typeof styles> {
+export interface IMenuProps {
   items: IMenuItem[];
   isVertical?: boolean;
   currentUser: UserDetails;
 }
 
-const { useState, useEffect } = React;
-
 const Menu: React.FunctionComponent<IMenuProps> = props => {
-  const { classes, currentUser, items, isVertical } = props;
-  const [dropdownOpen, setDropdownOpen] = useState<{[key: string]: boolean}>({});
+  const { items, isVertical } = props;
+  const [collapsableMenuOpen, setCollapsableMenuOpen] = useState<{[key: string]: boolean}>({});
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const classes = useStyles(props);
+  const currentUser = useSelector(getCurrentUser);
 
   useEffect(() => {
     const activeItem = items.find(item => item.isActive);
     if (activeItem) {
-      setDropdownOpen({ ...dropdownOpen, [activeItem.id]: true });
+      setCollapsableMenuOpen({ ...collapsableMenuOpen, [activeItem.id]: true });
     }
   }, [items]);
 
@@ -56,11 +56,11 @@ const Menu: React.FunctionComponent<IMenuProps> = props => {
     return item.allowedRoles.indexOf(currentUser.role) !== -1;
   };
 
-  const isDropdownOpen = (item: IMenuItem) => Boolean(dropdownOpen[item.id]);
+  const isCollapsableMenuOpen = (item: IMenuItem) => Boolean(collapsableMenuOpen[item.id]);
 
-  const handleDropdownOpen = (item: IMenuItem) => () => {
-    const newState = { ...dropdownOpen, [item.id]: !dropdownOpen[item.id] };
-    setDropdownOpen(newState);
+  const toggleCollapsableMenu = (item: IMenuItem) => () => {
+    const newState = { ...collapsableMenuOpen, [item.id]: !collapsableMenuOpen[item.id] };
+    setCollapsableMenuOpen(newState);
   };
 
   const renderItemContent = (item: IMenuItem) => {
@@ -80,14 +80,14 @@ const Menu: React.FunctionComponent<IMenuProps> = props => {
     <React.Fragment>
       <div
         className={classes.collapsableItem}
-        onClick={handleDropdownOpen(item)}
+        onClick={toggleCollapsableMenu(item)}
       >
         {renderItemContent(item)}
         <ListItemIcon className={classes.icon}>
-          {isDropdownOpen(item) ? <ExpandLess /> : <ExpandMore />}
+          {isCollapsableMenuOpen(item) ? <ExpandLess /> : <ExpandMore />}
         </ListItemIcon>
       </div>
-      <Collapse className={classes.collapsableMenu} in={isDropdownOpen(item)} timeout="auto" unmountOnExit>
+      <Collapse className={classes.collapsableMenu} in={isCollapsableMenuOpen(item)} timeout="auto" unmountOnExit>
         {item.items && (
           <List>
             {item.items.map(renderItem)}
@@ -97,15 +97,18 @@ const Menu: React.FunctionComponent<IMenuProps> = props => {
     </React.Fragment>
   );
 
-  const renderDropdownMenu = (item: IMenuItem) => item.items && (
-    <DropdownMenu
-      className={classes.dropdownMenu}
-      parentItem={<div className={classes.dropdownItem}>{renderItemContent(item)}</div>}
-      id={`menu-${item.id}`}
-    >
-      {item.items.map(renderItem)}
-    </DropdownMenu>
-  );
+  const renderDropdownMenu = (item: IMenuItem) => {
+    return item.items && (
+      <DropdownMenu
+        className={classes.dropdownMenu}
+        isDropdownOpen={isDropdownOpen}
+        parentItem={<div className={classes.dropdownItem}>{renderItemContent(item)}</div>}
+        id={`menu-${item.id}`}
+      >
+        {item.items.map(renderItem)}
+      </DropdownMenu>
+    );
+  };
 
   const renderEnabledItem = (item: IMenuItem) => {
     if (item.link) {
@@ -145,11 +148,17 @@ const Menu: React.FunctionComponent<IMenuProps> = props => {
     );
   };
 
+  const handleListItemClick = (item: IMenuItem) => (e: any) => {
+    e.stopPropagation();
+    setIsDropdownOpen(!item.link);
+  };
+
   const renderListItem = (item: IMenuItem, index: number) => {
     return (
       <ListItem
         key={index}
         disableGutters
+        onClick={handleListItemClick(item)}
         className={`
           ${classes.listItem}
           ${item.isDisabled ? classes.disabled : ''}
@@ -171,10 +180,4 @@ const Menu: React.FunctionComponent<IMenuProps> = props => {
   );
 };
 
-const mapStateToProps = (state: IAppState) => ({
-  currentUser: getCurrentUser(state)
-});
-
-export default withRouter(
-  connect(mapStateToProps)(Menu)
-);
+export default memo(Menu);

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
-import { injectIntl, defineMessages } from 'react-intl';
+import { defineMessages, useIntl } from 'react-intl';
 
 import { getClientLocale, getEnabledCities, getActiveItem } from 'selectors';
 import { IAppState, ActiveItem } from 'types';
@@ -15,7 +14,6 @@ import { ICity } from 'global-utils/typings';
 import { HorizontalMenu } from './horizontalMenu';
 import { VerticalMenu } from './verticalMenu';
 import { ITopMenuProps, IOwnProps, IStateProps } from './types';
-import { styles } from './styles';
 
 const { useEffect } = React;
 
@@ -35,9 +33,16 @@ const messages = defineMessages({
 });
 
 function ClientTopMenu(props: ITopMenuProps) {
-  const { classes, activeItem, cities, isLoggedIn, locale, isVertical, onRouteChange, intl } = props;
+  const { activeItem, cities, isLoggedIn, locale, isVertical, onRouteChange } = props;
+  const intl = useIntl();
 
   const StyledTopMenu: any = isVertical ? VerticalMenu : HorizontalMenu;
+
+  const getCityItems = () => cities.map((city: ICity) => ({
+    id: city.id,
+    text: getLocalizedText(city.name, locale),
+    link: clientRoutes.items.getLink(locale, city.alias)
+  }));
 
   const getMenuItems = (): IMenuItem[] => {
     const menuItems: IMenuItem[] = [
@@ -51,11 +56,7 @@ function ClientTopMenu(props: ITopMenuProps) {
         id: 2,
         text: intl.formatMessage(messages.items),
         isActive: [ActiveItem.City, ActiveItem.Type, ActiveItem.Item].includes(activeItem),
-        items: cities.map((city: ICity) => ({
-          id: city.id,
-          text: getLocalizedText(city.name, locale),
-          link: clientRoutes.items.getLink(locale, city.alias)
-        }))
+        items: getCityItems()
       }
     ];
 
@@ -85,10 +86,6 @@ const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
   activeItem: getActiveItem(state, props.location.pathname)
 });
 
-export default withStyles(styles)(
-  withRouter(
-    injectIntl(
-      connect<IStateProps, {}, IOwnProps, IAppState>(mapStateToProps)(ClientTopMenu)
-    )
-  )
+export default withRouter(
+  connect<IStateProps, {}, IOwnProps, IAppState>(mapStateToProps)(ClientTopMenu)
 );
