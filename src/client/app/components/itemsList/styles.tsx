@@ -1,5 +1,7 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { makeStyles } from '@material-ui/core/styles';
+import { SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT } from 'global-utils/constants';
+import { rowHeight } from './itemsList';
 
 export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
@@ -10,27 +12,32 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
-    height: '100px'
+    height: `${rowHeight}px`
   },
   item: {
     display: 'flex',
     width: '100%',
-    height: '80px',
+    height: `${SMALL_IMAGE_HEIGHT}px`,
     overflow: 'hidden',
     alignItems: 'center',
     position: 'relative'
   },
   image: {
-    width: '150px',
+    width: `${SMALL_IMAGE_WIDTH}px`,
     height: 'auto',
     marginRight: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+    background: '#fff',
     '& > img': {
-      width: '100%',
-      height: 'auto'
+      maxWidth: '100%',
+      maxHeight: '100%'
     }
   },
+  content: {
+    alignSelf: 'start'
+  },
   name: {
-    color: theme.palette.primary.dark,
-    fontSize: '18px'
+    color: theme.palette.primary.dark
   }
 }));

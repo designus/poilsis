@@ -213,6 +213,12 @@
       "publicPath": "http://localhost:8080/public/clientCity.js"
     },
     {
+      "id": "./app/pages/client/city/styles.tsx",
+      "name": "./app/pages/client/city/styles.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
       "id": "./app/components/loginButton/styles.tsx",
       "name": "./app/components/loginButton/styles.tsx",
       "file": "clientLayout.js",
@@ -337,6 +343,12 @@
       "name": "./app/client-utils/customHooks.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
+    },
+    {
+      "id": "./app/client-utils/customHooks.tsx",
+      "name": "./app/client-utils/customHooks.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
     }
   ],
   "./adminFormActions": [

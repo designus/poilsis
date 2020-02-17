@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
@@ -11,82 +11,72 @@ import { ItemsList } from 'components/itemsList';
 import { NotFound } from 'components/notFound';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { getCityByAlias, shouldLoadCityItems, getCityItems, getClientLocale } from 'selectors';
-import { IMatchParams, ICityPageProps, IOwnProps, IStateProps, IDispatchProps } from './types';
+import { IMatchParams, Props, OwnProps, StateProps, Dispatch } from './types';
+import { usePrevious } from 'client-utils/customHooks';
+import { useStyles } from './styles';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
-// const ItemsListWithLoader = ItemsList;
 
 export const loadCityData = (store: any, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
 
-class CityPage extends React.Component<ICityPageProps> {
+const CityPage: React.FunctionComponent<Props> = props => {
+  const { selectedCity, locale, location, shouldLoadCityItems, cityItems } = props;
+  const prevLocation = usePrevious(location);
+  const classes = useStyles(props);
 
-  componentDidUpdate(prevProps: ICityPageProps) {
-    if (this.props.location !== prevProps.location && this.props.shouldLoadCityItems) {
-      this.loadCityItems();
+  useEffect(() => {
+    if (location !== prevLocation && shouldLoadCityItems) {
+      props.loadCityItems(props.match.params.cityAlias);
     }
-  }
 
-  componentDidMount() {
-    if (this.props.shouldLoadCityItems) {
-      this.loadCityItems();
-    }
-  }
+  }, [props, prevLocation]);
 
-  loadCityItems = () => {
-    const { cityAlias } = this.props.match.params;
-    this.props.loadCityItems(cityAlias);
-  }
+  const getLocalizedName = () => getLocalizedText(selectedCity.name, locale);
 
-  getLocalizedName = () => getLocalizedText(this.props.selectedCity.name, this.props.locale);
-
-  renderTitle = () => {
-    const localizedName = this.getLocalizedName();
-    const localizedTitle = getLocalizedText(this.props.selectedCity.metaTitle, this.props.locale);
+  const renderTitle = () => {
+    const localizedName = getLocalizedName();
+    const localizedTitle = getLocalizedText(selectedCity.metaTitle, locale);
     return (
       <title>
         {localizedTitle || localizedName}
       </title>
     );
-  }
+  };
 
-  renderMetaDescription = () => {
-    const { metaDescription } = this.props.selectedCity;
-    return metaDescription && (
-      <meta name="description" content={getLocalizedText(metaDescription, this.props.locale)} />
+  const renderMetaDescription = () => {
+    return selectedCity.metaDescription && (
+      <meta name="description" content={getLocalizedText(selectedCity.metaDescription, locale)} />
     );
-  }
+  };
 
-  renderDocumentHead = () => {
+  const renderDocumentHead = () => {
     return (
       <Helmet>
-        {this.renderTitle()}
-        {this.renderMetaDescription()}
+        {renderTitle()}
+        {renderMetaDescription()}
       </Helmet>
     );
-  }
+  };
 
-  render() {
-    const { selectedCity, locale } = this.props;
-    return isDataEnabled(selectedCity, locale) ? (
-      <div style={{ height: '100%', width: '100%' }}>
-        {this.renderDocumentHead()}
-        <Typography variant="h1">
-          {this.getLocalizedName()}
-        </Typography>
-        <Typography variant="body1">
-          {getLocalizedText(selectedCity.description, locale)}
-        </Typography>
-        <ItemsListWithLoader
-          loaderId={CONTENT_LOADER_ID}
-          items={this.props.cityItems}
-          selectedCity={this.props.selectedCity}
-        />
-      </div>
-    ) : <NotFound/>;
-  }
-}
+  return isDataEnabled(selectedCity, locale) ? (
+    <div className={classes.wrapper}>
+      {renderDocumentHead()}
+      <Typography className={classes.header} variant="h1">
+        {getLocalizedName()}
+      </Typography>
+      <Typography variant="body1">
+        {getLocalizedText(selectedCity.description, locale)}
+      </Typography>
+      <ItemsListWithLoader
+        loaderId={CONTENT_LOADER_ID}
+        items={cityItems}
+        selectedCity={selectedCity}
+      />
+    </div>
+  ) : <NotFound/>;
+};
 
-const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
+const mapStateToProps = (state: IAppState, props: OwnProps): StateProps => ({
   selectedCity: getCityByAlias(state, props.match.params.cityAlias),
   cityItems: getCityItems(state, props.match.params.cityAlias),
   shouldLoadCityItems: shouldLoadCityItems(state, props.match.params.cityAlias),
@@ -97,4 +87,4 @@ const mapDispatchToProps = {
   loadCityItems
 };
 
-export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CityPage);
+export default connect<StateProps, Dispatch, OwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(CityPage);

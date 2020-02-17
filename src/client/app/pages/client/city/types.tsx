@@ -6,17 +6,17 @@ export interface IMatchParams {
   locale: Locale;
 }
 
-export interface IOwnProps extends RouteComponentProps<IMatchParams> {}
+export type OwnProps = RouteComponentProps<IMatchParams>;
 
-export interface IStateProps {
+export type StateProps = {
   cityItems: IItem[];
   selectedCity: ICity;
   shouldLoadCityItems: boolean;
   locale: Locale;
-}
+};
 
-export interface IDispatchProps {
+export type Dispatch = {
   loadCityItems: (cityAlias: string) => void;
-}
+};
 
-export type ICityPageProps = IOwnProps & IStateProps & IDispatchProps;
+export type Props = OwnProps & StateProps & Dispatch;

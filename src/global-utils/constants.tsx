@@ -9,5 +9,5 @@ export const IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png'];
 export const IMAGE_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 export const LARGE_IMAGE_WIDTH = 2000;
 export const LARGE_IMAGE_HEIGHT = 1200;
-export const SMALL_IMAGE_WIDTH = 280;
-export const SMALL_IMAGE_HEIGHT = 220;
+export const SMALL_IMAGE_WIDTH = 200;
+export const SMALL_IMAGE_HEIGHT = 160;

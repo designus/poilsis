@@ -3,10 +3,12 @@ import React, { memo, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { List, WindowScroller, AutoSizer } from 'react-virtualized';
+import Typography from '@material-ui/core/Typography';
 import 'react-virtualized/styles.css';
 
 import { config } from 'config';
 import { ICity, IItem } from 'global-utils/typings';
+import { SMALL_IMAGE_HEIGHT } from 'global-utils/constants';
 import { isClient, isServer } from 'global-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
@@ -20,6 +22,8 @@ type Props = {
   items: IItem[];
   selectedCity: ICity;
 };
+
+export const rowHeight = SMALL_IMAGE_HEIGHT + 20;
 
 const ItemsList: React.FunctionComponent<Props> = (props) => {
 
@@ -49,10 +53,10 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
           <div className={classes.image}>
             <img src={getImageUrl(item)} />
           </div>
-          <div>
-            <div className={classes.name}>
+          <div className={classes.content}>
+            <Typography variant="h3" className={classes.name}>
               {getLocalizedText(item.name, locale)}
-            </div>
+            </Typography>
             <ItemTypesList locale={locale} typeIds={item.types} />
           </div>
         </div>
@@ -71,7 +75,7 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
               isScrolling={isScrolling}
               onScroll={onChildScroll}
               rowCount={items.length}
-              rowHeight={100}
+              rowHeight={rowHeight}
               rowRenderer={renderRow}
               scrollTop={scrollTop}
               width={width}
