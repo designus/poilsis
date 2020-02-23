@@ -24,6 +24,7 @@ import { removeInjectedStyles } from 'client-utils/methods';
 import { getInitialData } from 'actions/initialData';
 import { getStaticFileUri } from 'global-utils';
 import { isLoggedIn, getClientLocale, isInitialDataLoaded } from 'selectors';
+import { LoadingBar } from 'components/loadingBar';
 
 import { CityPage } from 'pages/client/city';
 import { ItemPage } from 'pages/client/item';
@@ -132,6 +133,7 @@ const ClientLayoutPage: React.FunctionComponent<Props> = (props) => {
 
   return (
     <ConnectedIntlProvider locale={locale}>
+      <LoadingBar />
       <div className={classes.wrapper}>
         {renderContent()}
       </div>

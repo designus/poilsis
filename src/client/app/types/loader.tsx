@@ -9,14 +9,16 @@ export enum LoaderActionTypes {
   END_LOADING = 'END_LOADING'
 }
 
+export type LoaderType = 'content' | 'dialog' | 'global';
+
 export interface IStartLoading {
   type: LoaderActionTypes.START_LOADING;
-  loaderId: string;
+  loaderId: LoaderType;
 }
 
 export interface IEndLoading {
   type: LoaderActionTypes.END_LOADING;
-  loaderId: string;
+  loaderId: LoaderType;
 }
 
 export type LoaderActions = IStartLoading | IEndLoading;

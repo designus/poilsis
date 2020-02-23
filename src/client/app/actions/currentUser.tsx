@@ -1,11 +1,11 @@
 import { batch } from 'react-redux';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
-import { startLoading, endLoading } from 'actions/loader';
+import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { showLoader, hideLoader } from 'actions/loader';
 import { receiveItems } from 'actions/items';
 import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, ActionCreator } from 'types';
 import { isAdmin, IItem } from 'global-utils';
-import { getAdminLocale, getCurrentUser } from 'selectors';
+import { getAdminLocale } from 'selectors';
 import { handleApiResponse, http } from './utils';
 
 export const receiveUserDetails: ActionCreator<IReceiveUserDetails> = props => ({
@@ -31,7 +31,7 @@ export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch,
     return null;
   }
 
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
 
   return http.get<IItem[]>(endpoint, setAcceptLanguageHeader(locale))
     .then(response => handleApiResponse(response))
@@ -40,11 +40,11 @@ export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch,
       batch(() => {
         dispatch(receiveItems(data));
         dispatch(setUserItems());
-        dispatch(endLoading(CONTENT_LOADER_ID));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
       });
     })
     .catch(err => {
       console.error(err);
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
     });
 };

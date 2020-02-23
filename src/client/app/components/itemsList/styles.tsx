@@ -8,7 +8,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: '25px'
   },
   row: {
-    borderBottom: `1px solid ${theme.palette.grey[300]}`,
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
@@ -19,8 +18,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     height: `${SMALL_IMAGE_HEIGHT}px`,
     overflow: 'hidden',
-    alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
+    border: `1px solid ${theme.palette.grey[300]}`,
+    background: '#fff'
   },
   image: {
     width: `${SMALL_IMAGE_WIDTH}px`,
@@ -28,16 +28,16 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginRight: '10px',
     display: 'flex',
     justifyContent: 'center',
-    background: '#fff',
     '& > img': {
       maxWidth: '100%',
       maxHeight: '100%'
     }
   },
   content: {
-    alignSelf: 'start'
+    flex: 3
   },
   name: {
-    color: theme.palette.primary.dark
+    color: theme.palette.primary.dark,
+    paddingTop: '15px'
   }
 }));

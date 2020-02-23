@@ -1,5 +1,4 @@
 import { batch } from 'react-redux';
-import { AxiosResponse } from 'axios';
 import { getNormalizedData, setAcceptLanguageHeader, getUserDetails } from 'client-utils/methods';
 import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';

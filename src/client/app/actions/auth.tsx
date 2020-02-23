@@ -2,7 +2,7 @@ import { batch } from 'react-redux';
 import * as Cookies from 'js-cookie';
 import * as day from 'dayjs';
 
-import { startLoading, endLoading } from 'actions/loader';
+import { showLoader, hideLoader } from 'actions/loader';
 import { showToast } from 'actions/toast';
 import { receiveUserDetails } from 'actions/currentUser';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
@@ -10,7 +10,6 @@ import { getUserDetails } from 'client-utils/methods';
 import { getAccessTokenClaims } from 'global-utils/methods';
 import { getAccessToken } from 'selectors';
 import {
-  IAppState,
   AuthActionTypes,
   ILoginSucces,
   ILogoutSuccess,
@@ -18,7 +17,8 @@ import {
   IReauthenticateSuccess,
   ISetAccessToken,
   Toast,
-  ThunkResult
+  ThunkResult,
+  ThunkDispatch
 } from 'types';
 
 import {
@@ -53,17 +53,17 @@ export const setAccessToken = (accessToken: string): ISetAccessToken => ({
   accessToken
 });
 
-export const handleAuthError = (dispatch: any, isLogin: boolean) => (error: any) => {
+export const handleAuthError = (dispatch: ThunkDispatch, isLogin: boolean) => (error: any) => {
   const genericMessage = isLogin ? USER_LOGIN_ERROR : USER_LOGOUT_ERROR;
   const errorMessage = error.response.data.message;
   console.error(error);
-  dispatch(endLoading(DIALOG_LOADER_ID));
+  dispatch(hideLoader(DIALOG_LOADER_ID));
   dispatch(showToast(Toast.error, genericMessage, errorMessage));
   dispatch(logout());
 };
 
 export const login = (credentials = {username: 'admin', password: 'admin'}): ThunkResult<Promise<void>> => dispatch => {
-  dispatch(startLoading(DIALOG_LOADER_ID));
+  dispatch(showLoader(DIALOG_LOADER_ID));
   return http.post('/api/users/login', credentials)
     .then(response => response.data)
     .then(data => {
@@ -73,7 +73,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}): Thu
       batch(() => {
         dispatch(loginSuccess(accessToken));
         dispatch(receiveUserDetails({ userDetails: getUserDetails(accessTokenClaims) }));
-        dispatch(endLoading(DIALOG_LOADER_ID));
+        dispatch(hideLoader(DIALOG_LOADER_ID));
         dispatch(showToast(Toast.success, USER_LOGIN_SUCCESS));
       });
 
@@ -85,7 +85,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}): Thu
 };
 
 export const reauthenticateUser = (displayToast = false): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
-  dispatch(startLoading(DIALOG_LOADER_ID));
+  dispatch(showLoader(DIALOG_LOADER_ID));
   const state = getState();
   const oldAccessToken = getAccessToken(state);
   const refreshToken = localStorage.getItem('refreshToken');
@@ -99,7 +99,7 @@ export const reauthenticateUser = (displayToast = false): ThunkResult<Promise<vo
       const accessToken = data.accessToken;
       const { exp } = getAccessTokenClaims(accessToken);
       const expiryDate = day(exp * 1000).toDate();
-      dispatch(endLoading(DIALOG_LOADER_ID));
+      dispatch(hideLoader(DIALOG_LOADER_ID));
       dispatch(reauthenticateSuccess(accessToken));
       Cookies.set('jwt', accessToken, { expires: expiryDate });
       if (displayToast) {
