@@ -219,6 +219,12 @@
       "publicPath": "http://localhost:8080/public/clientCity.js"
     },
     {
+      "id": "./app/components/menu/clientLeftMenu/styles.tsx",
+      "name": "./app/components/menu/clientLeftMenu/styles.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
       "id": "./app/pages/client/city/styles.tsx",
       "name": "./app/pages/client/city/styles.tsx",
       "file": "clientCity.js",
@@ -1279,7 +1285,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../global-styles": [
+  "../../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -7349,7 +7355,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "./ListContext": [
+  "../List/ListContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
       "name": "../../node_modules/@material-ui/core/esm/List/ListContext.js",
@@ -7373,7 +7379,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/ListItem": [
+  "../ListItem": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
@@ -7393,22 +7399,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItemIcon/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItemIcon/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "./ListItemText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/ListItemText/ListItemText.js",
-      "name": "../../node_modules/@material-ui/core/esm/ListItemText/ListItemText.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "@material-ui/core/ListItemText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/ListItemText/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/ListItemText/index.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }

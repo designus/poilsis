@@ -20,7 +20,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     overflow: 'hidden',
     position: 'relative',
     border: `1px solid ${theme.palette.grey[300]}`,
-    background: '#fff'
+    background: '#fff',
+    borderRadius: 8
   },
   image: {
     width: `${SMALL_IMAGE_WIDTH}px`,
@@ -37,7 +38,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     flex: 3
   },
   name: {
-    color: theme.palette.primary.dark,
+    color: theme.palette.primary.main,
     paddingTop: '15px'
   }
 }));

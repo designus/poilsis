@@ -12,5 +12,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   disabled: {},
   collapsableMenu: {},
   collapsableItem: {},
-  link: {}
+  link: {
+    display: 'flex',
+    alignItems: 'center'
+  }
 }));

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo } from 'react';
-import { NavLink, withRouter, RouteComponentProps } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Collapse from '@material-ui/core/Collapse';
@@ -12,7 +13,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { DropdownMenu } from 'components/dropdownMenu';
 import { UserRoles } from 'global-utils/typings';
 import { getCurrentUser } from 'selectors';
-import { UserDetails } from 'types';
 import { useStyles } from './styles';
 
 export interface IMenuItem {
@@ -66,11 +66,12 @@ const Menu: React.FunctionComponent<IMenuProps> = props => {
     return (
       <React.Fragment>
         {typeof item.icon === 'function' && (
-          <ListItemIcon className={classes.icon}>
+          <span className={classes.icon}>
             {item.icon()}
-          </ListItemIcon>
+          </span>
         )}
-        <ListItemText className={classes.text} inset primary={item.text} />
+        {/* <ListItemText className={classes.text} inset primary={item.text} /> */}
+        <Typography variant="body2" className={classes.text}>{item.text}</Typography>
       </React.Fragment>
     );
   };

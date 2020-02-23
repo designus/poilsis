@@ -59,7 +59,8 @@ export const styles = (theme: Theme) => {
       }
     },
     text: {
-      paddingLeft: 0
+      padding: '6px 0',
+      fontSize: '15px'
     },
     link: {
       ...getListItemContentStyle(theme),

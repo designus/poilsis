@@ -28,7 +28,7 @@ const CityPage: React.FunctionComponent<Props> = props => {
   const prevLocation = usePrevious(location);
   const classes = useStyles(props);
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobileWidth = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     if (location !== prevLocation && shouldLoadCityItems) {
@@ -67,9 +67,7 @@ const CityPage: React.FunctionComponent<Props> = props => {
   return isDataEnabled(selectedCity, locale) ? (
     <div className={classes.wrapper}>
       {renderDocumentHead()}
-      {/* <Hidden smDown implementation="css">
-      </Hidden> */}
-      <div className={`${classes.left} ${matches ? classes.hidden : ''}`}>
+      <div className={`${classes.left} ${isMobileWidth ? classes.hidden : ''}`}>
         <LeftMenu />
       </div>
       <div className={classes.right}>
