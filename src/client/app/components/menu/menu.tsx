@@ -31,7 +31,6 @@ export interface IMenuItem {
 export interface IMenuProps {
   items: IMenuItem[];
   isVertical?: boolean;
-  currentUser: UserDetails;
 }
 
 const Menu: React.FunctionComponent<IMenuProps> = props => {
@@ -180,4 +179,4 @@ const Menu: React.FunctionComponent<IMenuProps> = props => {
   );
 };
 
-export default memo(Menu);
+export default memo<IMenuProps>(Menu);

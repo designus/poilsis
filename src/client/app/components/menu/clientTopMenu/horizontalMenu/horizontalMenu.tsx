@@ -1,6 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
 import { styles} from './styles';
-import Menu, { IMenuProps } from 'components/menu/menu';
+import Menu from 'components/menu/menu';
 
-// @ts-ignore
-export const HorizontalMenu = withStyles(styles as any)(Menu) as React.FunctionComponent<IMenuProps>;
+export const HorizontalMenu = withStyles(styles)(Menu);

@@ -5,9 +5,9 @@ import { IAppState, IItemsMap, ICitiesMap } from 'types';
 
 export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
 
-export const getAllCities = (state: IAppState) => Object.values(getCitiesMap(state));
+export const getAllCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));
 
-export const getEnabledCities = (state: IAppState) => {
+export const getEnabledCities = (state: IAppState): ICity[] => {
   const allCities = getAllCities(state);
   const locale = getClientLocale(state);
   return allCities.filter(city => {

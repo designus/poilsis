@@ -32,11 +32,11 @@ const messages = defineMessages({
   }
 });
 
-function ClientTopMenu(props: ITopMenuProps) {
+const ClientTopMenu: React.FunctionComponent<ITopMenuProps> = props => {
   const { activeItem, cities, isLoggedIn, locale, isVertical, onRouteChange } = props;
   const intl = useIntl();
 
-  const StyledTopMenu: any = isVertical ? VerticalMenu : HorizontalMenu;
+  const StyledTopMenu = isVertical ? VerticalMenu : HorizontalMenu;
 
   const getCityItems = () => cities.map((city: ICity) => ({
     id: city.id,
@@ -78,7 +78,7 @@ function ClientTopMenu(props: ITopMenuProps) {
   return (
     <StyledTopMenu isVertical={isVertical} items={getMenuItems()} />
   );
-}
+};
 
 const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
   locale: getClientLocale(state),

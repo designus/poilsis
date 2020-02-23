@@ -1279,7 +1279,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1391,6 +1391,28 @@
     {
       "id": "./app/components/itemsList/itemsList.tsx",
       "name": "./app/components/itemsList/itemsList.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "./clientLeftMenu": [
+    {
+      "id": "./app/components/menu/clientLeftMenu/clientLeftMenu.tsx",
+      "name": "./app/components/menu/clientLeftMenu/clientLeftMenu.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
+      "id": "./app/components/menu/clientLeftMenu/index.tsx",
+      "name": "./app/components/menu/clientLeftMenu/index.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "components/menu": [
+    {
+      "id": "./app/components/menu/index.tsx",
+      "name": "./app/components/menu/index.tsx",
       "file": "clientCity.js",
       "publicPath": "http://localhost:8080/public/clientCity.js"
     }
@@ -3637,7 +3659,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./typings": [
+  "global-utils/typings": [
     {
       "id": "../global-utils/typings.tsx",
       "name": "../global-utils/typings.tsx",
@@ -7391,7 +7413,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Menu/Menu": [
+  "./Menu": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
       "name": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
@@ -7719,7 +7741,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "lodash/debounce": [
+  "./debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
       "name": "../../node_modules/lodash/debounce.js",
