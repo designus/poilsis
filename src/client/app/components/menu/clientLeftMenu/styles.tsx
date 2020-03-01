@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => createStyles({
   list: {
     background: '#fff',
     marginRight: '25px',
-    marginTop: '15px',
+    marginTop: 0,
     border: `1px solid ${theme.palette.grey[300]}`,
     padding: 0,
     borderRadius: 8,

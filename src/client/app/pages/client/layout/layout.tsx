@@ -90,7 +90,8 @@ const ClientLayoutPage: React.FunctionComponent<Props> = (props) => {
             />
           </Drawer>
         </Hidden>
-        <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
+        <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="sticky">
+          <LoadingBar />
           <Container maxWidth="xl">
             <Toolbar disableGutters className={classes.toolbar}>
               <Hidden mdUp implementation="css">
@@ -133,7 +134,6 @@ const ClientLayoutPage: React.FunctionComponent<Props> = (props) => {
 
   return (
     <ConnectedIntlProvider locale={locale}>
-      <LoadingBar />
       <div className={classes.wrapper}>
         {renderContent()}
       </div>

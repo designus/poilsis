@@ -231,6 +231,12 @@
       "publicPath": "http://localhost:8080/public/clientCity.js"
     },
     {
+      "id": "./app/pages/client/city/filters/styles.tsx",
+      "name": "./app/pages/client/city/filters/styles.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
       "id": "./app/pages/client/city/styles.tsx",
       "name": "./app/pages/client/city/styles.tsx",
       "file": "clientCity.js",
@@ -1449,6 +1455,20 @@
     {
       "id": "./app/pages/client/city/city.tsx",
       "name": "./app/pages/client/city/city.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "./filters": [
+    {
+      "id": "./app/pages/client/city/filters/filters.tsx",
+      "name": "./app/pages/client/city/filters/filters.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
+      "id": "./app/pages/client/city/filters/index.tsx",
+      "name": "./app/pages/client/city/filters/index.tsx",
       "file": "clientCity.js",
       "publicPath": "http://localhost:8080/public/clientCity.js"
     }
@@ -7401,7 +7421,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../ListItem": [
+  "@material-ui/core/ListItem": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItem/index.js",

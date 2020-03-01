@@ -4,7 +4,7 @@ import { createStyles } from '@material-ui/core/styles';
 export const styles = (theme: Theme) => createStyles({
   '@global': {
     html: {
-      background: theme.palette.background.default,
+      background: '#fff',
       WebkitFontSmoothing: 'antialiased',
       MozOsxFontSmoothing: 'grayscale',
       boxSizing: 'border-box',
@@ -34,7 +34,7 @@ export const styles = (theme: Theme) => createStyles({
   wrapper: {
     margin: '0 auto',
     width: '100%',
-    height: '100%',
+    height: 'auto',
     position: 'relative'
   },
   toolbar: {

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -15,8 +14,9 @@ import { NotFound } from 'components/notFound';
 import { ClientLeftMenu as LeftMenu } from 'components/menu';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { getCityByAlias, shouldLoadCityItems, getCityItems, getClientLocale } from 'selectors';
-import { IMatchParams, Props, OwnProps, StateProps, Dispatch } from './types';
 import { usePrevious } from 'client-utils/customHooks';
+import { Filters } from './filters';
+import { IMatchParams, Props, OwnProps, StateProps, Dispatch } from './types';
 import { useStyles } from './styles';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
@@ -67,21 +67,24 @@ const CityPage: React.FunctionComponent<Props> = props => {
   return isDataEnabled(selectedCity, locale) ? (
     <div className={classes.wrapper}>
       {renderDocumentHead()}
-      <div className={`${classes.left} ${isMobileWidth ? classes.hidden : ''}`}>
-        <LeftMenu />
-      </div>
-      <div className={classes.right}>
-        <Typography className={classes.header} variant="h1">
-          {getLocalizedName()}
-        </Typography>
-        <Typography variant="body1">
-          {getLocalizedText(selectedCity.description, locale)}
-        </Typography>
-        <ItemsListWithLoader
-          loaderId={CONTENT_LOADER_ID}
-          items={cityItems}
-          selectedCity={selectedCity}
-        />
+      <Filters />
+      <div className={classes.content}>
+        <div className={`${classes.left} ${isMobileWidth ? classes.hidden : ''}`}>
+          <LeftMenu />
+        </div>
+        <div className={classes.right}>
+          <Typography className={classes.header} variant="h1">
+            {getLocalizedName()}
+          </Typography>
+          <Typography variant="body1">
+            {getLocalizedText(selectedCity.description, locale)}
+          </Typography>
+          <ItemsListWithLoader
+            loaderId={CONTENT_LOADER_ID}
+            items={cityItems}
+            selectedCity={selectedCity}
+          />
+        </div>
       </div>
     </div>
   ) : <NotFound/>;

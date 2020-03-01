@@ -26,6 +26,7 @@
   "common.form_validation.required_when_enabled": "This field is required when you want to enable this item",
   "common.form_validation.wrong_file_dimensions": "One or more of your selected photos do not meet minimum width or height {dimensions} requirements",
   "common.login": "Login",
+  "common.price_from": "from {value}",
   "admin.menu.dashboard": "Dashboard",
   "admin.menu.items": "Items",
   "admin.menu.types": "Types",
