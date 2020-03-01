@@ -12,6 +12,7 @@ import { SMALL_IMAGE_HEIGHT } from 'global-utils/constants';
 import { isClient, isServer } from 'global-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
+import { Price } from 'components/price';
 
 import { getClientLocale } from 'selectors';
 
@@ -58,6 +59,10 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
               {getLocalizedText(item.name, locale)}
             </Typography>
             <ItemTypesList locale={locale} typeIds={item.types} />
+            <Price
+              price={item.price}
+              currency={item.currency}
+            />
           </div>
         </div>
       </div>

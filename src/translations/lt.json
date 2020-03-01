@@ -26,6 +26,7 @@
   "common.form_validation.required_when_enabled": "Šį laukelį privaloma užpildyti jei norite skelbti įrašą",
   "common.form_validation.wrong_file_dimensions": "Viena ar daugiau jūsų pasirinktų nuotraukų neatitinka minimalių nuotraukos dydžio {dimensions} reikalavimų",
   "common.login": "Prisijungti",
+  "common.price_from": "Nuo {value}",
   "admin.menu.dashboard": "Skydelis",
   "admin.menu.items": "Įrašai",
   "admin.menu.types": "Tipai",

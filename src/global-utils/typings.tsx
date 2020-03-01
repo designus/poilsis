@@ -58,6 +58,8 @@ export interface IItem extends IItemDescFields {
   updatedAt?: string;
   mainImage: string;
   isFullyLoaded?: boolean;
+  price: number[];
+  currency: string;
 }
 
 export interface IType {

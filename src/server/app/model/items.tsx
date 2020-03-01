@@ -74,6 +74,18 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage]
   },
+  price: {
+    type: Array,
+    required: [true, requiredMessage],
+    validate: [
+      minMaxLength(1, 2),
+      getValidationMessage(RANGE, 1, 2)
+    ]
+  },
+  currency: {
+    type: String,
+    required: [true, requiredMessage]
+  },
   address: {
     type: String,
     required: [true, requiredMessage]

@@ -225,6 +225,12 @@
       "publicPath": "http://localhost:8080/public/clientCity.js"
     },
     {
+      "id": "./app/components/price/styles.tsx",
+      "name": "./app/components/price/styles.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
       "id": "./app/pages/client/city/styles.tsx",
       "name": "./app/pages/client/city/styles.tsx",
       "file": "clientCity.js",
@@ -1209,7 +1215,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "components/menu/menu": [
+  "./menu": [
     {
       "id": "./app/components/menu/menu.tsx",
       "name": "./app/components/menu/menu.tsx",
@@ -1419,6 +1425,22 @@
     {
       "id": "./app/components/menu/index.tsx",
       "name": "./app/components/menu/index.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "components/price": [
+    {
+      "id": "./app/components/price/index.tsx",
+      "name": "./app/components/price/index.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
+  "./price": [
+    {
+      "id": "./app/components/price/price.tsx",
+      "name": "./app/components/price/price.tsx",
       "file": "clientCity.js",
       "publicPath": "http://localhost:8080/public/clientCity.js"
     }
@@ -7627,7 +7649,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../useMediaQuery": [
+  "@material-ui/core/useMediaQuery": [
     {
       "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
       "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",

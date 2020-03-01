@@ -64,6 +64,7 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
   for (let i = 0; i < count; i++) {
     const cityId = cityIds[getRandomNumber(0, cityIds.length - 1)];
     const types = [typeIds[getRandomNumber(0, typeIds.length - 1)]];
+    const price = getRandomNumber(0, 1) ? [getRandomNumber(15, 30), getRandomNumber(30, 60)] : [getRandomNumber(15, 60)];
     const name = getItemName(names, nameIndex);
     const alias = getItemAlias(name, i);
     items.push({
@@ -81,6 +82,8 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
         lt: true,
         ru: true
       },
+      price,
+      currency: 'EUR',
       isRecommended: i < 5,
       mainImage: '',
       description: {
