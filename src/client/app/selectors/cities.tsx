@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 import { ICity, IItem } from 'global-utils/typings';
 import { getItemsMap, getClientLocale, isLoggedIn } from 'selectors';
-import { IAppState, IItemsMap, ICitiesMap } from 'types';
+import { IAppState, IItemsMap, CitiesMap } from 'types';
 
-export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
+export const getCitiesMap = (state: IAppState): CitiesMap => state.cities.dataMap;
 
 export const getAllCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));
 
@@ -50,3 +50,5 @@ export const getCityItems = createSelector<IAppState, string, ICity, IItemsMap, 
     return [];
   }
 );
+
+export const getSelectedCityFilters = (state: IAppState, alias: string) => getCityByAlias(state, alias)?.filters;

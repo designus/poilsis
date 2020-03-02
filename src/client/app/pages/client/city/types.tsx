@@ -1,12 +1,12 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { ICity, IItem, Locale } from 'global-utils/typings';
 
-export interface IMatchParams {
+export type MatchParams = {
   cityAlias: string;
   locale: Locale;
-}
+};
 
-export type OwnProps = RouteComponentProps<IMatchParams>;
+export type OwnProps = RouteComponentProps<MatchParams>;
 
 export type StateProps = {
   cityItems: IItem[];

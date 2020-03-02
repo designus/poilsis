@@ -13,7 +13,7 @@ export const shouldLoadType = (state: IAppState, typeId: string): boolean => {
   return Boolean(typeId && !state.loader.content && (!type || !type.isFullyLoaded));
 };
 
-export const getTypes = createSelector(
+export const getTypes = createSelector<IAppState, ITypesMap, IType[]>(
   [getTypesMap],
   (typesMap: ITypesMap) => Object.values(typesMap)
 );

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
 import { SelectInputProps } from '@material-ui/core/Select/SelectInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { IAppState, IItemsMap, ICitiesMap } from 'types';
+import { IAppState, IItemsMap, CitiesMap } from 'types';
 import { Locale } from 'global-utils/typings';
 import { loadRecommendedItems } from 'actions';
 import { ItemCard } from 'components/itemCard';
@@ -23,7 +23,7 @@ interface IStateProps {
   recommendedItems: string[];
   hasLoaded: boolean;
   itemsMap: IItemsMap;
-  citiesMap: ICitiesMap;
+  citiesMap: CitiesMap;
   locale: Locale;
 }
 

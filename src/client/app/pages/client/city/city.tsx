@@ -16,12 +16,12 @@ import { extendWithLoader } from 'components/extendWithLoader';
 import { getCityByAlias, shouldLoadCityItems, getCityItems, getClientLocale } from 'selectors';
 import { usePrevious } from 'client-utils/customHooks';
 import { Filters } from './filters';
-import { IMatchParams, Props, OwnProps, StateProps, Dispatch } from './types';
+import { MatchParams, Props, OwnProps, StateProps, Dispatch } from './types';
 import { useStyles } from './styles';
 
 const ItemsListWithLoader = extendWithLoader(ItemsList);
 
-export const loadCityData = (store: any, params: IMatchParams) => store.dispatch(loadCityItems(params.cityAlias));
+export const loadCityData = (store: any, params: MatchParams) => store.dispatch(loadCityItems(params.cityAlias));
 
 const CityPage: React.FunctionComponent<Props> = props => {
   const { selectedCity, locale, location, shouldLoadCityItems, cityItems } = props;

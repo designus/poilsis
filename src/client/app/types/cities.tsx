@@ -1,7 +1,7 @@
 import { ICity } from 'global-utils/typings';
 import { IGenericDataMap, IGenericState, IToggleEnabled } from './generic';
 
-export type ICitiesMap = IGenericDataMap<ICity>;
+export type CitiesMap = IGenericDataMap<ICity>;
 
 export interface ICityState extends IGenericState<ICity> {}
 

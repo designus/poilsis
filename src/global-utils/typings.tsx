@@ -71,6 +71,11 @@ export interface IType {
   isFullyLoaded?: boolean;
 }
 
+export interface ICityFilters {
+  type: string;
+  price: number[];
+}
+
 export interface ICity extends ISeoFields {
   id: string;
   alias: TranslatableField;
@@ -80,6 +85,7 @@ export interface ICity extends ISeoFields {
   isEnabled: IsEnabled;
   hasItems?: boolean;
   isFullyLoaded?: boolean;
+  filters?: ICityFilters;
 }
 
 export enum UserRoles {
