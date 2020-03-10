@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import { removeByKeys, getAliasKeysById, getAliasState } from 'client-utils/methods';
 import { ICityFilters } from 'global-utils/typings';
+import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
 import {
   ItemsActions,
   ICityState,
@@ -17,11 +18,6 @@ export const getInitialCitiesState = (): ICityState => ({
   aliases: {}
 });
 
-const getInitialFiltersState = (): ICityFilters => ({
-  type: 'all',
-  price: []
-});
-
 export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = getInitialCitiesState(), action): ICityState => {
   switch (action.type) {
     case CitiesActionTypes.SET_CITY_ITEMS:
@@ -32,7 +28,18 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
           [action.cityId]: {
             ...state.dataMap[action.cityId],
             hasItems: true,
-            filters: getInitialFiltersState()
+            filters: DEFAULT_CITY_FITLERS
+          }
+        }
+      };
+    case CitiesActionTypes.SET_CITY_FILTERS:
+      return {
+        ...state,
+        dataMap: {
+          ...state.dataMap,
+          [action.cityId]: {
+            ...state.dataMap[action.cityId],
+            filters: action.filters
           }
         }
       };

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import { ICity, IItem } from 'global-utils/typings';
-import { getItemsMap, getClientLocale, isLoggedIn } from 'selectors';
+import { ICity, IItem, ICityFilters } from 'global-utils/typings';
+import { getItemsMap, getClientLocale } from 'selectors';
 import { IAppState, IItemsMap, CitiesMap } from 'types';
 
 export const getCitiesMap = (state: IAppState): CitiesMap => state.cities.dataMap;
@@ -41,14 +41,21 @@ export const shouldLoadCityItems = (state: IAppState, alias: string) => {
   return false;
 };
 
-export const getCityItems = createSelector<IAppState, string, ICity, IItemsMap, IItem[]>(
-  [getCityByAlias, getItemsMap],
-  (selectedCity, itemsMap) => {
-    if (selectedCity) {
-      return Object.values(itemsMap).filter(item => item.cityId === selectedCity.id);
+export const getCityFilters = (state: IAppState, alias: string) => getCityByAlias(state, alias)?.filters;
+
+export const getSelectedCityId = (state: IAppState, alias: string) => getCityByAlias(state, alias).id;
+
+export const getCityItems = createSelector<IAppState, string, string, IItemsMap, ICityFilters | undefined,  IItem[]>(
+  [getSelectedCityId, getItemsMap, getCityFilters],
+  (selectedCityId, itemsMap, cityFilters) => {
+    if (selectedCityId && cityFilters) {
+      return Object.values(itemsMap).filter(item => {
+        const { type } = cityFilters;
+        const filterByCity = item.cityId === selectedCityId;
+        const filterByType = type !== 'all' ? item.types.includes(type) : true;
+        return filterByCity && filterByType;
+      });
     }
     return [];
   }
 );
-
-export const getSelectedCityFilters = (state: IAppState, alias: string) => getCityByAlias(state, alias)?.filters;

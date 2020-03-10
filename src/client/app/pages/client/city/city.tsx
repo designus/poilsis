@@ -67,7 +67,7 @@ const CityPage: React.FunctionComponent<Props> = props => {
   return isDataEnabled(selectedCity, locale) ? (
     <div className={classes.wrapper}>
       {renderDocumentHead()}
-      <Filters />
+      <Filters cityId={selectedCity.id} />
       <div className={classes.content}>
         <div className={`${classes.left} ${isMobileWidth ? classes.hidden : ''}`}>
           <LeftMenu />
