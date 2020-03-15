@@ -1,5 +1,6 @@
 import React, { memo, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, withRouter } from 'react-router-dom';
+import { History } from 'history';
 import { useSelector, useDispatch } from 'react-redux';
 import { useIntl, defineMessages } from 'react-intl';
 import { getTypes, getClientLocale, getCityFilters } from 'selectors';
@@ -27,6 +28,8 @@ const messages = defineMessages({
 const Filters: React.FunctionComponent<Props> = props => {
   const classes = useStyles();
   const params = useParams<MatchParams>();
+  const history = useHistory() as History;
+  console.log('History', history);
   const filters = useSelector<IAppState, ICityFilters | undefined>(state => getCityFilters(state, params.cityAlias));
   const locale = useSelector(getClientLocale);
   const types = useSelector(getTypes);
@@ -46,8 +49,21 @@ const Filters: React.FunctionComponent<Props> = props => {
 
   if (!filters) return null;
 
-  const handleTypeChange = (value: DropdownItemValue) => {
-    const newFilters: ICityFilters = { ...filters, type: value as string };
+  const handleTypeChange = (val: DropdownItemValue) => {
+    const value = val as string;
+    const newFilters: ICityFilters = { ...filters, type: value };
+    const url = new URL(document.URL);
+
+    // url.searchParams.append('type', value);
+
+    if (value === DEFAULT_CITY_FITLERS.type) {
+      url.searchParams.delete('type');
+    } else {
+      url.searchParams.set('type', value);
+    }
+
+
+    history.push({ search: url.search });
     dispatch(setCityFilters({ cityId: props.cityId, filters: newFilters }));
   };
 
