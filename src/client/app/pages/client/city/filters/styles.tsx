@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     background: '#fff',
     margin: '30px 0',
-    padding: '15px',
+    padding: '5px 15px 15px 15px',
     border: `1px solid ${theme.palette.grey[300]}`,
     borderRadius: 8,
     position: 'sticky',

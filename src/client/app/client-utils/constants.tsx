@@ -5,6 +5,6 @@ export const CONTENT_LOADER_ID = 'content';
 export const DIALOG_LOADER_ID = 'dialog';
 
 export const DEFAULT_CITY_FITLERS: ICityFilters = {
-  type: 'all',
-  price: []
+  type: '',
+  price: [10, 20]
 };

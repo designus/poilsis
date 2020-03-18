@@ -10,6 +10,7 @@ import { getLocalizedText } from 'client-utils/methods';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
 import { Dropdown } from 'components/dropdown';
 import { IDropdownOption, IAppState, DropdownItemValue } from 'types';
+import { Popup } from 'components/popup';
 import { MatchParams } from '../types';
 
 import { useStyles } from './styles';
@@ -29,7 +30,6 @@ const Filters: React.FunctionComponent<Props> = props => {
   const classes = useStyles();
   const params = useParams<MatchParams>();
   const history = useHistory() as History;
-  console.log('History', history);
   const filters = useSelector<IAppState, ICityFilters | undefined>(state => getCityFilters(state, params.cityAlias));
   const locale = useSelector(getClientLocale);
   const types = useSelector(getTypes);
@@ -54,14 +54,11 @@ const Filters: React.FunctionComponent<Props> = props => {
     const newFilters: ICityFilters = { ...filters, type: value };
     const url = new URL(document.URL);
 
-    // url.searchParams.append('type', value);
-
     if (value === DEFAULT_CITY_FITLERS.type) {
       url.searchParams.delete('type');
     } else {
       url.searchParams.set('type', value);
     }
-
 
     history.push({ search: url.search });
     dispatch(setCityFilters({ cityId: props.cityId, filters: newFilters }));
@@ -72,8 +69,17 @@ const Filters: React.FunctionComponent<Props> = props => {
       <Dropdown
         options={typeOptions}
         onChange={handleTypeChange}
+        disableUnderline={false}
         selectedValue={filters.type}
+        label="Select type"
+        minWidth={120}
       />
+      <Popup
+        label="Select price"
+        maxWidth={150}
+      >
+        This is popup
+      </Popup>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { ActionCreatorsMapObject } from 'redux';
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { IItemsMap, CitiesMap, IUsersMap, ThunkReturn, ActionReturn } from 'types';
