@@ -1,13 +1,15 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Props } from './popup';
 
+const maxWidth = (props: Props) => props.maxWidth || 'initial';
+
 export const useStyles = makeStyles((theme: Theme) => ({
   typography: {
     padding: theme.spacing(2)
   },
   wrapper: {
     marginLeft: '15px',
-    maxWidth: (props: Props) => props.maxWidth || 'initial'
+    maxWidth
   },
   mask: {
     width: '100%',
@@ -18,5 +20,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   icon: {
     color: '#000'
+  },
+  popover: {
+    maxWidth,
+    padding: '15px'
   }
 }));

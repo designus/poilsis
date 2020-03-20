@@ -11,3 +11,4 @@ export const LARGE_IMAGE_WIDTH = 2000;
 export const LARGE_IMAGE_HEIGHT = 1200;
 export const SMALL_IMAGE_WIDTH = 200;
 export const SMALL_IMAGE_HEIGHT = 160;
+export const GLOBAL_CURRENCY = 'EUR';

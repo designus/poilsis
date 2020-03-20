@@ -11,6 +11,8 @@ import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
 import { Dropdown } from 'components/dropdown';
 import { IDropdownOption, IAppState, DropdownItemValue } from 'types';
 import { Popup } from 'components/popup';
+import { PriceFilter } from './priceFilter';
+
 import { MatchParams } from '../types';
 
 import { useStyles } from './styles';
@@ -64,6 +66,10 @@ const Filters: React.FunctionComponent<Props> = props => {
     dispatch(setCityFilters({ cityId: props.cityId, filters: newFilters }));
   };
 
+  const handlePriceFilterChange = (values: number[]) => {
+    return {}
+  }
+
   return (
     <div className={classes.wrapper}>
       <Dropdown
@@ -74,12 +80,7 @@ const Filters: React.FunctionComponent<Props> = props => {
         label="Select type"
         minWidth={120}
       />
-      <Popup
-        label="Select price"
-        maxWidth={150}
-      >
-        This is popup
-      </Popup>
+      <PriceFilter onClick={handlePriceFilterChange} selectedValue={filters.price} />
     </div>
   );
 };

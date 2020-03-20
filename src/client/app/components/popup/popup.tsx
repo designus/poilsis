@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Popover from '@material-ui/core/Popover';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
@@ -13,12 +13,21 @@ export type Props = {
   maxWidth?: number;
   isOutlined?: boolean;
   label: string;
+  value: string;
+  isOpen?: boolean;
 };
 
 export const Popup: React.FunctionComponent<Props> = (props) => {
   const classes = useStyles(props);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    console.log('Is open', props.isOpen);
+    if (isOpen && !props.isOpen) {
+      handleClose();
+    }
+  }, [props.isOpen]);
 
   const handleClick = (event: React.MouseEvent<any>) => {
     setIsOpen(true);
@@ -39,8 +48,8 @@ export const Popup: React.FunctionComponent<Props> = (props) => {
   return (
     <FormControl className={classes.wrapper}>
       <FormControl>
-        <InputLabel focused={isOpen} shrink={isOpen}>{props.label}</InputLabel>
-        <Input readOnly id="component-simple" endAdornment={renderArrow()} />
+        <InputLabel focused={isOpen} shrink={Boolean(props.value) || isOpen}>{props.label}</InputLabel>
+        <Input value={props.value} readOnly id="component-simple" endAdornment={renderArrow()} />
         <div className={classes.mask} onClick={handleClick} />
       </FormControl>
       <Popover
@@ -48,6 +57,9 @@ export const Popup: React.FunctionComponent<Props> = (props) => {
         open={isOpen}
         anchorEl={anchorEl}
         onClose={handleClose}
+        classes={{
+          paper: classes.popover
+        }}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'left'
@@ -57,9 +69,7 @@ export const Popup: React.FunctionComponent<Props> = (props) => {
           horizontal: 'left'
         }}
       >
-        <Typography className={classes.typography}>
-          {props.children}
-        </Typography>
+        {props.children}
       </Popover>
     </FormControl>
   );

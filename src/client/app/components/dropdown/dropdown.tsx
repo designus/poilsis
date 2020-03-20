@@ -36,9 +36,10 @@ function Dropdown(props: Props) {
 
   const renderOption = (option: IDropdownOption) => (
     <MenuItem key={option.value} value={option.value}>
-      <Typography color="inherit" variant="body2">
+      {/* <Typography color="inherit" variant="body2">
         {option.label}
-      </Typography>
+      </Typography> */}
+      {option.label}
     </MenuItem>
   );
 

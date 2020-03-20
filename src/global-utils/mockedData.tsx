@@ -1,5 +1,5 @@
 import { IItem, TranslatableField, Locale, ObjectKeys } from 'global-utils/typings';
-import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils/constants';
+import { LANGUAGES, DEFAULT_LANGUAGE, GLOBAL_CURRENCY } from 'global-utils/constants';
 import shortId from 'shortid';
 import { formatValue } from './methods';
 
@@ -83,7 +83,7 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
         ru: true
       },
       price,
-      currency: 'EUR',
+      currency: GLOBAL_CURRENCY,
       isRecommended: i < 5,
       mainImage: '',
       description: {

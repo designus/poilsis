@@ -4,7 +4,7 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 // @ts-ignore
 import Countdown from 'react-countdown-now';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { IAppState, ThunkDispatch } from 'types';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
@@ -22,7 +22,7 @@ class KeepMeLoggedModalComponent extends React.PureComponent<Props> {
 
   renderCountdown = ({ seconds }: any) => {
     return (
-      <FormattedHTMLMessage id="admin.reauthenticate_modal.description" values={{ seconds }} />
+      <FormattedMessage id="admin.reauthenticate_modal.description" values={{ seconds }} />
     );
   }
 
