@@ -1,7 +1,7 @@
 import { IItem, TranslatableField, Locale, ObjectKeys, Price } from 'global-utils/typings';
 import { LANGUAGES, DEFAULT_LANGUAGE, GLOBAL_CURRENCY } from 'global-utils/constants';
 import shortId from 'shortid';
-import { formatValue } from './methods';
+import { formatValue, getRandomNumber } from './methods';
 
 const userId = 'asd2234zl';
 const names = [
@@ -41,7 +41,6 @@ const names = [
   'Apartamentai Palangoje - Obelynė'
 ];
 
-const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
 const getItemName = (names: string[], index: number): TranslatableField => {
   return LANGUAGES.reduce<TranslatableField>((acc, locale) => {

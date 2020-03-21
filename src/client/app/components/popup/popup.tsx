@@ -14,7 +14,7 @@ export type Props = {
   isOutlined?: boolean;
   label: string;
   value: string;
-  isOpen?: boolean;
+  popupKey?: number;
 };
 
 export const Popup: React.FunctionComponent<Props> = (props) => {
@@ -22,12 +22,7 @@ export const Popup: React.FunctionComponent<Props> = (props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    console.log('Is open', props.isOpen);
-    if (isOpen && !props.isOpen) {
-      handleClose();
-    }
-  }, [props.isOpen]);
+  useEffect(() => handleClose(), [props.popupKey]);
 
   const handleClick = (event: React.MouseEvent<any>) => {
     setIsOpen(true);

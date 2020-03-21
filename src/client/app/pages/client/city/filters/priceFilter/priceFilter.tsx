@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { useIntl, defineMessages } from 'react-intl';
 import { Price } from 'global-utils/typings';
@@ -36,7 +36,7 @@ type Props = {
 export function PriceFilter(props: Props) {
   const intl = useIntl();
   const [price, setPrice] = useState<Price>(props.selectedValue);
-  const [popupOpen, setPopupOpen] = useState(true);
+  const [popupKey, setPopupKey] = useState(1);
   const [displayPrice, setDisplayPrice] = useState(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
   const classes = useStyles();
 
@@ -58,7 +58,7 @@ export function PriceFilter(props: Props) {
   const handleApply = () => {
     if (!hasError()) {
       setDisplayPrice(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
-      setPopupOpen(false);
+      setPopupKey(Math.random());
       props.onClick(price);
     }
   };
@@ -74,7 +74,7 @@ export function PriceFilter(props: Props) {
       label={intl.formatMessage(messages.selectPrice)}
       maxWidth={150}
       value={displayPrice}
-      isOpen={popupOpen}
+      popupKey={popupKey}
     >
       <TextField
         label={intl.formatMessage(messages.from)}
