@@ -95,7 +95,7 @@ export const maxCheckedCount = (max: number) => (fieldValue: any[], formState: a
   return undefined;
 };
 
-export const isNumber = (fieldValue: any, formState: any, formProps: IFormProps) => {
+export const isNumberValidator = (fieldValue: any, formState: any, formProps: IFormProps) => {
   if (fieldValue && isNaN(Number(fieldValue))) {
     return formProps.intl.formatMessage({ id: errors.WRONG_NUMBER });
   }

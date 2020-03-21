@@ -6,5 +6,8 @@ export const DIALOG_LOADER_ID = 'dialog';
 
 export const DEFAULT_CITY_FITLERS: ICityFilters = {
   type: '',
-  price: []
+  price: {
+    from: null,
+    to: null
+  }
 };

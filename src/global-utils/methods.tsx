@@ -61,3 +61,5 @@ export const formatValue = (value: string): string =>
 export const isServer = () => !(typeof window !== 'undefined' && window.document);
 
 export const isClient = () => !isServer();
+
+export const isNumber = (val: number | null): val is number => typeof val === 'number';

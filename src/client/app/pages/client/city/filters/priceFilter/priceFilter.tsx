@@ -1,9 +1,11 @@
 import React, { useState, ChangeEvent } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { useIntl, defineMessages } from 'react-intl';
+import { Price } from 'global-utils/typings';
 import { Popup } from 'components/popup';
 import { getDisplayPrice } from 'components/price';
 import { GLOBAL_CURRENCY } from 'global-utils/constants';
+import { isNumber } from 'global-utils/methods';
 import { Button } from 'components/button';
 import { useStyles } from './styles';
 
@@ -27,41 +29,44 @@ const messages = defineMessages({
 });
 
 type Props = {
-  selectedValue: number[];
-  onClick: (values: number[]) => void;
+  selectedValue: Price;
+  onClick: (values: Price) => void;
 };
 
 export function PriceFilter(props: Props) {
   const intl = useIntl();
-  const [value, setValue] = useState<number[]>(props.selectedValue);
-  const [hasError, setHasError] = useState(false);
+  const [price, setPrice] = useState<Price>(props.selectedValue);
   const [popupOpen, setPopupOpen] = useState(true);
-  const [displayPrice, setDisplayPrice] = useState(getDisplayPrice(value, intl, GLOBAL_CURRENCY));
-  const [priceFrom, priceTo] = value;
+  const [displayPrice, setDisplayPrice] = useState(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
   const classes = useStyles();
-  const isDisabled = !priceFrom || hasError;
+
+  const hasError = () => {
+    const isFromNumber = typeof price.from === 'number';
+    const isToNumber = typeof price.to === 'number';
+
+    if (isNumber(price.from) && isNumber(price.to)) {
+      return price.from >= price.to;
+    }
+
+    if (!isFromNumber && isToNumber) {
+      return true;
+    }
+
+    return false;
+  };
 
   const handleApply = () => {
-    if (!hasError) {
-      setDisplayPrice(getDisplayPrice(value, intl, GLOBAL_CURRENCY));
+    if (!hasError()) {
+      setDisplayPrice(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
       setPopupOpen(false);
-      props.onClick(value);
+      props.onClick(price);
     }
   };
 
-  const handleChange = (type: 'from' | 'to') => (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (type: keyof Price) => (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value, 10);
-    const positiveValue = newValue < 0 ? 0 : newValue;
-    const value = type === 'from' ? [positiveValue, priceTo] : [priceFrom, positiveValue];
-
-    setValue(value);
-
-    if (type === 'from') {
-      setHasError(!newValue || newValue >= priceTo);
-    } else {
-      setHasError(!priceFrom || newValue <= priceFrom);
-    }
-
+    const positiveValue = !newValue || newValue < 0 ? null : newValue;
+    setPrice({ ...price, [type]: positiveValue });
   };
 
   return (
@@ -73,10 +78,10 @@ export function PriceFilter(props: Props) {
     >
       <TextField
         label={intl.formatMessage(messages.from)}
-        value={priceFrom || ''}
+        value={price.from || ''}
         fullWidth
         required
-        error={hasError}
+        error={hasError()}
         type="number"
         size="small"
         onChange={handleChange('from')}
@@ -84,7 +89,7 @@ export function PriceFilter(props: Props) {
       />
       <TextField
         label={intl.formatMessage(messages.to)}
-        value={priceTo || ''}
+        value={price.to || ''}
         fullWidth
         type="number"
         size="small"
@@ -92,7 +97,7 @@ export function PriceFilter(props: Props) {
         className={classes.input}
       />
       <Button
-        disabled={isDisabled}
+        disabled={hasError()}
         onClick={handleApply}
         borderRadius={16}
         size="small"

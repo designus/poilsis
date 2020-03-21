@@ -1,4 +1,4 @@
-import { IItem, TranslatableField, Locale, ObjectKeys } from 'global-utils/typings';
+import { IItem, TranslatableField, Locale, ObjectKeys, Price } from 'global-utils/typings';
 import { LANGUAGES, DEFAULT_LANGUAGE, GLOBAL_CURRENCY } from 'global-utils/constants';
 import shortId from 'shortid';
 import { formatValue } from './methods';
@@ -57,6 +57,17 @@ const getItemAlias = (name: TranslatableField, index: number): TranslatableField
   }, {} as TranslatableField);
 };
 
+const getPrice = (): Price => {
+  const priceFrom = getRandomNumber(15, 30);
+  const priceTo = getRandomNumber(30, 60);
+  const showPriceTo = getRandomNumber(0, 1);
+
+  return {
+    from: priceFrom,
+    to: showPriceTo ? priceTo : null
+  };
+};
+
 export const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {
   const items: IItem[] = [];
 
@@ -64,7 +75,7 @@ export const generateMockedData = (count: number, cityIds: string[], typeIds: st
   for (let i = 0; i < count; i++) {
     const cityId = cityIds[getRandomNumber(0, cityIds.length - 1)];
     const types = [typeIds[getRandomNumber(0, typeIds.length - 1)]];
-    const price = getRandomNumber(0, 1) ? [getRandomNumber(15, 30), getRandomNumber(30, 60)] : [getRandomNumber(15, 60)];
+    const price = getPrice();
     const name = getItemName(names, nameIndex);
     const alias = getItemAlias(name, i);
     items.push({

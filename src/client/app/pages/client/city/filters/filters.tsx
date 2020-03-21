@@ -4,13 +4,12 @@ import { History } from 'history';
 import { useSelector, useDispatch } from 'react-redux';
 import { useIntl, defineMessages } from 'react-intl';
 import { getTypes, getClientLocale, getCityFilters } from 'selectors';
-import { ICityFilters } from 'global-utils/typings';
+import { ICityFilters, Price } from 'global-utils/typings';
 import { setCityFilters } from 'actions/cities';
 import { getLocalizedText } from 'client-utils/methods';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
 import { Dropdown } from 'components/dropdown';
 import { IDropdownOption, IAppState, DropdownItemValue } from 'types';
-import { Popup } from 'components/popup';
 import { PriceFilter } from './priceFilter';
 
 import { MatchParams } from '../types';
@@ -66,9 +65,9 @@ const Filters: React.FunctionComponent<Props> = props => {
     dispatch(setCityFilters({ cityId: props.cityId, filters: newFilters }));
   };
 
-  const handlePriceFilterChange = (values: number[]) => {
-    return {}
-  }
+  const handlePriceFilterChange = (values: Price) => {
+    return {};
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -80,7 +79,10 @@ const Filters: React.FunctionComponent<Props> = props => {
         label="Select type"
         minWidth={120}
       />
-      <PriceFilter onClick={handlePriceFilterChange} selectedValue={filters.price} />
+      <PriceFilter
+        onClick={handlePriceFilterChange}
+        selectedValue={filters.price}
+      />
     </div>
   );
 };

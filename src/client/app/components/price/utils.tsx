@@ -1,4 +1,5 @@
 import { defineMessages, IntlShape } from 'react-intl';
+import { Price } from 'global-utils/typings';
 
 type Params = [IntlShape, string];
 
@@ -16,15 +17,19 @@ export const formatPrice = (price: number, intl: IntlShape, currency: string) =>
   maximumFractionDigits: 0
 });
 
-export const getSinglePrice = (price: number, ...params: Params) => {
+export const getSinglePrice = (price: number | null, ...params: Params) => {
   const [intl] = params;
-  return intl.formatMessage(messages.priceFrom, { value: formatPrice(price, ...params) });
+  return intl.formatMessage(messages.priceFrom, { value: price ? formatPrice(price, ...params) : price });
 };
 
-export const getPriceRange = (prices: number[], ...params: Params) => prices
-  .map((price, index) => index === 1 ? formatPrice(price, ...params) : price)
+export const getPriceRange = (price: Price, ...params: Params) => Object.values(price)
+  .map((price, index) => price && index === 1 ? formatPrice(price, ...params) : price)
   .join('-');
 
-export const getDisplayPrice = (price: number[], ...params: Params) => price.length === 1
-   ? getSinglePrice(price[0], ...params)
-   : getPriceRange(price, ...params);
+export const getDisplayPrice = (price: Price, ...params: Params) => {
+  if (!price.from && !price.to) return '';
+
+  return !price.to
+    ? getSinglePrice(price.from, ...params)
+    : getPriceRange(price, ...params);
+};

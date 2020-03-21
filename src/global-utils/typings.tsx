@@ -58,9 +58,14 @@ export interface IItem extends IItemDescFields {
   updatedAt?: string;
   mainImage: string;
   isFullyLoaded?: boolean;
-  price: number[];
+  price: Price | null;
   currency: string;
 }
+
+export type Price = {
+  from: number | null;
+  to: number | null;
+};
 
 export interface IType {
   id: string;
@@ -73,7 +78,7 @@ export interface IType {
 
 export interface ICityFilters {
   type: string;
-  price: number[];
+  price: Price;
 }
 
 export interface ICity extends ISeoFields {
