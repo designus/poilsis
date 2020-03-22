@@ -1553,6 +1553,20 @@
       "publicPath": "http://localhost:8080/public/clientCity.js"
     }
   ],
+  "./typesFilter": [
+    {
+      "id": "./app/pages/client/city/filters/typesFilter/index.tsx",
+      "name": "./app/pages/client/city/filters/typesFilter/index.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    },
+    {
+      "id": "./app/pages/client/city/filters/typesFilter/typesFilter.tsx",
+      "name": "./app/pages/client/city/filters/typesFilter/typesFilter.tsx",
+      "file": "clientCity.js",
+      "publicPath": "http://localhost:8080/public/clientCity.js"
+    }
+  ],
   "./item": [
     {
       "id": "./app/pages/client/item/item.tsx",

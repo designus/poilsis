@@ -11,7 +11,7 @@ import { useStyles } from './styles';
 
 const messages = defineMessages({
   selectPrice: {
-    id: 'common.select_price',
+    id: 'client.filters.select_price',
     defaultMessage: 'Select price'
   },
   from: {
@@ -30,7 +30,7 @@ const messages = defineMessages({
 
 type Props = {
   selectedValue: Price;
-  onClick: (values: Price) => void;
+  onChange: (values: Price) => void;
 };
 
 export function PriceFilter(props: Props) {
@@ -59,7 +59,7 @@ export function PriceFilter(props: Props) {
     if (!hasError()) {
       setDisplayPrice(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
       setPopupKey(Math.random());
-      props.onClick(price);
+      props.onChange(price);
     }
   };
 
