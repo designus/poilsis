@@ -2,11 +2,11 @@ import React, { memo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { History } from 'history';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCityFilters } from 'selectors';
-import { ICityFilters, Price } from 'global-utils/typings';
-import { setCityFilters } from 'actions/cities';
+import { getCityFilters } from 'selectors/filters';
+import { Price } from 'global-utils/typings';
+import { setCityFilters } from 'actions/filters';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
-import { IAppState, DropdownItemValue } from 'types';
+import { IAppState, DropdownItemValue, ICityFilters } from 'types';
 import { PriceFilter } from './priceFilter';
 import { TypesFilter } from './typesFilter';
 import { MatchParams } from '../types';
@@ -38,7 +38,7 @@ const Filters: React.FunctionComponent<Props> = props => {
     }
 
     history.push({ search: url.search });
-    dispatch(setCityFilters({ cityId: props.cityId, filters: newFilters }));
+    dispatch(setCityFilters(props.cityId, newFilters));
   };
 
   const handlePriceFilterChange = (values: Price) => {

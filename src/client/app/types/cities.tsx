@@ -1,4 +1,4 @@
-import { ICity, ICityFilters } from 'global-utils/typings';
+import { ICity } from 'global-utils/typings';
 import { IGenericDataMap, IGenericState, IToggleEnabled } from './generic';
 
 export type CitiesMap = IGenericDataMap<ICity>;
@@ -9,7 +9,6 @@ export enum CitiesActionTypes {
   RECEIVE_CITY = 'RECEIVE_CITY',
   REMOVE_CITY = 'REMOVE_CITY',
   SET_CITY_ITEMS = 'SET_CITY_ITEMS',
-  SET_CITY_FILTERS = 'SET_CITY_FILTERS',
   TOGGLE_CITY_ENABLED = 'TOGGLE_CITY_ENABLED'
 }
 
@@ -28,15 +27,8 @@ export interface ISetCityItems {
   cityId: string;
 }
 
-export interface ISetCityFilters {
-  type: CitiesActionTypes.SET_CITY_FILTERS;
-  cityId: string;
-  filters: ICityFilters;
-}
-
 export type CitiesActions =
   | IReceiveCity
   | IRemoveCity
   | IToggleEnabled
-  | ISetCityItems
-  | ISetCityFilters;
+  | ISetCityItems;

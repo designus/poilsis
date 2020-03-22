@@ -26,8 +26,7 @@ import {
   ThunkDispatch,
   ThunkResult,
   ISetCityItems,
-  ActionCreator,
-  ISetCityFilters
+  ActionCreator
 } from 'types';
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
@@ -49,11 +48,6 @@ export const toggleCityEnabledField: ActionCreator<IToggleEnabled> = params => (
 
 export const setCityItems: ActionCreator<ISetCityItems> = params => ({
   type: CitiesActionTypes.SET_CITY_ITEMS,
-  ...params
-});
-
-export const setCityFilters: ActionCreator<ISetCityFilters> = params => ({
-  type: CitiesActionTypes.SET_CITY_FILTERS,
   ...params
 });
 

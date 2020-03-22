@@ -12,3 +12,4 @@ export * from './users';
 export * from './uploadProgress';
 export * from './home';
 export * from './locale';
+export * from './filters';

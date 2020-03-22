@@ -5,7 +5,8 @@ import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { DataTypes, IUser, IItem, Locale, IAccessTokenClaims, IsEnabled } from 'global-utils/typings';
 import { TranslatableField, hasLocalizedFields, ICity } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails } from 'types';
+import { getInitialCityFilters } from 'reducers/filters';
+import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails, CitiesFilterState } from 'types';
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
@@ -178,3 +179,10 @@ export const getUserDetails = (accessTokenClaims: IAccessTokenClaims): UserDetai
     role: userRole
   };
 };
+
+export const getInitialCitiesFilters = (cities: ICity[]): CitiesFilterState =>
+  cities.reduce((acc: CitiesFilterState, city) => {
+    acc[city.id] = getInitialCityFilters();
+    return acc;
+  }, {}
+);

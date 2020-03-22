@@ -8,3 +8,4 @@ export * from './currentUser';
 export * from './home';
 export * from './common';
 export * from './initialData';
+export * from './filters';

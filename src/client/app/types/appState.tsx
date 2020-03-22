@@ -10,6 +10,7 @@ import { IToastState } from './toast';
 import { ILocaleState } from './locale';
 import { IUploadProgressState } from './uploadProgress';
 import { IHomeState } from './home';
+import { IFiltersState } from './filters';
 
 export interface IAppState {
   cities: ICityState;
@@ -24,6 +25,7 @@ export interface IAppState {
   loader: ILoadingState;
   toast: IToastState;
   uploadProgress: IUploadProgressState;
+  filters: IFiltersState;
   form: any;
   loadingBar: any;
 }
