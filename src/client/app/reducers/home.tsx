@@ -38,7 +38,7 @@ export const home: Reducer<IHomeState, ActionTypes> = (state = getInitialHomeSta
       return {
         ...state,
         isLoaded: true,
-        recommendedItems: Object.values(action.aliases)
+        recommendedItems: Object.values(action.dataMap).filter(item => item.isRecommended).map(item => item.id)
       };
     case ItemsActionTypes.REMOVE_ITEM:
       return {

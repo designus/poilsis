@@ -8,7 +8,8 @@ import {
   IItem,
   LANGUAGES,
   DEFAULT_LANGUAGE,
-  itemValidation
+  itemValidation,
+  Price
 } from 'global-utils';
 
 import { formatValue } from 'global-utils/methods';
@@ -58,6 +59,18 @@ const ImageSchemaMap: GenericSchemaMap<IImage> = {
   }
 };
 
+const PriceSchemaMap: GenericSchemaMap<Price> = {
+  from: {
+    type: Number,
+    required: true,
+    default: null
+  },
+  to: {
+    type: Number,
+    default: null
+  }
+};
+
 const ItemsSchemaMap: GenericSchemaMap<IItem> = {
   id: {
     type: String,
@@ -74,14 +87,7 @@ const ItemsSchemaMap: GenericSchemaMap<IItem> = {
     type: String,
     required: [true, requiredMessage]
   },
-  price: {
-    type: Array,
-    required: [true, requiredMessage],
-    validate: [
-      minMaxLength(1, 2),
-      getValidationMessage(RANGE, 1, 2)
-    ]
-  },
+  price: PriceSchemaMap,
   currency: {
     type: String,
     required: [true, requiredMessage]

@@ -24,7 +24,7 @@
       "global-utils/*": ["./src/global-utils/*"],
       "config": ["./config"]
     },
-    "lib": ["es2017", "dom", "es7"],
+    "lib": ["es2017", "dom", "es7", "dom.iterable"],
     "target": "es2015",
     // Preserve dynamic import
     "module": "esnext",

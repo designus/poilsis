@@ -40,6 +40,13 @@ export function PriceFilter(props: Props) {
   const [displayPrice, setDisplayPrice] = useState(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
   const classes = useStyles();
 
+  useEffect(() => {
+    if (props.selectedValue.from !== price.from || props.selectedValue.to !== price.to) {
+      setPrice(props.selectedValue);
+      setDisplayPrice(getDisplayPrice(props.selectedValue, intl, GLOBAL_CURRENCY));
+    }
+  }, [props.selectedValue, intl]);
+
   const hasError = () => {
     const isFromNumber = typeof price.from === 'number';
     const isToNumber = typeof price.to === 'number';

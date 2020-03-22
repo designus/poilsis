@@ -4,7 +4,7 @@ import { memoize } from 'lodash';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { DataTypes, IUser, IItem, Locale, IAccessTokenClaims, IsEnabled } from 'global-utils/typings';
-import { TranslatableField, hasLocalizedFields, ICity } from 'global-utils';
+import { TranslatableField, hasLocalizedFields, ICity, Price } from 'global-utils';
 import { getInitialCityFilters } from 'reducers/filters';
 import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails, CitiesFilterState } from 'types';
 
@@ -186,3 +186,5 @@ export const getInitialCitiesFilters = (cities: ICity[]): CitiesFilterState =>
     return acc;
   }, {}
 );
+
+export const getPriceQueryParam = (price: Price) => Object.values(price).filter(Boolean).join('-');
