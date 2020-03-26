@@ -37,7 +37,6 @@ export const styles = (theme: Theme) => createStyles({
     padding: '25px',
     position: 'relative',
     flex: 3,
-    overflowX: 'auto',
     '& > .loader': {
       position: 'relative'
     }

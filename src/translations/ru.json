@@ -96,6 +96,7 @@
   "admin.item.recommend_error": "[RU] Unable to recommend item",
   "admin.item.loader_error": "[RU] Failed to load item",
   "admin.item.seo_info": "[RU] To get your add indexed by search engines better please fill the following fields",
+  "admin.item.price": "[RU] Prices",
   "admin.items.upload_success": "[RU] Batch data uploaded successfully",
   "admin.items.upload_error": "[RU] Unable to upload batch data",
   "admin.items.remove_success": "[RU] All items have been removed successfully",

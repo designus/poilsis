@@ -96,6 +96,7 @@
   "admin.item.recommend_error": "Nepavyko rekomenduoti įrašo",
   "admin.item.loader_error": "[LT] Failed to load item",
   "admin.item.seo_info": "Tam, kad jūsų skelbimas Google paieškoje būtų matomas aukščiau, prašome kaip įmanoma išsamiau užpildyti sekančius laukelius",
+  "admin.item.price": "Kainos",
   "admin.items.upload_success": "[LT] Batch data uploaded successfully",
   "admin.items.upload_error": "[LT] Unable to upload batch data",
   "admin.items.remove_success": "[LT] All items have been removed successfully",

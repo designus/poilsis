@@ -327,6 +327,12 @@
       "publicPath": "http://localhost:8080/public/mainInfoPage.js"
     },
     {
+      "id": "./app/pages/admin/createEditItem/mainInfo/form/styles.tsx",
+      "name": "./app/pages/admin/createEditItem/mainInfo/form/styles.tsx",
+      "file": "mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
+    },
+    {
       "id": "./app/components/formFields/dropzoneInput/styles.tsx",
       "name": "./app/components/formFields/dropzoneInput/styles.tsx",
       "file": "photosPage.js",
@@ -1835,6 +1841,70 @@
       "name": "./app/components/formFields/textEditor/textEditor.tsx",
       "file": "descriptionPage.js",
       "publicPath": "http://localhost:8080/public/descriptionPage.js"
+    }
+  ],
+  "./Card": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Card/Card.js",
+      "name": "../../node_modules/@material-ui/core/esm/Card/Card.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "@material-ui/core/Card": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Card/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Card/index.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "./CardActionArea": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardActionArea/CardActionArea.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardActionArea/CardActionArea.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "@material-ui/core/CardActionArea": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardActionArea/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardActionArea/index.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "./CardContent": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardContent/CardContent.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardContent/CardContent.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "@material-ui/core/CardContent": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardContent/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardContent/index.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "./CardMedia": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardMedia/CardMedia.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardMedia/CardMedia.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
+    }
+  ],
+  "@material-ui/core/CardMedia": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
+      "file": "homePage.js",
+      "publicPath": "http://localhost:8080/public/homePage.js"
     }
   ],
   "components/itemCard": [
@@ -10051,8 +10121,8 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
       "name": "../../node_modules/@material-ui/core/esm/Grid/Grid.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+      "file": "vendors~homePage~mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage~mainInfoPage.js"
     }
   ],
   "./accessibilityOverscanIndicesGetter": [
@@ -11803,84 +11873,20 @@
       "publicPath": "http://localhost:8080/public/vendors~descriptionPage.js"
     }
   ],
-  "./Card": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Card/Card.js",
-      "name": "../../node_modules/@material-ui/core/esm/Card/Card.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "@material-ui/core/Card": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Card/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Card/index.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "./CardActionArea": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/CardActionArea/CardActionArea.js",
-      "name": "../../node_modules/@material-ui/core/esm/CardActionArea/CardActionArea.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "@material-ui/core/CardActionArea": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/CardActionArea/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/CardActionArea/index.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "./CardContent": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/CardContent/CardContent.js",
-      "name": "../../node_modules/@material-ui/core/esm/CardContent/CardContent.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "@material-ui/core/CardContent": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/CardContent/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/CardContent/index.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "./CardMedia": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/CardMedia/CardMedia.js",
-      "name": "../../node_modules/@material-ui/core/esm/CardMedia/CardMedia.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
-  "@material-ui/core/CardMedia": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/CardMedia/index.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
-    }
-  ],
   "@material-ui/core/Grid": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Grid/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Grid/index.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+      "file": "vendors~homePage~mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage~mainInfoPage.js"
     }
   ],
   "../utils/requirePropFactory": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/requirePropFactory.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/requirePropFactory.js",
-      "file": "vendors~homePage.js",
-      "publicPath": "http://localhost:8080/public/vendors~homePage.js"
+      "file": "vendors~homePage~mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~homePage~mainInfoPage.js"
     }
   ],
   "@material-ui/icons/CloudUpload": [
