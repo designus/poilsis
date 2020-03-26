@@ -63,7 +63,7 @@ export interface IItem extends IItemDescFields {
 }
 
 export type Price = {
-  from: number | null;
+  from: number;
   to: number | null;
 };
 

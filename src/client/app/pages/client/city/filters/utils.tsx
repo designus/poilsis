@@ -9,7 +9,7 @@ export const parsePriceFilter = (value: string): Price => value
     const key = index === 0 ? 'from' : 'to';
     acc[key] = price;
     return acc;
-  }, { from: null, to: null });
+  }, { from: 0, to: null });
 
 export const getFiltersFromSearchParams = (searchParams: URLSearchParams): ICityFilters => {
   const paramsList = Array.from(searchParams.entries()) as Array<[keyof ICityFilters, string]>;

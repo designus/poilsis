@@ -4,7 +4,7 @@ import { FiltersActions, FiltersActionTypes, IFiltersState, ICityFilters } from 
 export const getInitialCityFilters = (): ICityFilters => ({
   type: '',
   price: {
-    from: null,
+    from: 0,
     to: null
   }
 });
@@ -20,7 +20,10 @@ export const filters: Reducer<IFiltersState, FiltersActions> = (state: IFiltersS
         ...state,
         cities: {
           ...state.cities,
-          [action.cityId]: action.filters
+          [action.cityId]: {
+            ...state.cities[action.cityId],
+            ...action.filters
+          }
         }
       };
     case FiltersActionTypes.RECEIVE_CITY_FILTERS:

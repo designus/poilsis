@@ -29,7 +29,9 @@ const Filters: React.FunctionComponent<Props> = props => {
   useEffect(() => {
     const searchParams = new URLSearchParams(history.location.search);
     const filters = getFiltersFromSearchParams(searchParams);
-    dispatch(setCityFilters(props.cityId, filters));
+    if (Object.keys(filters).length) {
+      dispatch(setCityFilters(props.cityId, filters));
+    }
   }, []);
 
   if (!filters) return null;

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ICity, IItem } from 'global-utils/typings';
+import { ICity, IItem, Price } from 'global-utils/typings';
 import { getItemsMap, getClientLocale } from 'selectors';
 import { IAppState, IItemsMap, CitiesMap, ICityFilters } from 'types';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
@@ -45,15 +45,27 @@ export const shouldLoadCityItems = (state: IAppState, alias: string) => {
 
 export const getSelectedCityId = (state: IAppState, alias: string) => getCityByAlias(state, alias).id;
 
+const filterByPrice = (itemPrice: Price | null, priceFilter: Price) => {
+  if (itemPrice) {
+    const priceFrom = priceFilter.from || 0;
+    const priceTo = priceFilter.to || Number.MAX_SAFE_INTEGER;
+    return itemPrice.to
+      ? itemPrice.from >= priceFrom && itemPrice.to <= priceTo
+      : itemPrice.from >= priceFrom;
+  }
+
+  return true;
+};
+
 export const getCityItems = createSelector<IAppState, string, string, IItemsMap, ICityFilters | undefined,  IItem[]>(
   [getSelectedCityId, getItemsMap, getCityFilters],
   (selectedCityId, itemsMap, cityFilters) => {
     if (selectedCityId && cityFilters) {
+      const { type, price } = cityFilters;
       return Object.values(itemsMap).filter(item => {
-        const { type } = cityFilters;
         const filterByCity = item.cityId === selectedCityId;
         const filterByType = type !== DEFAULT_CITY_FITLERS.type ? item.types.includes(type) : true;
-        return filterByCity && filterByType;
+        return filterByCity && filterByType && filterByPrice(item.price, price);
       });
     }
     return [];
