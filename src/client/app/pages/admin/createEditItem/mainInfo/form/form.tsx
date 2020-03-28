@@ -19,6 +19,7 @@ import {
 } from 'global-utils';
 
 import { TextInput } from 'components/formFields/textInput';
+import { PriceInput } from 'components/formFields/priceInput';
 import { CheckboxGroup } from 'components/formFields/checkboxGroup';
 import { SelectBox } from 'components/formFields/selectBox';
 import { Switcher } from 'components/formFields/switch';
@@ -120,6 +121,11 @@ const Form = (props: Props)  => {
         <Typography variant="h5">
           <FormattedMessage id="admin.item.price" defaultMessage="Prices" />
         </Typography>
+        <Field
+          name="price"
+          type="text"
+          component={PriceInput}
+        />
       </Paper>
     );
   };

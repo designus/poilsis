@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { WrappedFieldProps } from 'redux-form';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -13,9 +12,9 @@ import { usePrevious } from 'client-utils/customHooks';
 import { isInputHidden } from 'client-utils/methods';
 
 import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields, TranslatableField, Locale } from 'global-utils';
-import { styles } from './styles';
+import { useStyles } from './styles';
 
-export interface ITextInputProps extends WrappedFieldProps, WithStyles<typeof styles> {
+export interface ITextInputProps extends WrappedFieldProps {
   hasIntl: boolean;
   selectedLanguage: Locale;
   isHidden: string;
@@ -37,10 +36,9 @@ const getInitialValue = (value: string | TranslatableField, isIntl: boolean) => 
   return value;
 };
 
-const { useState, useEffect, useCallback } = React;
-
 function TextInput(props: ITextInputProps) {
-  const { hasIntl, input, meta, selectedLanguage, classes, label, multiline } = props;
+  const { hasIntl, input, meta, selectedLanguage, label, multiline } = props;
+  const classes = useStyles();
   const [initialState] = useState(getInitialValue(input.value, hasIntl));
   const [inputValue, setInputValue] = useState(initialState);
 
@@ -132,7 +130,6 @@ function TextInput(props: ITextInputProps) {
               rows={4}
               onBlur={handleOnBlur(languageOption)}
               onChange={handleOnChange(languageOption)}
-              margin="dense"
               className={`${multiline ? classes.multilineInput : ''}`}
               classes={{
                 error: classes.error
@@ -157,4 +154,4 @@ function TextInput(props: ITextInputProps) {
   );
 }
 
-export default withStyles(styles)(TextInput) as any;
+export default TextInput as any;

@@ -23,7 +23,6 @@ const ItemsListWithLoader = extendWithLoader(ItemsList);
 
 export const loadCityData = (store: any, params: MatchParams) => {
   const [cityAlias] = params.cityAlias.split('?');
-  console.log('loading city data', cityAlias);
   return store.dispatch(loadCityItems(cityAlias));
 };
 

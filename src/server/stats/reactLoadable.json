@@ -6009,6 +6009,22 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
+  "components/formFields/priceInput": [
+    {
+      "id": "./app/components/formFields/priceInput/index.tsx",
+      "name": "./app/components/formFields/priceInput/index.tsx",
+      "file": "mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
+    }
+  ],
+  "./priceInput": [
+    {
+      "id": "./app/components/formFields/priceInput/priceInput.tsx",
+      "name": "./app/components/formFields/priceInput/priceInput.tsx",
+      "file": "mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/mainInfoPage.js"
+    }
+  ],
   "components/formFields/selectBox": [
     {
       "id": "./app/components/formFields/selectBox/index.tsx",
@@ -8851,38 +8867,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~keepMeLoggedModal.js"
     }
   ],
-  "./FormHelperText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/FormHelperText/FormHelperText.js",
-      "name": "../../node_modules/@material-ui/core/esm/FormHelperText/FormHelperText.js",
-      "file": "vendors~clientCity.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    }
-  ],
-  "../FormHelperText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/FormHelperText/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/FormHelperText/index.js",
-      "file": "vendors~clientCity.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    }
-  ],
-  "./TextField": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/TextField/TextField.js",
-      "name": "../../node_modules/@material-ui/core/esm/TextField/TextField.js",
-      "file": "vendors~clientCity.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    }
-  ],
-  "@material-ui/core/TextField": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/TextField/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/TextField/index.js",
-      "file": "vendors~clientCity.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    }
-  ],
   "@material-ui/icons/ArrowDropDown": [
     {
       "id": "../../node_modules/@material-ui/icons/ArrowDropDown.js",
@@ -10489,6 +10473,38 @@
       "name": "../../node_modules/shallowequal/index.js",
       "file": "vendors~clientCity~clientItem~homePage.js",
       "publicPath": "http://localhost:8080/public/vendors~clientCity~clientItem~homePage.js"
+    }
+  ],
+  "./FormHelperText": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/FormHelperText/FormHelperText.js",
+      "name": "../../node_modules/@material-ui/core/esm/FormHelperText/FormHelperText.js",
+      "file": "vendors~clientCity~mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~mainInfoPage.js"
+    }
+  ],
+  "../FormHelperText": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/FormHelperText/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/FormHelperText/index.js",
+      "file": "vendors~clientCity~mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~mainInfoPage.js"
+    }
+  ],
+  "./TextField": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/TextField/TextField.js",
+      "name": "../../node_modules/@material-ui/core/esm/TextField/TextField.js",
+      "file": "vendors~clientCity~mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~mainInfoPage.js"
+    }
+  ],
+  "@material-ui/core/TextField": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/TextField/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/TextField/index.js",
+      "file": "vendors~clientCity~mainInfoPage.js",
+      "publicPath": "http://localhost:8080/public/vendors~clientCity~mainInfoPage.js"
     }
   ],
   "@material-ui/icons/FormatBold": [

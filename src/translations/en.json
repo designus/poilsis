@@ -96,6 +96,7 @@
   "admin.item.recommend_error": "Unable to recommend item",
   "admin.item.loader_error": "Failed to load item",
   "admin.item.seo_info": "To get your ad indexed by search engines better please fill the following fields",
+  "admin.item.price": "Prices",
   "admin.items.upload_success": "Batch data uploaded successfully",
   "admin.items.upload_error": "Unable to upload batch data",
   "admin.items.remove_success": "All items have been removed successfully",
