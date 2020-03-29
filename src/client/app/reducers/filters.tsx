@@ -1,14 +1,6 @@
 import { Reducer } from 'redux';
 import { FiltersActions, FiltersActionTypes, IFiltersState, ICityFilters } from 'types';
 
-export const getInitialCityFilters = (): ICityFilters => ({
-  type: '',
-  price: {
-    from: null,
-    to: null
-  }
-});
-
 export const getInitialFiltersState = (): IFiltersState => ({
   cities: {}
 });
