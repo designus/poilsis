@@ -62,7 +62,6 @@ const ImageSchemaMap: GenericSchemaMap<IImage> = {
 const PriceSchemaMap: GenericSchemaMap<Price> = {
   from: {
     type: Number,
-    required: true,
     default: null
   },
   to: {

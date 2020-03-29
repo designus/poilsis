@@ -26,7 +26,7 @@ const Footer = (props: Props) => (
 
 Footer.defaultProps = {
   closeLabelId: 'common.cancel',
-  submitLabelId: 'common.submit'
+  submitLabelId: 'common.save'
 };
 
 export default withStyles(styles)(Footer);

@@ -15,10 +15,10 @@ const AdminFormActions = (props: Props) => {
   return (
     <div>
       <Button onClick={handleBackClick} type="button" variant="outlined" color="default">
-        <FormattedMessage id="common.cancel" />
+        <FormattedMessage id="common.cancel" defaultMessage="Cancel" />
       </Button>
       <Button type="submit" variant="contained" disabled={Boolean(props.isSubmitDisabled)}>
-        <FormattedMessage id="common.submit" />
+        <FormattedMessage id="common.save" defaultMessage="Save" />
       </Button>
     </div>
   );

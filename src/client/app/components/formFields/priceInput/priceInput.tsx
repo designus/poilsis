@@ -25,7 +25,6 @@ function PriceInput(props: Props) {
   const intl = useIntl();
   const classes = useStyles();
   const [price, setPrice] = useState<Price>(props.input.value);
-  const hasError = !props.meta.valid;
 
   const updateGlobalState = useCallback(
     debounce(props.input.onChange, 600), [props.input.onChange]
@@ -38,16 +37,20 @@ function PriceInput(props: Props) {
     updateGlobalState(newValue);
   };
 
+  const hasError = (type: keyof Price) => {
+    return type === 'from'
+      ? !props.meta.valid
+      : !props.meta.valid && !props.input.value.from && !props.input.value.to;
+  };
+
   return (
     <React.Fragment>
       <div className={classes.wrapper}>
-        <Tooltip open={hasError} title={props.meta.error || ''} placement="right-end">
+        <Tooltip open={hasError('from')} title={props.meta.error || ''} placement="right-end">
           <TextField
             label={intl.formatMessage(messages.from)}
             value={price.from || ''}
-            fullWidth
-            required
-            error={hasError}
+            error={hasError('from')}
             type="number"
             onChange={handleChange('from')}
             className={classes.formControl}
@@ -55,14 +58,17 @@ function PriceInput(props: Props) {
         </Tooltip>
       </div>
       <div className={classes.wrapper}>
-        <TextField
-          label={intl.formatMessage(messages.to)}
-          value={price.to || ''}
-          fullWidth
-          type="number"
-          onChange={handleChange('to')}
-          className={classes.formControl}
-        />
+        <Tooltip open={hasError('to')} title={props.meta.error || ''} placement="right-end">
+          <TextField
+            label={intl.formatMessage(messages.to)}
+            value={price.to || ''}
+            fullWidth
+            error={hasError('to')}
+            type="number"
+            onChange={handleChange('to')}
+            className={classes.formControl}
+          />
+        </Tooltip>
       </div>
     </React.Fragment>
   );

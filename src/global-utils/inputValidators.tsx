@@ -19,6 +19,10 @@ const messages = defineMessages({
   invalidPrice: {
     id: 'common.form_validation.wrong_price',
     defaultMessage: 'Min price should be lower than Max price'
+  },
+  requiredPrice: {
+    id: 'common.form_validation.required_price',
+    defaultMessage: 'At least one price (min or max) is required'
   }
 });
 
@@ -66,7 +70,13 @@ export const isRequired = (fieldValue: string | TranslatableField, formState: an
 };
 
 export const priceValidator = (price: Price, formState: any, formProps: IFormProps) => {
-  if (price && isNumber(price.from) && isNumber(price.to)) {
+  if (!price) return undefined;
+
+  if (!price.from && !price.to) {
+    return formProps.intl.formatMessage(messages.requiredPrice);
+  }
+
+  if (isNumber(price.from) && isNumber(price.to)) {
     return price.from >= price.to
       ? formProps.intl.formatMessage(messages.invalidPrice)
       : undefined;
