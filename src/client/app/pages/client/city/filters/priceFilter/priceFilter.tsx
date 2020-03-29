@@ -1,13 +1,21 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { useIntl, defineMessages } from 'react-intl';
+import { useSelector, useDispatch } from 'react-redux';
+import { History } from 'history';
+
 import { Price } from 'global-utils/typings';
+import { IAppState } from 'types';
+import { getPriceFilterValue } from 'selectors';
 import { Popup } from 'components/popup';
 import { getDisplayPrice } from 'components/price';
 import { GLOBAL_CURRENCY } from 'global-utils/constants';
+import { setPriceFilter } from 'actions/filters';
+import { getPriceQueryParam } from 'client-utils/methods';
 import { isNumber } from 'global-utils/methods';
 import { Button } from 'components/button';
 import { useStyles } from './styles';
+import { MatchParams } from '../../types';
 
 const messages = defineMessages({
   selectPrice: {
@@ -29,41 +37,53 @@ const messages = defineMessages({
 });
 
 type Props = {
-  selectedValue: Price;
-  onChange: (values: Price) => void;
+  cityId: string;
+  params: MatchParams;
+  history: History;
 };
 
 export function PriceFilter(props: Props) {
   const intl = useIntl();
-  const [price, setPrice] = useState<Price>(props.selectedValue);
+  const filterValue = useSelector<IAppState, Price>(state => getPriceFilterValue(state, props.params.cityAlias));
+  const [price, setPrice] = useState<Price>(filterValue);
   const [popupKey, setPopupKey] = useState(1);
   const [displayPrice, setDisplayPrice] = useState(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (props.selectedValue.from !== price.from || props.selectedValue.to !== price.to) {
-      setPrice(props.selectedValue);
-      setDisplayPrice(getDisplayPrice(props.selectedValue, intl, GLOBAL_CURRENCY));
+    if (filterValue.from !== price.from || filterValue.to !== price.to) {
+      setPrice(filterValue);
+      setDisplayPrice(getDisplayPrice(filterValue, intl, GLOBAL_CURRENCY));
     }
-  }, [props.selectedValue, intl]);
+  }, [filterValue, intl]);
 
   const hasError = () => {
     if (isNumber(price.from) && isNumber(price.to)) {
       return price.from >= price.to;
     }
 
-    // if (!isNumber(price.from) && isNumber(price.to)) {
-    //   return true;
-    // }
-
     return false;
+  };
+
+  const applyChange = (price: Price) => {
+    const url = new URL(document.URL);
+
+    if (!price.from && !price.to) {
+      url.searchParams.delete('price');
+    } else {
+      url.searchParams.set('price', getPriceQueryParam(price));
+    }
+
+    props.history.push({ search: url.search });
+    dispatch(setPriceFilter(props.cityId, price));
   };
 
   const handleApply = () => {
     if (!hasError()) {
       setDisplayPrice(getDisplayPrice(price, intl, GLOBAL_CURRENCY));
       setPopupKey(Math.random());
-      props.onChange(price);
+      applyChange(price);
     }
   };
 

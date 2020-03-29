@@ -23,6 +23,28 @@ export const filters: Reducer<IFiltersState, FiltersActions> = (state: IFiltersS
         ...state,
         cities: action.filters
       };
+    case FiltersActionTypes.SET_TYPE_FILTER:
+      return {
+        ...state,
+        cities: {
+          ...state.cities,
+          [action.cityId]: {
+            ...state.cities[action.cityId],
+            type: action.filterValue
+          }
+        }
+      };
+    case FiltersActionTypes.SET_PRICE_FILTER:
+      return {
+        ...state,
+        cities: {
+          ...state.cities,
+          [action.cityId]: {
+            ...state.cities[action.cityId],
+            price: action.filterValue
+          }
+        }
+      };
     default:
       return state;
   }
