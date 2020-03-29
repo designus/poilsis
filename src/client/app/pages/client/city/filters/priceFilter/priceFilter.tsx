@@ -48,14 +48,11 @@ export function PriceFilter(props: Props) {
   }, [props.selectedValue, intl]);
 
   const hasError = () => {
-    const isFromNumber = typeof price.from === 'number';
-    const isToNumber = typeof price.to === 'number';
-
     if (isNumber(price.from) && isNumber(price.to)) {
       return price.from >= price.to;
     }
 
-    if (!isFromNumber && isToNumber) {
+    if (!isNumber(price.from) && isNumber(price.to)) {
       return true;
     }
 

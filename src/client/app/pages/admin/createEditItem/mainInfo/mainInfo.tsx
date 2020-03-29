@@ -31,7 +31,7 @@ class MainInfoPage extends React.Component<Props> {
   onSubmit = (item: IItem) => {
     const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
     const submitFn = isCreatePage ? createItem : updateItem;
-    return submitFn(item)
+    return submitFn({ ...item, currency: 'EUR' })
       .then(newItem => {
         if (isCreatePage) {
           history.push(adminRoutes.editItemMain.getLink(newItem.userId, newItem.id));

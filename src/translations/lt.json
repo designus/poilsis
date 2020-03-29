@@ -72,7 +72,7 @@
   "admin.type.create_title": "Sukurti tipą",
   "admin.type.edit_title": "Redaguoti tipą",
   "admin.delete_modal.title": "Ar norite ištrinti {item} įrašą?",
-"admin.delete_modal.description": "Ištrynus įrašą jo sugražinti nebegalėsite.",
+  "admin.delete_modal.description": "Ištrynus įrašą jo sugražinti nebegalėsite.",
   "admin.reauthenticate_modal.title": "Jūsų sesija tuoj baigsis",
   "admin.reauthenticate_modal.description": "Jūsų sesija baigsis už {seconds} sekundžių. Ar norite naršyti toliau?",
   "admin.save_modal.title": "Ar norite išeiti?",

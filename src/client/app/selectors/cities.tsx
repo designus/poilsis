@@ -45,16 +45,13 @@ export const shouldLoadCityItems = (state: IAppState, alias: string) => {
 
 export const getSelectedCityId = (state: IAppState, alias: string) => getCityByAlias(state, alias).id;
 
-const filterByPrice = (itemPrice: Price | null, priceFilter: Price) => {
-  if (itemPrice) {
-    const priceFrom = priceFilter.from || 0;
-    const priceTo = priceFilter.to || Number.MAX_SAFE_INTEGER;
-    return itemPrice.to
-      ? itemPrice.from >= priceFrom && itemPrice.to <= priceTo
-      : itemPrice.from >= priceFrom;
-  }
+const filterByPrice = (itemPrice: Price, priceFilter: Price) => {
+  const filterFrom = priceFilter.from || 0;
+  const filterTo = priceFilter.to || Number.MAX_SAFE_INTEGER;
+  const priceFrom = itemPrice.from || 0;
+  const priceTo = itemPrice.to || Number.MAX_SAFE_INTEGER;
 
-  return true;
+  return priceFrom >= filterFrom && priceTo <= filterTo;
 };
 
 export const getCityItems = createSelector<IAppState, string, string, IItemsMap, ICityFilters | undefined,  IItem[]>(

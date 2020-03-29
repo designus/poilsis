@@ -4,7 +4,7 @@ import { FiltersActions, FiltersActionTypes, IFiltersState, ICityFilters } from 
 export const getInitialCityFilters = (): ICityFilters => ({
   type: '',
   price: {
-    from: 0,
+    from: null,
     to: null
   }
 });
