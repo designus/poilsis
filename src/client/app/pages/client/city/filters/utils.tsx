@@ -1,15 +1,16 @@
 import { Price } from 'global-utils/typings';
 import { ICityFilters } from 'types';
+import { isNumber } from 'global-utils/methods';
 
 export const parsePriceFilter = (value: string): Price => value
   .split('-')
   .map(Number)
-  .filter(Boolean)
+  .filter(val => isNumber(val))
   .reduce((acc: Price, price, index) => {
     const key = index === 0 ? 'from' : 'to';
     acc[key] = price;
     return acc;
-  }, { from: 0, to: null });
+  }, { from: null, to: null });
 
 export const getFiltersFromSearchParams = (searchParams: URLSearchParams): ICityFilters => {
   const paramsList = Array.from(searchParams.entries()) as Array<[keyof ICityFilters, string]>;

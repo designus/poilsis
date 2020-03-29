@@ -1985,7 +1985,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "config": [
+  "../../../../../config": [
     {
       "id": "../../config/index.tsx",
       "name": "../../config/index.tsx",
@@ -7725,7 +7725,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../FormControl/FormControlContext": [
+  "./FormControlContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
@@ -7829,7 +7829,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/Input": [
+  "../Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -8057,7 +8057,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Select": [
+  "@material-ui/core/Select": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Select/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Select/index.js",
@@ -8161,7 +8161,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../useMediaQuery": [
+  "@material-ui/core/useMediaQuery": [
     {
       "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
       "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",

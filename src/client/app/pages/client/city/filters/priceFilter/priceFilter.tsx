@@ -52,9 +52,9 @@ export function PriceFilter(props: Props) {
       return price.from >= price.to;
     }
 
-    if (!isNumber(price.from) && isNumber(price.to)) {
-      return true;
-    }
+    // if (!isNumber(price.from) && isNumber(price.to)) {
+    //   return true;
+    // }
 
     return false;
   };

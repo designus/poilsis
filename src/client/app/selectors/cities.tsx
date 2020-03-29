@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { ICity, IItem, Price } from 'global-utils/typings';
+import { isNumber } from 'global-utils/methods';
 import { getItemsMap, getClientLocale } from 'selectors';
 import { IAppState, IItemsMap, CitiesMap, ICityFilters } from 'types';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
@@ -48,10 +49,16 @@ export const getSelectedCityId = (state: IAppState, alias: string) => getCityByA
 const filterByPrice = (itemPrice: Price, priceFilter: Price) => {
   const filterFrom = priceFilter.from || 0;
   const filterTo = priceFilter.to || Number.MAX_SAFE_INTEGER;
-  const priceFrom = itemPrice.from || 0;
-  const priceTo = itemPrice.to || Number.MAX_SAFE_INTEGER;
 
-  return priceFrom >= filterFrom && priceTo <= filterTo;
+  if (isNumber(itemPrice.from) && isNumber(itemPrice.to)) {
+    return itemPrice.from >= filterFrom && itemPrice.to <= filterTo;
+  } else if (isNumber(itemPrice.from) && !isNumber(itemPrice.to)) {
+    return itemPrice.from >= filterFrom && itemPrice.from <= filterTo;
+  } else if (!isNumber(itemPrice.from) && isNumber(itemPrice.to)) {
+    return itemPrice.to >= filterFrom && itemPrice.to <= filterTo;
+  }
+
+  return true;
 };
 
 export const getCityItems = createSelector<IAppState, string, string, IItemsMap, ICityFilters | undefined,  IItem[]>(

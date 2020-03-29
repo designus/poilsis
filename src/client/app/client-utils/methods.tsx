@@ -187,4 +187,4 @@ export const getInitialCitiesFilters = (cities: ICity[]): CitiesFilterState =>
   }, {}
 );
 
-export const getPriceQueryParam = (price: Price) => Object.values(price).filter(Boolean).join('-');
+export const getPriceQueryParam = (price: Price) => Object.values(price).map(Number).join('-');
