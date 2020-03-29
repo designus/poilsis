@@ -1,6 +1,7 @@
 import React, { useState, useCallback, ChangeEvent } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { useIntl, defineMessages } from 'react-intl';
+import Tooltip from '@material-ui/core/Tooltip';
 import { WrappedFieldProps } from 'redux-form';
 import { debounce } from 'lodash';
 
@@ -24,6 +25,7 @@ function PriceInput(props: Props) {
   const intl = useIntl();
   const classes = useStyles();
   const [price, setPrice] = useState<Price>(props.input.value);
+  const hasError = !props.meta.valid;
 
   const updateGlobalState = useCallback(
     debounce(props.input.onChange, 600), [props.input.onChange]
@@ -31,7 +33,7 @@ function PriceInput(props: Props) {
 
   const handleChange = (type: keyof Price) => (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const newValue = { ...price, [type]: value };
+    const newValue = { ...price, [type]: Number(value) };
     setPrice(newValue);
     updateGlobalState(newValue);
   };
@@ -39,16 +41,18 @@ function PriceInput(props: Props) {
   return (
     <React.Fragment>
       <div className={classes.wrapper}>
-        <TextField
-          label={intl.formatMessage(messages.from)}
-          value={price.from || ''}
-          fullWidth
-          required
-          // error={hasError()}
-          type="number"
-          onChange={handleChange('from')}
-          className={classes.formControl}
-        />
+        <Tooltip open={hasError} title={props.meta.error || ''} placement="right-end">
+          <TextField
+            label={intl.formatMessage(messages.from)}
+            value={price.from || ''}
+            fullWidth
+            required
+            error={hasError}
+            type="number"
+            onChange={handleChange('from')}
+            className={classes.formControl}
+          />
+        </Tooltip>
       </div>
       <div className={classes.wrapper}>
         <TextField

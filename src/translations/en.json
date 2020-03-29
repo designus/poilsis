@@ -25,6 +25,7 @@
   "common.form_validation.range": "Please select from {count1} to {count2} options",
   "common.form_validation.wrong_number": "Field value must be a number",
   "common.form_validation.wrong_email": "Invalid email address",
+  "common.form_validation.wrong_price": "Min price should be lower than Max price",
   "common.form_validation.max_photo_count": "You are not allowed to uploade more than {count} photos",
   "common.form_validation.max_photo_size": "Some of your selected files exceeds maximum allowed size of {count} mb",
   "common.form_validation.wrong_file_type": "Field supports only {types} types",

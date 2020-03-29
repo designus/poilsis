@@ -24,6 +24,6 @@ export const languageStyles = (theme: Theme) => createStyles({
     }
   },
   wrapper: {
-    padding: '10px 0'
+    padding: '0 0 15px 0'
   }
 });

@@ -1033,6 +1033,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "../../node_modules/intl-messageformat-parser/lib/types.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/types.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
       "id": "../data-strings/types.tsx",
       "name": "../data-strings/types.tsx",
       "file": "main.js",
@@ -1055,12 +1061,6 @@
       "name": "./app/types/types.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/intl-messageformat-parser/lib/types.js",
-      "name": "../../node_modules/intl-messageformat-parser/lib/types.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     },
     {
       "id": "../../node_modules/react-virtualized/dist/es/ArrowKeyStepper/types.js",
@@ -1335,7 +1335,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1525,16 +1525,16 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/actions/utils.tsx",
-      "name": "./app/actions/utils.tsx",
+      "id": "../../node_modules/react-intl/lib/utils.js",
+      "name": "../../node_modules/react-intl/lib/utils.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/react-intl/lib/utils.js",
-      "name": "../../node_modules/react-intl/lib/utils.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
+      "id": "./app/actions/utils.tsx",
+      "name": "./app/actions/utils.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
   "./city": [
@@ -2245,6 +2245,86 @@
     {
       "id": "../../node_modules/@babel/runtime/helpers/toConsumableArray.js",
       "name": "../../node_modules/@babel/runtime/helpers/toConsumableArray.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./aliases": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/aliases.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/aliases.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./diff": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/diff.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/diff.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./get-canonical-locales": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/get-canonical-locales.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/get-canonical-locales.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "@formatjs/intl-utils": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/index.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./invariant": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/invariant.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/invariant.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./number-types": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/number-types.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/number-types.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./parentLocales": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/parentLocales.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/parentLocales.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./polyfill-utils": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/polyfill-utils.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/polyfill-utils.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./resolve-locale": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/resolve-locale.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/resolve-locale.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./units": [
+    {
+      "id": "../../node_modules/@formatjs/intl-utils/lib/units.js",
+      "name": "../../node_modules/@formatjs/intl-utils/lib/units.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3661,6 +3741,12 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
+      "id": "../../node_modules/react-intl/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
+      "name": "../../node_modules/react-intl/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
       "id": "../../node_modules/react-redux/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
       "name": "../../node_modules/react-redux/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
       "file": "main.js",
@@ -3677,12 +3763,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "../../node_modules/react-intl/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
-      "name": "../../node_modules/react-intl/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
   "html-entities": [
@@ -3721,6 +3801,84 @@
     {
       "id": "../../node_modules/hyphenate-style-name/index.js",
       "name": "../../node_modules/hyphenate-style-name/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "intl-format-cache": [
+    {
+      "id": "../../node_modules/intl-format-cache/lib/index.js",
+      "name": "../../node_modules/intl-format-cache/lib/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "intl-messageformat-parser": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/index.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./normalize": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/normalize.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/normalize.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./parser": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/parser.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/parser.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./skeleton": [
+    {
+      "id": "../../node_modules/intl-messageformat-parser/lib/skeleton.js",
+      "name": "../../node_modules/intl-messageformat-parser/lib/skeleton.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./core": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/core.js",
+      "name": "../../node_modules/intl-messageformat/lib/core.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./error": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/error.js",
+      "name": "../../node_modules/intl-messageformat/lib/error.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/react-intl/lib/error.js",
+      "name": "../../node_modules/react-intl/lib/error.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./formatters": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/formatters.js",
+      "name": "../../node_modules/intl-messageformat/lib/formatters.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "intl-messageformat": [
+    {
+      "id": "../../node_modules/intl-messageformat/lib/index.js",
+      "name": "../../node_modules/intl-messageformat/lib/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4791,6 +4949,126 @@
       "publicPath": "http://localhost:8080/public/vendors~photosPage.js"
     }
   ],
+  "./components/createFormattedComponent": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/createFormattedComponent.js",
+      "name": "../../node_modules/react-intl/lib/components/createFormattedComponent.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./components/injectIntl": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/injectIntl.js",
+      "name": "../../node_modules/react-intl/lib/components/injectIntl.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./components/message": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/message.js",
+      "name": "../../node_modules/react-intl/lib/components/message.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./components/plural": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/plural.js",
+      "name": "../../node_modules/react-intl/lib/components/plural.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./components/provider": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/provider.js",
+      "name": "../../node_modules/react-intl/lib/components/provider.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./components/relative": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/relative.js",
+      "name": "../../node_modules/react-intl/lib/components/relative.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./components/useIntl": [
+    {
+      "id": "../../node_modules/react-intl/lib/components/useIntl.js",
+      "name": "../../node_modules/react-intl/lib/components/useIntl.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../formatters/dateTime": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/dateTime.js",
+      "name": "../../node_modules/react-intl/lib/formatters/dateTime.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../formatters/displayName": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/displayName.js",
+      "name": "../../node_modules/react-intl/lib/formatters/displayName.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../formatters/list": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/list.js",
+      "name": "../../node_modules/react-intl/lib/formatters/list.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../formatters/message": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/message.js",
+      "name": "../../node_modules/react-intl/lib/formatters/message.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../formatters/number": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/number.js",
+      "name": "../../node_modules/react-intl/lib/formatters/number.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../formatters/plural": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/plural.js",
+      "name": "../../node_modules/react-intl/lib/formatters/plural.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "../formatters/relativeTime": [
+    {
+      "id": "../../node_modules/react-intl/lib/formatters/relativeTime.js",
+      "name": "../../node_modules/react-intl/lib/formatters/relativeTime.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "react-intl": [
+    {
+      "id": "../../node_modules/react-intl/lib/index.js",
+      "name": "../../node_modules/react-intl/lib/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
   "./cjs/react-is.development.js": [
     {
       "id": "../../node_modules/react-is/cjs/react-is.development.js",
@@ -5355,6 +5633,14 @@
     {
       "id": "../../node_modules/setimmediate/setImmediate.js",
       "name": "../../node_modules/setimmediate/setImmediate.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "shallow-equal/objects": [
+    {
+      "id": "../../node_modules/shallow-equal/objects/index.js",
+      "name": "../../node_modules/shallow-equal/objects/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -8053,86 +8339,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./aliases": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/aliases.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/aliases.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./diff": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/diff.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/diff.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./get-canonical-locales": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/get-canonical-locales.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/get-canonical-locales.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "@formatjs/intl-utils": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/index.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./invariant": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/invariant.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/invariant.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./number-types": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/number-types.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/number-types.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./parentLocales": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/parentLocales.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/parentLocales.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./polyfill-utils": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/polyfill-utils.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/polyfill-utils.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./resolve-locale": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/resolve-locale.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/resolve-locale.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./units": [
-    {
-      "id": "../../node_modules/@formatjs/intl-utils/lib/units.js",
-      "name": "../../node_modules/@formatjs/intl-utils/lib/units.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
   "./Backdrop": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Backdrop/Backdrop.js",
@@ -8485,208 +8691,10 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "intl-format-cache": [
-    {
-      "id": "../../node_modules/intl-format-cache/lib/index.js",
-      "name": "../../node_modules/intl-format-cache/lib/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "intl-messageformat-parser": [
-    {
-      "id": "../../node_modules/intl-messageformat-parser/lib/index.js",
-      "name": "../../node_modules/intl-messageformat-parser/lib/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./normalize": [
-    {
-      "id": "../../node_modules/intl-messageformat-parser/lib/normalize.js",
-      "name": "../../node_modules/intl-messageformat-parser/lib/normalize.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./parser": [
-    {
-      "id": "../../node_modules/intl-messageformat-parser/lib/parser.js",
-      "name": "../../node_modules/intl-messageformat-parser/lib/parser.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./skeleton": [
-    {
-      "id": "../../node_modules/intl-messageformat-parser/lib/skeleton.js",
-      "name": "../../node_modules/intl-messageformat-parser/lib/skeleton.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./core": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/core.js",
-      "name": "../../node_modules/intl-messageformat/lib/core.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./error": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/error.js",
-      "name": "../../node_modules/intl-messageformat/lib/error.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/react-intl/lib/error.js",
-      "name": "../../node_modules/react-intl/lib/error.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./formatters": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/formatters.js",
-      "name": "../../node_modules/intl-messageformat/lib/formatters.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "intl-messageformat": [
-    {
-      "id": "../../node_modules/intl-messageformat/lib/index.js",
-      "name": "../../node_modules/intl-messageformat/lib/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
   "react-countdown-now": [
     {
       "id": "../../node_modules/react-countdown-now/dist/Countdown.js",
       "name": "../../node_modules/react-countdown-now/dist/Countdown.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./components/createFormattedComponent": [
-    {
-      "id": "../../node_modules/react-intl/lib/components/createFormattedComponent.js",
-      "name": "../../node_modules/react-intl/lib/components/createFormattedComponent.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./components/injectIntl": [
-    {
-      "id": "../../node_modules/react-intl/lib/components/injectIntl.js",
-      "name": "../../node_modules/react-intl/lib/components/injectIntl.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./components/message": [
-    {
-      "id": "../../node_modules/react-intl/lib/components/message.js",
-      "name": "../../node_modules/react-intl/lib/components/message.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./components/plural": [
-    {
-      "id": "../../node_modules/react-intl/lib/components/plural.js",
-      "name": "../../node_modules/react-intl/lib/components/plural.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./components/provider": [
-    {
-      "id": "../../node_modules/react-intl/lib/components/provider.js",
-      "name": "../../node_modules/react-intl/lib/components/provider.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./components/relative": [
-    {
-      "id": "../../node_modules/react-intl/lib/components/relative.js",
-      "name": "../../node_modules/react-intl/lib/components/relative.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "./components/useIntl": [
-    {
-      "id": "../../node_modules/react-intl/lib/components/useIntl.js",
-      "name": "../../node_modules/react-intl/lib/components/useIntl.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "../formatters/dateTime": [
-    {
-      "id": "../../node_modules/react-intl/lib/formatters/dateTime.js",
-      "name": "../../node_modules/react-intl/lib/formatters/dateTime.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "../formatters/displayName": [
-    {
-      "id": "../../node_modules/react-intl/lib/formatters/displayName.js",
-      "name": "../../node_modules/react-intl/lib/formatters/displayName.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "../formatters/list": [
-    {
-      "id": "../../node_modules/react-intl/lib/formatters/list.js",
-      "name": "../../node_modules/react-intl/lib/formatters/list.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "../formatters/message": [
-    {
-      "id": "../../node_modules/react-intl/lib/formatters/message.js",
-      "name": "../../node_modules/react-intl/lib/formatters/message.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "../formatters/number": [
-    {
-      "id": "../../node_modules/react-intl/lib/formatters/number.js",
-      "name": "../../node_modules/react-intl/lib/formatters/number.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "../formatters/plural": [
-    {
-      "id": "../../node_modules/react-intl/lib/formatters/plural.js",
-      "name": "../../node_modules/react-intl/lib/formatters/plural.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "../formatters/relativeTime": [
-    {
-      "id": "../../node_modules/react-intl/lib/formatters/relativeTime.js",
-      "name": "../../node_modules/react-intl/lib/formatters/relativeTime.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "react-intl": [
-    {
-      "id": "../../node_modules/react-intl/lib/index.js",
-      "name": "../../node_modules/react-intl/lib/index.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
@@ -8767,14 +8775,6 @@
     {
       "id": "../../node_modules/react-transition-group/esm/utils/PropTypes.js",
       "name": "../../node_modules/react-transition-group/esm/utils/PropTypes.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "shallow-equal/objects": [
-    {
-      "id": "../../node_modules/shallow-equal/objects/index.js",
-      "name": "../../node_modules/shallow-equal/objects/index.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }

@@ -14,6 +14,7 @@ import {
   requiredWhenEnabled,
   minCheckedCount,
   maxCheckedCount,
+  priceValidator,
   IItem,
   DEFAULT_LANGUAGE
 } from 'global-utils';
@@ -125,6 +126,7 @@ const Form = (props: Props)  => {
           name="price"
           type="text"
           component={PriceInput}
+          validate={[priceValidator]}
         />
       </Paper>
     );
