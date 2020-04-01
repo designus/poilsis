@@ -56,10 +56,10 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
         ...state,
         dataMap: {
           ...state.dataMap,
-          [action.id]: {
-            ...state.dataMap[action.id],
+          [action.cityId]: {
+            ...state.dataMap[action.cityId],
             isEnabled: {
-              ...state.dataMap[action.id].isEnabled,
+              ...state.dataMap[action.cityId].isEnabled,
               [action.locale]: action.isEnabled
             }
           }

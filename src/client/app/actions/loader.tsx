@@ -1,16 +1,16 @@
 import { batch } from 'react-redux';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { LoaderActionTypes, IStartLoading, IEndLoading, LoaderType, ThunkResult } from 'types';
+import { LoaderActionTypes, LoaderType, ThunkResult } from 'types';
 
-export const startLoading = (loaderId: LoaderType): IStartLoading => ({
+export const startLoading = (loaderId: LoaderType) => ({
   type: LoaderActionTypes.START_LOADING,
   loaderId
-});
+}) as const;
 
-export const endLoading = (loaderId: LoaderType): IEndLoading => ({
+export const endLoading = (loaderId: LoaderType) => ({
   type: LoaderActionTypes.END_LOADING,
   loaderId
-});
+}) as const;
 
 export const showLoader = (loaderId: LoaderType): ThunkResult<void> => dispatch => {
   batch(() => {

@@ -1,7 +1,7 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { IPhotoFormState, IImage } from 'global-utils/typings';
-import { IReceiveImages, ThunkReturn } from 'types';
-import { updatePhotos, uploadPhotos, receiveImages } from 'actions/items';
+import { ThunkReturn } from 'types';
+import { updatePhotos, uploadPhotos } from 'actions/items';
 
 import { CreateEditItemProps } from '../types';
 

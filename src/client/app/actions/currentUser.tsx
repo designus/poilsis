@@ -3,19 +3,19 @@ import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { showLoader, hideLoader } from 'actions/loader';
 import { receiveItems } from 'actions/items';
-import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, ActionCreator } from 'types';
+import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, UserDetails, ActionCreator } from 'types';
 import { isAdmin, IItem } from 'global-utils';
 import { getAdminLocale } from 'selectors';
 import { handleApiResponse, http } from './utils';
 
-export const receiveUserDetails: ActionCreator<IReceiveUserDetails> = props => ({
+export const receiveUserDetails = (userDetails: UserDetails | null) => ({
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
-  ...props
-});
+  userDetails
+}) as const;
 
-export const setUserItems = (): ISetUserItems => ({
+export const setUserItems = () => ({
   type: CurrentUserActionTypes.SET_USER_ITEMS
-});
+}) as const;
 
 export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const state = getState();
@@ -38,7 +38,7 @@ export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch,
     .then(items => {
       const data = getNormalizedData(items);
       batch(() => {
-        dispatch(receiveItems(data));
+        dispatch(receiveItems(data.dataMap, data.aliases));
         dispatch(setUserItems());
         dispatch(hideLoader(CONTENT_LOADER_ID));
       });

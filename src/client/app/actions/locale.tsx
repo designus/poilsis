@@ -1,22 +1,22 @@
 import { Locale } from 'global-utils/typings';
-import { LocaleActionTypes, ISetClientLocale, ISetAdminLocale, ActionCreator, ThunkResult } from 'types';
+import { LocaleActionTypes, ThunkResult } from 'types';
 import { clearAllData } from './initialData';
 
-export const setClientLocale: ActionCreator<ISetClientLocale> = params => ({
+export const setClientLocale = (locale: Locale) => ({
   type: LocaleActionTypes.SET_CLIENT_LOCALE,
-  ...params
-});
+  locale
+}) as const;
 
-export const setAdminLocale: ActionCreator<ISetAdminLocale> = params => ({
+export const setAdminLocale = (locale: Locale) => ({
   type: LocaleActionTypes.SET_ADMIN_LOCALE,
-  ...params
-});
+  locale
+}) as const;
 
 export const switchLanguage = (locale: Locale, isAdmin: boolean): ThunkResult<void> => dispatch => {
   if (isAdmin) {
-    dispatch(setAdminLocale({ locale }));
+    dispatch(setAdminLocale(locale));
   } else {
-    dispatch(setClientLocale({ locale }));
+    dispatch(setClientLocale(locale));
     dispatch(clearAllData());
   }
 };

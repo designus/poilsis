@@ -3,14 +3,14 @@ import { showLoader, hideLoader } from 'actions/loader';
 import { IItem } from 'global-utils';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
-import { IReceiveRecommendedItems, HomeActionTypes, ThunkResult, ActionCreator } from 'types';
+import { HomeActionTypes, ThunkResult } from 'types';
 import { handleApiResponse, http } from './utils';
 import { receiveItems } from './items';
 
-export const receiveRecommendedItems: ActionCreator<IReceiveRecommendedItems> = props => ({
+export const receiveRecommendedItems = (items: string[]) => ({
   type: HomeActionTypes.RECEIVE_RECOMMENDED_ITEMS,
-  ...props
-});
+  items
+}) as const;
 
 export const loadRecommendedItems = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
   dispatch(showLoader(CONTENT_LOADER_ID));
@@ -21,8 +21,8 @@ export const loadRecommendedItems = (): ThunkResult<Promise<void>> => (dispatch,
       const newItems = getNewItems(items, getState());
       const data = getNormalizedData(newItems);
       batch(() => {
-        dispatch(receiveItems(data));
-        dispatch(receiveRecommendedItems({ items: items.map(item => item.id) }));
+        dispatch(receiveItems(data.dataMap, data.aliases));
+        dispatch(receiveRecommendedItems(items.map(item => item.id)));
         dispatch(hideLoader(CONTENT_LOADER_ID));
       });
     })

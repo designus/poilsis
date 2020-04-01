@@ -43,10 +43,10 @@ export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = ge
         ...state,
         dataMap: {
           ...state.dataMap,
-          [action.id]: {
-            ...state.dataMap[action.id],
+          [action.typeId]: {
+            ...state.dataMap[action.typeId],
             isEnabled: {
-              ...state.dataMap[action.id].isEnabled,
+              ...state.dataMap[action.typeId].isEnabled,
               [action.locale]: action.isEnabled
             }
           }

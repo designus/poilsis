@@ -1,3 +1,5 @@
+import { loginSuccess, logoutSuccess, showKeepMeLoggedModal, reauthenticateSuccess, setAccessToken } from 'actions/auth';
+
 export interface IAuthState {
   isLoggedIn: boolean;
   accessToken: string | null;
@@ -12,32 +14,9 @@ export enum AuthActionTypes {
   SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 }
 
-export interface ILoginSucces {
-  type: AuthActionTypes.LOGIN_SUCCESS;
-  accessToken: string;
-}
-
-export interface ILogoutSuccess {
-  type: AuthActionTypes.LOGOUT_SUCCESS;
-}
-
-export interface IShowKeepMeLoggedModal {
-  type: AuthActionTypes.SHOW_KEEP_ME_LOGGED_MODAL;
-}
-
-export interface IReauthenticateSuccess {
-  type: AuthActionTypes.REAUTHENTICATE_SUCCESS;
-  accessToken: string;
-}
-
-export interface ISetAccessToken {
-  type: AuthActionTypes.SET_ACCESS_TOKEN;
-  accessToken: string;
-}
-
 export type AuthActions =
-  | ILoginSucces
-  | ILogoutSuccess
-  | IShowKeepMeLoggedModal
-  | IReauthenticateSuccess
-  | ISetAccessToken;
+  | ReturnType<typeof loginSuccess>
+  | ReturnType<typeof logoutSuccess>
+  | ReturnType<typeof showKeepMeLoggedModal>
+  | ReturnType<typeof reauthenticateSuccess>
+  | ReturnType<typeof setAccessToken>;

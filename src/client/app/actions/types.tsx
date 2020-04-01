@@ -1,5 +1,5 @@
 import { batch } from 'react-redux';
-import { IType } from 'global-utils';
+import { IType, Locale } from 'global-utils';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { showToast } from 'actions/toast';
 import {
@@ -14,37 +14,35 @@ import {
 } from 'data-strings';
 import {
   TypesActionTypes,
-  ISelectType,
-  IReceiveType,
-  IRemoveType,
   ToggleEnabledParams,
   Toast,
-  IToggleEnabled,
   ThunkResult
 } from 'types';
 
 import { handleApiErrors, handleApiResponse, http } from './utils';
 import { showLoader, hideLoader } from './loader';
 
-export const selectType = (typeId: string): ISelectType => ({
+export const selectType = (typeId: string) => ({
   type: TypesActionTypes.SELECT_TYPE,
   typeId
-});
+}) as const;
 
-export const receiveType = (newType: IType): IReceiveType => ({
+export const receiveType = (newType: IType) => ({
   type: TypesActionTypes.RECEIVE_TYPE,
   newType
-});
+}) as const;
 
-export const removeType = (typeId: string): IRemoveType => ({
+export const removeType = (typeId: string) => ({
   type: TypesActionTypes.REMOVE_TYPE,
   typeId
-});
+}) as const;
 
-export const toggleTypeEnabledField = (params: ToggleEnabledParams): IToggleEnabled => ({
+export const toggleTypeEnabledField = (typeId: string, isEnabled: boolean, locale: Locale) => ({
   type: TypesActionTypes.TOGGLE_TYPE_ENABLED,
-  ...params
-});
+  typeId,
+  isEnabled,
+  locale
+}) as const;
 
 export const getAdminType = (typeId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
@@ -110,7 +108,7 @@ export const toggleTypeEnabled = (params: ToggleEnabledParams): ThunkResult<Prom
   return http.patch(`/api/types/type/toggle-enabled`, params)
     .then(handleApiResponse)
     .then(() => {
-      dispatch(toggleTypeEnabledField(params));
+      dispatch(toggleTypeEnabledField(params.id, params.isEnabled, params.locale));
     })
     .catch(handleApiErrors(TYPE_ENABLE_ERROR, CONTENT_LOADER_ID, dispatch));
 };

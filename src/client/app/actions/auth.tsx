@@ -11,11 +11,6 @@ import { getAccessTokenClaims } from 'global-utils/methods';
 import { getAccessToken } from 'selectors';
 import {
   AuthActionTypes,
-  ILoginSucces,
-  ILogoutSuccess,
-  IShowKeepMeLoggedModal,
-  IReauthenticateSuccess,
-  ISetAccessToken,
   Toast,
   ThunkResult,
   ThunkDispatch
@@ -30,28 +25,28 @@ import {
 } from 'data-strings';
 import { http } from './utils';
 
-export const loginSuccess = (accessToken: string): ILoginSucces => ({
+export const loginSuccess = (accessToken: string) => ({
   type: AuthActionTypes.LOGIN_SUCCESS,
   accessToken
-});
+}) as const;
 
-export const logoutSuccess = (): ILogoutSuccess => ({
+export const logoutSuccess = () => ({
   type: AuthActionTypes.LOGOUT_SUCCESS
-});
+}) as const;
 
-export const showKeepMeLoggedModal = (): IShowKeepMeLoggedModal => ({
+export const showKeepMeLoggedModal = () => ({
   type: AuthActionTypes.SHOW_KEEP_ME_LOGGED_MODAL
-});
+}) as const;
 
-export const reauthenticateSuccess = (accessToken: string): IReauthenticateSuccess => ({
+export const reauthenticateSuccess = (accessToken: string) => ({
   type: AuthActionTypes.REAUTHENTICATE_SUCCESS,
   accessToken
-});
+}) as const;
 
-export const setAccessToken = (accessToken: string): ISetAccessToken => ({
+export const setAccessToken = (accessToken: string) => ({
   type: AuthActionTypes.SET_ACCESS_TOKEN,
   accessToken
-});
+}) as const;
 
 export const handleAuthError = (dispatch: ThunkDispatch, isLogin: boolean) => (error: any) => {
   const genericMessage = isLogin ? USER_LOGIN_ERROR : USER_LOGOUT_ERROR;
@@ -72,7 +67,7 @@ export const login = (credentials = {username: 'admin', password: 'admin'}): Thu
       const expiryDate = day(accessTokenClaims.exp * 1000).toDate();
       batch(() => {
         dispatch(loginSuccess(accessToken));
-        dispatch(receiveUserDetails({ userDetails: getUserDetails(accessTokenClaims) }));
+        dispatch(receiveUserDetails(getUserDetails(accessTokenClaims)));
         dispatch(hideLoader(DIALOG_LOADER_ID));
         dispatch(showToast(Toast.success, USER_LOGIN_SUCCESS));
       });
@@ -123,7 +118,7 @@ export const logout = (): ThunkResult<Promise<void> | null> => (dispatch, getSta
       localStorage.removeItem('refreshToken');
       dispatch(logoutSuccess());
       dispatch(showToast(Toast.success, USER_LOGOUT_SUCCESS));
-      dispatch(receiveUserDetails({ userDetails: null }));
+      dispatch(receiveUserDetails(null));
     })
     .catch(handleAuthError(dispatch, false));
 };
