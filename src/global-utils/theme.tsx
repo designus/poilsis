@@ -43,6 +43,13 @@ export const theme = createMuiTheme({
       }
     }
   },
+  props: {
+    MuiTypography: {
+      variantMapping: {
+        body2: 'span'
+      }
+    }
+  },
   typography: {
     h1: {
       fontSize: '3rem'
@@ -55,7 +62,7 @@ export const theme = createMuiTheme({
     },
     h4: {
       fontSize: '1.25rem'
-    }
+    },
   },
   customButton: {
     borderRadius: '16px'

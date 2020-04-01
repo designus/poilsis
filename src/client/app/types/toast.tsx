@@ -1,3 +1,4 @@
+import { showToast, hideToast } from 'actions/toast';
 
 export enum Toast {
   warning = 'warning',
@@ -19,15 +20,4 @@ export enum ToastActionTypes {
   HIDE_TOAST = 'HIDE_TOAST'
 }
 
-export interface IShowToast {
-  type: ToastActionTypes.SHOW_TOAST;
-  toastType: ToastType;
-  message: string;
-  error: string | null;
-}
-
-export interface IHideToast {
-  type: ToastActionTypes.HIDE_TOAST;
-}
-
-export type ToastActions = IShowToast | IHideToast;
+export type ToastActions = ReturnType<typeof showToast> | ReturnType<typeof hideToast>;

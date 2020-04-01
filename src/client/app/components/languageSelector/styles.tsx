@@ -1,17 +1,13 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { Props } from './languageSelector';
 
-export const styles = (theme: Theme) => createStyles({
-  wrapper: {
+export const useStyles = makeStyles((theme: Theme) => ({
+  wrapper: (props: Props) => ({
     padding: '0 0 0 15px',
     borderLeft: '1px solid rgba(255, 255, 255, 0.3)',
-    '& > div': {
-      color: '#fff'
+    '& svg, & div': {
+      color: props.isAdmin ? '#fff' : '#1c1c1c'
     }
-  },
-  admin: {
-    '& p, & svg': {
-      color: '#fff'
-    }
-  }
-});
+  })
+}));

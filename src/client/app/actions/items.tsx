@@ -1,4 +1,3 @@
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { batch } from 'react-redux';
 import {
   setUploadProgress,
@@ -7,7 +6,7 @@ import {
 } from 'actions/upload';
 
 import { showToast } from 'actions/toast';
-import { startLoading, endLoading } from 'actions/loader';
+import { showLoader, hideLoader } from 'actions/loader';
 import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
@@ -17,6 +16,14 @@ import {
   ITEM_CREATE_ERROR,
   ITEM_DELETE_SUCCESS,
   ITEM_DELETE_ERROR,
+  ITEM_LOAD_ERROR,
+  ITEM_APPROVE_ERROR,
+  ITEM_ENABLE_ERROR,
+  ITEM_RECOMMEND_ERROR,
+  ITEMS_UPLOAD_SUCCESS,
+  ITEMS_UPLOAD_ERROR,
+  ITEMS_REMOVE_SUCCESS,
+  ITEMS_REMOVE_ERROR,
   IMAGES_UPLOAD_ERROR,
   IMAGES_UPLOAD_SUCCESS,
   IMAGES_UPDATE_SUCCESS,
@@ -26,98 +33,99 @@ import { IImage, IItem, IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
 import {
   ItemsActionTypes,
-  IReceiveItems,
-  IReceiveItem,
-  IReceiveImages,
-  IReceiveItemDescription,
-  IRemoveItem,
-  IRemoveMockedData,
-  IReceiveMockedData,
-  IToggleItemRecommended,
   Toast,
   ToggleEnabledParams,
-  IToggleEnabled,
-  IToggleItemApprovedByAdmin,
   ThunkResult,
-  ActionCreator
+  IItemsMap,
+  IAliasMap
 } from 'types';
 
-import { stopLoading, handleApiResponse, handleApiErrors, http } from './utils';
+import { handleApiResponse, http, handleApiErrors } from './utils';
 
-export const receiveItems: ActionCreator<IReceiveItems> = props => ({
+export const receiveItems = (dataMap: IItemsMap, aliases: IAliasMap) => ({
   type: ItemsActionTypes.RECEIVE_ITEMS,
-  ...props
-});
+  dataMap,
+  aliases
+}) as const;
 
-export const receiveItem: ActionCreator<IReceiveItem> = props => ({
+export const receiveItem = (item: IItem) => ({
   type: ItemsActionTypes.RECEIVE_ITEM,
-  ...props
-});
+  item
+}) as const;
 
-export const receiveItemDescription: ActionCreator<IReceiveItemDescription> = props => ({
+export const receiveItemDescription = (itemId: string, descFields: IItemDescFields) => ({
   type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION,
-  ...props
-});
+  itemId,
+  descFields
+}) as const;
 
-export const removeItem: ActionCreator<IRemoveItem> = props => ({
+export const removeItem = (itemId: string) => ({
   type: ItemsActionTypes.REMOVE_ITEM,
-  ...props
-});
+  itemId
+}) as const;
 
-export const removeMockedData = (): IRemoveMockedData => ({
+export const removeMockedData = () => ({
   type: ItemsActionTypes.REMOVE_MOCKED_DATA
-});
+}) as const;
 
-export const receiveMockedData: ActionCreator<IReceiveMockedData> = props => ({
+export const receiveMockedData = (dataMap: IItemsMap, aliases: IAliasMap) => ({
   type: ItemsActionTypes.RECEIVE_MOCKED_DATA,
-  ...props
-});
+  dataMap,
+  aliases
+}) as const;
 
-export const receiveImages: ActionCreator<IReceiveImages> = props => ({
+export const receiveImages = (itemId: string, images: IImage[], mainImage: string | null) => ({
   type: ItemsActionTypes.RECEIVE_IMAGES,
-  ...props
-});
+  itemId,
+  images,
+  mainImage
+}) as const;
 
-export const toggleItemEnabledField: ActionCreator<IToggleEnabled> = params => ({
+export const toggleItemEnabledField = (itemId: string, isEnabled: boolean, locale: Locale) => ({
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED,
-  ...params
-});
+  itemId,
+  isEnabled,
+  locale
+}) as const;
 
-export const toggleItemApprovedField: ActionCreator<IToggleItemApprovedByAdmin> = params => ({
+export const toggleItemApprovedField = (itemId: string, isApproved: boolean) => ({
   type: ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN,
-  ...params
-});
+  itemId,
+  isApproved
+}) as const;
 
-export const toggleItemRecommendedField: ActionCreator<IToggleItemRecommended> = params => ({
+export const toggleItemRecommendedField = (itemId: string, isRecommended: boolean) => ({
   type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED,
-  ...params
-});
+  itemId,
+  isRecommended
+}) as const;
 
 export const getClientItem = (locale: Locale, alias: string): ThunkResult<Promise<void>> => (dispatch) => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
 
   return http.get(`/api/items/client-item/${alias}`, setAcceptLanguageHeader(locale))
     .then(handleApiResponse)
     .then((item: IItem) => {
-      console.log('Client item', item);
-      dispatch(receiveItem({ item }));
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(receiveItem(item));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
     })
     .catch(err => {
       console.error(err);
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
     });
 };
 
 export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
   return http.get<IItem>(`/api/items/admin-item/${itemId}`)
     .then(response => handleApiResponse(response))
     .then(item => {
-      dispatch(receiveItem({ item }));
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      batch(() => {
+        dispatch(receiveItem(item));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
+      });
     })
-    .catch(handleApiErrors('Unable to load Item', CONTENT_LOADER_ID, dispatch));
+    .catch(handleApiErrors(ITEM_LOAD_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<IImage[]>> => dispatch => {
@@ -128,7 +136,7 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
     .then(response => handleApiResponse(response))
     .then(item => {
       batch(() => {
-        dispatch(receiveImages({ itemId, images: item.images, mainImage: item.mainImage }));
+        dispatch(receiveImages(itemId, item.images, item.mainImage));
         dispatch(setUploadProgress(100));
         dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
         dispatch(uploadSuccess());
@@ -142,19 +150,19 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
       const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
       dispatch(showToast(Toast.error, message));
       dispatch(uploadError());
-      return Promise.reject(errors);
+      return errors;
     });
 };
 
 export const updatePhotos = (itemId: string, images: IImage[]): ThunkResult<Promise<void>> => dispatch => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
   return http.put<IItem>(`/api/items/item/update-photos/${itemId}`, {images})
     .then(response => handleApiResponse(response))
     .then(item => {
       batch(() => {
-        dispatch(receiveImages({ itemId, images: item.images, mainImage: item.mainImage }));
+        dispatch(receiveImages(itemId, item.images, item.mainImage));
         dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
-        dispatch(endLoading(CONTENT_LOADER_ID));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
       });
     })
     .catch(err => {
@@ -162,45 +170,53 @@ export const updatePhotos = (itemId: string, images: IImage[]): ThunkResult<Prom
       const errors = err.images;
       const message = errors && errors.message || IMAGES_UPDATE_ERROR;
       dispatch(showToast(Toast.error, message));
-      dispatch(endLoading(CONTENT_LOADER_ID));
-      return Promise.reject(errors);
+      dispatch(hideLoader(CONTENT_LOADER_ID));
+      return errors;
     });
 };
 
 export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
 
   return http.put<IItem>(`/api/items/item/main-info/${item.id}`, item)
     .then(response => handleApiResponse(response))
     .then(item => {
-      dispatch(receiveItem({ item }));
-      dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
+      batch(() => {
+        dispatch(receiveItem(item));
+        dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
+      });
       return item;
     })
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields): ThunkResult<Promise<void>> => dispatch => {
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
   return http.put<IItemDescFields>(`/api/items/item/description/${itemId}`, itemDescFields)
     .then(response => handleApiResponse(response))
     .then(response => {
-      dispatch(receiveItemDescription({ itemId, descFields: response }));
-      dispatch(stopLoading(false, ITEM_UPDATE_SUCCESS, CONTENT_LOADER_ID));
+      batch(() => {
+        dispatch(receiveItemDescription(itemId, response));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
+        dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
+      });
     })
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
-
 };
 
 export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
 
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
 
   return http.post<IItem>(`/api/items`, item)
     .then(response => handleApiResponse(response))
     .then(item => {
-      dispatch(receiveItem({ item }));
-      dispatch(stopLoading(false, ITEM_CREATE_SUCCESS, CONTENT_LOADER_ID));
+      batch(() => {
+        dispatch(receiveItem(item));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
+        dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
+      });
       return item;
     })
     .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
@@ -208,55 +224,49 @@ export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => dispatch
 
 export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispatch) => {
 
-  dispatch(startLoading(DIALOG_LOADER_ID));
+  dispatch(showLoader(DIALOG_LOADER_ID));
 
   return http.delete(`/api/items/item/${itemId}`)
     .then(handleApiResponse)
     .then((item: IItem) => {
-      dispatch(removeItem({ itemId: item.id }));
-      dispatch(stopLoading(false, ITEM_DELETE_SUCCESS, CONTENT_LOADER_ID));
+      batch(() => {
+        dispatch(removeItem(item.id));
+        dispatch(hideLoader(DIALOG_LOADER_ID));
+        dispatch(showToast(Toast.success, ITEM_DELETE_SUCCESS));
+      });
     })
-    .catch(handleApiErrors(ITEM_DELETE_ERROR, CONTENT_LOADER_ID, dispatch));
+    .catch(handleApiErrors(ITEM_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
 export const toggleItemEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
   return http.patch<boolean>(`/api/items/item/toggle-enabled`, params)
     .then(response => handleApiResponse(response))
     .then(() => {
-      dispatch(toggleItemEnabledField(params));
+      dispatch(toggleItemEnabledField(params.id, params.isEnabled, params.locale));
     })
-    .catch(err => {
-      console.error('Err', err);
-      dispatch(showToast(Toast.error, 'admin.item.enable_error'));
-    });
+    .catch(handleApiErrors(ITEM_ENABLE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const toggleItemApproved = (itemId: string, isApproved: boolean): ThunkResult<Promise<void>> => dispatch => {
   return http.patch<boolean>(`/api/items/item/toggle-approved`, { itemId, isApproved })
     .then(response => handleApiResponse(response))
     .then(() => {
-      dispatch(toggleItemApprovedField({ itemId, isApproved }));
+      dispatch(toggleItemApprovedField(itemId, isApproved));
     })
-    .catch(err => {
-      console.error('Err', err);
-      dispatch(showToast(Toast.error, 'admin.item.approve_error'));
-    });
+    .catch(handleApiErrors(ITEM_APPROVE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const toggleItemRecommended = (itemId: string, isRecommended: boolean): ThunkResult<Promise<void>> => dispatch => {
   return http.patch<boolean>(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
     .then(response => handleApiResponse(response))
     .then(() => {
-      dispatch(toggleItemRecommendedField({ itemId, isRecommended }));
+      dispatch(toggleItemRecommendedField(itemId, isRecommended));
     })
-    .catch(err => {
-      console.error('Err', err);
-      dispatch(showToast(Toast.error, 'admin.item.recommend_error'));
-    });
+    .catch(handleApiErrors(ITEM_RECOMMEND_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
-  dispatch(showLoading());
+  dispatch(showLoader(CONTENT_LOADER_ID));
   const state = getState();
   const cityIds = Object.keys(state.cities.dataMap);
   const typeIds = Object.keys(state.types.dataMap);
@@ -268,36 +278,24 @@ export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, g
       const newItems = getNewItems(items, state);
       const { dataMap, aliases } = getNormalizedData(newItems);
       batch(() => {
-        dispatch(receiveMockedData({ dataMap, aliases }));
-        dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
-        dispatch(hideLoading());
+        dispatch(receiveMockedData(dataMap, aliases));
+        dispatch(showToast(Toast.success, ITEMS_UPLOAD_SUCCESS));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
       });
     })
-    .catch(err => {
-      console.error('Unable to add mocked data', err);
-      batch(() => {
-        dispatch(showToast(Toast.error, ITEM_CREATE_ERROR));
-        dispatch(hideLoading());
-      });
-    });
+    .catch(handleApiErrors(ITEMS_UPLOAD_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const removeMockedDataAsync = (): ThunkResult<Promise<void>> => dispatch => {
-  dispatch(showLoading());
+  dispatch(showLoader(CONTENT_LOADER_ID));
   return http.delete('/api/items/mocked-data')
     .then(response => handleApiResponse(response))
     .then(() => {
       batch(() => {
-        dispatch(showToast(Toast.success, ITEM_DELETE_SUCCESS));
+        dispatch(showToast(Toast.success, ITEMS_REMOVE_SUCCESS));
         dispatch(removeMockedData());
-        dispatch(hideLoading());
+        dispatch(hideLoader(CONTENT_LOADER_ID));
       });
     })
-    .catch(err => {
-      console.error('Unable to remove mocked data', err);
-      batch(() => {
-        dispatch(showToast(Toast.error, ITEM_DELETE_ERROR));
-        dispatch(hideLoading());
-      });
-    });
+    .catch(handleApiErrors(ITEMS_REMOVE_ERROR, CONTENT_LOADER_ID, dispatch));
 };

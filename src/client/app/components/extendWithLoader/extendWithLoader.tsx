@@ -2,14 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 
-import { ILoadingState, IAppState } from 'types';
+import { ILoadingState, IAppState, LoaderType } from 'types';
 import { Loader } from 'components/loader';
 
 import { styles } from './styles';
-import { GLOBAL_LOADER_ID, CONTENT_LOADER_ID } from 'client-utils/constants';
 
 interface IExtendWithLoaderProps extends Partial<WithStyles<typeof styles>> {
-  loaderId?: 'content' | 'dialog' | 'global';
+  loaderId?: LoaderType;
   showLoadingOverlay?: boolean;
   loadingState?: ILoadingState;
   isLoading?: boolean;
@@ -26,7 +25,7 @@ export function extendWithLoader<TOriginalProps extends {}>(
         const { loadingState, showLoadingOverlay, classes } = this.props;
         const loaderId = this.props.loaderId || 'content';
         // @ts-ignore
-        const isLoading = loadingState && loadingState[loaderId] && !loadingState[GLOBAL_LOADER_ID];
+        const isLoading = loadingState && loadingState[loaderId];
 
         return (
           <div className={classes?.wrapper}>

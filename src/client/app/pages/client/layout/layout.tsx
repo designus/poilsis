@@ -24,6 +24,7 @@ import { removeInjectedStyles } from 'client-utils/methods';
 import { getInitialData } from 'actions/initialData';
 import { getStaticFileUri } from 'global-utils';
 import { isLoggedIn, getClientLocale, isInitialDataLoaded } from 'selectors';
+import { LoadingBar } from 'components/loadingBar';
 
 import { CityPage } from 'pages/client/city';
 import { ItemPage } from 'pages/client/item';
@@ -89,7 +90,8 @@ const ClientLayoutPage: React.FunctionComponent<Props> = (props) => {
             />
           </Drawer>
         </Hidden>
-        <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="static">
+        <AppBar classes={{ colorDefault: classes.appBar }} color="default" position="sticky">
+          <LoadingBar />
           <Container maxWidth="xl">
             <Toolbar disableGutters className={classes.toolbar}>
               <Hidden mdUp implementation="css">

@@ -1,3 +1,5 @@
+import { startLoading, endLoading } from 'actions/loader';
+
 export interface ILoadingState {
   content: boolean;
   dialog: boolean;
@@ -9,14 +11,6 @@ export enum LoaderActionTypes {
   END_LOADING = 'END_LOADING'
 }
 
-export interface IStartLoading {
-  type: LoaderActionTypes.START_LOADING;
-  loaderId: string;
-}
+export type LoaderType = 'content' | 'dialog' | 'global';
 
-export interface IEndLoading {
-  type: LoaderActionTypes.END_LOADING;
-  loaderId: string;
-}
-
-export type LoaderActions = IStartLoading | IEndLoading;
+export type LoaderActions = ReturnType<typeof startLoading> | ReturnType<typeof endLoading>;

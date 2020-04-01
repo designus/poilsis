@@ -47,6 +47,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   icon: {
     marginRight: '5px',
-    minWidth: '25px'
+    minWidth: '25px',
+    height: '23px',
+    color: theme.palette.grey[400]
   }
 });

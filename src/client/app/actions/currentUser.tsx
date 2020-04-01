@@ -1,21 +1,21 @@
 import { batch } from 'react-redux';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
-import { startLoading, endLoading } from 'actions/loader';
+import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { showLoader, hideLoader } from 'actions/loader';
 import { receiveItems } from 'actions/items';
-import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, ActionCreator } from 'types';
+import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, UserDetails, ActionCreator } from 'types';
 import { isAdmin, IItem } from 'global-utils';
-import { getAdminLocale, getCurrentUser } from 'selectors';
+import { getAdminLocale } from 'selectors';
 import { handleApiResponse, http } from './utils';
 
-export const receiveUserDetails: ActionCreator<IReceiveUserDetails> = props => ({
+export const receiveUserDetails = (userDetails: UserDetails | null) => ({
   type: CurrentUserActionTypes.RECEIVE_USER_DETAILS,
-  ...props
-});
+  userDetails
+}) as const;
 
-export const setUserItems = (): ISetUserItems => ({
+export const setUserItems = () => ({
   type: CurrentUserActionTypes.SET_USER_ITEMS
-});
+}) as const;
 
 export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const state = getState();
@@ -31,20 +31,20 @@ export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch,
     return null;
   }
 
-  dispatch(startLoading(CONTENT_LOADER_ID));
+  dispatch(showLoader(CONTENT_LOADER_ID));
 
   return http.get<IItem[]>(endpoint, setAcceptLanguageHeader(locale))
     .then(response => handleApiResponse(response))
     .then(items => {
       const data = getNormalizedData(items);
       batch(() => {
-        dispatch(receiveItems(data));
+        dispatch(receiveItems(data.dataMap, data.aliases));
         dispatch(setUserItems());
-        dispatch(endLoading(CONTENT_LOADER_ID));
+        dispatch(hideLoader(CONTENT_LOADER_ID));
       });
     })
     .catch(err => {
       console.error(err);
-      dispatch(endLoading(CONTENT_LOADER_ID));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
     });
 };

@@ -2,7 +2,7 @@ import { Locale, IItem, UserRoles } from 'global-utils/typings';
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { updateMainInfo, createItem } from 'actions/items';
-import { ICitiesMap, ITypesMap, IUsersMap, ThunkReturn } from 'types';
+import { CitiesMap, ITypesMap, IUsersMap, ThunkReturn } from 'types';
 import { CreateEditItemProps } from '../types';
 
 export interface IOwnProps extends CreateEditItemProps, InjectedIntlProps {
@@ -11,7 +11,7 @@ export interface IOwnProps extends CreateEditItemProps, InjectedIntlProps {
 
 export interface IStateProps {
   usersMap: IUsersMap;
-  citiesMap: ICitiesMap;
+  citiesMap: CitiesMap;
   typesMap: ITypesMap;
   userRole?: UserRoles;
   locale: Locale;

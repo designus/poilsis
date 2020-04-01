@@ -4,7 +4,7 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 
 type Props = WithStyles<typeof styles> & {
-  isAdmin: boolean;
+  isAdmin?: boolean;
 };
 
 const Loader: React.FunctionComponent<Props> = (props) => {

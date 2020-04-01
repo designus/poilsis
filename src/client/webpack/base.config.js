@@ -92,6 +92,18 @@ module.exports = {
         use: [
           'file-loader'
         ]
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          'isomorphic-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+        ],
       }
     ]
   },

@@ -33,7 +33,9 @@ const clientItemsProjection = {
   createdAt: 1,
   updatedAt: 1,
   isApprovedByAdmin: 1,
-  mainImage: 1
+  mainImage: 1,
+  price: 1,
+  currency: 1
 };
 
 const adminItemsProjection = {

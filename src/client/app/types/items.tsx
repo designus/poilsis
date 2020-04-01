@@ -1,5 +1,17 @@
-import { IItem, IImage, IItemDescFields, IsEnabled } from 'global-utils/typings';
-import { IGenericState, IAliasMap, IGenericDataMap, IToggleEnabled } from './generic';
+import { IItem, IImage } from 'global-utils/typings';
+import { IGenericState, IGenericDataMap } from './generic';
+import {
+  receiveItems,
+  receiveItem,
+  receiveItemDescription,
+  removeItem,
+  removeMockedData,
+  receiveMockedData,
+  receiveImages,
+  toggleItemEnabledField,
+  toggleItemApprovedField,
+  toggleItemRecommendedField
+} from 'actions/items';
 
 export type IItemsMap = IGenericDataMap<IItem>;
 
@@ -19,38 +31,6 @@ export enum ItemsActionTypes {
   TOGGLE_ITEM_APPROVED_BY_ADMIN = 'TOGGLE_ITEM_APPROVED_BY_ADMIN'
 }
 
-export interface IReceiveItems {
-  type: ItemsActionTypes.RECEIVE_ITEMS;
-  dataMap: IItemsMap;
-  aliases: IAliasMap;
-}
-
-export interface IReceiveItem {
-  type: ItemsActionTypes.RECEIVE_ITEM;
-  item: IItem;
-}
-
-export interface IReceiveItemDescription {
-  type: ItemsActionTypes.RECEIVE_ITEM_DESCRIPTION;
-  itemId: string;
-  descFields: IItemDescFields;
-}
-
-export interface IRemoveItem {
-  type: ItemsActionTypes.REMOVE_ITEM;
-  itemId: string;
-}
-
-export interface IRemoveMockedData {
-  type: ItemsActionTypes.REMOVE_MOCKED_DATA;
-}
-
-export interface IReceiveMockedData {
-  type: ItemsActionTypes.RECEIVE_MOCKED_DATA;
-  dataMap: IItemsMap;
-  aliases: IAliasMap;
-}
-
 export interface IReceiveImages {
   type: ItemsActionTypes.RECEIVE_IMAGES;
   itemId: string;
@@ -58,25 +38,14 @@ export interface IReceiveImages {
   mainImage: string | null;
 }
 
-export interface IToggleItemRecommended {
-  type: ItemsActionTypes.TOGGLE_ITEM_RECOMMENDED;
-  itemId: string;
-  isRecommended: boolean;
-}
-
-export interface IToggleItemApprovedByAdmin {
-  type: ItemsActionTypes.TOGGLE_ITEM_APPROVED_BY_ADMIN;
-  itemId: string;
-  isApproved: boolean;
-}
-
-export type ItemsActions = IReceiveItems
-  | IReceiveItem
-  | IReceiveItemDescription
-  | IRemoveItem
-  | IReceiveImages
-  | IToggleEnabled
-  | IToggleItemRecommended
-  | IToggleItemApprovedByAdmin
-  | IRemoveMockedData
-  | IReceiveMockedData;
+export type ItemsActions =
+  | ReturnType<typeof receiveItems>
+  | ReturnType<typeof receiveItem>
+  | ReturnType<typeof receiveItemDescription>
+  | ReturnType<typeof removeItem>
+  | ReturnType<typeof removeMockedData>
+  | ReturnType<typeof receiveMockedData>
+  | ReturnType<typeof receiveImages>
+  | ReturnType<typeof toggleItemEnabledField>
+  | ReturnType<typeof toggleItemApprovedField>
+  | ReturnType<typeof toggleItemRecommendedField>;

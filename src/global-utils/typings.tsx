@@ -58,7 +58,14 @@ export interface IItem extends IItemDescFields {
   updatedAt?: string;
   mainImage: string;
   isFullyLoaded?: boolean;
+  price: Price;
+  currency: string;
 }
+
+export type Price = {
+  from: number | null;
+  to: number | null;
+};
 
 export interface IType {
   id: string;

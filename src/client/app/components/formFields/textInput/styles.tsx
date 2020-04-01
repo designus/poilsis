@@ -1,8 +1,8 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { ERROR_COLOR, INPUT_WIDTH } from 'global-styles';
 
-export const styles = (theme: Theme) => createStyles({
+export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     padding: '10px 0'
   },
@@ -23,4 +23,4 @@ export const styles = (theme: Theme) => createStyles({
       backgroundColor: ERROR_COLOR
     }
   }
-});
+}));

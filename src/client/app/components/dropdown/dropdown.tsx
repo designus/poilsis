@@ -1,47 +1,55 @@
-import * as React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
 import { SelectInputProps } from '@material-ui/core/Select/SelectInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-
 import { DropdownItemValue, IDropdownOption } from 'types/generic';
 
-import { styles } from './styles';
+import { useStyles } from './styles';
 
-interface IDropdownProps extends WithStyles<typeof styles> {
+export type Props = {
   options: IDropdownOption[];
   onChange: (value: DropdownItemValue) => void;
   selectedValue?: DropdownItemValue;
+  isOutlined?: boolean;
   label?: string;
-}
+  minWidth?: number;
+  disableUnderline: boolean;
+};
 
-function Dropdown(props: IDropdownProps) {
-  const { classes, label, onChange, options, selectedValue } = props;
+Dropdown.defaultProps = {
+  disableUnderline: true
+} as Partial<Props>;
+
+function Dropdown(props: Props) {
+  const { label, onChange, options, selectedValue } = props;
+  const classes = useStyles(props);
 
   const handleChange: SelectInputProps['onChange'] = (event) => {
-    onChange(event.target.value as DropdownItemValue);
+    if (onChange) {
+      onChange(event.target.value as DropdownItemValue);
+    }
   };
 
   const renderOption = (option: IDropdownOption) => (
     <MenuItem key={option.value} value={option.value}>
-      <Typography color="inherit" variant="body1">
+      {/* <Typography color="inherit" variant="body2">
         {option.label}
-      </Typography>
+      </Typography> */}
+      {option.label}
     </MenuItem>
   );
 
   return (
-    <FormControl>
+    <FormControl className={classes.wrapper}>
       {label ? <InputLabel htmlFor={label}>{label}</InputLabel> : null}
       <Select
         value={selectedValue}
         onChange={handleChange}
-        disableUnderline={true}
+        disableUnderline={props.disableUnderline}
         inputProps={{
           id: label
         }}
@@ -56,4 +64,4 @@ function Dropdown(props: IDropdownProps) {
   );
 }
 
-export default withStyles(styles)(Dropdown);
+export default Dropdown;

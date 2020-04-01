@@ -1,37 +1,41 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom';
+import React, { memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { clientRoutes } from 'client-utils/routes';
 import { Dropdown } from 'components/dropdown';
 import { LANGUAGES, Locale } from 'global-utils';
 import { IDropdownOption } from 'types/generic';
-import { IAppState } from 'types';
 import { capitalize } from 'client-utils/methods';
 
 import { switchLanguage } from 'actions/locale';
-import { LanguageSelectorProps, IOwnProps, IDispatchProps } from './types';
 
-import { styles } from './styles';
+import { useStyles } from './styles';
 
-export function LanguageSelector(props: LanguageSelectorProps)  {
-  const { isAdmin, onSelectLanguage, classes, locale } = props;
+export type Props = {
+  locale: Locale;
+  isAdmin: boolean;
+};
 
+export function LanguageSelector(props: Props)  {
+  const { isAdmin, locale } = props;
+  const classes = useStyles(props);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const options = React.useMemo((): IDropdownOption[] =>
     LANGUAGES.map(locale => ({ label: capitalize(locale), value: locale })),
     []
   );
 
   const onChange = (locale: any) => {
-    onSelectLanguage(locale, isAdmin);
+    dispatch(switchLanguage(locale, isAdmin));
     if (!isAdmin) {
-      props.history.push(clientRoutes.landing.getLink(locale));
+      history.push(clientRoutes.landing.getLink(locale));
     }
   };
 
   return (
-    <div className={`${classes.wrapper} ${isAdmin ? classes.admin : ''}`}>
+    <div className={classes.wrapper}>
       <Dropdown
         options={options}
         selectedValue={locale}
@@ -41,14 +45,4 @@ export function LanguageSelector(props: LanguageSelectorProps)  {
   );
 }
 
-const mapDispatchToProps = (dispatch: any): IDispatchProps => ({
-  onSelectLanguage: (language: Locale, isAdmin: boolean) => dispatch(switchLanguage(language, isAdmin))
-});
-
-export default withStyles(styles)(
-  withRouter(
-    connect<{}, IDispatchProps, IOwnProps, IAppState>(undefined, mapDispatchToProps)(
-      LanguageSelector
-    )
-  )
-);
+export default memo(LanguageSelector);

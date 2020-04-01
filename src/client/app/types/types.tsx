@@ -1,5 +1,6 @@
 import { IType } from 'global-utils/typings';
-import { IGenericDataMap, IGenericState, IToggleEnabled } from './generic';
+import { IGenericDataMap, IGenericState } from './generic';
+import { selectType, receiveType, removeType, toggleTypeEnabledField } from 'actions/types';
 
 export type ITypesMap = IGenericDataMap<IType>;
 
@@ -14,23 +15,8 @@ export enum TypesActionTypes {
   TOGGLE_TYPE_ENABLED = 'TOGGLE_TYPE_ENABLED'
 }
 
-export interface ISelectType {
-  type: TypesActionTypes.SELECT_TYPE;
-  typeId: string;
-}
-
-export interface IReceiveType {
-  type: TypesActionTypes.RECEIVE_TYPE;
-  newType: IType;
-}
-
-export interface IRemoveType {
-  type: TypesActionTypes.REMOVE_TYPE;
-  typeId: string;
-}
-
 export type TypesActions =
-  | ISelectType
-  | IReceiveType
-  | IRemoveType
-  | IToggleEnabled;
+  | ReturnType<typeof selectType>
+  | ReturnType<typeof receiveType>
+  | ReturnType<typeof removeType>
+  | ReturnType<typeof toggleTypeEnabledField>;

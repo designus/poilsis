@@ -1,4 +1,4 @@
-import { IntlShape } from 'react-intl';
+import { IntlShape, defineMessages } from 'react-intl';
 import {
   DEFAULT_LANGUAGE,
   hasLocalizedFields,
@@ -7,11 +7,24 @@ import {
   IPhotoFormState,
   TranslatableField,
   Locale,
-  IntlSetting
+  IntlSetting,
+  Price
 } from 'global-utils';
+import { isNumber } from 'global-utils/methods';
 
 import * as errors from '../data-strings/validation';
 import { IsEnabled, TranslatableFields } from './typings';
+
+const messages = defineMessages({
+  invalidPrice: {
+    id: 'common.form_validation.wrong_price',
+    defaultMessage: 'Min price should be lower than Max price'
+  },
+  requiredPrice: {
+    id: 'common.form_validation.required_price',
+    defaultMessage: 'At least one price (min or max) is required'
+  }
+});
 
 const { images: { maxPhotos, maxPhotoSizeBytes, minPhotoWidth, minPhotoHeight } } = itemValidation;
 
@@ -56,6 +69,22 @@ export const isRequired = (fieldValue: string | TranslatableField, formState: an
   return errorMessage;
 };
 
+export const priceValidator = (price: Price, formState: any, formProps: IFormProps) => {
+  if (!price) return undefined;
+
+  if (!price.from && !price.to) {
+    return formProps.intl.formatMessage(messages.requiredPrice);
+  }
+
+  if (isNumber(price.from) && isNumber(price.to)) {
+    return price.from >= price.to
+      ? formProps.intl.formatMessage(messages.invalidPrice)
+      : undefined;
+  }
+
+  return undefined;
+};
+
 export const maxTextLength = (max: number) => (fieldValue: string | TranslatableField, formState: any, formProps: IFormProps) => {
   if (!fieldValue) return undefined;
 
@@ -95,7 +124,7 @@ export const maxCheckedCount = (max: number) => (fieldValue: any[], formState: a
   return undefined;
 };
 
-export const isNumber = (fieldValue: any, formState: any, formProps: IFormProps) => {
+export const isNumberValidator = (fieldValue: any, formState: any, formProps: IFormProps) => {
   if (fieldValue && isNaN(Number(fieldValue))) {
     return formProps.intl.formatMessage({ id: errors.WRONG_NUMBER });
   }

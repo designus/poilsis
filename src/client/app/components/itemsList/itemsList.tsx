@@ -1,55 +1,104 @@
 'use strict';
-import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { memo, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { List, WindowScroller, AutoSizer } from 'react-virtualized';
+import Typography from '@material-ui/core/Typography';
+import 'react-virtualized/styles.css';
 
-import { ICity, IItem, Locale } from 'global-utils/typings';
-import { IAppState } from 'types';
+import { config } from 'config';
+import { ICity, IItem } from 'global-utils/typings';
+import { SMALL_IMAGE_HEIGHT } from 'global-utils/constants';
+import { isClient, isServer } from 'global-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { getLocalizedText, isItemEnabled } from 'client-utils/methods';
+import { PriceDisplay } from 'components/price';
 
 import { getClientLocale } from 'selectors';
 
 import { ItemTypesList } from '../itemTypesList';
+import { useStyles } from './styles';
 
-interface IItemsListProps {
-  locale: Locale;
+type Props = {
   items: IItem[];
   selectedCity: ICity;
-}
+};
 
-export class ItemsList extends React.Component<IItemsListProps> {
+export const rowHeight = SMALL_IMAGE_HEIGHT + 20;
 
-  renderItem = (item: IItem) => {
-    return isItemEnabled(item, this.props.selectedCity, this.props.locale) && (
-      <NavLink
-        key={item.id}
-        activeStyle={{ color: 'red' }}
-        to={{
-          pathname: clientRoutes.item.getLink(this.props.locale, this.props.selectedCity.alias, item.alias)
-        }}
-      >
-        {getLocalizedText(item.name, this.props.locale)}<br />
-        <ItemTypesList locale={this.props.locale} typeIds={item.types} />
-        <hr />
-      </NavLink>
-    );
-  }
+const ItemsList: React.FunctionComponent<Props> = (props) => {
 
-  render() {
+  const locale = useSelector(getClientLocale);
+  const items = props.items || [];
+  const classes = useStyles(props);
+  const history = useHistory();
+  const [isMounted, setIsMounted] = useState(false);
 
-    const items = this.props.items || [];
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-    return (
-      <div className="itemsList">
-        {items.map(this.renderItem)}
+  const handleClick = (item: IItem) => () => {
+    history.push(clientRoutes.item.getLink(locale, props.selectedCity.alias, item.alias));
+  };
+
+  const getImageUrl = (item: IItem) => item.mainImage
+    ? `${config.host}/${item.mainImage}`
+    : `${config.host}/images/no-image.png`;
+
+  const renderRow = ({ index, style }: any) => {
+    const item = items[index];
+    return isItemEnabled(item, props.selectedCity, locale) ? (
+      <div className={classes.row} key={item.id} style={style} onClick={handleClick(item)}>
+        <div className={classes.item}>
+          <div className={classes.image}>
+            <img src={getImageUrl(item)} />
+          </div>
+          <div className={classes.content}>
+            <Typography variant="h3" className={classes.name}>
+              {getLocalizedText(item.name, locale)}
+            </Typography>
+            <ItemTypesList locale={locale} typeIds={item.types} />
+            <PriceDisplay
+              price={item.price}
+              currency={item.currency}
+            />
+          </div>
+        </div>
       </div>
-    );
-  }
-}
+    ) : null;
+  };
 
-const mapStateToProps = (state: IAppState) => ({
-  locale: getClientLocale(state)
-});
+  const renderClientList = () => (
+    <WindowScroller>
+      {({ height, isScrolling, onChildScroll, scrollTop }) => (
+        <AutoSizer disableHeight>
+          {({width}) => (
+            <List
+              autoHeight
+              height={height}
+              isScrolling={isScrolling}
+              onScroll={onChildScroll}
+              rowCount={items.length}
+              rowHeight={rowHeight}
+              rowRenderer={renderRow}
+              scrollTop={scrollTop}
+              width={width}
+            />
+          )}
+        </AutoSizer>
+      )}
+    </WindowScroller>
+  );
 
-export default connect(mapStateToProps)(ItemsList);
+  const renderServerList = () => items.map((item, index) => renderRow({ index, style: {} }));
+
+  return (
+    <div className={classes.wrapper}>
+      {isServer() && renderServerList()}
+      {isClient() && isMounted ? renderClientList() : null}
+    </div>
+  );
+};
+
+export default memo(ItemsList);

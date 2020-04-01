@@ -3,9 +3,10 @@ import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
+import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
 import { DataTypes, IUser, IItem, Locale, IAccessTokenClaims, IsEnabled } from 'global-utils/typings';
-import { TranslatableField, hasLocalizedFields, ICity } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails } from 'types';
+import { TranslatableField, hasLocalizedFields, ICity, Price } from 'global-utils';
+import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails, CitiesFilterState } from 'types';
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
@@ -178,3 +179,12 @@ export const getUserDetails = (accessTokenClaims: IAccessTokenClaims): UserDetai
     role: userRole
   };
 };
+
+export const getInitialCitiesFilters = (cities: ICity[]): CitiesFilterState =>
+  cities.reduce((acc: CitiesFilterState, city) => {
+    acc[city.id] = { ...DEFAULT_CITY_FITLERS };
+    return acc;
+  }, {}
+);
+
+export const getPriceQueryParam = (price: Price) => Object.values(price).map(Number).join('-');

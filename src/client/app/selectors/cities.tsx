@@ -1,13 +1,16 @@
 import { createSelector } from 'reselect';
-import { ICity, IItem } from 'global-utils/typings';
-import { getItemsMap, getClientLocale, isLoggedIn } from 'selectors';
-import { IAppState, IItemsMap, ICitiesMap } from 'types';
+import { ICity, IItem, Price } from 'global-utils/typings';
+import { isNumber } from 'global-utils/methods';
+import { getItemsMap, getClientLocale } from 'selectors';
+import { IAppState, IItemsMap, CitiesMap, ICityFilters } from 'types';
+import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
+import { getCityFilters } from './filters';
 
-export const getCitiesMap = (state: IAppState): ICitiesMap => state.cities.dataMap;
+export const getCitiesMap = (state: IAppState): CitiesMap => state.cities.dataMap;
 
-export const getAllCities = (state: IAppState) => Object.values(getCitiesMap(state));
+export const getAllCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));
 
-export const getEnabledCities = (state: IAppState) => {
+export const getEnabledCities = (state: IAppState): ICity[] => {
   const allCities = getAllCities(state);
   const locale = getClientLocale(state);
   return allCities.filter(city => {
@@ -41,11 +44,33 @@ export const shouldLoadCityItems = (state: IAppState, alias: string) => {
   return false;
 };
 
-export const getCityItems = createSelector<IAppState, string, ICity, IItemsMap, IItem[]>(
-  [getCityByAlias, getItemsMap],
-  (selectedCity, itemsMap) => {
-    if (selectedCity) {
-      return Object.values(itemsMap).filter(item => item.cityId === selectedCity.id);
+export const getSelectedCityId = (state: IAppState, alias: string) => getCityByAlias(state, alias).id;
+
+const filterByPrice = (itemPrice: Price, priceFilter: Price) => {
+  const filterFrom = priceFilter.from || 0;
+  const filterTo = priceFilter.to || Number.MAX_SAFE_INTEGER;
+
+  if (isNumber(itemPrice.from) && isNumber(itemPrice.to)) {
+    return itemPrice.from >= filterFrom && itemPrice.to <= filterTo;
+  } else if (isNumber(itemPrice.from) && !isNumber(itemPrice.to)) {
+    return itemPrice.from >= filterFrom && itemPrice.from <= filterTo;
+  } else if (!isNumber(itemPrice.from) && isNumber(itemPrice.to)) {
+    return itemPrice.to >= filterFrom && itemPrice.to <= filterTo;
+  }
+
+  return true;
+};
+
+export const getCityItems = createSelector<IAppState, string, string, IItemsMap, ICityFilters | undefined,  IItem[]>(
+  [getSelectedCityId, getItemsMap, getCityFilters],
+  (selectedCityId, itemsMap, cityFilters) => {
+    if (selectedCityId && cityFilters) {
+      const { type, price } = cityFilters;
+      return Object.values(itemsMap).filter(item => {
+        const filterByCity = item.cityId === selectedCityId;
+        const filterByType = type !== DEFAULT_CITY_FITLERS.type ? item.types.includes(type) : true;
+        return filterByCity && filterByType && filterByPrice(item.price, price);
+      });
     }
     return [];
   }

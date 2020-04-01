@@ -20,7 +20,8 @@ class SaveModalComponent extends React.PureComponent<ISaveModalProps, any> {
         open={isModalOpen}
         onClose={onCancel}
         classes={{
-          paper: classes.paper
+          paper: classes.paper,
+          root: classes.root
         }}
       >
         <Header onClose={onCancel}>
@@ -32,6 +33,7 @@ class SaveModalComponent extends React.PureComponent<ISaveModalProps, any> {
         <Footer
           onClose={onCancel}
           onSubmit={onConfirm}
+          submitLabelId="common.proceed"
         />
       </Dialog>
     );

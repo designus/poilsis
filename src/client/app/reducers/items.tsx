@@ -52,14 +52,14 @@ export const items: Reducer<IItemsState, ActionTypes> = (state = getInitialItems
         }
       };
     case ItemsActionTypes.TOGGLE_ITEM_ENABLED:
-      return typeof state.dataMap[action.id].isEnabled !== 'boolean' ? {
+      return typeof state.dataMap[action.itemId].isEnabled !== 'boolean' ? {
         ...state,
         dataMap: {
           ...state.dataMap,
-          [action.id]: {
-            ...state.dataMap[action.id],
+          [action.itemId]: {
+            ...state.dataMap[action.itemId],
             isEnabled: {
-              ...state.dataMap[action.id].isEnabled as IsEnabled,
+              ...state.dataMap[action.itemId].isEnabled as IsEnabled,
               [action.locale]: action.isEnabled
             }
           }

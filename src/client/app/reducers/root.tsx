@@ -29,6 +29,7 @@ import { currentUser } from './currentUser';
 import { users } from './users';
 import { locale } from './locale';
 import { home, getInitialHomeState } from './home';
+import { filters } from './filters';
 
 type ActionTypes = ItemsActions
   | InitialDataActions
@@ -54,6 +55,7 @@ const appReducer = combineReducers<IAppState>({
   currentUser,
   locale,
   users,
+  filters,
   form: formReducer,
   loadingBar: loadingBarReducer
 });

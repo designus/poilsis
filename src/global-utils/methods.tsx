@@ -61,3 +61,7 @@ export const formatValue = (value: string): string =>
 export const isServer = () => !(typeof window !== 'undefined' && window.document);
 
 export const isClient = () => !isServer();
+
+export const isNumber = (val: number | null): val is number => typeof val === 'number';
+
+export const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
