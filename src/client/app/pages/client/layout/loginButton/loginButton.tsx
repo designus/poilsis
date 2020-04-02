@@ -1,77 +1,42 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, memo } from 'react';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Fab from '@material-ui/core/Fab';
-import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { isLoggedIn } from 'selectors';
-import { ThunkDispatch, IAppState } from 'types';
-import { DropdownMenu } from 'components/dropdownMenu';
-import { login } from 'actions/auth';
-
-import { styles } from './styles';
-
-interface IOwnProps extends WithStyles<typeof styles> {}
-
-interface IDispatchProps {
-  login: (credentials: any) => any;
-}
-
-interface IStateProps {
-  isLoggedIn: boolean;
-}
-
-type Props = IOwnProps & IStateProps & IDispatchProps;
+import { isLoggedIn as isAuthenticated } from 'selectors';
+import { AuthenticationModal } from '../authenticationModal';
+import { useStyles } from './styles';
 
 const translation = {
   id: 'common.login',
   defaultMessage: 'Login'
 };
 
-const LoginButton: React.FunctionComponent<Props> = props => {
-  const { login, isLoggedIn } = props;
+function LoginButton(props: {}) {
+  const classes = useStyles();
+  const isLoggedIn = useSelector(isAuthenticated);
   const intl = useIntl();
-  const signIn = (credentials: any) => () => {
-    login(credentials);
-  };
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const getButton = () => (
-    <Fab
-      classes={{
-        root: props.classes.button
-      }}
-      color="default"
-      variant="extended"
-      size="small"
-      aria-label={intl.formatMessage(translation)}
-    >
-      <FontAwesomeIcon icon={['far', 'user']} />&nbsp;
-      <FormattedMessage {...translation} />
-    </Fab>
-  );
+  const toggleModal = (isOpen: boolean) => () => setModalOpen(isOpen);
 
   return !isLoggedIn ? (
-    <DropdownMenu
-      className={props.classes.dropdownMenu}
-      parentItem={getButton()}
-      id={`menu-login`}
-    >
-      <MenuItem onClick={signIn({username: 'admin', password: 'admin'})}>Admin</MenuItem>
-      <MenuItem onClick={signIn({username: 'tomas', password: 'tomas'})}>User</MenuItem>
-    </DropdownMenu>
+    <React.Fragment>
+      <Fab
+        classes={{ root: classes.button }}
+        color="default"
+        variant="extended"
+        size="small"
+        aria-label={intl.formatMessage(translation)}
+        onClick={toggleModal(true)}
+      >
+        <FontAwesomeIcon icon={['far', 'user']} />&nbsp;
+        <FormattedMessage {...translation} />
+      </Fab>
+      <AuthenticationModal isModalOpen={modalOpen} onClose={toggleModal(false)} />
+    </React.Fragment>
   ) : null;
-};
+}
 
-const mapStateToProps = (state: IAppState): IStateProps => ({
-  isLoggedIn: isLoggedIn(state)
-});
-
-const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
-  login: (credentials) => dispatch(login(credentials))
-});
-
-export default withStyles(styles)(
-  connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(mapStateToProps, mapDispatchToProps)(LoginButton)
-);
+export default memo(LoginButton);
