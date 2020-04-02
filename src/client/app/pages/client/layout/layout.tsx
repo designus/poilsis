@@ -15,7 +15,6 @@ import { LanguageSelector } from 'components/languageSelector';
 import { NotFound } from 'components/notFound';
 import { Drawer } from 'components/drawer';
 import { Loader } from 'components/loader';
-import { LoginButton } from 'components/loginButton';
 import { ConnectedIntlProvider } from 'components/connectedIntlProvider';
 import { KeepMeLoggedModal } from 'components/modals/keepMeLoggedModal';
 import { ClientTopMenu as TopMenu } from 'components/menu/clientTopMenu';
@@ -36,6 +35,7 @@ import logoUrl from 'static/images/logo.gif';
 
 import { IAppState, ThunkDispatch } from 'types';
 import { Props, StateProps, OwnProps, DispatchProps } from './types';
+import { LoginButton } from './loginButton';
 
 import { styles } from './styles';
 
