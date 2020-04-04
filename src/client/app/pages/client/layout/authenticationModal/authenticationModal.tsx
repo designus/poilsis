@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { Header, Content, Footer } from 'components/modals/shared';
+import { SimpleTabs, TabOption } from 'components/tabs';
 import { useStyles } from './styles';
 
 type Props = {
@@ -15,12 +16,22 @@ export default function AuthenticationModal(props: Props) {
   const { onClose, isModalOpen } = props;
   const classes = useStyles(props);
 
-  const handleSubmit = () => ({});
+  const tabOptions: TabOption[] = [
+    {
+      label: 'Login',
+      content: 'Login form'
+    },
+    {
+      label: 'Register',
+      content: 'Registration form'
+    }
+  ];
 
   return (
     <Dialog
       open={isModalOpen}
       onClose={onClose}
+      classes={{ paper: classes.wrapper }}
     >
       <Header onClose={onClose}>
         Sign in
@@ -29,12 +40,8 @@ export default function AuthenticationModal(props: Props) {
         showLoadingOverlay={true}
         loaderId={DIALOG_LOADER_ID}
       >
-        {/* <FormattedMessage id="admin.delete_modal.description" /> */}
+        <SimpleTabs options={tabOptions} />
       </Content>
-      <Footer
-        onClose={onClose}
-        onSubmit={handleSubmit}
-      />
     </Dialog>
   );
 }
