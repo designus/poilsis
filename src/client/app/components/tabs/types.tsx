@@ -6,6 +6,7 @@ export type TabOption = {
 export type TabProps = {
   options: TabOption[];
   value: number;
+  onChange: (value: number) => void;
 };
 
-export type DefaultProps = Pick<TabProps, 'value'>;
+export type DefaultProps = Pick<TabProps, 'value' | 'onChange'>;

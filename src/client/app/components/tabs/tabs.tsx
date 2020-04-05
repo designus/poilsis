@@ -12,6 +12,7 @@ export function SimpleTabs(props: TabProps) {
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+    props.onChange(newValue);
   };
 
   const a11yProps = (index: number) => ({
@@ -46,6 +47,7 @@ export function SimpleTabs(props: TabProps) {
           value={value}
           indicatorColor="primary"
           textColor="primary"
+          variant="fullWidth"
           onChange={handleChange}
           aria-label="Tabs"
         >
@@ -58,5 +60,6 @@ export function SimpleTabs(props: TabProps) {
 }
 
 SimpleTabs.defaultProps = {
-  value: 0
+  value: 0,
+  onChange: (value: number) => value
 } as DefaultProps;

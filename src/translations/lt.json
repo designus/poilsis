@@ -8,6 +8,8 @@
   "client.filters.all_types": "Visi tipai",
   "client.filters.select_type": "Pasirinkite tipą",
   "client.filters.select_price": "Pasirinkite kainą",
+  "client.sign_in": "Prisijungti",
+  "client.sign_up": "Registruotis",
   "common.submit": "Siųsti",
   "common.save": "Išsaugoti",
   "common.cancel": "Atšaukti",

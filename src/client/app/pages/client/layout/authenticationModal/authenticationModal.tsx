@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import { FormattedMessage } from 'react-intl';
+import { useIntl, defineMessages } from 'react-intl';
 
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
-import { Header, Content, Footer } from 'components/modals/shared';
+import { Header, Content } from 'components/modals/shared';
 import { SimpleTabs, TabOption } from 'components/tabs';
 import { useStyles } from './styles';
 
@@ -12,20 +12,35 @@ type Props = {
   onClose: () => void;
 };
 
+const messages = defineMessages({
+  sign_in: {
+    id: 'client.sign_in',
+    defaultMessage: 'Sign in'
+  },
+  sign_up: {
+    id: 'client.sign_up',
+    defaultMessage: 'Sign up'
+  }
+});
+
 export default function AuthenticationModal(props: Props) {
   const { onClose, isModalOpen } = props;
   const classes = useStyles(props);
+  const intl = useIntl();
+  const [activeTab, setActiveTab] = useState(0);
 
   const tabOptions: TabOption[] = [
     {
-      label: 'Login',
+      label: intl.formatMessage(messages.sign_in),
       content: 'Login form'
     },
     {
-      label: 'Register',
+      label: intl.formatMessage(messages.sign_up),
       content: 'Registration form'
     }
   ];
+
+  const handleTabChange = (value: number) => setActiveTab(value);
 
   return (
     <Dialog
@@ -34,13 +49,16 @@ export default function AuthenticationModal(props: Props) {
       classes={{ paper: classes.wrapper }}
     >
       <Header onClose={onClose}>
-        Sign in
+        {intl.formatMessage(activeTab === 0 ? messages.sign_in : messages.sign_up)}
       </Header>
       <Content
         showLoadingOverlay={true}
         loaderId={DIALOG_LOADER_ID}
       >
-        <SimpleTabs options={tabOptions} />
+        <SimpleTabs
+          options={tabOptions}
+          onChange={handleTabChange}
+        />
       </Content>
     </Dialog>
   );

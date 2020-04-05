@@ -8,6 +8,8 @@
   "client.filters.all_types": "[RU] All types",
   "client.filters.select_type": "[RU] Select type",
   "client.filters.select_price": "[RU] Select price",
+  "client.sign_in": "[RU] Sign in",
+  "client.sign_up": "[RU] Sign up",
   "common.submit": "[RU] Send",
   "common.save": "[RU] Save",
   "common.cancel": "[RU] Cancel",
