@@ -1,12 +1,22 @@
-import * as React from 'react';
+import React from 'react';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
+import { useDispatch as dispatch } from 'react-redux';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
-import { DataTypes, IUser, IItem, Locale, IAccessTokenClaims, IsEnabled } from 'global-utils/typings';
-import { TranslatableField, hasLocalizedFields, ICity, Price } from 'global-utils';
-import { IGenericState, IGenericDataMap, IDropdownOption, IAliasMap, IAppState, UserDetails, CitiesFilterState } from 'types';
+import { DataTypes, IUser, IItem, Locale, IAccessTokenClaims, ICity, Price, TranslatableField } from 'global-utils/typings';
+import { hasLocalizedFields } from 'global-utils/methods';
+import {
+  IGenericState,
+  IGenericDataMap,
+  IDropdownOption,
+  IAliasMap,
+  IAppState,
+  UserDetails,
+  CitiesFilterState,
+  ThunkDispatch
+} from 'types';
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
@@ -188,3 +198,5 @@ export const getInitialCitiesFilters = (cities: ICity[]): CitiesFilterState =>
 );
 
 export const getPriceQueryParam = (price: Price) => Object.values(price).map(Number).join('-');
+
+export const useDispatch = () => dispatch<ThunkDispatch>();

@@ -3,15 +3,14 @@ import Dialog from '@material-ui/core/Dialog';
 import { useIntl, defineMessages } from 'react-intl';
 
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
+import { useDispatch } from 'client-utils/methods';
+import { Credentials } from 'types/auth';
+import { login } from 'actions/auth';
 import { Header, Content } from 'components/modals/shared';
 import { SimpleTabs, TabOption } from 'components/tabs';
 import { SignInForm } from './singIn';
 import { useStyles } from './styles';
-
-type Props = {
-  isModalOpen: boolean;
-  onClose: () => void;
-};
+import { Props } from './types';
 
 const messages = defineMessages({
   sign_in: {
@@ -29,9 +28,10 @@ export default function AuthenticationModal(props: Props) {
   const classes = useStyles(props);
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState(0);
+  const dispatch = useDispatch();
 
-  const handleLogin = (credentials: any) => {
-    console.log('Credentials', credentials);
+  const handleLogin = (credentials: Credentials) => {
+    return dispatch(login(credentials));
   };
 
   const renderSignIn = () => {

@@ -2,10 +2,10 @@ import React from 'react';
 import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { Button } from 'components/button';
 import { TextInput } from 'components/formFields/textInput';
-
+import { Credentials } from 'types/auth';
 export const SIGN_IN_FORM = 'SignInForm';
 
-const Form = (props: InjectedFormProps)  => {
+const Form = (props: InjectedFormProps<Credentials>)  => {
   const { handleSubmit, error, submitting, pristine } = props;
 
   return (
@@ -28,6 +28,6 @@ const Form = (props: InjectedFormProps)  => {
   );
 };
 
-export default reduxForm({
+export default reduxForm<Credentials>({
   form: SIGN_IN_FORM
 })(Form);

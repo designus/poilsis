@@ -117,7 +117,22 @@ function TextInput(props: ITextInputProps) {
         key={languageOption}
       >
         <Tooltip open={hasError} title={tooltipText} placement="right-end">
-          <FormControl
+          <TextField
+            value={value}
+            multiline={multiline}
+            rows={4}
+            id={`${label}-${languageOption}`}
+            label={label}
+            className={`${classes.formControl} ${multiline ? classes.multiline : ''}`}
+            error={hasError}
+            onBlur={handleOnBlur(languageOption)}
+            onChange={handleOnChange(languageOption)}
+            inputProps={{
+              endAdornment: renderLoader()
+            }}
+          />
+        </Tooltip>
+         {/* <FormControl
             className={`${classes.formControl} ${multiline ? classes.multiline : ''}`}
             error={hasError}
           >
@@ -137,8 +152,7 @@ function TextInput(props: ITextInputProps) {
               }}
               endAdornment={renderLoader()}
             />
-          </FormControl>
-        </Tooltip>
+          </FormControl> */}
       </div>
     );
   };

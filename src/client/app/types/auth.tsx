@@ -6,6 +6,11 @@ export interface IAuthState {
   showKeepMeLoggedModal: boolean;
 }
 
+export type Credentials = {
+  username: string;
+  password: string;
+};
+
 export enum AuthActionTypes {
   LOGIN_SUCCESS = 'LOGIN_SUCCESS',
   LOGOUT_SUCCESS = 'LOGOUT_SUCCESS',
