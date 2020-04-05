@@ -8407,22 +8407,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./DialogContentText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js",
-      "name": "../../node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
-  "@material-ui/core/DialogContentText": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/DialogContentText/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/DialogContentText/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    }
-  ],
   "./DialogTitle": [
     {
       "id": "../../node_modules/@material-ui/core/esm/DialogTitle/DialogTitle.js",

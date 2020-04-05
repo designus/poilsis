@@ -46,7 +46,6 @@ export function SimpleTabs(props: TabProps) {
         value={value}
         indicatorColor="primary"
         textColor="primary"
-        variant="fullWidth"
         onChange={handleChange}
         aria-label="Tabs"
         classes={{ root: classes.tabs }}
