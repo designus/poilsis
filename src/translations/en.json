@@ -8,6 +8,8 @@
   "client.filters.all_types": "All types",
   "client.filters.select_type": "Select type",
   "client.filters.select_price": "Select price",
+  "client.sign_in": "Sign in",
+  "client.sign_up": "Sign up",
   "common.submit": "Send",
   "common.save": "Save",
   "common.cancel": "Cancel",

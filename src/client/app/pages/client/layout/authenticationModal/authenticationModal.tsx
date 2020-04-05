@@ -5,6 +5,7 @@ import { useIntl, defineMessages } from 'react-intl';
 import { DIALOG_LOADER_ID } from 'client-utils/constants';
 import { Header, Content } from 'components/modals/shared';
 import { SimpleTabs, TabOption } from 'components/tabs';
+import { SignInForm } from './singIn';
 import { useStyles } from './styles';
 
 type Props = {
@@ -29,10 +30,20 @@ export default function AuthenticationModal(props: Props) {
   const intl = useIntl();
   const [activeTab, setActiveTab] = useState(0);
 
+  const handleLogin = (credentials: any) => {
+    console.log('Credentials', credentials);
+  };
+
+  const renderSignIn = () => {
+    return (
+      <SignInForm onSubmit={handleLogin} />
+    );
+  };
+
   const tabOptions: TabOption[] = [
     {
       label: intl.formatMessage(messages.sign_in),
-      content: 'Login form'
+      content: renderSignIn()
     },
     {
       label: intl.formatMessage(messages.sign_up),

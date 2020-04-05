@@ -11,9 +11,7 @@ type Props = WithStyles<typeof styles> & {
 
 const Content: React.FunctionComponent<Props> = (props) => (
   <DialogContentBox className={props.classes.content}>
-    <DialogContentText>
-      {props.error ? props.error : props.children}
-    </DialogContentText>
+    {props.error ? (<DialogContentText>{props.error}</DialogContentText>) : props.children}
   </DialogContentBox>
 );
 

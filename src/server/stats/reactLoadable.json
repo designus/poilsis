@@ -99,12 +99,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
-      "id": "./app/components/formFields/textInput/styles.tsx",
-      "name": "./app/components/formFields/textInput/styles.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
       "id": "./app/components/itemActions/styles.tsx",
       "name": "./app/components/itemActions/styles.tsx",
       "file": "adminLayoutPage.js",
@@ -155,6 +149,12 @@
     {
       "id": "./app/components/dropdownMenu/styles.tsx",
       "name": "./app/components/dropdownMenu/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "./app/components/formFields/textInput/styles.tsx",
+      "name": "./app/components/formFields/textInput/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
@@ -251,6 +251,12 @@
     {
       "id": "./app/components/menu/clientTopMenu/horizontalMenu/styles.tsx",
       "name": "./app/components/menu/clientTopMenu/horizontalMenu/styles.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    },
+    {
+      "id": "./app/components/tabs/styles.tsx",
+      "name": "./app/components/tabs/styles.tsx",
       "file": "clientLayout.js",
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     },
@@ -367,20 +373,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "client-utils/customHooks": [
-    {
-      "id": "./app/client-utils/customHooks.tsx",
-      "name": "./app/client-utils/customHooks.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    },
-    {
-      "id": "./app/client-utils/customHooks.tsx",
-      "name": "./app/client-utils/customHooks.tsx",
-      "file": "clientCity.js",
-      "publicPath": "http://localhost:8080/public/clientCity.js"
-    }
-  ],
   "./adminFormActions": [
     {
       "id": "./app/components/adminFormActions/adminFormActions.tsx",
@@ -473,22 +465,6 @@
     {
       "id": "./app/components/formFields/switch/switch.tsx",
       "name": "./app/components/formFields/switch/switch.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "components/formFields/textInput": [
-    {
-      "id": "./app/components/formFields/textInput/index.tsx",
-      "name": "./app/components/formFields/textInput/index.tsx",
-      "file": "adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
-    }
-  ],
-  "./textInput": [
-    {
-      "id": "./app/components/formFields/textInput/textInput.tsx",
-      "name": "./app/components/formFields/textInput/textInput.tsx",
       "file": "adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
@@ -965,6 +941,14 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
+  "client-utils/customHooks": [
+    {
+      "id": "./app/client-utils/customHooks.tsx",
+      "name": "./app/client-utils/customHooks.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./connectedIntlProvider": [
     {
       "id": "./app/components/connectedIntlProvider/connectedIntlProvider.tsx",
@@ -1025,6 +1009,22 @@
     {
       "id": "./app/components/dropdownMenu/index.tsx",
       "name": "./app/components/dropdownMenu/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "components/formFields/textInput": [
+    {
+      "id": "./app/components/formFields/textInput/index.tsx",
+      "name": "./app/components/formFields/textInput/index.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./textInput": [
+    {
+      "id": "./app/components/formFields/textInput/textInput.tsx",
+      "name": "./app/components/formFields/textInput/textInput.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
@@ -1601,6 +1601,22 @@
       "publicPath": "http://localhost:8080/public/clientLayout.js"
     }
   ],
+  "./singIn": [
+    {
+      "id": "./app/pages/client/layout/authenticationModal/singIn/index.tsx",
+      "name": "./app/pages/client/layout/authenticationModal/singIn/index.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
+  "./signIn": [
+    {
+      "id": "./app/pages/client/layout/authenticationModal/singIn/signIn.tsx",
+      "name": "./app/pages/client/layout/authenticationModal/singIn/signIn.tsx",
+      "file": "clientLayout.js",
+      "publicPath": "http://localhost:8080/public/clientLayout.js"
+    }
+  ],
   "./loginButton": [
     {
       "id": "./app/pages/client/layout/loginButton/index.tsx",
@@ -1915,12 +1931,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "@babel/runtime/helpers/esm/extends": [
@@ -1989,12 +1999,6 @@
       "name": "../../node_modules/react-transition-group/node_modules/@babel/runtime/helpers/esm/extends.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/extends.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/extends.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "@babel/runtime/helpers/esm/inheritsLoose": [
@@ -2117,12 +2121,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/iterableToArray.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/iterableToArray.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/iterableToArray.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "./nonIterableSpread": [
@@ -2143,12 +2141,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "@babel/runtime/helpers/objectWithoutPropertiesLoose": [
@@ -2461,12 +2453,6 @@
       "name": "../../node_modules/@material-ui/core/esm/styles/shadows.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/esm/shadows.js",
-      "name": "../../node_modules/@material-ui/system/esm/shadows.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "./shape": [
@@ -2585,12 +2571,6 @@
       "name": "../../node_modules/@material-ui/utils/node_modules/@babel/runtime/helpers/esm/defineProperty.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/defineProperty.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/defineProperty.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "@babel/runtime/helpers/esm/objectWithoutProperties": [
@@ -2891,12 +2871,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/typeof.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/typeof.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/typeof.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "jss": [
@@ -2975,14 +2949,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/redux-form/node_modules/prop-types/checkPropTypes.js",
-      "name": "../../node_modules/redux-form/node_modules/prop-types/checkPropTypes.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    },
-    {
       "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/checkPropTypes.js",
       "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/checkPropTypes.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "../../node_modules/redux-form/node_modules/prop-types/checkPropTypes.js",
+      "name": "../../node_modules/redux-form/node_modules/prop-types/checkPropTypes.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
@@ -3003,12 +2977,6 @@
       "name": "../../node_modules/react-virtualized/node_modules/prop-types/checkPropTypes.js",
       "file": "vendors~clientCity.js",
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/prop-types/checkPropTypes.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/prop-types/checkPropTypes.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/checkPropTypes.js",
@@ -3061,14 +3029,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/redux-form/node_modules/prop-types/factoryWithTypeCheckers.js",
-      "name": "../../node_modules/redux-form/node_modules/prop-types/factoryWithTypeCheckers.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    },
-    {
       "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/factoryWithTypeCheckers.js",
       "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "../../node_modules/redux-form/node_modules/prop-types/factoryWithTypeCheckers.js",
+      "name": "../../node_modules/redux-form/node_modules/prop-types/factoryWithTypeCheckers.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
@@ -3089,12 +3057,6 @@
       "name": "../../node_modules/react-virtualized/node_modules/prop-types/factoryWithTypeCheckers.js",
       "file": "vendors~clientCity.js",
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/prop-types/factoryWithTypeCheckers.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/prop-types/factoryWithTypeCheckers.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/factoryWithTypeCheckers.js",
@@ -3153,14 +3115,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/redux-form/node_modules/prop-types/index.js",
-      "name": "../../node_modules/redux-form/node_modules/prop-types/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    },
-    {
       "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/index.js",
       "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "../../node_modules/redux-form/node_modules/prop-types/index.js",
+      "name": "../../node_modules/redux-form/node_modules/prop-types/index.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
@@ -3181,12 +3143,6 @@
       "name": "../../node_modules/react-virtualized/node_modules/prop-types/index.js",
       "file": "vendors~clientCity.js",
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/prop-types/index.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/prop-types/index.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/index.js",
@@ -3257,14 +3213,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/redux-form/node_modules/prop-types/lib/ReactPropTypesSecret.js",
-      "name": "../../node_modules/redux-form/node_modules/prop-types/lib/ReactPropTypesSecret.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    },
-    {
       "id": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "name": "../../node_modules/@fortawesome/react-fontawesome/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "../../node_modules/redux-form/node_modules/prop-types/lib/ReactPropTypesSecret.js",
+      "name": "../../node_modules/redux-form/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
@@ -3285,12 +3241,6 @@
       "name": "../../node_modules/react-virtualized/node_modules/prop-types/lib/ReactPropTypesSecret.js",
       "file": "vendors~clientCity.js",
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/prop-types/lib/ReactPropTypesSecret.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/prop-types/lib/ReactPropTypesSecret.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/prop-types/lib/ReactPropTypesSecret.js",
@@ -3713,14 +3663,14 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "../../node_modules/redux-form/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
-      "name": "../../node_modules/redux-form/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    },
-    {
       "id": "../../node_modules/@material-ui/core/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
       "name": "../../node_modules/@material-ui/core/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    },
+    {
+      "id": "../../node_modules/redux-form/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
+      "name": "../../node_modules/redux-form/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -3943,12 +3893,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/toConsumableArray.js",
       "file": "vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/toConsumableArray.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/toConsumableArray.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "css-vendor": [
@@ -4815,8 +4759,8 @@
     {
       "id": "../../node_modules/@babel/runtime/helpers/inheritsLoose.js",
       "name": "../../node_modules/@babel/runtime/helpers/inheritsLoose.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
   "object-assign": [
@@ -5051,8 +4995,8 @@
     {
       "id": "../../node_modules/redux-form/node_modules/react-is/cjs/react-is.development.js",
       "name": "../../node_modules/redux-form/node_modules/react-is/cjs/react-is.development.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/react-is/cjs/react-is.development.js",
@@ -5077,8 +5021,8 @@
     {
       "id": "../../node_modules/redux-form/node_modules/react-is/index.js",
       "name": "../../node_modules/redux-form/node_modules/react-is/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     },
     {
       "id": "../../node_modules/react-dropzone/node_modules/react-is/index.js",
@@ -5289,8 +5233,8 @@
     {
       "id": "../../node_modules/lodash/isPlainObject.js",
       "name": "../../node_modules/lodash/isPlainObject.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
   "./utils/reactBatchedUpdates": [
@@ -6329,12 +6273,6 @@
       "name": "./app/components/imagePreview/style.tsx",
       "file": "photosPage.js",
       "publicPath": "http://localhost:8080/public/photosPage.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/esm/style.js",
-      "name": "../../node_modules/@material-ui/system/esm/style.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "./dropzoneInput": [
@@ -6399,14 +6337,6 @@
       "publicPath": "http://localhost:8080/public/photosPage.js"
     }
   ],
-  "@babel/runtime/helpers/createClass": [
-    {
-      "id": "../../node_modules/@babel/runtime/helpers/createClass.js",
-      "name": "../../node_modules/@babel/runtime/helpers/createClass.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "@material-ui/core/colors/blueGrey": [
     {
       "id": "../../node_modules/@material-ui/core/colors/blueGrey.js",
@@ -6459,38 +6389,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/FormGroup/index.js",
       "name": "../../node_modules/@material-ui/core/esm/FormGroup/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./InputAdornment": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputAdornment/InputAdornment.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputAdornment/InputAdornment.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/InputAdornment": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputAdornment/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputAdornment/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./Popper": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Popper/Popper.js",
-      "name": "../../node_modules/@material-ui/core/esm/Popper/Popper.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "../Popper": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Popper/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Popper/index.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -6675,22 +6573,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./Tooltip": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Tooltip/Tooltip.js",
-      "name": "../../node_modules/@material-ui/core/esm/Tooltip/Tooltip.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "@material-ui/core/Tooltip": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Tooltip/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Tooltip/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "../internal/SwitchBase": [
     {
       "id": "../../node_modules/@material-ui/core/esm/internal/SwitchBase.js",
@@ -6811,606 +6693,6 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "es6-error": [
-    {
-      "id": "../../node_modules/es6-error/es6/index.js",
-      "name": "../../node_modules/es6-error/es6/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "is-promise": [
-    {
-      "id": "../../node_modules/is-promise/index.js",
-      "name": "../../node_modules/is-promise/index.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_apply": [
-    {
-      "id": "../../node_modules/lodash/_apply.js",
-      "name": "../../node_modules/lodash/_apply.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_assignMergeValue": [
-    {
-      "id": "../../node_modules/lodash/_assignMergeValue.js",
-      "name": "../../node_modules/lodash/_assignMergeValue.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_assignValue": [
-    {
-      "id": "../../node_modules/lodash/_assignValue.js",
-      "name": "../../node_modules/lodash/_assignValue.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseAssignValue": [
-    {
-      "id": "../../node_modules/lodash/_baseAssignValue.js",
-      "name": "../../node_modules/lodash/_baseAssignValue.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseCreate": [
-    {
-      "id": "../../node_modules/lodash/_baseCreate.js",
-      "name": "../../node_modules/lodash/_baseCreate.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseFor": [
-    {
-      "id": "../../node_modules/lodash/_baseFor.js",
-      "name": "../../node_modules/lodash/_baseFor.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseForOwn": [
-    {
-      "id": "../../node_modules/lodash/_baseForOwn.js",
-      "name": "../../node_modules/lodash/_baseForOwn.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseGet": [
-    {
-      "id": "../../node_modules/lodash/_baseGet.js",
-      "name": "../../node_modules/lodash/_baseGet.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseHasIn": [
-    {
-      "id": "../../node_modules/lodash/_baseHasIn.js",
-      "name": "../../node_modules/lodash/_baseHasIn.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseIsMatch": [
-    {
-      "id": "../../node_modules/lodash/_baseIsMatch.js",
-      "name": "../../node_modules/lodash/_baseIsMatch.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseIteratee": [
-    {
-      "id": "../../node_modules/lodash/_baseIteratee.js",
-      "name": "../../node_modules/lodash/_baseIteratee.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseKeysIn": [
-    {
-      "id": "../../node_modules/lodash/_baseKeysIn.js",
-      "name": "../../node_modules/lodash/_baseKeysIn.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseMatches": [
-    {
-      "id": "../../node_modules/lodash/_baseMatches.js",
-      "name": "../../node_modules/lodash/_baseMatches.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseMatchesProperty": [
-    {
-      "id": "../../node_modules/lodash/_baseMatchesProperty.js",
-      "name": "../../node_modules/lodash/_baseMatchesProperty.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseMerge": [
-    {
-      "id": "../../node_modules/lodash/_baseMerge.js",
-      "name": "../../node_modules/lodash/_baseMerge.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseMergeDeep": [
-    {
-      "id": "../../node_modules/lodash/_baseMergeDeep.js",
-      "name": "../../node_modules/lodash/_baseMergeDeep.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseProperty": [
-    {
-      "id": "../../node_modules/lodash/_baseProperty.js",
-      "name": "../../node_modules/lodash/_baseProperty.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_basePropertyDeep": [
-    {
-      "id": "../../node_modules/lodash/_basePropertyDeep.js",
-      "name": "../../node_modules/lodash/_basePropertyDeep.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseRest": [
-    {
-      "id": "../../node_modules/lodash/_baseRest.js",
-      "name": "../../node_modules/lodash/_baseRest.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_baseSetToString": [
-    {
-      "id": "../../node_modules/lodash/_baseSetToString.js",
-      "name": "../../node_modules/lodash/_baseSetToString.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_castPath": [
-    {
-      "id": "../../node_modules/lodash/_castPath.js",
-      "name": "../../node_modules/lodash/_castPath.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_cloneArrayBuffer": [
-    {
-      "id": "../../node_modules/lodash/_cloneArrayBuffer.js",
-      "name": "../../node_modules/lodash/_cloneArrayBuffer.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_cloneBuffer": [
-    {
-      "id": "../../node_modules/lodash/_cloneBuffer.js",
-      "name": "../../node_modules/lodash/_cloneBuffer.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_cloneTypedArray": [
-    {
-      "id": "../../node_modules/lodash/_cloneTypedArray.js",
-      "name": "../../node_modules/lodash/_cloneTypedArray.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_copyObject": [
-    {
-      "id": "../../node_modules/lodash/_copyObject.js",
-      "name": "../../node_modules/lodash/_copyObject.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_createAssigner": [
-    {
-      "id": "../../node_modules/lodash/_createAssigner.js",
-      "name": "../../node_modules/lodash/_createAssigner.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_createBaseFor": [
-    {
-      "id": "../../node_modules/lodash/_createBaseFor.js",
-      "name": "../../node_modules/lodash/_createBaseFor.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_defineProperty": [
-    {
-      "id": "../../node_modules/lodash/_defineProperty.js",
-      "name": "../../node_modules/lodash/_defineProperty.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_getMatchData": [
-    {
-      "id": "../../node_modules/lodash/_getMatchData.js",
-      "name": "../../node_modules/lodash/_getMatchData.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_getPrototype": [
-    {
-      "id": "../../node_modules/lodash/_getPrototype.js",
-      "name": "../../node_modules/lodash/_getPrototype.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_hasPath": [
-    {
-      "id": "../../node_modules/lodash/_hasPath.js",
-      "name": "../../node_modules/lodash/_hasPath.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_initCloneObject": [
-    {
-      "id": "../../node_modules/lodash/_initCloneObject.js",
-      "name": "../../node_modules/lodash/_initCloneObject.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_isIterateeCall": [
-    {
-      "id": "../../node_modules/lodash/_isIterateeCall.js",
-      "name": "../../node_modules/lodash/_isIterateeCall.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_isKey": [
-    {
-      "id": "../../node_modules/lodash/_isKey.js",
-      "name": "../../node_modules/lodash/_isKey.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_isStrictComparable": [
-    {
-      "id": "../../node_modules/lodash/_isStrictComparable.js",
-      "name": "../../node_modules/lodash/_isStrictComparable.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_matchesStrictComparable": [
-    {
-      "id": "../../node_modules/lodash/_matchesStrictComparable.js",
-      "name": "../../node_modules/lodash/_matchesStrictComparable.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_nativeKeysIn": [
-    {
-      "id": "../../node_modules/lodash/_nativeKeysIn.js",
-      "name": "../../node_modules/lodash/_nativeKeysIn.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_overRest": [
-    {
-      "id": "../../node_modules/lodash/_overRest.js",
-      "name": "../../node_modules/lodash/_overRest.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_safeGet": [
-    {
-      "id": "../../node_modules/lodash/_safeGet.js",
-      "name": "../../node_modules/lodash/_safeGet.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_setToString": [
-    {
-      "id": "../../node_modules/lodash/_setToString.js",
-      "name": "../../node_modules/lodash/_setToString.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./_shortOut": [
-    {
-      "id": "../../node_modules/lodash/_shortOut.js",
-      "name": "../../node_modules/lodash/_shortOut.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./constant": [
-    {
-      "id": "../../node_modules/lodash/constant.js",
-      "name": "../../node_modules/lodash/constant.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./get": [
-    {
-      "id": "../../node_modules/lodash/get.js",
-      "name": "../../node_modules/lodash/get.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./hasIn": [
-    {
-      "id": "../../node_modules/lodash/hasIn.js",
-      "name": "../../node_modules/lodash/hasIn.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./identity": [
-    {
-      "id": "../../node_modules/lodash/identity.js",
-      "name": "../../node_modules/lodash/identity.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./isArrayLikeObject": [
-    {
-      "id": "../../node_modules/lodash/isArrayLikeObject.js",
-      "name": "../../node_modules/lodash/isArrayLikeObject.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./keysIn": [
-    {
-      "id": "../../node_modules/lodash/keysIn.js",
-      "name": "../../node_modules/lodash/keysIn.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "lodash/mapValues": [
-    {
-      "id": "../../node_modules/lodash/mapValues.js",
-      "name": "../../node_modules/lodash/mapValues.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "lodash/merge": [
-    {
-      "id": "../../node_modules/lodash/merge.js",
-      "name": "../../node_modules/lodash/merge.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./property": [
-    {
-      "id": "../../node_modules/lodash/property.js",
-      "name": "../../node_modules/lodash/property.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./toPlainObject": [
-    {
-      "id": "../../node_modules/lodash/toPlainObject.js",
-      "name": "../../node_modules/lodash/toPlainObject.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "popper.js": [
-    {
-      "id": "../../node_modules/popper.js/dist/esm/popper.js",
-      "name": "../../node_modules/popper.js/dist/esm/popper.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./ConnectedField": [
-    {
-      "id": "../../node_modules/redux-form/es/ConnectedField.js",
-      "name": "../../node_modules/redux-form/es/ConnectedField.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "redux-form/es/Field": [
-    {
-      "id": "../../node_modules/redux-form/es/Field.js",
-      "name": "../../node_modules/redux-form/es/Field.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./ReduxFormContext": [
-    {
-      "id": "../../node_modules/redux-form/es/ReduxFormContext.js",
-      "name": "../../node_modules/redux-form/es/ReduxFormContext.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "redux-form/es/SubmissionError": [
-    {
-      "id": "../../node_modules/redux-form/es/SubmissionError.js",
-      "name": "../../node_modules/redux-form/es/SubmissionError.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "redux-form/es/actions": [
-    {
-      "id": "../../node_modules/redux-form/es/actions.js",
-      "name": "../../node_modules/redux-form/es/actions.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./asyncValidation": [
-    {
-      "id": "../../node_modules/redux-form/es/asyncValidation.js",
-      "name": "../../node_modules/redux-form/es/asyncValidation.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./createField": [
-    {
-      "id": "../../node_modules/redux-form/es/createField.js",
-      "name": "../../node_modules/redux-form/es/createField.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./createFieldProps": [
-    {
-      "id": "../../node_modules/redux-form/es/createFieldProps.js",
-      "name": "../../node_modules/redux-form/es/createFieldProps.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./createReduxForm": [
-    {
-      "id": "../../node_modules/redux-form/es/createReduxForm.js",
-      "name": "../../node_modules/redux-form/es/createReduxForm.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./defaultShouldAsyncValidate": [
-    {
-      "id": "../../node_modules/redux-form/es/defaultShouldAsyncValidate.js",
-      "name": "../../node_modules/redux-form/es/defaultShouldAsyncValidate.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./defaultShouldError": [
-    {
-      "id": "../../node_modules/redux-form/es/defaultShouldError.js",
-      "name": "../../node_modules/redux-form/es/defaultShouldError.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./defaultShouldValidate": [
-    {
-      "id": "../../node_modules/redux-form/es/defaultShouldValidate.js",
-      "name": "../../node_modules/redux-form/es/defaultShouldValidate.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./defaultShouldWarn": [
-    {
-      "id": "../../node_modules/redux-form/es/defaultShouldWarn.js",
-      "name": "../../node_modules/redux-form/es/defaultShouldWarn.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./getValue": [
-    {
-      "id": "../../node_modules/redux-form/es/events/getValue.js",
-      "name": "../../node_modules/redux-form/es/events/getValue.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./events/isEvent": [
-    {
-      "id": "../../node_modules/redux-form/es/events/isEvent.js",
-      "name": "../../node_modules/redux-form/es/events/isEvent.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./events/onChangeValue": [
-    {
-      "id": "../../node_modules/redux-form/es/events/onChangeValue.js",
-      "name": "../../node_modules/redux-form/es/events/onChangeValue.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./events/silenceEvent": [
-    {
-      "id": "../../node_modules/redux-form/es/events/silenceEvent.js",
-      "name": "../../node_modules/redux-form/es/events/silenceEvent.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./events/silenceEvents": [
-    {
-      "id": "../../node_modules/redux-form/es/events/silenceEvents.js",
-      "name": "../../node_modules/redux-form/es/events/silenceEvents.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./generateValidator": [
-    {
-      "id": "../../node_modules/redux-form/es/generateValidator.js",
-      "name": "../../node_modules/redux-form/es/generateValidator.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./handleSubmit": [
-    {
-      "id": "../../node_modules/redux-form/es/handleSubmit.js",
-      "name": "../../node_modules/redux-form/es/handleSubmit.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "../hasError": [
-    {
-      "id": "../../node_modules/redux-form/es/hasError.js",
-      "name": "../../node_modules/redux-form/es/hasError.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "redux-form/es/isDirty": [
     {
       "id": "../../node_modules/redux-form/es/isDirty.js",
@@ -7419,26 +6701,10 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./isReactNative": [
-    {
-      "id": "../../node_modules/redux-form/es/isReactNative.js",
-      "name": "../../node_modules/redux-form/es/isReactNative.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
   "redux-form/es/isSubmitting": [
     {
       "id": "../../node_modules/redux-form/es/isSubmitting.js",
       "name": "../../node_modules/redux-form/es/isSubmitting.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "redux-form/es/reduxForm": [
-    {
-      "id": "../../node_modules/redux-form/es/reduxForm.js",
-      "name": "../../node_modules/redux-form/es/reduxForm.js",
       "file": "vendors~adminLayoutPage.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
@@ -7467,60 +6733,12 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
     }
   ],
-  "./selectors/isValid": [
+  "@babel/runtime/helpers/createClass": [
     {
-      "id": "../../node_modules/redux-form/es/selectors/isValid.js",
-      "name": "../../node_modules/redux-form/es/selectors/isValid.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./util/eventConsts": [
-    {
-      "id": "../../node_modules/redux-form/es/util/eventConsts.js",
-      "name": "../../node_modules/redux-form/es/util/eventConsts.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./util/getDisplayName": [
-    {
-      "id": "../../node_modules/redux-form/es/util/getDisplayName.js",
-      "name": "../../node_modules/redux-form/es/util/getDisplayName.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./util/isHotReloading": [
-    {
-      "id": "../../node_modules/redux-form/es/util/isHotReloading.js",
-      "name": "../../node_modules/redux-form/es/util/isHotReloading.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./util/prefixName": [
-    {
-      "id": "../../node_modules/redux-form/es/util/prefixName.js",
-      "name": "../../node_modules/redux-form/es/util/prefixName.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./util/shallowCompare": [
-    {
-      "id": "../../node_modules/redux-form/es/util/shallowCompare.js",
-      "name": "../../node_modules/redux-form/es/util/shallowCompare.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
-    }
-  ],
-  "./util/validateComponentProp": [
-    {
-      "id": "../../node_modules/redux-form/es/util/validateComponentProp.js",
-      "name": "../../node_modules/redux-form/es/util/validateComponentProp.js",
-      "file": "vendors~adminLayoutPage.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage.js"
+      "id": "../../node_modules/@babel/runtime/helpers/createClass.js",
+      "name": "../../node_modules/@babel/runtime/helpers/createClass.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
   "@fortawesome/react-fontawesome": [
@@ -7787,6 +7005,22 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "./InputAdornment": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputAdornment/InputAdornment.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputAdornment/InputAdornment.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/InputAdornment": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputAdornment/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputAdornment/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./InputBase": [
     {
       "id": "../../node_modules/@material-ui/core/esm/InputBase/InputBase.js",
@@ -7999,6 +7233,22 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "./Popper": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Popper/Popper.js",
+      "name": "../../node_modules/@material-ui/core/esm/Popper/Popper.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "../Popper": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Popper/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Popper/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./Select": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Select/Select.js",
@@ -8103,6 +7353,22 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "./Tooltip": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Tooltip/Tooltip.js",
+      "name": "../../node_modules/@material-ui/core/esm/Tooltip/Tooltip.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "@material-ui/core/Tooltip": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/Tooltip/index.js",
+      "name": "../../node_modules/@material-ui/core/esm/Tooltip/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "../internal/svg-icons/ArrowDropDown": [
     {
       "id": "../../node_modules/@material-ui/core/esm/internal/svg-icons/ArrowDropDown.js",
@@ -8197,12 +7463,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "./iterableToArrayLimit": [
@@ -8211,12 +7471,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "./nonIterableRest": [
@@ -8225,12 +7479,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "@babel/runtime/helpers/esm/slicedToArray": [
@@ -8239,12 +7487,6 @@
       "name": "../../node_modules/@material-ui/core/node_modules/@babel/runtime/helpers/esm/slicedToArray.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/slicedToArray.js",
-      "name": "../../node_modules/@material-ui/system/node_modules/@babel/runtime/helpers/esm/slicedToArray.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }
   ],
   "@material-ui/icons/AccountCircle": [
@@ -8303,6 +7545,358 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "es6-error": [
+    {
+      "id": "../../node_modules/es6-error/es6/index.js",
+      "name": "../../node_modules/es6-error/es6/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "is-promise": [
+    {
+      "id": "../../node_modules/is-promise/index.js",
+      "name": "../../node_modules/is-promise/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_apply": [
+    {
+      "id": "../../node_modules/lodash/_apply.js",
+      "name": "../../node_modules/lodash/_apply.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_assignMergeValue": [
+    {
+      "id": "../../node_modules/lodash/_assignMergeValue.js",
+      "name": "../../node_modules/lodash/_assignMergeValue.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_assignValue": [
+    {
+      "id": "../../node_modules/lodash/_assignValue.js",
+      "name": "../../node_modules/lodash/_assignValue.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseAssignValue": [
+    {
+      "id": "../../node_modules/lodash/_baseAssignValue.js",
+      "name": "../../node_modules/lodash/_baseAssignValue.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseCreate": [
+    {
+      "id": "../../node_modules/lodash/_baseCreate.js",
+      "name": "../../node_modules/lodash/_baseCreate.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseFor": [
+    {
+      "id": "../../node_modules/lodash/_baseFor.js",
+      "name": "../../node_modules/lodash/_baseFor.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseForOwn": [
+    {
+      "id": "../../node_modules/lodash/_baseForOwn.js",
+      "name": "../../node_modules/lodash/_baseForOwn.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseGet": [
+    {
+      "id": "../../node_modules/lodash/_baseGet.js",
+      "name": "../../node_modules/lodash/_baseGet.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseHasIn": [
+    {
+      "id": "../../node_modules/lodash/_baseHasIn.js",
+      "name": "../../node_modules/lodash/_baseHasIn.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseIsMatch": [
+    {
+      "id": "../../node_modules/lodash/_baseIsMatch.js",
+      "name": "../../node_modules/lodash/_baseIsMatch.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseIteratee": [
+    {
+      "id": "../../node_modules/lodash/_baseIteratee.js",
+      "name": "../../node_modules/lodash/_baseIteratee.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseKeysIn": [
+    {
+      "id": "../../node_modules/lodash/_baseKeysIn.js",
+      "name": "../../node_modules/lodash/_baseKeysIn.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseMatches": [
+    {
+      "id": "../../node_modules/lodash/_baseMatches.js",
+      "name": "../../node_modules/lodash/_baseMatches.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseMatchesProperty": [
+    {
+      "id": "../../node_modules/lodash/_baseMatchesProperty.js",
+      "name": "../../node_modules/lodash/_baseMatchesProperty.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseMerge": [
+    {
+      "id": "../../node_modules/lodash/_baseMerge.js",
+      "name": "../../node_modules/lodash/_baseMerge.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseMergeDeep": [
+    {
+      "id": "../../node_modules/lodash/_baseMergeDeep.js",
+      "name": "../../node_modules/lodash/_baseMergeDeep.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseProperty": [
+    {
+      "id": "../../node_modules/lodash/_baseProperty.js",
+      "name": "../../node_modules/lodash/_baseProperty.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_basePropertyDeep": [
+    {
+      "id": "../../node_modules/lodash/_basePropertyDeep.js",
+      "name": "../../node_modules/lodash/_basePropertyDeep.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseRest": [
+    {
+      "id": "../../node_modules/lodash/_baseRest.js",
+      "name": "../../node_modules/lodash/_baseRest.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_baseSetToString": [
+    {
+      "id": "../../node_modules/lodash/_baseSetToString.js",
+      "name": "../../node_modules/lodash/_baseSetToString.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_castPath": [
+    {
+      "id": "../../node_modules/lodash/_castPath.js",
+      "name": "../../node_modules/lodash/_castPath.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_cloneArrayBuffer": [
+    {
+      "id": "../../node_modules/lodash/_cloneArrayBuffer.js",
+      "name": "../../node_modules/lodash/_cloneArrayBuffer.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_cloneBuffer": [
+    {
+      "id": "../../node_modules/lodash/_cloneBuffer.js",
+      "name": "../../node_modules/lodash/_cloneBuffer.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_cloneTypedArray": [
+    {
+      "id": "../../node_modules/lodash/_cloneTypedArray.js",
+      "name": "../../node_modules/lodash/_cloneTypedArray.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_copyObject": [
+    {
+      "id": "../../node_modules/lodash/_copyObject.js",
+      "name": "../../node_modules/lodash/_copyObject.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_createAssigner": [
+    {
+      "id": "../../node_modules/lodash/_createAssigner.js",
+      "name": "../../node_modules/lodash/_createAssigner.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_createBaseFor": [
+    {
+      "id": "../../node_modules/lodash/_createBaseFor.js",
+      "name": "../../node_modules/lodash/_createBaseFor.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_defineProperty": [
+    {
+      "id": "../../node_modules/lodash/_defineProperty.js",
+      "name": "../../node_modules/lodash/_defineProperty.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_getMatchData": [
+    {
+      "id": "../../node_modules/lodash/_getMatchData.js",
+      "name": "../../node_modules/lodash/_getMatchData.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_getPrototype": [
+    {
+      "id": "../../node_modules/lodash/_getPrototype.js",
+      "name": "../../node_modules/lodash/_getPrototype.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_hasPath": [
+    {
+      "id": "../../node_modules/lodash/_hasPath.js",
+      "name": "../../node_modules/lodash/_hasPath.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_initCloneObject": [
+    {
+      "id": "../../node_modules/lodash/_initCloneObject.js",
+      "name": "../../node_modules/lodash/_initCloneObject.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_isIterateeCall": [
+    {
+      "id": "../../node_modules/lodash/_isIterateeCall.js",
+      "name": "../../node_modules/lodash/_isIterateeCall.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_isKey": [
+    {
+      "id": "../../node_modules/lodash/_isKey.js",
+      "name": "../../node_modules/lodash/_isKey.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_isStrictComparable": [
+    {
+      "id": "../../node_modules/lodash/_isStrictComparable.js",
+      "name": "../../node_modules/lodash/_isStrictComparable.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_matchesStrictComparable": [
+    {
+      "id": "../../node_modules/lodash/_matchesStrictComparable.js",
+      "name": "../../node_modules/lodash/_matchesStrictComparable.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_nativeKeysIn": [
+    {
+      "id": "../../node_modules/lodash/_nativeKeysIn.js",
+      "name": "../../node_modules/lodash/_nativeKeysIn.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_overRest": [
+    {
+      "id": "../../node_modules/lodash/_overRest.js",
+      "name": "../../node_modules/lodash/_overRest.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_safeGet": [
+    {
+      "id": "../../node_modules/lodash/_safeGet.js",
+      "name": "../../node_modules/lodash/_safeGet.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_setToString": [
+    {
+      "id": "../../node_modules/lodash/_setToString.js",
+      "name": "../../node_modules/lodash/_setToString.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./_shortOut": [
+    {
+      "id": "../../node_modules/lodash/_shortOut.js",
+      "name": "../../node_modules/lodash/_shortOut.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./constant": [
+    {
+      "id": "../../node_modules/lodash/constant.js",
+      "name": "../../node_modules/lodash/constant.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
@@ -8311,10 +7905,74 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "./get": [
+    {
+      "id": "../../node_modules/lodash/get.js",
+      "name": "../../node_modules/lodash/get.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./hasIn": [
+    {
+      "id": "../../node_modules/lodash/hasIn.js",
+      "name": "../../node_modules/lodash/hasIn.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./identity": [
+    {
+      "id": "../../node_modules/lodash/identity.js",
+      "name": "../../node_modules/lodash/identity.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./isArrayLikeObject": [
+    {
+      "id": "../../node_modules/lodash/isArrayLikeObject.js",
+      "name": "../../node_modules/lodash/isArrayLikeObject.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./keysIn": [
+    {
+      "id": "../../node_modules/lodash/keysIn.js",
+      "name": "../../node_modules/lodash/keysIn.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "lodash/mapValues": [
+    {
+      "id": "../../node_modules/lodash/mapValues.js",
+      "name": "../../node_modules/lodash/mapValues.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "lodash/merge": [
+    {
+      "id": "../../node_modules/lodash/merge.js",
+      "name": "../../node_modules/lodash/merge.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./now": [
     {
       "id": "../../node_modules/lodash/now.js",
       "name": "../../node_modules/lodash/now.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./property": [
+    {
+      "id": "../../node_modules/lodash/property.js",
+      "name": "../../node_modules/lodash/property.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -8331,6 +7989,262 @@
     {
       "id": "../../node_modules/lodash/toNumber.js",
       "name": "../../node_modules/lodash/toNumber.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./toPlainObject": [
+    {
+      "id": "../../node_modules/lodash/toPlainObject.js",
+      "name": "../../node_modules/lodash/toPlainObject.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "popper.js": [
+    {
+      "id": "../../node_modules/popper.js/dist/esm/popper.js",
+      "name": "../../node_modules/popper.js/dist/esm/popper.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./ConnectedField": [
+    {
+      "id": "../../node_modules/redux-form/es/ConnectedField.js",
+      "name": "../../node_modules/redux-form/es/ConnectedField.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "redux-form/es/Field": [
+    {
+      "id": "../../node_modules/redux-form/es/Field.js",
+      "name": "../../node_modules/redux-form/es/Field.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./ReduxFormContext": [
+    {
+      "id": "../../node_modules/redux-form/es/ReduxFormContext.js",
+      "name": "../../node_modules/redux-form/es/ReduxFormContext.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "redux-form/es/SubmissionError": [
+    {
+      "id": "../../node_modules/redux-form/es/SubmissionError.js",
+      "name": "../../node_modules/redux-form/es/SubmissionError.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "redux-form/es/actions": [
+    {
+      "id": "../../node_modules/redux-form/es/actions.js",
+      "name": "../../node_modules/redux-form/es/actions.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./asyncValidation": [
+    {
+      "id": "../../node_modules/redux-form/es/asyncValidation.js",
+      "name": "../../node_modules/redux-form/es/asyncValidation.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./createField": [
+    {
+      "id": "../../node_modules/redux-form/es/createField.js",
+      "name": "../../node_modules/redux-form/es/createField.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./createFieldProps": [
+    {
+      "id": "../../node_modules/redux-form/es/createFieldProps.js",
+      "name": "../../node_modules/redux-form/es/createFieldProps.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./createReduxForm": [
+    {
+      "id": "../../node_modules/redux-form/es/createReduxForm.js",
+      "name": "../../node_modules/redux-form/es/createReduxForm.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./defaultShouldAsyncValidate": [
+    {
+      "id": "../../node_modules/redux-form/es/defaultShouldAsyncValidate.js",
+      "name": "../../node_modules/redux-form/es/defaultShouldAsyncValidate.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./defaultShouldError": [
+    {
+      "id": "../../node_modules/redux-form/es/defaultShouldError.js",
+      "name": "../../node_modules/redux-form/es/defaultShouldError.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./defaultShouldValidate": [
+    {
+      "id": "../../node_modules/redux-form/es/defaultShouldValidate.js",
+      "name": "../../node_modules/redux-form/es/defaultShouldValidate.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./defaultShouldWarn": [
+    {
+      "id": "../../node_modules/redux-form/es/defaultShouldWarn.js",
+      "name": "../../node_modules/redux-form/es/defaultShouldWarn.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./getValue": [
+    {
+      "id": "../../node_modules/redux-form/es/events/getValue.js",
+      "name": "../../node_modules/redux-form/es/events/getValue.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./events/isEvent": [
+    {
+      "id": "../../node_modules/redux-form/es/events/isEvent.js",
+      "name": "../../node_modules/redux-form/es/events/isEvent.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./events/onChangeValue": [
+    {
+      "id": "../../node_modules/redux-form/es/events/onChangeValue.js",
+      "name": "../../node_modules/redux-form/es/events/onChangeValue.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./events/silenceEvent": [
+    {
+      "id": "../../node_modules/redux-form/es/events/silenceEvent.js",
+      "name": "../../node_modules/redux-form/es/events/silenceEvent.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./events/silenceEvents": [
+    {
+      "id": "../../node_modules/redux-form/es/events/silenceEvents.js",
+      "name": "../../node_modules/redux-form/es/events/silenceEvents.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./generateValidator": [
+    {
+      "id": "../../node_modules/redux-form/es/generateValidator.js",
+      "name": "../../node_modules/redux-form/es/generateValidator.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./handleSubmit": [
+    {
+      "id": "../../node_modules/redux-form/es/handleSubmit.js",
+      "name": "../../node_modules/redux-form/es/handleSubmit.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "../hasError": [
+    {
+      "id": "../../node_modules/redux-form/es/hasError.js",
+      "name": "../../node_modules/redux-form/es/hasError.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./isReactNative": [
+    {
+      "id": "../../node_modules/redux-form/es/isReactNative.js",
+      "name": "../../node_modules/redux-form/es/isReactNative.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "redux-form/es/reduxForm": [
+    {
+      "id": "../../node_modules/redux-form/es/reduxForm.js",
+      "name": "../../node_modules/redux-form/es/reduxForm.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./selectors/isValid": [
+    {
+      "id": "../../node_modules/redux-form/es/selectors/isValid.js",
+      "name": "../../node_modules/redux-form/es/selectors/isValid.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./util/eventConsts": [
+    {
+      "id": "../../node_modules/redux-form/es/util/eventConsts.js",
+      "name": "../../node_modules/redux-form/es/util/eventConsts.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./util/getDisplayName": [
+    {
+      "id": "../../node_modules/redux-form/es/util/getDisplayName.js",
+      "name": "../../node_modules/redux-form/es/util/getDisplayName.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./util/isHotReloading": [
+    {
+      "id": "../../node_modules/redux-form/es/util/isHotReloading.js",
+      "name": "../../node_modules/redux-form/es/util/isHotReloading.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./util/prefixName": [
+    {
+      "id": "../../node_modules/redux-form/es/util/prefixName.js",
+      "name": "../../node_modules/redux-form/es/util/prefixName.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./util/shallowCompare": [
+    {
+      "id": "../../node_modules/redux-form/es/util/shallowCompare.js",
+      "name": "../../node_modules/redux-form/es/util/shallowCompare.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./util/validateComponentProp": [
+    {
+      "id": "../../node_modules/redux-form/es/util/validateComponentProp.js",
+      "name": "../../node_modules/redux-form/es/util/validateComponentProp.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -10503,22 +10417,6 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity~mainInfoPage.js"
     }
   ],
-  "./Box": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Box/Box.js",
-      "name": "../../node_modules/@material-ui/core/esm/Box/Box.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "@material-ui/core/Box": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/Box/index.js",
-      "name": "../../node_modules/@material-ui/core/esm/Box/index.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
   "./Container": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Container/Container.js",
@@ -10611,134 +10509,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/unsupportedProp.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/unsupportedProp.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./borders": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/borders.js",
-      "name": "../../node_modules/@material-ui/system/esm/borders.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./breakpoints": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/breakpoints.js",
-      "name": "../../node_modules/@material-ui/system/esm/breakpoints.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./compose": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/compose.js",
-      "name": "../../node_modules/@material-ui/system/esm/compose.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./css": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/css.js",
-      "name": "../../node_modules/@material-ui/system/esm/css.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./display": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/display.js",
-      "name": "../../node_modules/@material-ui/system/esm/display.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./flexbox": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/flexbox.js",
-      "name": "../../node_modules/@material-ui/system/esm/flexbox.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./grid": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/grid.js",
-      "name": "../../node_modules/@material-ui/system/esm/grid.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "@material-ui/system": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/index.js",
-      "name": "../../node_modules/@material-ui/system/esm/index.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./memoize": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/memoize.js",
-      "name": "../../node_modules/@material-ui/system/esm/memoize.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./merge": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/merge.js",
-      "name": "../../node_modules/@material-ui/system/esm/merge.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./palette": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/palette.js",
-      "name": "../../node_modules/@material-ui/system/esm/palette.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./positions": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/positions.js",
-      "name": "../../node_modules/@material-ui/system/esm/positions.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./responsivePropType": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/responsivePropType.js",
-      "name": "../../node_modules/@material-ui/system/esm/responsivePropType.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./sizing": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/sizing.js",
-      "name": "../../node_modules/@material-ui/system/esm/sizing.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./spacing": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/spacing.js",
-      "name": "../../node_modules/@material-ui/system/esm/spacing.js",
-      "file": "vendors~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
-    }
-  ],
-  "./typography": [
-    {
-      "id": "../../node_modules/@material-ui/system/esm/typography.js",
-      "name": "../../node_modules/@material-ui/system/esm/typography.js",
       "file": "vendors~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~clientLayout.js"
     }

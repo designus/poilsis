@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import { TabProps, TabOption, DefaultProps } from './types';
+import { useStyles } from './styles';
 
 export function SimpleTabs(props: TabProps) {
   const [value, setValue] = useState(props.value);
+  const classes = useStyles(props);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -21,18 +20,19 @@ export function SimpleTabs(props: TabProps) {
   });
 
   const renderTabLabel = (option: TabOption, index: number) => (
-    <Tab label={option.label} {...a11yProps(index)} />
+    <Tab key={index} label={option.label} {...a11yProps(index)} />
   );
 
   const renderTabContent = (option: TabOption, index: number) => (
     <Typography
+      key={index}
       component="div"
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
-      {value === index && <Box p={3}>{option.content}</Box>}
+      {value === index && option.content}
     </Typography>
   );
 
@@ -41,21 +41,20 @@ export function SimpleTabs(props: TabProps) {
   const renderTabContents = () => props.options.map(renderTabContent);
 
   return (
-    <div>
-      <Paper square>
-        <Tabs
-          value={value}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          onChange={handleChange}
-          aria-label="Tabs"
-        >
-          {renderTabLabels()}
-        </Tabs>
-      </Paper>
+    <React.Fragment>
+      <Tabs
+        value={value}
+        indicatorColor="primary"
+        textColor="primary"
+        variant="fullWidth"
+        onChange={handleChange}
+        aria-label="Tabs"
+        classes={{ root: classes.tabs }}
+      >
+        {renderTabLabels()}
+      </Tabs>
       {renderTabContents()}
-    </div>
+    </React.Fragment>
   );
 }
 
