@@ -36,7 +36,7 @@ export default function AuthenticationModal(props: Props) {
 
   const renderSignIn = () => {
     return (
-      <SignInForm onSubmit={handleLogin} />
+      <SignInForm onSubmit={handleLogin} intl={intl} />
     );
   };
 
