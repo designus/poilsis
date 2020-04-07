@@ -42,7 +42,7 @@ function PasswordInput(props: Props) {
     <div className={`${classes.wrapper}`}>
       <Tooltip open={hasError} title={meta.error || ''} placement="right-end">
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="password-field">{label}</InputLabel>
+          <InputLabel error={hasError} htmlFor="password-field">{label}</InputLabel>
           <Input
             id="password-field"
             type={showPassword ? 'text' : 'password'}
