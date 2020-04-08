@@ -3,7 +3,7 @@ import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { showLoader, hideLoader } from 'actions/loader';
 import { receiveItems } from 'actions/items';
-import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, UserDetails, ActionCreator } from 'types';
+import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, UserDetails } from 'types';
 import { isAdmin, IItem } from 'global-utils';
 import { getAdminLocale } from 'selectors';
 import { handleApiResponse, http } from './utils';

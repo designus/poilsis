@@ -12,9 +12,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
   multiline: {
     width: INPUT_WIDTH + 200
   },
-  multilineInput: {
-    background: '#efefef'
-  },
   hidden: {
     display: 'none'
   },

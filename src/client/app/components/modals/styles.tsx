@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   content: {
     paddingTop: '20px',
-    paddingBottom: '10px'
+    paddingBottom: '20px'
   },
   header: {
     background: theme.palette.primary.main,

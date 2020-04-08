@@ -7,7 +7,7 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { styles } from '../../styles';
 
 type Props = WithStyles<typeof styles> & {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | string;
   onClose: () => void;
 };
 

@@ -1,9 +1,9 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const styles = (theme: Theme) => {
+export const useStyles = makeStyles((theme: Theme) => {
   const { borderRadius } = theme.customButton;
-  return createStyles({
+  return {
     button: {
       boxShadow: 'none',
       backgroundColor: theme.palette.grey[300],
@@ -25,5 +25,5 @@ export const styles = (theme: Theme) => {
         minHeight: 'auto'
       }
     }
-  });
-};
+  };
+});

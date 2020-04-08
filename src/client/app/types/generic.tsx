@@ -62,5 +62,3 @@ export type ActionReturn<A> = A extends (...args: infer B) => any
   : never;
 
 export type ReduxStore = Store<IAppState, any>;
-
-export type ActionCreator<T extends { type: string }> = (props: Omit<T, 'type'>) => T;

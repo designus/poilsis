@@ -13,7 +13,8 @@ import {
   AuthActionTypes,
   Toast,
   ThunkResult,
-  ThunkDispatch
+  ThunkDispatch,
+  Credentials
 } from 'types';
 
 import {
@@ -57,7 +58,7 @@ export const handleAuthError = (dispatch: ThunkDispatch, isLogin: boolean) => (e
   dispatch(logout());
 };
 
-export const login = (credentials = {username: 'admin', password: 'admin'}): ThunkResult<Promise<void>> => dispatch => {
+export const login = (credentials: Credentials): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(DIALOG_LOADER_ID));
   return http.post('/api/users/login', credentials)
     .then(response => response.data)

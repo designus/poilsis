@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { WrappedFieldProps } from 'redux-form';
-import Input from '@material-ui/core/Input';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import { debounce } from 'lodash';
@@ -117,27 +114,20 @@ function TextInput(props: ITextInputProps) {
         key={languageOption}
       >
         <Tooltip open={hasError} title={tooltipText} placement="right-end">
-          <FormControl
+          <TextField
+            value={value}
+            multiline={multiline}
+            rows={4}
+            id={`${label}-${languageOption}`}
+            label={label}
             className={`${classes.formControl} ${multiline ? classes.multiline : ''}`}
             error={hasError}
-          >
-            <InputLabel htmlFor={label}>
-              {label}
-            </InputLabel>
-            <Input
-              id={`${label}-${languageOption}`}
-              value={value}
-              multiline={multiline}
-              rows={4}
-              onBlur={handleOnBlur(languageOption)}
-              onChange={handleOnChange(languageOption)}
-              className={`${multiline ? classes.multilineInput : ''}`}
-              classes={{
-                error: classes.error
-              }}
-              endAdornment={renderLoader()}
-            />
-          </FormControl>
+            onBlur={handleOnBlur(languageOption)}
+            onChange={handleOnChange(languageOption)}
+            InputProps={{
+              endAdornment: renderLoader()
+            }}
+          />
         </Tooltip>
       </div>
     );
