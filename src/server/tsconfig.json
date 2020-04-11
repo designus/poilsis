@@ -7,6 +7,8 @@
     "allowJs": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "lib": ["es2017", "dom"],
     "outDir": "../../build/server",
     "types": ["node"],

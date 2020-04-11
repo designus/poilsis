@@ -623,7 +623,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/toggleAction": [
+  "../toggleAction": [
     {
       "id": "./app/components/toggleAction/index.tsx",
       "name": "./app/components/toggleAction/index.tsx",
@@ -1061,7 +1061,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "components/menu/menu": [
+  "./menu": [
     {
       "id": "./app/components/menu/menu.tsx",
       "name": "./app/components/menu/menu.tsx",
@@ -1137,7 +1137,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../global-styles": [
+  "../../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1415,12 +1415,6 @@
       "name": "./app/actions/utils.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
   "./city": [
@@ -1911,7 +1905,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../../../../../config": [
+  "config": [
     {
       "id": "../../config/index.tsx",
       "name": "../../config/index.tsx",
@@ -3485,14 +3479,6 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../helpers/btoa": [
-    {
-      "id": "../../node_modules/axios/lib/helpers/btoa.js",
-      "name": "../../node_modules/axios/lib/helpers/btoa.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
   "./../helpers/buildURL": [
     {
       "id": "../../node_modules/axios/lib/helpers/buildURL.js",
@@ -3553,6 +3539,14 @@
     {
       "id": "../../node_modules/axios/lib/helpers/spread.js",
       "name": "../../node_modules/axios/lib/helpers/spread.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "is-buffer": [
+    {
+      "id": "../../node_modules/axios/node_modules/is-buffer/index.js",
+      "name": "../../node_modules/axios/node_modules/is-buffer/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3819,14 +3813,6 @@
     {
       "id": "../../node_modules/invariant/browser.js",
       "name": "../../node_modules/invariant/browser.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "is-buffer": [
-    {
-      "id": "../../node_modules/is-buffer/index.js",
-      "name": "../../node_modules/is-buffer/index.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4715,7 +4701,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "lodash/memoize": [
+  "./memoize": [
     {
       "id": "../../node_modules/lodash/memoize.js",
       "name": "../../node_modules/lodash/memoize.js",
@@ -5835,7 +5821,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./inputValidators": [
+  "global-utils/inputValidators": [
     {
       "id": "../global-utils/inputValidators.tsx",
       "name": "../global-utils/inputValidators.tsx",
@@ -6939,7 +6925,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../FormControl/useFormControl": [
+  "./useFormControl": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
@@ -7075,6 +7061,14 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
+  "../InputBase/utils": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
   "./InputLabel": [
     {
       "id": "../../node_modules/@material-ui/core/esm/InputLabel/InputLabel.js",
@@ -7119,7 +7113,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../List": [
+  "@material-ui/core/List": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/index.js",
       "name": "../../node_modules/@material-ui/core/esm/List/index.js",
@@ -7159,7 +7153,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Menu/Menu": [
+  "./Menu": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
       "name": "../../node_modules/@material-ui/core/esm/Menu/Menu.js",
@@ -7943,7 +7937,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "lodash/debounce": [
+  "./debounce": [
     {
       "id": "../../node_modules/lodash/debounce.js",
       "name": "../../node_modules/lodash/debounce.js",

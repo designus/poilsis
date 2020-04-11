@@ -1,49 +1,33 @@
-'use strict';
+import { prop, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
+import * as mongoose from 'mongoose';
 
-import { Document, Schema, Model, model, SchemaDefinition } from 'mongoose';
+import { getDefaultTranslatableField } from 'global-utils/methods';
 import shortId from 'shortid';
-import { IType, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
-import { formatValue } from 'global-utils/methods';
-import { GenericSchemaMap, requiredMessage } from '../server-utils';
-import { IsEnabledSchemaMap } from './common';
 
-const mongooseIntl = require('mongoose-intl');
+import { requiredMessage } from '../server-utils';
+import { IsEnabled, TranslatableField, NameField } from './common';
 
-// @ts-ignore
-export interface ITypeDocument extends IType, Document {}
-export type TypeModelType = Model<ITypeDocument>;
+export class Type {
+  @prop({ unique: true, default: shortId.generate, required: true })
+  public id!: string;
 
-const schemaMap: GenericSchemaMap<IType> = {
-  id: {
-    type: String,
-    unique: true,
-    default: shortId.generate,
-    required: [true, requiredMessage]
-  },
-  name: {
-    type: String,
-    required: [true, requiredMessage],
-    intl: true
-  },
-  description: {
-    type: String,
-    intl: true
-  },
-  isEnabled: {
-    type: IsEnabledSchemaMap
-  },
-  alias: {
-    type: String,
-    lowercase: true,
-    trim: true,
-    required: [true, requiredMessage],
-    set: formatValue,
-    intl: true
-  }
-};
+  @prop({ required: [true, requiredMessage] })
+  public name!: NameField;
 
-const TypesSchema = new Schema(schemaMap as SchemaDefinition);
+  @prop({ default: getDefaultTranslatableField() })
+  public description?: TranslatableField;
 
-TypesSchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
+  @prop({ required: [true, requiredMessage]})
+  public isEnabled!: IsEnabled;
 
-export const TypesModel: TypeModelType = model<ITypeDocument>('Types', TypesSchema);
+  @prop({ required: [true, requiredMessage] })
+  public alias!: TranslatableField;
+
+}
+
+export type TypesModelType = ReturnModelType<typeof Type>;
+
+export const TypesModel = getModelForClass(Type, {
+  existingMongoose: mongoose,
+  schemaOptions: { collection: 'cities' }
+});

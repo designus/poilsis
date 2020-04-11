@@ -15,9 +15,11 @@ router.route('/client-cities')
   .get(getClientCities);
 
 router.route('/city/alias-exist')
+  // @ts-ignore
   .post(doesAliasExist(CitiesModel));
 
 router.route('/city/toggle-enabled')
+  // @ts-ignore
   .patch(auth.authenticate(), auth.authorize(['admin', 'user']), toggleEnabled(CitiesModel));
 
 router.route('/city/:cityId')

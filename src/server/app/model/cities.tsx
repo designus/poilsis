@@ -1,64 +1,41 @@
-'use strict';
+import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
+import * as mongoose from 'mongoose';
 
-import { ICity, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
-import { Document, Schema, Model, model, SchemaDefinition} from 'mongoose';
+import { getDefaultTranslatableField } from 'global-utils/methods';
 import shortId from 'shortid';
 
-import { formatValue } from 'global-utils/methods';
-import { GenericSchemaMap, requiredMessage } from '../server-utils';
-import { IsEnabledSchemaMap } from './common';
+import { requiredMessage } from '../server-utils';
+import { IsEnabled, TranslatableField, NameField } from './common';
 
-const mongooseIntl = require('mongoose-intl');
+export class City {
+  @prop({ unique: true, default: shortId.generate, required: true })
+  public id!: string;
 
-// @ts-ignore
-export interface ICityDocument extends ICity, Document {}
-export type CityModelType = Model<ICityDocument>;
+  @prop({ required: [true, requiredMessage] })
+  public name!: NameField;
 
-const schemaMap: GenericSchemaMap<ICity> = {
-  id: {
-    type: String,
-    unique: true,
-    default: shortId.generate,
-    required: true
-  },
-  name: {
-    type: String,
-    required: [true, requiredMessage],
-    intl: true
-  },
-  description: {
-    type: String,
-    intl: true
-  },
-  types: {
-    type: [String]
-  },
-  isEnabled: {
-    type: IsEnabledSchemaMap
-  },
-  alias: {
-    type: String,
-    lowercase: true,
-    intl: true,
-    trim: true,
-    required: [true, requiredMessage],
-    set: formatValue
-  },
-  metaTitle: {
-    type: String,
-    intl: true
-  },
-  metaDescription: {
-    type: String,
-    intl: true
-  }
-};
+  @prop({ default: getDefaultTranslatableField() })
+  public description?: TranslatableField;
 
-const CitySchema = new Schema(schemaMap as SchemaDefinition);
+  @arrayProp({ required: [true, requiredMessage], items: String })
+  public types!: string[];
 
-CitySchema.plugin(mongooseIntl, {
-  languages: LANGUAGES,
-  defaultLanguage: DEFAULT_LANGUAGE
+  @prop({ required: [true, requiredMessage]})
+  public isEnabled!: IsEnabled;
+
+  @prop({ required: [true, requiredMessage] })
+  public alias!: TranslatableField;
+
+  @prop({ default: getDefaultTranslatableField() })
+  public metaTitle?: TranslatableField;
+
+  @prop({ default: getDefaultTranslatableField() })
+  public metaDescription?: TranslatableField;
+}
+
+export type CitiesModelType = ReturnModelType<typeof City>;
+
+export const CitiesModel = getModelForClass(City, {
+  existingMongoose: mongoose,
+  schemaOptions: { collection: 'cities' }
 });
-
-export const CitiesModel: CityModelType = model<ICityDocument>('Cities', CitySchema);

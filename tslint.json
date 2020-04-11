@@ -25,6 +25,7 @@
     "member-access": false,
     "no-var-requires": false,
     "arrow-parens": false,
+    "max-classes-per-file": false,
     "ordered-imports": false,
     "member-ordering": [
       false

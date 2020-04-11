@@ -54,6 +54,7 @@ export const addNewCity = async (req: Request, res: Response, next: NextFunction
   const city: ICity = req.body;
   const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
   const isEnabled = getAdjustedIsEnabledValue(city, LANGUAGES);
+  // @ts-ignore
   const citiesByAlias = await getDataByAlias(CitiesModel, alias);
   const newCity = {
     id,
@@ -71,6 +72,7 @@ export const updateCity = async (req: Request, res: Response, next: NextFunction
     const cityId = req.params.cityId;
     const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
     const isEnabled = getAdjustedIsEnabledValue(city, LANGUAGES);
+    // @ts-ignore
     const citiesByAlias = await getDataByAlias(CitiesModel, alias);
 
     const updatedCity = {

@@ -1,5 +1,5 @@
 import * as JWT from 'jwt-decode';
-import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields, TranslatableField, Locale } from './typings';
+import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields, TranslatableField, Locale, Price } from './typings';
 import { LANGUAGES } from './constants';
 
 const AsciiFolder = require('fold-to-ascii');
@@ -65,3 +65,15 @@ export const isClient = () => !isServer();
 export const isNumber = (val: number | null): val is number => typeof val === 'number';
 
 export const getRandomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
+
+export const getDefaultTranslatableField = (): TranslatableField => LANGUAGES.reduce(
+  (acc: TranslatableField, locale) => {
+    acc[locale] = '';
+    return acc;
+  }, {} as TranslatableField
+);
+
+export const getDefaultPriceField = (): Price => ({
+  from: null,
+  to: null
+});

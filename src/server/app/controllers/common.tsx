@@ -1,12 +1,11 @@
-import { Model } from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 import { ToggleEnabledParams } from 'types';
 import { DataTypes, TranslatableField, IsEnabled } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 import { getItemsByAliasesQuery, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
-import { IItemDocument, ICityDocument, ITypeDocument } from '../model';
+import { ItemsModelType, CitiesModelType, TypesModelType } from '../model';
 
-type DocumentModelType = Model<IItemDocument | ICityDocument | ITypeDocument>;
+type DocumentModelType = ItemsModelType | CitiesModelType | TypesModelType;
 
 export const toggleEnabled = (DocumentModel: DocumentModelType) =>
   async (req: Request, res: Response, next: NextFunction) => {

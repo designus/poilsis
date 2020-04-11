@@ -43,6 +43,8 @@ class DeleteModalComponent extends React.PureComponent<IDeleteModalProps, any> {
         <Footer
           onClose={onClose}
           onSubmit={this.deleteItem}
+          closeLabelId="common.no"
+          submitLabelId="common.yes"
         />
       </Dialog>
     );
