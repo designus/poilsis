@@ -247,6 +247,7 @@ export const updatePhotos = async (req: Request, res: Response, next: NextFuncti
     }
 
     item.images = req.body.images;
+    // @ts-ignore
     item.mainImage = item.images.length > 0 ? getImagePath(item.images[0]) : '';
 
     const newItem = await item.save();
@@ -280,6 +281,7 @@ export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFuncti
       }
 
       item.images = [...(item.images || []), ...newImages];
+      // @ts-ignore
       item.mainImage = getImagePath(item.images[0]);
 
       const updatedItem = await item.save();

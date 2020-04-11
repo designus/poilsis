@@ -7,7 +7,7 @@ import { Strategy } from 'passport-jwt';
 import { UserRoles, IItem, IUser, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
 import { USER_NOT_FOUND, INVALID_CREDENTIALS, AUTHORIZATION_FAILED } from 'data-strings';
 
-import { UsersModel as User } from '../model/users';
+import { UsersModel } from '../model/users';
 import { TokensModel } from '../model/tokens';
 import { ItemsModel } from '../model/items';
 
@@ -45,9 +45,9 @@ class Auth {
     return token;
   }
 
-  private getUserItems = async (userRole: string, userId: string) => {
+  private getUserItems = async (userRole: UserRoles, userId: string) => {
     const itemDocs = userRole !== UserRoles.admin ? await ItemsModel.find({ userId }).exec() : [];
-    return itemDocs.length ? itemDocs.map((item: IItem) => item.id) : [];
+    return itemDocs.length ? itemDocs.map(item => item.id) : [];
   }
 
   public reauthenticate = async (req: Request, res: Response) => {
@@ -84,7 +84,7 @@ class Auth {
         throw new Error(INVALID_CREDENTIALS);
       }
 
-      const user = await User.findOne({ username: req.body.username }).exec();
+      const user = await UsersModel.findOne({ username: req.body.username }).exec();
 
       if (user === null || !user.id) {
         throw new Error(USER_NOT_FOUND);
@@ -150,7 +150,7 @@ class Auth {
     };
 
     return new Strategy(params, (req: Request, payload: any, done: any) => {
-      User.findOne({ id: payload.userId }, (err, user) => {
+      UsersModel.findOne({ id: payload.userId }, (err, user) => {
         if (err) { return done(err); }
         if (user === null) {
           return done(null, false, { message: 'The user in the token was not found' });

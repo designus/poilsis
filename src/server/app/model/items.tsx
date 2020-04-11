@@ -1,158 +1,93 @@
-'use strict';
-import { Document, Schema, Model, model, SchemaDefinition } from 'mongoose';
+import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 import shortId from 'shortid';
+import * as mongoose from 'mongoose';
 
+import { getDefaultTranslatableField, getDefaultPriceField } from 'global-utils/methods';
+import { GLOBAL_CURRENCY } from 'global-utils/constants';
+import { itemValidation } from 'global-utils/validationRules';
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
-import {
-  IImage,
-  IItem,
-  LANGUAGES,
-  DEFAULT_LANGUAGE,
-  itemValidation,
-  Price
-} from 'global-utils';
 
-import { formatValue } from 'global-utils/methods';
-
-import {
-  GenericSchemaMap,
-  getValidationMessage,
-  requiredMessage
-} from '../server-utils';
-
-import { IsEnabledSchemaMap } from './common';
-
-const mongooseIntl = require('mongoose-intl');
+import { requiredMessage, getValidationMessage } from '../server-utils';
+import { IsEnabled, TranslatableField, NameField } from './common';
+import { Price } from './price';
+import { Image } from './image';
 
 const maxLength = (maxLength: number) => (value: string) => value.length <= maxLength;
 const minLength = (minLength: number) => (value: string) => value.length >= minLength;
 const minMaxLength = (min: number, max: number) => (value: string) => minLength(min)(value) && maxLength(max)(value);
-
-// @ts-ignore
-export interface IItemDocument extends IItem, Document {}
-export type ItemModelType = Model<IItemDocument>;
-
 const {
   types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
   images: { maxPhotos }
 } = itemValidation;
 
-// @ts-ignore
-const ImageSchemaMap: GenericSchemaMap<IImage> = {
-  id: {
-    type: String,
-    sparse: true,
-    default: shortId.generate,
-    required: true
-  },
-  fileName: {
-    type: String,
-    required: true
-  },
-  path: {
-    type: String,
-    required: true
-  },
-  thumbName: {
-    type: String,
-    required: true
-  }
-};
+export class Item {
+  @prop({ unique: true, default: shortId.generate, required: true })
+  public id!: string;
 
-const PriceSchemaMap: GenericSchemaMap<Price> = {
-  from: {
-    type: Number,
-    default: null
-  },
-  to: {
-    type: Number,
-    default: null
-  }
-};
+  @prop({ required: [true, requiredMessage] })
+  public name!: NameField;
 
-const ItemsSchemaMap: GenericSchemaMap<IItem> = {
-  id: {
-    type: String,
-    unique: true,
-    default: shortId.generate,
-    required: true
-  },
-  name: {
-    type: String,
-    required: [true, requiredMessage],
-    intl: true
-  },
-  cityId: {
-    type: String,
-    required: [true, requiredMessage]
-  },
-  price: PriceSchemaMap,
-  currency: {
-    type: String,
-    required: [true, requiredMessage]
-  },
-  address: {
-    type: String,
-    required: [true, requiredMessage]
-  },
-  types: {
-    type: Array,
-    required: [true, requiredMessage],
-    validate: [
-      minMaxLength(minTypesCount, maxTypesCount),
-      getValidationMessage(RANGE, minTypesCount, maxTypesCount)
-    ]
-  },
-  alias: {
-    type: String,
-    lowercase: true,
-    trim: true,
-    set: formatValue,
-    intl: true
-  },
-  userId: {
-    type: String,
-    required: [true, requiredMessage]
-  },
-  isEnabled: {
-    type: IsEnabledSchemaMap
-  },
-  isApprovedByAdmin: Boolean,
-  isRecommended: Boolean,
-  createdAt: Date,
-  updatedAt: Date,
-  mainImage: String,
-  images: {
-    type: [ImageSchemaMap],
-    validate: [
-      maxLength(maxPhotos),
-      getValidationMessage(MAX_PHOTO_COUNT, maxPhotos)
-    ]
-  },
-  description: {
-    type: String,
-    intl: true
-  },
-  metaTitle: {
-    type: String,
-    intl: true
-  },
-  metaDescription: {
-    type: String,
-    intl: true
-  }
-};
+  @prop({ required: [true, requiredMessage] })
+  public alias!: TranslatableField;
 
-const ItemsSchema = new Schema(ItemsSchemaMap as SchemaDefinition);
+  @prop({ required: [true, requiredMessage] })
+  public cityId!: string;
 
-ItemsSchema.plugin(mongooseIntl, { languages: LANGUAGES, defaultLanguage: DEFAULT_LANGUAGE });
+  @prop({ default: getDefaultPriceField() })
+  public price!: Price;
 
-ItemsSchema.pre('save', function(this: any, next: any) {
-  const now = new Date();
-  if (!this.createdAt) {
-    this.createdAt = now;
-  }
-  next();
+  @prop({ default: GLOBAL_CURRENCY })
+  public currency!: string;
+
+  @prop({ default: '' })
+  public address!: string;
+
+  @arrayProp({ required: [true, requiredMessage], items: String, validate: [
+    minMaxLength(minTypesCount, maxTypesCount),
+    getValidationMessage(RANGE, minTypesCount, maxTypesCount)
+  ] })
+  public types!: string[];
+
+  @prop({ required: [true, requiredMessage] })
+  public userId!: string;
+
+  @prop({ default: false })
+  public isApprovedByAdmin!: boolean;
+
+  @prop({ default: false })
+  public isRecommended!: boolean;
+
+  @prop({ default: Date.now() })
+  public createdAt!: string;
+
+  @prop({ updatedAt: Date.now() })
+  public updatedAt!: string;
+
+  @prop({ default: '' })
+  public mainImage!: string;
+
+  @arrayProp({ default: [], items: Image, validate: [
+    maxLength(maxPhotos),
+    getValidationMessage(MAX_PHOTO_COUNT, maxPhotos)
+  ] })
+  public images!: Image[];
+
+  @prop({ default: getDefaultTranslatableField() })
+  public description?: TranslatableField;
+
+  @prop({ required: [true, requiredMessage]})
+  public isEnabled!: IsEnabled;
+
+  @prop({ default: getDefaultTranslatableField() })
+  public metaTitle?: TranslatableField;
+
+  @prop({ default: getDefaultTranslatableField() })
+  public metaDescription?: TranslatableField;
+}
+
+export type ItemsModelType = ReturnModelType<typeof Item>;
+
+export const ItemsModel = getModelForClass(Item, {
+  existingMongoose: mongoose,
+  schemaOptions: { collection: 'items' }
 });
-
-export const ItemsModel: ItemModelType = model<IItemDocument>('Items', ItemsSchema);

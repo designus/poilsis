@@ -1,64 +1,48 @@
-'use strict';
+import { prop, pre, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-const shortId = require('shortid');
-import { requiredMessage } from '../server-utils';
 
-interface IUser extends mongoose.Document {
-  name: string;
-  username: string;
-  password: string;
-  role: string;
-  comparePassword(password: string): Promise<boolean>;
+import { UserRoles } from 'global-utils/typings';
+import shortId from 'shortid';
+
+@pre<User>('save', function(this, next) {
+  bcrypt.hash(this.password, 10, (err, hash) => {
+    this.password = hash;
+    next();
+  });
+})
+export class User {
+  @prop({ unique: true, default: shortId.generate, required: true })
+  public id!: string;
+
+  @prop({ required: true })
+  public name!: string;
+
+  @prop({ required: true, enum: UserRoles })
+  public role!: UserRoles;
+
+  @prop({ required: true, unique: true })
+  public username!: string;
+
+  @prop({ required: true })
+  public password!: string;
+
+  @prop({ default: false })
+  public isEnabled!: boolean;
+
+  public comparePassword(password: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, this.password, (err, success) => {
+        if (err) { return reject(err); }
+        return resolve(success);
+      });
+    });
+  }
 }
 
-const usersSchema = new mongoose.Schema({
-  name: String,
-  role: String,
-  id: {
-    type: String,
-    unique: true,
-    default: shortId.generate,
-    required: [true, requiredMessage]
-  },
-  username: {
-    type: String,
-    required: [true, requiredMessage],
-    unique: true
-  },
-  password: {
-    type: String,
-    required: [true, requiredMessage]
-  },
-  isEnabled: Boolean
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  }
+export type UsersModelType = ReturnModelType<typeof User>;
+
+export const UsersModel = getModelForClass(User, {
+  existingMongoose: mongoose,
+  schemaOptions: { collection: 'users' }
 });
-
-usersSchema.pre('save', function(this: any, next)  {
-  bcrypt.hash(this.password, 10, (err, hash) => {
-    this.password = hash;
-    next();
-  });
-});
-
-usersSchema.pre('update', function(this: any, next) {
-  bcrypt.hash(this.password, 10, (err, hash) => {
-    this.password = hash;
-    next();
-  });
-});
-
-usersSchema.methods.comparePassword = function(password: string): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(password, this.password, (err, success) => {
-      if (err) { return reject(err); }
-      return resolve(success);
-    });
-  });
-};
-
-export const UsersModel = mongoose.model<IUser>('Users', usersSchema);

@@ -1,21 +1,15 @@
 import { prop, modelOptions } from '@typegoose/typegoose';
-import { Locale, DEFAULT_LANGUAGE, LANGUAGES, getDefaultTranslatableField } from 'global-utils';
-
-export const IsEnabledSchemaMap: Record<Locale, any> = {
-  lt: Boolean,
-  en: Boolean,
-  ru: Boolean
-};
+import { DEFAULT_LANGUAGE } from 'global-utils';
 
 @modelOptions({ schemaOptions: { _id: false } })
 export class IsEnabled {
-  @prop({ default: false, required: true })
+  @prop({ default: false })
   lt!: boolean;
 
-  @prop({ default: false, required: true })
+  @prop({ default: false })
   en!: boolean;
 
-  @prop({ default: false, required: true })
+  @prop({ default: false })
   ru!: boolean;
 }
 
@@ -36,4 +30,3 @@ export class NameField extends TranslatableField {
   // @ts-ignore
   [DEFAULT_LANGUAGE]: string;
 }
-

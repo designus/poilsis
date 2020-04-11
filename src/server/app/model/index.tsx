@@ -1,4 +1,4 @@
 export * from './cities';
-export * from './items2';
+export * from './items';
 export * from './types';
 export * from './users';
