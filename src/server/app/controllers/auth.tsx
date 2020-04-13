@@ -7,9 +7,7 @@ import { Strategy } from 'passport-jwt';
 import { UserRoles, IItem, IUser, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
 import { USER_NOT_FOUND, INVALID_CREDENTIALS, AUTHORIZATION_FAILED } from 'data-strings';
 
-import { UsersModel } from '../model/users';
-import { TokensModel } from '../model/tokens';
-import { ItemsModel } from '../model/items';
+import { UsersModel, TokensModel, ItemsModel } from 'data-models';
 
 const randToken = require('rand-token');
 

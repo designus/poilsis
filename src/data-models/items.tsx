@@ -1,13 +1,12 @@
 import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 import shortId from 'shortid';
-import * as mongoose from 'mongoose';
 
 import { getDefaultTranslatableField, getDefaultPriceField } from 'global-utils/methods';
 import { GLOBAL_CURRENCY } from 'global-utils/constants';
 import { itemValidation } from 'global-utils/validationRules';
+import { requiredMessage, getValidationMessage } from 'global-utils/validationMessages';
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 
-import { requiredMessage, getValidationMessage } from '../server-utils';
 import { IsEnabled, TranslatableField, NameField } from './common';
 import { Price } from './price';
 import { Image } from './image';
@@ -88,6 +87,5 @@ export class Item {
 export type ItemsModelType = ReturnModelType<typeof Item>;
 
 export const ItemsModel = getModelForClass(Item, {
-  existingMongoose: mongoose,
   schemaOptions: { collection: 'items' }
 });

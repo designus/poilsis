@@ -1,13 +1,12 @@
-import { prop, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
-import * as mongoose from 'mongoose';
+import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 
 import { getDefaultTranslatableField } from 'global-utils/methods';
 import shortId from 'shortid';
 
-import { requiredMessage } from '../server-utils';
+import { requiredMessage } from 'global-utils';
 import { IsEnabled, TranslatableField, NameField } from './common';
 
-export class Type {
+export class City {
   @prop({ unique: true, default: shortId.generate, required: true })
   public id!: string;
 
@@ -17,17 +16,24 @@ export class Type {
   @prop({ default: getDefaultTranslatableField() })
   public description?: TranslatableField;
 
+  @arrayProp({ required: [true, requiredMessage], items: String })
+  public types!: string[];
+
   @prop({ required: [true, requiredMessage]})
   public isEnabled!: IsEnabled;
 
   @prop({ required: [true, requiredMessage] })
   public alias!: TranslatableField;
 
+  @prop({ default: getDefaultTranslatableField() })
+  public metaTitle?: TranslatableField;
+
+  @prop({ default: getDefaultTranslatableField() })
+  public metaDescription?: TranslatableField;
 }
 
-export type TypesModelType = ReturnModelType<typeof Type>;
+export type CitiesModelType = ReturnModelType<typeof City>;
 
-export const TypesModel = getModelForClass(Type, {
-  existingMongoose: mongoose,
+export const CitiesModel = getModelForClass(City, {
   schemaOptions: { collection: 'cities' }
 });

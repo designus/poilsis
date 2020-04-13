@@ -1,5 +1,5 @@
 import { prop, modelOptions } from '@typegoose/typegoose';
-import { DEFAULT_LANGUAGE } from 'global-utils';
+import { DEFAULT_LANGUAGE } from 'global-utils/constants';
 
 @modelOptions({ schemaOptions: { _id: false } })
 export class IsEnabled {

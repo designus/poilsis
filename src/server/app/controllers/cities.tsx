@@ -4,7 +4,7 @@ import { ICity, LANGUAGES, TranslatableField, ToggleFields, Locale } from 'globa
 import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
 import { getAdjustedAliasValue, getUniqueAlias, getAliasList } from 'server-utils/aliases';
 import { getDataByAlias } from './common';
-import { CitiesModel } from '../model';
+import { CitiesModel } from 'data-models';
 
 export const getClientCities = async (req: Request, res: Response, next: NextFunction) => {
   try {

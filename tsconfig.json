@@ -22,6 +22,8 @@
       "global-styles": ["./src/client/app/global-styles"],
       "global-utils": ["./src/global-utils"],
       "global-utils/*": ["./src/global-utils/*"],
+      "data-models": ["./src/data-models"],
+      "data-models/*": ["./src/data-models/*"],
       "config": ["./config"]
     },
     "lib": ["es2017", "dom", "es7", "dom.iterable"],

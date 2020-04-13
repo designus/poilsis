@@ -4,7 +4,7 @@ import shortId from 'shortid';
 
 import { getUniqueAlias, getAdjustedAliasValue } from 'server-utils/aliases';
 import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
-import { TypesModel } from '../model';
+import { TypesModel } from 'data-models';
 import { getDataByAlias } from './common';
 
 export const getClientTypes = async (req: Request, res: Response, next: NextFunction) => {

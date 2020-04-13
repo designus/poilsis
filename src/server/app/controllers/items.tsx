@@ -17,7 +17,7 @@ import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { MulterRequest, MulterFile } from 'server-utils/types';
 import { config } from 'config';
 import { getDataByAlias } from './common';
-import { ItemsModel } from '../model';
+import { ItemsModel } from 'data-models';
 
 const clientItemsProjection = {
   _id: 0,

@@ -8,7 +8,6 @@ import {
   DataTypes,
   UserRoles,
   Locale,
-  LANGUAGES,
   TranslatableFields,
   IsEnabled,
   TranslatableField

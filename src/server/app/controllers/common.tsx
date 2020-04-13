@@ -3,7 +3,7 @@ import { ToggleEnabledParams } from 'types';
 import { DataTypes, TranslatableField, IsEnabled } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 import { getItemsByAliasesQuery, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
-import { ItemsModelType, CitiesModelType, TypesModelType } from '../model';
+import { ItemsModelType, CitiesModelType, TypesModelType } from 'data-models';
 
 type DocumentModelType = ItemsModelType | CitiesModelType | TypesModelType;
 
