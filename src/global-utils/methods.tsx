@@ -1,5 +1,6 @@
 import * as JWT from 'jwt-decode';
-import { UserRoles, IAccessTokenClaims, IItem, IItemDescFields, TranslatableField, Locale, Price } from './typings';
+import { TranslatableField, Price, Item } from 'data-models';
+import { UserRoles, IAccessTokenClaims, IItemDescFields, Locale } from './typings';
 import { LANGUAGES } from './constants';
 
 const AsciiFolder = require('fold-to-ascii');
@@ -37,9 +38,9 @@ export const callFn = (fn: any, ...args: any[]) => {
   }
 };
 
-export const getTranslationMessages = (locale: string) => require(`../translations/${locale}.json`);
+export const getTranslationMessages = (locale: string) => require(`src/translations/${locale}.json`);
 
-export const getItemDescriptionFields = (item: IItem): IItemDescFields => {
+export const getItemDescriptionFields = (item: Item): IItemDescFields => {
   const { description, metaTitle, metaDescription  } = item;
   return {
     description,

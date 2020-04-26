@@ -2,7 +2,8 @@ import React, { memo, useMemo } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { getEnabledCities, getClientLocale } from 'selectors';
-import { ICity, Locale } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
+import { City } from 'data-models';
 import { getLocalizedText } from 'client-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { Menu, IMenuItem  } from 'components/menu';
@@ -12,9 +13,9 @@ type Props = {};
 
 const MenuWithStyles = withStyles(styles)(Menu);
 
-const getMenuItems = (cities: ICity[], locale: Locale): IMenuItem[] => cities.map(city => ({
+const getMenuItems = (cities: City[], locale: Locale): IMenuItem[] => cities.map(city => ({
   id: city.id,
-  text: getLocalizedText(city.name, locale),
+  text: getLocalizedText(locale, city.name),
   link: clientRoutes.items.getLink(locale, city.alias)
 }));
 

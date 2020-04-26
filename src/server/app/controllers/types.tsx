@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { IType, LANGUAGES, TranslatableField, Locale, ToggleFields } from 'global-utils';
+import { LANGUAGES, Locale, ToggleFields } from 'global-utils';
+import { TypesModel, TranslatableField, Type } from 'data-models';
 import shortId from 'shortid';
 
 import { getUniqueAlias, getAdjustedAliasValue } from 'server-utils/aliases';
 import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
-import { TypesModel } from 'data-models';
 import { getDataByAlias } from './common';
 
 export const getClientTypes = async (req: Request, res: Response, next: NextFunction) => {
@@ -13,11 +13,11 @@ export const getClientTypes = async (req: Request, res: Response, next: NextFunc
 
     if (!locale) throw new Error('Locale is not set');
 
-    const toggleFields: ToggleFields<IType> = ['name', 'isEnabled', 'alias', 'description'];
+    const toggleFields: ToggleFields<Type> = ['name', 'isEnabled', 'alias', 'description'];
     const types = await TypesModel.aggregate([
       { $project: { _id: 0, __v: 0 } },
-      { $unset: getFieldsToUnset<IType>(LANGUAGES, locale, toggleFields) },
-      { $set: getFieldsToSet<IType>(locale, toggleFields)}
+      { $unset: getFieldsToUnset<Type>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<Type>(locale, toggleFields)}
     ])
     .exec();
 
@@ -52,7 +52,7 @@ export const getType = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewType = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
-  const data: IType = req.body;
+  const data: Type = req.body;
   const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
   const typesByAlias = await getDataByAlias(TypesModel, alias);
   const isEnabled = getAdjustedIsEnabledValue(data, LANGUAGES);
@@ -68,7 +68,7 @@ export const addNewType = async (req: Request, res: Response, next: NextFunction
 
 export const updateType = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data: IType = req.body;
+    const data: Type = req.body;
     const typeId = req.params.typeId;
     const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
     const typesByAlias = await getDataByAlias(TypesModel, alias);

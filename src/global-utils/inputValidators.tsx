@@ -1,19 +1,14 @@
 import { IntlShape, defineMessages } from 'react-intl';
 import {
-  DEFAULT_LANGUAGE,
   hasLocalizedFields,
   itemValidation,
-  IImage,
   IPhotoFormState,
-  TranslatableField,
-  Locale,
-  IntlSetting,
-  Price
+  Locale
 } from 'global-utils';
 import { isNumber } from 'global-utils/methods';
+import { IsEnabled, TranslatableField, Price, Image as IImage } from 'data-models';
 
 import * as errors from '../data-strings/validation';
-import { IsEnabled, TranslatableFields } from './typings';
 
 const messages = defineMessages({
   invalidPrice: {

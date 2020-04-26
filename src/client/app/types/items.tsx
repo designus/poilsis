@@ -1,4 +1,4 @@
-import { IItem, IImage } from 'global-utils/typings';
+import { Item, Image } from 'data-models';
 import { IGenericState, IGenericDataMap } from './generic';
 import {
   receiveItems,
@@ -13,9 +13,9 @@ import {
   toggleItemRecommendedField
 } from 'actions/items';
 
-export type IItemsMap = IGenericDataMap<IItem>;
+export type IItemsMap = IGenericDataMap<Item>;
 
-export interface IItemsState extends IGenericState<IItem> {}
+export interface IItemsState extends IGenericState<Item> {}
 
 export enum ItemsActionTypes {
   RECEIVE_ITEMS = 'RECEIVE_ITEMS',
@@ -34,7 +34,7 @@ export enum ItemsActionTypes {
 export interface IReceiveImages {
   type: ItemsActionTypes.RECEIVE_IMAGES;
   itemId: string;
-  images: IImage[];
+  images: Image[];
   mainImage: string | null;
 }
 

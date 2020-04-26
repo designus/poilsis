@@ -1,4 +1,4 @@
-import { Price } from 'global-utils/typings';
+import { Price } from 'data-models';
 import { ICityFilters } from 'types';
 import { isNumber } from 'global-utils/methods';
 

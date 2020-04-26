@@ -26,7 +26,7 @@ const ItemTypesList: React.FunctionComponent<Props> = (props) => {
           if (type) {
             return (
               <span key={typeId} className="types" style={{ fontSize: 12 + 'px' }}>
-                {getLocalizedText(typesMap[typeId].name, locale)}
+                {getLocalizedText(locale, typesMap[typeId].name)}
                 &nbsp;
               </span>
             );

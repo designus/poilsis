@@ -1,6 +1,6 @@
 const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const { ReactLoadablePlugin } = require("react-loadable/webpack");
-
+const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const projectRoot = path.join(__dirname, '..', '..', '..');
@@ -119,6 +119,10 @@ module.exports = {
     }),
     new ReactLoadablePlugin({
       filename: path.join(__dirname, "..", "..", "server", "stats", "reactLoadable.json")
+    }),
+    new webpack.NormalModuleReplacementPlugin(/type-graphql$|@typegoose\/typegoose$/, resource => {
+      resource.request = resource.request.replace(/type-graphql/, 'type-graphql/dist/browser-shim.js')
+      resource.request = resource.request.replace(/@typegoose\/typegoose/, '@typegoose/../../config/typegoose-browser-shim.js')
     })
   ]
 };

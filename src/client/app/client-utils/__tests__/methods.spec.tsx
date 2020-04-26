@@ -1,9 +1,9 @@
-import { IItem } from 'global-utils/typings';
+import { Item } from 'data-models';
 import { getNormalizedData, isAdminItemActive } from '../methods';
 
 describe('client-utils/methods', () => {
   it('getNormalizedData()', () => {
-    const mockedItem: Pick<IItem, 'id' | 'alias'> = {
+    const mockedItem: Pick<Item, 'id' | 'alias'> = {
       id: '123',
       alias: {
         lt: 'lt-almuka',
@@ -12,7 +12,7 @@ describe('client-utils/methods', () => {
       }
     };
 
-    const mockedItems = [mockedItem] as IItem[];
+    const mockedItems = [mockedItem] as Item[];
 
     expect(getNormalizedData(mockedItems)).toEqual({
       dataMap: {

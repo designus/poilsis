@@ -2,7 +2,8 @@ import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { LANGUAGES, IsEnabled, Locale } from 'global-utils';
+import { LANGUAGES, Locale } from 'global-utils';
+import { IsEnabled } from 'data-models';
 import Switch from '@material-ui/core/Switch';
 import { isInputHidden } from 'client-utils/methods';
 

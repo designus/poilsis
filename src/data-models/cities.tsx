@@ -1,35 +1,38 @@
 import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
-
-import { getDefaultTranslatableField } from 'global-utils/methods';
 import shortId from 'shortid';
 
-import { requiredMessage } from 'global-utils';
+import { getDefaultTranslatableField } from 'global-utils/methods';
+import { getRequiredMessage } from 'global-utils/validationMessages';
 import { IsEnabled, TranslatableField, NameField } from './common';
 
 export class City {
   @prop({ unique: true, default: shortId.generate, required: true })
-  public id!: string;
+  id!: string;
 
-  @prop({ required: [true, requiredMessage] })
-  public name!: NameField;
+  @prop({ required: [true, getRequiredMessage()], type: NameField })
+  name!: TranslatableField | string;
 
-  @prop({ default: getDefaultTranslatableField() })
-  public description?: TranslatableField;
+  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
+  description?: TranslatableField | string;
 
-  @arrayProp({ required: [true, requiredMessage], items: String })
-  public types!: string[];
+  @arrayProp({ required: [true, getRequiredMessage()], items: String })
+  types!: string[];
 
-  @prop({ required: [true, requiredMessage]})
-  public isEnabled!: IsEnabled;
+  @prop({ required: [true, getRequiredMessage()], type: IsEnabled })
+  isEnabled!: IsEnabled | boolean;
 
-  @prop({ required: [true, requiredMessage] })
-  public alias!: TranslatableField;
+  @prop({ required: [true, getRequiredMessage()], type: TranslatableField })
+  alias!: TranslatableField | string;
 
-  @prop({ default: getDefaultTranslatableField() })
-  public metaTitle?: TranslatableField;
+  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
+  metaTitle?: TranslatableField | string;
 
-  @prop({ default: getDefaultTranslatableField() })
-  public metaDescription?: TranslatableField;
+  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
+  metaDescription?: TranslatableField | string;
+
+  hasItems?: boolean;
+
+  isFullyLoaded?: boolean;
 }
 
 export type CitiesModelType = ReturnModelType<typeof City>;

@@ -1,7 +1,7 @@
 
 import { Request, Response, NextFunction, response } from 'express';
 import shortId from 'shortid';
-import { IItem, itemValidation, getItemDescriptionFields, TranslatableField, LANGUAGES, ToggleFields, Locale } from 'global-utils';
+import { itemValidation, getItemDescriptionFields, LANGUAGES, ToggleFields, Locale } from 'global-utils';
 import {
   getImages,
   sendResponse,
@@ -12,12 +12,12 @@ import {
   getFieldsToSet,
   getFieldsToUnset
 } from 'server-utils/methods';
+import { ItemsModel, TranslatableField, Item } from 'data-models';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { MulterRequest, MulterFile } from 'server-utils/types';
 import { config } from 'config';
 import { getDataByAlias } from './common';
-import { ItemsModel } from 'data-models';
 
 const clientItemsProjection = {
   _id: 0,
@@ -64,12 +64,12 @@ export const getRecommendedItems = async (req: Request, res: Response, next: Nex
 
     if (!locale) throw new Error('Locale is not set');
 
-    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
+    const toggleFields: ToggleFields<Item> = ['name', 'alias', 'isEnabled'];
     const recommendedItems = await ItemsModel.aggregate([
       { $match: { isRecommended: true } },
       { $project: clientItemsProjection },
-      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
-      { $set: getFieldsToSet<IItem>(locale, toggleFields)}
+      { $unset: getFieldsToUnset<Item>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<Item>(locale, toggleFields)}
     ])
     .exec();
 
@@ -82,13 +82,13 @@ export const getRecommendedItems = async (req: Request, res: Response, next: Nex
 export const getCityItems = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const locale = req.headers['accept-language'] as Locale;
-    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled'];
+    const toggleFields: ToggleFields<Item> = ['name', 'alias', 'isEnabled'];
     const cityItems = await ItemsModel
       .aggregate([
         { $match: { cityId: req.params.cityId } },
         { $project: clientItemsProjection },
-        { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
-        { $set: getFieldsToSet<IItem>(locale, toggleFields)}
+        { $unset: getFieldsToUnset<Item>(LANGUAGES, locale, toggleFields) },
+        { $set: getFieldsToSet<Item>(locale, toggleFields)}
       ])
       .exec();
 
@@ -146,13 +146,13 @@ export const toggleItemApproved = async (req: Request, res: Response, next: Next
 
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
-  const item: IItem = req.body;
+  const item: Item = req.body;
   const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
   const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
   const alias = getUniqueAlias(itemsByAlias, id, adjustedAlias);
   const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);
 
-  const newItem: IItem = {
+  const newItem: Item = {
     ...item,
     alias,
     isEnabled,
@@ -170,15 +170,15 @@ export const getAdminItem = (req: Request, res: Response, next: NextFunction) =>
 export const getClientItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const locale = req.headers['accept-language'] as Locale;
-    const toggleFields: ToggleFields<IItem> = ['name', 'alias', 'isEnabled', 'metaTitle', 'metaDescription', 'description'];
+    const toggleFields: ToggleFields<Item> = ['name', 'alias', 'isEnabled', 'metaTitle', 'metaDescription', 'description'];
 
     if (!locale) throw new Error('Locale is not set');
 
     const item = await ItemsModel.aggregate([
       { $match: { [`alias.${locale}`]: req.params.alias } },
       { $project: {_id: 0, __v: 0 } },
-      { $unset: getFieldsToUnset<IItem>(LANGUAGES, locale, toggleFields) },
-      { $set: getFieldsToSet<IItem>(locale, toggleFields)}
+      { $unset: getFieldsToUnset<Item>(LANGUAGES, locale, toggleFields) },
+      { $set: getFieldsToSet<Item>(locale, toggleFields)}
     ])
     .then(items => items[0]);
 
@@ -195,14 +195,14 @@ export const deleteItem = (req: Request, res: Response, next: NextFunction) => {
 
 export const updateMainInfo = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const item: IItem = req.body;
+    const item: Item = req.body;
     const updatedAt = new Date().toUTCString();
     const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
     const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
     const alias = getUniqueAlias(itemsByAlias, item.id, adjustedAlias);
     const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);
 
-    const updatedItem: IItem = {
+    const updatedItem: Item = {
       ...item,
       alias,
       isEnabled,
@@ -232,7 +232,7 @@ export const updateItemDescription = async (req: Request, res: Response, next: N
 
     if (!result) throw new Error('Unable to update description');
 
-    res.status(200).json(getItemDescriptionFields(result.toJSON() as IItem));
+    res.status(200).json(getItemDescriptionFields(result.toJSON() as Item));
   } catch (err) {
     return next(err);
   }
@@ -304,7 +304,7 @@ export const addMockedData = async (req: Request, res: Response, next: NextFunct
     if (config.env !== 'development') {
       res.status(401).send({ message: `Unauthorized action is ${config.env} environment` });
     } else {
-      const data = req.body.data as IItem[];
+      const data = req.body.data as Item[];
       const items = await ItemsModel.insertMany(data);
 
       if (!items) {

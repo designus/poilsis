@@ -1,6 +1,6 @@
-import { IItem, TranslatableField, Locale, ObjectKeys, Price } from 'global-utils/typings';
-import { LANGUAGES, DEFAULT_LANGUAGE, GLOBAL_CURRENCY } from 'global-utils/constants';
 import shortId from 'shortid';
+import { LANGUAGES, DEFAULT_LANGUAGE, GLOBAL_CURRENCY } from 'global-utils/constants';
+import { Price, TranslatableField, Item } from 'data-models';
 import { formatValue, getRandomNumber } from './methods';
 
 const userId = 'asd2234zl';
@@ -41,7 +41,6 @@ const names = [
   'Apartamentai Palangoje - Obelynė'
 ];
 
-
 const getItemName = (names: string[], index: number): TranslatableField => {
   return LANGUAGES.reduce<TranslatableField>((acc, locale) => {
     acc[locale] = locale === DEFAULT_LANGUAGE ? names[index] : `${locale} - ${names[index]}`;
@@ -67,8 +66,8 @@ const getPrice = (): Price => {
   };
 };
 
-export const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): IItem[] => {
-  const items: IItem[] = [];
+export const generateMockedData = (count: number, cityIds: string[], typeIds: string[]): Item[] => {
+  const items: Item[] = [];
 
   let nameIndex = 0;
   for (let i = 0; i < count; i++) {

@@ -1,5 +1,4 @@
 import { prop, pre, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
-import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 
 import { UserRoles } from 'global-utils/typings';
@@ -17,6 +16,9 @@ export class User {
 
   @prop({ required: true })
   public name!: string;
+
+  @prop({ required: true })
+  public alias!: string;
 
   @prop({ required: true, enum: UserRoles })
   public role!: UserRoles;
@@ -43,6 +45,5 @@ export class User {
 export type UsersModelType = ReturnModelType<typeof User>;
 
 export const UsersModel = getModelForClass(User, {
-  existingMongoose: mongoose,
   schemaOptions: { collection: 'users' }
 });

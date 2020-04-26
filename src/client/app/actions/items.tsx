@@ -29,7 +29,7 @@ import {
   IMAGES_UPDATE_SUCCESS,
   IMAGES_UPDATE_ERROR
 } from 'data-strings';
-import { IImage, IItem, IItemDescFields, Locale } from 'global-utils/typings';
+import { IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
 import {
   ItemsActionTypes,
@@ -39,6 +39,7 @@ import {
   IItemsMap,
   IAliasMap
 } from 'types';
+import { Image, Item } from 'data-models';
 
 import { handleApiResponse, http, handleApiErrors } from './utils';
 
@@ -48,7 +49,7 @@ export const receiveItems = (dataMap: IItemsMap, aliases: IAliasMap) => ({
   aliases
 }) as const;
 
-export const receiveItem = (item: IItem) => ({
+export const receiveItem = (item: Item) => ({
   type: ItemsActionTypes.RECEIVE_ITEM,
   item
 }) as const;
@@ -74,7 +75,7 @@ export const receiveMockedData = (dataMap: IItemsMap, aliases: IAliasMap) => ({
   aliases
 }) as const;
 
-export const receiveImages = (itemId: string, images: IImage[], mainImage: string | null) => ({
+export const receiveImages = (itemId: string, images: Image[], mainImage: string | null) => ({
   type: ItemsActionTypes.RECEIVE_IMAGES,
   itemId,
   images,
@@ -105,7 +106,7 @@ export const getClientItem = (locale: Locale, alias: string): ThunkResult<Promis
 
   return http.get(`/api/items/client-item/${alias}`, setAcceptLanguageHeader(locale))
     .then(handleApiResponse)
-    .then((item: IItem) => {
+    .then((item: Item) => {
       dispatch(receiveItem(item));
       dispatch(hideLoader(CONTENT_LOADER_ID));
     })
@@ -117,7 +118,7 @@ export const getClientItem = (locale: Locale, alias: string): ThunkResult<Promis
 
 export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.get<IItem>(`/api/items/admin-item/${itemId}`)
+  return http.get<Item>(`/api/items/admin-item/${itemId}`)
     .then(response => handleApiResponse(response))
     .then(item => {
       batch(() => {
@@ -128,9 +129,9 @@ export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => disp
     .catch(handleApiErrors(ITEM_LOAD_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<IImage[]>> => dispatch => {
+export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<Image[]>> => dispatch => {
   return http
-    .put<IItem>(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
+    .put<Item>(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
       onUploadProgress: (e) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent)))
     })
     .then(response => handleApiResponse(response))
@@ -154,9 +155,9 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
     });
 };
 
-export const updatePhotos = (itemId: string, images: IImage[]): ThunkResult<Promise<void>> => dispatch => {
+export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.put<IItem>(`/api/items/item/update-photos/${itemId}`, {images})
+  return http.put<Item>(`/api/items/item/update-photos/${itemId}`, {images})
     .then(response => handleApiResponse(response))
     .then(item => {
       batch(() => {
@@ -175,10 +176,10 @@ export const updatePhotos = (itemId: string, images: IImage[]): ThunkResult<Prom
     });
 };
 
-export const updateMainInfo = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
+export const updateMainInfo = (item: Item): ThunkResult<Promise<Item>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.put<IItem>(`/api/items/item/main-info/${item.id}`, item)
+  return http.put<Item>(`/api/items/item/main-info/${item.id}`, item)
     .then(response => handleApiResponse(response))
     .then(item => {
       batch(() => {
@@ -205,11 +206,11 @@ export const updateItemDescription = (itemId: string, itemDescFields: IItemDescF
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const createItem = (item: IItem): ThunkResult<Promise<IItem>> => dispatch => {
+export const createItem = (item: Item): ThunkResult<Promise<Item>> => dispatch => {
 
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.post<IItem>(`/api/items`, item)
+  return http.post<Item>(`/api/items`, item)
     .then(response => handleApiResponse(response))
     .then(item => {
       batch(() => {
@@ -228,7 +229,7 @@ export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispa
 
   return http.delete(`/api/items/item/${itemId}`)
     .then(handleApiResponse)
-    .then((item: IItem) => {
+    .then((item: Item) => {
       batch(() => {
         dispatch(removeItem(item.id));
         dispatch(hideLoader(DIALOG_LOADER_ID));
@@ -272,7 +273,7 @@ export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, g
   const typeIds = Object.keys(state.types.dataMap);
   const data = generateMockedData(1000, cityIds, typeIds);
 
-  return http.post<IItem[]>('/api/items/mocked-data', { data })
+  return http.post<Item[]>('/api/items/mocked-data', { data })
     .then(response => handleApiResponse(response))
     .then(items => {
       const newItems = getNewItems(items, state);

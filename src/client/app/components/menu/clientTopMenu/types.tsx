@@ -1,5 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { ICity, Locale } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
+import { City } from 'data-models';
 import { ActiveItem } from 'types';
 
 export interface IOwnProps extends RouteComponentProps<any> {
@@ -11,7 +12,7 @@ export interface IOwnProps extends RouteComponentProps<any> {
 
 export interface IStateProps {
   locale: Locale;
-  cities: ICity[];
+  cities: City[];
   selectedCityId?: string;
   activeItem: ActiveItem;
 }

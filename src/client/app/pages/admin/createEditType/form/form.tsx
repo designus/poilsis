@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
 import { Field, reduxForm } from 'redux-form';
-import { withRouter } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 
 import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
-import { isRequired, IType } from 'global-utils';
+import { isRequired } from 'global-utils';
+import { Type } from 'data-models';
 import { TextInput } from 'components/formFields/textInput';
 import { Switcher } from 'components/formFields/switch';
 import { AdminFormActions } from 'components/adminFormActions';
@@ -57,8 +55,8 @@ const Form: React.FunctionComponent<Props> = props => {
   );
 };
 
-export const TypeForm = reduxForm<IType, ICustomProps>({
-  asyncValidate: (values: IType, dispatch, props) => asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl),
+export const TypeForm = reduxForm<Type, ICustomProps>({
+  asyncValidate: (values: Type, dispatch, props) => asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl),
   asyncBlurFields: ['alias'],
   form: TYPE_FORM_NAME
 })(Form);

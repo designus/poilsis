@@ -5,7 +5,8 @@ import { useDispatch as dispatch } from 'react-redux';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
-import { DataTypes, IUser, IItem, Locale, IAccessTokenClaims, ICity, Price, TranslatableField } from 'global-utils/typings';
+import { Price, TranslatableField, Item, City } from 'data-models';
+import { DataTypes, IUser, Locale, IAccessTokenClaims } from 'global-utils/typings';
 import { hasLocalizedFields } from 'global-utils/methods';
 import {
   IGenericState,
@@ -110,7 +111,7 @@ export function removeByKeys<T>(keys: string[], dataMap: IGenericDataMap<T>): IG
 
 export const capitalize = (word: string) => word.slice(0, 1).toUpperCase() + word.slice(1);
 
-export const getLocalizedText = (text: string | TranslatableField | null, locale: Locale): string => {
+export const getLocalizedText = (locale: Locale, text?: string | TranslatableField | null): string => {
   if (!text || !Object.keys(text).length) return '';
 
   if (hasLocalizedFields(text)) {
@@ -120,14 +121,16 @@ export const getLocalizedText = (text: string | TranslatableField | null, locale
   return text as string;
 };
 
-export const getDropdownOptions = memoize(
-  (dataMap: IGenericDataMap<object>, labelKey: string, locale: Locale): IDropdownOption[] => {
-    return Object.values(dataMap).map((item: any) => ({
-      label: hasLocalizedFields(item[labelKey]) ? getLocalizedText(item[labelKey], locale) : item[labelKey],
-      value: item.id
-    }));
-  }
-);
+export const getDropdownOptions = memoize(<T extends DataTypes>(
+  dataMap: IGenericDataMap<T>,
+  labelKey: keyof T,
+  locale: Locale
+): IDropdownOption[] => {
+  return Object.values(dataMap).map((item: any) => ({
+    label: hasLocalizedFields(item[labelKey]) ? getLocalizedText(locale, item[labelKey]) : item[labelKey],
+    value: item.id
+  }));
+});
 
 export const toggleItemInArray = (items: string[], item: string, shouldAddItem: boolean): string[] => {
   if (shouldAddItem) {
@@ -142,7 +145,7 @@ export const isDataEnabled = (item: DataTypes, locale: Locale) => {
   return item && isEnabled;
 };
 
-export const isItemEnabled = (item: IItem, city: ICity, locale: Locale) =>
+export const isItemEnabled = (item: Item, city: City, locale: Locale) =>
   isDataEnabled(item, locale) && isDataEnabled(city, locale) && item.isApprovedByAdmin;
 
 export const isInputHidden = (selectedLanguage: Locale, hasIntl: boolean, languageOption?: Locale) => {
@@ -179,7 +182,7 @@ export const isAdminItemActive = (pathName: string, paths: string[]) => {
   });
 };
 
-export const getNewItems = (items: IItem[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
+export const getNewItems = (items: Item[], state: IAppState) => items.filter(item => !getItemById(state, item.id));
 
 export const getUserDetails = (accessTokenClaims: IAccessTokenClaims): UserDetails => {
   const { userId, userName, userRole } = accessTokenClaims;
@@ -190,7 +193,7 @@ export const getUserDetails = (accessTokenClaims: IAccessTokenClaims): UserDetai
   };
 };
 
-export const getInitialCitiesFilters = (cities: ICity[]): CitiesFilterState =>
+export const getInitialCitiesFilters = (cities: City[]): CitiesFilterState =>
   cities.reduce((acc: CitiesFilterState, city) => {
     acc[city.id] = { ...DEFAULT_CITY_FITLERS };
     return acc;

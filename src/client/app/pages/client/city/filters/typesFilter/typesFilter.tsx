@@ -40,7 +40,7 @@ function TypesFilter(props: Props) {
         label: intl.formatMessage(messages.allTypes),
         value: DEFAULT_CITY_FITLERS.type
       },
-      ...types.map((type): IDropdownOption => ({ label: getLocalizedText(type.name, locale), value: type.id }))
+      ...types.map((type): IDropdownOption => ({ label: getLocalizedText(locale, type.name), value: type.id }))
     ],
     [types]
   );

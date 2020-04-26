@@ -4,7 +4,8 @@ import { IItemsMap, CitiesMap, IUsersMap, ThunkReturn, ActionReturn } from 'type
 import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApproved } from 'actions/items';
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
-import { IItem, UserRoles, Locale } from 'global-utils/typings';
+import { UserRoles, Locale } from 'global-utils/typings';
+import { Item } from 'data-models';
 
 export interface IOwnProps extends InjectedIntlProps {}
 
@@ -22,7 +23,7 @@ export interface IStateProps {
   usersMap: IUsersMap;
   citiesMap: CitiesMap;
   shouldLoadUserItems: boolean;
-  userItems: IItem[];
+  userItems: Item[];
   userRole?: UserRoles;
   locale: Locale;
 }

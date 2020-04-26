@@ -1,6 +1,6 @@
 import { batch } from 'react-redux';
 import { showLoader, hideLoader } from 'actions/loader';
-import { IItem } from 'global-utils';
+import { Item } from 'data-models';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { HomeActionTypes, ThunkResult } from 'types';
@@ -15,7 +15,7 @@ export const receiveRecommendedItems = (items: string[]) => ({
 export const loadRecommendedItems = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
   dispatch(showLoader(CONTENT_LOADER_ID));
   const state = getState();
-  return http.get<IItem[]>('/api/items/recommended', setAcceptLanguageHeader(state.locale.client))
+  return http.get<Item[]>('/api/items/recommended', setAcceptLanguageHeader(state.locale.client))
     .then(response => handleApiResponse(response))
     .then(items => {
       const newItems = getNewItems(items, getState());

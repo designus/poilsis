@@ -1,11 +1,4 @@
-export interface IImage {
-  id: string;
-  name: string;
-  fileName: string;
-  path: string;
-  thumbName: string;
-  preview: string;
-}
+import { Item, Type, City, User, TranslatableField } from 'data-models';
 
 export enum ImageSize {
   Small = 'S',
@@ -21,10 +14,6 @@ export type Value<T, K extends keyof T> = T[K];
 
 export type IntlSetting<T> = Record<Locale, T>;
 
-export type TranslatableField = IntlSetting<string>;
-
-export type IsEnabled = IntlSetting<boolean>;
-
 export interface IResponseError {
   errors: {
     [key: string]: {
@@ -33,59 +22,7 @@ export interface IResponseError {
   };
 }
 
-export interface ISeoFields {
-  metaTitle: TranslatableField | string;
-  metaDescription: TranslatableField | string;
-}
-
-export interface IItemDescFields extends ISeoFields {
-  description: TranslatableField | string;
-}
-
-export interface IItem extends IItemDescFields {
-  id: string;
-  alias: TranslatableField | string;
-  name: TranslatableField | string;
-  address: string;
-  cityId: string;
-  types: string[];
-  images: IImage[];
-  userId: string;
-  isRecommended: boolean;
-  isEnabled: IsEnabled | boolean;
-  isApprovedByAdmin: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-  mainImage: string;
-  isFullyLoaded?: boolean;
-  price: Price;
-  currency: string;
-}
-
-export type Price = {
-  from: number | null;
-  to: number | null;
-};
-
-export interface IType {
-  id: string;
-  alias: TranslatableField;
-  name: TranslatableField;
-  description: TranslatableField;
-  isEnabled: IsEnabled;
-  isFullyLoaded?: boolean;
-}
-
-export interface ICity extends ISeoFields {
-  id: string;
-  alias: TranslatableField;
-  types: string[];
-  name: TranslatableField;
-  description: TranslatableField;
-  isEnabled: IsEnabled;
-  hasItems?: boolean;
-  isFullyLoaded?: boolean;
-}
+export type IItemDescFields = Pick<Item, 'description' | 'metaDescription' | 'metaTitle'>;
 
 export enum UserRoles {
   admin = 'admin',
@@ -104,15 +41,9 @@ export interface IPhotoFormState {
   files?: File[];
 }
 
-export interface IUser {
-  id: string;
-  name: string;
-  role: UserRoles;
-  alias: string;
-  isEnabled: boolean;
-}
+export type IUser = Pick<User, 'id' | 'name' | 'role' | 'isEnabled' | 'alias'>;
 
-export type DataTypes = IItem | IType | ICity;
+export type DataTypes = Item | Type | City | IUser;
 
 export interface IConfig {
   env: 'development' | 'production' | 'test';
@@ -122,7 +53,7 @@ export interface IConfig {
 }
 
 export type TranslatableFields<O, K = keyof O> = K extends keyof O
-  ? O[K] extends (TranslatableField | string)
+  ? O[K] extends (TranslatableField | string | undefined)
     ? K
     : K extends 'isEnabled' ? K : never
   : never;

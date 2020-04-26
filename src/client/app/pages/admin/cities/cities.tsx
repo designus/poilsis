@@ -8,7 +8,7 @@ import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { deleteCity, toggleCityEnabled } from 'actions/cities';
-import { ICity } from 'global-utils/typings';
+import { City } from 'data-models';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -32,13 +32,13 @@ class AdminCitiesPage extends React.Component<Props, State> {
   get deleteCityName(): string {
     const city = this.props.citiesMap[this.state.deleteId];
     if (city) {
-      return getLocalizedText(city.name, this.props.locale);
+      return getLocalizedText(this.props.locale, city.name);
     }
 
     return '';
   }
 
-  get columns(): Array<ITableColumn<ICity>> {
+  get columns(): Array<ITableColumn<City>> {
     const { formatMessage } = this.props.intl;
     return [
       {
@@ -48,7 +48,7 @@ class AdminCitiesPage extends React.Component<Props, State> {
       {
         headerName: formatMessage({ id: 'admin.common_fields.name'}),
         field: 'name',
-        cellRenderer: (city) => getLocalizedText(city.name, this.props.locale)
+        cellRenderer: (city) => getLocalizedText(this.props.locale, city.name)
       },
       {
         headerName: formatMessage({ id: 'admin.common_fields.types'}),

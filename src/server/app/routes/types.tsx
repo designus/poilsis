@@ -1,5 +1,6 @@
 
 import { Router } from 'express';
+import { TypesModel } from 'data-models';
 import {
   auth,
   getAdminTypes,
@@ -11,8 +12,6 @@ import {
   doesAliasExist,
   toggleEnabled
 } from '../controllers';
-
-import { TypesModel } from '../model';
 
 const router = Router();
 

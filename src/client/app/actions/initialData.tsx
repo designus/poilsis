@@ -3,7 +3,8 @@ import { getNormalizedData, setAcceptLanguageHeader, getUserDetails, getInitialC
 import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
 import { receiveCityFilters } from 'actions/filters';
-import { getAccessTokenClaims, DEFAULT_LANGUAGE, ICity, IType, Locale, isAdmin as isUserAdmin, IUser } from 'global-utils';
+import { getAccessTokenClaims, DEFAULT_LANGUAGE, Locale, IUser } from 'global-utils';
+import { City, Type } from 'data-models';
 import {
   InitialDataActionTypes,
   ThunkResult,
@@ -52,8 +53,8 @@ export const getAdminInitialData = (params: IGetInitialDataParams): ThunkResult<
   return Promise.all(promises)
     .then(response => {
       const [citiesResponse, typesResponse, usersResponse] = response;
-      const cities = getNormalizedData(citiesResponse.data as ICity[]);
-      const types = getNormalizedData(typesResponse.data as IType[]);
+      const cities = getNormalizedData(citiesResponse.data as City[]);
+      const types = getNormalizedData(typesResponse.data as Type[]);
       const users = getNormalizedData(usersResponse.data as IUser[]);
       const filters = getInitialCitiesFilters(citiesResponse.data);
 
@@ -86,8 +87,8 @@ export const getClientInitialData = (params: IGetInitialDataParams): ThunkResult
     return Promise.all(promises)
       .then((response) => {
         const [citiesResponse, typesResponse] = response;
-        const cities = getNormalizedData(citiesResponse.data as ICity[]);
-        const types = getNormalizedData(typesResponse.data as IType[]);
+        const cities = getNormalizedData(citiesResponse.data as City[]);
+        const types = getNormalizedData(typesResponse.data as Type[]);
         const filters = getInitialCitiesFilters(citiesResponse.data);
 
         batch(() => {

@@ -14,4 +14,8 @@ export class Image {
 
   @prop({ required: true })
   public thumbName!: string;
+
+  public name!: string;
+
+  public preview!: string;
 }

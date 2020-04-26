@@ -2,16 +2,13 @@ import { Response, NextFunction } from 'express';
 import { unlink } from 'fs';
 import {
   ImageSize,
-  IImage,
   IMAGE_EXTENSIONS,
-  IItem,
   DataTypes,
   UserRoles,
   Locale,
-  TranslatableFields,
-  IsEnabled,
-  TranslatableField
+  TranslatableFields
 } from 'global-utils';
+import { IsEnabled, TranslatableField, Item, Image } from 'data-models';
 
 import { MulterFile, IInfoFromFileName, FieldsToSet } from './types';
 import { readDirectoryContent } from './fileSystem';
@@ -45,20 +42,20 @@ export const getFileExtension = (mimeType: string) => {
   }
 };
 
-export const getImagePath = (image: IImage) => `${image.path}/${image.thumbName}`;
+export const getImagePath = (image: Image) => `${image.path}/${image.thumbName}`;
 
 export const getFilePath = (destination: string, name: string, extension: string, size: ImageSize) => {
   return `${destination}/${name}_${size}.${extension}`;
 };
 
-export const getImages = (files: MulterFile[]): IImage[] => {
+export const getImages = (files: MulterFile[]): Image[] => {
   return files.map(({filename, destination}: MulterFile) => {
     const { name, extension } = getInfoFromFileName(filename);
     return {
       fileName: filename,
       path: destination,
       thumbName: `${name}_${ImageSize.Small}.${extension}`
-    } as IImage;
+    } as Image;
   });
 };
 
@@ -87,9 +84,9 @@ export function removeFiles(files: string[], next: NextFunction) {
 
 export const extendWithUploadPath = (uploadPath: string) => (fileName: string) => `${uploadPath}/${fileName}`;
 
-export const getRemovableFiles = (existingFiles: string[], newImages: IImage[], uploadPath: string): string[] => {
+export const getRemovableFiles = (existingFiles: string[], newImages: Image[], uploadPath: string): string[] => {
   return existingFiles
-    .filter(fileName => !newImages.find((image: IImage) => (image.fileName === fileName) || (image.thumbName === fileName)))
+    .filter(fileName => !newImages.find((image: Image) => (image.fileName === fileName) || (image.thumbName === fileName)))
     .map(extendWithUploadPath(uploadPath));
 };
 
@@ -139,7 +136,7 @@ export const getAdjustedIsEnabledValue = (item: DataTypes, languages: Locale[]) 
   }, {} as IsEnabled);
 };
 
-export const isApprovedByAdmin = (userRole: UserRoles, item: IItem) =>
+export const isApprovedByAdmin = (userRole: UserRoles, item: Item) =>
   userRole === UserRoles.admin ? item.isApprovedByAdmin : false;
 
 export function getFieldsToUnset<T>(languages: Locale[], skipLocale: Locale, fields: Array<TranslatableFields<T>>): string[] {

@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Dispatch } from 'redux';
 import { isEqual } from 'lodash';
 
-import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IImage, IPhotoFormState, itemValidation } from 'global-utils';
-
+import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IPhotoFormState, itemValidation } from 'global-utils';
+import { Image } from 'data-models';
 import { adminRoutes } from 'client-utils/routes';
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
 import { ImagePreview } from 'components/imagePreview';
@@ -42,7 +41,7 @@ function FormComponent(props: Props) {
     onSaveImages(images);
   };
 
-  const handleImagesSort = (images: IImage[]) => {
+  const handleImagesSort = (images: Image[]) => {
     setImages([...images]);
   };
 
@@ -65,8 +64,8 @@ function FormComponent(props: Props) {
     });
 
   const isSubmitDisabled = () => {
-    const imagesIds = images.map((image: IImage) => image.id);
-    const initialImagesIds = initialImages.map((image: IImage) => image.id);
+    const imagesIds = images.map((image: Image) => image.id);
+    const initialImagesIds = initialImages.map((image: Image) => image.id);
     return isEqual(imagesIds, initialImagesIds);
   };
 

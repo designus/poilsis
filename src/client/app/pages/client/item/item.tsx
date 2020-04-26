@@ -36,11 +36,11 @@ const ItemPage: React.FunctionComponent<ItemPageProps> = props => {
     };
   };
 
-  const getLocalizedName = () => getLocalizedText(selectedItem.name, locale);
+  const getLocalizedName = () => getLocalizedText(locale, selectedItem.name);
 
   const renderTitle = () => {
     const localizedName = getLocalizedName();
-    const localizedTitle = getLocalizedText(selectedItem.metaTitle, locale);
+    const localizedTitle = getLocalizedText(locale, selectedItem.metaTitle);
     return (
       <title>
         {localizedTitle || localizedName}
@@ -50,7 +50,7 @@ const ItemPage: React.FunctionComponent<ItemPageProps> = props => {
 
   const renderMetaDescription = () => {
     return selectedItem.metaDescription && (
-      <meta name="description" content={getLocalizedText(selectedItem.metaDescription, locale)} />
+      <meta name="description" content={getLocalizedText(locale, selectedItem.metaDescription)} />
     );
   };
 
@@ -72,7 +72,7 @@ const ItemPage: React.FunctionComponent<ItemPageProps> = props => {
       <div>{selectedItem.address}</div>
       <Typography variant="body1">
         <div dangerouslySetInnerHTML={
-          createMarkup(getLocalizedText(selectedItem.description, locale))
+          createMarkup(getLocalizedText(locale, selectedItem.description))
         } />
       </Typography>
     </React.Fragment>

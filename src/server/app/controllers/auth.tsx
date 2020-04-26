@@ -4,7 +4,7 @@ import * as day from 'dayjs';
 import * as JWT from 'jwt-decode';
 import { Request, Response, NextFunction } from 'express';
 import { Strategy } from 'passport-jwt';
-import { UserRoles, IItem, IUser, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
+import { UserRoles, SESSION_DURATION_MINUTES, IAccessTokenClaims, Omit } from 'global-utils';
 import { USER_NOT_FOUND, INVALID_CREDENTIALS, AUTHORIZATION_FAILED } from 'data-strings';
 
 import { UsersModel, TokensModel, ItemsModel } from 'data-models';

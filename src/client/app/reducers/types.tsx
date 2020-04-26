@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import { ITypesState, TypesActionTypes, TypesActions, InitialDataActionTypes, InitialDataActions } from 'types';
 import { getAliasState, removeByKeys, getAliasKeysById } from 'client-utils/methods';
+import { IsEnabled } from 'data-models';
 
 type ActionTypes = TypesActions | InitialDataActions;
 
@@ -46,7 +47,7 @@ export const types: Reducer<ITypesState, ActionTypes> = (state: ITypesState = ge
           [action.typeId]: {
             ...state.dataMap[action.typeId],
             isEnabled: {
-              ...state.dataMap[action.typeId].isEnabled,
+              ...state.dataMap[action.typeId].isEnabled as IsEnabled,
               [action.locale]: action.isEnabled
             }
           }

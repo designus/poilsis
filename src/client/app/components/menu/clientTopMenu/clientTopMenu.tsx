@@ -9,7 +9,7 @@ import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { getLocalizedText } from 'client-utils/methods';
 import { callFn } from 'global-utils';
-import { ICity } from 'global-utils/typings';
+import { City } from 'data-models';
 
 import { HorizontalMenu } from './horizontalMenu';
 import { VerticalMenu } from './verticalMenu';
@@ -38,9 +38,9 @@ const ClientTopMenu: React.FunctionComponent<ITopMenuProps> = props => {
 
   const StyledTopMenu = isVertical ? VerticalMenu : HorizontalMenu;
 
-  const getCityItems = () => cities.map((city: ICity) => ({
+  const getCityItems = () => cities.map(city => ({
     id: city.id,
-    text: getLocalizedText(city.name, locale),
+    text: getLocalizedText(locale, city.name),
     link: clientRoutes.items.getLink(locale, city.alias)
   }));
 

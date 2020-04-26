@@ -7,7 +7,8 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { IItem, ICity, Locale } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
+import { Item, City } from 'data-models';
 import { getLocalizedText } from 'client-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { config } from 'config';
@@ -15,8 +16,8 @@ import { config } from 'config';
 import { styles } from './styles';
 
 interface IItemCardProps extends WithStyles<typeof styles>, RouteComponentProps<any> {
-  item: IItem;
-  city: ICity;
+  item: Item;
+  city: City;
   locale: Locale;
 }
 
@@ -36,7 +37,7 @@ function ItemCard(props: IItemCardProps) {
         />
         <CardContent>
           <Typography gutterBottom variant="h4">
-            {getLocalizedText(item.name, locale)}
+            {getLocalizedText(locale, item.name)}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             This is short description

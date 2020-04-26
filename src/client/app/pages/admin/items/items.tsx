@@ -28,7 +28,7 @@ import { ToggleEnabled } from 'components/toggleEnabled';
 import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
 import { ToggleAction } from 'components/toggleAction';
-import { IItem } from 'global-utils/typings';
+import { Item } from 'data-models';
 import { isAdmin } from 'global-utils/methods';
 
 import { Props, IOwnProps, IStateProps, IDispatchProps, State } from './types';
@@ -62,9 +62,9 @@ class AdminItemsPage extends React.Component<Props, State> {
     this.props.toggleItemApproved(itemId, isApproved);
   }
 
-  getColumns(): Array<ITableColumn<IItem>> {
+  getColumns(): Array<ITableColumn<Item>> {
     const { formatMessage, formatDate } = this.props.intl;
-    const columns: Array<ITableColumn<IItem>> = [
+    const columns: Array<ITableColumn<Item>> = [
       {
         headerName: formatMessage({ id: 'admin.common_fields.id' }),
         field: 'id',
@@ -74,14 +74,14 @@ class AdminItemsPage extends React.Component<Props, State> {
         headerName: formatMessage({ id: 'admin.common_fields.name' }),
         field: 'name',
         sortType: 'string',
-        cellRenderer: item => getLocalizedText(item.name, this.props.locale),
+        cellRenderer: item => getLocalizedText(this.props.locale, item.name),
         searchable: true
       },
       {
         headerName: formatMessage({ id: 'admin.common_fields.city' }),
         field: 'cityId',
         sortType: 'string',
-        cellRenderer: (item) => getLocalizedText(this.props.citiesMap[item.cityId].name, this.props.locale),
+        cellRenderer: (item) => getLocalizedText(this.props.locale, this.props.citiesMap[item.cityId].name),
         searchable: true
       },
       {
@@ -186,7 +186,7 @@ class AdminItemsPage extends React.Component<Props, State> {
   get deleteItemName(): string {
     const item = this.props.itemsMap[this.state.deleteId];
     if (item) {
-      return getLocalizedText(item.name, this.props.locale);
+      return getLocalizedText(this.props.locale, item.name);
     }
 
     return '';

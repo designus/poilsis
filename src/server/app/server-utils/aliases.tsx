@@ -1,5 +1,6 @@
 import { NextFunction } from 'express';
-import { TranslatableField, Locale, DataTypes, LANGUAGES } from 'global-utils';
+import { Locale, DataTypes, LANGUAGES } from 'global-utils';
+import { TranslatableField } from 'data-models';
 import { formatValue } from 'global-utils/methods';
 
 export const getAdjustedAliasValue = (item: DataTypes, languages: Locale[], next: NextFunction): TranslatableField | void => {

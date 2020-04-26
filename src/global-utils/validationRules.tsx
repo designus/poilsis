@@ -1,4 +1,3 @@
-import { IItem } from './typings';
 import { IMAGE_MIME_TYPES } from './constants';
 
 interface IRules {

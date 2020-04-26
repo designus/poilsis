@@ -6,16 +6,17 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
+import { Item, City, Type } from 'data-models';
 import { asyncValidateAlias } from 'actions';
 import {
   isAdmin,
   itemValidation,
   isRequired,
+  IUser,
   requiredWhenEnabled,
   minCheckedCount,
   maxCheckedCount,
   priceValidator,
-  IItem,
   DEFAULT_LANGUAGE
 } from 'global-utils';
 
@@ -38,7 +39,6 @@ const Form = (props: Props)  => {
   const { handleSubmit, submitting, pristine, selectedLanguage, intl, locale } = props;
   const classes = useStyles();
   const isHidden = () => selectedLanguage !== DEFAULT_LANGUAGE;
-
   const renderMainInfo = () => {
     return (
       <Paper classes={{ root: classes.paper }} square variant="outlined">
@@ -76,7 +76,7 @@ const Form = (props: Props)  => {
           validate={[isRequired]}
           isHidden={isHidden()}
           label={intl.formatMessage({ id: 'admin.common_fields.city'})}
-          options={getDropdownOptions(props.citiesMap, 'name', locale)}
+          options={getDropdownOptions<City>(props.citiesMap, 'name', locale)}
         />
         {isAdmin(props.userRole) &&
           <Field
@@ -86,7 +86,7 @@ const Form = (props: Props)  => {
             label={intl.formatMessage({ id: 'admin.common_fields.user'})}
             isHidden={isHidden()}
             data={props.usersMap}
-            options={getDropdownOptions(props.usersMap, 'name', locale)}
+            options={getDropdownOptions<IUser>(props.usersMap, 'name', locale)}
           />
         }
         <Field
@@ -95,7 +95,7 @@ const Form = (props: Props)  => {
           validate={[minTypesCount, maxTypesCount]}
           label={intl.formatMessage({ id: 'admin.common_fields.types'})}
           isHidden={isHidden()}
-          options={getDropdownOptions(props.typesMap, 'name', locale)}
+          options={getDropdownOptions<Type>(props.typesMap, 'name', locale)}
         />
         <Field
           name="isEnabled"
@@ -149,8 +149,8 @@ const Form = (props: Props)  => {
   );
 };
 
-export const MainInfoForm = reduxForm<IItem, ICustomProps>({
-  asyncValidate: (item: IItem, dispatch, props) => {
+export const MainInfoForm = reduxForm<Item, ICustomProps>({
+  asyncValidate: (item: Item, dispatch, props) => {
     return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
   },
   asyncBlurFields: ['alias'],

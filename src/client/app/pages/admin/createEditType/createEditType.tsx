@@ -7,8 +7,8 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 
 import { injectIntl, defineMessages } from 'react-intl';
-
-import { IType, LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
+import { Type } from 'data-models';
+import { LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
 import { createType, updateType, getAdminType } from 'actions/types';
 import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
@@ -52,11 +52,11 @@ class CreateEditTypePageComponent extends React.Component<Props> {
 
   isCreatePage = () => !Boolean(this.props.match.params.typeId);
 
-  onSubmit = (type: IType) => {
+  onSubmit = (type: Type) => {
     const { createType, history, updateType, initializeForm } = this.props;
     const submitFn = this.isCreatePage() ? createType : updateType;
     return submitFn(type)
-      .then((newType: IType) => {
+      .then((newType: Type) => {
         if (this.isCreatePage()) {
           history.push(adminRoutes.editType.getLink(newType.id));
         } else {

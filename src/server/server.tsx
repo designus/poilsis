@@ -16,9 +16,9 @@ import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
 import 'global-utils/icons';
 import { rootReducer  } from 'reducers';
-import { IAuthState, IAppState } from 'types';
+import { IAppState } from 'types';
 
-import app, { staticFilesPort } from './app';
+import app from './app';
 import { config } from 'config';
 import { App } from 'pages';
 import { routes } from '../client/app/routes';

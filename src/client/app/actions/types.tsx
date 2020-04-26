@@ -1,5 +1,6 @@
 import { batch } from 'react-redux';
-import { IType, Locale } from 'global-utils';
+import { Locale } from 'global-utils';
+import { Type } from 'data-models';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { showToast } from 'actions/toast';
 import {
@@ -27,7 +28,7 @@ export const selectType = (typeId: string) => ({
   typeId
 }) as const;
 
-export const receiveType = (newType: IType) => ({
+export const receiveType = (newType: Type) => ({
   type: TypesActionTypes.RECEIVE_TYPE,
   newType
 }) as const;
@@ -46,7 +47,7 @@ export const toggleTypeEnabledField = (typeId: string, isEnabled: boolean, local
 
 export const getAdminType = (typeId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.get<IType>(`/api/types/type/${typeId}`)
+  return http.get<Type>(`/api/types/type/${typeId}`)
     .then(response => handleApiResponse(response))
     .then(response => {
       batch(() => {
@@ -57,10 +58,10 @@ export const getAdminType = (typeId: string): ThunkResult<Promise<void>> => disp
     .catch(handleApiErrors(TYPE_LOAD_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const createType = (type: IType): ThunkResult<Promise<IType>> => dispatch => {
+export const createType = (type: Type): ThunkResult<Promise<Type>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.post<IType>('/api/types', type)
+  return http.post<Type>('/api/types', type)
     .then(response => handleApiResponse(response))
     .then(newType => {
       batch(() => {
@@ -73,10 +74,10 @@ export const createType = (type: IType): ThunkResult<Promise<IType>> => dispatch
     .catch(handleApiErrors(TYPE_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateType = (adminType: IType): ThunkResult<Promise<IType>> => dispatch => {
+export const updateType = (adminType: Type): ThunkResult<Promise<Type>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.put<IType>(`/api/types/type/${adminType.id}`, adminType)
+  return http.put<Type>(`/api/types/type/${adminType.id}`, adminType)
     .then(response => handleApiResponse(response))
     .then(newType => {
       batch(() => {

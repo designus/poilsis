@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { auth, getClientCities, getAdminCities, addNewCity, updateCity, deleteCity, getCity, doesAliasExist, toggleEnabled } from '../controllers';
 
-import { CitiesModel } from '../model';
+import { CitiesModel } from 'data-models';
 
 const router = Router();
 

@@ -1,5 +1,6 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
-import { IPhotoFormState, IImage } from 'global-utils/typings';
+import { IPhotoFormState } from 'global-utils/typings';
+import { Image } from 'data-models';
 import { ThunkReturn } from 'types';
 import { updatePhotos, uploadPhotos } from 'actions/items';
 
@@ -11,7 +12,7 @@ export interface IDispatchProps {
   uploadImages: ThunkReturn<typeof uploadPhotos>;
   updateImages: ThunkReturn<typeof updatePhotos>;
   resetUploadState: () => void;
-  sortImages: (id: string) => (image: IImage[]) => void;
+  sortImages: (id: string) => (image: Image[]) => void;
 }
 
 export type Props = IOwnProps & IDispatchProps;

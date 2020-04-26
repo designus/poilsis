@@ -3,8 +3,9 @@ import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { showLoader, hideLoader } from 'actions/loader';
 import { receiveItems } from 'actions/items';
-import { CurrentUserActionTypes, IReceiveUserDetails, ThunkResult, ISetUserItems, UserDetails } from 'types';
-import { isAdmin, IItem } from 'global-utils';
+import { CurrentUserActionTypes, ThunkResult, UserDetails } from 'types';
+import { isAdmin } from 'global-utils';
+import { Item } from 'data-models';
 import { getAdminLocale } from 'selectors';
 import { handleApiResponse, http } from './utils';
 
@@ -33,7 +34,7 @@ export const loadUserItems = (): ThunkResult<Promise<void> | null> => (dispatch,
 
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.get<IItem[]>(endpoint, setAcceptLanguageHeader(locale))
+  return http.get<Item[]>(endpoint, setAcceptLanguageHeader(locale))
     .then(response => handleApiResponse(response))
     .then(items => {
       const data = getNormalizedData(items);

@@ -1,6 +1,7 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { EditorState } from 'draft-js';
-import { IItemDescFields, TranslatableField } from 'global-utils';
+import { IItemDescFields } from 'global-utils';
+import { TranslatableField } from 'data-models';
 import { updateItemDescription } from 'actions/items';
 import { ThunkReturn } from 'types';
 import { CreateEditItemProps } from '../types';

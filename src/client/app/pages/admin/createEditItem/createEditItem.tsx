@@ -9,7 +9,8 @@ import { injectIntl } from 'react-intl';
 
 import { IAppState, ThunkDispatch } from 'types';
 import { getAdminItem } from 'actions';
-import { IItem, hasLocalizedFields } from 'global-utils';
+import { Item } from 'data-models';
+import { hasLocalizedFields } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem, getItemById, getAdminLocale } from 'selectors';
 import { NotFound } from 'components/notFound';
@@ -69,7 +70,7 @@ class CreateEditItemPage extends React.Component<CreateEditItemProps> {
     }
   }
 
-  renderItemName = (loadedItem: IItem) => {
+  renderItemName = (loadedItem: Item) => {
     return loadedItem && hasLocalizedFields(loadedItem.name) ?
       ReactDOM.createPortal(
         <span> / {loadedItem.name[this.props.locale]}</span>,

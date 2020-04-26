@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+import { ReturnModelType } from '@typegoose/typegoose';
 import { ToggleEnabledParams } from 'types';
-import { DataTypes, TranslatableField, IsEnabled } from 'global-utils/typings';
+import { DataTypes } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 import { getItemsByAliasesQuery, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
-import { ItemsModelType, CitiesModelType, TypesModelType } from 'data-models';
+import { Item, City, Type, TranslatableField, IsEnabled } from 'data-models';
 
-type DocumentModelType = ItemsModelType | CitiesModelType | TypesModelType;
+type DocumentModelType = ReturnModelType<typeof Item | typeof City | typeof Type>;
 
 export const toggleEnabled = (DocumentModel: DocumentModelType) =>
   async (req: Request, res: Response, next: NextFunction) => {

@@ -1,5 +1,6 @@
 import { batch } from 'react-redux';
-import { ICity, IItem, Locale } from 'global-utils';
+import { Locale } from 'global-utils';
+import { Item, City } from 'data-models';
 import { showLoader, hideLoader } from 'actions/loader';
 import { showToast } from 'actions/toast';
 import { receiveItems } from 'actions/items';
@@ -26,7 +27,7 @@ import {
 
 import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
 
-export const receiveCity = (city: ICity) => ({
+export const receiveCity = (city: City) => ({
   type: CitiesActionTypes.RECEIVE_CITY,
   city
 }) as const;
@@ -48,9 +49,9 @@ export const setCityItems = (cityId: string) => ({
   cityId
 }) as const;
 
-export const getAdminCity = (cityId: string): ThunkResult<Promise<ICity>> => dispatch => {
+export const getAdminCity = (cityId: string): ThunkResult<Promise<City>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.get<ICity>(`/api/cities/city/${cityId}`)
+  return http.get<City>(`/api/cities/city/${cityId}`)
     .then(response => handleApiResponse(response))
     .then(city => {
       dispatch(receiveCity(city));
@@ -70,7 +71,7 @@ export const loadCityItems = (alias: string): ThunkResult<Promise<void> | null> 
 
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.get<IItem[]>(`/api/items/city/${city.id}`, setAcceptLanguageHeader(state.locale.client))
+  return http.get<Item[]>(`/api/items/city/${city.id}`, setAcceptLanguageHeader(state.locale.client))
     .then(response => handleApiResponse(response))
     .then((items) => {
       const newItems = getNewItems(items, state);
@@ -87,10 +88,10 @@ export const loadCityItems = (alias: string): ThunkResult<Promise<void> | null> 
     });
 };
 
-export const createCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatch: ThunkDispatch) => {
+export const createCity = (city: City): ThunkResult<Promise<City>> => (dispatch: ThunkDispatch) => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.post<ICity>('/api/cities', city)
+  return http.post<City>('/api/cities', city)
     .then(response => handleApiResponse(response))
     .then(city => {
       dispatch(receiveCity(city));
@@ -100,10 +101,10 @@ export const createCity = (city: ICity): ThunkResult<Promise<ICity>> => (dispatc
     .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (city: ICity): ThunkResult<Promise<ICity>> => dispatch => {
+export const updateCity = (city: City): ThunkResult<Promise<City>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.put<ICity>(`/api/cities/city/${city.id}`, city)
+  return http.put<City>(`/api/cities/city/${city.id}`, city)
     .then(response => handleApiResponse(response))
     .then(city => {
       batch(() => {

@@ -1,5 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { ICity, IItem, Locale } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
+import { City, Item } from 'data-models';
 
 export type MatchParams = {
   cityAlias: string;
@@ -9,8 +10,8 @@ export type MatchParams = {
 export type OwnProps = RouteComponentProps<MatchParams>;
 
 export type StateProps = {
-  cityItems: IItem[];
-  selectedCity: ICity;
+  cityItems: Item[];
+  selectedCity: City;
   shouldLoadCityItems: boolean;
   locale: Locale;
 };

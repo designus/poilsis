@@ -7,7 +7,8 @@ import { adminRoutes } from 'client-utils/routes';
 import { deleteType, toggleTypeEnabled } from 'actions/types';
 import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
-import { IType, Locale } from 'global-utils';
+import { Locale } from 'global-utils';
+import { Type } from 'data-models';
 import { IAppState, ITypesMap, ToggleEnabledParams, ThunkDispatch, ThunkReturn } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
@@ -28,7 +29,7 @@ interface IDispatchProps {
 
 interface IStateProps {
   typesMap: ITypesMap;
-  types: IType[];
+  types: Type[];
   locale: Locale;
 }
 
@@ -49,13 +50,13 @@ class AdminTypesPage extends React.Component<Props, State> {
   get deleteTypeName(): string {
     const type = this.props.typesMap[this.state.deleteId];
     if (type) {
-      return getLocalizedText(type.name, this.props.locale);
+      return getLocalizedText(this.props.locale, type.name);
     }
 
     return '';
   }
 
-  getColumns(): Array<ITableColumn<IType>> {
+  getColumns(): Array<ITableColumn<Type>> {
     const { formatMessage } = this.props.intl;
     return [
       {
@@ -65,12 +66,12 @@ class AdminTypesPage extends React.Component<Props, State> {
       {
         headerName: formatMessage({id: 'admin.common_fields.name'}),
         field: 'name',
-        cellRenderer: (type) => getLocalizedText(type.name, this.props.locale)
+        cellRenderer: (type) => getLocalizedText(this.props.locale, type.name)
       },
       {
         headerName: formatMessage({id: 'admin.common_fields.description'}),
         field: 'description',
-        cellRenderer: (type) => getLocalizedText(type.description, this.props.locale)
+        cellRenderer: (type) => getLocalizedText(this.props.locale, type.description)
       },
       {
         headerName: formatMessage({ id: 'admin.common_fields.is_enabled' }),

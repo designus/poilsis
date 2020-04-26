@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 import { IUploadProgressState } from 'types';
 import { SuccessIcon, ErrorIcon } from 'client-utils/custom-icons';
-import { IImage } from 'global-utils';
+import { Image } from 'data-models';
 import { config } from 'config';
 import { ImageWrapper } from './imageWrapper';
 
@@ -14,11 +14,11 @@ import { styles, viewbox } from './style';
 
 export interface IImagePreview extends IUploadProgressState, WithStyles<typeof styles> {
   isTemporary: boolean;
-  images: IImage[];
+  images: Image[];
   label?: string;
   onLoadImage?: () => void;
   onDeleteImage: (index: number) => (e: any) => void;
-  onSortImages?: (images: IImage[]) => void;
+  onSortImages?: (images: Image[]) => void;
   showLoader?: boolean;
 }
 
@@ -53,7 +53,7 @@ const ImagePreview = (props: IImagePreview) => {
     );
   };
 
-  const renderImage = (image: IImage, index: number) => {
+  const renderImage = (image: Image, index: number) => {
     const src = isTemporary ? image.preview : `${config.host}/${image.path}/${image.thumbName}`;
     return (
       <div className={classes.imageSource}>
@@ -65,7 +65,7 @@ const ImagePreview = (props: IImagePreview) => {
     );
   };
 
-  const renderImageWrapper = (image: IImage, index: number, array: IImage[]) => {
+  const renderImageWrapper = (image: Image, index: number, array: Image[]) => {
     const key = image.id ? image.id : index;
     return (
       <ImageWrapper

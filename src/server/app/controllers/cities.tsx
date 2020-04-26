@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
-import { ICity, LANGUAGES, TranslatableField, ToggleFields, Locale } from 'global-utils';
+import { CitiesModel, TranslatableField, City } from 'data-models';
+import { LANGUAGES, ToggleFields, Locale } from 'global-utils';
 import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
-import { getAdjustedAliasValue, getUniqueAlias, getAliasList } from 'server-utils/aliases';
+import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { getDataByAlias } from './common';
-import { CitiesModel } from 'data-models';
 
 export const getClientCities = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -12,11 +12,11 @@ export const getClientCities = async (req: Request, res: Response, next: NextFun
 
     if (!locale) throw new Error('Locale is not set');
 
-    const toggleFields: ToggleFields<ICity> = ['name', 'alias', 'description', 'metaTitle', 'metaDescription', 'isEnabled'];
+    const toggleFields: ToggleFields<City> = ['name', 'alias', 'description', 'metaTitle', 'metaDescription', 'isEnabled'];
     const cities = await CitiesModel.aggregate([
       { $project: { _id: 0, __v: 0 } },
-      { $unset: getFieldsToUnset<ICity>(LANGUAGES, locale, toggleFields)},
-      { $set: getFieldsToSet<ICity>(locale, toggleFields) }
+      { $unset: getFieldsToUnset<City>(LANGUAGES, locale, toggleFields)},
+      { $set: getFieldsToSet<City>(locale, toggleFields) }
     ])
     .exec();
 
@@ -51,7 +51,7 @@ export const getCity = (req: Request, res: Response, next: NextFunction) => {
 
 export const addNewCity = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
-  const city: ICity = req.body;
+  const city: City = req.body;
   const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
   const isEnabled = getAdjustedIsEnabledValue(city, LANGUAGES);
   // @ts-ignore
@@ -68,7 +68,7 @@ export const addNewCity = async (req: Request, res: Response, next: NextFunction
 
 export const updateCity = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const city: ICity = req.body;
+    const city: City = req.body;
     const cityId = req.params.cityId;
     const alias = getAdjustedAliasValue(city, LANGUAGES, next) as TranslatableField;
     const isEnabled = getAdjustedIsEnabledValue(city, LANGUAGES);

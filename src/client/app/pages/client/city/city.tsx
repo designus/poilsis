@@ -40,11 +40,11 @@ const CityPage: React.FunctionComponent<Props> = props => {
 
   }, [props, prevLocation]);
 
-  const getLocalizedName = () => getLocalizedText(selectedCity.name, locale);
+  const getLocalizedName = () => getLocalizedText(locale, selectedCity.name);
 
   const renderTitle = () => {
     const localizedName = getLocalizedName();
-    const localizedTitle = getLocalizedText(selectedCity.metaTitle, locale);
+    const localizedTitle = getLocalizedText(locale, selectedCity.metaTitle);
     return (
       <title>
         {localizedTitle || localizedName}
@@ -54,7 +54,7 @@ const CityPage: React.FunctionComponent<Props> = props => {
 
   const renderMetaDescription = () => {
     return selectedCity.metaDescription && (
-      <meta name="description" content={getLocalizedText(selectedCity.metaDescription, locale)} />
+      <meta name="description" content={getLocalizedText(locale, selectedCity.metaDescription)} />
     );
   };
 
@@ -80,7 +80,7 @@ const CityPage: React.FunctionComponent<Props> = props => {
             {getLocalizedName()}
           </Typography>
           <Typography variant="body1">
-            {getLocalizedText(selectedCity.description, locale)}
+            {getLocalizedText(locale, selectedCity.description)}
           </Typography>
           <ItemsListWithLoader
             loaderId={CONTENT_LOADER_ID}

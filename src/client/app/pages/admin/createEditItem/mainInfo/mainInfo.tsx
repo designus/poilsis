@@ -11,7 +11,8 @@ import { updateMainInfo, createItem } from 'actions/items';
 import { getBackendErrors } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { IItem, LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { Item } from 'data-models';
+import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
@@ -28,7 +29,7 @@ class MainInfoPage extends React.Component<Props> {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onSubmit = (item: IItem) => {
+  onSubmit = (item: Item) => {
     const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
     const submitFn = isCreatePage ? createItem : updateItem;
     return submitFn({ ...item, currency: 'EUR' })

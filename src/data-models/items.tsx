@@ -4,16 +4,16 @@ import shortId from 'shortid';
 import { getDefaultTranslatableField, getDefaultPriceField } from 'global-utils/methods';
 import { GLOBAL_CURRENCY } from 'global-utils/constants';
 import { itemValidation } from 'global-utils/validationRules';
-import { requiredMessage, getValidationMessage } from 'global-utils/validationMessages';
+import { getRequiredMessage, getValidationMessage } from 'global-utils/validationMessages';
 import { RANGE, MAX_PHOTO_COUNT } from 'data-strings';
 
 import { IsEnabled, TranslatableField, NameField } from './common';
 import { Price } from './price';
 import { Image } from './image';
 
-const maxLength = (maxLength: number) => (value: string) => value.length <= maxLength;
-const minLength = (minLength: number) => (value: string) => value.length >= minLength;
-const minMaxLength = (min: number, max: number) => (value: string) => minLength(min)(value) && maxLength(max)(value);
+const maxLength = (maxLength: number) => (value: any) => value.length <= maxLength;
+const minLength = (minLength: number) => (value: any) => value.length >= minLength;
+const minMaxLength = (min: number, max: number) => (value: any) => minLength(min)(value) && maxLength(max)(value);
 const {
   types: { minCheckedCount: minTypesCount, maxCheckedCount: maxTypesCount },
   images: { maxPhotos }
@@ -21,67 +21,73 @@ const {
 
 export class Item {
   @prop({ unique: true, default: shortId.generate, required: true })
-  public id!: string;
+  id!: string;
 
-  @prop({ required: [true, requiredMessage] })
-  public name!: NameField;
+  @prop({ required: [true, getRequiredMessage()], type: NameField })
+  name!: TranslatableField | string;
 
-  @prop({ required: [true, requiredMessage] })
-  public alias!: TranslatableField;
+  @prop({ required: [true, getRequiredMessage()], type: TranslatableField })
+  alias!: TranslatableField | string;
 
-  @prop({ required: [true, requiredMessage] })
-  public cityId!: string;
+  @prop({ required: [true, getRequiredMessage()] })
+  cityId!: string;
 
   @prop({ default: getDefaultPriceField() })
-  public price!: Price;
+  price!: Price;
 
   @prop({ default: GLOBAL_CURRENCY })
-  public currency!: string;
+  currency!: string;
 
   @prop({ default: '' })
-  public address!: string;
+  address!: string;
 
-  @arrayProp({ required: [true, requiredMessage], items: String, validate: [
-    minMaxLength(minTypesCount, maxTypesCount),
-    getValidationMessage(RANGE, minTypesCount, maxTypesCount)
+  @arrayProp({ required: [true, getRequiredMessage()], items: String, validate: [
+    {
+      validator: minMaxLength(minTypesCount, maxTypesCount),
+      message: getValidationMessage(RANGE, minTypesCount, maxTypesCount)
+    }
   ] })
-  public types!: string[];
+  types!: string[];
 
-  @prop({ required: [true, requiredMessage] })
-  public userId!: string;
-
-  @prop({ default: false })
-  public isApprovedByAdmin!: boolean;
+  @prop({ required: [true, getRequiredMessage()] })
+  userId!: string;
 
   @prop({ default: false })
-  public isRecommended!: boolean;
+  isApprovedByAdmin!: boolean;
+
+  @prop({ default: false })
+  isRecommended!: boolean;
 
   @prop({ default: Date.now() })
-  public createdAt!: string;
+  createdAt?: string;
 
   @prop({ updatedAt: Date.now() })
-  public updatedAt!: string;
+  updatedAt?: string;
 
   @prop({ default: '' })
-  public mainImage!: string;
+  mainImage!: string;
 
   @arrayProp({ default: [], items: Image, validate: [
-    maxLength(maxPhotos),
-    getValidationMessage(MAX_PHOTO_COUNT, maxPhotos)
+    {
+      validator: maxLength(maxPhotos),
+      message: getValidationMessage(MAX_PHOTO_COUNT, maxPhotos)
+    }
   ] })
-  public images!: Image[];
+  images!: Image[];
 
-  @prop({ default: getDefaultTranslatableField() })
-  public description?: TranslatableField;
+  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
+  description?: TranslatableField | string;
 
-  @prop({ required: [true, requiredMessage]})
-  public isEnabled!: IsEnabled;
+  @prop({ required: [true, getRequiredMessage()], type: IsEnabled })
+  isEnabled!: IsEnabled | boolean;
 
-  @prop({ default: getDefaultTranslatableField() })
-  public metaTitle?: TranslatableField;
+  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
+  metaTitle?: TranslatableField | string;
 
-  @prop({ default: getDefaultTranslatableField() })
-  public metaDescription?: TranslatableField;
+  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
+  metaDescription?: TranslatableField | string;
+
+  isFullyLoaded?: boolean;
 }
 
 export type ItemsModelType = ReturnModelType<typeof Item>;

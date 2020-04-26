@@ -16,7 +16,8 @@ import FormatUnderlined from '@material-ui/icons/FormatUnderlined';
 import FormatUnorderedList from '@material-ui/icons/FormatListBulleted';
 import { debounce } from 'lodash';
 
-import { LANGUAGES, DEFAULT_LANGUAGE, TranslatableField, IntlSetting } from 'global-utils';
+import { LANGUAGES, DEFAULT_LANGUAGE, IntlSetting } from 'global-utils';
+import { TranslatableField } from 'data-models';
 import { styles } from './styles';
 
 export interface IEditorInputProps extends WrappedFieldProps, WithStyles<typeof styles> {

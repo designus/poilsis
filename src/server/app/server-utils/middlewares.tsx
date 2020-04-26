@@ -4,9 +4,9 @@ import { Request, NextFunction, Response } from 'express';
 import { readdir } from 'fs';
 import {
   ImageSize,
-  IImage,
   itemValidation
 } from 'global-utils';
+import { Image } from 'data-models';
 
 import { formatValue } from 'global-utils/methods';
 
@@ -72,7 +72,7 @@ export const removeImagesDir = async (req: Request, res: Response, next: NextFun
 export const removeImagesFromFs = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const itemId = req.params.itemId;
-    const images: IImage[] = req.body.images;
+    const images: Image[] = req.body.images;
     const uploadPath = getUploadPath(itemId);
     const files: string[] = await readDirectoryContent(getUploadPath(itemId));
 

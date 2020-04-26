@@ -1,4 +1,5 @@
-import { UserRoles, TranslatableField, Locale } from 'global-utils/typings';
+import { UserRoles, Locale } from 'global-utils/typings';
+import { TranslatableField } from 'data-models';
 import { LANGUAGES } from 'global-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 
@@ -83,7 +84,7 @@ interface IAdminRoutesConfig {
     path: string;
     getLink: (cityId: string) => string;
     allowedRoles: UserRoles[];
-  }
+  };
 }
 
 const locales = LANGUAGES.join('|');
@@ -99,11 +100,11 @@ export const clientRoutes: IClientRoutesConfig = {
   },
   items: {
     path: `/:locale(${locales})/:cityAlias`,
-    getLink: (locale, cityAlias) => `/${locale}/${getLocalizedText(cityAlias, locale)}`
+    getLink: (locale, cityAlias) => `/${locale}/${getLocalizedText(locale, cityAlias)}`
   },
   item: {
     path: `/:locale(${locales})/:cityAlias/:itemAlias`,
-    getLink: (locale, cityAlias, itemAlias) => `/${locale}/${getLocalizedText(cityAlias, locale)}/${getLocalizedText(itemAlias, locale)}`
+    getLink: (locale, cityAlias, itemAlias) => `/${locale}/${getLocalizedText(locale, cityAlias)}/${getLocalizedText(locale, itemAlias)}`
   }
 };
 

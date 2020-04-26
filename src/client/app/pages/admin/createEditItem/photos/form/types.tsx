@@ -1,12 +1,12 @@
 import { InjectedFormProps } from 'redux-form';
 import { IntlShape } from 'react-intl';
-import { IImage } from 'global-utils/typings';
+import { Image } from 'data-models';
 
 export interface ICustomProps {
-  images: IImage[];
+  images: Image[];
   onResetUploadState: () => void;
-  onSaveImages: (images: IImage[]) => void;
-  onSortImages: (images: IImage[]) => void;
+  onSaveImages: (images: Image[]) => void;
+  onSortImages: (images: Image[]) => void;
   intl: IntlShape;
 }
 

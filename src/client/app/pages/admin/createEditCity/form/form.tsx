@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
-import { ICity, DEFAULT_LANGUAGE, requiredWhenEnabled } from 'global-utils';
+import { City } from 'data-models';
+import { DEFAULT_LANGUAGE, requiredWhenEnabled } from 'global-utils';
 import { asyncValidateAlias } from 'actions';
 
 import { TextInput } from 'components/formFields/textInput';
@@ -81,8 +82,8 @@ const Form = (props: Props) => {
   );
 };
 
-export const CityForm = reduxForm<ICity, ICustomProps>({
-  asyncValidate: (values: ICity, dispatch, props) => {
+export const CityForm = reduxForm<City, ICustomProps>({
+  asyncValidate: (values: City, dispatch, props) => {
     return asyncValidateAlias(values, '/api/cities/city/alias-exist', props.intl);
   },
   asyncBlurFields: ['alias'],

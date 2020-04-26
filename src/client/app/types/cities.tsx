@@ -1,10 +1,10 @@
-import { ICity } from 'global-utils/typings';
+import { City } from 'data-models';
 import { receiveCity, removeCity, toggleCityEnabledField, setCityItems } from 'actions/cities';
 import { IGenericDataMap, IGenericState } from './generic';
 
-export type CitiesMap = IGenericDataMap<ICity>;
+export type CitiesMap = IGenericDataMap<City>;
 
-export interface ICityState extends IGenericState<ICity> {}
+export interface ICityState extends IGenericState<City> {}
 
 export enum CitiesActionTypes {
   RECEIVE_CITY = 'RECEIVE_CITY',

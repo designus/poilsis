@@ -27,7 +27,7 @@ import {
   removeImagesDir
 } from '../server-utils';
 
-import { ItemsModel } from '../model';
+import { ItemsModel } from 'data-models';
 
 const router = Router();
 

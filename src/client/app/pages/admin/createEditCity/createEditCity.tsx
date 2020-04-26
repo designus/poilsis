@@ -6,7 +6,8 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, defineMessages } from 'react-intl';
 
-import { ICity, LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
+import { City } from 'data-models';
+import { LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions/cities';
 import { getBackendErrors } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
@@ -51,11 +52,11 @@ class CreateEditCity extends React.Component<Props> {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onSubmit = (city: ICity) => {
+  onSubmit = (city: City) => {
     const { createCity, history, updateCity, initializeForm } = this.props;
     const submitFn = this.isCreatePage() ? createCity : updateCity;
     return submitFn(city)
-      .then((newCity: ICity) => {
+      .then((newCity: City) => {
         if (this.isCreatePage()) {
           history.push(adminRoutes.editCity.getLink(newCity.id));
         } else {

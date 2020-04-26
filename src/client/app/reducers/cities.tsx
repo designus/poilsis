@@ -8,6 +8,7 @@ import {
   InitialDataActionTypes,
   InitialDataActions
 } from 'types';
+import { IsEnabled } from 'data-models';
 
 type ActionTypes = CitiesActions | ItemsActions | InitialDataActions;
 
@@ -59,7 +60,7 @@ export const cities: Reducer<ICityState, ActionTypes> = (state: ICityState = get
           [action.cityId]: {
             ...state.dataMap[action.cityId],
             isEnabled: {
-              ...state.dataMap[action.cityId].isEnabled,
+              ...state.dataMap[action.cityId].isEnabled as IsEnabled,
               [action.locale]: action.isEnabled
             }
           }

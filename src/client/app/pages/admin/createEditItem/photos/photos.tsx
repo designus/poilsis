@@ -2,8 +2,9 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 
-import { IImage, IPhotoFormState } from 'global-utils/typings';
+import { IPhotoFormState } from 'global-utils/typings';
 import { IAppState, ThunkDispatch } from 'types';
+import { Image } from 'data-models';
 
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { updatePhotos, uploadPhotos, receiveImages } from 'actions/items';
@@ -24,7 +25,7 @@ class PhotosPage extends React.Component<Props> {
     }
   }
 
-  handleImagesUpdate = (images: IImage[]) => {
+  handleImagesUpdate = (images: Image[]) => {
     this.props.updateImages(this.getItemId(), images);
   }
 
@@ -51,7 +52,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   uploadImages: (itemId, files) => dispatch(uploadPhotos(itemId, files)),
   updateImages: (itemId, images) => dispatch(updatePhotos(itemId, images)),
   resetUploadState: () => dispatch(resetUploadState()),
-  sortImages: id => (images: IImage[]) => dispatch(receiveImages(id, images, null))
+  sortImages: id => (images: Image[]) => dispatch(receiveImages(id, images, null))
 });
 
 export default injectIntl(

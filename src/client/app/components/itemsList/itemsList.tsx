@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import 'react-virtualized/styles.css';
 
 import { config } from 'config';
-import { ICity, IItem } from 'global-utils/typings';
+import { City, Item } from 'data-models';
 import { SMALL_IMAGE_HEIGHT } from 'global-utils/constants';
 import { isClient, isServer } from 'global-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
@@ -20,8 +20,8 @@ import { ItemTypesList } from '../itemTypesList';
 import { useStyles } from './styles';
 
 type Props = {
-  items: IItem[];
-  selectedCity: ICity;
+  items: Item[];
+  selectedCity: City;
 };
 
 export const rowHeight = SMALL_IMAGE_HEIGHT + 20;
@@ -38,11 +38,11 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
     setIsMounted(true);
   }, []);
 
-  const handleClick = (item: IItem) => () => {
+  const handleClick = (item: Item) => () => {
     history.push(clientRoutes.item.getLink(locale, props.selectedCity.alias, item.alias));
   };
 
-  const getImageUrl = (item: IItem) => item.mainImage
+  const getImageUrl = (item: Item) => item.mainImage
     ? `${config.host}/${item.mainImage}`
     : `${config.host}/images/no-image.png`;
 
@@ -56,7 +56,7 @@ const ItemsList: React.FunctionComponent<Props> = (props) => {
           </div>
           <div className={classes.content}>
             <Typography variant="h3" className={classes.name}>
-              {getLocalizedText(item.name, locale)}
+              {getLocalizedText(locale, item.name)}
             </Typography>
             <ItemTypesList locale={locale} typeIds={item.types} />
             <PriceDisplay

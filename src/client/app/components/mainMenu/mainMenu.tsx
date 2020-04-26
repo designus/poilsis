@@ -6,7 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { IAppState } from 'types';
-import { ICity, Locale } from 'global-utils/typings';
+import { Locale } from 'global-utils/typings';
+import { City } from 'data-models';
 import { getEnabledCities, getClientLocale } from 'selectors';
 
 import { styles } from './styles';
@@ -17,7 +18,7 @@ interface IOwnProps extends RouteComponentProps<any>, WithStyles<typeof styles> 
 }
 
 interface IStateProps {
-  citiesList: ICity[];
+  citiesList: City[];
   locale: Locale;
 }
 
@@ -26,7 +27,7 @@ type Props = IOwnProps & IStateProps;
 const MainMenu: React.FunctionComponent<Props> = props => {
   const { useWrapper, citiesList, locale } = props;
 
-  const renderCity = (city: ICity) => (
+  const renderCity = (city: City) => (
     <MenuItem key={city.id}>
       <NavLink
         activeStyle={{ color: 'red' }}

@@ -1,10 +1,10 @@
-import { IType } from 'global-utils/typings';
+import { Type } from 'data-models';
 import { IGenericDataMap, IGenericState } from './generic';
 import { selectType, receiveType, removeType, toggleTypeEnabledField } from 'actions/types';
 
-export type ITypesMap = IGenericDataMap<IType>;
+export type ITypesMap = IGenericDataMap<Type>;
 
-export interface ITypesState extends IGenericState<IType> {
+export interface ITypesState extends IGenericState<Type> {
   selectedId?: string;
 }
 

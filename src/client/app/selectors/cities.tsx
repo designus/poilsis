@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ICity, IItem, Price } from 'global-utils/typings';
+import { Price, City, Item } from 'data-models';
 import { isNumber } from 'global-utils/methods';
 import { getItemsMap, getClientLocale } from 'selectors';
 import { IAppState, IItemsMap, CitiesMap, ICityFilters } from 'types';
@@ -8,9 +8,9 @@ import { getCityFilters } from './filters';
 
 export const getCitiesMap = (state: IAppState): CitiesMap => state.cities.dataMap;
 
-export const getAllCities = (state: IAppState): ICity[] => Object.values(getCitiesMap(state));
+export const getAllCities = (state: IAppState): City[] => Object.values(getCitiesMap(state));
 
-export const getEnabledCities = (state: IAppState): ICity[] => {
+export const getEnabledCities = (state: IAppState): City[] => {
   const allCities = getAllCities(state);
   const locale = getClientLocale(state);
   return allCities.filter(city => {
@@ -21,10 +21,10 @@ export const getEnabledCities = (state: IAppState): ICity[] => {
 
 export const getCitiesAliases = (state: IAppState) => state.cities.aliases;
 
-export const getCityById = (state: IAppState, cityId: string): ICity =>
+export const getCityById = (state: IAppState, cityId: string): City =>
   getCitiesMap(state)[cityId];
 
-export const getCityByAlias = (state: IAppState, alias: string): ICity => {
+export const getCityByAlias = (state: IAppState, alias: string): City => {
   const aliases = getCitiesAliases(state);
   const cityId = aliases[alias];
   return getCitiesMap(state)[cityId];
@@ -61,7 +61,7 @@ const filterByPrice = (itemPrice: Price, priceFilter: Price) => {
   return true;
 };
 
-export const getCityItems = createSelector<IAppState, string, string, IItemsMap, ICityFilters | undefined,  IItem[]>(
+export const getCityItems = createSelector<IAppState, string, string, IItemsMap, ICityFilters | undefined,  Item[]>(
   [getSelectedCityId, getItemsMap, getCityFilters],
   (selectedCityId, itemsMap, cityFilters) => {
     if (selectedCityId && cityFilters) {
