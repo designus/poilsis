@@ -26,10 +26,10 @@
       "data-models/*": ["./src/data-models/*"],
       "config": ["./config"]
     },
-    "lib": ["es2017", "dom", "es7", "dom.iterable"],
+    "lib": ["es2017", "dom", "es7", "dom.iterable", "esnext.asynciterable"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es2015",
+    "target": "es2016",
     // Preserve dynamic import
     "module": "esnext",
     // Preserve React jsx syntax

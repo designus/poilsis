@@ -11,7 +11,6 @@ const helmet = require('helmet');
 const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
-const mung = require('express-mung');
 
 const app = express();
 

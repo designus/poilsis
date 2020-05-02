@@ -1,8 +1,12 @@
+import 'reflect-metadata';
 import * as React from 'react';
+import { buildSchema } from 'type-graphql';
+
 import { renderToString } from 'react-dom/server';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
+import * as graphqlHTTP from 'express-graphql';
 import { Response } from 'express';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
@@ -14,6 +18,7 @@ import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
+import { CityResolver } from './app/resolvers';
 import 'global-utils/icons';
 import { rootReducer  } from 'reducers';
 import { IAppState } from 'types';
@@ -25,103 +30,114 @@ import { routes } from '../client/app/routes';
 
 import { auth, preloadData } from './app/index';
 
-const stats = require('./stats/reactLoadable.json');
+async function bootstrap() {
+  const stats = require('./stats/reactLoadable.json');
 
-const getInitialState = (req: any, user: any): IAppState => {
-  const state = {} as IAppState;
-  if (user) {
-    return {
-      ...state,
-      auth: {
-        accessToken: req.cookies.jwt,
-        isLoggedIn: true,
-        showKeepMeLoggedModal: false
+  const schema = await buildSchema({
+    resolvers: [CityResolver]
+  });
+
+  const getInitialState = (req: any, user: any): IAppState => {
+    const state = {} as IAppState;
+    if (user) {
+      return {
+        ...state,
+        auth: {
+          accessToken: req.cookies.jwt,
+          isLoggedIn: true,
+          showKeepMeLoggedModal: false
+        }
+      };
+    }
+
+    return state;
+  };
+
+  app.use('/graphql', graphqlHTTP(async (req, res, params) => ({ schema })));
+
+  app.get('*', (req, res, next) => {
+    return auth.authenticate((err: any, user: any) => {
+      const location = req.url;
+      const initialState = getInitialState(req, user);
+      const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
+      const branch = matchRoutes(routes, location);
+
+      const promises = branch
+        .map((item: MatchedRoute<{}>) => {
+          const { fetchData } = item.route;
+          const { params } = item.match;
+          if (Array.isArray(fetchData)) {
+            return fetchData.map(fn => ({ fetchData: fn, params }));
+          } else {
+            return { fetchData, params };
+          }
+        })
+        // Flatten array to 1 level deep
+        .reduce((acc: any[], val) => acc.concat(val), [])
+        .filter(({fetchData}) => Boolean(fetchData))
+        .map((item) => {
+          const {fetchData, params} = item;
+          return fetchData.bind(null, store, params);
+        });
+
+      return preloadData(promises).then(() => sendResponse(res, store, location));
+    })(req, res, next);
+  });
+
+  function sendResponse(res: Response, store: any, location: any) {
+    const modules: string[] = [];
+    const state = store.getState();
+    const sheets = new ServerStyleSheets();
+    const context = {};
+
+    const html = renderToString(
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        {sheets.collect(
+          <ThemeProvider theme={theme}>
+            <Provider store={store} key="provider">
+              <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
+                <StaticRouter location={location} context={context}>
+                  <App />
+                </StaticRouter>
+              </IntlProvider>
+            </Provider>
+          </ThemeProvider>
+        )}
+      </Loadable.Capture>
+    );
+
+    const helmet = Helmet.renderStatic();
+    const css = sheets.toString();
+    const bundles = getBundles(stats, modules);
+    const preloadedState = serialize(state, { isJSON: true });
+
+    const scripts = bundles
+      .filter(bundle => bundle.file.endsWith('.js'))
+      .map(script => script.file)
+      .filter(removeDuplicates)
+      .map(jsFile => `<script src="${getStaticFileUri(jsFile)}"></script>`)
+      .join('\n');
+
+    res.render('index', {
+      locals: {
+        html,
+        scripts,
+        css,
+        preloadedState,
+        helmet,
+        fontAwesomeCSS: dom.css()
       }
-    };
+  });
   }
 
-  return state;
-};
+  Loadable.preloadAll()
+    .then(() => {
 
-app.get('*', (req, res, next) => {
-  return auth.authenticate((err: any, user: any) => {
-    const location = req.url;
-    const initialState = getInitialState(req, user);
-    const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
-    const branch = matchRoutes(routes, location);
-
-    const promises = branch
-      .map((item: MatchedRoute<{}>) => {
-        const { fetchData } = item.route;
-        const { params } = item.match;
-        if (Array.isArray(fetchData)) {
-          return fetchData.map(fn => ({ fetchData: fn, params }));
-        } else {
-          return { fetchData, params };
-        }
-      })
-      // Flatten array to 1 level deep
-      .reduce((acc: any[], val) => acc.concat(val), [])
-      .filter(({fetchData}) => Boolean(fetchData))
-      .map((item) => {
-        const {fetchData, params} = item;
-        return fetchData.bind(null, store, params);
+      app.listen(config.port, () => {
+        console.info(`==> 🌎  Listening on ports ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
       });
-
-    return preloadData(promises).then(() => sendResponse(res, store, location));
-  })(req, res, next);
-});
-
-function sendResponse(res: Response, store: any, location: any) {
-  const modules: string[] = [];
-  const state = store.getState();
-  const sheets = new ServerStyleSheets();
-  const context = {};
-
-  const html = renderToString(
-    <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-      {sheets.collect(
-        <ThemeProvider theme={theme}>
-          <Provider store={store} key="provider">
-            <IntlProvider locale={DEFAULT_LANGUAGE} messages={getTranslationMessages(DEFAULT_LANGUAGE)}>
-              <StaticRouter location={location} context={context}>
-                <App />
-              </StaticRouter>
-            </IntlProvider>
-          </Provider>
-        </ThemeProvider>
-      )}
-    </Loadable.Capture>
-  );
-
-  const helmet = Helmet.renderStatic();
-  const css = sheets.toString();
-  const bundles = getBundles(stats, modules);
-  const preloadedState = serialize(state, { isJSON: true });
-
-  const scripts = bundles
-    .filter(bundle => bundle.file.endsWith('.js'))
-    .map(script => script.file)
-    .filter(removeDuplicates)
-    .map(jsFile => `<script src="${getStaticFileUri(jsFile)}"></script>`)
-    .join('\n');
-
-  res.render('index', {
-    locals: {
-      html,
-      scripts,
-      css,
-      preloadedState,
-      helmet,
-      fontAwesomeCSS: dom.css()
-    }
-});
+    })
+    .catch(err => console.log(err));
 }
 
-Loadable.preloadAll()
-  .then(() => {
-    app.listen(config.port, () => {
-      console.info(`==> 🌎  Listening on ports ${config.port}. Open up http://localhost:${config.port}/ in your browser.`);
-    });
-  })
-  .catch(err => console.log(err));
+bootstrap();

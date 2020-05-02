@@ -18,7 +18,7 @@ module.exports = {
   },
   devtool: 'cheap-source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.mjs','.ts', '.tsx', '.js', '.jsx'],
     modules: [path.resolve(__dirname), 'node_modules', 'app'],
     plugins: [
       new TsConfigPathsPlugin(),
@@ -61,12 +61,12 @@ module.exports = {
                 babelrc: false,
                 presets: [
                   "@babel/react",
-                  [
-                    "@babel/env",
-                    {
-                        modules: false
-                    }
-                  ]
+                  // [
+                  //   "@babel/env",
+                  //   {
+                  //     modules: false
+                  //   }
+                  // ]
                 ],
                 plugins: ["dynamic-import-node", "react-loadable/babel"]
               }
