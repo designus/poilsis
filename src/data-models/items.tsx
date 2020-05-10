@@ -1,3 +1,4 @@
+import { Field, ObjectType, ID } from 'type-graphql';
 import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 
@@ -19,29 +20,38 @@ const {
   images: { maxPhotos }
 } = itemValidation;
 
+@ObjectType()
 export class Item {
+  @Field(type => ID)
   @prop({ unique: true, default: shortId.generate, required: true })
   id!: string;
 
-  @prop({ required: [true, getRequiredMessage()], type: NameField })
-  name!: TranslatableField | string;
+  @Field(type => NameField)
+  @prop({ required: true, type: NameField })
+  name!: TranslatableField;
 
-  @prop({ required: [true, getRequiredMessage()], type: TranslatableField })
-  alias!: TranslatableField | string;
+  @Field(type => TranslatableField)
+  @prop({ required: true, type: TranslatableField })
+  alias!: TranslatableField;
 
-  @prop({ required: [true, getRequiredMessage()] })
+  @Field()
+  @prop({ required: true })
   cityId!: string;
 
-  @prop({ default: getDefaultPriceField() })
+  @Field(type => Price, { nullable: true })
+  @prop({ default: getDefaultPriceField(), type: Price })
   price!: Price;
 
+  @Field()
   @prop({ default: GLOBAL_CURRENCY })
   currency!: string;
 
+  @Field()
   @prop({ default: '' })
   address!: string;
 
-  @arrayProp({ required: [true, getRequiredMessage()], items: String, validate: [
+  @Field(type => [String])
+  @arrayProp({ required: true, items: String, validate: [
     {
       validator: minMaxLength(minTypesCount, maxTypesCount),
       message: getValidationMessage(RANGE, minTypesCount, maxTypesCount)
@@ -49,24 +59,31 @@ export class Item {
   ] })
   types!: string[];
 
-  @prop({ required: [true, getRequiredMessage()] })
+  @Field()
+  @prop({ required: true })
   userId!: string;
 
+  @Field()
   @prop({ default: false })
   isApprovedByAdmin!: boolean;
 
+  @Field()
   @prop({ default: false })
   isRecommended!: boolean;
 
+  @Field()
   @prop({ default: Date.now() })
   createdAt?: string;
 
+  @Field()
   @prop({ updatedAt: Date.now() })
   updatedAt?: string;
 
+  @Field()
   @prop({ default: '' })
   mainImage!: string;
 
+  @Field(type => [Image])
   @arrayProp({ default: [], items: Image, validate: [
     {
       validator: maxLength(maxPhotos),
@@ -75,17 +92,21 @@ export class Item {
   ] })
   images!: Image[];
 
+  @Field(type => TranslatableField, { nullable: true })
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  description?: TranslatableField | string;
+  description?: TranslatableField;
 
+  @Field(type => IsEnabled)
   @prop({ required: [true, getRequiredMessage()], type: IsEnabled })
-  isEnabled!: IsEnabled | boolean;
+  isEnabled!: IsEnabled;
 
+  @Field(type => TranslatableField, { nullable: true })
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  metaTitle?: TranslatableField | string;
+  metaTitle?: TranslatableField;
 
+  @Field(type => TranslatableField, { nullable: true })
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  metaDescription?: TranslatableField | string;
+  metaDescription?: TranslatableField;
 
   isFullyLoaded?: boolean;
 }

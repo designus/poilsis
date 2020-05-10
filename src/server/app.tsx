@@ -1,6 +1,5 @@
 require('dotenv').config();
 import * as express from 'express';
-// import es6Renderer from 'express-es6-template-engine';
 import { auth, apiRouter, handleItemsErrors } from './app/index';
 import { config } from 'config';
 

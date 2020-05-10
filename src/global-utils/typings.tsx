@@ -29,6 +29,8 @@ export enum UserRoles {
   user = 'user'
 }
 
+export type Roles = 'admin' | 'user';
+
 export interface IAccessTokenClaims {
   exp: number;
   userName: string;

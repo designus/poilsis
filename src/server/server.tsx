@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
-import * as graphqlHTTP from 'express-graphql';
+import * as expressGraphql from 'express-graphql';
 import { Response } from 'express';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
@@ -18,7 +18,7 @@ import { StaticRouter } from 'react-router';
 import { getBundles } from 'react-loadable/webpack';
 import { matchRoutes, MatchedRoute } from 'react-router-config';
 import { DEFAULT_LANGUAGE, getTranslationMessages, removeDuplicates, theme, getStaticFileUri } from 'global-utils';
-import { CityResolver } from './app/resolvers';
+import { CityResolver, TypeResolver, ItemResolver } from './app/resolvers';
 import 'global-utils/icons';
 import { rootReducer  } from 'reducers';
 import { IAppState } from 'types';
@@ -27,6 +27,7 @@ import app from './app';
 import { config } from 'config';
 import { App } from 'pages';
 import { routes } from '../client/app/routes';
+import { authChecker } from './app/server-utils/auth';
 
 import { auth, preloadData } from './app/index';
 
@@ -34,7 +35,8 @@ async function bootstrap() {
   const stats = require('./stats/reactLoadable.json');
 
   const schema = await buildSchema({
-    resolvers: [CityResolver]
+    resolvers: [CityResolver, TypeResolver, ItemResolver],
+    authChecker
   });
 
   const getInitialState = (req: any, user: any): IAppState => {
@@ -53,7 +55,13 @@ async function bootstrap() {
     return state;
   };
 
-  app.use('/graphql', graphqlHTTP(async (req, res, params) => ({ schema })));
+  app.use('/graphql', expressGraphql((req, res, params) => ({
+    schema,
+    context: () => ({
+      req,
+      res
+    })
+  })));
 
   app.get('*', (req, res, next) => {
     return auth.authenticate((err: any, user: any) => {

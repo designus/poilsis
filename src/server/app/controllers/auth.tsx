@@ -21,6 +21,16 @@ class Auth {
 
   public authenticate = (callback?: any) => passport.authenticate('jwt', { session: false, failWithError: true }, callback);
 
+  public authenticatePromise = (req: any, res: any): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+      return passport.authenticate('jwt', { session: false, failWithError: true }, (err: any, user: boolean) => {
+        if (err) reject(new Error(err));
+        else if (!user) reject(new Error('Not authenticated'));
+        resolve(user);
+      })(req, res);
+    });
+  }
+
   public authorize = (roles: string[]) => (req: Request, res: Response, next: NextFunction) => {
     const accessToken = this.getAccessTokenClaims(req);
     const { userRole, userId, userItems } = accessToken;
@@ -131,11 +141,11 @@ class Auth {
     }
   }
 
-  private extractFromCookie(req: Request) {
+  extractFromCookie(req: Request) {
     return req && req.cookies ? req.cookies.jwt : null;
   }
 
-  private getAccessTokenClaims(req: Request): IAccessTokenClaims {
+  getAccessTokenClaims(req: Request): IAccessTokenClaims {
     const accessToken = this.extractFromCookie(req);
     return JWT(accessToken);
   }

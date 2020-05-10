@@ -153,6 +153,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
+      "id": "./app/components/formFields/textInput/styles.tsx",
+      "name": "./app/components/formFields/textInput/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    },
+    {
       "id": "./app/components/languageSelector/styles.tsx",
       "name": "./app/components/languageSelector/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
@@ -1011,14 +1017,6 @@
     {
       "id": "./app/components/formFields/textInput/index.tsx",
       "name": "./app/components/formFields/textInput/index.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "../textInput/styles": [
-    {
-      "id": "./app/components/formFields/textInput/styles.tsx",
-      "name": "./app/components/formFields/textInput/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
@@ -2517,42 +2515,18 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./useTheme": [
+  "../styles/useTheme": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/useTheme.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/useTheme.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
-      "name": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./withStyles": [
+  "../styles/withStyles": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/withStyles.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/withStyles.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
-      "name": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -2785,6 +2759,34 @@
     {
       "id": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
       "name": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./useTheme": [
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
+      "name": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./withStyles": [
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
+      "name": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4885,7 +4887,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./components/injectIntl": [
+  "./injectIntl": [
     {
       "id": "../../node_modules/react-intl/lib/components/injectIntl.js",
       "name": "../../node_modules/react-intl/lib/components/injectIntl.js",
@@ -6455,7 +6457,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "./TableContext": [
+  "../Table/TableContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
       "name": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
@@ -7039,7 +7041,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/Input": [
+  "../Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -8091,7 +8093,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./SubmissionError": [
+  "redux-form/es/SubmissionError": [
     {
       "id": "../../node_modules/redux-form/es/SubmissionError.js",
       "name": "../../node_modules/redux-form/es/SubmissionError.js",
@@ -8099,7 +8101,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./actions": [
+  "redux-form/es/actions": [
     {
       "id": "../../node_modules/redux-form/es/actions.js",
       "name": "../../node_modules/redux-form/es/actions.js",
@@ -8859,7 +8861,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "babel-runtime/core-js/object/assign": [
+  "../core-js/object/assign": [
     {
       "id": "../../node_modules/babel-runtime/core-js/object/assign.js",
       "name": "../../node_modules/babel-runtime/core-js/object/assign.js",
@@ -10261,7 +10263,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "./defaultHeaderRowRenderer.js": [
+  "./defaultHeaderRowRenderer": [
     {
       "id": "../../node_modules/react-virtualized/dist/es/Table/defaultHeaderRowRenderer.js",
       "name": "../../node_modules/react-virtualized/dist/es/Table/defaultHeaderRowRenderer.js",

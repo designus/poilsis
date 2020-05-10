@@ -3,7 +3,6 @@ import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/t
 import shortId from 'shortid';
 
 import { getDefaultTranslatableField } from 'global-utils/methods';
-import { getRequiredMessage } from 'global-utils/validationMessages';
 import { IsEnabled, TranslatableField, NameField } from './common';
 
 @ObjectType()
@@ -13,32 +12,32 @@ export class City {
   id!: string;
 
   @Field(type => NameField)
-  @prop({ required: [true, getRequiredMessage()], type: NameField })
-  name!: NameField | string;
+  @prop({ required: true, type: NameField })
+  name!: NameField;
 
   @Field(type => TranslatableField)
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  description?: TranslatableField | string;
+  description?: TranslatableField;
 
   @Field(type => [String])
-  @arrayProp({ required: [true, getRequiredMessage()], items: String })
+  @arrayProp({ required: true, items: String })
   types!: string[];
 
   @Field(type => IsEnabled)
-  @prop({ required: [true, getRequiredMessage()], type: IsEnabled })
-  isEnabled!: IsEnabled | boolean;
+  @prop({ required: true, type: IsEnabled })
+  isEnabled!: IsEnabled;
 
   @Field(type => TranslatableField)
-  @prop({ required: [true, getRequiredMessage()], type: TranslatableField })
-  alias!: TranslatableField | string;
+  @prop({ required: true, type: TranslatableField })
+  alias!: TranslatableField;
 
-  @Field(type => TranslatableField)
+  @Field(type => TranslatableField, { nullable: true })
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  metaTitle?: TranslatableField | string;
+  metaTitle?: TranslatableField;
 
-  @Field(type => TranslatableField)
+  @Field(type => TranslatableField, { nullable: true })
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  metaDescription?: TranslatableField | string;
+  metaDescription?: TranslatableField;
 
   hasItems?: boolean;
 
