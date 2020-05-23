@@ -24,6 +24,8 @@
       "global-utils/*": ["./src/global-utils/*"],
       "data-models": ["./src/data-models"],
       "data-models/*": ["./src/data-models/*"],
+      "input-types": ["./src/server/app/input-types"],
+      "input-types/*": ["./src/server/app/input-types/*"],
       "config": ["./config"]
     },
     "lib": ["es2017", "dom", "es7", "dom.iterable", "esnext.asynciterable"],

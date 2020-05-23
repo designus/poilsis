@@ -2515,18 +2515,42 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../styles/useTheme": [
+  "./useTheme": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/useTheme.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/useTheme.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
+      "name": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../styles/withStyles": [
+  "./withStyles": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/withStyles.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/withStyles.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
+      "name": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -2759,34 +2783,6 @@
     {
       "id": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
       "name": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./useTheme": [
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
-      "name": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    }
-  ],
-  "./withStyles": [
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
-      "name": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -3379,7 +3375,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./adapters/xhr": [
+  "./adapters/http": [
     {
       "id": "../../node_modules/axios/lib/adapters/xhr.js",
       "name": "../../node_modules/axios/lib/adapters/xhr.js",
@@ -4887,7 +4883,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./injectIntl": [
+  "./components/injectIntl": [
     {
       "id": "../../node_modules/react-intl/lib/components/injectIntl.js",
       "name": "../../node_modules/react-intl/lib/components/injectIntl.js",
@@ -6921,7 +6917,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./FormControlContext": [
+  "../FormControl/FormControlContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/FormControlContext.js",
@@ -7041,7 +7037,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Input": [
+  "@material-ui/core/Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -7149,7 +7145,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/ListItem": [
+  "../ListItem": [
     {
       "id": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
       "name": "../../node_modules/@material-ui/core/esm/ListItem/index.js",
@@ -8861,7 +8857,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "../core-js/object/assign": [
+  "babel-runtime/core-js/object/assign": [
     {
       "id": "../../node_modules/babel-runtime/core-js/object/assign.js",
       "name": "../../node_modules/babel-runtime/core-js/object/assign.js",
@@ -9181,7 +9177,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "../../modules/_core": [
+  "../modules/_core": [
     {
       "id": "../../node_modules/core-js/library/modules/_core.js",
       "name": "../../node_modules/core-js/library/modules/_core.js",

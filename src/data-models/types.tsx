@@ -15,11 +15,11 @@ export class Type {
 
   @Field(type => NameField)
   @prop({ required: [true, getRequiredMessage()], type: NameField })
-  public name!: TranslatableField | string;
+  public name!: TranslatableField;
 
   @Field(type => TranslatableField)
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  public description?: TranslatableField | string;
+  public description?: TranslatableField;
 
   @Field(type => IsEnabled)
   @prop({ required: [true, getRequiredMessage()], type: IsEnabled })
@@ -27,7 +27,7 @@ export class Type {
 
   @Field(type => TranslatableField)
   @prop({ required: [true, getRequiredMessage()], type: TranslatableField })
-  public alias!: TranslatableField | string;
+  public alias!: TranslatableField;
 
   public isFullyLoaded?: boolean;
 }

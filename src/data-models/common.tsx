@@ -1,8 +1,9 @@
-import { Field, Int, ObjectType, ID } from 'type-graphql';
+import { Field, Int, InputType, ObjectType, ID } from 'type-graphql';
 import { prop, modelOptions } from '@typegoose/typegoose';
 import { DEFAULT_LANGUAGE } from 'global-utils/constants';
 
 @ObjectType()
+@InputType('IsEnabledInput')
 @modelOptions({ schemaOptions: { _id: false } })
 export class IsEnabled {
   @Field()
@@ -19,6 +20,7 @@ export class IsEnabled {
 }
 
 @ObjectType()
+@InputType('TranslatableFieldInput')
 @modelOptions({ schemaOptions: { _id: false } })
 export class TranslatableField {
   @Field()
@@ -35,6 +37,7 @@ export class TranslatableField {
 }
 
 @ObjectType()
+@InputType('NameFieldInput')
 export class NameField extends TranslatableField {
   @Field()
   @prop({ required: true })

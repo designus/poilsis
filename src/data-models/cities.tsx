@@ -15,10 +15,6 @@ export class City {
   @prop({ required: true, type: NameField })
   name!: NameField;
 
-  @Field(type => TranslatableField)
-  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
-  description?: TranslatableField;
-
   @Field(type => [String])
   @arrayProp({ required: true, items: String })
   types!: string[];
@@ -30,6 +26,10 @@ export class City {
   @Field(type => TranslatableField)
   @prop({ required: true, type: TranslatableField })
   alias!: TranslatableField;
+
+  @Field(type => TranslatableField, { nullable: true })
+  @prop({ default: getDefaultTranslatableField(), type: TranslatableField })
+  description?: TranslatableField;
 
   @Field(type => TranslatableField, { nullable: true })
   @prop({ default: getDefaultTranslatableField(), type: TranslatableField })

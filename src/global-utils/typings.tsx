@@ -45,7 +45,7 @@ export interface IPhotoFormState {
 
 export type IUser = Pick<User, 'id' | 'name' | 'role' | 'isEnabled' | 'alias'>;
 
-export type DataTypes = Item | Type | City | IUser;
+export type DataTypes = Item | Type | City;
 
 export interface IConfig {
   env: 'development' | 'production' | 'test';

@@ -6,9 +6,11 @@ import {
   DataTypes,
   UserRoles,
   Locale,
-  TranslatableFields
+  TranslatableFields,
+  LANGUAGES
 } from 'global-utils';
 import { IsEnabled, TranslatableField, Item, Image } from 'data-models';
+import { CityInput } from 'input-types';
 
 import { MulterFile, IInfoFromFileName, FieldsToSet } from './types';
 import { readDirectoryContent } from './fileSystem';
@@ -125,9 +127,21 @@ export const sendResponse = (res: Response, next: NextFunction) => (err: any, re
   res.status(200).json(result);
 };
 
+// TODO: remove deprecated
 export const getAdjustedIsEnabledValue = (item: DataTypes, languages: Locale[]) => {
   const isEnabled = item.isEnabled as IsEnabled;
   const name = item.name as TranslatableField;
+
+  return languages.reduce<IsEnabled>((acc, locale) => {
+    const oldValue = isEnabled[locale];
+    acc[locale] = name[locale] ? oldValue : false;
+    return acc;
+  }, {} as IsEnabled);
+};
+
+export const getFormattedIsEnabled = (item: CityInput, languages: Locale[] = LANGUAGES) => {
+  const isEnabled = item.isEnabled;
+  const name = item.name;
 
   return languages.reduce<IsEnabled>((acc, locale) => {
     const oldValue = isEnabled[locale];

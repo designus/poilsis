@@ -147,7 +147,7 @@ export const toggleItemApproved = async (req: Request, res: Response, next: Next
 export const addNewItem = async (req: Request, res: Response, next: NextFunction) => {
   const id = shortId.generate();
   const item: Item = req.body;
-  const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
+  const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES);
   const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
   const alias = getUniqueAlias(itemsByAlias, id, adjustedAlias);
   const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);
@@ -197,7 +197,7 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   try {
     const item: Item = req.body;
     const updatedAt = new Date().toUTCString();
-    const adjustedAlias = getAdjustedAliasValue(item, LANGUAGES, next) as TranslatableField;
+    const adjustedAlias = getAdjustedAliasValue(item);
     const itemsByAlias = await getDataByAlias(ItemsModel, adjustedAlias);
     const alias = getUniqueAlias(itemsByAlias, item.id, adjustedAlias);
     const isEnabled = getAdjustedIsEnabledValue(item, LANGUAGES);

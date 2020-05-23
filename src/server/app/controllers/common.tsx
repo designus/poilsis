@@ -45,7 +45,7 @@ export const toggleEnabled = (DocumentModel: DocumentModelType) =>
 export const doesAliasExist = (DocumentModel: DocumentModelType) => async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data: DataTypes = req.body;
-    const alias = getAdjustedAliasValue(data, LANGUAGES, next) as TranslatableField;
+    const alias = getAdjustedAliasValue(data);
     const typesByAlias = await getDataByAlias(DocumentModel, alias);
     const existingAliases = getAliasList(typesByAlias, data.id);
     res.status(200).json(existingAliases.length > 0);
@@ -54,6 +54,7 @@ export const doesAliasExist = (DocumentModel: DocumentModelType) => async (req: 
   }
 };
 
+// TODO: remove deprecated
 export const getDataByAlias = async (DocumentModel: DocumentModelType, alias: TranslatableField): Promise<DataTypes[]> => {
   const aliasValues = Object.values(alias).filter(Boolean);
   const documents = await DocumentModel.find(getItemsByAliasesQuery(aliasValues));

@@ -1,10 +1,11 @@
+import { Request, Response } from 'express';
 import { AuthChecker } from 'type-graphql';
 import { UserRoles } from 'global-utils/typings';
 import { auth } from '../controllers';
 
 type Context = {
-  req: any;
-  res: any;
+  req: Request;
+  res: Response;
 };
 
 export const authChecker: AuthChecker<Context, UserRoles> = async (resolverData, roles) => {
@@ -30,7 +31,6 @@ export const authChecker: AuthChecker<Context, UserRoles> = async (resolverData,
     return false;
 
   } catch (err) {
-    console.error('Authenticate err', err);
     return false;
   }
 };

@@ -28,6 +28,7 @@ import { config } from 'config';
 import { App } from 'pages';
 import { routes } from '../client/app/routes';
 import { authChecker } from './app/server-utils/auth';
+import { ErrorInterceptor } from './app/server-utils/graphqlMiddlewares';
 
 import { auth, preloadData } from './app/index';
 
@@ -36,7 +37,8 @@ async function bootstrap() {
 
   const schema = await buildSchema({
     resolvers: [CityResolver, TypeResolver, ItemResolver],
-    authChecker
+    authChecker,
+    globalMiddlewares: [ErrorInterceptor]
   });
 
   const getInitialState = (req: any, user: any): IAppState => {
@@ -57,10 +59,10 @@ async function bootstrap() {
 
   app.use('/graphql', expressGraphql((req, res, params) => ({
     schema,
-    context: () => ({
+    context: {
       req,
       res
-    })
+    }
   })));
 
   app.get('*', (req, res, next) => {

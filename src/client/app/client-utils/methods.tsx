@@ -121,7 +121,7 @@ export const getLocalizedText = (locale: Locale, text?: string | TranslatableFie
   return text as string;
 };
 
-export const getDropdownOptions = memoize(<T extends DataTypes>(
+export const getDropdownOptions = memoize(<T extends DataTypes | IUser>(
   dataMap: IGenericDataMap<T>,
   labelKey: keyof T,
   locale: Locale
