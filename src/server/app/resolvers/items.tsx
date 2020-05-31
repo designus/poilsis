@@ -4,6 +4,7 @@ import shortId from 'shortid';
 import { Item, ItemsModel } from 'data-models';
 import { UserRoles } from 'global-utils/typings';
 import { MainInfoInput } from 'input-types';
+import { isAdmin } from 'global-utils/methods';
 import { getFormattedIsEnabled, hasAdminAproval } from 'server-utils/methods';
 import { getAlias } from 'server-utils/aliases';
 import { Context } from 'server-utils/types';
@@ -33,18 +34,26 @@ export class ItemResolver {
   }
 
   @Query(returns => Item)
-  async item(@Arg('id') id: string) {
+  async adminItem(@Arg('id') id: string) {
     return ItemsModel.findOne({ id });
   }
 
+  @Query(returns => Item)
+  async clientItem(@Arg('alias') alias: string, @Arg('locale') locale: string) {
+    return ItemsModel.findOne({ [`alias.${locale}`]: alias });
+  }
+
   async getAdjustedFields(id: string, item: MainInfoInput, ctx: Context) {
+    const claims = auth.getAccessTokenClaims(ctx.req);
+    const userId = isAdmin(claims.userRole) ? item.userId : claims.userId;
     const isEnabled = getFormattedIsEnabled(item);
     const alias = await getAlias(id, item, ItemsModel);
     const isApprovedByAdmin = hasAdminAproval(ctx.req, item);
     return {
       isEnabled,
       alias,
-      isApprovedByAdmin
+      isApprovedByAdmin,
+      userId
     };
   }
 
@@ -58,9 +67,8 @@ export class ItemResolver {
     return true;
   }
 
-  // TODO: Do not accept userId which is different from the user creating it
   @Mutation(returns => Item)
-  @Authorized<UserRoles>([UserRoles.admin, UserRoles.user])
+  @Authorized<UserRoles>()
   async createItem(@Arg('item') item: MainInfoInput, @Ctx() ctx: Context): Promise<Item> {
     const id = shortId.generate();
     const adjustedFields = await this.getAdjustedFields(id, item, ctx);
@@ -71,7 +79,7 @@ export class ItemResolver {
 
   // TODO: Add guard to check that user changes item that belongs to him
   @Mutation(returns => Item)
-  @Authorized<UserRoles>([UserRoles.admin, UserRoles.user])
+  @Authorized<UserRoles>()
   async updateItem(@Arg('item') item: MainInfoInput, @Arg('id') id: string, @Ctx() ctx: Context): Promise<Item> {
     const adjustedFields = await this.getAdjustedFields(id, item, ctx);
     const itemCandidate: Partial<Item> = { ...item, ...adjustedFields };
