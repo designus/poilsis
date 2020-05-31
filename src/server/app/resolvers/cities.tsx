@@ -18,7 +18,7 @@ export class CityResolver {
   async city(@Arg('id') id: string) {
     const city = await CitiesModel.findOne({ id });
 
-    if (!city) throw new Error('Unable to find city');
+    if (!city) throw new Error('City not found');
 
     return city;
   }
@@ -44,19 +44,23 @@ export class CityResolver {
 
   @Mutation(returns => City)
   @Authorized<UserRoles>([UserRoles.admin])
-  async updateCity(@Arg('id') id: string, @Arg('city') city: CityInput): Promise<City | null> {
+  async updateCity(@Arg('id') id: string, @Arg('city') city: CityInput): Promise<City> {
     const isEnabled = getFormattedIsEnabled(city);
     const alias = await getAlias(id, city, CitiesModel);
 
     if (!alias) throw new Error('Unable to update city');
 
-    const updatedCity = {
+    const cityCandidate = {
       ...city,
       alias,
       isEnabled
     };
 
-    return CitiesModel.findOneAndUpdate({ id },  { $set: updatedCity }, { new: true, runValidators: true });
+    const updatedCity = await CitiesModel.findOneAndUpdate({ id },  { $set: cityCandidate }, { new: true, runValidators: true });
+
+    if (!updatedCity) throw new Error('City not found');
+
+    return updatedCity;
   }
 
   @Mutation(returns => Boolean)

@@ -42,7 +42,7 @@ export class Item {
   @prop({ default: getDefaultPriceField(), type: Price })
   price!: Price;
 
-  @Field()
+  @Field({ nullable: true })
   @prop({ default: GLOBAL_CURRENCY })
   currency!: string;
 
@@ -63,27 +63,27 @@ export class Item {
   @prop({ required: true })
   userId!: string;
 
-  @Field()
+  @Field({ nullable: true })
   @prop({ default: false })
   isApprovedByAdmin!: boolean;
 
-  @Field()
+  @Field({ nullable: true })
   @prop({ default: false })
   isRecommended!: boolean;
 
-  @Field()
+  @Field({ nullable: true })
   @prop({ default: Date.now() })
   createdAt?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @prop({ updatedAt: Date.now() })
   updatedAt?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @prop({ default: '' })
   mainImage!: string;
 
-  @Field(type => [Image])
+  @Field(type => [Image], { nullable: true })
   @arrayProp({ default: [], items: Image, validate: [
     {
       validator: maxLength(maxPhotos),

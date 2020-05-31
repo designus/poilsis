@@ -1,12 +1,7 @@
-import { Request, Response } from 'express';
 import { AuthChecker } from 'type-graphql';
 import { UserRoles } from 'global-utils/typings';
 import { auth } from '../controllers';
-
-type Context = {
-  req: Request;
-  res: Response;
-};
+import { Context } from './types';
 
 export const authChecker: AuthChecker<Context, UserRoles> = async (resolverData, roles) => {
   try {

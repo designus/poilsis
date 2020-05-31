@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { unlink } from 'fs';
 import {
   ImageSize,
@@ -10,8 +10,8 @@ import {
   LANGUAGES
 } from 'global-utils';
 import { IsEnabled, TranslatableField, Item, Image } from 'data-models';
-import { CityInput } from 'input-types';
-
+import { CityInput, MainInfoInput } from 'input-types';
+import { auth } from '../controllers';
 import { MulterFile, IInfoFromFileName, FieldsToSet } from './types';
 import { readDirectoryContent } from './fileSystem';
 
@@ -139,7 +139,7 @@ export const getAdjustedIsEnabledValue = (item: DataTypes, languages: Locale[]) 
   }, {} as IsEnabled);
 };
 
-export const getFormattedIsEnabled = (item: CityInput, languages: Locale[] = LANGUAGES) => {
+export const getFormattedIsEnabled = (item: CityInput | MainInfoInput, languages: Locale[] = LANGUAGES) => {
   const isEnabled = item.isEnabled;
   const name = item.name;
 
@@ -150,8 +150,12 @@ export const getFormattedIsEnabled = (item: CityInput, languages: Locale[] = LAN
   }, {} as IsEnabled);
 };
 
+// TODO: remove deprecated
 export const isApprovedByAdmin = (userRole: UserRoles, item: Item) =>
   userRole === UserRoles.admin ? item.isApprovedByAdmin : false;
+
+export const hasAdminAproval = (req: Request, item: MainInfoInput): boolean =>
+  auth.getAccessTokenClaims(req).userRole === UserRoles.admin ? Boolean(item.isApprovedByAdmin) : false;
 
 export function getFieldsToUnset<T>(languages: Locale[], skipLocale: Locale, fields: Array<TranslatableFields<T>>): string[] {
   const languagesToUnset = languages.filter(lang => lang !== skipLocale);
