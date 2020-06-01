@@ -3,7 +3,7 @@ import { DocumentType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 import { Item, ItemsModel } from 'data-models';
 import { UserRoles } from 'global-utils/typings';
-import { MainInfoInput } from 'input-types';
+import { MainInfoInput, DescriptionInput } from 'input-types';
 import { isAdmin } from 'global-utils/methods';
 import { getFormattedIsEnabled, hasAdminAproval } from 'server-utils/methods';
 import { getAlias } from 'server-utils/aliases';
@@ -129,5 +129,21 @@ export class ItemResolver {
     await item.remove();
 
     return true;
+  }
+
+  @Mutation(returns => Item)
+  @Authorized<UserRoles>()
+  async updateDescription(@Arg('id') id: string, @Arg('description') description: DescriptionInput, @Ctx() ctx: Context): Promise<Item> {
+    const item = await ItemsModel.findOne({ id });
+
+    if (!item) throw new Error('Unable to find item');
+
+    if (!this.hasUserAccess(item, ctx)) throw new Error('You have no access');
+
+    Object.assign(item, description);
+
+    await item.save();
+
+    return item;
   }
 }

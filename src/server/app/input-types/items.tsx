@@ -33,3 +33,15 @@ export class MainInfoInput implements Partial<Item> {
   @Field(type => TranslatableField, { nullable: true })
   alias?: TranslatableField;
 }
+
+@InputType()
+export class DescriptionInput implements Partial<Item> {
+  @Field(type => TranslatableField, { nullable: true })
+  description?: TranslatableField;
+
+  @Field(type => TranslatableField, { nullable: true })
+  metaTitle?: TranslatableField;
+
+  @Field(type => TranslatableField, { nullable: true })
+  metaDescription?: TranslatableField;
+}

@@ -5,10 +5,10 @@ export const ErrorInterceptor: MiddlewareFn<any> = async ({ context, info }, nex
     return await next();
   } catch (err) {
 
-    if (!(err instanceof ArgumentValidationError)) {
+    // if (!(err instanceof ArgumentValidationError)) {
       // hide errors from db like printing sql query
-      throw new Error('Unknown error occurred. Try again later!');
-    }
+      // throw new Error('Unknown error occurred. Try again later!');
+    // }
 
     throw err;
   }
