@@ -19,6 +19,9 @@ module.exports = {
   devtool: 'cheap-source-map',
   resolve: {
     extensions: ['.mjs','.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      isobject: path.join(projectRoot, 'libs', 'isobject.js'),
+    },
     modules: [path.resolve(__dirname), 'node_modules', 'app'],
     plugins: [
       new TsConfigPathsPlugin(),

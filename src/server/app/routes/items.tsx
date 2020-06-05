@@ -22,7 +22,7 @@ import {
   removeMockedData
 } from '../controllers';
 import {
-  createUploadPath,
+  createUploadPath_deprecated,
   removeImagesFromFs,
   removeImagesDir
 } from '../server-utils';
@@ -60,7 +60,7 @@ router.route('/item/update-photos/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesFromFs, updatePhotos);
 
 router.route('/item/upload-photos/:itemId')
-  .put(auth.authenticate(), auth.authorize(['admin', 'user']), createUploadPath, uploadPhotos);
+  .put(auth.authenticate(), auth.authorize(['admin', 'user']), createUploadPath_deprecated, uploadPhotos);
 
 router.route('/city/:cityId')
   .get(getCityItems);

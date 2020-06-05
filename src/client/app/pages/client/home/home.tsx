@@ -1,9 +1,12 @@
 import * as React from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { Helmet } from 'react-helmet';
 import { injectIntl, WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { TranslatedMessages } from 'types';
+import { http } from 'actions/utils';
+import { graphqlFetchOptions } from 'client-utils/methods';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { RecommendedItems } from './recommendedItems';
 
@@ -37,9 +40,23 @@ class HomePage extends React.Component<IHomePageProps, any> {
     );
   }
 
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    axios(graphqlFetchOptions({
+      query: `
+        mutation($file: Upload!) {
+          singleUpload(file: $file, id: "SkEH8QnIoI")
+        }
+      `,
+      variables: {
+        file: event.target.files![0]
+      }
+    }));
+  }
+
   render() {
     return (
       <div className={this.props.classes.wrapper}>
+        <input type="file" onChange={this.handleChange} />
         {this.renderDocumentHead()}
         <RecommendedItemsWithLoader showLoadingOverlay loaderId={CONTENT_LOADER_ID} />
       </div>

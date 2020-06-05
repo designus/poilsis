@@ -13,7 +13,7 @@ import { IsEnabled, TranslatableField, Item, Image } from 'data-models';
 import { CityInput, MainInfoInput } from 'input-types';
 import { auth } from '../controllers';
 import { MulterFile, IInfoFromFileName, FieldsToSet } from './types';
-import { readDirectoryContent } from './fileSystem';
+import { readDirectoryContent, checkIfDirectoryExists, createDirectory } from './fileSystem';
 
 export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
   const pattern = `(.+)\.(${IMAGE_EXTENSIONS.join('|')})`;
@@ -61,8 +61,8 @@ export const getImages = (files: MulterFile[]): Image[] => {
   });
 };
 
-export const getUploadPath = (itemId: string) =>
-  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/items/${itemId}`;
+export const getUploadPath = (id: string, type: 'items' | 'cities' | 'users' = 'items') =>
+  `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/${type}/${id}`;
 
 export const getSourceFiles = (files: string[]) => {
   const sourceFiles = files.filter(fileName => fileName === getSourceFileName(fileName));
@@ -157,6 +157,7 @@ export const isApprovedByAdmin = (userRole: UserRoles, item: Item) =>
 export const hasAdminAproval = (req: Request, item: MainInfoInput): boolean =>
   auth.getAccessTokenClaims(req).userRole === UserRoles.admin ? Boolean(item.isApprovedByAdmin) : false;
 
+// TODO: remove deprecated
 export function getFieldsToUnset<T>(languages: Locale[], skipLocale: Locale, fields: Array<TranslatableFields<T>>): string[] {
   const languagesToUnset = languages.filter(lang => lang !== skipLocale);
   return fields
@@ -164,6 +165,7 @@ export function getFieldsToUnset<T>(languages: Locale[], skipLocale: Locale, fie
     .reduce((acc: string[], val) => acc.concat(val), []);
 }
 
+// TODO: remove deprecated
 export function getFieldsToSet<T>(locale: Locale, fields: Array<TranslatableFields<T>>): FieldsToSet {
   return fields.reduce((acc: any, field) => {
     const value = `$${field}.${locale}`;
@@ -171,3 +173,16 @@ export function getFieldsToSet<T>(locale: Locale, fields: Array<TranslatableFiel
     return acc;
   }, {});
 }
+
+export const createUploadPath = async (name: string) => {
+  const path = getUploadPath(name);
+  const exists = await checkIfDirectoryExists(path);
+
+  if (exists) {
+    return path;
+  }
+
+  await createDirectory(path);
+
+  return path;
+};

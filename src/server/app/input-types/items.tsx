@@ -45,3 +45,8 @@ export class DescriptionInput implements Partial<Item> {
   @Field(type => TranslatableField, { nullable: true })
   metaDescription?: TranslatableField;
 }
+
+// @InputType()
+// export class PhotosInput implements Partial<Item> {
+
+// }

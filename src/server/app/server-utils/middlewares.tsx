@@ -38,7 +38,8 @@ import {
 
 const { maxPhotos, mimeTypes, minPhotoHeight, maxPhotoSizeBytes, minPhotoWidth } = itemValidation.images;
 
-export const createUploadPath = async (req: Request, res: Response, next: NextFunction) => {
+// TODO: Remove deprecated
+export const createUploadPath_deprecated = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const itemId = req.params.itemId;
     const uploadPath = getUploadPath(itemId);
@@ -54,6 +55,7 @@ export const createUploadPath = async (req: Request, res: Response, next: NextFu
   }
 };
 
+// TODO: Remove deprecated
 export const removeImagesDir = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const uploadPath = getUploadPath(req.params.itemId);

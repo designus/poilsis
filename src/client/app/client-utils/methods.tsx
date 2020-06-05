@@ -1,4 +1,7 @@
 import React from 'react';
+// @ts-ignore
+import { extractFiles } from 'extract-files';
+import axios, { AxiosResponse } from 'axios';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { useDispatch as dispatch } from 'react-redux';
@@ -8,6 +11,7 @@ import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
 import { Price, TranslatableField, Item, City } from 'data-models';
 import { DataTypes, IUser, Locale, IAccessTokenClaims } from 'global-utils/typings';
 import { hasLocalizedFields } from 'global-utils/methods';
+import { config } from 'config';
 import {
   IGenericState,
   IGenericDataMap,
@@ -203,3 +207,47 @@ export const getInitialCitiesFilters = (cities: City[]): CitiesFilterState =>
 export const getPriceQueryParam = (price: Price) => Object.values(price).map(Number).join('-');
 
 export const useDispatch = () => dispatch<ThunkDispatch>();
+
+export function graphqlFetchOptions(operation: any) {
+  const fetchOptions: any = {
+    url: config.host + '/graphql',
+    method: 'POST',
+    headers: { Accept: 'application/json' }
+  };
+
+  console.log('Operation', operation);
+
+  const { clone, files } = extractFiles(operation);
+
+  console.log('clone', clone);
+  console.log('Files', files);
+  const operationJSON = JSON.stringify(clone);
+
+  if (files.size) {
+    // See the GraphQL multipart request spec:
+    // https://github.com/jaydenseric/graphql-multipart-request-spec
+
+    const form = new FormData();
+
+    form.append('operations', operationJSON);
+
+    const map: any = {};
+    let i = 0;
+    files.forEach((paths: any) => {
+      map[++i] = paths;
+    });
+    form.append('map', JSON.stringify(map));
+
+    i = 0;
+    files.forEach((paths: any, file: any) => {
+      form.append(`${++i}`, file, file.name);
+    });
+
+    fetchOptions.data = form;
+  } else {
+    fetchOptions.headers['Content-Type'] = 'application/json';
+    fetchOptions.data = operationJSON;
+  }
+
+  return fetchOptions;
+}

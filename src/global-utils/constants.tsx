@@ -1,6 +1,6 @@
 import { Locale } from 'global-utils/typings';
 
-export const SESSION_DURATION_MINUTES = 10;
+export const SESSION_DURATION_MINUTES = 30;
 export const REAUTHENTICATE_DURATION_SECONDS = 45;
 
 export const LANGUAGES: Locale[] = ['en', 'lt', 'ru'];

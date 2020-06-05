@@ -7,6 +7,7 @@ import { dom } from '@fortawesome/fontawesome-svg-core';
 import { Provider } from 'react-redux';
 import serialize from 'serialize-javascript';
 import * as expressGraphql from 'express-graphql';
+import { graphqlUploadExpress } from 'graphql-upload';
 import { Response } from 'express';
 import { IntlProvider } from 'react-intl';
 import { createStore, applyMiddleware } from 'redux';
@@ -57,13 +58,17 @@ async function bootstrap() {
     return state;
   };
 
-  app.use('/graphql', expressGraphql((req, res, params) => ({
-    schema,
-    context: {
-      req,
-      res
-    }
-  })));
+  app.use(
+    '/graphql',
+    graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }),
+    expressGraphql((req, res, params) => ({
+      schema,
+      context: {
+        req,
+        res
+      }
+    }))
+  );
 
   app.get('*', (req, res, next) => {
     return auth.authenticate((err: any, user: any) => {

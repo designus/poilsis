@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID } from 'type-graphql';
+import { Field, ObjectType, ID, InputType } from 'type-graphql';
 import { prop, modelOptions } from '@typegoose/typegoose';
 import shortId from 'shortid';
 

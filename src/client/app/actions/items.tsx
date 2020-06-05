@@ -130,6 +130,7 @@ export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => disp
 };
 
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<Image[]>> => dispatch => {
+  console.log('Files', files);
   return http
     .put<Item>(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
       onUploadProgress: (e) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent)))
