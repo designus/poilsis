@@ -96,6 +96,7 @@ export const removeImagesFromFs = async (req: Request, res: Response, next: Next
   }
 };
 
+// TODO: Remove deprecated
 export const fileFilter = (req: MulterRequest, file: MulterFile, cb: any) => {
   const itemId = req.params.itemId;
 
@@ -115,6 +116,7 @@ export const fileFilter = (req: MulterRequest, file: MulterFile, cb: any) => {
   });
 };
 
+// TODO: Remove deprecated
 const storage = multer.diskStorage({
   // @ts-ignore
   destination: (req: MulterRequest, file: MulterFile, callback) => {
@@ -127,6 +129,7 @@ const storage = multer.diskStorage({
   }
 });
 
+// TODO: Remove deprecated
 export const uploadImages = multer({
   storage,
   fileFilter,
@@ -136,6 +139,7 @@ export const uploadImages = multer({
   }
 });
 
+// TODO: Remove deprecated
 async function resizeVerticalImage(
   smallImage: Jimp,
   largeImage: Jimp,
@@ -163,7 +167,7 @@ async function resizeVerticalImage(
       .write(largeImagePath);
   }
 }
-
+// TODO: Remove deprecated
 async function resizeHorizontalImage(
   smallImage: Jimp,
   largeImage: Jimp,
@@ -192,8 +196,8 @@ async function resizeHorizontalImage(
   }
 }
 
+// TODO: Remove deprecated
 const resizeImage = (file: MulterFile) => {
-  console.log('Resize image', file);
   return new Promise(async (resolve, reject) => {
     try {
       const { name, extension } = getInfoFromFileName(file.filename);

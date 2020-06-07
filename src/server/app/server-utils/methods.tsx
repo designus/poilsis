@@ -16,15 +16,18 @@ import { MulterFile, IInfoFromFileName, FieldsToSet, UploadPath } from './types'
 import { readDirectoryContent, checkIfDirectoryExists, createDirectory } from './fileSystem';
 
 export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
-  const pattern = `(.+)\.(${IMAGE_EXTENSIONS.join('|')})`;
-  const searchValue = new RegExp(pattern);
-  const nameAndSize = fileName.replace(searchValue, '$1');
-  const extension = fileName.replace(searchValue, '$2');
-  const sizeMatch: any = nameAndSize.match(new RegExp(`_(?<size>${ImageSize.Small}|${ImageSize.Large})$`));
-  const size = sizeMatch ? sizeMatch.groups.size : null;
-  const name = size ? nameAndSize.slice(0, -2) : nameAndSize;
-
-  return { name, size, extension };
+  try {
+    const pattern = `(.+)\.(${IMAGE_EXTENSIONS.join('|')})`;
+    const searchValue = new RegExp(pattern);
+    const nameAndSize = fileName.replace(searchValue, '$1');
+    const extension = fileName.replace(searchValue, '$2');
+    const sizeMatch: any = nameAndSize.match(new RegExp(`_(?<size>${ImageSize.Small}|${ImageSize.Large})$`));
+    const size = sizeMatch ? sizeMatch.groups.size : null;
+    const name = size ? nameAndSize.slice(0, -2) : nameAndSize;
+    return { name, size, extension };
+  } catch (err) {
+    throw new Error(err);
+  }
 };
 
 export const getSourceFileName = (fileName: string) => {
@@ -46,6 +49,7 @@ export const getFileExtension = (mimeType: string) => {
 
 export const getImagePath = (image: Image) => `${image.path}/${image.thumbName}`;
 
+// TODO: Remove deprecated
 export const getFilePath = (destination: string, name: string, extension: string, size: ImageSize) => {
   return `${destination}/${name}_${size}.${extension}`;
 };
