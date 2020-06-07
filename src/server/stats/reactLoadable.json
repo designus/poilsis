@@ -171,12 +171,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     },
     {
-      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
-      "file": "adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
-    },
-    {
       "id": "./app/components/menu/styles.tsx",
       "name": "./app/components/menu/styles.tsx",
       "file": "adminLayoutPage~clientLayout.js",
@@ -485,7 +479,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "components/itemTypesList": [
+  "../itemTypesList": [
     {
       "id": "./app/components/itemTypesList/index.tsx",
       "name": "./app/components/itemTypesList/index.tsx",
@@ -851,6 +845,12 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     },
     {
+      "id": "./app/actions/types.tsx",
+      "name": "./app/actions/types.tsx",
+      "file": "adminLayoutPage~homePage.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
+    },
+    {
       "id": "../../node_modules/intl-messageformat-parser/lib/types.js",
       "name": "../../node_modules/intl-messageformat-parser/lib/types.js",
       "file": "main.js",
@@ -1061,7 +1061,15 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "components/menu/menu": [
+  "components/menu/adminLeftMenu/styles": [
+    {
+      "id": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "name": "./app/components/menu/adminLeftMenu/styles.tsx",
+      "file": "adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "./menu": [
     {
       "id": "./app/components/menu/menu.tsx",
       "name": "./app/components/menu/menu.tsx",
@@ -1137,7 +1145,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../global-styles": [
+  "../../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1307,14 +1315,6 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
     }
   ],
-  "actions/types": [
-    {
-      "id": "./app/actions/types.tsx",
-      "name": "./app/actions/types.tsx",
-      "file": "adminLayoutPage~homePage.js",
-      "publicPath": "http://localhost:8080/public/adminLayoutPage~homePage.js"
-    }
-  ],
   "components/itemsList": [
     {
       "id": "./app/components/itemsList/index.tsx",
@@ -1415,12 +1415,6 @@
       "name": "./app/actions/utils.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
   "./city": [
@@ -1903,7 +1897,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./development": [
+  "./development.tsx": [
     {
       "id": "../../config/development.tsx",
       "name": "../../config/development.tsx",
@@ -1919,7 +1913,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./production": [
+  "./production.tsx": [
     {
       "id": "../../config/production.tsx",
       "name": "../../config/production.tsx",
@@ -1927,7 +1921,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./test": [
+  "./test.tsx": [
     {
       "id": "../../config/test.tsx",
       "name": "../../config/test.tsx",
@@ -1935,7 +1929,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./typegoose-browser-shim": [
+  "./typegoose-browser-shim.js": [
     {
       "id": "../../config/typegoose-browser-shim.js",
       "name": "../../config/typegoose-browser-shim.js",
@@ -2513,7 +2507,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./transitions": [
+  "../styles/transitions": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/transitions.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/transitions.js",
@@ -2521,42 +2515,18 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./useTheme": [
+  "../styles/useTheme": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/useTheme.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/useTheme.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
-      "name": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./withStyles": [
+  "../styles/withStyles": [
     {
       "id": "../../node_modules/@material-ui/core/esm/styles/withStyles.js",
       "name": "../../node_modules/@material-ui/core/esm/styles/withStyles.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
-      "name": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
-      "file": "main.js",
-      "publicPath": "http://localhost:8080/public/main.js"
-    },
-    {
-      "id": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
-      "name": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -2785,10 +2755,38 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "../useTheme/ThemeContext": [
+  "./ThemeContext": [
     {
       "id": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
       "name": "../../node_modules/@material-ui/styles/esm/useTheme/ThemeContext.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./useTheme": [
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/useTheme/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
+      "name": "../../node_modules/@material-ui/styles/esm/useTheme/useTheme.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./withStyles": [
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
+      "name": "../../node_modules/@material-ui/styles/esm/withStyles/index.js",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
+      "name": "../../node_modules/@material-ui/styles/esm/withStyles/withStyles.js",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -4825,7 +4823,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./../process/browser.js": [
+  "./../node_modules/process/browser.js": [
     {
       "id": "../../node_modules/process/browser.js",
       "name": "../../node_modules/process/browser.js",
@@ -5323,7 +5321,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./warning": [
+  "../utils/warning": [
     {
       "id": "../../node_modules/react-redux/es/utils/warning.js",
       "name": "../../node_modules/react-redux/es/utils/warning.js",
@@ -5835,7 +5833,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./validation": [
+  "../data-strings/validation": [
     {
       "id": "../data-strings/validation.tsx",
       "name": "../data-strings/validation.tsx",
@@ -6491,7 +6489,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "./TableContext": [
+  "../Table/TableContext": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
       "name": "../../node_modules/@material-ui/core/esm/Table/TableContext.js",
@@ -7075,7 +7073,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/Input": [
+  "../Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -7111,6 +7109,14 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
       "name": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
+    }
+  ],
+  "../InputBase/utils": [
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -7159,7 +7165,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../List": [
+  "@material-ui/core/List": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/index.js",
       "name": "../../node_modules/@material-ui/core/esm/List/index.js",
@@ -8119,7 +8125,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "redux-form/es/SubmissionError": [
+  "./SubmissionError": [
     {
       "id": "../../node_modules/redux-form/es/SubmissionError.js",
       "name": "../../node_modules/redux-form/es/SubmissionError.js",
@@ -8127,7 +8133,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "redux-form/es/actions": [
+  "./actions": [
     {
       "id": "../../node_modules/redux-form/es/actions.js",
       "name": "../../node_modules/redux-form/es/actions.js",
@@ -8687,7 +8693,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout~keepMeLoggedModal.js"
     }
   ],
-  "./setRef": [
+  "../utils/setRef": [
     {
       "id": "../../node_modules/@material-ui/core/esm/utils/setRef.js",
       "name": "../../node_modules/@material-ui/core/esm/utils/setRef.js",
@@ -9847,7 +9853,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "../modules/es6.object.to-string": [
+  "../../modules/es6.object.to-string": [
     {
       "id": "../../node_modules/core-js/library/modules/es6.object.to-string.js",
       "name": "../../node_modules/core-js/library/modules/es6.object.to-string.js",
@@ -9863,7 +9869,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "../modules/es6.string.iterator": [
+  "../../modules/es6.string.iterator": [
     {
       "id": "../../node_modules/core-js/library/modules/es6.string.iterator.js",
       "name": "../../node_modules/core-js/library/modules/es6.string.iterator.js",
@@ -9911,7 +9917,7 @@
       "publicPath": "http://localhost:8080/public/vendors~clientCity.js"
     }
   ],
-  "../modules/web.dom.iterable": [
+  "../../modules/web.dom.iterable": [
     {
       "id": "../../node_modules/core-js/library/modules/web.dom.iterable.js",
       "name": "../../node_modules/core-js/library/modules/web.dom.iterable.js",

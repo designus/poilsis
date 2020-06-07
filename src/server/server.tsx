@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import * as React from 'react';
 import { buildSchema } from 'type-graphql';
-
+import { Container } from 'typedi';
 import { renderToString } from 'react-dom/server';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import { Provider } from 'react-redux';
@@ -39,7 +39,8 @@ async function bootstrap() {
   const schema = await buildSchema({
     resolvers: [CityResolver, TypeResolver, ItemResolver],
     authChecker,
-    globalMiddlewares: [ErrorInterceptor]
+    globalMiddlewares: [ErrorInterceptor],
+    container: Container
   });
 
   const getInitialState = (req: any, user: any): IAppState => {

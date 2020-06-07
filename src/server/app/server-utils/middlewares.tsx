@@ -42,7 +42,7 @@ const { maxPhotos, mimeTypes, minPhotoHeight, maxPhotoSizeBytes, minPhotoWidth }
 export const createUploadPath_deprecated = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const itemId = req.params.itemId;
-    const uploadPath = getUploadPath(itemId);
+    const uploadPath = getUploadPath(itemId, 'items');
     const exists = await checkIfDirectoryExists(uploadPath);
     if (exists) {
       next();
@@ -58,7 +58,7 @@ export const createUploadPath_deprecated = async (req: Request, res: Response, n
 // TODO: Remove deprecated
 export const removeImagesDir = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const uploadPath = getUploadPath(req.params.itemId);
+    const uploadPath = getUploadPath(req.params.itemId, 'items');
     await removeDirectory(uploadPath);
     const exists = await checkIfDirectoryExists(uploadPath);
     if (exists) {
@@ -75,8 +75,8 @@ export const removeImagesFromFs = async (req: Request, res: Response, next: Next
   try {
     const itemId = req.params.itemId;
     const images: Image[] = req.body.images;
-    const uploadPath = getUploadPath(itemId);
-    const files: string[] = await readDirectoryContent(getUploadPath(itemId));
+    const uploadPath = getUploadPath(itemId, 'items');
+    const files: string[] = await readDirectoryContent(getUploadPath(itemId, 'items'));
 
     if (!files) {
       throw new Error('Unable to read directory content');
@@ -103,7 +103,7 @@ export const fileFilter = (req: MulterRequest, file: MulterFile, cb: any) => {
     cb({ code: 'No files given'}, false);
   }
 
-  readdir(getUploadPath(itemId), (err, files: string[]) => {
+  readdir(getUploadPath(itemId, 'items'), (err, files: string[]) => {
     const sourceFiles = getSourceFiles(files);
     if (sourceFiles.length >= maxPhotos) {
       cb(new Error(`Please upload no more than ${maxPhotos} photos`), false);
@@ -118,7 +118,7 @@ export const fileFilter = (req: MulterRequest, file: MulterFile, cb: any) => {
 const storage = multer.diskStorage({
   // @ts-ignore
   destination: (req: MulterRequest, file: MulterFile, callback) => {
-    callback(null, getUploadPath(req.params.itemId));
+    callback(null, getUploadPath(req.params.itemId, 'items'));
   },
   filename: (req: MulterRequest, file: MulterFile, callback) => {
     const { name } = getInfoFromFileName(file.originalname);
@@ -193,6 +193,7 @@ async function resizeHorizontalImage(
 }
 
 const resizeImage = (file: MulterFile) => {
+  console.log('Resize image', file);
   return new Promise(async (resolve, reject) => {
     try {
       const { name, extension } = getInfoFromFileName(file.filename);

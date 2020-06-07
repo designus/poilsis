@@ -137,7 +137,7 @@ describe.skip('Integration tests: Items', () => {
     });
 
     it('should be able to upload photos', () => {
-      const uploadDirectory = getUploadPath(newItem.id);
+      const uploadDirectory = getUploadPath(newItem.id, 'items');
 
       return request(app)
         .put(`/api/items/item/upload-photos/${newItem.id}`)
@@ -152,7 +152,7 @@ describe.skip('Integration tests: Items', () => {
 
     it('should be able to update photos', () => {
       const images = adminItem.images.slice(0, 1);
-      const uploadDirectory = getUploadPath(adminItem.id);
+      const uploadDirectory = getUploadPath(adminItem.id, 'items');
 
       return request(app)
         .put(`/api/items/item/update-photos/${adminItem.id}`)
@@ -235,7 +235,7 @@ describe.skip('Integration tests: Items', () => {
     });
 
     it('should be able to upload photos to his own item', () => {
-      const uploadDirectory = getUploadPath(userItem.id);
+      const uploadDirectory = getUploadPath(userItem.id, 'items');
       return request(app)
         .put(`/api/items/item/upload-photos/${userItem.id}`)
         .attach('files[]', 'testUploads/src.jpeg')
@@ -258,7 +258,7 @@ describe.skip('Integration tests: Items', () => {
     });
 
     it('should be able to update his own photos', () => {
-      const uploadDirectory = getUploadPath(userItem.id);
+      const uploadDirectory = getUploadPath(userItem.id, 'items');
       return request(app)
         .put(`/api/items/item/update-photos/${userItem.id}`)
         .set('Cookie', `jwt=${accessToken}`)

@@ -27,3 +27,5 @@ export type Context = {
   req: Request;
   res: Response;
 };
+
+export type UploadPath = 'items' | 'cities' | 'users' | 'tmp';

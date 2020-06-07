@@ -43,12 +43,12 @@ class HomePage extends React.Component<IHomePageProps, any> {
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     axios(graphqlFetchOptions({
       query: `
-        mutation($file: Upload!) {
-          singleUpload(file: $file, id: "SkEH8QnIoI")
+        mutation($files: [Upload!]!) {
+          uploadPhotos(files: $files, id: "SkEH8QnIoI")
         }
       `,
       variables: {
-        file: event.target.files![0]
+        files: event.target.files
       }
     }));
   }
@@ -56,7 +56,7 @@ class HomePage extends React.Component<IHomePageProps, any> {
   render() {
     return (
       <div className={this.props.classes.wrapper}>
-        <input type="file" onChange={this.handleChange} />
+        <input type="file" multiple onChange={this.handleChange} />
         {this.renderDocumentHead()}
         <RecommendedItemsWithLoader showLoadingOverlay loaderId={CONTENT_LOADER_ID} />
       </div>

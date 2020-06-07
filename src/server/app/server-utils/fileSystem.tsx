@@ -1,4 +1,4 @@
-import { exists, mkdir, readFile, writeFile, readdir, lstat } from 'fs';
+import { exists, mkdir, readFile, writeFile, readdir, lstat, stat } from 'fs';
 import { promisify } from 'util';
 import * as rimraf from 'rimraf';
 
@@ -10,3 +10,4 @@ export const readFileFromDisk = promisify(readFile);
 export const writeFileToDisk = promisify(writeFile);
 export const getDirectoryStatus = promisify(lstat);
 export const readDirectoryContent = promisify(readdir);
+export const getFileStatistics = promisify(stat);

@@ -19,7 +19,7 @@ export const ErrorInterceptor: MiddlewareFn<Context> = async ({ context, info },
 export const removeImageDirectory: MiddlewareFn<Context> = async (params, next) => {
   try {
     const id = await next();
-    const uploadPath = getUploadPath(id);
+    const uploadPath = getUploadPath(id, 'items');
 
     await removeDirectory(uploadPath);
 
@@ -37,7 +37,7 @@ export const removeImageDirectory: MiddlewareFn<Context> = async (params, next) 
 
 export const createImageDirectory: MiddlewareFn<Context> = async (params, next) => {
   try {
-    await createUploadPath(params.args.id);
+    await createUploadPath(params.args.id, 'items');
     return next();
   } catch (err) {
     return next();

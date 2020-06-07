@@ -215,12 +215,8 @@ export function graphqlFetchOptions(operation: any) {
     headers: { Accept: 'application/json' }
   };
 
-  console.log('Operation', operation);
-
   const { clone, files } = extractFiles(operation);
 
-  console.log('clone', clone);
-  console.log('Files', files);
   const operationJSON = JSON.stringify(clone);
 
   if (files.size) {

@@ -3,9 +3,11 @@ import { DocumentType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { createWriteStream, unlink } from 'fs';
+import Jimp from 'jimp';
 
 import { Item, ItemsModel, Image } from 'data-models';
-import { UserRoles } from 'global-utils/typings';
+import { UserRoles, MAX_PHOTOS, MIN_PHOTO_WIDTH, MIN_PHOTO_HEIGHT, MAX_PHOTO_SIZE_BYTES, IMAGE_MIME_TYPES, IMAGE_EXTENSIONS } from 'global-utils';
+
 import { MainInfoInput, DescriptionInput } from 'input-types';
 import { isAdmin, formatValue } from 'global-utils/methods';
 import {
@@ -17,12 +19,19 @@ import {
   Context,
   getUploadPath,
   getInfoFromFileName,
-  createUploadPath
+  createUploadPath,
+  getFileStatistics,
+  removeDirectory
 } from 'server-utils';
 import { auth } from '../controllers';
+import { FileUploadService } from '../services';
 
 @Resolver(of => Item)
 export class ItemResolver {
+
+  constructor(
+    private readonly fileUploadService: FileUploadService
+  ) {}
 
   async getAdjustedFields(id: string, item: MainInfoInput, ctx: Context) {
     const claims = auth.getAccessTokenClaims(ctx.req);
@@ -170,7 +179,8 @@ export class ItemResolver {
   async singleUpload(@Arg('file', () => GraphQLUpload) file: FileUpload, @Arg('id') id: string, @Ctx() ctx: Context) {
 
     const item = await this.getOwnItemById(id, ctx);
-    const uploadPath = await createUploadPath(id);
+    const uploadPath = await createUploadPath(id, 'items');
+
     const { createReadStream, filename } = await file;
 
     const { name, extension } = getInfoFromFileName(filename);
@@ -190,6 +200,24 @@ export class ItemResolver {
           res();
         })
     );
+
+    return true;
+  }
+
+  @Mutation(returns => Boolean)
+  @Authorized<UserRoles>()
+  async uploadPhotos(@Arg('files', () => [GraphQLUpload]) files: Array<Promise<FileUpload>>, @Arg('id') id: string, @Ctx() ctx: Context) {
+    const item = await this.getOwnItemById(id, ctx);
+
+    if (item.images.length + files.length > MAX_PHOTOS) {
+      throw new Error(`You are not allowed to have more than ${MAX_PHOTOS} uploaded`);
+    }
+
+    const uploadPath = await createUploadPath(id, 'items');
+    const tmpPath = await createUploadPath(id, 'tmp');
+    const resolvedFiles = await Promise.all(files);
+
+    await this.fileUploadService.uploadFiles(resolvedFiles, tmpPath, uploadPath);
 
     return true;
   }
