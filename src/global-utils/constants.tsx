@@ -13,7 +13,7 @@ export const LARGE_IMAGE_HEIGHT = 1200;
 export const SMALL_IMAGE_WIDTH = 200;
 export const SMALL_IMAGE_HEIGHT = 160;
 
-export const MAX_PHOTOS = 4;
+export const MAX_PHOTOS = 6;
 export const MAX_PHOTO_SIZE_MEGABYTES = 3;
 export const MAX_PHOTO_SIZE_BYTES = MAX_PHOTO_SIZE_MEGABYTES * 1024 * 1024;
 export const MIN_PHOTO_WIDTH = 1000;

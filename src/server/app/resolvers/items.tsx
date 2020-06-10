@@ -1,27 +1,19 @@
-import { Resolver, Query, Arg, Authorized, Mutation, Ctx, MiddlewareFn, UseMiddleware } from 'type-graphql';
+import { Resolver, Query, Arg, Authorized, Mutation, Ctx, UseMiddleware } from 'type-graphql';
 import { DocumentType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
-import { createWriteStream, unlink } from 'fs';
-import Jimp from 'jimp';
 
-import { Item, ItemsModel, Image } from 'data-models';
-import { UserRoles, MAX_PHOTOS, MIN_PHOTO_WIDTH, MIN_PHOTO_HEIGHT, MAX_PHOTO_SIZE_BYTES, IMAGE_MIME_TYPES, IMAGE_EXTENSIONS } from 'global-utils';
-
+import { Item, ItemsModel } from 'data-models';
+import { UserRoles, MAX_PHOTOS } from 'global-utils';
 import { MainInfoInput, DescriptionInput } from 'input-types';
-import { isAdmin, formatValue } from 'global-utils/methods';
+import { isAdmin } from 'global-utils/methods';
 import {
   removeImageDirectory,
-  createImageDirectory,
   getFormattedIsEnabled,
   hasAdminAproval,
   getAlias,
   Context,
-  getUploadPath,
-  getInfoFromFileName,
-  createUploadPath,
-  getFileStatistics,
-  removeDirectory
+  createUploadPath
 } from 'server-utils';
 import { auth } from '../controllers';
 import { FileUploadService } from '../services';
@@ -176,36 +168,6 @@ export class ItemResolver {
 
   @Mutation(returns => Boolean)
   @Authorized<UserRoles>()
-  async singleUpload(@Arg('file', () => GraphQLUpload) file: FileUpload, @Arg('id') id: string, @Ctx() ctx: Context) {
-
-    const item = await this.getOwnItemById(id, ctx);
-    const uploadPath = await createUploadPath(id, 'items');
-
-    const { createReadStream, filename } = await file;
-
-    const { name, extension } = getInfoFromFileName(filename);
-    const fileName = formatValue(name);
-    const destination = `${uploadPath}/${fileName}.${extension}`;
-    const url = await new Promise((res, rej) =>
-      createReadStream()
-        .pipe(createWriteStream(destination))
-        .on('error', rej)
-        .on('finish', (something) => {
-          // Do your custom business logic
-
-          // Delete the tmp file uploaded
-          // unlink(destinationPath, () => {
-          //   res('your image url..');
-          // });
-          res();
-        })
-    );
-
-    return true;
-  }
-
-  @Mutation(returns => Boolean)
-  @Authorized<UserRoles>()
   async uploadPhotos(@Arg('files', () => [GraphQLUpload]) files: Array<Promise<FileUpload>>, @Arg('id') id: string, @Ctx() ctx: Context) {
     const item = await this.getOwnItemById(id, ctx);
 
@@ -217,7 +179,7 @@ export class ItemResolver {
     const tmpPath = await createUploadPath(id, 'tmp');
     const resolvedFiles = await Promise.all(files);
 
-    await this.fileUploadService.uploadFiles(resolvedFiles, tmpPath, uploadPath);
+    const uploadedFiles = await this.fileUploadService.uploadFiles(resolvedFiles, tmpPath, uploadPath);
 
     return true;
   }

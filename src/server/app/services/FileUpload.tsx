@@ -2,9 +2,11 @@ import { FileUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
 import Jimp from 'jimp';
 import { Service } from 'typedi';
-import { formatValue } from 'global-utils/methods';
-import { getInfoFromFileName, getFileStatistics, removeDirectory } from 'server-utils';
+import { remove, copy } from 'fs-extra';
+
+import { getInfoFromFileName, getFileStatistics, UploadedFile } from 'server-utils';
 import {
+  formatValue,
   MIN_PHOTO_WIDTH,
   MIN_PHOTO_HEIGHT,
   MAX_PHOTO_SIZE_BYTES,
@@ -166,20 +168,34 @@ export class FileUploadService {
     });
   }
 
-  resizeFiles(files: IUploadedFile[], tempDirectory: string) {
+  async resizeFiles(files: IUploadedFile[], tempDirectory: string) {
     return Promise.all(files.map(file => this.resizeFile(file, tempDirectory)));
   }
 
-  async uploadFiles(files: FileUpload[], tempDirectory: string, finalDirectory: string) {
+  async moveFilesToFinalDirectory(tempDirectory: string, finalDirectory: string) {
+    await copy(tempDirectory, finalDirectory);
+    await remove(tempDirectory);
+  }
+
+  async uploadFiles(files: FileUpload[], tempDirectory: string, finalDirectory: string): Promise<UploadedFile[]> {
     const tempFiles = await this.getTempFiles(files, tempDirectory);
     const validationErrors = await this.getValidationErrors(tempFiles);
 
     if (validationErrors.length) {
-      await removeDirectory(tempDirectory);
+      await remove(tempDirectory);
       throw new Error(validationErrors.join('.'));
     }
 
     await this.resizeFiles(tempFiles, tempDirectory);
+    await this.moveFilesToFinalDirectory(tempDirectory, finalDirectory);
 
+    return tempFiles.map((file): UploadedFile => {
+      const { name, extension } = getInfoFromFileName(file.fileName);
+      return {
+        fileName: file.fileName,
+        path: file.path,
+        thumbName: `${name}_${ImageSize.Small}.${extension}`
+      };
+    });
   }
 }

@@ -54,6 +54,7 @@ export const getFilePath = (destination: string, name: string, extension: string
   return `${destination}/${name}_${size}.${extension}`;
 };
 
+// TODO: Remove_deprecated
 export const getImages = (files: MulterFile[]): Image[] => {
   return files.map(({filename, destination}: MulterFile) => {
     const { name, extension } = getInfoFromFileName(filename);

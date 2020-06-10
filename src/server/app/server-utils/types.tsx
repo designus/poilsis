@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { DocumentType } from '@typegoose/typegoose';
 import { ImageSize, DataTypes } from 'global-utils/typings';
 import { CityInput, MainInfoInput } from 'input-types';
-import { CitiesModelType, TypesModelType, ItemsModelType } from 'data-models';
+import { Image, CitiesModelType, TypesModelType, ItemsModelType } from 'data-models';
 
 export type MulterRequest = Express.Request & Request;
 export type MulterFile = Express.Multer.File;
@@ -29,3 +29,5 @@ export type Context = {
 };
 
 export type UploadPath = 'items' | 'cities' | 'users' | 'tmp';
+
+export type UploadedFile = Pick<Image, 'fileName' | 'path' | 'thumbName'>;
