@@ -30,4 +30,4 @@ export type Context = {
 
 export type UploadPath = 'items' | 'cities' | 'users' | 'tmp';
 
-export type UploadedFile = Pick<Image, 'fileName' | 'path' | 'thumbName'>;
+export type UploadedFile = Pick<Image, 'id' | 'fileName' | 'path' | 'thumbName'>;

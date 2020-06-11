@@ -78,3 +78,11 @@ export const getDefaultPriceField = (): Price => ({
   from: null,
   to: null
 });
+
+export function indexBy<T extends any, K extends keyof T = keyof T>(data: T[], key: K) {
+  return data.reduce<Record<string, T>>((acc, item) => {
+    const indexKey = item[key];
+    acc[indexKey] = item;
+    return acc;
+  }, {});
+}

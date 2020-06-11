@@ -1,5 +1,6 @@
 import { FileUpload } from 'graphql-upload';
 import { createWriteStream } from 'fs';
+import shortId from 'shortid';
 import Jimp from 'jimp';
 import { Service } from 'typedi';
 import { remove, copy } from 'fs-extra';
@@ -192,8 +193,9 @@ export class FileUploadService {
     return tempFiles.map((file): UploadedFile => {
       const { name, extension } = getInfoFromFileName(file.fileName);
       return {
+        id: shortId.generate(),
         fileName: file.fileName,
-        path: file.path,
+        path: `${finalDirectory}/${file.fileName}`,
         thumbName: `${name}_${ImageSize.Small}.${extension}`
       };
     });

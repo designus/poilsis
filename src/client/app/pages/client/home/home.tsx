@@ -45,6 +45,12 @@ class HomePage extends React.Component<IHomePageProps, any> {
       query: `
         mutation($files: [Upload!]!) {
           uploadPhotos(files: $files, id: "SkEH8QnIoI")
+          {
+            id,
+            fileName,
+            path
+            thumbName
+          }
         }
       `,
       variables: {

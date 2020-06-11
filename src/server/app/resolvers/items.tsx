@@ -3,10 +3,10 @@ import { DocumentType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
-import { Item, ItemsModel } from 'data-models';
+import { Item, Image, ItemsModel } from 'data-models';
 import { UserRoles, MAX_PHOTOS } from 'global-utils';
 import { MainInfoInput, DescriptionInput } from 'input-types';
-import { isAdmin } from 'global-utils/methods';
+import { isAdmin, indexBy } from 'global-utils/methods';
 import {
   removeImageDirectory,
   getFormattedIsEnabled,
@@ -166,7 +166,7 @@ export class ItemResolver {
     return item;
   }
 
-  @Mutation(returns => Boolean)
+  @Mutation(returns => [Image])
   @Authorized<UserRoles>()
   async uploadPhotos(@Arg('files', () => [GraphQLUpload]) files: Array<Promise<FileUpload>>, @Arg('id') id: string, @Ctx() ctx: Context) {
     const item = await this.getOwnItemById(id, ctx);
@@ -179,8 +179,14 @@ export class ItemResolver {
     const tmpPath = await createUploadPath(id, 'tmp');
     const resolvedFiles = await Promise.all(files);
 
-    const uploadedFiles = await this.fileUploadService.uploadFiles(resolvedFiles, tmpPath, uploadPath);
+    const uploadedImages = await this.fileUploadService.uploadFiles(resolvedFiles, tmpPath, uploadPath);
+    const existingImages = indexBy<Image>(item.images, 'fileName');
+    const newImages = uploadedImages.filter(image => !existingImages[image.fileName]);
 
-    return true;
+    item.images.concat(newImages);
+
+    await item.save();
+
+    return item.images;
   }
 }
