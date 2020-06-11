@@ -28,6 +28,6 @@ export type Context = {
   res: Response;
 };
 
-export type UploadPath = 'items' | 'cities' | 'users' | 'tmp';
+export type EntityPath = 'items' | 'cities' | 'users' | 'tmp';
 
 export type UploadedFile = Pick<Image, 'id' | 'fileName' | 'path' | 'thumbName'>;

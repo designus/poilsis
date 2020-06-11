@@ -5,7 +5,7 @@ import Jimp from 'jimp';
 import { Service } from 'typedi';
 import { remove, copy } from 'fs-extra';
 
-import { getInfoFromFileName, getFileStatistics, UploadedFile } from 'server-utils';
+import { getInfoFromFileName, getFileStatistics, UploadedFile, EntityPath } from 'server-utils';
 import {
   formatValue,
   MIN_PHOTO_WIDTH,
@@ -38,6 +38,11 @@ export class FileUploadService {
   getResizedFileName = (name: string, size: ImageSize, extension: string) => this.getFileName(`${name}_${size}`, extension);
 
   getFilePath = (directory: string, fileName: string) => `${directory}/${fileName}`;
+
+  async removeDirectory(parent: 'uploads' | 'testUploads', entity: EntityPath, id: string) {
+    const path = `${parent}/${entity}/${id}`;
+    await remove(path);
+  }
 
   async streamFilesToTempDirectory(files: FileUpload[], tempDirectory: string) {
     return Promise.all<string>(files.map(file => {

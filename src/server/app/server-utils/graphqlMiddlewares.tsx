@@ -1,6 +1,5 @@
-import { MiddlewareFn, ArgumentValidationError } from 'type-graphql';
-import { getUploadPath, removeDirectory, checkIfDirectoryExists, createDirectory, Context, createUploadPath } from 'server-utils';
-import { Item } from 'data-models';
+import { MiddlewareFn } from 'type-graphql';
+import { Context } from 'server-utils';
 
 export const ErrorInterceptor: MiddlewareFn<Context> = async ({ context, info }, next) => {
   try {
@@ -13,33 +12,5 @@ export const ErrorInterceptor: MiddlewareFn<Context> = async ({ context, info },
     // }
 
     throw err;
-  }
-};
-
-export const removeImageDirectory: MiddlewareFn<Context> = async (params, next) => {
-  try {
-    const id = await next();
-    const uploadPath = getUploadPath(id, 'items');
-
-    await removeDirectory(uploadPath);
-
-    const exists = await checkIfDirectoryExists(uploadPath);
-
-    if (exists) {
-      throw new Error ('Unable to remove image directory');
-    } else {
-      return true;
-    }
-  } catch (err) {
-    return next();
-  }
-};
-
-export const createImageDirectory: MiddlewareFn<Context> = async (params, next) => {
-  try {
-    await createUploadPath(params.args.id, 'items');
-    return next();
-  } catch (err) {
-    return next();
   }
 };

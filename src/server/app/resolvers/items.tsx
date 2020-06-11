@@ -8,7 +8,6 @@ import { UserRoles, MAX_PHOTOS } from 'global-utils';
 import { MainInfoInput, DescriptionInput } from 'input-types';
 import { isAdmin, indexBy } from 'global-utils/methods';
 import {
-  removeImageDirectory,
   getFormattedIsEnabled,
   hasAdminAproval,
   getAlias,
@@ -99,59 +98,54 @@ export class ItemResolver {
     return new ItemsModel(newItem).save();
   }
 
-  // TODO: Add guard to check that user changes item that belongs to him
   @Mutation(returns => Item)
   @Authorized<UserRoles>()
-  async updateItem(@Arg('item') item: MainInfoInput, @Arg('id') id: string, @Ctx() ctx: Context): Promise<Item> {
+  async updateItem(@Arg('item') item: MainInfoInput, @Arg('id') id: string, @Ctx() ctx: Context) {
+    const existingItem = await this.getOwnItemById(id, ctx);
     const adjustedFields = await this.getAdjustedFields(id, item, ctx);
     const itemCandidate: Partial<Item> = { ...item, ...adjustedFields };
 
-    const updatedItem = await ItemsModel.findOneAndUpdate(
-      { id }, { $set: itemCandidate }, { new: true, runValidators: true }
-    );
+    Object.assign(existingItem, itemCandidate);
 
-    if (!updatedItem) throw new Error('Unable to find item');
+    await existingItem.save();
 
-    return updatedItem;
+    return existingItem;
   }
 
   @Mutation(returns => Boolean)
   @Authorized<UserRoles>([UserRoles.admin])
-  async recommendItem(@Arg('id') id: string, @Arg('isRecommended') isRecommended: boolean): Promise<boolean> {
-    const item = await ItemsModel.findOneAndUpdate(
-      { id }, { $set: { isRecommended } }, { new: true, runValidators: true }
-    );
+  async recommendItem(@Arg('id') id: string, @Arg('isRecommended') isRecommended: boolean, @Ctx() ctx: Context) {
+    const item = await this.getOwnItemById(id, ctx);
 
-    if (!item) throw new Error('Unable to find item');
+    item.isRecommended = isRecommended;
+
+    await item.save();
 
     return true;
   }
 
   @Mutation(returns => Boolean)
   @Authorized<UserRoles>([UserRoles.admin])
-  async approveItem(@Arg('id') id: string, @Arg('isApproved') isApprovedByAdmin: boolean): Promise<boolean> {
-    const item = await ItemsModel.findOneAndUpdate(
-      { id }, { $set: { isApprovedByAdmin } }, { new: true, runValidators: true }
-    );
+  async approveItem(@Arg('id') id: string, @Arg('isApproved') isApprovedByAdmin: boolean, @Ctx() ctx: Context) {
+    const item = await this.getOwnItemById(id, ctx);
 
-    if (!item) throw new Error('Unable to find item');
+    item.isApprovedByAdmin = isApprovedByAdmin;
+
+    await item.save();
 
     return true;
   }
 
   @Mutation(returns => Boolean)
-  @UseMiddleware(removeImageDirectory)
   @Authorized<UserRoles>()
   async removeItem(@Arg('id') id: string, @Ctx() ctx: Context) {
-    const item = await ItemsModel.findOne({ id });
+    const item = await this.getOwnItemById(id, ctx);
 
-    if (!item) throw new Error('Unable to find item');
-
-    if (!this.hasUserAccess(item, ctx)) throw new Error('You have no access');
+    await this.fileUploadService.removeDirectory('uploads', 'items', item.id);
 
     await item.remove();
 
-    return item.id;
+    return true;
   }
 
   @Mutation(returns => Item)

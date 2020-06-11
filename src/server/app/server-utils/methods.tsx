@@ -12,7 +12,7 @@ import {
 import { IsEnabled, TranslatableField, Item, Image } from 'data-models';
 import { CityInput, MainInfoInput } from 'input-types';
 import { auth } from '../controllers';
-import { MulterFile, IInfoFromFileName, FieldsToSet, UploadPath } from './types';
+import { MulterFile, IInfoFromFileName, FieldsToSet, EntityPath } from './types';
 import { readDirectoryContent, checkIfDirectoryExists, createDirectory } from './fileSystem';
 
 export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
@@ -66,7 +66,7 @@ export const getImages = (files: MulterFile[]): Image[] => {
   });
 };
 
-export const getUploadPath = (id: string, type: UploadPath) =>
+export const getUploadPath = (id: string, type: EntityPath) =>
   `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/${type}/${id}`;
 
 export const getSourceFiles = (files: string[]) => {
@@ -179,7 +179,7 @@ export function getFieldsToSet<T>(locale: Locale, fields: Array<TranslatableFiel
   }, {});
 }
 
-export const createUploadPath = async (name: string, type: UploadPath) => {
+export const createUploadPath = async (name: string, type: EntityPath) => {
   const path = getUploadPath(name, type);
   const exists = await checkIfDirectoryExists(path);
 
