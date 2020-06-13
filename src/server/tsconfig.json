@@ -9,7 +9,7 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es2017", "dom"],
+    "lib": ["es2017", "dom", "es2019"],
     "outDir": "../../build/server",
     "types": ["node"],
     "jsx": "react"

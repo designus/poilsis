@@ -3,9 +3,9 @@ import { createWriteStream } from 'fs';
 import shortId from 'shortid';
 import Jimp from 'jimp';
 import { Service } from 'typedi';
-import { remove, copy } from 'fs-extra';
+import { remove, copy, ensureDir } from 'fs-extra';
 
-import { getInfoFromFileName, getFileStatistics, UploadedFile, EntityPath } from 'server-utils';
+import { getInfoFromFileName, getFileStatistics, UploadedFile, EntityPath, ParentPath, readDirectoryContent } from 'server-utils';
 import {
   formatValue,
   MIN_PHOTO_WIDTH,
@@ -33,22 +33,47 @@ interface IUploadedFile {
 @Service()
 export class FileUploadService {
 
-  getFileName = (name: string, extension: string) => `${name}.${extension}`;
+  parentPath: ParentPath;
 
-  getResizedFileName = (name: string, size: ImageSize, extension: string) => this.getFileName(`${name}_${size}`, extension);
+  constructor() {
+    this.parentPath = process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads';
+  }
+
+  getSourceFileName = (name: string, extension: string) => `${name}.${extension}`;
+
+  getResizedFileName = (name: string, size: ImageSize, extension: string) => this.getSourceFileName(`${name}_${size}`, extension);
 
   getFilePath = (directory: string, fileName: string) => `${directory}/${fileName}`;
 
-  async removeDirectory(parent: 'uploads' | 'testUploads', entity: EntityPath, id: string) {
-    const path = `${parent}/${entity}/${id}`;
-    await remove(path);
+  getDirectoryPath = (entity: EntityPath, id: string) => `${this.parentPath}/${entity}/${id}`;
+
+  getResizedFilePath = (directory: string, name: string, size: ImageSize, extension: string) =>
+    this.getFilePath(directory, this.getResizedFileName(name, size, extension))
+
+  async createDirectory(entity: EntityPath, id: string) {
+    try {
+      const path = this.getDirectoryPath(entity, id);
+      await ensureDir(path);
+      return path;
+    } catch (err) {
+      console.error('Error creating directory');
+      return false;
+    }
+  }
+
+  async removeDirectory(entity: EntityPath, id: string) {
+    try {
+      await remove(this.getDirectoryPath(entity, id));
+    } catch (err) {
+      console.error('Error removing directory', err);
+    }
   }
 
   async streamFilesToTempDirectory(files: FileUpload[], tempDirectory: string) {
     return Promise.all<string>(files.map(file => {
       return new Promise((resolve, reject) => {
         const { name, extension } = getInfoFromFileName(file.filename);
-        const fileName = this.getFileName(formatValue(name), extension);
+        const fileName = this.getSourceFileName(formatValue(name), extension);
         return file.createReadStream()
           .pipe(createWriteStream(this.getFilePath(tempDirectory, fileName)))
           .on('error', reject)
@@ -158,8 +183,8 @@ export class FileUploadService {
         const { name, extension } = getInfoFromFileName(fileName);
         const largeFile = file;
         const smallFile = await Jimp.read(path);
-        const smallImagePath = this.getFilePath(tempDirectory, this.getResizedFileName(name, ImageSize.Small, extension));
-        const largeImagePath = this.getFilePath(tempDirectory, this.getResizedFileName(name, ImageSize.Large, extension));
+        const smallImagePath = this.getResizedFilePath(tempDirectory, name, ImageSize.Small, extension);
+        const largeImagePath = this.getResizedFilePath(tempDirectory, name, ImageSize.Large, extension);
 
         if (height > width) {
           await this.resizeVerticalImage(smallFile, largeFile, smallImagePath, largeImagePath, height);
@@ -183,7 +208,14 @@ export class FileUploadService {
     await remove(tempDirectory);
   }
 
-  async uploadFiles(files: FileUpload[], tempDirectory: string, finalDirectory: string): Promise<UploadedFile[]> {
+  async uploadFiles(files: FileUpload[], entity: EntityPath, id: string): Promise<UploadedFile[]> {
+    const tempDirectory = await this.createDirectory('tmp', id);
+    const finalDirectory = await this.createDirectory(entity, id);
+
+    if (!tempDirectory || !finalDirectory) {
+      throw new Error('Unable to create directory');
+    }
+
     const tempFiles = await this.getTempFiles(files, tempDirectory);
     const validationErrors = await this.getValidationErrors(tempFiles);
 
@@ -200,9 +232,34 @@ export class FileUploadService {
       return {
         id: shortId.generate(),
         fileName: file.fileName,
-        path: `${finalDirectory}/${file.fileName}`,
-        thumbName: `${name}_${ImageSize.Small}.${extension}`
+        path: finalDirectory,
+        thumbName: this.getResizedFileName(name, ImageSize.Small, extension)
       };
     });
+  }
+
+  getRemovableFiles = (directory: string, updatedFiles: string[], existingFiles: string[]) => {
+    return existingFiles
+      .map(getInfoFromFileName)
+      .filter(({ name, extension }) => !updatedFiles.includes(this.getSourceFileName(name, extension)))
+      .map(({ name, extension }) => [
+        this.getFilePath(directory, this.getSourceFileName(name, extension)),
+        this.getResizedFilePath(directory, name, ImageSize.Large, extension),
+        this.getResizedFilePath(directory, name, ImageSize.Small, extension)
+      ])
+      .flat();
+  }
+
+  async removeFiles(updatedFiles: string[], entity: EntityPath, id: string) {
+    try {
+      const directoryPath = this.getDirectoryPath(entity, id);
+      const existingFiles = await readDirectoryContent(directoryPath);
+      const removableFiles = this.getRemovableFiles(directoryPath, updatedFiles, existingFiles);
+
+      await Promise.all(removableFiles.map(remove));
+
+    } catch (err) {
+      console.error('Failed to remove files', err);
+    }
   }
 }

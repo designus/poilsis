@@ -30,11 +30,13 @@ export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
   }
 };
 
+// TODO: Remove depracated
 export const getSourceFileName = (fileName: string) => {
   const { name, extension } = getInfoFromFileName(fileName);
   return `${name}.${extension}`;
 };
 
+// TODO: Remove deprecated
 export const getFileExtension = (mimeType: string) => {
   if (mimeType === 'image/jpeg') {
     return '.jpeg';
@@ -69,6 +71,7 @@ export const getImages = (files: MulterFile[]): Image[] => {
 export const getUploadPath = (id: string, type: EntityPath) =>
   `${process.env.NODE_ENV === 'test' ? 'testUploads' : 'uploads'}/${type}/${id}`;
 
+// TODO: remove deprecated
 export const getSourceFiles = (files: string[]) => {
   const sourceFiles = files.filter(fileName => fileName === getSourceFileName(fileName));
   return sourceFiles;
@@ -91,12 +94,14 @@ export function removeFiles(files: string[], next: NextFunction) {
 
 export const extendWithUploadPath = (uploadPath: string) => (fileName: string) => `${uploadPath}/${fileName}`;
 
+// TODO: remove deprecated
 export const getRemovableFiles = (existingFiles: string[], newImages: Image[], uploadPath: string): string[] => {
   return existingFiles
     .filter(fileName => !newImages.find((image: Image) => (image.fileName === fileName) || (image.thumbName === fileName)))
     .map(extendWithUploadPath(uploadPath));
 };
 
+// TODO: remove deprecated
 export const getFilesToRemove = (existingFiles: string[], newFiles: MulterFile[], uploadPath: string): string[] => {
   return existingFiles
     .filter(fileName => {
@@ -106,6 +111,7 @@ export const getFilesToRemove = (existingFiles: string[], newFiles: MulterFile[]
     .map(extendWithUploadPath(uploadPath));
 };
 
+// TODO: remove deprecated
 export const removeUploadedFiles = async (files: MulterFile[], itemId: string, next: NextFunction) => {
   try {
     const uploadPath = getUploadPath(itemId, 'items');
@@ -179,6 +185,7 @@ export function getFieldsToSet<T>(locale: Locale, fields: Array<TranslatableFiel
   }, {});
 }
 
+// TODO: Remove deprecated
 export const createUploadPath = async (name: string, type: EntityPath) => {
   const path = getUploadPath(name, type);
   const exists = await checkIfDirectoryExists(path);

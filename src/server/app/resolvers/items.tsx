@@ -12,7 +12,7 @@ import {
   hasAdminAproval,
   getAlias,
   Context,
-  createUploadPath
+  getImagePath
 } from 'server-utils';
 import { auth } from '../controllers';
 import { FileUploadService } from '../services';
@@ -141,7 +141,7 @@ export class ItemResolver {
   async removeItem(@Arg('id') id: string, @Ctx() ctx: Context) {
     const item = await this.getOwnItemById(id, ctx);
 
-    await this.fileUploadService.removeDirectory('uploads', 'items', item.id);
+    await this.fileUploadService.removeDirectory('items', item.id);
 
     await item.remove();
 
@@ -162,22 +162,33 @@ export class ItemResolver {
 
   @Mutation(returns => [Image])
   @Authorized<UserRoles>()
-  async uploadPhotos(@Arg('files', () => [GraphQLUpload]) files: Array<Promise<FileUpload>>, @Arg('id') id: string, @Ctx() ctx: Context) {
+  async uploadImages(@Arg('files', () => [GraphQLUpload]) files: Array<Promise<FileUpload>>, @Arg('id') id: string, @Ctx() ctx: Context) {
     const item = await this.getOwnItemById(id, ctx);
 
     if (item.images.length + files.length > MAX_PHOTOS) {
       throw new Error(`You are not allowed to have more than ${MAX_PHOTOS} uploaded`);
     }
 
-    const uploadPath = await createUploadPath(id, 'items');
-    const tmpPath = await createUploadPath(id, 'tmp');
     const resolvedFiles = await Promise.all(files);
-
-    const uploadedImages = await this.fileUploadService.uploadFiles(resolvedFiles, tmpPath, uploadPath);
+    const uploadedImages = await this.fileUploadService.uploadFiles(resolvedFiles, 'items', item.id);
     const existingImages = indexBy<Image>(item.images, 'fileName');
     const newImages = uploadedImages.filter(image => !existingImages[image.fileName]);
 
-    item.images.concat(newImages);
+    item.images.push(...newImages);
+    item.mainImage = getImagePath(item.images[0]);
+
+    await item.save();
+
+    return item.images;
+  }
+
+  @Mutation(returns => [Image])
+  @Authorized<UserRoles>()
+  async updateImages(@Arg('id') id: string, @Arg('images', type => [Image]) images: Image[], @Ctx() ctx: Context) {
+    const item = await this.getOwnItemById(id, ctx);
+
+    item.images = images;
+    item.mainImage = getImagePath(item.images[0]);
 
     await item.save();
 

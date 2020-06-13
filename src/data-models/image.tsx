@@ -3,6 +3,7 @@ import { prop, modelOptions } from '@typegoose/typegoose';
 import shortId from 'shortid';
 
 @ObjectType()
+@InputType('ImageInput')
 @modelOptions({ schemaOptions: { _id: false } })
 export class Image {
   @Field(type => ID)

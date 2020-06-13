@@ -44,7 +44,7 @@ class HomePage extends React.Component<IHomePageProps, any> {
     axios(graphqlFetchOptions({
       query: `
         mutation($files: [Upload!]!) {
-          uploadPhotos(files: $files, id: "SkEH8QnIoI")
+          uploadImages(files: $files, id: "H1OrUm2LoU")
           {
             id,
             fileName,
