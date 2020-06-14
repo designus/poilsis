@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosPromise } from 'axios';
 import { config } from 'config';
 import { Toast, ThunkResult, ThunkDispatch, LoaderType } from 'types';
 
@@ -8,6 +8,12 @@ import { endLoading, hideLoader } from './loader';
 export const http = axios.create({
   baseURL: config.host
 });
+
+export function gqlRequest<T>(requestParams: AxiosRequestConfig): AxiosPromise<T> {
+  return axios.create({
+    baseURL: config.host
+  })(requestParams);
+}
 
 export const stopLoading = (isError: boolean, toastMessage: string, loaderId: LoaderType) => (dispatch: ThunkDispatch) => {
   const toastType = isError ? Toast.error : Toast.success;

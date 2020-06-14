@@ -1,4 +1,5 @@
 import { batch } from 'react-redux';
+import { mutation, query, params, types } from 'typed-graphqlify';
 import {
   setUploadProgress,
   uploadError,
@@ -42,7 +43,7 @@ import {
 } from 'types';
 import { Image, Item } from 'global-utils/data-models';
 
-import { handleApiResponse, http, handleApiErrors } from './utils';
+import { handleApiResponse, http, handleApiErrors, gqlRequest, handleGraphqlResponse } from './utils';
 
 export const receiveItems = (dataMap: IItemsMap, aliases: IAliasMap) => ({
   type: ItemsActionTypes.RECEIVE_ITEMS,
@@ -131,49 +132,46 @@ export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => disp
 };
 
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<Image[]>> => dispatch => {
-  return http
-    ({
-      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent))),
-      ...graphqlFetchOptions({
-        query: `
-          mutation($files: [Upload!]!, $itemId: String!) {
-            uploadImages(files: $files, id: $itemId)
-            {
-              mainImage
-              images {
-                id,
-                fileName,
-                path
-                thumbName
-              }
-            }
-          }
-        `,
-        variables: {
-          files,
-          itemId
-        }
-      })
-    })
-    .then(response => response.data.data.uploadImages)
-    .then(item => {
-      batch(() => {
-        dispatch(receiveImages(itemId, item.images, item.mainImage));
-        dispatch(setUploadProgress(100));
-        dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
-        dispatch(uploadSuccess());
-      });
 
-      return item.images;
+  const query = {
+    uploadImages: params({ files: '$files', id: '$itemId' }, {
+      mainImage: types.string,
+      images: [{
+        id: types.string,
+        fileName: types.string,
+        path: types.string,
+        thumbName: types.string
+      }]
     })
-    .catch(err => {
-      console.error(err);
-      const errors = err.images;
-      const message = errors && errors.message || IMAGES_UPLOAD_ERROR;
-      dispatch(showToast(Toast.error, message));
-      dispatch(uploadError());
-      return errors;
+  };
+
+  return gqlRequest<typeof query>({
+    onUploadProgress: (e: any) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent))),
+    ...graphqlFetchOptions({
+      query: mutation(params({ $files: '[Upload!]!', $itemId: 'String!' }, query)),
+      variables: {
+        files,
+        itemId
+      }
+    })
+  })
+  .then(handleGraphqlResponse)
+  .then(({ uploadImages: item }) => {
+    batch(() => {
+      dispatch(setUploadProgress(100));
+      dispatch(receiveImages(itemId, item.images, item.mainImage));
+      dispatch(showToast(Toast.success, IMAGES_UPLOAD_SUCCESS));
+      dispatch(uploadSuccess());
     });
+
+    return item.images;
+  })
+  .catch(err => {
+    console.error(err);
+    dispatch(showToast(Toast.error, IMAGES_UPLOAD_ERROR));
+    dispatch(uploadError());
+    return [];
+  });
 };
 
 export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promise<void>> => dispatch => {

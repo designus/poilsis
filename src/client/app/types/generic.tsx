@@ -1,4 +1,5 @@
 import { MessageDescriptor } from 'react-intl';
+import { AxiosResponse } from 'axios';
 import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
 import { Action, Store } from 'redux';
 import { Omit, Locale } from 'global-utils/typings';
@@ -62,3 +63,5 @@ export type ActionReturn<A> = A extends (...args: infer B) => any
   : never;
 
 export type ReduxStore = Store<IAppState, any>;
+
+export type GraphqlResponse<T> = { data: T };
