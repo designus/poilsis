@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import { ITypesState, TypesActionTypes, TypesActions, InitialDataActionTypes, InitialDataActions } from 'types';
 import { getAliasState, removeByKeys, getAliasKeysById } from 'client-utils/methods';
-import { IsEnabled } from 'data-models';
+import { IsEnabled } from 'global-utils/data-models';
 
 type ActionTypes = TypesActions | InitialDataActions;
 

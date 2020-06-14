@@ -9,7 +9,7 @@ import { injectIntl } from 'react-intl';
 
 import { IAppState, ThunkDispatch } from 'types';
 import { getAdminItem } from 'actions';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { hasLocalizedFields } from 'global-utils';
 import { adminRoutes } from 'client-utils/routes';
 import { shouldLoadEditItem, getItemById, getAdminLocale } from 'selectors';

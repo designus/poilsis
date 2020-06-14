@@ -1,4 +1,4 @@
-import { Field, Int, InputType, ObjectType, ID } from 'type-graphql';
+import { Field, InputType, ObjectType } from 'type-graphql';
 import { prop, modelOptions } from '@typegoose/typegoose';
 import { DEFAULT_LANGUAGE } from 'global-utils/constants';
 

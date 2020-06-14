@@ -17,7 +17,7 @@ import FormatUnorderedList from '@material-ui/icons/FormatListBulleted';
 import { debounce } from 'lodash';
 
 import { LANGUAGES, DEFAULT_LANGUAGE, IntlSetting } from 'global-utils';
-import { TranslatableField } from 'data-models';
+import { TranslatableField } from 'global-utils/data-models';
 import { styles } from './styles';
 
 export interface IEditorInputProps extends WrappedFieldProps, WithStyles<typeof styles> {

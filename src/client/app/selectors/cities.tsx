@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { Price, City, Item } from 'data-models';
+import { Price, City, Item } from 'global-utils/data-models';
 import { isNumber } from 'global-utils/methods';
 import { getItemsMap, getClientLocale } from 'selectors';
 import { IAppState, IItemsMap, CitiesMap, ICityFilters } from 'types';

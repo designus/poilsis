@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { TypesModel } from 'data-models';
+import { TypesModel } from 'global-utils/data-models';
 import {
   auth,
   getAdminTypes,

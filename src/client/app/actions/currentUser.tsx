@@ -5,7 +5,7 @@ import { showLoader, hideLoader } from 'actions/loader';
 import { receiveItems } from 'actions/items';
 import { CurrentUserActionTypes, ThunkResult, UserDetails } from 'types';
 import { isAdmin } from 'global-utils';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { getAdminLocale } from 'selectors';
 import { handleApiResponse, http } from './utils';
 

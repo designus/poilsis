@@ -8,7 +8,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { Locale } from 'global-utils/typings';
-import { Item, City } from 'data-models';
+import { Item, City } from 'global-utils/data-models';
 import { getLocalizedText } from 'client-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { config } from 'config';

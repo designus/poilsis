@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import 'react-virtualized/styles.css';
 
 import { config } from 'config';
-import { City, Item } from 'data-models';
+import { City, Item } from 'global-utils/data-models';
 import { SMALL_IMAGE_HEIGHT } from 'global-utils/constants';
 import { isClient, isServer } from 'global-utils/methods';
 import { clientRoutes } from 'client-utils/routes';

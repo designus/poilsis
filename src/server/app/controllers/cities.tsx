@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import shortId from 'shortid';
-import { CitiesModel, TranslatableField, City } from 'data-models';
+import { CitiesModel, TranslatableField, City } from 'global-utils/data-models';
 import { LANGUAGES, ToggleFields, Locale } from 'global-utils';
 import { sendResponse, getAdjustedIsEnabledValue, getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { IAppState, ITypesMap } from 'types';
-import { Type } from 'data-models';
+import { Type } from 'global-utils/data-models';
 
 export const getTypesMap = (state: IAppState): ITypesMap => state.types.dataMap;
 

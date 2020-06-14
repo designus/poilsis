@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { WrappedFieldProps } from 'redux-form';
 import { debounce } from 'lodash';
 
-import { Price } from 'data-models';
+import { Price } from 'global-utils/data-models';
 import { useStyles } from '../textInput/styles';
 
 type Props = WrappedFieldProps;

@@ -1,4 +1,4 @@
-import { Price } from 'data-models';
+import { Price } from 'global-utils/data-models';
 import { ICityFilters, CitiesFilterState } from 'types/filters';
 import { FiltersActionTypes } from 'types';
 

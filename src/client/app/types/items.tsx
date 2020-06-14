@@ -1,4 +1,4 @@
-import { Item, Image } from 'data-models';
+import { Item, Image } from 'global-utils/data-models';
 import { IGenericState, IGenericDataMap } from './generic';
 import {
   receiveItems,

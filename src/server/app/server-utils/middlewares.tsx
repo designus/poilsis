@@ -6,7 +6,7 @@ import {
   ImageSize,
   itemValidation
 } from 'global-utils';
-import { Image } from 'data-models';
+import { Image } from 'global-utils/data-models';
 
 import { formatValue } from 'global-utils/methods';
 
@@ -71,6 +71,7 @@ export const removeImagesDir = async (req: Request, res: Response, next: NextFun
   }
 };
 
+// TODO: Remove deprecated
 export const removeImagesFromFs = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const itemId = req.params.itemId;

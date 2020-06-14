@@ -7,7 +7,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { IAppState } from 'types';
 import { Locale } from 'global-utils/typings';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 import { getEnabledCities, getClientLocale } from 'selectors';
 
 import { styles } from './styles';

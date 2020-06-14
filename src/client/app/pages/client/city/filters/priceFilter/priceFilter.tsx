@@ -4,7 +4,7 @@ import { useIntl, defineMessages } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { History } from 'history';
 
-import { Price } from 'data-models';
+import { Price } from 'global-utils/data-models';
 import { IAppState } from 'types';
 import { getPriceFilterValue } from 'selectors';
 import { Popup } from 'components/popup';

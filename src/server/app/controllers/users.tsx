@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getFieldsToUnset, getFieldsToSet } from 'server-utils/methods';
 import { IUser, ToggleFields, Locale } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
-import { UsersModel } from 'data-models';
+import { UsersModel } from 'global-utils/data-models';
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {

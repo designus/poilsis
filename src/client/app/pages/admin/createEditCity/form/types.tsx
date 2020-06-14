@@ -2,7 +2,7 @@ import { InjectedFormProps } from 'redux-form';
 import { IntlShape } from 'react-intl';
 import { ITypesMap } from 'types';
 import { Locale } from 'global-utils/typings';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 
 export interface ICustomProps {
   typesMap: ITypesMap;

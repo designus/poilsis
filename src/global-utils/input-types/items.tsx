@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql';
-import { Item, NameField, TranslatableField, IsEnabled, Price } from 'data-models';
+import { Item, NameField, TranslatableField, IsEnabled, Price } from 'global-utils/data-models';
 
 @InputType()
 export class MainInfoInput implements Partial<Item> {

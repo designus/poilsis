@@ -9,7 +9,7 @@ import { IMenuItem  } from 'components/menu';
 import { adminRoutes, clientRoutes } from 'client-utils/routes';
 import { getLocalizedText } from 'client-utils/methods';
 import { callFn } from 'global-utils';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 
 import { HorizontalMenu } from './horizontalMenu';
 import { VerticalMenu } from './verticalMenu';

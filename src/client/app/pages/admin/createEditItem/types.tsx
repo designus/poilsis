@@ -1,7 +1,7 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { Locale } from 'global-utils/typings';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { ThunkReturn } from 'types';
 import { getAdminItem } from 'actions/items';
 

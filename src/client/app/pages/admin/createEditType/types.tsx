@@ -1,6 +1,6 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
-import { Type } from 'data-models';
+import { Type } from 'global-utils/data-models';
 import { ThunkReturn } from 'types';
 import { createType, updateType, getAdminType } from 'actions/types';
 

@@ -251,15 +251,10 @@ export class FileUploadService {
   }
 
   async removeFiles(updatedFiles: string[], entity: EntityPath, id: string) {
-    try {
-      const directoryPath = this.getDirectoryPath(entity, id);
-      const existingFiles = await readDirectoryContent(directoryPath);
-      const removableFiles = this.getRemovableFiles(directoryPath, updatedFiles, existingFiles);
+    const directoryPath = this.getDirectoryPath(entity, id);
+    const existingFiles = await readDirectoryContent(directoryPath);
+    const removableFiles = this.getRemovableFiles(directoryPath, updatedFiles, existingFiles);
 
-      await Promise.all(removableFiles.map(remove));
-
-    } catch (err) {
-      console.error('Failed to remove files', err);
-    }
+    await Promise.all(removableFiles.map(async file => remove(file)));
   }
 }

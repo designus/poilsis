@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import Typography from '@material-ui/core/Typography';
-import { Price } from 'data-models';
+import { Price } from 'global-utils/data-models';
 import { getDisplayPrice } from './utils';
 
 import { useStyles } from './styles';

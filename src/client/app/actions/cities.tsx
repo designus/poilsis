@@ -1,6 +1,6 @@
 import { batch } from 'react-redux';
 import { Locale } from 'global-utils';
-import { Item, City } from 'data-models';
+import { Item, City } from 'global-utils/data-models';
 import { showLoader, hideLoader } from 'actions/loader';
 import { showToast } from 'actions/toast';
 import { receiveItems } from 'actions/items';

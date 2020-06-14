@@ -7,7 +7,7 @@ import {
 
 import { showToast } from 'actions/toast';
 import { showLoader, hideLoader } from 'actions/loader';
-import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
+import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader, getNewItems, graphqlFetchOptions } from 'client-utils/methods';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -31,6 +31,7 @@ import {
 } from 'data-strings';
 import { IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
+import { DescriptionInput } from 'global-utils/input-types';
 import {
   ItemsActionTypes,
   Toast,
@@ -39,7 +40,7 @@ import {
   IItemsMap,
   IAliasMap
 } from 'types';
-import { Image, Item } from 'data-models';
+import { Image, Item } from 'global-utils/data-models';
 
 import { handleApiResponse, http, handleApiErrors } from './utils';
 
@@ -130,12 +131,31 @@ export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => disp
 };
 
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<Image[]>> => dispatch => {
-  console.log('Files', files);
   return http
-    .put<Item>(`/api/items/item/upload-photos/${itemId}`, getFormDataFromFiles(files), {
-      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent)))
+    ({
+      onUploadProgress: (e) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent))),
+      ...graphqlFetchOptions({
+        query: `
+          mutation($files: [Upload!]!, $itemId: String!) {
+            uploadImages(files: $files, id: $itemId)
+            {
+              mainImage
+              images {
+                id,
+                fileName,
+                path
+                thumbName
+              }
+            }
+          }
+        `,
+        variables: {
+          files,
+          itemId
+        }
+      })
     })
-    .then(response => handleApiResponse(response))
+    .then(response => response.data.data.uploadImages)
     .then(item => {
       batch(() => {
         dispatch(receiveImages(itemId, item.images, item.mainImage));
@@ -158,23 +178,42 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
 
 export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.put<Item>(`/api/items/item/update-photos/${itemId}`, {images})
-    .then(response => handleApiResponse(response))
-    .then(item => {
-      batch(() => {
-        dispatch(receiveImages(itemId, item.images, item.mainImage));
-        dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-      });
-    })
-    .catch(err => {
-      console.error(err);
-      const errors = err.images;
-      const message = errors && errors.message || IMAGES_UPDATE_ERROR;
-      dispatch(showToast(Toast.error, message));
+  return http(graphqlFetchOptions({
+    query: `
+      mutation($itemId: String!, $images: [ImageInput!]!) {
+        updateImages(id: $itemId, images: $images)
+        {
+          mainImage
+          images {
+            id,
+            fileName,
+            path
+            thumbName
+          }
+        }
+      }
+    `,
+    variables: {
+      itemId,
+      images
+    }
+  }))
+  .then(response => response.data.data.updateImages)
+  .then(item => {
+    batch(() => {
+      dispatch(receiveImages(itemId, item.images, item.mainImage));
+      dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
       dispatch(hideLoader(CONTENT_LOADER_ID));
-      return errors;
     });
+  })
+  .catch(err => {
+    console.error(err);
+    const errors = err.images;
+    const message = errors && errors.message || IMAGES_UPDATE_ERROR;
+    dispatch(showToast(Toast.error, message));
+    dispatch(hideLoader(CONTENT_LOADER_ID));
+    return errors;
+  });
 };
 
 export const updateMainInfo = (item: Item): ThunkResult<Promise<Item>> => dispatch => {
@@ -193,18 +232,33 @@ export const updateMainInfo = (item: Item): ThunkResult<Promise<Item>> => dispat
     .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateItemDescription = (itemId: string, itemDescFields: IItemDescFields): ThunkResult<Promise<void>> => dispatch => {
+export const updateItemDescription = (itemId: string, description: DescriptionInput): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.put<IItemDescFields>(`/api/items/item/description/${itemId}`, itemDescFields)
-    .then(response => handleApiResponse(response))
-    .then(response => {
-      batch(() => {
-        dispatch(receiveItemDescription(itemId, response));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-        dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
-      });
-    })
-    .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
+  return http(graphqlFetchOptions({
+    query: `
+      mutation($itemId: String!, $description: DescriptionInput!) {
+        updateDescription(id: $itemId, description: $description)
+        {
+          description { lt, en, ru }
+          metaTitle { lt, en, ru }
+          metaDescription { lt, en, ru }
+        }
+      }
+    `,
+    variables: {
+      itemId,
+      description
+    }
+  }))
+  .then(response => response.data.data.updateDescription)
+  .then(response => {
+    batch(() => {
+      dispatch(receiveItemDescription(itemId, response));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
+      dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
+    });
+  })
+  .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const createItem = (item: Item): ThunkResult<Promise<Item>> => dispatch => {

@@ -10,7 +10,7 @@ import { updateItemDescription } from 'actions/items';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getBackendErrors } from 'client-utils/methods';
 import { IItemDescFields, getItemDescriptionFields, ObjectKeys } from 'global-utils';
-import { TranslatableField } from 'data-models';
+import { TranslatableField } from 'global-utils/data-models';
 import { stateToHTML } from 'draft-js-export-html';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';

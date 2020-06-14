@@ -1,5 +1,5 @@
 import { Locale, UserRoles } from 'global-utils/typings';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { updateMainInfo, createItem } from 'actions/items';

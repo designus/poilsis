@@ -11,7 +11,7 @@ import { updateMainInfo, createItem } from 'actions/items';
 import { getBackendErrors } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';

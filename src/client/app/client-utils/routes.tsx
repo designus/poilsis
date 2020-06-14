@@ -1,5 +1,5 @@
 import { UserRoles, Locale } from 'global-utils/typings';
-import { TranslatableField } from 'data-models';
+import { TranslatableField } from 'global-utils/data-models';
 import { LANGUAGES } from 'global-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 

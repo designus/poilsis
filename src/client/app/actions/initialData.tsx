@@ -4,7 +4,7 @@ import { setClientLocale } from 'actions/locale';
 import { receiveUserDetails } from 'actions/currentUser';
 import { receiveCityFilters } from 'actions/filters';
 import { getAccessTokenClaims, DEFAULT_LANGUAGE, Locale, IUser } from 'global-utils';
-import { City, Type } from 'data-models';
+import { City, Type } from 'global-utils/data-models';
 import {
   InitialDataActionTypes,
   ThunkResult,

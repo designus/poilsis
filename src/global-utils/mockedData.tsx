@@ -1,6 +1,6 @@
 import shortId from 'shortid';
 import { LANGUAGES, DEFAULT_LANGUAGE, GLOBAL_CURRENCY } from 'global-utils/constants';
-import { Price, TranslatableField, Item } from 'data-models';
+import { Price, TranslatableField, Item } from 'global-utils/data-models';
 import { formatValue, getRandomNumber } from './methods';
 
 const userId = 'asd2234zl';

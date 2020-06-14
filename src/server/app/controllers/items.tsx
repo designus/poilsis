@@ -12,7 +12,7 @@ import {
   getFieldsToSet,
   getFieldsToUnset
 } from 'server-utils/methods';
-import { ItemsModel, TranslatableField, Item } from 'data-models';
+import { ItemsModel, TranslatableField, Item } from 'global-utils/data-models';
 import { uploadImages, resizeImages } from 'server-utils/middlewares';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
 import { MulterRequest, MulterFile } from 'server-utils/types';

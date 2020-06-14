@@ -8,7 +8,7 @@ import {
   InitialDataActionTypes,
   InitialDataActions
 } from 'types';
-import { IsEnabled } from 'data-models';
+import { IsEnabled } from 'global-utils/data-models';
 
 type ActionTypes = CitiesActions | ItemsActions | InitialDataActions;
 

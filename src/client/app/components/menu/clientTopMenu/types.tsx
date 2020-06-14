@@ -1,6 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { Locale } from 'global-utils/typings';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 import { ActiveItem } from 'types';
 
 export interface IOwnProps extends RouteComponentProps<any> {

@@ -1,4 +1,4 @@
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { getNormalizedData, isAdminItemActive } from '../methods';
 
 describe('client-utils/methods', () => {

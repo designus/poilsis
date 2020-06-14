@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 import { DEFAULT_LANGUAGE, requiredWhenEnabled } from 'global-utils';
 import { asyncValidateAlias } from 'actions';
 

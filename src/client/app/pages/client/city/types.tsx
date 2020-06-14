@@ -1,6 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { Locale } from 'global-utils/typings';
-import { City, Item } from 'data-models';
+import { City, Item } from 'global-utils/data-models';
 
 export type MatchParams = {
   cityAlias: string;

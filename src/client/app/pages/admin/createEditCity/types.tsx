@@ -1,7 +1,7 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { RouteComponentProps } from 'react-router-dom';
 import { Locale } from 'global-utils/typings';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 import { ITypesMap, ThunkReturn } from 'types';
 import { createCity, updateCity, getAdminCity } from 'actions/cities';
 

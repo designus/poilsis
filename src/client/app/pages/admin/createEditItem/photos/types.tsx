@@ -1,6 +1,6 @@
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { IPhotoFormState } from 'global-utils/typings';
-import { Image } from 'data-models';
+import { Image } from 'global-utils/data-models';
 import { ThunkReturn } from 'types';
 import { updatePhotos, uploadPhotos } from 'actions/items';
 

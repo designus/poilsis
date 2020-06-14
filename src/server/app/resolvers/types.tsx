@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType, ID, Resolver, Query, Arg, buildSchema, FieldResolver, Root } from 'type-graphql';
-import { Type, TypesModel } from 'data-models';
+import { Type, TypesModel } from 'global-utils/data-models';
 
 @Resolver(of => Type)
 export class TypeResolver {

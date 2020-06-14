@@ -2,7 +2,7 @@ import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { CitiesMap, ITypesMap, ThunkReturn } from 'types';
 import { Locale } from 'global-utils/typings';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 import { deleteCity, toggleCityEnabled } from 'actions/cities';
 
 export interface IOwnProps extends InjectedIntlProps {}

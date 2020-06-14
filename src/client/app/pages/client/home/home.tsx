@@ -1,5 +1,4 @@
 import * as React from 'react';
-import axios, { AxiosResponse } from 'axios';
 import { Helmet } from 'react-helmet';
 import { injectIntl, WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -41,7 +40,7 @@ class HomePage extends React.Component<IHomePageProps, any> {
   }
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    axios(graphqlFetchOptions({
+    http(graphqlFetchOptions({
       query: `
         mutation($files: [Upload!]!) {
           uploadImages(files: $files, id: "H1OrUm2LoU")

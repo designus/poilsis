@@ -10,7 +10,7 @@ import { usePrevious } from 'client-utils/customHooks';
 import { isInputHidden } from 'client-utils/methods';
 
 import { LANGUAGES, DEFAULT_LANGUAGE, hasLocalizedFields, Locale } from 'global-utils';
-import { TranslatableField } from 'data-models';
+import { TranslatableField } from 'global-utils/data-models';
 import { useStyles } from './styles';
 
 export interface ITextInputProps extends WrappedFieldProps {

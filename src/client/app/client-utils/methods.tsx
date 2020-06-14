@@ -8,7 +8,7 @@ import { useDispatch as dispatch } from 'react-redux';
 import { getItemById } from 'selectors';
 import { DEFAULT_LANGUAGE, LANGUAGES } from 'global-utils/constants';
 import { DEFAULT_CITY_FITLERS } from 'client-utils/constants';
-import { Price, TranslatableField, Item, City } from 'data-models';
+import { Price, TranslatableField, Item, City } from 'global-utils/data-models';
 import { DataTypes, IUser, Locale, IAccessTokenClaims } from 'global-utils/typings';
 import { hasLocalizedFields } from 'global-utils/methods';
 import { config } from 'config';
@@ -208,7 +208,7 @@ export const getPriceQueryParam = (price: Price) => Object.values(price).map(Num
 
 export const useDispatch = () => dispatch<ThunkDispatch>();
 
-export function graphqlFetchOptions(operation: any) {
+export const graphqlFetchOptions = (operation: any) => {
   const fetchOptions: any = {
     url: config.host + '/graphql',
     method: 'POST',

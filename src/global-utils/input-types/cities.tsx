@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql';
-import { City, NameField, TranslatableField, IsEnabled } from 'data-models';
+import { City, NameField, TranslatableField, IsEnabled } from 'global-utils/data-models';
 
 @InputType()
 export class CityInput implements Partial<City> {

@@ -1,6 +1,6 @@
 import { InjectedFormProps } from 'redux-form';
 import { IntlShape } from 'react-intl';
-import { Image } from 'data-models';
+import { Image } from 'global-utils/data-models';
 
 export interface ICustomProps {
   images: Image[];

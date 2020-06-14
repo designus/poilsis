@@ -1,5 +1,5 @@
 import * as JWT from 'jwt-decode';
-import { TranslatableField, Price, Item } from 'data-models';
+import { TranslatableField, Price, Item } from 'global-utils/data-models';
 import { UserRoles, IAccessTokenClaims, IItemDescFields, Locale } from './typings';
 import { LANGUAGES } from './constants';
 

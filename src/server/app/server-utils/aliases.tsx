@@ -1,5 +1,5 @@
 import { Locale, DataTypes, LANGUAGES } from 'global-utils';
-import { TranslatableField } from 'data-models';
+import { TranslatableField } from 'global-utils/data-models';
 import { formatValue, getDefaultTranslatableField } from 'global-utils/methods';
 import { Input, Model, Document } from 'server-utils/types';
 

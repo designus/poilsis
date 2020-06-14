@@ -8,7 +8,7 @@ import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getLocalizedText } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { deleteCity, toggleCityEnabled } from 'actions/cities';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
 import { extendWithLoader } from 'components/extendWithLoader';

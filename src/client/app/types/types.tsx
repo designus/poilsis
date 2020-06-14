@@ -1,4 +1,4 @@
-import { Type } from 'data-models';
+import { Type } from 'global-utils/data-models';
 import { IGenericDataMap, IGenericState } from './generic';
 import { selectType, receiveType, removeType, toggleTypeEnabledField } from 'actions/types';
 

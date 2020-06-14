@@ -1,6 +1,6 @@
 import { batch } from 'react-redux';
 import { Locale } from 'global-utils';
-import { Type } from 'data-models';
+import { Type } from 'global-utils/data-models';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { showToast } from 'actions/toast';
 import {

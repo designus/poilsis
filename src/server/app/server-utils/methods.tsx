@@ -9,8 +9,8 @@ import {
   TranslatableFields,
   LANGUAGES
 } from 'global-utils';
-import { IsEnabled, TranslatableField, Item, Image } from 'data-models';
-import { CityInput, MainInfoInput } from 'input-types';
+import { IsEnabled, TranslatableField, Item, Image } from 'global-utils/data-models';
+import { CityInput, MainInfoInput } from 'global-utils/input-types';
 import { auth } from '../controllers';
 import { MulterFile, IInfoFromFileName, FieldsToSet, EntityPath } from './types';
 import { readDirectoryContent, checkIfDirectoryExists, createDirectory } from './fileSystem';
@@ -77,6 +77,7 @@ export const getSourceFiles = (files: string[]) => {
   return sourceFiles;
 };
 
+// TODO: remove deprecated
 export function removeFiles(files: string[], next: NextFunction) {
   if (files.length === 0) {
     next();
@@ -92,6 +93,7 @@ export function removeFiles(files: string[], next: NextFunction) {
   }
 }
 
+// TODO: remove deprecated
 export const extendWithUploadPath = (uploadPath: string) => (fileName: string) => `${uploadPath}/${fileName}`;
 
 // TODO: remove deprecated

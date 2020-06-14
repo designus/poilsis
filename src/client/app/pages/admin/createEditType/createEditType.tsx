@@ -7,7 +7,7 @@ import { SubmissionError, isDirty, isSubmitting } from 'redux-form';
 import reduxFormActions from 'redux-form/es/actions';
 
 import { injectIntl, defineMessages } from 'react-intl';
-import { Type } from 'data-models';
+import { Type } from 'global-utils/data-models';
 import { LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
 import { createType, updateType, getAdminType } from 'actions/types';
 import { getBackendErrors } from 'client-utils/methods';

@@ -1,4 +1,4 @@
-import { Price } from 'data-models';
+import { Price } from 'global-utils/data-models';
 import { setCityFilters, receiveCityFilters, setTypeFilter, setPriceFilter } from 'actions/filters';
 
 export interface ICityFilters {

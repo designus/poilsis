@@ -3,7 +3,7 @@ import { join } from 'path';
 import { flatMap } from 'lodash';
 
 import { voidFn } from 'global-utils';
-import { Image, Item } from 'data-models';
+import { Image, Item } from 'global-utils/data-models';
 import { config } from 'config';
 import {
   checkIfDirectoryExists,

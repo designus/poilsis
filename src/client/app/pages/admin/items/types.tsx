@@ -5,7 +5,7 @@ import { deleteItem, toggleItemEnabled, toggleItemRecommended, toggleItemApprove
 import { loadUserItems } from 'actions/currentUser';
 import { endLoading } from 'actions/loader';
 import { UserRoles, Locale } from 'global-utils/typings';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 
 export interface IOwnProps extends InjectedIntlProps {}
 

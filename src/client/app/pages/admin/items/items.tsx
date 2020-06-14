@@ -28,7 +28,7 @@ import { ToggleEnabled } from 'components/toggleEnabled';
 import { ToggleRecommended } from 'components/toggleRecommended';
 import { AdminHeader } from 'components/adminHeader';
 import { ToggleAction } from 'components/toggleAction';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { isAdmin } from 'global-utils/methods';
 
 import { Props, IOwnProps, IStateProps, IDispatchProps, State } from './types';

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { IAppState } from 'types';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { getItemsMap } from 'selectors';
 
 export const getCurrentUser = (state: IAppState) => state.currentUser.details;

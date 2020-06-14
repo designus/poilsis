@@ -2,7 +2,7 @@ import * as React from 'react';
 import { injectIntl, WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { DataTypes, Locale } from 'global-utils/typings';
-import { TranslatableField, IsEnabled } from 'data-models';
+import { TranslatableField, IsEnabled } from 'global-utils/data-models';
 import { LANGUAGES } from 'global-utils/constants';
 import { ToggleEnabledParams } from 'types';
 

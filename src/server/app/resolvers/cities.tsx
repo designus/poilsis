@@ -1,10 +1,10 @@
 import { Authorized, Mutation, Resolver, Query, Arg } from 'type-graphql';
 import shortId from 'shortid';
-import { City, CitiesModel } from 'data-models';
+import { City, CitiesModel } from 'global-utils/data-models';
 import { UserRoles } from 'global-utils/typings';
 import { getAlias } from 'server-utils/aliases';
 import { getFormattedIsEnabled } from 'server-utils/methods';
-import { CityInput } from 'input-types';
+import { CityInput } from 'global-utils/input-types';
 
 @Resolver(of => City)
 export class CityResolver {

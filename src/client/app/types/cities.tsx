@@ -1,4 +1,4 @@
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 import { receiveCity, removeCity, toggleCityEnabledField, setCityItems } from 'actions/cities';
 import { IGenericDataMap, IGenericState } from './generic';
 

@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { adminRoutes } from 'client-utils/routes';
 import { asyncValidateAlias } from 'actions';
 import { isRequired } from 'global-utils';
-import { Type } from 'data-models';
+import { Type } from 'global-utils/data-models';
 import { TextInput } from 'components/formFields/textInput';
 import { Switcher } from 'components/formFields/switch';
 import { AdminFormActions } from 'components/adminFormActions';

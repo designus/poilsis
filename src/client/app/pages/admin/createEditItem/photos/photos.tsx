@@ -4,7 +4,7 @@ import { injectIntl } from 'react-intl';
 
 import { IPhotoFormState } from 'global-utils/typings';
 import { IAppState, ThunkDispatch } from 'types';
-import { Image } from 'data-models';
+import { Image } from 'global-utils/data-models';
 
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { updatePhotos, uploadPhotos, receiveImages } from 'actions/items';

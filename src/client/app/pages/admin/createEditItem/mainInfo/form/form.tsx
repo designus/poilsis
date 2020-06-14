@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
-import { Item, City, Type } from 'data-models';
+import { Item, City, Type } from 'global-utils/data-models';
 import { asyncValidateAlias } from 'actions';
 import {
   isAdmin,

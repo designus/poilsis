@@ -1,6 +1,6 @@
 import { batch } from 'react-redux';
 import { showLoader, hideLoader } from 'actions/loader';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import { HomeActionTypes, ThunkResult } from 'types';

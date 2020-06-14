@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { isEqual } from 'lodash';
 
 import { maxUploadedPhotos, maxUploadedPhotoSize, asyncValidateImage, IPhotoFormState, itemValidation } from 'global-utils';
-import { Image } from 'data-models';
+import { Image } from 'global-utils/data-models';
 import { adminRoutes } from 'client-utils/routes';
 import { DropzoneInput } from 'components/formFields/dropzoneInput';
 import { ImagePreview } from 'components/imagePreview';
@@ -89,7 +89,11 @@ function FormComponent(props: Props) {
         isUploading={false}
         isTemporary={false}
       />
-      <AdminFormActions backLink={adminRoutes.items.getLink()} isSubmitDisabled={isSubmitDisabled()} />
+      <AdminFormActions
+        backLink={adminRoutes.items.getLink()}
+        isSubmitDisabled={isSubmitDisabled()}
+        onSubmit={handleImagesSave}
+      />
     </form>
   );
 }

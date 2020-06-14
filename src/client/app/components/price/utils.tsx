@@ -1,5 +1,5 @@
 import { defineMessages, IntlShape } from 'react-intl';
-import { Price } from 'data-models';
+import { Price } from 'global-utils/data-models';
 import { isNumber } from 'global-utils/methods';
 
 type Params = [IntlShape, string];

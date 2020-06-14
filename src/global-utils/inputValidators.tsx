@@ -6,7 +6,7 @@ import {
   Locale
 } from 'global-utils';
 import { isNumber } from 'global-utils/methods';
-import { IsEnabled, TranslatableField, Price, Image as IImage } from 'data-models';
+import { IsEnabled, TranslatableField, Price, Image as IImage } from 'global-utils/data-models';
 
 import * as errors from '../data-strings/validation';
 

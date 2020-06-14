@@ -1,5 +1,5 @@
 import { IAppState, IItemsMap } from 'types';
-import { Item } from 'data-models';
+import { Item } from 'global-utils/data-models';
 
 export const shouldLoadUserItems = (state: IAppState) =>
   !state.currentUser.hasItems && !state.loader.content;

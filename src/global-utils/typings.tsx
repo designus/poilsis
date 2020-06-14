@@ -1,4 +1,4 @@
-import { Item, Type, City, User, TranslatableField } from 'data-models';
+import { Item, Type, City, User, TranslatableField } from 'global-utils/data-models';
 
 export enum ImageSize {
   Small = 'S',

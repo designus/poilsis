@@ -8,7 +8,7 @@ import { deleteType, toggleTypeEnabled } from 'actions/types';
 import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 import { Locale } from 'global-utils';
-import { Type } from 'data-models';
+import { Type } from 'global-utils/data-models';
 import { IAppState, ITypesMap, ToggleEnabledParams, ThunkDispatch, ThunkReturn } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';

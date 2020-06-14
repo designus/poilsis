@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { getEnabledCities, getClientLocale } from 'selectors';
 import { Locale } from 'global-utils/typings';
-import { City } from 'data-models';
+import { City } from 'global-utils/data-models';
 import { getLocalizedText } from 'client-utils/methods';
 import { clientRoutes } from 'client-utils/routes';
 import { Menu, IMenuItem  } from 'components/menu';

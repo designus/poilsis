@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { LANGUAGES, Locale, ToggleFields } from 'global-utils';
-import { TypesModel, TranslatableField, Type } from 'data-models';
+import { TypesModel, TranslatableField, Type } from 'global-utils/data-models';
 import shortId from 'shortid';
 
 import { getUniqueAlias, getAdjustedAliasValue } from 'server-utils/aliases';
