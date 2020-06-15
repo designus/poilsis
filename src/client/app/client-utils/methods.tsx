@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import { extractFiles } from 'extract-files';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { useDispatch as dispatch } from 'react-redux';
@@ -208,7 +208,7 @@ export const getPriceQueryParam = (price: Price) => Object.values(price).map(Num
 
 export const useDispatch = () => dispatch<ThunkDispatch>();
 
-export const graphqlFetchOptions = (operation: any) => {
+export const graphqlFetchOptions = (operation: string): AxiosRequestConfig => {
   const fetchOptions: any = {
     url: config.host + '/graphql',
     method: 'POST',

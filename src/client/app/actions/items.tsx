@@ -8,7 +8,7 @@ import {
 
 import { showToast } from 'actions/toast';
 import { showLoader, hideLoader } from 'actions/loader';
-import { onUploadProgress, getFormDataFromFiles, getNormalizedData, setAcceptLanguageHeader, getNewItems, graphqlFetchOptions } from 'client-utils/methods';
+import { onUploadProgress, getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -146,14 +146,10 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
   };
 
   return gqlRequest<typeof query>({
+    query: mutation(params({ $files: '[Upload!]!', $itemId: 'String!' }, query)),
+    variables: { files, itemId }
+  }, {
     onUploadProgress: (e: any) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent))),
-    ...graphqlFetchOptions({
-      query: mutation(params({ $files: '[Upload!]!', $itemId: 'String!' }, query)),
-      variables: {
-        files,
-        itemId
-      }
-    })
   })
   .then(handleGraphqlResponse)
   .then(({ uploadImages: item }) => {
@@ -176,28 +172,25 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
 
 export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http(graphqlFetchOptions({
-    query: `
-      mutation($itemId: String!, $images: [ImageInput!]!) {
-        updateImages(id: $itemId, images: $images)
-        {
-          mainImage
-          images {
-            id,
-            fileName,
-            path
-            thumbName
-          }
-        }
-      }
-    `,
-    variables: {
-      itemId,
-      images
-    }
-  }))
-  .then(response => response.data.data.updateImages)
-  .then(item => {
+
+  const query = {
+    updateImages: params({ id: '$itemId', images: '$images' }, {
+      mainImage: types.string,
+      images: [{
+        id: types.string,
+        fileName: types.string,
+        path: types.string,
+        thumbName: types.string
+      }]
+    })
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(params({ $itemId: 'String!', $images: '[ImageInput!]!' }, query)),
+    variables: { itemId, images }
+  })
+  .then(handleGraphqlResponse)
+  .then(({ updateImages: item }) => {
     batch(() => {
       dispatch(receiveImages(itemId, item.images, item.mainImage));
       dispatch(showToast(Toast.success, IMAGES_UPDATE_SUCCESS));
@@ -206,11 +199,8 @@ export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promi
   })
   .catch(err => {
     console.error(err);
-    const errors = err.images;
-    const message = errors && errors.message || IMAGES_UPDATE_ERROR;
-    dispatch(showToast(Toast.error, message));
+    dispatch(showToast(Toast.error, IMAGES_UPDATE_ERROR));
     dispatch(hideLoader(CONTENT_LOADER_ID));
-    return errors;
   });
 };
 
@@ -232,26 +222,35 @@ export const updateMainInfo = (item: Item): ThunkResult<Promise<Item>> => dispat
 
 export const updateItemDescription = (itemId: string, description: DescriptionInput): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http(graphqlFetchOptions({
-    query: `
-      mutation($itemId: String!, $description: DescriptionInput!) {
-        updateDescription(id: $itemId, description: $description)
-        {
-          description { lt, en, ru }
-          metaTitle { lt, en, ru }
-          metaDescription { lt, en, ru }
-        }
+
+  const query = {
+    updateDescription: params({ id: '$itemId', description: '$description' }, {
+      description: {
+        lt: types.string,
+        en: types.string,
+        ru: types.string
+      },
+      metaTitle: {
+        lt: types.string,
+        en: types.string,
+        ru: types.string
+      },
+      metaDescription: {
+        lt: types.string,
+        en: types.string,
+        ru: types.string
       }
-    `,
-    variables: {
-      itemId,
-      description
-    }
-  }))
-  .then(response => response.data.data.updateDescription)
+    })
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(params({ $itemId: 'String!', $description: 'DescriptionInput!' }, query)),
+    variables: { itemId, description }
+  })
+  .then(handleGraphqlResponse)
   .then(response => {
     batch(() => {
-      dispatch(receiveItemDescription(itemId, response));
+      dispatch(receiveItemDescription(itemId, response.updateDescription));
       dispatch(hideLoader(CONTENT_LOADER_ID));
       dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
     });
