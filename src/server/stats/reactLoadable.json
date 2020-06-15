@@ -623,7 +623,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "../toggleAction": [
+  "components/toggleAction": [
     {
       "id": "./app/components/toggleAction/index.tsx",
       "name": "./app/components/toggleAction/index.tsx",
@@ -4741,7 +4741,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "lodash/memoize": [
+  "./memoize": [
     {
       "id": "../../node_modules/lodash/memoize.js",
       "name": "../../node_modules/lodash/memoize.js",
@@ -5989,7 +5989,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./upload": [
+  "actions/upload": [
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",
@@ -7169,7 +7169,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/List": [
+  "../List": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/index.js",
       "name": "../../node_modules/@material-ui/core/esm/List/index.js",
@@ -7497,7 +7497,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/useMediaQuery": [
+  "../useMediaQuery": [
     {
       "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
       "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",

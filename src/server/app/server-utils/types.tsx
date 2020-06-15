@@ -4,9 +4,6 @@ import { ImageSize, DataTypes } from 'global-utils/typings';
 import { CityInput, MainInfoInput } from 'global-utils/input-types';
 import { Image, CitiesModelType, TypesModelType, ItemsModelType } from 'global-utils/data-models';
 
-export type MulterRequest = Express.Request & Request;
-export type MulterFile = Express.Multer.File;
-
 export interface IInfoFromFileName {
   name: string;
   size: ImageSize;

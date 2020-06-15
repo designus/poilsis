@@ -88,8 +88,7 @@ async function bootstrap() {
             return { fetchData, params };
           }
         })
-        // Flatten array to 1 level deep
-        .reduce((acc: any[], val) => acc.concat(val), [])
+        .flat()
         .filter(({fetchData}) => Boolean(fetchData))
         .map((item) => {
           const {fetchData, params} = item;

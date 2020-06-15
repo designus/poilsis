@@ -13,19 +13,12 @@ import {
   toggleItemApproved,
   addNewItem,
   deleteItem,
-  updateItemDescription,
   updateMainInfo,
-  updatePhotos,
-  uploadPhotos,
   doesAliasExist,
   addMockedData,
   removeMockedData
 } from '../controllers';
-import {
-  createUploadPath_deprecated,
-  removeImagesFromFs,
-  removeImagesDir
-} from '../server-utils';
+import { removeImagesDir } from '../server-utils';
 
 import { ItemsModel } from 'global-utils/data-models';
 
@@ -52,15 +45,6 @@ router.route('/item/alias-exist')
 
 router.route('/item/main-info/:itemId')
   .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateMainInfo);
-
-router.route('/item/description/:itemId')
-  .put(auth.authenticate(), auth.authorize(['admin', 'user']), updateItemDescription);
-
-router.route('/item/update-photos/:itemId')
-  .put(auth.authenticate(), auth.authorize(['admin', 'user']), removeImagesFromFs, updatePhotos);
-
-router.route('/item/upload-photos/:itemId')
-  .put(auth.authenticate(), auth.authorize(['admin', 'user']), createUploadPath_deprecated, uploadPhotos);
 
 router.route('/city/:cityId')
   .get(getCityItems);

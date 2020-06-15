@@ -1,21 +1,16 @@
 
 import { Request, Response, NextFunction, response } from 'express';
 import shortId from 'shortid';
-import { itemValidation, getItemDescriptionFields, LANGUAGES, ToggleFields, Locale } from 'global-utils';
+import { LANGUAGES, ToggleFields, Locale } from 'global-utils';
 import {
-  getImages,
   sendResponse,
   getAdjustedIsEnabledValue,
   isApprovedByAdmin,
-  getImagePath,
-  removeUploadedFiles,
   getFieldsToSet,
   getFieldsToUnset
 } from 'server-utils/methods';
-import { ItemsModel, TranslatableField, Item } from 'global-utils/data-models';
-import { uploadImages, resizeImages } from 'server-utils/middlewares';
+import { ItemsModel, Item } from 'global-utils/data-models';
 import { getAdjustedAliasValue, getUniqueAlias } from 'server-utils/aliases';
-import { MulterRequest, MulterFile } from 'server-utils/types';
 import { config } from 'config';
 import { getDataByAlias } from './common';
 
@@ -223,80 +218,6 @@ export const updateMainInfo = async (req: Request, res: Response, next: NextFunc
   } catch (err) {
     return next(err);
   }
-};
-
-export const updateItemDescription = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const fields = getItemDescriptionFields(req.body);
-    const result = await ItemsModel.findOneAndUpdate({ id: req.params.itemId }, { $set: fields }, { new: true, runValidators: true });
-
-    if (!result) throw new Error('Unable to update description');
-
-    res.status(200).json(getItemDescriptionFields(result.toJSON() as Item));
-  } catch (err) {
-    return next(err);
-  }
-};
-
-export const updatePhotos = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const item = await ItemsModel.findOne({ id: req.params.itemId });
-
-    if (!item) {
-      throw new Error('Unable to find item by provided itemId');
-    }
-
-    item.images = req.body.images;
-    // @ts-ignore
-    item.mainImage = item.images.length > 0 ? getImagePath(item.images[0]) : '';
-
-    const newItem = await item.save();
-
-    if (!newItem) {
-      throw new Error('Unable to update item images');
-    }
-
-    res.status(200).json(newItem);
-
-  } catch (err) {
-    return next(err);
-  }
-};
-
-export const uploadPhotos = (req: MulterRequest, res: Response, next: NextFunction) => {
-  const uploadPhotos = uploadImages.array('files[]', itemValidation.images.maxPhotos);
-
-  uploadPhotos(req, res, async (err) => {
-    if (err) { return next(err); }
-
-    const files = req.files as MulterFile[];
-
-    try {
-      await resizeImages(req, res);
-      const newImages = getImages(files);
-      const item = await ItemsModel.findOne({ id: req.params.itemId });
-
-      if (!item) {
-        throw new Error('Unable to find item by provided itemId');
-      }
-
-      item.images = [...(item.images || []), ...newImages];
-      // @ts-ignore
-      item.mainImage = getImagePath(item.images[0]);
-
-      const updatedItem = await item.save();
-
-      if (!updatedItem) {
-        throw new Error('Unable to update item images');
-      }
-
-      res.status(200).json(item);
-
-    } catch (err) {
-      removeUploadedFiles(files, req.params.itemId, next);
-      return next(err);
-    }
-  });
 };
 
 export const addMockedData = async (req: Request, res: Response, next: NextFunction) => {

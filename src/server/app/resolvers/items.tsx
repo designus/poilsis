@@ -150,7 +150,7 @@ export class ItemResolver {
 
   @Mutation(returns => Item)
   @Authorized<UserRoles>()
-  async updateDescription(@Arg('id') id: string, @Arg('description') description: DescriptionInput, @Ctx() ctx: Context): Promise<Item> {
+  async updateDescription(@Arg('id') id: string, @Arg('description') description: DescriptionInput, @Ctx() ctx: Context) {
     const item = await this.getOwnItemById(id, ctx);
 
     Object.assign(item, description);
