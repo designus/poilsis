@@ -1,7 +1,9 @@
 import React from 'react';
 // @ts-ignore
 import { extractFiles } from 'extract-files';
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
+import { mutation, query, params, types } from 'typed-graphqlify';
+import { Params } from 'typed-graphqlify/dist/render';
+import { AxiosRequestConfig } from 'axios';
 import * as FormData from 'form-data';
 import { memoize } from 'lodash';
 import { useDispatch as dispatch } from 'react-redux';
@@ -20,8 +22,13 @@ import {
   IAppState,
   UserDetails,
   CitiesFilterState,
-  ThunkDispatch
+  ThunkDispatch,
+  GraphqlInput
 } from 'types';
+
+export function graphqlParams<T>(parameters: Params, input: GraphqlInput<T>): T {
+  return params<any>(parameters, input);
+}
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {
   return data.reduce((acc: IGenericState<T>, item: T) => {
@@ -94,12 +101,6 @@ export const renderMergedProps = (component: any, ...rest: any) => {
   return (
     React.createElement(component, finalProps)
   );
-};
-
-export const getFormDataFromFiles = (files: File[]) => {
-  const formData = new FormData();
-  files.forEach(file => formData.append('files[]', file));
-  return formData;
 };
 
 export const getSelectedLanguage = () => DEFAULT_LANGUAGE;

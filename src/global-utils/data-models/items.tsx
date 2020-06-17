@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID } from 'type-graphql';
+import { Field, ObjectType, ID, InputType } from 'type-graphql';
 import { prop, arrayProp, getModelForClass, ReturnModelType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 
@@ -21,6 +21,7 @@ const {
 } = itemValidation;
 
 @ObjectType()
+@InputType('ItemInput')
 export class Item {
   @Field(type => ID)
   @prop({ unique: true, default: shortId.generate, required: true })

@@ -3,6 +3,7 @@ import { DocumentType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
+import { config } from 'config';
 import { Item, Image, ItemsModel } from 'global-utils/data-models';
 import { UserRoles, MAX_PHOTOS } from 'global-utils';
 import { isAdmin, indexBy } from 'global-utils/methods';
@@ -196,5 +197,31 @@ export class ItemResolver {
     await item.save();
 
     return item;
+  }
+
+  @Mutation(returns => [Item])
+  @Authorized<UserRoles>([UserRoles.admin])
+  async addMockedData(@Arg('data', type => [Item]) data: Item[]) {
+
+    if (config.env !== 'development') {
+      throw new Error(`Unauthorized action is ${config.env} environment`);
+    }
+
+    const items = await ItemsModel.insertMany(data);
+
+    return items;
+  }
+
+  @Mutation(returns => Boolean)
+  @Authorized<UserRoles>([UserRoles.admin])
+  async removeMockedData() {
+
+    if (config.env !== 'development') {
+      throw new Error(`Unauthorized action is ${config.env} environment`);
+    }
+
+    await ItemsModel.remove({});
+
+    return true;
   }
 }

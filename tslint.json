@@ -26,6 +26,7 @@
     "no-var-requires": false,
     "arrow-parens": false,
     "max-classes-per-file": false,
+    "array-type": false,
     "ordered-imports": false,
     "member-ordering": [
       false

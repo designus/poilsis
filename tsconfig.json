@@ -22,8 +22,8 @@
       "global-styles": ["./src/client/app/global-styles"],
       "global-utils": ["./src/global-utils"],
       "global-utils/*": ["./src/global-utils/*"],
-      "input-types": ["src/global-utils/input-types"],
-      "input-types/*": ["src/global-utils/input-types/*"],
+      "input-types": ["src/server/app/input-types"],
+      "input-types/*": ["src/server/app/input-types/*"],
       "config": ["./config"]
     },
     "lib": ["es2017", "es2019", "dom", "es7", "dom.iterable", "esnext.asynciterable"],

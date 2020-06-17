@@ -65,3 +65,11 @@ export type ActionReturn<A> = A extends (...args: infer B) => any
 export type ReduxStore = Store<IAppState, any>;
 
 export type GraphqlResponse<T> = { data: T };
+
+export type GraphqlInput<T> = {
+  [P in keyof T]?: T[P] extends (infer R)[] ? GraphqlInput<Partial<R>>[] : T[P] extends { [key: string]: any }
+    ? GraphqlInput<Partial<T[P]>>
+    : Partial<T[P]>;
+};
+
+export type GraphqlParams<T> = T extends (infer R)[] ? GraphqlInput<R> : GraphqlInput<T>;

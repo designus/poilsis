@@ -8,7 +8,7 @@ import {
 
 import { showToast } from 'actions/toast';
 import { showLoader, hideLoader } from 'actions/loader';
-import { onUploadProgress, getNormalizedData, setAcceptLanguageHeader, getNewItems } from 'client-utils/methods';
+import { onUploadProgress, getNormalizedData, setAcceptLanguageHeader, getNewItems, graphqlParams } from 'client-utils/methods';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -149,7 +149,7 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
     query: mutation(params({ $files: '[Upload!]!', $itemId: 'String!' }, query)),
     variables: { files, itemId }
   }, {
-    onUploadProgress: (e: any) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent))),
+    onUploadProgress: (e: any) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent)))
   })
   .then(handleGraphqlResponse)
   .then(({ uploadImages: item }) => {
@@ -325,18 +325,59 @@ export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, g
   const typeIds = Object.keys(state.types.dataMap);
   const data = generateMockedData(1000, cityIds, typeIds);
 
-  return http.post<Item[]>('/api/items/mocked-data', { data })
-    .then(response => handleApiResponse(response))
-    .then(items => {
-      const newItems = getNewItems(items, state);
-      const { dataMap, aliases } = getNormalizedData(newItems);
-      batch(() => {
-        dispatch(receiveMockedData(dataMap, aliases));
-        dispatch(showToast(Toast.success, ITEMS_UPLOAD_SUCCESS));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-      });
-    })
-    .catch(handleApiErrors(ITEMS_UPLOAD_ERROR, CONTENT_LOADER_ID, dispatch));
+  const query = {
+    addMockedData: graphqlParams<Item[]>({ data: '$data' }, [{
+      id: types.string,
+      name: {
+        lt: types.string,
+        en: types.string,
+        ru: types.string
+      },
+      alias: {
+        lt: types.string,
+        en: types.string,
+        ru: types.string
+      },
+      isEnabled: {
+        lt: types.boolean,
+        en: types.boolean,
+        ru: types.boolean
+      },
+      price: {
+        from: types.number,
+        to: types.number
+      },
+      cityId: types.string,
+      currency: types.string,
+      address: types.string,
+      mainImage: types.string,
+      isApprovedByAdmin: types.boolean,
+      isRecommended: types.boolean,
+      images: [{
+        id: types.string,
+        fileName: types.string,
+        path: types.string,
+        thumbName: types.string
+      }]
+    }]
+  )};
+
+  return gqlRequest<typeof query>({
+    query: mutation(params({ $data: '[ItemInput!]!' }, query)),
+    variables: { data }
+  })
+  .then(handleGraphqlResponse)
+  .then(response => {
+    const items = response.addMockedData;
+    const newItems = getNewItems(items, state);
+    const { dataMap, aliases } = getNormalizedData(newItems);
+    batch(() => {
+      dispatch(receiveMockedData(dataMap, aliases));
+      dispatch(showToast(Toast.success, ITEMS_UPLOAD_SUCCESS));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
+    });
+  })
+  .catch(handleApiErrors(ITEMS_UPLOAD_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const removeMockedDataAsync = (): ThunkResult<Promise<void>> => dispatch => {
