@@ -127,7 +127,7 @@ export class ItemResolver {
 
   @Mutation(returns => Boolean)
   @Authorized<UserRoles>([UserRoles.admin])
-  async approveItem(@Arg('id') id: string, @Arg('isApproved') isApprovedByAdmin: boolean, @Ctx() ctx: Context) {
+  async approveItem(@Arg('id') id: string, @Arg('isApprovedByAdmin') isApprovedByAdmin: boolean, @Ctx() ctx: Context) {
     const item = await this.getOwnItemById(id, ctx);
 
     item.isApprovedByAdmin = isApprovedByAdmin;

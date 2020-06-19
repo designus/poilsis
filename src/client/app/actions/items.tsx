@@ -1,5 +1,5 @@
 import { batch } from 'react-redux';
-import { mutation, query, params, types } from 'typed-graphqlify';
+import { mutation, query, rawString, params, types } from 'typed-graphqlify';
 import {
   setUploadProgress,
   uploadError,
@@ -134,7 +134,7 @@ export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => disp
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<Image[]>> => dispatch => {
 
   const query = {
-    uploadImages: params({ files: '$files', id: '$itemId' }, {
+    uploadImages: graphqlParams<Item>({ files: '$files', id: '$itemId' }, {
       mainImage: types.string,
       images: [{
         id: types.string,
@@ -146,13 +146,15 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
   };
 
   return gqlRequest<typeof query>({
-    query: mutation(params({ $files: '[Upload!]!', $itemId: 'String!' }, query)),
+    query: mutation(graphqlParams({ $files: '[Upload!]!', $itemId: 'String!' }, query)),
     variables: { files, itemId }
   }, {
     onUploadProgress: (e: any) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent)))
   })
   .then(handleGraphqlResponse)
-  .then(({ uploadImages: item }) => {
+  .then(response => {
+    const item = response.uploadImages;
+
     batch(() => {
       dispatch(setUploadProgress(100));
       dispatch(receiveImages(itemId, item.images, item.mainImage));
@@ -174,7 +176,7 @@ export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promi
   dispatch(showLoader(CONTENT_LOADER_ID));
 
   const query = {
-    updateImages: params({ id: '$itemId', images: '$images' }, {
+    updateImages: graphqlParams<Item>({ id: '$itemId', images: '$images' }, {
       mainImage: types.string,
       images: [{
         id: types.string,
@@ -224,7 +226,7 @@ export const updateItemDescription = (itemId: string, description: DescriptionIn
   dispatch(showLoader(CONTENT_LOADER_ID));
 
   const query = {
-    updateDescription: params({ id: '$itemId', description: '$description' }, {
+    updateDescription: graphqlParams<DescriptionInput>({ id: '$itemId', description: '$description' }, {
       description: {
         lt: types.string,
         en: types.string,
@@ -301,21 +303,37 @@ export const toggleItemEnabled = (params: ToggleEnabledParams): ThunkResult<Prom
 };
 
 export const toggleItemApproved = (itemId: string, isApproved: boolean): ThunkResult<Promise<void>> => dispatch => {
-  return http.patch<boolean>(`/api/items/item/toggle-approved`, { itemId, isApproved })
-    .then(response => handleApiResponse(response))
-    .then(() => {
-      dispatch(toggleItemApprovedField(itemId, isApproved));
-    })
-    .catch(handleApiErrors(ITEM_APPROVE_ERROR, CONTENT_LOADER_ID, dispatch));
+
+  const query = {
+    approveItem: graphqlParams<boolean>({ id: '$itemId', isApprovedByAdmin: '$isApproved' }, types.boolean)
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(graphqlParams({ $itemId: 'String!', $isApproved: 'Boolean!' }, query)),
+    variables: { itemId, isApproved }
+  })
+  .then(handleGraphqlResponse)
+  .then(() => {
+    dispatch(toggleItemApprovedField(itemId, isApproved));
+  })
+  .catch(handleApiErrors(ITEM_APPROVE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const toggleItemRecommended = (itemId: string, isRecommended: boolean): ThunkResult<Promise<void>> => dispatch => {
-  return http.patch<boolean>(`/api/items/item/toggle-recommended`, { itemId, isRecommended })
-    .then(response => handleApiResponse(response))
-    .then(() => {
-      dispatch(toggleItemRecommendedField(itemId, isRecommended));
-    })
-    .catch(handleApiErrors(ITEM_RECOMMEND_ERROR, CONTENT_LOADER_ID, dispatch));
+
+  const query = {
+    recommendItem: graphqlParams<boolean>({ id: '$itemId', isRecommended: '$isRecommended' }, types.boolean)
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(graphqlParams({ $itemId: 'String!', $isRecommended: 'Boolean!' }, query)),
+    variables: { itemId, isRecommended }
+  })
+  .then(handleGraphqlResponse)
+  .then(() => {
+    dispatch(toggleItemRecommendedField(itemId, isRecommended));
+  })
+  .catch(handleApiErrors(ITEM_RECOMMEND_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, getState) => {
@@ -382,8 +400,9 @@ export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, g
 
 export const removeMockedDataAsync = (): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.delete('/api/items/mocked-data')
-    .then(response => handleApiResponse(response))
+
+  return gqlRequest({ query: `mutation { removeMockedData }` })
+    .then(handleGraphqlResponse)
     .then(() => {
       batch(() => {
         dispatch(showToast(Toast.success, ITEMS_REMOVE_SUCCESS));
