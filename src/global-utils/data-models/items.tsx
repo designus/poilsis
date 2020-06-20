@@ -73,11 +73,11 @@ export class Item {
   isRecommended!: boolean;
 
   @Field({ nullable: true })
-  @prop({ default: Date.now() })
+  @prop({ default: new Date().toISOString() })
   createdAt?: string;
 
   @Field({ nullable: true })
-  @prop({ updatedAt: Date.now() })
+  @prop({ updatedAt: new Date().toISOString() })
   updatedAt?: string;
 
   @Field({ nullable: true })

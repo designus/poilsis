@@ -280,16 +280,23 @@ export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispa
 
   dispatch(showLoader(DIALOG_LOADER_ID));
 
-  return http.delete(`/api/items/item/${itemId}`)
-    .then(handleApiResponse)
-    .then((item: Item) => {
-      batch(() => {
-        dispatch(removeItem(item.id));
-        dispatch(hideLoader(DIALOG_LOADER_ID));
-        dispatch(showToast(Toast.success, ITEM_DELETE_SUCCESS));
-      });
-    })
-    .catch(handleApiErrors(ITEM_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
+  const query = {
+    removeItem: graphqlParams<boolean>({ id: '$itemId' }, types.boolean)
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(graphqlParams({ $itemId: 'String!' }, query)),
+    variables: { itemId }
+  })
+  .then(handleGraphqlResponse)
+  .then(() => {
+    batch(() => {
+      dispatch(removeItem(itemId));
+      dispatch(hideLoader(DIALOG_LOADER_ID));
+      dispatch(showToast(Toast.success, ITEM_DELETE_SUCCESS));
+    });
+  })
+  .catch(handleApiErrors(ITEM_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
 export const toggleItemEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
@@ -302,6 +309,7 @@ export const toggleItemEnabled = (params: EnableItemInput): ThunkResult<Promise<
     query: mutation(graphqlParams({ $params: 'EnableItemInput!' }, query)),
     variables: { params }
   })
+  .then(handleGraphqlResponse)
   .then(() => {
     dispatch(toggleItemEnabledField(params.id, params.isEnabled, params.locale));
   })
