@@ -32,7 +32,7 @@ import {
 } from 'data-strings';
 import { IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
-import { DescriptionInput, EnableItemInput } from 'global-utils/input-types';
+import { DescriptionInput, EnableItemInput, MainInfoInput } from 'global-utils/input-types';
 import {
   ItemsActionTypes,
   Toast,
@@ -259,21 +259,61 @@ export const updateItemDescription = (itemId: string, description: DescriptionIn
   .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const createItem = (item: Item): ThunkResult<Promise<Item>> => dispatch => {
+export const createItem = (item: MainInfoInput): ThunkResult<Promise<Item>> => dispatch => {
 
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.post<Item>(`/api/items`, item)
-    .then(response => handleApiResponse(response))
-    .then(item => {
-      batch(() => {
-        dispatch(receiveItem(item));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-        dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
-      });
-      return item;
+  const query = {
+    createItem: graphqlParams<Item>({ item: '$item' }, {
+      id: types.string,
+      name: {
+        lt: types.string,
+        en: types.string,
+        ru: types.string
+      },
+      alias: {
+        lt: types.string,
+        en: types.string,
+        ru: types.string
+      },
+      cityId: types.string,
+      price: {
+        from: types.number,
+        to: types.number
+      },
+      currency: types.string,
+      address: types.string,
+      types: [types.string],
+      userId: types.string,
+      isApprovedByAdmin: types.boolean,
+      isRecommended: types.boolean,
+      createdAt: types.string,
+      updatedAt: types.string,
+      isEnabled: {
+        lt: types.boolean,
+        en: types.boolean,
+        ru: types.boolean
+      }
     })
-    .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(graphqlParams({ $item: 'MainInfoInput!' }, query)),
+    variables: { item }
+  })
+  .then(handleGraphqlResponse)
+  .then(response => {
+    const createdItem = response.createItem;
+
+    batch(() => {
+      dispatch(receiveItem(createdItem));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
+      dispatch(showToast(Toast.success, ITEM_CREATE_SUCCESS));
+    });
+
+    return createdItem;
+  })
+  .catch(handleApiErrors(ITEM_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispatch) => {
