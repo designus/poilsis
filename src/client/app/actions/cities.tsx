@@ -15,11 +15,11 @@ import {
   CITY_ENABLE_ERROR
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
+import { EnableItemInput } from 'global-utils/input-types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
 import {
   CitiesActionTypes,
-  ToggleEnabledParams,
   Toast,
   ThunkDispatch,
   ThunkResult
@@ -132,7 +132,7 @@ export const deleteCity = (cityId: string): ThunkResult<Promise<void>> => dispat
     .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleCityEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
+export const toggleCityEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
   return http.patch<boolean>(`/api/cities/city/toggle-enabled`, params)
     .then(response => handleApiResponse(response))
     .then(() => {

@@ -8,8 +8,6 @@ export enum ImageSize {
 
 export type Locale = 'en' | 'lt' | 'ru';
 
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-
 export type Value<T, K extends keyof T> = T[K];
 
 export type IntlSetting<T> = Record<Locale, T>;

@@ -32,11 +32,10 @@ import {
 } from 'data-strings';
 import { IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
-import { DescriptionInput } from 'global-utils/input-types';
+import { DescriptionInput, EnableItemInput } from 'global-utils/input-types';
 import {
   ItemsActionTypes,
   Toast,
-  ToggleEnabledParams,
   ThunkResult,
   IItemsMap,
   IAliasMap
@@ -293,13 +292,20 @@ export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispa
     .catch(handleApiErrors(ITEM_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (params: ToggleEnabledParams): ThunkResult<Promise<void>> => dispatch => {
-  return http.patch<boolean>(`/api/items/item/toggle-enabled`, params)
-    .then(response => handleApiResponse(response))
-    .then(() => {
-      dispatch(toggleItemEnabledField(params.id, params.isEnabled, params.locale));
-    })
-    .catch(handleApiErrors(ITEM_ENABLE_ERROR, CONTENT_LOADER_ID, dispatch));
+export const toggleItemEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
+
+  const query = {
+    enableItem: graphqlParams<boolean>({ params: '$params' }, types.boolean)
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(graphqlParams({ $params: 'EnableItemInput!' }, query)),
+    variables: { params }
+  })
+  .then(() => {
+    dispatch(toggleItemEnabledField(params.id, params.isEnabled, params.locale));
+  })
+  .catch(handleApiErrors(ITEM_ENABLE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const toggleItemApproved = (itemId: string, isApproved: boolean): ThunkResult<Promise<void>> => dispatch => {

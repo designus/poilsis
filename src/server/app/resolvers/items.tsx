@@ -5,9 +5,10 @@ import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
 import { config } from 'config';
 import { Item, Image, ItemsModel } from 'global-utils/data-models';
+import { Locale } from 'global-utils/typings';
 import { UserRoles, MAX_PHOTOS } from 'global-utils';
 import { isAdmin, indexBy } from 'global-utils/methods';
-import { MainInfoInput, DescriptionInput } from 'global-utils/input-types';
+import { MainInfoInput, DescriptionInput, EnableItemInput } from 'global-utils/input-types';
 import {
   getFormattedIsEnabled,
   hasAdminAproval,
@@ -111,6 +112,18 @@ export class ItemResolver {
     await existingItem.save();
 
     return existingItem;
+  }
+
+  @Mutation(returns => Boolean)
+  @Authorized<UserRoles>()
+  async enableItem(@Arg('params') params: EnableItemInput, @Ctx() ctx: Context) {
+    const item = await this.getOwnItemById(params.id, ctx);
+
+    item.isEnabled[params.locale] = params.isEnabled;
+
+    await item.save();
+
+    return true;
   }
 
   @Mutation(returns => Boolean)
