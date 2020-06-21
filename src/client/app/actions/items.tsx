@@ -205,20 +205,30 @@ export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promi
   });
 };
 
-export const updateMainInfo = (item: Item): ThunkResult<Promise<Item>> => dispatch => {
+export const updateMainInfo = (item: MainInfoInput, itemId: string): ThunkResult<Promise<Item>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.put<Item>(`/api/items/item/main-info/${item.id}`, item)
-    .then(response => handleApiResponse(response))
-    .then(item => {
-      batch(() => {
-        dispatch(receiveItem(item));
-        dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-      });
-      return item;
-    })
-    .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
+  const query = {
+    updateItem: graphqlParams<Item>({ item: '$item', id: '$itemId' }, mainInfoFragment)
+  };
+
+  return gqlRequest<typeof query>({
+    query: mutation(graphqlParams({ $item: 'MainInfoInput!', $itemId: 'String!' }, query)),
+    variables: { item, itemId }
+  })
+  .then(handleGraphqlResponse)
+  .then(item => {
+    const updatedItem = item.updateItem;
+
+    batch(() => {
+      dispatch(receiveItem(updatedItem));
+      dispatch(showToast(Toast.success, ITEM_UPDATE_SUCCESS));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
+    });
+
+    return updatedItem;
+  })
+  .catch(handleApiErrors(ITEM_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const updateItemDescription = (itemId: string, description: DescriptionInput): ThunkResult<Promise<void>> => dispatch => {

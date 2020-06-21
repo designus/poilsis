@@ -31,7 +31,7 @@ export class Item {
   @prop({ required: true, type: NameField })
   name!: TranslatableField;
 
-  @Field(type => TranslatableField)
+  @Field(type => TranslatableField, { nullable: true })
   @prop({ required: true, type: TranslatableField })
   alias!: TranslatableField;
 

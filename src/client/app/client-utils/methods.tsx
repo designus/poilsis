@@ -251,4 +251,15 @@ export const graphqlFetchOptions = (operation: string): AxiosRequestConfig => {
   }
 
   return fetchOptions;
+};
+
+export function pickProps<T, K extends keyof T = keyof T>(obj: T, keys: K[]): Pick<T, K>  {
+  return keys.reduce((acc, key) => {
+    acc[key] = obj[key];
+    return acc;
+  }, {} as Pick<T, K>);
+}
+
+export function objectKeys<T>(object: T) {
+  return Object.keys(object) as (keyof T)[];
 }

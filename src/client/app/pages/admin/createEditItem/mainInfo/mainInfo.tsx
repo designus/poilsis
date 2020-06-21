@@ -12,7 +12,8 @@ import { getBackendErrors } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { Item } from 'global-utils/data-models';
-import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils';
+import { MainInfoInput } from 'global-utils/input-types';
+import { LANGUAGES, DEFAULT_LANGUAGE } from 'global-utils/constants';
 import { extendWithLoader } from 'components/extendWithLoader';
 import { extendWithLanguage } from 'components/extendWithLanguage';
 import { NavigationPrompt } from 'components/navigationPrompt';
@@ -29,19 +30,34 @@ class MainInfoPage extends React.Component<Props> {
     throw new SubmissionError(getBackendErrors(errors));
   }
 
-  onSubmit = (item: Item) => {
-    const { isCreatePage, createItem, history, updateItem, initializeForm } = this.props;
-    const submitFn = isCreatePage ? createItem : updateItem;
-    return submitFn({ ...item, currency: 'EUR' })
+  onSubmit = (item: MainInfoInput) => {
+    const { isCreatePage, createItem, history, match, updateItem, initializeForm } = this.props;
+    const submitFn = isCreatePage ? createItem(item) : updateItem(item, match.params.itemId);
+
+    return submitFn
       .then(newItem => {
         if (isCreatePage) {
           history.push(adminRoutes.editItemMain.getLink(newItem.userId, newItem.id));
-        } else {
-          initializeForm(newItem);
         }
+
+        initializeForm(this.getInitialValue(newItem));
+
       })
       .catch(this.handleErrors);
   }
+
+  getInitialValue = (item: Item): Required<MainInfoInput> => ({
+    name: item.name,
+    types: item.types,
+    cityId: item.cityId,
+    address: item.address,
+    userId: item.userId,
+    isEnabled: item.isEnabled,
+    isApprovedByAdmin: item.isApprovedByAdmin,
+    price: item.price,
+    alias: item.alias,
+    currency: 'EUR'
+  })
 
   render() {
     return (this.props.loadedItem || this.props.isCreatePage) ? (
@@ -56,7 +72,8 @@ class MainInfoPage extends React.Component<Props> {
           typesMap={this.props.typesMap}
           userRole={this.props.userRole}
           usersMap={this.props.usersMap}
-          initialValues={this.props.loadedItem}
+          itemId={this.props.match.params.itemId}
+          initialValues={this.props.isCreatePage ? {} : this.getInitialValue(this.props.loadedItem)}
           languages={LANGUAGES}
           defaultLanguage={DEFAULT_LANGUAGE}
         />
@@ -76,7 +93,7 @@ const mapStateToProps = (state: IAppState): IStateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
-  updateItem: item => dispatch(updateMainInfo(item)),
+  updateItem: (item, itemId) => dispatch(updateMainInfo(item, itemId)),
   createItem: item => dispatch(createItem(item)),
   initializeForm: item => dispatch(initialize(MAIN_INFO_FORM_NAME, item))
 });

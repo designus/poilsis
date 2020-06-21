@@ -20,6 +20,7 @@ export interface IResponseError {
   };
 }
 
+// Todo: Replace this with Input type
 export type IItemDescFields = Pick<Item, 'description' | 'metaDescription' | 'metaTitle'>;
 
 export enum UserRoles {

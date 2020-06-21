@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { getDropdownOptions } from 'client-utils/methods';
 import { adminRoutes } from 'client-utils/routes';
 import { Item, City, Type } from 'global-utils/data-models';
+import { MainInfoInput } from 'global-utils/input-types';
 import { asyncValidateAlias } from 'actions';
 import {
   isAdmin,
@@ -149,9 +150,9 @@ const Form = (props: Props)  => {
   );
 };
 
-export const MainInfoForm = reduxForm<Item, ICustomProps>({
-  asyncValidate: (item: Item, dispatch, props) => {
-    return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl);
+export const MainInfoForm = reduxForm<MainInfoInput, ICustomProps>({
+  asyncValidate: (item: MainInfoInput, dispatch, props) => {
+    return asyncValidateAlias(item, '/api/items/item/alias-exist', props.intl, props.itemId);
   },
   asyncBlurFields: ['alias'],
   form: MAIN_INFO_FORM_NAME

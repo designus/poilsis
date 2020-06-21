@@ -1,5 +1,5 @@
 import { Locale, UserRoles } from 'global-utils/typings';
-import { Item } from 'global-utils/data-models';
+import { MainInfoInput } from 'global-utils/input-types';
 import { WrappedComponentProps as InjectedIntlProps } from 'react-intl';
 
 import { updateMainInfo, createItem } from 'actions/items';
@@ -22,7 +22,7 @@ export interface IStateProps {
 export interface IDispatchProps {
   createItem: ThunkReturn<typeof createItem>;
   updateItem: ThunkReturn<typeof updateMainInfo>;
-  initializeForm: (item: Item) => void;
+  initializeForm: (item: MainInfoInput) => void;
 }
 
 export type Props = IOwnProps & IStateProps & IDispatchProps;
