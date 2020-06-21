@@ -1,5 +1,6 @@
 import { batch } from 'react-redux';
-import { mutation, query, rawString, params, types } from 'typed-graphqlify';
+import { mutation, types } from 'typed-graphqlify';
+
 import {
   setUploadProgress,
   uploadError,
@@ -8,7 +9,13 @@ import {
 
 import { showToast } from 'actions/toast';
 import { showLoader, hideLoader } from 'actions/loader';
-import { onUploadProgress, getNormalizedData, setAcceptLanguageHeader, getNewItems, graphqlParams } from 'client-utils/methods';
+import {
+  onUploadProgress,
+  getNormalizedData,
+  setAcceptLanguageHeader,
+  getNewItems,
+  graphqlParams
+} from 'client-utils/methods';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import {
   ITEM_UPDATE_SUCCESS,
@@ -32,6 +39,7 @@ import {
 } from 'data-strings';
 import { IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
+import { Image, Item } from 'global-utils/data-models';
 import { DescriptionInput, EnableItemInput, MainInfoInput } from 'global-utils/input-types';
 import {
   ItemsActionTypes,
@@ -40,9 +48,17 @@ import {
   IItemsMap,
   IAliasMap
 } from 'types';
-import { Image, Item } from 'global-utils/data-models';
 
-import { handleApiResponse, http, handleApiErrors, gqlRequest, handleGraphqlResponse } from './utils';
+import {
+  handleApiResponse,
+  http,
+  handleApiErrors,
+  gqlRequest,
+  handleGraphqlResponse,
+  mainInfoFragment,
+  imagesFragment,
+  translatableFieldFragment
+} from './utils';
 
 export const receiveItems = (dataMap: IItemsMap, aliases: IAliasMap) => ({
   type: ItemsActionTypes.RECEIVE_ITEMS,
@@ -133,15 +149,7 @@ export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => disp
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<Image[]>> => dispatch => {
 
   const query = {
-    uploadImages: graphqlParams<Item>({ files: '$files', id: '$itemId' }, {
-      mainImage: types.string,
-      images: [{
-        id: types.string,
-        fileName: types.string,
-        path: types.string,
-        thumbName: types.string
-      }]
-    })
+    uploadImages: graphqlParams<Item>({ files: '$files', id: '$itemId' }, imagesFragment)
   };
 
   return gqlRequest<typeof query>({
@@ -175,19 +183,11 @@ export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promi
   dispatch(showLoader(CONTENT_LOADER_ID));
 
   const query = {
-    updateImages: graphqlParams<Item>({ id: '$itemId', images: '$images' }, {
-      mainImage: types.string,
-      images: [{
-        id: types.string,
-        fileName: types.string,
-        path: types.string,
-        thumbName: types.string
-      }]
-    })
+    updateImages: graphqlParams<Item>({ id: '$itemId', images: '$images' }, imagesFragment)
   };
 
   return gqlRequest<typeof query>({
-    query: mutation(params({ $itemId: 'String!', $images: '[ImageInput!]!' }, query)),
+    query: mutation(graphqlParams({ $itemId: 'String!', $images: '[ImageInput!]!' }, query)),
     variables: { itemId, images }
   })
   .then(handleGraphqlResponse)
@@ -226,26 +226,14 @@ export const updateItemDescription = (itemId: string, description: DescriptionIn
 
   const query = {
     updateDescription: graphqlParams<DescriptionInput>({ id: '$itemId', description: '$description' }, {
-      description: {
-        lt: types.string,
-        en: types.string,
-        ru: types.string
-      },
-      metaTitle: {
-        lt: types.string,
-        en: types.string,
-        ru: types.string
-      },
-      metaDescription: {
-        lt: types.string,
-        en: types.string,
-        ru: types.string
-      }
+      description: translatableFieldFragment,
+      metaTitle: translatableFieldFragment,
+      metaDescription: translatableFieldFragment
     })
   };
 
   return gqlRequest<typeof query>({
-    query: mutation(params({ $itemId: 'String!', $description: 'DescriptionInput!' }, query)),
+    query: mutation(graphqlParams({ $itemId: 'String!', $description: 'DescriptionInput!' }, query)),
     variables: { itemId, description }
   })
   .then(handleGraphqlResponse)
@@ -264,37 +252,7 @@ export const createItem = (item: MainInfoInput): ThunkResult<Promise<Item>> => d
   dispatch(showLoader(CONTENT_LOADER_ID));
 
   const query = {
-    createItem: graphqlParams<Item>({ item: '$item' }, {
-      id: types.string,
-      name: {
-        lt: types.string,
-        en: types.string,
-        ru: types.string
-      },
-      alias: {
-        lt: types.string,
-        en: types.string,
-        ru: types.string
-      },
-      cityId: types.string,
-      price: {
-        from: types.number,
-        to: types.number
-      },
-      currency: types.string,
-      address: types.string,
-      types: [types.string],
-      userId: types.string,
-      isApprovedByAdmin: types.boolean,
-      isRecommended: types.boolean,
-      createdAt: types.string,
-      updatedAt: types.string,
-      isEnabled: {
-        lt: types.boolean,
-        en: types.boolean,
-        ru: types.boolean
-      }
-    })
+    createItem: graphqlParams<Item>({ item: '$item' }, mainInfoFragment)
   };
 
   return gqlRequest<typeof query>({
@@ -399,43 +357,13 @@ export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, g
 
   const query = {
     addMockedData: graphqlParams<Item[]>({ data: '$data' }, [{
-      id: types.string,
-      name: {
-        lt: types.string,
-        en: types.string,
-        ru: types.string
-      },
-      alias: {
-        lt: types.string,
-        en: types.string,
-        ru: types.string
-      },
-      isEnabled: {
-        lt: types.boolean,
-        en: types.boolean,
-        ru: types.boolean
-      },
-      price: {
-        from: types.number,
-        to: types.number
-      },
-      cityId: types.string,
-      currency: types.string,
-      address: types.string,
-      mainImage: types.string,
-      isApprovedByAdmin: types.boolean,
-      isRecommended: types.boolean,
-      images: [{
-        id: types.string,
-        fileName: types.string,
-        path: types.string,
-        thumbName: types.string
-      }]
+      ...mainInfoFragment,
+      ...imagesFragment
     }]
   )};
 
   return gqlRequest<typeof query>({
-    query: mutation(params({ $data: '[ItemInput!]!' }, query)),
+    query: mutation(graphqlParams({ $data: '[ItemInput!]!' }, query)),
     variables: { data }
   })
   .then(handleGraphqlResponse)

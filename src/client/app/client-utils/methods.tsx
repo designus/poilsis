@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import { extractFiles } from 'extract-files';
-import { mutation, query, params, types } from 'typed-graphqlify';
+import { mutation, query, params, types, fragment } from 'typed-graphqlify';
 import { Params } from 'typed-graphqlify/dist/render';
 import { AxiosRequestConfig } from 'axios';
 import * as FormData from 'form-data';
@@ -28,6 +28,10 @@ import {
 
 export function graphqlParams<T>(parameters: Params, input: GraphqlInput<T>): T {
   return params<any>(parameters, input);
+}
+
+export function graphqlFragment<T>(name: string, typeName: string, input: GraphqlInput<T>): T {
+  return fragment<any>(name, typeName, input);
 }
 
 export function getNormalizedData<T extends DataTypes | IUser>(data: T[]): IGenericState<T> {

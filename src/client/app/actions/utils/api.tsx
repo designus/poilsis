@@ -2,8 +2,8 @@ import axios, { AxiosResponse, AxiosRequestConfig, AxiosPromise } from 'axios';
 import { config } from 'config';
 import { Toast, ThunkResult, ThunkDispatch, LoaderType, GraphqlResponse } from 'types';
 import { graphqlFetchOptions } from 'client-utils/methods';
-import { showToast } from './toast';
-import { endLoading, hideLoader } from './loader';
+import { showToast } from '../toast';
+import { endLoading, hideLoader } from '../loader';
 
 export const http = axios.create({
   baseURL: config.host

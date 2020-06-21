@@ -623,7 +623,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "../toggleAction": [
+  "components/toggleAction": [
     {
       "id": "./app/components/toggleAction/index.tsx",
       "name": "./app/components/toggleAction/index.tsx",
@@ -1411,8 +1411,8 @@
       "publicPath": "http://localhost:8080/public/main.js"
     },
     {
-      "id": "./app/actions/utils.tsx",
-      "name": "./app/actions/utils.tsx",
+      "id": "./app/actions/utils/index.tsx",
+      "name": "./app/actions/utils/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
@@ -5993,6 +5993,22 @@
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./api": [
+    {
+      "id": "./app/actions/utils/api.tsx",
+      "name": "./app/actions/utils/api.tsx",
+      "file": "main.js",
+      "publicPath": "http://localhost:8080/public/main.js"
+    }
+  ],
+  "./fragments": [
+    {
+      "id": "./app/actions/utils/fragments.tsx",
+      "name": "./app/actions/utils/fragments.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
     }
