@@ -1,5 +1,5 @@
 import { batch } from 'react-redux';
-import { mutation, types } from 'typed-graphqlify';
+import { mutation, query, types } from 'typed-graphqlify';
 
 import {
   setUploadProgress,
@@ -55,9 +55,10 @@ import {
   handleApiErrors,
   gqlRequest,
   handleGraphqlResponse,
-  mainInfoFragment,
-  imagesFragment,
-  translatableFieldFragment
+  getMainInfoFragment,
+  getImagesFragment,
+  getDescriptionFragment,
+  getItemFragment
 } from './utils';
 
 export const receiveItems = (dataMap: IItemsMap, aliases: IAliasMap) => ({
@@ -135,25 +136,33 @@ export const getClientItem = (locale: Locale, alias: string): ThunkResult<Promis
 
 export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.get<Item>(`/api/items/admin-item/${itemId}`)
-    .then(response => handleApiResponse(response))
-    .then(item => {
-      batch(() => {
-        dispatch(receiveItem(item));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-      });
-    })
-    .catch(handleApiErrors(ITEM_LOAD_ERROR, CONTENT_LOADER_ID, dispatch));
+
+  const operation = {
+    adminItem: graphqlParams<Item>({ id: '$itemId' }, getItemFragment())
+  };
+
+  return gqlRequest<typeof operation>({
+    query: query(graphqlParams({ $itemId: 'String!' }, operation)),
+    variables: { itemId }
+  })
+  .then(handleGraphqlResponse)
+  .then(item => {
+    batch(() => {
+      dispatch(receiveItem(item.adminItem));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
+    });
+  })
+  .catch(handleApiErrors(ITEM_LOAD_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise<Image[]>> => dispatch => {
 
-  const query = {
-    uploadImages: graphqlParams<Item>({ files: '$files', id: '$itemId' }, imagesFragment)
+  const operation = {
+    uploadImages: graphqlParams<Item>({ files: '$files', id: '$itemId' }, getImagesFragment())
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $files: '[Upload!]!', $itemId: 'String!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $files: '[Upload!]!', $itemId: 'String!' }, operation)),
     variables: { files, itemId }
   }, {
     onUploadProgress: (e: any) => onUploadProgress(e, (loadedPercent: number) => dispatch(setUploadProgress(loadedPercent)))
@@ -182,12 +191,12 @@ export const uploadPhotos = (itemId: string, files: File[]): ThunkResult<Promise
 export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  const query = {
-    updateImages: graphqlParams<Item>({ id: '$itemId', images: '$images' }, imagesFragment)
+  const operation = {
+    updateImages: graphqlParams<Item>({ id: '$itemId', images: '$images' }, getImagesFragment())
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $itemId: 'String!', $images: '[ImageInput!]!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $itemId: 'String!', $images: '[ImageInput!]!' }, operation)),
     variables: { itemId, images }
   })
   .then(handleGraphqlResponse)
@@ -208,12 +217,12 @@ export const updatePhotos = (itemId: string, images: Image[]): ThunkResult<Promi
 export const updateMainInfo = (item: MainInfoInput, itemId: string): ThunkResult<Promise<Item>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  const query = {
-    updateItem: graphqlParams<Item>({ item: '$item', id: '$itemId' }, mainInfoFragment)
+  const operation = {
+    updateItem: graphqlParams<Item>({ item: '$item', id: '$itemId' }, getMainInfoFragment())
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $item: 'MainInfoInput!', $itemId: 'String!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $item: 'MainInfoInput!', $itemId: 'String!' }, operation)),
     variables: { item, itemId }
   })
   .then(handleGraphqlResponse)
@@ -234,16 +243,12 @@ export const updateMainInfo = (item: MainInfoInput, itemId: string): ThunkResult
 export const updateItemDescription = (itemId: string, description: DescriptionInput): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  const query = {
-    updateDescription: graphqlParams<DescriptionInput>({ id: '$itemId', description: '$description' }, {
-      description: translatableFieldFragment,
-      metaTitle: translatableFieldFragment,
-      metaDescription: translatableFieldFragment
-    })
+  const operation = {
+    updateDescription: graphqlParams<DescriptionInput>({ id: '$itemId', description: '$description' }, getDescriptionFragment())
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $itemId: 'String!', $description: 'DescriptionInput!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $itemId: 'String!', $description: 'DescriptionInput!' }, operation)),
     variables: { itemId, description }
   })
   .then(handleGraphqlResponse)
@@ -261,12 +266,12 @@ export const createItem = (item: MainInfoInput): ThunkResult<Promise<Item>> => d
 
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  const query = {
-    createItem: graphqlParams<Item>({ item: '$item' }, mainInfoFragment)
+  const operation = {
+    createItem: graphqlParams<Item>({ item: '$item' }, getMainInfoFragment())
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $item: 'MainInfoInput!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $item: 'MainInfoInput!' }, operation)),
     variables: { item }
   })
   .then(handleGraphqlResponse)
@@ -288,12 +293,12 @@ export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispa
 
   dispatch(showLoader(DIALOG_LOADER_ID));
 
-  const query = {
+  const operation = {
     removeItem: graphqlParams<boolean>({ id: '$itemId' }, types.boolean)
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $itemId: 'String!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $itemId: 'String!' }, operation)),
     variables: { itemId }
   })
   .then(handleGraphqlResponse)
@@ -309,12 +314,12 @@ export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispa
 
 export const toggleItemEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
 
-  const query = {
+  const operation = {
     enableItem: graphqlParams<boolean>({ params: '$params' }, types.boolean)
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $params: 'EnableItemInput!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $params: 'EnableItemInput!' }, operation)),
     variables: { params }
   })
   .then(handleGraphqlResponse)
@@ -326,12 +331,12 @@ export const toggleItemEnabled = (params: EnableItemInput): ThunkResult<Promise<
 
 export const toggleItemApproved = (itemId: string, isApproved: boolean): ThunkResult<Promise<void>> => dispatch => {
 
-  const query = {
+  const operation = {
     approveItem: graphqlParams<boolean>({ id: '$itemId', isApprovedByAdmin: '$isApproved' }, types.boolean)
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $itemId: 'String!', $isApproved: 'Boolean!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $itemId: 'String!', $isApproved: 'Boolean!' }, operation)),
     variables: { itemId, isApproved }
   })
   .then(handleGraphqlResponse)
@@ -343,12 +348,12 @@ export const toggleItemApproved = (itemId: string, isApproved: boolean): ThunkRe
 
 export const toggleItemRecommended = (itemId: string, isRecommended: boolean): ThunkResult<Promise<void>> => dispatch => {
 
-  const query = {
+  const operation = {
     recommendItem: graphqlParams<boolean>({ id: '$itemId', isRecommended: '$isRecommended' }, types.boolean)
   };
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $itemId: 'String!', $isRecommended: 'Boolean!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $itemId: 'String!', $isRecommended: 'Boolean!' }, operation)),
     variables: { itemId, isRecommended }
   })
   .then(handleGraphqlResponse)
@@ -365,15 +370,15 @@ export const addMockedDataAsync = (): ThunkResult<Promise<void>> => (dispatch, g
   const typeIds = Object.keys(state.types.dataMap);
   const data = generateMockedData(1000, cityIds, typeIds);
 
-  const query = {
+  const operation = {
     addMockedData: graphqlParams<Item[]>({ data: '$data' }, [{
-      ...mainInfoFragment,
-      ...imagesFragment
+      ...getMainInfoFragment(),
+      ...getImagesFragment()
     }]
   )};
 
-  return gqlRequest<typeof query>({
-    query: mutation(graphqlParams({ $data: '[ItemInput!]!' }, query)),
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $data: '[ItemInput!]!' }, operation)),
     variables: { data }
   })
   .then(handleGraphqlResponse)

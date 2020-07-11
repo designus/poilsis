@@ -1,20 +1,39 @@
 import { types } from 'typed-graphqlify';
-import { Item, TranslatableField } from 'global-utils/data-models';
+import { Item, TranslatableField, IsEnabled } from 'global-utils/data-models';
+import { Locale } from 'global-utils/typings';
+import { LANGUAGES } from 'global-utils/constants';
 import { graphqlFragment } from 'client-utils/methods';
 
-export const translatableFieldFragment = graphqlFragment<TranslatableField>('translatableFieldFragment', 'TranslatableField', {
-  lt: types.string,
-  en: types.string,
-  ru: types.string
-});
+export function getLanguagesInput<T extends string | boolean>(type: T, locale?: Locale) {
+  const languages = locale ? [locale] : LANGUAGES;
 
-export const nameFieldFragment = graphqlFragment<TranslatableField>('nameFieldFragment', 'NameField', {
-  lt: types.string,
-  en: types.string,
-  ru: types.string
-});
+  type ReturnType = typeof type extends string ? TranslatableField : IsEnabled;
 
-export const imagesFragment = graphqlFragment<Item>('imagesFragment', 'Item', {
+  return languages.reduce<Partial<ReturnType>>((acc, lang) => {
+    acc[lang] = type;
+    return acc;
+  }, {});
+}
+
+export const getTranslatableFieldFragment = (fragmentName: string, locale?: Locale) => graphqlFragment<TranslatableField>(
+  fragmentName,
+  'TranslatableField',
+  getLanguagesInput(types.string, locale)
+);
+
+export const getNameFieldFragment = (locale?: Locale) => graphqlFragment<TranslatableField>(
+  'nameFieldFragment',
+  'NameField',
+  getLanguagesInput(types.string, locale)
+);
+
+export const getIsEnabledFragment = (locale?: Locale) => graphqlFragment<IsEnabled>(
+  'isEnabledFragment',
+  'IsEnabled',
+  getLanguagesInput(types.boolean, locale)
+);
+
+export const getImagesFragment = () => graphqlFragment<Item>('imagesFragment', 'Item', {
   mainImage: types.string,
   images: [{
     id: types.string,
@@ -24,10 +43,11 @@ export const imagesFragment = graphqlFragment<Item>('imagesFragment', 'Item', {
   }]
 });
 
-export const mainInfoFragment = graphqlFragment<Item>('mainInfoFragment', 'Item', {
+export const getMainInfoFragment = (locale?: Locale) => graphqlFragment<Item>('mainInfoFragment', 'Item', {
   id: types.string,
-  name: nameFieldFragment,
-  alias: translatableFieldFragment,
+  name: getNameFieldFragment(locale),
+  alias: getTranslatableFieldFragment('aliasFragment', locale),
+  isEnabled: getIsEnabledFragment(locale),
   cityId: types.string,
   price: {
     from: types.number,
@@ -40,10 +60,17 @@ export const mainInfoFragment = graphqlFragment<Item>('mainInfoFragment', 'Item'
   isApprovedByAdmin: types.boolean,
   isRecommended: types.boolean,
   createdAt: types.string,
-  updatedAt: types.string,
-  isEnabled: {
-    lt: types.boolean,
-    en: types.boolean,
-    ru: types.boolean
-  }
+  updatedAt: types.string
+});
+
+export const getDescriptionFragment = (locale?: Locale) => graphqlFragment<Item>('descriptionFragment', 'Item', {
+  description: getTranslatableFieldFragment('description', locale),
+  metaTitle: getTranslatableFieldFragment('metaTitle', locale),
+  metaDescription: getTranslatableFieldFragment('metaDescription', locale)
+});
+
+export const getItemFragment = (locale?: Locale) => graphqlFragment<Item>('itemFragment', 'Item', {
+  ...getMainInfoFragment(locale),
+  ...getDescriptionFragment(locale),
+  ...getImagesFragment()
 });

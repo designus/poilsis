@@ -13,7 +13,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
 
-export const staticFilesPort = app.get('env') === 'production' ? config.port : 8080;
+// export const staticFilesPort = app.get('env') === 'production' ? config.port : 8080;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.db);

@@ -30,6 +30,7 @@ class PhotosPage extends React.Component<Props> {
   }
 
   render() {
+    console.log('Loaded item', this.props.loadedItem);
     return this.props.loadedItem ? (
       <React.Fragment>
         <PhotosFormWithLoader
