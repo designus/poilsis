@@ -1,7 +1,7 @@
 import React from 'react';
 // @ts-ignore
 import { extractFiles } from 'extract-files';
-import { mutation, query, params, types, fragment } from 'typed-graphqlify';
+import { params, fragment } from 'typed-graphqlify';
 import { Params } from 'typed-graphqlify/dist/render';
 import { AxiosRequestConfig } from 'axios';
 import * as FormData from 'form-data';

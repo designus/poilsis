@@ -122,16 +122,23 @@ export const toggleItemRecommendedField = (itemId: string, isRecommended: boolea
 export const getClientItem = (locale: Locale, alias: string): ThunkResult<Promise<void>> => (dispatch) => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.get(`/api/items/client-item/${alias}`, setAcceptLanguageHeader(locale))
-    .then(handleApiResponse)
-    .then((item: Item) => {
-      dispatch(receiveItem(item));
-      dispatch(hideLoader(CONTENT_LOADER_ID));
-    })
-    .catch(err => {
-      console.error(err);
-      dispatch(hideLoader(CONTENT_LOADER_ID));
-    });
+  const operation = {
+    clientItem: graphqlParams<Item>({ locale: '$locale', alias: '$alias' }, getItemFragment())
+  };
+
+  return gqlRequest<typeof operation>({
+    query: query(graphqlParams({ $alias: 'String!', $locale: 'String!' }, operation)),
+    variables: { locale, alias }
+  })
+  .then(handleGraphqlResponse)
+  .then(response => {
+    dispatch(receiveItem(response.clientItem));
+    dispatch(hideLoader(CONTENT_LOADER_ID));
+  })
+  .catch(err => {
+    console.error(err);
+    dispatch(hideLoader(CONTENT_LOADER_ID));
+  });
 };
 
 export const getAdminItem = (itemId: string): ThunkResult<Promise<void>> => dispatch => {

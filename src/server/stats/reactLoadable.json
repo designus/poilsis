@@ -623,7 +623,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage.js"
     }
   ],
-  "../toggleAction": [
+  "components/toggleAction": [
     {
       "id": "./app/components/toggleAction/index.tsx",
       "name": "./app/components/toggleAction/index.tsx",
@@ -1061,7 +1061,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "./menu": [
+  "components/menu/menu": [
     {
       "id": "./app/components/menu/menu.tsx",
       "name": "./app/components/menu/menu.tsx",
@@ -1137,7 +1137,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "../../../global-styles": [
+  "../../global-styles": [
     {
       "id": "./app/global-styles/index.tsx",
       "name": "./app/global-styles/index.tsx",
@@ -1415,6 +1415,12 @@
       "name": "./app/actions/utils/index.tsx",
       "file": "main.js",
       "publicPath": "http://localhost:8080/public/main.js"
+    },
+    {
+      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
+      "file": "vendors~adminLayoutPage~clientLayout.js",
+      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
   "./city": [
@@ -5989,7 +5995,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./upload": [
+  "actions/upload": [
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",
@@ -6997,7 +7003,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "./useFormControl": [
+  "../FormControl/useFormControl": [
     {
       "id": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
       "name": "../../node_modules/@material-ui/core/esm/FormControl/useFormControl.js",
@@ -7093,7 +7099,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "../Input": [
+  "@material-ui/core/Input": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Input/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Input/index.js",
@@ -7129,14 +7135,6 @@
     {
       "id": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
       "name": "../../node_modules/@material-ui/core/esm/InputBase/index.js",
-      "file": "vendors~adminLayoutPage~clientLayout.js",
-      "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
-    }
-  ],
-  "../InputBase/utils": [
-    {
-      "id": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
-      "name": "../../node_modules/@material-ui/core/esm/InputBase/utils.js",
       "file": "vendors~adminLayoutPage~clientLayout.js",
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
@@ -7185,7 +7183,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/List": [
+  "../List": [
     {
       "id": "../../node_modules/@material-ui/core/esm/List/index.js",
       "name": "../../node_modules/@material-ui/core/esm/List/index.js",
@@ -7361,7 +7359,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/Select": [
+  "../Select": [
     {
       "id": "../../node_modules/@material-ui/core/esm/Select/index.js",
       "name": "../../node_modules/@material-ui/core/esm/Select/index.js",
@@ -7513,7 +7511,7 @@
       "publicPath": "http://localhost:8080/public/vendors~adminLayoutPage~clientLayout.js"
     }
   ],
-  "@material-ui/core/useMediaQuery": [
+  "../useMediaQuery": [
     {
       "id": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",
       "name": "../../node_modules/@material-ui/core/esm/useMediaQuery/index.js",

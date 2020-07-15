@@ -1,4 +1,5 @@
 import { batch } from 'react-redux';
+import { mutation, query, types } from 'typed-graphqlify';
 import { Locale } from 'global-utils';
 import { Item, City } from 'global-utils/data-models';
 import { showLoader, hideLoader } from 'actions/loader';
@@ -17,7 +18,7 @@ import {
 import { getCityByAlias } from 'selectors';
 import { EnableItemInput } from 'global-utils/input-types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { getNewItems, getNormalizedData, setAcceptLanguageHeader } from 'client-utils/methods';
+import { getNewItems, getNormalizedData, setAcceptLanguageHeader, graphqlParams } from 'client-utils/methods';
 import {
   CitiesActionTypes,
   Toast,
@@ -25,7 +26,18 @@ import {
   ThunkResult
 } from 'types';
 
-import { stopLoading, handleApiErrors, handleApiResponse, http } from './utils';
+import {
+  stopLoading,
+  handleApiErrors,
+  handleApiResponse,
+  http,
+  gqlRequest,
+  handleGraphqlResponse,
+  getTranslatableFieldFragment,
+  getIsEnabledFragment,
+  getNameFieldFragment,
+  getPriceFragment
+} from './utils';
 
 export const receiveCity = (city: City) => ({
   type: CitiesActionTypes.RECEIVE_CITY,
@@ -51,19 +63,37 @@ export const setCityItems = (cityId: string) => ({
 
 export const getAdminCity = (cityId: string): ThunkResult<Promise<City>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
-  return http.get<City>(`/api/cities/city/${cityId}`)
-    .then(response => handleApiResponse(response))
-    .then(city => {
-      dispatch(receiveCity(city));
-      dispatch(hideLoader(CONTENT_LOADER_ID));
-      return city;
+
+  const operation = {
+    city: graphqlParams<City>({ id: '$cityId' }, {
+      id: types.string,
+      name: getNameFieldFragment(),
+      types: [types.string],
+      isEnabled: getIsEnabledFragment(),
+      alias: getTranslatableFieldFragment('cityAlias'),
+      description: getTranslatableFieldFragment('cityDescription'),
+      metaTitle: getTranslatableFieldFragment('cityMetaTitle'),
+      metaDescription: getTranslatableFieldFragment('cityMetaDescription')
     })
-    .catch(handleApiErrors(CITY_LOAD_ERROR, CONTENT_LOADER_ID, dispatch));
+  };
+
+  return gqlRequest<typeof operation>({
+    query: query(graphqlParams({ $cityId: 'String!' }, operation)),
+    variables: { cityId }
+  })
+  .then(handleGraphqlResponse)
+  .then(response => {
+    dispatch(receiveCity(response.city));
+    dispatch(hideLoader(CONTENT_LOADER_ID));
+    return response.city;
+  })
+  .catch(handleApiErrors(CITY_LOAD_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
 export const loadCityItems = (alias: string): ThunkResult<Promise<void> | null> => (dispatch, getState) => {
   const state = getState();
   const city = getCityByAlias(state, alias);
+  const locale = state.locale.client;
 
   if (!city) {
     return null;
@@ -71,21 +101,42 @@ export const loadCityItems = (alias: string): ThunkResult<Promise<void> | null> 
 
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.get<Item[]>(`/api/items/city/${city.id}`, setAcceptLanguageHeader(state.locale.client))
-    .then(response => handleApiResponse(response))
-    .then((items) => {
-      const newItems = getNewItems(items, state);
-      const data = getNormalizedData(newItems);
-      batch(() => {
-        dispatch(receiveItems(data.dataMap, data.aliases));
-        dispatch(setCityItems(city.id));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-      });
-    })
-    .catch(err => {
-      console.error(err);
+  const operation = {
+    cityItems: graphqlParams<Item[]>({ cityId: '$cityId' }, [{
+      id: types.string,
+      name: getNameFieldFragment(locale),
+      alias: getTranslatableFieldFragment('cityAlias', locale),
+      types: [types.string],
+      address: types.string,
+      userId: types.string,
+      cityId: types.string,
+      isEnabled: getIsEnabledFragment(locale),
+      isRecommended: types.boolean,
+      isApprovedByAdmin: types.boolean,
+      mainImage: types.string,
+      price: getPriceFragment(),
+      currency: types.string
+    }])
+  };
+
+  return gqlRequest<typeof operation>({
+    query: query(graphqlParams({ $cityId: 'String!' }, operation)),
+    variables: { cityId: city.id }
+  })
+  .then(handleGraphqlResponse)
+  .then(response => {
+    const newItems = getNewItems(response.cityItems, state);
+    const data = getNormalizedData(newItems);
+    batch(() => {
+      dispatch(receiveItems(data.dataMap, data.aliases));
+      dispatch(setCityItems(city.id));
       dispatch(hideLoader(CONTENT_LOADER_ID));
     });
+  })
+  .catch(err => {
+    console.error(err);
+    dispatch(hideLoader(CONTENT_LOADER_ID));
+  });
 };
 
 export const createCity = (city: City): ThunkResult<Promise<City>> => (dispatch: ThunkDispatch) => {
