@@ -181,16 +181,24 @@ export const updateCity = (city: CityInput, cityId: string): ThunkResult<Promise
 
 export const deleteCity = (cityId: string): ThunkResult<Promise<void>> => dispatch => {
   dispatch(showLoader(DIALOG_LOADER_ID));
-  return http.delete(`/api/cities/city/${cityId}`)
-    .then(response => handleApiResponse(response))
-    .then(() => {
-      batch(() => {
-        dispatch(removeCity(cityId));
-        dispatch(hideLoader(DIALOG_LOADER_ID));
-        dispatch(showToast(Toast.success, CITY_DELETE_SUCCESS));
-      });
-    })
-    .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
+
+  const operation = {
+    deleteCity: graphqlParams<boolean>({ id: '$cityId' }, types.boolean)
+  };
+
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $cityId: 'String!' }, operation)),
+    variables: { cityId }
+  })
+  .then(handleGraphqlResponse)
+  .then(() => {
+    batch(() => {
+      dispatch(removeCity(cityId));
+      dispatch(hideLoader(DIALOG_LOADER_ID));
+      dispatch(showToast(Toast.success, CITY_DELETE_SUCCESS));
+    });
+  })
+  .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
 export const toggleCityEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
