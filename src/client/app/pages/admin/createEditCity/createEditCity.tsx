@@ -7,9 +7,10 @@ import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, defineMessages } from 'react-intl';
 
 import { City } from 'global-utils/data-models';
+import { CityInput } from 'global-utils/input-types';
 import { LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions/cities';
-import { getBackendErrors } from 'client-utils/methods';
+import { getBackendErrors, withoutProps } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
 import { IAppState, ThunkDispatch } from 'types';
@@ -53,10 +54,12 @@ class CreateEditCity extends React.Component<Props> {
   }
 
   onSubmit = (city: City) => {
-    const { createCity, history, updateCity, initializeForm } = this.props;
-    const submitFn = this.isCreatePage() ? createCity : updateCity;
-    return submitFn(city)
-      .then((newCity: City) => {
+    const { createCity, history, updateCity, initializeForm, match } = this.props;
+    const cityCandidate = withoutProps(city, ['id']);
+    const submitFn = this.isCreatePage() ? createCity(cityCandidate) : updateCity(cityCandidate, match.params.cityId);
+
+    return submitFn
+      .then(newCity => {
         if (this.isCreatePage()) {
           history.push(adminRoutes.editCity.getLink(newCity.id));
         } else {
@@ -107,7 +110,7 @@ const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   getCity: cityId => dispatch(getAdminCity(cityId)),
   createCity: city => dispatch(createCity(city)),
-  updateCity: city => dispatch(updateCity(city)),
+  updateCity: (city, cityId) => dispatch(updateCity(city, cityId)),
   initializeForm: city => dispatch(initialize(CITY_FORM_NAME, city))
 });
 

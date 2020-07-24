@@ -84,7 +84,7 @@ const Form = (props: Props) => {
 
 export const CityForm = reduxForm<City, ICustomProps>({
   asyncValidate: (values: City, dispatch, props) => {
-    return asyncValidateAlias(values, '/api/cities/city/alias-exist', props.intl);
+    return asyncValidateAlias(values, '/api/cities/city/alias-exist', props.intl, values.id);
   },
   asyncBlurFields: ['alias'],
   form: CITY_FORM_NAME

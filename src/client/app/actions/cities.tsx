@@ -16,9 +16,9 @@ import {
   CITY_ENABLE_ERROR
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
-import { EnableItemInput } from 'global-utils/input-types';
+import { EnableItemInput, CityInput } from 'global-utils/input-types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
-import { getNewItems, getNormalizedData, setAcceptLanguageHeader, graphqlParams } from 'client-utils/methods';
+import { getNewItems, getNormalizedData, graphqlParams } from 'client-utils/methods';
 import {
   CitiesActionTypes,
   Toast,
@@ -36,7 +36,8 @@ import {
   getTranslatableFieldFragment,
   getIsEnabledFragment,
   getNameFieldFragment,
-  getPriceFragment
+  getPriceFragment,
+  getCityFragment
 } from './utils';
 
 export const receiveCity = (city: City) => ({
@@ -65,16 +66,7 @@ export const getAdminCity = (cityId: string): ThunkResult<Promise<City>> => disp
   dispatch(showLoader(CONTENT_LOADER_ID));
 
   const operation = {
-    city: graphqlParams<City>({ id: '$cityId' }, {
-      id: types.string,
-      name: getNameFieldFragment(),
-      types: [types.string],
-      isEnabled: getIsEnabledFragment(),
-      alias: getTranslatableFieldFragment('cityAlias'),
-      description: getTranslatableFieldFragment('cityDescription'),
-      metaTitle: getTranslatableFieldFragment('cityMetaTitle'),
-      metaDescription: getTranslatableFieldFragment('cityMetaDescription')
-    })
+    city: graphqlParams<City>({ id: '$cityId' }, getCityFragment())
   };
 
   return gqlRequest<typeof operation>({
@@ -139,33 +131,51 @@ export const loadCityItems = (alias: string): ThunkResult<Promise<void> | null> 
   });
 };
 
-export const createCity = (city: City): ThunkResult<Promise<City>> => (dispatch: ThunkDispatch) => {
+export const createCity = (city: CityInput): ThunkResult<Promise<City>> => (dispatch: ThunkDispatch) => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.post<City>('/api/cities', city)
-    .then(response => handleApiResponse(response))
-    .then(city => {
-      dispatch(receiveCity(city));
-      dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
-      return city;
-    })
-    .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
+  const operation = {
+    createCity: graphqlParams<City>({ city: '$city' }, getCityFragment())
+  };
+
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $city: 'CityInput!' }, operation)),
+    variables: { city }
+  })
+  .then(handleGraphqlResponse)
+  .then(response => {
+    const newCity = response.createCity;
+    dispatch(receiveCity(newCity));
+    dispatch(stopLoading(false, CITY_CREATE_SUCCESS, CONTENT_LOADER_ID));
+    return newCity;
+  })
+  .catch(handleApiErrors(CITY_CREATE_ERROR, CONTENT_LOADER_ID, dispatch));
 };
 
-export const updateCity = (city: City): ThunkResult<Promise<City>> => dispatch => {
+export const updateCity = (city: CityInput, cityId: string): ThunkResult<Promise<City>> => dispatch => {
   dispatch(showLoader(CONTENT_LOADER_ID));
 
-  return http.put<City>(`/api/cities/city/${city.id}`, city)
-    .then(response => handleApiResponse(response))
-    .then(city => {
-      batch(() => {
-        dispatch(receiveCity(city));
-        dispatch(hideLoader(CONTENT_LOADER_ID));
-        dispatch(showToast(Toast.success, CITY_UPDATE_SUCCESS));
-      });
-      return city;
-    })
-    .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
+  const operation = {
+    updateCity: graphqlParams<City>({ city: '$city', id: '$cityId' }, getCityFragment())
+  };
+
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $city: 'CityInput!', $cityId: 'String!' }, operation)),
+    variables: { city, cityId }
+  })
+  .then(handleGraphqlResponse)
+  .then(response => {
+    const updatedCity = response.updateCity;
+
+    batch(() => {
+      dispatch(receiveCity(updatedCity));
+      dispatch(hideLoader(CONTENT_LOADER_ID));
+      dispatch(showToast(Toast.success, CITY_UPDATE_SUCCESS));
+    });
+
+    return updatedCity;
+  })
+  .catch(handleApiErrors(CITY_UPDATE_ERROR, CONTENT_LOADER_ID, dispatch));
 
 };
 
