@@ -9,7 +9,7 @@ import { getTypes, getTypesMap, getAdminLocale } from 'selectors';
 import { getLocalizedText } from 'client-utils/methods';
 import { Locale } from 'global-utils';
 import { Type } from 'global-utils/data-models';
-import { EnableItemInput } from 'global-utils/input-types';
+import { EnableInput } from 'global-utils/input-types';
 import { IAppState, ITypesMap, ThunkDispatch, ThunkReturn } from 'types';
 
 import { EnhancedTable, ITableColumn } from 'components/table';
@@ -149,7 +149,7 @@ const mapStateToProps = (state: IAppState): IStateProps => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   deleteType: (typeId: string) => dispatch(deleteType(typeId)),
-  toggleTypeEnabled: (params: EnableItemInput) => dispatch(toggleTypeEnabled(params))
+  toggleTypeEnabled: (params: EnableInput) => dispatch(toggleTypeEnabled(params))
 });
 
 export default injectIntl(

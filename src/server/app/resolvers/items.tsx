@@ -8,7 +8,7 @@ import { Item, Image, ItemsModel } from 'global-utils/data-models';
 import { Locale } from 'global-utils/typings';
 import { UserRoles, MAX_PHOTOS } from 'global-utils';
 import { isAdmin, indexBy } from 'global-utils/methods';
-import { MainInfoInput, DescriptionInput, EnableItemInput } from 'global-utils/input-types';
+import { MainInfoInput, DescriptionInput, EnableInput } from 'global-utils/input-types';
 import {
   getFormattedIsEnabled,
   hasAdminAproval,
@@ -116,7 +116,7 @@ export class ItemResolver {
 
   @Mutation(returns => Boolean)
   @Authorized<UserRoles>()
-  async enableItem(@Arg('params') params: EnableItemInput, @Ctx() ctx: Context) {
+  async enableItem(@Arg('params') params: EnableInput, @Ctx() ctx: Context) {
     const item = await this.getOwnItemById(params.id, ctx);
 
     item.isEnabled[params.locale] = params.isEnabled;

@@ -2,7 +2,7 @@ import { Field, InputType } from 'type-graphql';
 import { Locale } from 'global-utils/typings';
 
 @InputType()
-export class EnableItemInput {
+export class EnableInput {
   @Field()
   id!: string;
 

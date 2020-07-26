@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { EnableItemInput } from 'global-utils/input-types';
+import { EnableInput } from 'global-utils/input-types';
 import { DataTypes } from 'global-utils/typings';
 import { getItemsByAliasesQuery, getAdjustedAliasValue, getAliasList } from 'server-utils/aliases';
 import { Item, City, Type, TranslatableField, IsEnabled } from 'global-utils/data-models';
@@ -10,7 +10,7 @@ type DocumentModelType = ReturnModelType<typeof Item | typeof City | typeof Type
 export const toggleEnabled = (DocumentModel: DocumentModelType) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const params = req.body as EnableItemInput;
+      const params = req.body as EnableInput;
       const { isEnabled, locale, id } = params;
       const document = await DocumentModel.findOne({ id });
 

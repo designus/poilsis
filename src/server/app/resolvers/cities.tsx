@@ -1,13 +1,22 @@
-import { Authorized, Mutation, Resolver, Query, Arg } from 'type-graphql';
+import { Authorized, Mutation, Resolver, Query, Arg, Ctx } from 'type-graphql';
 import shortId from 'shortid';
 import { City, CitiesModel } from 'global-utils/data-models';
 import { UserRoles } from 'global-utils/typings';
 import { getAlias } from 'server-utils/aliases';
 import { getFormattedIsEnabled } from 'server-utils/methods';
-import { CityInput } from 'global-utils/input-types';
+import { Context } from 'server-utils/types';
+import { CityInput, EnableInput } from 'global-utils/input-types';
 
 @Resolver(of => City)
 export class CityResolver {
+
+  async getCityById(id: string) {
+    const city = await CitiesModel.findOne({ id });
+
+    if (!city) throw new Error('Unable to find city');
+
+    return city;
+  }
 
   @Query(returns => [City])
   async cities() {
@@ -16,11 +25,7 @@ export class CityResolver {
 
   @Query(returns => City)
   async city(@Arg('id') id: string) {
-    const city = await CitiesModel.findOne({ id });
-
-    if (!city) throw new Error('City not found');
-
-    return city;
+    return this.getCityById(id);
   }
 
   @Mutation(returns => City)
@@ -66,9 +71,22 @@ export class CityResolver {
   @Mutation(returns => Boolean)
   @Authorized<UserRoles>([UserRoles.admin])
   async deleteCity(@Arg('id') id: string): Promise<boolean | null> {
-    const city = await CitiesModel.findOne({ id });
-    if (!city) throw new Error('City not found');
+    const city = await this.getCityById(id);
+
     await city.remove();
+
+    return true;
+  }
+
+  @Mutation(returns => Boolean)
+  @Authorized<UserRoles>([UserRoles.admin])
+  async enableCity(@Arg('params') params: EnableInput) {
+    const city = await this.getCityById(params.id);
+
+    city.isEnabled[params.locale] = params.isEnabled;
+
+    await city.save();
+
     return true;
   }
 

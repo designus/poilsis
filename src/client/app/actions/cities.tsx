@@ -16,7 +16,7 @@ import {
   CITY_ENABLE_ERROR
 } from 'data-strings';
 import { getCityByAlias } from 'selectors';
-import { EnableItemInput, CityInput } from 'global-utils/input-types';
+import { EnableInput, CityInput } from 'global-utils/input-types';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { getNewItems, getNormalizedData, graphqlParams } from 'client-utils/methods';
 import {
@@ -29,8 +29,6 @@ import {
 import {
   stopLoading,
   handleApiErrors,
-  handleApiResponse,
-  http,
   gqlRequest,
   handleGraphqlResponse,
   getTranslatableFieldFragment,
@@ -201,11 +199,18 @@ export const deleteCity = (cityId: string): ThunkResult<Promise<void>> => dispat
   .catch(handleApiErrors(CITY_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleCityEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
-  return http.patch<boolean>(`/api/cities/city/toggle-enabled`, params)
-    .then(response => handleApiResponse(response))
-    .then(() => {
-      dispatch(toggleCityEnabledField(params.id, params.isEnabled, params.locale));
-    })
-    .catch(handleApiErrors(CITY_ENABLE_ERROR, CONTENT_LOADER_ID, dispatch));
+export const toggleCityEnabled = (params: EnableInput): ThunkResult<Promise<void>> => dispatch => {
+  const operation = {
+    enableCity: graphqlParams<boolean>({ params: '$params' }, types.boolean)
+  };
+
+  return gqlRequest<typeof operation>({
+    query: mutation(graphqlParams({ $params: 'EnableInput!' }, operation)),
+    variables: { params }
+  })
+  .then(handleGraphqlResponse)
+  .then(() => {
+    dispatch(toggleCityEnabledField(params.id, params.isEnabled, params.locale));
+  })
+  .catch(handleApiErrors(CITY_ENABLE_ERROR, CONTENT_LOADER_ID, dispatch));
 };

@@ -40,7 +40,7 @@ import {
 import { IItemDescFields, Locale } from 'global-utils/typings';
 import { generateMockedData } from 'global-utils/mockedData';
 import { Image, Item } from 'global-utils/data-models';
-import { DescriptionInput, EnableItemInput, MainInfoInput } from 'global-utils/input-types';
+import { DescriptionInput, EnableInput, MainInfoInput } from 'global-utils/input-types';
 import {
   ItemsActionTypes,
   Toast,
@@ -319,14 +319,14 @@ export const deleteItem = (itemId: string): ThunkResult<Promise<void>> => (dispa
   .catch(handleApiErrors(ITEM_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleItemEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
+export const toggleItemEnabled = (params: EnableInput): ThunkResult<Promise<void>> => dispatch => {
 
   const operation = {
     enableItem: graphqlParams<boolean>({ params: '$params' }, types.boolean)
   };
 
   return gqlRequest<typeof operation>({
-    query: mutation(graphqlParams({ $params: 'EnableItemInput!' }, operation)),
+    query: mutation(graphqlParams({ $params: 'EnableInput!' }, operation)),
     variables: { params }
   })
   .then(handleGraphqlResponse)

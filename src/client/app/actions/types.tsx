@@ -3,7 +3,7 @@ import { Locale } from 'global-utils';
 import { Type } from 'global-utils/data-models';
 import { CONTENT_LOADER_ID, DIALOG_LOADER_ID } from 'client-utils/constants';
 import { showToast } from 'actions/toast';
-import { EnableItemInput } from 'global-utils/input-types';
+import { EnableInput } from 'global-utils/input-types';
 import {
   TYPE_CREATE_SUCCESS,
   TYPE_UPDATE_SUCCESS,
@@ -105,7 +105,7 @@ export const deleteType = (typeId: string): ThunkResult<Promise<void>> => dispat
     .catch(handleApiErrors(TYPE_DELETE_ERROR, DIALOG_LOADER_ID, dispatch));
 };
 
-export const toggleTypeEnabled = (params: EnableItemInput): ThunkResult<Promise<void>> => dispatch => {
+export const toggleTypeEnabled = (params: EnableInput): ThunkResult<Promise<void>> => dispatch => {
   return http.patch(`/api/types/type/toggle-enabled`, params)
     .then(handleApiResponse)
     .then(() => {

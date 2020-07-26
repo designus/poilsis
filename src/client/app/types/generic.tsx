@@ -2,7 +2,7 @@ import { MessageDescriptor } from 'react-intl';
 import { ThunkAction, ThunkDispatch as Dispatch } from 'redux-thunk';
 import { Action, Store } from 'redux';
 import { Locale } from 'global-utils/typings';
-import { EnableItemInput } from 'global-utils/input-types';
+import { EnableInput } from 'global-utils/input-types';
 import { ItemsActionTypes } from './items';
 import { CitiesActionTypes } from './cities';
 import { TypesActionTypes } from './types';
@@ -39,7 +39,7 @@ export type TranslatedMessages = {
   [key: string]: MessageDescriptor;
 };
 
-export interface IToggleEnabled extends EnableItemInput {
+export interface IToggleEnabled extends EnableInput {
   type: ItemsActionTypes.TOGGLE_ITEM_ENABLED | CitiesActionTypes.TOGGLE_CITY_ENABLED | TypesActionTypes.TOGGLE_TYPE_ENABLED;
 }
 

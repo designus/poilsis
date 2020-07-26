@@ -3,7 +3,7 @@ import { injectIntl, WrappedComponentProps as InjectedIntlProps } from 'react-in
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { DataTypes, Locale } from 'global-utils/typings';
 import { TranslatableField, IsEnabled } from 'global-utils/data-models';
-import { EnableItemInput } from 'global-utils/input-types';
+import { EnableInput } from 'global-utils/input-types';
 import { LANGUAGES } from 'global-utils/constants';
 
 import { ToggleAction } from '../toggleAction';
@@ -12,7 +12,7 @@ import { styles } from './styles';
 
 interface IToggleEnabledProps extends WithStyles<typeof styles>, InjectedIntlProps {
   item: DataTypes;
-  onToggle: (params: EnableItemInput) => void;
+  onToggle: (params: EnableInput) => void;
 }
 
 function ToggleEnabled(props: IToggleEnabledProps) {
