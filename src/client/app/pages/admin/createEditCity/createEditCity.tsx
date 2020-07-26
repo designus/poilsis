@@ -7,7 +7,6 @@ import reduxFormActions from 'redux-form/es/actions';
 import { injectIntl, defineMessages } from 'react-intl';
 
 import { City } from 'global-utils/data-models';
-import { CityInput } from 'global-utils/input-types';
 import { LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
 import { createCity, updateCity, getAdminCity } from 'actions/cities';
 import { getBackendErrors, withoutProps } from 'client-utils/methods';

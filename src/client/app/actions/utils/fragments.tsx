@@ -1,5 +1,5 @@
 import { types } from 'typed-graphqlify';
-import { Item, TranslatableField, IsEnabled, Price, City } from 'global-utils/data-models';
+import { Item, TranslatableField, IsEnabled, Price, City, Type } from 'global-utils/data-models';
 import { Locale } from 'global-utils/typings';
 import { LANGUAGES } from 'global-utils/constants';
 import { graphqlFragment } from 'client-utils/methods';
@@ -86,4 +86,12 @@ export const getCityFragment = () => graphqlFragment<City>('cityFragment', 'City
   description: getTranslatableFieldFragment('cityDescription'),
   metaTitle: getTranslatableFieldFragment('cityMetaTitle'),
   metaDescription: getTranslatableFieldFragment('cityMetaDescription')
+});
+
+export const getTypeFragment = () => graphqlFragment<Type>('typeFragment', 'Type', {
+  id: types.string,
+  name: getNameFieldFragment(),
+  isEnabled: getIsEnabledFragment(),
+  alias: getTranslatableFieldFragment('typeAlias'),
+  description: getTranslatableFieldFragment('typeDescription')
 });

@@ -1061,7 +1061,7 @@
       "publicPath": "http://localhost:8080/public/adminLayoutPage~clientLayout.js"
     }
   ],
-  "components/menu/menu": [
+  "./menu": [
     {
       "id": "./app/components/menu/menu.tsx",
       "name": "./app/components/menu/menu.tsx",
@@ -5989,7 +5989,7 @@
       "publicPath": "http://localhost:8080/public/main.js"
     }
   ],
-  "./upload": [
+  "actions/upload": [
     {
       "id": "./app/actions/upload.tsx",
       "name": "./app/actions/upload.tsx",

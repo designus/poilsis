@@ -10,7 +10,7 @@ import { injectIntl, defineMessages } from 'react-intl';
 import { Type } from 'global-utils/data-models';
 import { LANGUAGES, DEFAULT_LANGUAGE, isClient } from 'global-utils';
 import { createType, updateType, getAdminType } from 'actions/types';
-import { getBackendErrors } from 'client-utils/methods';
+import { getBackendErrors, withoutProps } from 'client-utils/methods';
 import { CONTENT_LOADER_ID } from 'client-utils/constants';
 import { adminRoutes } from 'client-utils/routes';
 import { extendWithLoader } from 'components/extendWithLoader';
@@ -54,8 +54,9 @@ class CreateEditTypePageComponent extends React.Component<Props> {
 
   onSubmit = (type: Type) => {
     const { createType, history, updateType, initializeForm } = this.props;
-    const submitFn = this.isCreatePage() ? createType : updateType;
-    return submitFn(type)
+    const typeCandidate = withoutProps(type, ['id']);
+    const submitFn = this.isCreatePage() ? createType(typeCandidate) : updateType(typeCandidate, this.props.match.params.typeId);
+    return submitFn
       .then((newType: Type) => {
         if (this.isCreatePage()) {
           history.push(adminRoutes.editType.getLink(newType.id));
@@ -101,7 +102,7 @@ const mapStateToProps = (state: IAppState, props: IOwnProps): IStateProps => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch): IDispatchProps => ({
   getType: typeId => dispatch(getAdminType(typeId)),
   createType: type => dispatch(createType(type)),
-  updateType: type => dispatch(updateType(type)),
+  updateType: (type, typeId) => dispatch(updateType(type, typeId)),
   initializeForm: type => dispatch(initialize(TYPE_FORM_NAME, type))
 });
 

@@ -56,7 +56,7 @@ const Form: React.FunctionComponent<Props> = props => {
 };
 
 export const TypeForm = reduxForm<Type, ICustomProps>({
-  asyncValidate: (values: Type, dispatch, props) => asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl),
+  asyncValidate: (values: Type, dispatch, props) => asyncValidateAlias(values, '/api/types/type/alias-exist', props.intl, values.id),
   asyncBlurFields: ['alias'],
   form: TYPE_FORM_NAME
 })(Form);
