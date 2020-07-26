@@ -4,7 +4,6 @@ import { City, CitiesModel } from 'global-utils/data-models';
 import { UserRoles } from 'global-utils/typings';
 import { getAlias } from 'server-utils/aliases';
 import { getFormattedIsEnabled } from 'server-utils/methods';
-import { Context } from 'server-utils/types';
 import { CityInput, EnableInput } from 'global-utils/input-types';
 
 @Resolver(of => City)

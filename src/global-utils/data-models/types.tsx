@@ -23,7 +23,7 @@ export class Type {
 
   @Field(type => IsEnabled)
   @prop({ required: [true, getRequiredMessage()], type: IsEnabled })
-  public isEnabled!: IsEnabled | boolean;
+  public isEnabled!: IsEnabled;
 
   @Field(type => TranslatableField)
   @prop({ required: [true, getRequiredMessage()], type: TranslatableField })

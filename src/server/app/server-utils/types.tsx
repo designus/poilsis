@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { DocumentType } from '@typegoose/typegoose';
 import { ImageSize, DataTypes } from 'global-utils/typings';
-import { CityInput, MainInfoInput } from 'global-utils/input-types';
+import { CityInput, MainInfoInput, TypeInput } from 'global-utils/input-types';
 import { Image, CitiesModelType, TypesModelType, ItemsModelType } from 'global-utils/data-models';
 
 export interface IInfoFromFileName {
@@ -14,7 +14,7 @@ export type FieldsToSet = {
   [key: string]: string;
 };
 
-export type Input = CityInput | MainInfoInput;
+export type Input = CityInput | MainInfoInput | TypeInput;
 
 export type Model = CitiesModelType | TypesModelType | ItemsModelType;
 

@@ -1,11 +1,10 @@
-import { Resolver, Query, Arg, Authorized, Mutation, Ctx, UseMiddleware } from 'type-graphql';
+import { Resolver, Query, Arg, Authorized, Mutation, Ctx } from 'type-graphql';
 import { DocumentType } from '@typegoose/typegoose';
 import shortId from 'shortid';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
 import { config } from 'config';
 import { Item, Image, ItemsModel } from 'global-utils/data-models';
-import { Locale } from 'global-utils/typings';
 import { UserRoles, MAX_PHOTOS } from 'global-utils';
 import { isAdmin, indexBy } from 'global-utils/methods';
 import { MainInfoInput, DescriptionInput, EnableInput } from 'global-utils/input-types';

@@ -9,10 +9,9 @@ import {
   LANGUAGES
 } from 'global-utils';
 import { IsEnabled, TranslatableField, Item, Image } from 'global-utils/data-models';
-import { CityInput, MainInfoInput } from 'global-utils/input-types';
+import { CityInput, MainInfoInput, TypeInput } from 'global-utils/input-types';
 import { auth } from '../controllers';
 import { IInfoFromFileName, FieldsToSet, EntityPath } from './types';
-import { checkIfDirectoryExists, createDirectory } from './fileSystem';
 
 export const getInfoFromFileName = (fileName: string): IInfoFromFileName => {
   try {
@@ -72,7 +71,7 @@ export const getAdjustedIsEnabledValue = (item: DataTypes, languages: Locale[]) 
   }, {} as IsEnabled);
 };
 
-export const getFormattedIsEnabled = (item: CityInput | MainInfoInput, languages: Locale[] = LANGUAGES) => {
+export const getFormattedIsEnabled = (item: CityInput | MainInfoInput | TypeInput, languages: Locale[] = LANGUAGES) => {
   const isEnabled = item.isEnabled;
   const name = item.name;
 
